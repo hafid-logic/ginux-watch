@@ -53,3 +53,8 @@ If unattended authentication cannot be demonstrated, mark the setup BLOCKED; do 
 
 ## Language
 Reports: Arabic with English technical terms. Drafts and upstream text: English.
+
+## HANDOFF.md upkeep (آخر خطوة في كل تشغيل)
+- آخر خطوة في كل تشغيل: تحديث أقسام ج وو وح من HANDOFF.md (وبقية الأقسام عند تغيّر قرار)، مع فحص الأسرار قبل الدفع:
+  `grep -E "gh(p|o)_|github_pat_|@gmail|BEGIN .*PRIVATE KEY" HANDOFF.md` — أي تطابق: توقف وأبلغ ولا تدفع.
+- سقف الحجم 1200 كلمة؛ عند التجاوز لخّص القديم إلى docs/HISTORY.md وأبقِ رابطه في القسم ز.
