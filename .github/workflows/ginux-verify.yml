@@ -74,7 +74,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential ninja-build pkg-config python3-venv \
-            libglib2.0-dev libpixman-1-dev libslirp-dev libfdt-dev ovmf clang lld jq
+            libglib2.0-dev libpixman-1-dev libslirp-dev libfdt-dev ovmf clang lld jq ripgrep
           clang --version | head -1
           ls /usr/share/OVMF/ | head -20
 
@@ -123,25 +123,39 @@ jobs:
             echo "QEMU_ACCEL=tcg"; } >> "$GITHUB_ENV"
           cd ginux && rustup show && rustup target add x86_64-unknown-none || true
 
+      - name: Capture runner environment (for upstream #14 comparison)
+        run: |
+          set +e
+          mkdir -p "$GITHUB_WORKSPACE/out"
+          { echo "== lscpu =="; lscpu
+            echo "== QEMU =="; "$HOME/qemu-${QEMU_VERSION}/bin/qemu-system-x86_64" --version | head -1
+            echo "== OVMF sizes =="; ls -l /usr/share/OVMF/OVMF_CODE_4M.fd /usr/share/OVMF/OVMF_VARS_4M.fd 2>&1
+            echo "== clang =="; clang --version | head -1
+            echo "== rustc =="; cd ginux && rustc --version && cargo --version
+            echo "== kvm =="; ls -l /dev/kvm 2>&1 || echo "no /dev/kvm"
+            echo "== os =="; cat /etc/os-release | head -2; } > "$GITHUB_WORKSPACE/out/env-details.txt" 2>&1
+          cat "$GITHUB_WORKSPACE/out/env-details.txt"
+
       - name: doctor, check, test
         id: run
         working-directory: ginux
         run: |
           mkdir -p "$GITHUB_WORKSPACE/out"
           set +e
-          { echo "upstream_sha=$(git rev-parse HEAD)"; "$QEMU_SYSTEM_X86_64" --version | head -1; } | tee out/env.txt
-          make doctor 2>&1 | tee out/doctor.log;               d=${PIPESTATUS[0]}
-          make check 2>&1 | tee out/check.log;                 c=${PIPESTATUS[0]}
+          OUT="$GITHUB_WORKSPACE/out"
+          { echo "upstream_sha=$(git rev-parse HEAD)"; "$QEMU_SYSTEM_X86_64" --version | head -1; } | tee "$OUT/env.txt"
+          make doctor 2>&1 | tee "$OUT/doctor.log";               d=${PIPESTATUS[0]}
+          make check 2>&1 | tee "$OUT/check.log";                 c=${PIPESTATUS[0]}
           make reset-storage > /dev/null 2>&1
-          timeout 25m make test 2>&1 | tee out/test.log;       t=${PIPESTATUS[0]}
-          echo "doctor=$d check=$c test=$t" | tee out/status.txt
+          timeout 25m make test 2>&1 | tee "$OUT/test.log";       t=${PIPESTATUS[0]}
+          echo "doctor=$d check=$c test=$t" | tee "$OUT/status.txt"
           {
             echo "### target=${TARGET} qemu=${QEMU_VERSION} (TCG)"
             echo "| doctor | check | test | upstream sha |"
             echo "|---|---|---|---|"
             echo "| $d | $c | $t | $(git rev-parse --short HEAD) |"
             echo
-            grep -E 'virtio-net (receive|transmit) queue size|Boot test (passed|failed)|GINUX_KERNEL_(OK|PANIC)' out/test.log | sort -u | head -8
+            grep -E 'virtio-net (receive|transmit) queue size|Boot test (passed|failed)|GINUX_KERNEL_(OK|PANIC)' "$OUT/test.log" | sort -u | head -8
           } >> "$GITHUB_STEP_SUMMARY"
           if [ "$t" != "0" ] || [ "$c" != "0" ]; then exit 1; fi
 
