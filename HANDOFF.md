@@ -43,20 +43,21 @@
 ## و) بنود مفتوحة
 - D2: تعليق على #14 ببيئتنا — بيانات runner (lscpu، سطر QEMU، أحجام OVMF) تُجمع في reports/.
 - D3: إبطال التوكن القديم الملصوق سابقًا في المحادثة — إجراء المستخدم في إعدادات GitHub.
-- CI: نتيجة التشغيل 41359521470 (يُحدَّث تلقائيًا بعد كل تشغيل).
+- CI: نتيجة التشغيل 41360402671 (يُحدَّث تلقائيًا بعد كل تشغيل).
 - الجدولة: سلسلة 08:00 UTC (يُحدَّث حالة القالب تلقائيًا).
 
 ## ز) روابط
 - داخل المستودع: [STATE.md](STATE.md) | [POLICY.md](POLICY.md) | [AGENTS.md](AGENTS.md) | [reports/](reports/) | [docs/HISTORY.md](docs/HISTORY.md)
-- آخر تشغيل CI: https://github.com/hafid-logic/ginux-watch/actions/runs/41359521470
+- آخر تشغيل CI: https://github.com/hafid-logic/ginux-watch/actions/runs/41360402671
 - المستودعات الثلاثة: upstream [gmkurtzer/ginux](https://github.com/gmkurtzer/ginux) | fork [hafid-logic/ginux](https://github.com/hafid-logic/ginux) | watch [hafid-logic/ginux-watch](https://github.com/hafid-logic/ginux-watch)
 
 ## ح) آخر تحديث
-- التاريخ UTC: 2026-11-01T22:56:56Z
-- آخر تشغيل CI: 41359521470 — https://github.com/hafid-logic/ginux-watch/actions/runs/41359521470
+- التاريخ UTC: 2026-11-01T23:16:29Z
+- آخر تشغيل CI: 41360402671 — https://github.com/hafid-logic/ginux-watch/actions/runs/41360402671
 
 ## سجل الجلسات مع Claude
 آخر 10 بنود من كتل التحديث ("دلتا الجلسة") التي يلصقها المستخدم؛ تُضاف كل كتلة جديدة بتاريخها ويُحذف الأقدم عند الزيادة (يُؤرشف في docs/HISTORY.md).
 
 ### دلتا الجلسة
-1. 2026-11-01 — الجلسة 2: مصادقة نجحت بتدفق الجهاز (hafid-logic؛ repo, read:org, workflow)؛ دفع main عند 2e0124c؛ تشغيل CI 41359521470 (target=13، qemu 10.0.13+10.1.2)؛ إنشاء HANDOFF.md وقاعدة تحديثه في AGENTS.md؛ تفعيل سلسلة الجدولة 08:00 UTC.
+1. 2026-11-01 — الجلسة 2: مصادقة نجحت بتدفق الجهاز (hafid-logic؛ repo, read:org, workflow)؛ دفع main (e9550b2→2e0124c)؛ إنشاء HANDOFF.md وقاعدة تحديثه في AGENTS.md؛ تفعيل سلسلة الجدولة 08:00 UTC (job 494593).
+2. 2026-11-02 — تكملة الجلسة 2: run 1 (41359521470) فشل — rg مفقود على runner + خطأ مسار out/؛ إصلاح workflow في 5528f20؛ run 2 (41360402671) نجح: doctor/check/test = 0/0/0 على 10.0.13 (queue 1024) و10.1.2 (queue 256) على رأس PR #13 (59761169)؛ تقرير البيئة في reports/2026-11-02.md (مادة D2)؛ /dev/kvm موجود على runner وغير مستعمل (TCG).

@@ -1,6 +1,6 @@
 # STATE (updated by the agent at the end of every run)
 
-last_run: 2026-11-02 (session 2, setup: auth+push+CI dispatch)
+last_run: 2026-11-02 (session 2 complete: ginux-verify PASS on PR #13 head, qemu 10.0.13+10.1.2)
 upstream_main_seen: 759cf2e2 (merge of PR #10) as of 2026-11-01
 fork: https://github.com/hafid-logic/ginux
 
@@ -15,8 +15,8 @@ fork: https://github.com/hafid-logic/ginux
 - F8 our interrupt-safety argument holds for a single CPU only; SMP now exists (cf. upstream #25).
 
 ## Watchlist (upstream)
-- PR #13 (boot.sh queue-size check): our v6 local run = `make test` 3/3 on 10.0.13 and 10.1.0 (TCG); CI re-verification via ginux-verify (10.0.13 + 10.1.2) in progress.
-- Issue #14 (`make test` fails for another user; ours passes on TCG with Debian OVMF 2025.02-8+deb13u1): environment comparison pending.
+- PR #13 (boot.sh queue-size check): our v6 local run = `make test` 3/3 on 10.0.13 and 10.1.0 (TCG); CI run 41360402671 = doctor/check/test 0/0/0 on 10.0.13 (queue 1024) and 10.1.2 (queue 256) at head 59761169. PASS.
+- Issue #14 (`make test` fails for another user; ours passes on TCG): environment data captured in reports/2026-11-02.md (runner: Ubuntu 24.04.5, clang 18.1.3, OVMF 2025-09-23, KVM present but TCG used) — D2 comment still pending human approval.
 - Issue #5 (tracking list), #15-#30 (external security/robustness reports), PRs #36-#38 (fixes).
 
 ## Pending decisions (human)
