@@ -1,6 +1,6 @@
 # STATE (updated by the agent at the end of every run)
 
-last_run: never
+last_run: 2026-11-02 (session 2, setup: auth+push+CI dispatch)
 upstream_main_seen: 759cf2e2 (merge of PR #10) as of 2026-11-01
 fork: https://github.com/hafid-logic/ginux
 
@@ -15,12 +15,12 @@ fork: https://github.com/hafid-logic/ginux
 - F8 our interrupt-safety argument holds for a single CPU only; SMP now exists (cf. upstream #25).
 
 ## Watchlist (upstream)
-- PR #13 (boot.sh queue-size check): needs `make test` on QEMU 10.0.13.
+- PR #13 (boot.sh queue-size check): our v6 local run = `make test` 3/3 on 10.0.13 and 10.1.0 (TCG); CI re-verification via ginux-verify (10.0.13 + 10.1.2) in progress.
 - Issue #14 (`make test` fails for another user; ours passes on TCG with Debian OVMF 2025.02-8+deb13u1): environment comparison pending.
 - Issue #5 (tracking list), #15-#30 (external security/robustness reports), PRs #36-#38 (fixes).
 
 ## Pending decisions (human)
-- D1 Comment on PR #13 after CI verification on QEMU 10.0.13.
-- D2 Comment on issue #14 with our environment data.
+- D1 DONE (2026-11-01): verification comment posted on PR #13 (pull/13#issuecomment-6549305835); v6 results = make test 3/3 on 10.0.13 and 10.1.0 (TCG).
+- D2 Comment on issue #14 with our environment data (pending: capture Ubuntu runner environment in reports/).
 - D3 Revoke the GitHub token that was pasted in chat (human action, GitHub settings).
-- D4 Schedule: cadence, time of day, timezone.
+- D4 DECIDED (2026-11-01): daily review 09:00 Africa/Algiers = 08:00 UTC.

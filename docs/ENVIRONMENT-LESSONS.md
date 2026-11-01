@@ -17,3 +17,4 @@
   from `kernel_fail` (raw writes). Queue sizes are printed in the verification boot (`make test`).
 - Sandbox disks were ~10 GiB: delete QEMU build trees after install. Platform sessions were recycled
   between messages; only the persistent work directory survived. That is why CI is primary.
+- Sandbox recycle (2026-11-01 -> 2026-11-02) wiped work/bin/gh, the local ginux-watch git clone and session evidence; upload/ + download/ survived. Conclusion: durable state lives in the pushed GitHub repo; do auth->push->dispatch in one session whenever possible.
