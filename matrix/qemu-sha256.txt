@@ -1,4 +1,4 @@
 # version sha256 (first CI run prints the real hash; replace TBD, then CI verifies it)
 10.0.12 TBD
-10.0.13 TBD
-10.1.2 TBD
+10.0.13 4a59b74dac7ead8b162a7c4595dcbbeebe989b90c89cfe6bb4dec5447342f6fa
+10.1.2 9d75f331c1a5cb9b6eb8fd9f64f563ec2eab346c822cb97f8b35cd82d3f11479
