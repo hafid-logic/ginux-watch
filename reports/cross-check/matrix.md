@@ -6,6 +6,7 @@
 - **الأصناف:** A مطابق | B مشابه (نفس العائلة/الملف/الجذر) | C غير مطروح | D أُصلح (تحقق قراءةً في main).
 - **الإحصاء:** A=1، B=7، C=5، D=4 (17 صفًا).
 - **upstream-dump:** `work/upstream-dump/` (41 بندًا حتى #41، تعليقات وملفات وSHA دمج؛ snapshot 2026-11-02T00:50Z).
+- **قرار Opp (2026-11-03، أمر المستخدم v2.2 §1):** Opp-1/Opp-2 في contribute.md **أُسقطتا (dropped)** — Opp-1 يكرر تعليقنا على #4 (2026-10-31T00:55:19Z)، Opp-2 يتجاهل فرض `can_release` وقت التشغيل (memory.rs:528-550)؛ حكم critic T-04. لا مسودات معلقة.
 
 | P | العنوان | المصدر | الصنف | المقابل | الحالة على main | الدليل | الثقة |
 |---|---|---|---|---|---|---|---|
@@ -16,7 +17,7 @@
 | P5 | `FrameLease` هو Copy → ملكية الإطارات غير مفروضة نوعيًا | TF؛ STATE F4 | **B** | عائلة #26/#27/#28/#29 (إصلاح فردي #37) | **قائمة** | `#[derive(Clone, Copy…)]` فوق struct FrameLease@main [MEASURED] | متوسطة (الجذر نوعي مقصود للسجلات المعبأة)؛ الحضور عالية |
 | P6 | ~100 `static mut` + افتراض vCPU واحد → سباقات عند SMP | Critical 7.1.4؛ STATE F8 | **B** | #5 بندا 3–4 + #7/#8 (spinlocks، KERNEL_ENTRY_LOCK) + #25 (مثال SMP) | **تُعالج جزئيًا** | static mut في kernel/src: 100@d11c126a → **36**@main [MEASURED]؛ سكربتات writable-globals موجودة | عالية |
 | P7 | نسخ uname إلى المستخدم (08f9df46): افتراض حجم داخلي غير مفحوص | TD؛ errata E6/E7 | **D** | إصلاح upstream ذاته 08f9df46 ثم #7 | **زالت** | `ginux_raw_copy_{from,to}_user` بـfixups موجودة cpu.rs:2178+@main [MEASURED] | عالية |
-| P8 | لا تثبيت/تسجيل إصدارات QEMU/OVMF في doctor؛ فشل معتمد على البيئة | TE E1/E2؛ Critical 7.2 | **B** | عائلة #14 + #31 (aw-bits) — CI أُضيف في #9 | **قائمة جزئيًا** | doctor.sh@main يفحص `check_command qemu-system-x86_64` فقط، لا إصدارات [MEASURED]؛ CI موجود (.github/workflows/check.yml) | عالية |
+| P8 | لا تثبيت/تسجيل إصدارات QEMU/OVMF في doctor؛ فشل معتمد على البيئة | TE E1/E2؛ Critical 7.2 | **B** | عائلة #14 + #31 (aw-bits) — CI أُضيف في #9 | **قائمة جزئيًا** | doctor.sh@main يفحص الوجود **والقدرات**، لكنه لا يسجّل ولا يفحص إصدارات QEMU/OVMF [MEASURED]؛ **errata 2026-11-03:** الصياغة السابقة «يفحص `check_command` فقط» قلّلت الوصف (critic T-04 R4: V1 يُظهر فحوص قدرات أيضًا)؛ CI موجود (.github/workflows/check.yml) | عالية |
 | P9 | provenance الورقة: استشهاد 9afa6176 وأرقام تطابق d11c126a | STATE F7 | **D** | لا نظير مباشر (#5 يتناول 3.31× بندًا مختلفًا) | **زالت في المستودع** | الورقة@main تعلن `\evaluatedcommit{d11c126a…}` [MEASURED]؛ نسخة Zenodo نفسها [UNVERIFIED] | عالية |
 | P10 | release بلا `overflow-checks` → التفاف حسابي صامت | TA A3 | **C** | لا نظير (dump scan 02:12Z: صفر نقاش overflow-checks) | **منشور — issue #43** (يدوي بإذن صريح؛ GET: مطابقة حرفية؛ job 494920 أُلغي)؛ **gmkurtzer ردّ 2026-11-02T04:59:39Z: "Implemented in PR #54"** — PR #54@a0e9220b تحققنا عليه: 0/0/0 على النسختين، لكنه يكشف F9 (خمسة مواقع eager → panics من الضيف)؛ **تعليق F9 نُشر على PR #54 بإذن صريح 2026-11-02T10:05Z: https://github.com/gmkurtzer/ginux/pull/54#issuecomment-6574390843 — مطابقة حرفية GET 659/659 بايت، 93 كلمة (I-P54 MATCH)**) | Cargo.toml@fbe6472e و1203e291 بلا overflow-checks؛ لا .cargo/؛ لا RUSTFLAGS/CARGO_PROFILE_*/debug-assertions؛ `PROFILE ?= release` (Makefile:4) وCI make بلا تجاوز [MEASURED] | عالية |
 | P11 | ملفات عملاقة: cpu.rs 44,324 سطرًا | Critical 7.1.5 | **B** | #5 بند 5 (تحليل #7/#9 جارٍ) | **تُعالج جزئيًا** | cpu.rs: 44,324@d11c126a → **42,752**@main [MEASURED] | عالية |
