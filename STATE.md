@@ -1,7 +1,7 @@
 # STATE (updated by the agent at the end of every run)
 
-last_run: 2026-11-02T01:10Z (cross-check matrix built: 17 P-rows A1/B7/C5/D4 on main@fbe6472e; drafts pending user decision)
-upstream_main_seen: fbe6472e (merge of PR #38) as of 2026-11-02T00:00:47Z
+last_run: 2026-11-02T02:12Z (P10 verdict executed: two read-only conditions passed on fbe6472e AND 1203e291 — no overflow-checks enabling in any build surface, PROFILE ?= release confirmed, dump scan 35 hits all unrelated; draft approved verbatim -> approved/2026-11-03-1.md; publication scheduled 2026-11-03T08:00Z via cron job 494920 with gates)
+upstream_main_seen: fbe6472e (merge of PR #38) as of 2026-11-02T00:00:47Z; ADVANCED to 1203e291 observed 2026-11-02T02:12Z (9 new commits incl. PR #41 merge/Gate 20, PR #39/#40 still open; Cargo.toml/Makefile/rust-toolchain.toml unchanged) — full review at next scheduled run
 fork: https://github.com/hafid-logic/ginux
 
 ## Our findings (F-ids)
@@ -27,4 +27,4 @@ fork: https://github.com/hafid-logic/ginux
 - D2 DONE (2026-11-02T00:31Z): user-approved data-point comment posted verbatim on issue #14 (https://github.com/gmkurtzer/ginux/issues/14#issuecomment-6566220344); second post today authorized explicitly (daily-limit override).
 - D3 Revoke the GitHub token that was pasted in chat (human action, GitHub settings).
 - D4 DECIDED (2026-11-01): daily review 09:00 Africa/Algiers = 08:00 UTC.
-- D5 Cross-check drafts pending user decision: P10 (overflow-checks issue draft), Opp-1 (doctor version recording → #14), Opp-2 (FrameLease Copy → #28) — see reports/cross-check/. Daily cap consumed (2 posts under explicit override); earliest next post 2026-11-03.
+- D5 Cross-check drafts: **P10 DECIDED (2026-11-02T02:12Z) — user verdict «عدّل ثم اعتمد»; conditions passed; approved text saved verbatim in approved/2026-11-03-1.md; publication (open NEW issue, exact title inside) scheduled 2026-11-03T08:00Z via cron job 494920; today's cap exhausted so nothing posts before 11-03.** Opp-1 (doctor version recording → #14) and Opp-2 (FrameLease Copy → #28) still pending — see reports/cross-check/contribute.md.
