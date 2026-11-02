@@ -8,9 +8,21 @@ matching card from team/tasks/done/ back to open/ (status: rejected + reasons).
 """
 import json, os, re, sys, shutil, datetime, argparse
 
-SECRET = re.compile(r"gh[pousr]_[A-Za-z0-9]{16,}|github_pat_[A-Za-z0-9_]{20,}|AKIA[0-9A-Z]{16}"
-                    r"|-----BEGIN [A-Z ]*PRIVATE KEY-----|xox[baprs]-[A-Za-z0-9-]{10,}"
-                    r"|bearer [A-Za-z0-9._\-]{20,}", re.I)
+# Secret patterns are assembled from string FRAGMENTS so that neither this file's own
+# source nor a verbatim quotation of the pattern definitions inside a result.md can ever
+# match them: the checker must never flag its own checking code. `--selftest` asserts
+# both properties on every run (0 self-matches; 7 runtime-built canary shapes detected).
+def _canary(*parts):
+    return "".join(parts)
+
+SECRET = re.compile(
+    "gh" "[pousr]" "_[A-Za-z0-9]{16,}"      # classic GitHub tokens (g-h-p/_ shapes)
+    "|githu" "b_pat_[A-Za-z0-9_]{20,}"       # fine-grained PATs
+    "|AK" "IA[0-9A-Z]{16}"                   # AWS access-key ids
+    "|-----BEGIN [A-Z ]*PRIV" "ATE KEY-----" # PEM private keys
+    "|xo" "x[baprs]-[A-Za-z0-9-]{10,}"       # chat tokens
+    "|bea" "rer [A-Za-z0-9._-]{20,}",        # auth header credentials
+    re.I)
 PLACEHOLDER = re.compile(r"(?<![\w/-])(TODO|FIXME|XXX)(?![\w/-])|guaranteed|100% secure|proven safe", re.I)
 TAG = re.compile(r"\[(MEASURED|OBSERVED|INFERRED|UNVERIFIED)\]")
 PATHY = re.compile(r"(evidence/|reports/|team/|\.md|\.rs|\.sh|\.py|\.json|\.toml"
@@ -69,11 +81,33 @@ def find_card(repo, tid):
             return os.path.join(done, fn)
     return None
 
+def selftest():
+    """0 matches on this script's own source; 7/7 runtime-built canaries detected."""
+    src = open(os.path.abspath(__file__), encoding="utf-8").read()
+    hit = SECRET.search(src)
+    if hit:
+        print(f"selftest FAIL: SECRET matched validator source at {hit.group(0)!r}", file=sys.stderr)
+        return 1
+    shapes = [
+        ("gh", "p_", "a" * 20), ("gh", "o_", "a" * 20), ("githu", "b_pat_", "a" * 21),
+        ("AK", "IA", "0" * 16), ("-----BEGIN ", "RSA ", "PRIVATE KEY-----"),
+        ("xo", "xb-", "a" * 12), ("bea", "rer ", "a" * 21),
+    ]
+    for parts in shapes:
+        if not SECRET.search(_canary(*parts)):
+            print(f"selftest FAIL: canary shape not detected: {parts[0]}", file=sys.stderr)
+            return 1
+    print("selftest PASS: 0 self-matches, 7/7 canary shapes detected")
+    return 0
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("root", nargs="?", default="team/results")
     ap.add_argument("--enforce", action="store_true")
+    ap.add_argument("--selftest", action="store_true")
     a = ap.parse_args()
+    if a.selftest:
+        sys.exit(selftest())
     repo = os.path.dirname(os.path.dirname(os.path.abspath(a.root)))
     if os.path.basename(repo) != "ginux-watch":
         repo = os.getcwd()

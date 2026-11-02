@@ -4,16 +4,23 @@ on:
     paths:
       - "team/results/**"
   workflow_dispatch: {}
-permissions:
-  contents: write
+permissions: {} # nothing at workflow level; the single job below grants its own
 concurrency:
   group: team-validator
   cancel-in-progress: false
 jobs:
   validate:
+    # Push-only + manual dispatch. Fork pull-requests can never reach this job: no
+    # pull_request trigger is configured, and the guard below keeps that true even if
+    # someone adds one later.
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-24.04
+    permissions:
+      contents: write # scoped to THIS job alone (it commits validation.md)
     steps:
       - uses: actions/checkout@v4
+      - name: Selftest (checker must never match its own code)
+        run: python3 team/scripts/validate-result.py --selftest
       - name: Validate results (format, tags, evidence, secrets)
         run: python3 team/scripts/validate-result.py --enforce team/results
       - name: Commit validation output

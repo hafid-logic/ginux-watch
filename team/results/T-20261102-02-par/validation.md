@@ -1,3 +1,3 @@
-# validation — T-20261102-02-par — FAIL — 2026-11-02T21:21:28Z
+# validation — T-20261102-02-par — PASS — 2026-11-02T22:02:59Z
 
-- FAIL: no evidence tag [MEASURED/OBSERVED/INFERRED/UNVERIFIED] found
+- all gates passed
