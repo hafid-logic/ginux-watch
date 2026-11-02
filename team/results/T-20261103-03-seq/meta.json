@@ -1,0 +1,6 @@
+{
+  "duration_min": 10,
+  "tools": ["git", "python3", "rg", "Read/Write"],
+  "verified_format": true,
+  "status": "done"
+}

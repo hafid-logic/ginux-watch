@@ -1,0 +1,6 @@
+{
+  "duration_min": 15,
+  "tools": ["git (read-only ops on /home/z/my-project/work/ginux)", "python3 (index.json + upstream-dump.jsonl queries)", "mkdir"],
+  "verified_format": "result.md tagged claims (MEASURED/OBSERVED/INFERRED/UNVERIFIED) with cited commands/SHAs, word cap <= 900; every MEASURED cites a recorded command, path or SHA",
+  "status": "done"
+}

@@ -1,0 +1,6 @@
+{
+  "duration_min": 4,
+  "tools": ["git (read-only: log/merge-base/diff/grep/ls-tree/show)", "python3 (index.json + upstream-dump.jsonl scan)", "wc"],
+  "verified_format": "result.md 821 words (<=900); sections 1-5 present; every claim tagged MEASURED/OBSERVED/INFERRED/UNVERIFIED; MEASURED claims cite SHAs/paths/recorded commands; negative results recorded (3x 0-hit git grep in tests/, dump query)",
+  "status": "done"
+}

@@ -1,0 +1,14 @@
+{
+  "duration_min": 14,
+  "tools": [
+    "git (read-only)",
+    "rg via git grep",
+    "python3",
+    "Read/Write"
+  ],
+  "verified_format": "result.md <=900 words; every claim tagged [MEASURED]/[OBSERVED]/[INFERRED]/[UNVERIFIED]; [MEASURED] claims cite repo paths, SHAs or exact recorded commands",
+  "status": "done",
+  "card": "T-20261103-01",
+  "worker": "w1s (sequential rerun)",
+  "word_count_result_md": 896
+}

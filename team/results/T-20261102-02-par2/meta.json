@@ -1,0 +1,28 @@
+{
+  "card": "T-20261102-02",
+  "run": "par2",
+  "role": "crosschecker",
+  "duration_min": 11,
+  "tools": ["python3", "rg", "git (read-only)", "Read/Write"],
+  "verified_format": true,
+  "status": "done",
+  "snapshot": {
+    "path": "/home/z/my-project/work/data-wt/",
+    "generated_at_utc": "2026-11-02T22:05:39Z",
+    "item_count": 56,
+    "age_hours_at_read": 0.04,
+    "freshness_gate": "FRESH (<= 26h)"
+  },
+  "verdicts": {
+    "P11": "DUPLICATE (#5)",
+    "P12": "FIXED (PR #9, c921e98d4955bda72de203836436e7a951eb94eb)",
+    "P13": "FIXED (PR #9, c921e98d4955bda72de203836436e7a951eb94eb)",
+    "P14": "NOT-DUPLICATE",
+    "P15": "NOT-DUPLICATE",
+    "P16": "NOT-DUPLICATE",
+    "P17": "NOT-DUPLICATE",
+    "stale_index": 0
+  },
+  "new_items_reviewed": "#42-#56 (15 items)",
+  "notes": "Re-verdict against updated 56-item snapshot; jsonl has no body field, body-level checks via card-listed backup dump (41 items); #42-#56 verified on title/files/labels/keywords only."
+}

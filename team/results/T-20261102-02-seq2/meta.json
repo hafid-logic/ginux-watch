@@ -1,0 +1,26 @@
+{
+  "card": "T-20261102-02",
+  "run": "seq2 (v2.2 re-claim, updated 56-item snapshot)",
+  "duration_min": 6,
+  "tools": ["python3", "git (read-only)", "date/wc (bash)"],
+  "verified_format": true,
+  "status": "done",
+  "snapshot": {
+    "index": "/home/z/my-project/work/data-wt/index.json",
+    "generated_at_utc": "2026-11-02T22:05:39Z",
+    "item_count": 56,
+    "age_hours_at_check": 0.47
+  },
+  "repo_head_checked": "95f8ef2447f52eacd1b73e8612465fcd38bcc31b",
+  "verdicts": {
+    "P11": "DUPLICATE (#5)",
+    "P12": "FIXED (PR #9, c921e98d)",
+    "P13": "FIXED (PR #9, c921e98d; 339149da)",
+    "P14": "NOT-DUPLICATE (0/56 hits)",
+    "P15": "NOT-DUPLICATE (0/56 hits)",
+    "P16": "NOT-DUPLICATE (#9 examined, root-cause mismatch)",
+    "P17": "NOT-DUPLICATE (#7/#8 filename-only, mismatch)"
+  },
+  "prior_runs_read": false,
+  "writes_outside_deliverable_dir": false
+}

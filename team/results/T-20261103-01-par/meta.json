@@ -1,0 +1,6 @@
+{
+  "duration_min": 15,
+  "tools": ["git (log/show/diff/grep/merge-base/ls-tree, read-only)", "python3 (dump/index scan)", "mkdir"],
+  "verified_format": "result.md markdown, <=900 words, every claim tagged [MEASURED]/[OBSERVED]/[INFERRED]/[UNVERIFIED], MEASURED claims cite SHA/path/recorded command; meta.json present",
+  "status": "done"
+}

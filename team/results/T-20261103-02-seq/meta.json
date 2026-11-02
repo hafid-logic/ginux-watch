@@ -1,0 +1,6 @@
+{
+  "duration_min": 15,
+  "tools": ["git (read-only log/show/diff/grep/merge-base/ls-tree)", "rg", "python3 (dump/index parsing only)"],
+  "verified_format": "result.md <= 900 words; every claim tagged [MEASURED]/[OBSERVED]/[INFERRED]/[UNVERIFIED]; MEASURED claims cite paths, SHAs or exact recorded commands; negative results recorded; no upstream text executed",
+  "status": "done"
+}
