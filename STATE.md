@@ -19,12 +19,13 @@ fork: https://github.com/hafid-logic/ginux
 - main verify: run 41364863523 (target=main@fbe6472e) = doctor/check/test 0/0/0 on 10.0.13 (queue 1024) and 10.1.2 (queue 256); Boot test passed + GINUX_KERNEL_OK both.
 - Main merge burst 23:43-00:00 UTC: #31 (IOMMU width) #32 #33 #34 #35 #36 (issue-30) #37 (issue-26) #38 (issue-21) merged; PR #39 (native desktop controller) open.
 - Issue #14 (`make test` fails for another user; ours passes on TCG): gmkurtzer 2026-11-01T18:24:45Z (Gate 20; IOMMU stall fixed by #31; log request to reporter CG-8663) and 2026-11-02T00:12:17Z (after #31 his Ubuntu TCG repro reaches boot test and FAILS: 300s timeout, exit 2, run 41365239310; serial/interrupt logs to be published before a corrective PR). Our user-approved data-point comment posted verbatim 00:31:29Z (issuecomment-6566220344) — a passing environment for comparison, not a reproduction.
-- Issue #5 (tracking list), #15-#30 (external security/robustness reports; fixes for #21/#26/#30 merged via #36-#38); open PRs #39 (desktop), #40 (TLS entropy→#15), #41 (volume recovery→#14).
+- Issue #5 (tracking list), #15-#30 (external security/robustness reports; fixes for #21/#26/#30 merged via #36-#38); open PRs #39 (desktop), #40 (TLS entropy→#15); PR #41 (volume recovery→#14/Gate 20) MERGED at 1203e291 (observed 2026-11-02T02:12Z).
 - Cross-check matrix (2026-11-02): reports/cross-check/matrix.md — 17 P-rows A1/B7/C5/D4 vs full dump (41 items) in work/upstream-dump/; update incrementally each run (AGENTS.md 5b-5d).
+- Next review directive (2026-11-02, user): at the 2026-11-03T08:00Z review, dispatch ginux-verify with target=main (qemu_versions 10.0.13,10.1.2) — head to verify = 1203e291 (includes PR #41 merge = #14/Gate 20 fix) or latest at run time — and record results in reports/2026-11-03.md.
 
 ## Pending decisions (human)
 - D1 DONE (2026-11-01): verification comment posted on PR #13 (pull/13#issuecomment-6549305835); v6 results = make test 3/3 on 10.0.13 and 10.1.0 (TCG).
 - D2 DONE (2026-11-02T00:31Z): user-approved data-point comment posted verbatim on issue #14 (https://github.com/gmkurtzer/ginux/issues/14#issuecomment-6566220344); second post today authorized explicitly (daily-limit override).
-- D3 Revoke the GitHub token that was pasted in chat (human action, GitHub settings).
+- D3 DONE (2026-11-02, user decision): old pasted token no longer exists — the sandbox rotation wiped gh's credential store and no copy exists in any file or chat; user directed to consider it closed. No action remains.
 - D4 DECIDED (2026-11-01): daily review 09:00 Africa/Algiers = 08:00 UTC.
 - D5 Cross-check drafts: **P10 DECIDED (2026-11-02T02:12Z) — user verdict «عدّل ثم اعتمد»; conditions passed; approved text saved verbatim in approved/2026-11-03-1.md; publication (open NEW issue, exact title inside) scheduled 2026-11-03T08:00Z via cron job 494920; today's cap exhausted so nothing posts before 11-03.** Opp-1 (doctor version recording → #14) and Opp-2 (FrameLease Copy → #28) still pending — see reports/cross-check/contribute.md.
