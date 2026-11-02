@@ -1,0 +1,11 @@
+# Root virtual manifest — intentionally has NO members.
+#
+# Why this file exists: cargo-fuzz 0.13.2 requires a Cargo.toml at the
+# repository root (it walks up from ./fuzz to the nearest manifest and then
+# expects ./fuzz next to it). Upstream crates under upstream/crates/* must
+# keep resolving `license.workspace = true` against the UPSTREAM workspace
+# root, so they must never be added as members here — doing so breaks that
+# inheritance and the build fails. An empty virtual manifest satisfies
+# cargo-fuzz without claiming any member. [MEASURED 2026-11-02,
+# cargo-fuzz 0.13.2; restored after sandbox loss, original commit lost]
+[workspace]

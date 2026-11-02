@@ -1,0 +1,8 @@
+# Rust build output
+target/
+# Upstream checkout (CI job or local symlink) — never committed
+upstream
+# cargo-fuzz outputs
+fuzz/artifacts/
+fuzz/corpus/
+fuzz/coverage/

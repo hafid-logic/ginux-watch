@@ -1,0 +1,27 @@
+[package]
+name = "ginux-watch-fuzz"
+version = "0.0.0"
+publish = false
+edition = "2021"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+# Upstream is consumed READ-ONLY via a path dependency (checked out at
+# <repo>/upstream by CI, symlinked locally). Zero modification, zero rewrite.
+# `default-features = false` avoids pulling features the kernel does not use;
+# "sha256" matches the upstream default set (dep:sha2).
+ginux-oci = { path = "../upstream/crates/oci", default-features = false, features = ["sha256"] }
+libfuzzer-sys = "0.4"
+
+# Keep this crate OUT of any parent workspace: upstream crates must resolve
+# `license.workspace = true` against the upstream workspace, not ours.
+[workspace]
+
+[[bin]]
+name = "oci_surfaces"
+path = "fuzz_targets/oci_surfaces.rs"
+test = false
+doc = false
+bench = false

@@ -1,0 +1,68 @@
+name: fuzz
+
+# Weekly fuzzing of upstream crates/oci surfaces from this repository.
+# Upstream is checked out PINNED and untrusted: no credentials are persisted,
+# the job is contents: read, and it never writes to upstream.
+
+on:
+  workflow_dispatch:
+    inputs:
+      max_seconds:
+        description: "libFuzzer -max_total_time per run (seconds)"
+        default: "300"
+  schedule:
+    # Mondays 05:30 UTC
+    - cron: "30 5 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  oci-surfaces:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      MAX_SECONDS: ${{ github.event.inputs.max_seconds || '300' }}
+      UPSTREAM_PIN: "ecbb3142e0c332d1bfefe107322fdffdcdc3d38c"
+    steps:
+      - name: Checkout watch repo
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Checkout upstream (untrusted code, pinned, no credentials)
+        uses: actions/checkout@v4
+        with:
+          repository: gmkurtzer/ginux
+          ref: ${{ env.UPSTREAM_PIN }}
+          path: upstream
+          persist-credentials: false
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang g++
+
+      - name: Install nightly toolchain + cargo-fuzz
+        run: |
+          rustup toolchain install nightly --profile minimal
+          rustup default nightly
+          rustup component add rust-src llvm-tools-preview
+          cargo install cargo-fuzz --locked --version 0.13.2
+
+      - name: Fuzz oci_surfaces
+        run: |
+          mkdir -p fuzz/corpus fuzz/artifacts
+          cargo fuzz run --target x86_64-unknown-linux-gnu oci_surfaces -- \
+            -max_total_time="${MAX_SECONDS}" \
+            -rss_limit_mb=4096 \
+            -artifact_prefix=fuzz/artifacts/ \
+            fuzz/corpus
+
+      - name: Upload artifacts on crash
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fuzz-crash
+          path: fuzz/artifacts/
+          retention-days: 30
