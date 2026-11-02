@@ -1,4 +1,4 @@
-# validation — T-20261102-01-par — PASS — 2026-11-02T22:45:44Z
+# validation — T-20261102-01-par — PASS — 2026-11-02T23:11:40Z
 
 - note: summary MEASURED line (section-level evidence): '- P2 (indexing + panic=abort DoS): no new dynamic indexing; one consta'
 - note: summary MEASURED line (section-level evidence): '- P3 (SAFETY coverage): marginally adverse — +1 undocumented unsafe bl'
