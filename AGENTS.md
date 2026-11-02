@@ -67,6 +67,14 @@ If unattended authentication cannot be demonstrated, mark the setup BLOCKED; do 
 ## Language
 Reports: Arabic with English technical terms. Drafts and upstream text: English.
 
+## Team mode (v2.1, 2026-11-02)
+Distributable work is carded under `team/` (PROTOCOL.md, roles/, routing.yml). The primary
+agent acts as SUPERVISOR: triage into cards, launch workers, merge results, draft for the
+human. Workers never post upstream; the supervisor publishes only verbatim user-approved
+text. Results are validated by `team-validator.yml`; leases by `team-watcher.yml`; the
+upstream search snapshot lives on the `data` branch (hourly `team-indexer.yml`). Pilot
+evidence: `reports/team-pilot.md` (parallel adopted, 57.1% ≥ 30% threshold).
+
 ## HANDOFF.md upkeep (آخر خطوة في كل تشغيل)
 - آخر خطوة في كل تشغيل: تحديث أقسام ج وو وح من HANDOFF.md (وبقية الأقسام عند تغيّر قرار)، مع فحص الأسرار قبل الدفع:
   `grep -E "gh(p|o)_|github[_-]pat_|[@]gmail|BEGIN[ ].*PRIVATE[ ]KEY" HANDOFF.md` — أي تطابق: توقف وأبلغ ولا تدفع.
