@@ -1,0 +1,36 @@
+# team/routing.yml — task type → role → max parallel workers
+# Tuned by the supervisor from reports/metrics.md every 2 weeks.
+version: 1
+defaults:
+  budget_min: 20          # card budget; exceeding needs a supervisor note in the card
+  parallel: 4             # max concurrent workers of one role unless overridden below
+  lease_min: 25           # claim_until window; watcher re-queues expired cards
+split_thresholds:         # supervisor splits the card when inputs exceed ANY of these
+  files: 8
+  bytes: 409600
+  prs: 5
+priority_order:           # highest first; cards carry priority = one of these labels
+  - security_new_failure
+  - open_impactful_prs
+  - merge_verification
+  - crosscheck
+  - contribution
+  - maintenance
+routing:
+  pr_review:        { role: pr-reviewer, parallel: 4 }
+  crosscheck_slice: { role: crosschecker, parallel: 4 }
+  gap_analysis:     { role: gap-finder,  parallel: 2 }
+  contribution:     { role: builder,     parallel: 1 }   # single-writer to the fork
+  draft_review:     { role: critic,      parallel: 2 }
+deterministic:
+  watcher:   { workflow: team-watcher.yml,   trigger: "schedule */15 min + dispatch" }
+  verifier:  { workflow: ginux-verify.yml,   trigger: "dispatch + daily cron (existing, unchanged)" }
+  fuzzer:    { workflow: fuzz.yml,           trigger: "weekly Mon 05:30Z (existing, unchanged)" }
+  indexer:   { workflow: team-indexer.yml,   trigger: "schedule hourly + dispatch" }
+  validator: { workflow: team-validator.yml, trigger: "push paths team/results/** + dispatch" }
+adaptation:
+  repeated_failure_gt: 2        # attempts > 2 → supervisor-review flag
+  on_overrun_or_failure: [split_smaller, change_role, return_to_supervisor_with_reason]
+environment:
+  no_local_builds: true         # workers never build QEMU/toolchain; dynamic runs via Actions
+  data_source: data_branch      # workers read the data branch snapshot, not upstream APIs

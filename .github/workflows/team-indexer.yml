@@ -1,0 +1,39 @@
+name: team-indexer
+on:
+  schedule:
+    - cron: "7 * * * *"
+  workflow_dispatch: {}
+permissions:
+  contents: write
+concurrency:
+  group: team-indexer
+  cancel-in-progress: false
+jobs:
+  index:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch upstream metadata (public, implicit GITHUB_TOKEN)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p /tmp/dump /tmp/out
+          gh api --paginate "repos/gmkurtzer/ginux/issues?state=all&per_page=100" > /tmp/dump/issues.json
+          python3 team/scripts/build-index.py --fetch-files --dump-dir /tmp/dump --out /tmp/out
+      - name: Commit to data branch
+        run: |
+          git config user.name "team-indexer"
+          git config user.email "actions@users.noreply.github.com"
+          if git ls-remote --exit-code origin refs/heads/data >/dev/null 2>&1; then
+            git fetch origin data && git checkout -B data origin/data
+          else
+            git checkout -B data
+          fi
+          cp /tmp/out/upstream-dump.jsonl /tmp/out/index.json .
+          git add upstream-dump.jsonl index.json
+          if ! git diff --cached --quiet; then
+            git commit -m "index refresh $(date -u +%Y-%m-%dT%H:%MZ) [skip ci]"
+            git push origin data
+          else
+            echo "no index changes"
+          fi
