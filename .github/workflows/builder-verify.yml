@@ -1,0 +1,125 @@
+name: builder-verify
+
+on:
+  workflow_dispatch:
+    inputs:
+      fork_repo:
+        description: "fork repo holding the builder branch"
+        default: "hafid-logic/ginux"
+      fork_branch:
+        description: "builder branch to verify"
+        required: true
+      qemu_versions:
+        description: "JSON array of QEMU versions"
+        default: '["10.0.13","10.1.2"]'
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    strategy:
+      fail-fast: false
+      matrix:
+        qemu: ${{ fromJson(inputs.qemu_versions || '["10.0.13","10.1.2"]') }}
+    env:
+      QEMU_VERSION: ${{ matrix.qemu }}
+    steps:
+      - name: Checkout watch repo
+        uses: actions/checkout@v4
+        with:
+          path: watch
+          persist-credentials: false
+
+      - name: Checkout builder branch (untrusted code, no credentials)
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.fork_repo }}
+          ref: refs/heads/${{ inputs.fork_branch }}
+          path: ginux
+          persist-credentials: false
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential ninja-build pkg-config python3-venv \
+            libglib2.0-dev libpixman-1-dev libslirp-dev libfdt-dev ovmf clang lld jq ripgrep
+          clang --version | head -1
+
+      - name: Enable KVM if available (probe only)
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm || true
+          ls -l /dev/kvm || echo "no /dev/kvm"
+
+      - name: Cache QEMU build
+        id: qemucache
+        uses: actions/cache@v4
+        with:
+          path: ~/qemu-${{ matrix.qemu }}
+          key: qemu-${{ matrix.qemu }}-ubuntu24.04-v1
+
+      - name: Build QEMU (cache miss)
+        if: steps.qemucache.outputs.cache-hit != 'true'
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP"
+          curl -fsSLO "https://download.qemu.org/qemu-${QEMU_VERSION}.tar.xz"
+          actual=$(sha256sum "qemu-${QEMU_VERSION}.tar.xz" | cut -d' ' -f1)
+          pinned=$(awk -v v="$QEMU_VERSION" '$1==v {print $2}' "$GITHUB_WORKSPACE/watch/matrix/qemu-sha256.txt")
+          echo "QEMU ${QEMU_VERSION} sha256=${actual} pinned=${pinned:-none}"
+          if [ -n "${pinned:-}" ] && [ "$pinned" != "TBD" ] && [ "$pinned" != "$actual" ]; then
+            echo "sha256 mismatch"; exit 1
+          fi
+          tar xf "qemu-${QEMU_VERSION}.tar.xz" --exclude='*/roms/*'
+          cd "qemu-${QEMU_VERSION}"
+          ./configure --target-list=x86_64-softmmu --disable-docs --disable-user --disable-gtk \
+            --disable-sdl --disable-werror --enable-slirp --prefix="$HOME/qemu-${QEMU_VERSION}"
+          make -j"$(nproc)"
+          make install
+
+      - name: Prepare environment
+        run: |
+          set -euo pipefail
+          mkdir -p "$HOME/shim"
+          ln -sf "$HOME/qemu-${QEMU_VERSION}/bin/qemu-system-x86_64" "$HOME/shim/qemu-system-x86_64"
+          echo "$HOME/shim" >> "$GITHUB_PATH"
+          { echo "QEMU_SYSTEM_X86_64=$HOME/qemu-${QEMU_VERSION}/bin/qemu-system-x86_64"
+            echo "OVMF_CODE=/usr/share/OVMF/OVMF_CODE_4M.fd"
+            echo "OVMF_VARS=/usr/share/OVMF/OVMF_VARS_4M.fd"
+            echo "QEMU_ACCEL=tcg"; } >> "$GITHUB_ENV"
+          cd ginux && rustup show && rustup target add x86_64-unknown-none || true
+
+      - name: doctor, check, test
+        id: run
+        working-directory: ginux
+        run: |
+          mkdir -p "$GITHUB_WORKSPACE/out"
+          set +e
+          OUT="$GITHUB_WORKSPACE/out"
+          { echo "builder_sha=$(git rev-parse HEAD)"; "$QEMU_SYSTEM_X86_64" --version | head -1; } | tee "$OUT/env.txt"
+          make doctor 2>&1 | tee "$OUT/doctor.log";               d=${PIPESTATUS[0]}
+          make check 2>&1 | tee "$OUT/check.log";                 c=${PIPESTATUS[0]}
+          make reset-storage > /dev/null 2>&1
+          timeout 25m make test 2>&1 | tee "$OUT/test.log";       t=${PIPESTATUS[0]}
+          echo "doctor=$d check=$c test=$t" | tee "$OUT/status.txt"
+          {
+            echo "### builder=${{ inputs.fork_repo }}@${{ inputs.fork_branch }} qemu=${QEMU_VERSION} (TCG)"
+            echo "| doctor | check | test | builder sha |"
+            echo "|---|---|---|---|"
+            echo "| $d | $c | $t | $(git rev-parse --short HEAD) |"
+            echo
+            grep -E 'hierarchy frames released after failed init|failed-init hierarchy frame release verified|Boot test (passed|failed)|GINUX_KERNEL_(OK|PANIC)' "$OUT/test.log" | sort -u | head -8
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ "$t" != "0" ] || [ "$c" != "0" ]; then exit 1; fi
+
+      - name: Upload logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs-builder-qemu-${{ matrix.qemu }}
+          path: out/
+          retention-days: 30
