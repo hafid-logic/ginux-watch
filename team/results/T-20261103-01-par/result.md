@@ -4,14 +4,14 @@ Repo: gmkurtzer/ginux read-only clone `/home/z/my-project/work/ginux`; main = 95
 
 ## 1. The fix [MEASURED]
 
-PR head `eac4a784`; true PR diff = `git diff --stat 759cf2e2 eac4a784` (759cf2e2 = merge-base with pre-merge main 4b87e9a2; merge commit d33ee0f5): exactly 2 files — `kernel/src/address_space.rs` (+5/−3) and `hdae/gates-todo/22-failed-linux-init-frame-release.md` (+81). Code commit `b79cdb8a` "Release failed Linux init hierarchy frames" (2026-11-01T10:20:42-08:00, Signed-off-by Gregory M. Kurtzer), shown via `git show b79cdb8a`.
+PR head `eac4a784`; true PR diff = `git diff --stat 759cf2e2 eac4a784` (759cf2e2 = merge-base with pre-merge main 4b87e9a2; merge commit d33ee0f5): exactly 2 files — `kernel/src/address_space.rs` (+2/−3 numstat; the earlier +5/−3 came from --stat hunk grouping [MEASURED: git diff --numstat 759cf2e2 eac4a784]) and `hdae/gates-todo/22-failed-linux-init-frame-release.md` (+81). Code commit `b79cdb8a` "Release failed Linux init hierarchy frames" (2026-11-01T10:20:42-08:00, Signed-off-by Gregory M. Kurtzer), shown via `git show b79cdb8a`.
 
 Mechanism, in `pub(crate) fn run_linux_init(init: &[u8])` (defined at line 249 on main), the non-suspended teardown after `LinuxElfResult`:
 
 - Hunk @@ −641,8 +641,7: `let owned_released = valid && runtime_scrubbed && memory::release_frames(FrameOwner::KERNEL, [frames[0..6]])` → `let owned_released = runtime_scrubbed && memory::release_frames(...)`. The `valid` short-circuit removed.
 - Hunk @@ −663,7 +662,7: success/diagnostics branch `if owned_released` → `if valid && owned_released`; outcome mapping (`LinuxProcessOutcome::Exited` only when valid) unchanged — invalid init still returns `Failed`.
 
-Failure path closed: when the Linux runtime returned `valid=false` (kernel prints `ginux: Linux init setup failed at stage N`, address_space.rs:640 on main), the old `&&` chain short-circuited before `memory::release_frames`, so the six bootstrap page-table hierarchy frames (root, pdpt, directory, main, interpreter, runtime tables — `frames[0..6]`) leaked on every failed non-suspended init attempt. [OBSERVED] the suspended path (`valid && result.suspended`) returns earlier with ownership transfer and is untouched, per surrounding code at lines ~630-641. [MEASURED] `git diff eac4a784 origin/main -- kernel/src/address_space.rs` is empty: fix is on main 95f8ef24 unchanged (lines 644-645, 665).
+Failure path closed: when the Linux runtime returned `valid=false` (kernel prints `ginux: Linux init setup failed at stage N`, address_space.rs:640 on main), the old `&&` chain short-circuited before `memory::release_frames`, so the six bootstrap page-table hierarchy frames (root, pdpt, directory, main, interpreter, runtime tables — `frames[0..6]`) leaked on every failed non-suspended init attempt [OBSERVED]. [OBSERVED] the suspended path (`valid && result.suspended`) returns earlier with ownership transfer and is untouched, per surrounding code at lines ~630-641. [MEASURED] `git diff eac4a784 origin/main -- kernel/src/address_space.rs` is empty: fix is on main 95f8ef24 unchanged (lines 644-645, 665).
 
 ## 2. The missing regression test
 
