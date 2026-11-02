@@ -1,0 +1,1862 @@
+{
+ "generated_at_utc": "2026-11-02T20:47:05Z",
+ "source_repo": "gmkurtzer/ginux",
+ "item_count": 41,
+ "items": {
+  "1": {
+   "kind": "issue",
+   "title": "Is this work with DISPLAYLINK USB device for display device ?",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "device",
+    "display",
+    "displaylink",
+    "usb",
+    "work"
+   ]
+  },
+  "2": {
+   "kind": "issue",
+   "title": "Will there be an implementation similar to uutils coreutils?",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "coreutils",
+    "implementation",
+    "similar",
+    "there",
+    "uutils"
+   ]
+  },
+  "3": {
+   "kind": "pr",
+   "title": "WIP: Define feedback-driven hardening research",
+   "state": "closed",
+   "merged_at": "2026-10-30T03:43:29Z",
+   "files": [
+    ".agents/skills/hdae-development",
+    ".agents/skills/pr-issue-review",
+    ".claude/skills/hdae-development",
+    ".claude/skills/pr-issue-review",
+    "README.md",
+    "docs/FEEDBACK-HARDENING-RESEARCH.md",
+    "docs/ROADMAP.md",
+    "skills/README.md",
+    "skills/hdae-development/SKILL.md",
+    "skills/hdae-development/agents/openai.yaml",
+    "skills/hdae-development/references/hdae-method.md",
+    "skills/pr-issue-review/SKILL.md",
+    "skills/pr-issue-review/agents/openai.yaml",
+    "skills/pr-issue-review/references/review-workflow.md"
+   ],
+   "keywords": [
+    "hardening",
+    "research",
+    "check",
+    "claude",
+    "codex",
+    "define",
+    "driven",
+    "feedback",
+    "hdae",
+    "kernel"
+   ]
+  },
+  "4": {
+   "kind": "issue",
+   "title": "Runtime gates fail on QEMU 10.0.13: virtio-net queue size is 1024, check requires 256.",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "v10",
+    "qemu",
+    "256",
+    "size",
+    "1024",
+    "assertion",
+    "check",
+    "fail",
+    "gates",
+    "queue"
+   ]
+  },
+  "5": {
+   "kind": "issue",
+   "title": "Tracking: technical criticism of Ginux collected from public reviews",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "ginux",
+    "com",
+    "github",
+    "gmkurtzer",
+    "https",
+    "main",
+    "commit",
+    "hardening",
+    "item",
+    "one"
+   ]
+  },
+  "6": {
+   "kind": "pr",
+   "title": "Optimize command parser with robust slice iteration and clean up test…",
+   "state": "closed",
+   "merged_at": null,
+   "files": [
+    "crates/command/src/lib.rs"
+   ],
+   "keywords": [
+    "command",
+    "robust",
+    "slice",
+    "lib",
+    "parser",
+    "unit",
+    "workspace",
+    "autocompletion",
+    "byte",
+    "cargo"
+   ]
+  },
+  "7": {
+   "kind": "pr",
+   "title": "Harden kernel entry, state ownership, and SMP operation",
+   "state": "closed",
+   "merged_at": "2026-10-31T01:57:52Z",
+   "files": [
+    ".hdae/manifest",
+    ".hdae/skills/hdae-development/SKILL.md",
+    ".hdae/skills/hdae-development/references/hdae-method.md",
+    "Makefile",
+    "README.md",
+    "boot/efi/src/generated_boot.rs",
+    "docs/FEEDBACK-HARDENING-RESEARCH.md",
+    "docs/LINUX-COMPATIBILITY.md",
+    "docs/ROADMAP.md",
+    "docs/feedback-hardening/GATE-1-BASELINE.md",
+    "docs/feedback-hardening/GATE-10-QUALIFICATION.md",
+    "docs/feedback-hardening/GATE-11-TOPOLOGY-BENCHMARKS.md",
+    "docs/feedback-hardening/GATE-11.6-SMP-THREAD-CONTEXT.md",
+    "docs/feedback-hardening/GATE-3-USER-ACCESS.md",
+    "docs/feedback-hardening/GATE-4-STATE-OWNERSHIP.md",
+    "docs/feedback-hardening/GATE-5-RUNTIME-OWNERSHIP.md",
+    "docs/feedback-hardening/SYNCHRONIZATION.md",
+    "docs/feedback-hardening/X86-DECOMPOSITION.md",
+    "docs/feedback-hardening/gate-10-results/README.md",
+    "docs/feedback-hardening/gate-10-results/architecture-check.log",
+    "docs/feedback-hardening/gate-10-results/architecture-hardening.log",
+    "docs/feedback-hardening/gate-10-results/diagnostic-test-oci-cache-explicit-dns.log",
+    "docs/feedback-hardening/gate-10-results/diagnostic-test-oci-cache-pcap.log",
+    "docs/feedback-hardening/gate-10-results/environment.md",
+    "docs/feedback-hardening/gate-10-results/final-architecture-check.log",
+    "docs/feedback-hardening/gate-10-results/final-benchmark-compare.log",
+    "docs/feedback-hardening/gate-10-results/final-benchmark-ginux-boot.log",
+    "docs/feedback-hardening/gate-10-results/final-benchmark-ginux-sysbench.log",
+    "docs/feedback-hardening/gate-10-results/final-hardening-reproduction.log",
+    "docs/feedback-hardening/gate-10-results/final-make-check.log"
+   ],
+   "keywords": [
+    "state",
+    "cpu",
+    "entry",
+    "global",
+    "ownership",
+    "smp",
+    "explicit",
+    "kernel",
+    "operation",
+    "per"
+   ]
+  },
+  "8": {
+   "kind": "pr",
+   "title": "Reach UP and SMP performance parity",
+   "state": "closed",
+   "merged_at": "2026-10-31T05:28:14Z",
+   "files": [
+    "docs/feedback-hardening/GATE-12-BASELINE.md",
+    "docs/feedback-hardening/GATE-12-PERFORMANCE-PARITY.md",
+    "docs/feedback-hardening/gate-12-results/README.md",
+    "docs/feedback-hardening/gate-12-results/boot-topology-comparison.tsv",
+    "docs/feedback-hardening/gate-12-results/environment.tsv",
+    "docs/feedback-hardening/gate-12-results/topology-comparison.tsv",
+    "docs/feedback-hardening/gate-12-results/topology-scaling.tsv",
+    "docs/feedback-hardening/writable-globals.tsv",
+    "hdae/ARCHITECTURE.md",
+    "hdae/PLAN.md",
+    "hdae/PROJECT.md",
+    "hdae/STATUS.md",
+    "hdae/gates-done/12-up-smp-performance-parity.md",
+    "kernel/src/address_space.rs",
+    "kernel/src/arch/x86_64/cpu.rs",
+    "kernel/src/arch/x86_64/cpu/linux_futex.rs",
+    "kernel/src/arch/x86_64/cpu/linux_signal.rs",
+    "kernel/src/arch/x86_64/cpu/linux_syscall.rs",
+    "kernel/src/arch/x86_64/smp.rs",
+    "kernel/src/sync.rs",
+    "tests/qemu/rocky-smp-futex.sh"
+   ],
+   "keywords": [
+    "smp",
+    "cpu",
+    "linux",
+    "rocky",
+    "thread",
+    "matched",
+    "futex",
+    "ginux",
+    "parity",
+    "performance"
+   ]
+  },
+  "10": {
+   "kind": "pr",
+   "title": "Accept supported virtio queue sizes",
+   "state": "closed",
+   "merged_at": "2026-10-31T16:02:03Z",
+   "files": [
+    "hdae/gates-todo/13-virtio-queue-size-compatibility.md",
+    "kernel/src/arch/x86_64/pci.rs"
+   ],
+   "keywords": [
+    "entry",
+    "check",
+    "queue",
+    "1000",
+    "1024",
+    "256",
+    "accept",
+    "architecture",
+    "assertion",
+    "automatically"
+   ]
+  },
+  "9": {
+   "kind": "pr",
+   "title": "Implement corrective hardening from issue #5",
+   "state": "closed",
+   "merged_at": "2026-10-31T16:01:51Z",
+   "files": [
+    ".github/workflows/check.yml",
+    "Cargo.lock",
+    "Cargo.toml",
+    "Makefile",
+    "boot/efi/src/generated_boot.rs",
+    "control-plane/runtime/build.rs",
+    "crates/kernel-policy/Cargo.toml",
+    "crates/kernel-policy/src/lib.rs",
+    "docs/LINUX-COMPATIBILITY.md",
+    "docs/feedback-hardening/GATE-14-CRITICISM-RECONCILIATION.md",
+    "hdae/STATUS.md",
+    "hdae/gates-todo/14-post-hardening-criticism-reconciliation.md",
+    "hdae/gates-todo/15-linux-personality-decomposition.md",
+    "hdae/gates-todo/16-kernel-unsafe-lint-enforcement.md",
+    "hdae/gates-todo/17-ci-kernel-policy-tests.md",
+    "hdae/gates-todo/18-compatibility-ledger-semantics.md",
+    "kernel/Cargo.toml",
+    "kernel/packet-wait.S",
+    "kernel/src/arch/x86_64/cpu.rs",
+    "kernel/src/arch/x86_64/cpu/linux_random.rs",
+    "kernel/src/arch/x86_64/iommu.rs",
+    "tests/qemu/boot.sh",
+    "tools/architecture/check-kernel-unsafe.sh",
+    "tools/architecture/check-linux-compat.sh",
+    "tools/architecture/check.sh"
+   ],
+   "keywords": [
+    "check",
+    "kernel",
+    "policy",
+    "boot",
+    "linux",
+    "only",
+    "passed",
+    "architecture",
+    "automatically",
+    "backed"
+   ]
+  },
+  "11": {
+   "kind": "pr",
+   "title": "Correct Linux compatibility status semantics",
+   "state": "closed",
+   "merged_at": null,
+   "files": [
+    "control-plane/runtime/build.rs",
+    "docs/LINUX-COMPATIBILITY.md",
+    "hdae/gates-todo/18-compatibility-ledger-semantics.md",
+    "tools/architecture/check-linux-compat.sh"
+   ],
+   "keywords": [
+    "check",
+    "complete",
+    "enosys",
+    "entries",
+    "linux",
+    "reclassify",
+    "status",
+    "architecture",
+    "automatically",
+    "bounded"
+   ]
+  },
+  "12": {
+   "kind": "issue",
+   "title": "Full rust desktop running on ginux",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "ginux",
+    "desktop",
+    "1337",
+    "1ab002f2",
+    "33fe",
+    "4073",
+    "950",
+    "a685",
+    "alt",
+    "assets"
+   ]
+  },
+  "13": {
+   "kind": "pr",
+   "title": "Accept supported virtio queue sizes in QEMU checks",
+   "state": "closed",
+   "merged_at": "2026-11-01T23:24:48Z",
+   "files": [
+    "hdae/STATUS.md",
+    "hdae/gates-todo/19-qemu-boot-queue-size-contract.md",
+    "tests/qemu/boot.sh"
+   ],
+   "keywords": [
+    "qemu",
+    "1024",
+    "boot",
+    "queue",
+    "accept",
+    "contract",
+    "hdae",
+    "kernel",
+    "side",
+    "size"
+   ]
+  },
+  "14": {
+   "kind": "issue",
+   "title": "make test fails on Linux/x86-64: native volume service faults, storage falls back to tmpfs",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "volume",
+    "native",
+    "same",
+    "service",
+    "your",
+    "boot",
+    "fails",
+    "faults",
+    "here",
+    "linux"
+   ]
+  },
+  "15": {
+   "kind": "issue",
+   "title": "TLS 1.3 client RNG is seeded solely from the RTC boot second — full session decryption from a passive capture (ephemeral key replayed across all connections)",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "seed",
+    "registry",
+    "tls",
+    "boot",
+    "key",
+    "certificate",
+    "connection",
+    "ephemeral",
+    "identical",
+    "one"
+   ]
+  },
+  "16": {
+   "kind": "issue",
+   "title": "Digest-pinned image references never verify the top-level manifest body (@sha256: pin is unused)",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "digest",
+    "body",
+    "level",
+    "manifest",
+    "pin",
+    "top",
+    "pinned",
+    "sha256",
+    "image",
+    "rng"
+   ]
+  },
+  "17": {
+   "kind": "issue",
+   "title": "Unbounded PAX-header recursion in the OCI tar parser — kernel panic from a ~9 KB layer",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "layer",
+    "oci",
+    "pax",
+    "cache",
+    "depth",
+    "entry",
+    "headers",
+    "kernel",
+    "src",
+    "256"
+   ]
+  },
+  "18": {
+   "kind": "issue",
+   "title": "Directory whiteouts (.wh.<name>) do not hide the subtree — deleted files resurrect from lower layers",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "layer",
+    "directory",
+    "oci",
+    "base",
+    "ginux",
+    "image",
+    "key",
+    "name",
+    "path",
+    "secret"
+   ]
+  },
+  "19": {
+   "kind": "issue",
+   "title": "Per-domain memory limits are not enforced (memory_limit_mib unused; both mmap and shmget bypass it)",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "domain",
+    "kernel",
+    "cpu",
+    "memory",
+    "memory_limit_mib",
+    "mib",
+    "mmap",
+    "one",
+    "allocated",
+    "allocation"
+   ]
+  },
+  "20": {
+   "kind": "issue",
+   "title": "gzip ISIZE trailer sizes a ring-0 allocate+zero before validation (up to ~4 GiB per layer)",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "layer",
+    "before",
+    "gib",
+    "gzip",
+    "isize",
+    "output",
+    "trailer",
+    "allocate",
+    "allocation",
+    "byte"
+   ]
+  },
+  "21": {
+   "kind": "issue",
+   "title": "getcwd off-by-one: 257-byte output buffer vs 258-byte requirement on 256-char paths — kernel panic",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "byte",
+    "258",
+    "256",
+    "257",
+    "kernel",
+    "output",
+    "arithmetic",
+    "buffer",
+    "bytes",
+    "length"
+   ]
+  },
+  "22": {
+   "kind": "issue",
+   "title": "Blocking socket syscalls busy-wait for a guest-chosen SO_RCVTIMEO while holding kernel_entry_lock",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "guest",
+    "blocking",
+    "chosen",
+    "limit",
+    "lock",
+    "available",
+    "busy",
+    "com",
+    "dynamic",
+    "error"
+   ]
+  },
+  "23": {
+   "kind": "pr",
+   "title": "Test reserved volume header bytes with a valid digest",
+   "state": "closed",
+   "merged_at": "2026-11-01T23:32:45Z",
+   "files": [
+    "crates/volume-format/src/lib.rs"
+   ],
+   "keywords": [
+    "cargo",
+    "guard",
+    "volume",
+    "format",
+    "check",
+    "digest",
+    "ginux",
+    "offset",
+    "package",
+    "passed"
+   ]
+  },
+  "24": {
+   "kind": "issue",
+   "title": "process_vm_readv/writev bypass memfd_secret exclusion — remote read AND write of secret pages reproduced",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "secret",
+    "remote",
+    "process_vm_readv",
+    "b05",
+    "com",
+    "copy",
+    "exclusion",
+    "https",
+    "kernel",
+    "linuxactiveimagemapping"
+   ]
+  },
+  "25": {
+   "kind": "issue",
+   "title": "mprotect(PROT_READ) leaves a stale writable TLB on sibling CPUs — write succeeds after the syscall returns (SMP)",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "cpu",
+    "mprotect",
+    "after",
+    "page",
+    "path",
+    "sibling",
+    "syscall",
+    "writable",
+    "acknowledged",
+    "com"
+   ]
+  },
+  "26": {
+   "kind": "issue",
+   "title": "Failed Linux init leaks six page-hierarchy frames (short-circuited release on the invalid path)",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "frames",
+    "valid",
+    "failed",
+    "hierarchy",
+    "init",
+    "path",
+    "release",
+    "six",
+    "com",
+    "each"
+   ]
+  },
+  "27": {
+   "kind": "issue",
+   "title": "rootfs exec is non-transactional: late failures leave a mixed old/new image and leaked frames",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "old",
+    "image",
+    "before",
+    "com",
+    "failures",
+    "fallible",
+    "frames",
+    "guard",
+    "https",
+    "late"
+   ]
+  },
+  "28": {
+   "kind": "issue",
+   "title": "DMA frame is scrubbed/released after failed device or IOMMU teardown (revocation invariant not fail-closed)",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "device",
+    "dma",
+    "frame",
+    "after",
+    "before",
+    "com",
+    "fail",
+    "failed",
+    "finish",
+    "hostile"
+   ]
+  },
+  "29": {
+   "kind": "issue",
+   "title": "Failed IOMMU activation rollback releases translation tables it may still be walking",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "rollback",
+    "activation",
+    "failed",
+    "iommu",
+    "translation",
+    "com",
+    "device",
+    "failure",
+    "https",
+    "inactive"
+   ]
+  },
+  "30": {
+   "kind": "issue",
+   "title": "virtio-net common-capability length check off-by-seven: accepts 0x31, queue geometry reads u64 at 0x30",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "0x30",
+    "capability",
+    "device",
+    "length",
+    "u64",
+    "0x31",
+    "accepts",
+    "block",
+    "com",
+    "common"
+   ]
+  },
+  "31": {
+   "kind": "pr",
+   "title": "Select the IOMMU address width required by the kernel in QEMU",
+   "state": "closed",
+   "merged_at": "2026-11-01T23:43:50Z",
+   "files": [
+    "tools/qemu/run.sh"
+   ],
+   "keywords": [
+    "iommu",
+    "qemu",
+    "boot",
+    "width",
+    "address",
+    "failed",
+    "kernel",
+    "parser",
+    "suite",
+    "tested"
+   ]
+  },
+  "32": {
+   "kind": "pr",
+   "title": "Test volume payload padding with a valid digest",
+   "state": "closed",
+   "merged_at": "2026-11-01T23:44:00Z",
+   "files": [
+    "crates/volume-format/src/lib.rs"
+   ],
+   "keywords": [
+    "padding",
+    "passes",
+    "payload",
+    "record",
+    "aienux",
+    "digest",
+    "five",
+    "nonzero",
+    "only",
+    "pass"
+   ]
+  },
+  "33": {
+   "kind": "pr",
+   "title": "Test host volume geometry validation boundaries",
+   "state": "closed",
+   "merged_at": "2026-11-01T23:45:40Z",
+   "files": [
+    "crates/volume-format/src/lib.rs"
+   ],
+   "keywords": [
+    "validation",
+    "volume",
+    "geometry",
+    "malformed",
+    "passes",
+    "aienux",
+    "data",
+    "five",
+    "headers",
+    "host"
+   ]
+  },
+  "34": {
+   "kind": "pr",
+   "title": "Test unchanged local configuration commits avoid storage writes",
+   "state": "closed",
+   "merged_at": "2026-11-01T23:45:55Z",
+   "files": [
+    "crates/volume-service/src/lib.rs"
+   ],
+   "keywords": [
+    "storage",
+    "pass",
+    "payload",
+    "unchanged",
+    "writes",
+    "configuration",
+    "durable",
+    "eight",
+    "existing",
+    "local"
+   ]
+  },
+  "35": {
+   "kind": "pr",
+   "title": "Reject overlapping loaded PE sections",
+   "state": "closed",
+   "merged_at": "2026-11-02T00:00:10Z",
+   "files": [
+    "Makefile",
+    "kernel/src/pe.rs"
+   ],
+   "keywords": [
+    "parser",
+    "passes",
+    "section",
+    "boot",
+    "check",
+    "overlap",
+    "qemu",
+    "sections",
+    "six",
+    "aienux"
+   ]
+  },
+  "36": {
+   "kind": "pr",
+   "title": "Reject undersized virtio-net common capabilities",
+   "state": "closed",
+   "merged_at": "2026-11-02T00:00:27Z",
+   "files": [
+    "hdae/gates-todo/21-virtio-net-common-capability-length.md",
+    "kernel/src/arch/x86_64/pci.rs"
+   ],
+   "keywords": [
+    "common",
+    "net",
+    "virtio",
+    "boot",
+    "boundary",
+    "capability",
+    "hdae",
+    "length",
+    "reject",
+    "verification"
+   ]
+  },
+  "37": {
+   "kind": "pr",
+   "title": "Release failed Linux init hierarchy frames",
+   "state": "closed",
+   "merged_at": "2026-11-02T00:00:38Z",
+   "files": [
+    "hdae/gates-todo/22-failed-linux-init-frame-release.md",
+    "kernel/src/address_space.rs"
+   ],
+   "keywords": [
+    "init",
+    "failed",
+    "linux",
+    "release",
+    "frames",
+    "hdae",
+    "hierarchy",
+    "invalid",
+    "suspended",
+    "automatically"
+   ]
+  },
+  "38": {
+   "kind": "pr",
+   "title": "Size getcwd output for maximum paths",
+   "state": "closed",
+   "merged_at": "2026-11-02T00:00:48Z",
+   "files": [
+    "hdae/gates-todo/23-getcwd-maximum-path-capacity.md",
+    "kernel/src/arch/x86_64/cpu.rs"
+   ],
+   "keywords": [
+    "capacity",
+    "getcwd",
+    "maximum",
+    "path",
+    "existing",
+    "hdae",
+    "size",
+    "arithmetic",
+    "array",
+    "automatically"
+   ]
+  },
+  "39": {
+   "kind": "pr",
+   "title": "Add the native Ginux controller desktop",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    "ARCHITECTURE.md",
+    "Cargo.lock",
+    "Cargo.toml",
+    "Makefile",
+    "README.md",
+    "boot/efi/src/generated_boot.rs",
+    "boot/efi/src/main.rs",
+    "boot/manifest-v0.conf",
+    "control-plane/runtime/Cargo.toml",
+    "control-plane/runtime/src/main.rs",
+    "crates/controller-ui/Cargo.toml",
+    "crates/controller-ui/src/lib.rs",
+    "crates/desktop-recovery/Cargo.toml",
+    "crates/desktop-recovery/src/lib.rs",
+    "crates/display-protocol/Cargo.toml",
+    "crates/display-protocol/src/lib.rs",
+    "crates/domain-display/Cargo.toml",
+    "crates/domain-display/src/lib.rs",
+    "crates/domain-presentation/Cargo.toml",
+    "crates/domain-presentation/src/lib.rs",
+    "crates/native-abi/src/lib.rs",
+    "crates/wayland-domain/Cargo.toml",
+    "crates/wayland-domain/src/lib.rs",
+    "crates/windowing/Cargo.toml",
+    "crates/windowing/src/inter_13.rs",
+    "crates/windowing/src/inter_16.rs",
+    "crates/windowing/src/lib.rs",
+    "docs/CONTROLLER-DESKTOP.md",
+    "docs/decisions/0003-controller-desktop.md",
+    "docs/feedback-hardening/GATE-14-CRITICISM-RECONCILIATION.md"
+   ],
+   "keywords": [
+    "controller",
+    "desktop",
+    "recovery",
+    "display",
+    "domain",
+    "ginux",
+    "native",
+    "graphical",
+    "input",
+    "focus"
+   ]
+  },
+  "40": {
+   "kind": "pr",
+   "title": "Use hardware entropy for registry TLS",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    "boot/efi/src/generated_boot.rs",
+    "hdae/STATUS.md",
+    "hdae/gates-todo/32-tls-client-entropy.md",
+    "services/network/src/registry.rs"
+   ],
+   "keywords": [
+    "tls",
+    "check",
+    "entropy",
+    "hardware",
+    "registry",
+    "seed",
+    "automatically",
+    "boot",
+    "cannot",
+    "cargo"
+   ]
+  },
+  "41": {
+   "kind": "pr",
+   "title": "Drain stale virtio block recovery interrupts",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    ".github/workflows/issue-14-linux-repro.yml",
+    "hdae/STATUS.md",
+    "hdae/gates-todo/20-linux-native-volume-recovery.md",
+    "kernel/src/arch/x86_64/pci.rs",
+    "tests/qemu/boot.sh",
+    "tools/qemu/common.sh",
+    "tools/qemu/run.sh"
+   ],
+   "keywords": [
+    "qemu",
+    "block",
+    "generation",
+    "passed",
+    "boot",
+    "drain",
+    "including",
+    "recovery",
+    "stale",
+    "tcg"
+   ]
+  }
+ },
+ "keywords": {
+  "device": [
+   1,
+   28,
+   29,
+   30
+  ],
+  "display": [
+   1,
+   39
+  ],
+  "displaylink": [
+   1
+  ],
+  "usb": [
+   1
+  ],
+  "work": [
+   1
+  ],
+  "coreutils": [
+   2
+  ],
+  "implementation": [
+   2
+  ],
+  "similar": [
+   2
+  ],
+  "there": [
+   2
+  ],
+  "uutils": [
+   2
+  ],
+  "hardening": [
+   3,
+   5
+  ],
+  "research": [
+   3
+  ],
+  "check": [
+   3,
+   4,
+   10,
+   9,
+   11,
+   23,
+   35,
+   40
+  ],
+  "claude": [
+   3
+  ],
+  "codex": [
+   3
+  ],
+  "define": [
+   3
+  ],
+  "driven": [
+   3
+  ],
+  "feedback": [
+   3
+  ],
+  "hdae": [
+   3,
+   13,
+   36,
+   37,
+   38
+  ],
+  "kernel": [
+   3,
+   7,
+   9,
+   13,
+   17,
+   19,
+   21,
+   24,
+   31
+  ],
+  "v10": [
+   4
+  ],
+  "qemu": [
+   4,
+   13,
+   31,
+   35,
+   41
+  ],
+  "256": [
+   4,
+   10,
+   17,
+   21
+  ],
+  "size": [
+   4,
+   13,
+   38
+  ],
+  "1024": [
+   4,
+   10,
+   13
+  ],
+  "assertion": [
+   4,
+   10
+  ],
+  "fail": [
+   4,
+   28
+  ],
+  "gates": [
+   4
+  ],
+  "queue": [
+   4,
+   10,
+   13
+  ],
+  "ginux": [
+   5,
+   8,
+   12,
+   18,
+   23,
+   39
+  ],
+  "com": [
+   5,
+   22,
+   24,
+   25,
+   26,
+   27,
+   28,
+   29,
+   30
+  ],
+  "github": [
+   5
+  ],
+  "gmkurtzer": [
+   5
+  ],
+  "https": [
+   5,
+   24,
+   27,
+   29
+  ],
+  "main": [
+   5
+  ],
+  "commit": [
+   5
+  ],
+  "item": [
+   5
+  ],
+  "one": [
+   5,
+   15,
+   19
+  ],
+  "command": [
+   6
+  ],
+  "robust": [
+   6
+  ],
+  "slice": [
+   6
+  ],
+  "lib": [
+   6
+  ],
+  "parser": [
+   6,
+   31,
+   35
+  ],
+  "unit": [
+   6
+  ],
+  "workspace": [
+   6
+  ],
+  "autocompletion": [
+   6
+  ],
+  "byte": [
+   6,
+   20,
+   21
+  ],
+  "cargo": [
+   6,
+   23,
+   40
+  ],
+  "state": [
+   7
+  ],
+  "cpu": [
+   7,
+   8,
+   19,
+   25
+  ],
+  "entry": [
+   7,
+   10,
+   17
+  ],
+  "global": [
+   7
+  ],
+  "ownership": [
+   7
+  ],
+  "smp": [
+   7,
+   8
+  ],
+  "explicit": [
+   7
+  ],
+  "operation": [
+   7
+  ],
+  "per": [
+   7
+  ],
+  "linux": [
+   8,
+   9,
+   11,
+   14,
+   37
+  ],
+  "rocky": [
+   8
+  ],
+  "thread": [
+   8
+  ],
+  "matched": [
+   8
+  ],
+  "futex": [
+   8
+  ],
+  "parity": [
+   8
+  ],
+  "performance": [
+   8
+  ],
+  "1000": [
+   10
+  ],
+  "accept": [
+   10,
+   13
+  ],
+  "architecture": [
+   10,
+   9,
+   11
+  ],
+  "automatically": [
+   10,
+   9,
+   11,
+   37,
+   38,
+   40
+  ],
+  "policy": [
+   9
+  ],
+  "boot": [
+   9,
+   13,
+   14,
+   15,
+   31,
+   35,
+   36,
+   40,
+   41
+  ],
+  "only": [
+   9,
+   32
+  ],
+  "passed": [
+   9,
+   23,
+   41
+  ],
+  "backed": [
+   9
+  ],
+  "complete": [
+   11
+  ],
+  "enosys": [
+   11
+  ],
+  "entries": [
+   11
+  ],
+  "reclassify": [
+   11
+  ],
+  "status": [
+   11
+  ],
+  "bounded": [
+   11
+  ],
+  "desktop": [
+   12,
+   39
+  ],
+  "1337": [
+   12
+  ],
+  "1ab002f2": [
+   12
+  ],
+  "33fe": [
+   12
+  ],
+  "4073": [
+   12
+  ],
+  "950": [
+   12
+  ],
+  "a685": [
+   12
+  ],
+  "alt": [
+   12
+  ],
+  "assets": [
+   12
+  ],
+  "contract": [
+   13
+  ],
+  "side": [
+   13
+  ],
+  "volume": [
+   14,
+   23,
+   33
+  ],
+  "native": [
+   14,
+   39
+  ],
+  "same": [
+   14
+  ],
+  "service": [
+   14
+  ],
+  "your": [
+   14
+  ],
+  "fails": [
+   14
+  ],
+  "faults": [
+   14
+  ],
+  "here": [
+   14
+  ],
+  "seed": [
+   15,
+   40
+  ],
+  "registry": [
+   15,
+   40
+  ],
+  "tls": [
+   15,
+   40
+  ],
+  "key": [
+   15,
+   18
+  ],
+  "certificate": [
+   15
+  ],
+  "connection": [
+   15
+  ],
+  "ephemeral": [
+   15
+  ],
+  "identical": [
+   15
+  ],
+  "digest": [
+   16,
+   23,
+   32
+  ],
+  "body": [
+   16
+  ],
+  "level": [
+   16
+  ],
+  "manifest": [
+   16
+  ],
+  "pin": [
+   16
+  ],
+  "top": [
+   16
+  ],
+  "pinned": [
+   16
+  ],
+  "sha256": [
+   16
+  ],
+  "image": [
+   16,
+   18,
+   27
+  ],
+  "rng": [
+   16
+  ],
+  "layer": [
+   17,
+   18,
+   20
+  ],
+  "oci": [
+   17,
+   18
+  ],
+  "pax": [
+   17
+  ],
+  "cache": [
+   17
+  ],
+  "depth": [
+   17
+  ],
+  "headers": [
+   17,
+   33
+  ],
+  "src": [
+   17
+  ],
+  "directory": [
+   18
+  ],
+  "base": [
+   18
+  ],
+  "name": [
+   18
+  ],
+  "path": [
+   18,
+   25,
+   26,
+   38
+  ],
+  "secret": [
+   18,
+   24
+  ],
+  "domain": [
+   19,
+   39
+  ],
+  "memory": [
+   19
+  ],
+  "memory_limit_mib": [
+   19
+  ],
+  "mib": [
+   19
+  ],
+  "mmap": [
+   19
+  ],
+  "allocated": [
+   19
+  ],
+  "allocation": [
+   19,
+   20
+  ],
+  "before": [
+   20,
+   27,
+   28
+  ],
+  "gib": [
+   20
+  ],
+  "gzip": [
+   20
+  ],
+  "isize": [
+   20
+  ],
+  "output": [
+   20,
+   21
+  ],
+  "trailer": [
+   20
+  ],
+  "allocate": [
+   20
+  ],
+  "258": [
+   21
+  ],
+  "257": [
+   21
+  ],
+  "arithmetic": [
+   21,
+   38
+  ],
+  "buffer": [
+   21
+  ],
+  "bytes": [
+   21
+  ],
+  "length": [
+   21,
+   30,
+   36
+  ],
+  "guest": [
+   22
+  ],
+  "blocking": [
+   22
+  ],
+  "chosen": [
+   22
+  ],
+  "limit": [
+   22
+  ],
+  "lock": [
+   22
+  ],
+  "available": [
+   22
+  ],
+  "busy": [
+   22
+  ],
+  "dynamic": [
+   22
+  ],
+  "error": [
+   22
+  ],
+  "guard": [
+   23,
+   27
+  ],
+  "format": [
+   23
+  ],
+  "offset": [
+   23
+  ],
+  "package": [
+   23
+  ],
+  "remote": [
+   24
+  ],
+  "process_vm_readv": [
+   24
+  ],
+  "b05": [
+   24
+  ],
+  "copy": [
+   24
+  ],
+  "exclusion": [
+   24
+  ],
+  "linuxactiveimagemapping": [
+   24
+  ],
+  "mprotect": [
+   25
+  ],
+  "after": [
+   25,
+   28
+  ],
+  "page": [
+   25
+  ],
+  "sibling": [
+   25
+  ],
+  "syscall": [
+   25
+  ],
+  "writable": [
+   25
+  ],
+  "acknowledged": [
+   25
+  ],
+  "frames": [
+   26,
+   27,
+   37
+  ],
+  "valid": [
+   26
+  ],
+  "failed": [
+   26,
+   28,
+   29,
+   31,
+   37
+  ],
+  "hierarchy": [
+   26,
+   37
+  ],
+  "init": [
+   26,
+   37
+  ],
+  "release": [
+   26,
+   37
+  ],
+  "six": [
+   26,
+   35
+  ],
+  "each": [
+   26
+  ],
+  "old": [
+   27
+  ],
+  "failures": [
+   27
+  ],
+  "fallible": [
+   27
+  ],
+  "late": [
+   27
+  ],
+  "dma": [
+   28
+  ],
+  "frame": [
+   28
+  ],
+  "finish": [
+   28
+  ],
+  "hostile": [
+   28
+  ],
+  "rollback": [
+   29
+  ],
+  "activation": [
+   29
+  ],
+  "iommu": [
+   29,
+   31
+  ],
+  "translation": [
+   29
+  ],
+  "failure": [
+   29
+  ],
+  "inactive": [
+   29
+  ],
+  "0x30": [
+   30
+  ],
+  "capability": [
+   30,
+   36
+  ],
+  "u64": [
+   30
+  ],
+  "0x31": [
+   30
+  ],
+  "accepts": [
+   30
+  ],
+  "block": [
+   30,
+   41
+  ],
+  "common": [
+   30,
+   36
+  ],
+  "width": [
+   31
+  ],
+  "address": [
+   31
+  ],
+  "suite": [
+   31
+  ],
+  "tested": [
+   31
+  ],
+  "padding": [
+   32
+  ],
+  "passes": [
+   32,
+   33,
+   35
+  ],
+  "payload": [
+   32,
+   34
+  ],
+  "record": [
+   32
+  ],
+  "aienux": [
+   32,
+   33,
+   35
+  ],
+  "five": [
+   32,
+   33
+  ],
+  "nonzero": [
+   32
+  ],
+  "pass": [
+   32,
+   34
+  ],
+  "validation": [
+   33
+  ],
+  "geometry": [
+   33
+  ],
+  "malformed": [
+   33
+  ],
+  "data": [
+   33
+  ],
+  "host": [
+   33
+  ],
+  "storage": [
+   34
+  ],
+  "unchanged": [
+   34
+  ],
+  "writes": [
+   34
+  ],
+  "configuration": [
+   34
+  ],
+  "durable": [
+   34
+  ],
+  "eight": [
+   34
+  ],
+  "existing": [
+   34,
+   38
+  ],
+  "local": [
+   34
+  ],
+  "section": [
+   35
+  ],
+  "overlap": [
+   35
+  ],
+  "sections": [
+   35
+  ],
+  "net": [
+   36
+  ],
+  "virtio": [
+   36
+  ],
+  "boundary": [
+   36
+  ],
+  "reject": [
+   36
+  ],
+  "verification": [
+   36
+  ],
+  "invalid": [
+   37
+  ],
+  "suspended": [
+   37
+  ],
+  "capacity": [
+   38
+  ],
+  "getcwd": [
+   38
+  ],
+  "maximum": [
+   38
+  ],
+  "array": [
+   38
+  ],
+  "controller": [
+   39
+  ],
+  "recovery": [
+   39,
+   41
+  ],
+  "graphical": [
+   39
+  ],
+  "input": [
+   39
+  ],
+  "focus": [
+   39
+  ],
+  "entropy": [
+   40
+  ],
+  "hardware": [
+   40
+  ],
+  "cannot": [
+   40
+  ],
+  "generation": [
+   41
+  ],
+  "drain": [
+   41
+  ],
+  "including": [
+   41
+  ],
+  "stale": [
+   41
+  ],
+  "tcg": [
+   41
+  ]
+ }
+}
