@@ -1,5 +1,5 @@
 {
- "generated_at_utc": "2026-11-02T21:24:12Z",
+ "generated_at_utc": "2026-11-02T22:05:39Z",
  "source_repo": "gmkurtzer/ginux",
  "item_count": 56,
  "items": {
@@ -288,8 +288,8 @@
   "45": {
    "kind": "pr",
    "title": "Hide whiteouted directory subtrees",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-02T22:04:26Z",
    "files": [
     "crates/oci/src/lib.rs",
     "hdae/STATUS.md",
@@ -882,7 +882,7 @@
   "18": {
    "kind": "issue",
    "title": "Directory whiteouts (.wh.<name>) do not hide the subtree — deleted files resurrect from lower layers",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
