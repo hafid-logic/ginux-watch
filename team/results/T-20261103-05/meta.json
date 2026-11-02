@@ -1,0 +1,6 @@
+{
+  "duration_min": 55,
+  "tools": ["git", "cargo check (env-v6 toolchain 1.99.0)", "gh workflow run/run view/run download", "python3 patch scripts"],
+  "verified_format": "result.md tagged; CI runs 41541091690 (failure, diagnosed) + 41542581308 (success, both QEMU legs); draft PR hafid-logic/ginux#1; artifacts /tmp/bv-logs + /tmp/bv2",
+  "status": "partial"
+}
