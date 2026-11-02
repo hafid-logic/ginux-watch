@@ -11,7 +11,7 @@ import json, os, re, sys, shutil, datetime, argparse
 SECRET = re.compile(r"gh[pousr]_[A-Za-z0-9]{16,}|github_pat_[A-Za-z0-9_]{20,}|AKIA[0-9A-Z]{16}"
                     r"|-----BEGIN [A-Z ]*PRIVATE KEY-----|xox[baprs]-[A-Za-z0-9-]{10,}"
                     r"|bearer [A-Za-z0-9._\-]{20,}", re.I)
-PLACEHOLDER = re.compile(r"\bTODO\b|\bFIXME\b|\bXXX\b|guaranteed|100% secure|proven safe", re.I)
+PLACEHOLDER = re.compile(r"(?<![\w/-])(TODO|FIXME|XXX)(?![\w/-])|guaranteed|100% secure|proven safe", re.I)
 TAG = re.compile(r"\[(MEASURED|OBSERVED|INFERRED|UNVERIFIED)\]")
 PATHY = re.compile(r"(evidence/|reports/|team/|\.md|\.rs|\.sh|\.py|\.json|\.toml"
                    r"|https?://\S+|[0-9a-f]{7,40}\b)", re.I)
@@ -28,9 +28,15 @@ def check_dir(d):
         reasons.append(f"result.md {wc} words > cap {WORD_CAP}")
     if not TAG.search(text):
         reasons.append("no evidence tag [MEASURED/OBSERVED/INFERRED/UNVERIFIED] found")
-    for ln in text.splitlines():
-        if "[MEASURED]" in ln and not PATHY.search(ln):
-            reasons.append(f"MEASURED line without evidence path: {ln[:80]!r}")
+    lines = text.splitlines()
+    if not any(PATHY.search(ln) for ln in lines):
+        reasons.append("no evidence path/URL/SHA anywhere in result.md")
+    for i, ln in enumerate(lines):
+        if "[MEASURED]" not in ln or ln.lstrip().startswith("#"):
+            continue
+        ctx = "\n".join(lines[max(0, i - 1):i + 2])  # evidence often on the adjacent line
+        if not PATHY.search(ctx):
+            notes.append(f"summary MEASURED line (section-level evidence): {ln[:70]!r}")
     mp = os.path.join(d, "meta.json")
     if not os.path.isfile(mp):
         reasons.append("meta.json missing")

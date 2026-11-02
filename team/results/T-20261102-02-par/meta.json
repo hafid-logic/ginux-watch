@@ -1,0 +1,1 @@
+{"card_id":"T-20261102-02","worker":"w2","run_mode":"parallel","duration_min":9,"tools":["python3","jq","read"],"verified_format":"result.md<=800 words, 7 row verdicts with evidence","status":"done"}

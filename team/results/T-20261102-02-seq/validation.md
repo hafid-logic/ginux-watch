@@ -1,0 +1,3 @@
+# validation — T-20261102-02-seq — FAIL — 2026-11-02T21:20:06Z
+
+- FAIL: no evidence tag [MEASURED/OBSERVED/INFERRED/UNVERIFIED] found

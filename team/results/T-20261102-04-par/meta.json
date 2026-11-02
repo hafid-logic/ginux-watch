@@ -1,0 +1,1 @@
+{"card_id":"T-20261102-04","worker":"w4","run_mode":"parallel","duration_min":15,"tools":["git","bash","read"],"verified_format":"result.md<=700 words, verdicts with quotes","status":"done"}
