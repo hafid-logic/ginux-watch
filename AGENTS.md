@@ -28,7 +28,20 @@ no credentials.
    only for items on the watchlist (Tier 1).
 5. Classify each material item: relates to one of our findings (F-ids in STATE.md) / new /
    duplicate / noise. State evidence status, risk, missing information, recommended action.
-6. Write `reports/YYYY-MM-DD.md` (Arabic, English technical terms). Write an unposted draft
+5b. Cross-check maintenance (directive 2026-11-02): update `work/upstream-dump/`
+   incrementally (items new/changed since last_run: issues+PRs with state=all, comments,
+   PR files, merge SHAs) and re-classify ONLY the affected P-rows in
+   `reports/cross-check/matrix.md`.
+5c. Duplicate gate (mandatory before proposing ANY public item): search the dump
+   (open+closed+merged) and matrix.md first. If an exact or similar item already exists,
+   was already fixed, or someone got there first: do NOT draft it — record the number and
+   the rejection reason under "أُسقط لأنه مطروح" in reports/YYYY-MM-DD.md.
+5d. Status-change check: for each matrix row, did a newly merged PR touch its file or
+   function? If yes, re-verify on main (read-only git grep) and flip the status
+   (قائمة → زالت) with evidence.
+6. Write `reports/YYYY-MM-DD.md` (Arabic, English technical terms) including the fixed
+   section "التقاطع": new unreported (C) | new contribution opportunities (A/B) |
+   rows whose status changed | items dropped as duplicates. Write an unposted draft
    in `drafts/` (English) only when POLICY.md criteria are met.
 7. Update STATE.md (last_run, watchlist, finding status, pending decisions). Commit and push
    to THIS repository only.

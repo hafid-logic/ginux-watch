@@ -22,6 +22,8 @@
 - هدفنا: تحقق مستقل ومتكرر لـ gmkurtzer/ginux (نواة Rust تعمل عبر UEFI).
 - issue #4: فشل قيد `queue size: 256` في tests/qemu/boot.sh مع QEMU 10.0.13 الذي يسحق virtqueue إلى 1024 — **محسوم كوديًا**: PR #10 وPR #13 مدموجان (#13 في 2026-11-01T23:24:48Z برأس 59761169 المطابق لتحققنا 3/3)؛ **أُغلقت #4 بتوجيه صريح من المستخدم** (2026-11-02T00:31:21Z، completed) بعد تعليق معتمد منشور حرفيًا: issues/4#issuecomment-6566218531.
 - main عند `fbe6472e` بعد موجة دمج 23:43→00:00 UTC: #31–#38 (منها إصلاحات #21/#26/#30 من سلسلة scadastrangelove)؛ PR #39 (desktop controller) مفتوح؛ `boot.sh` لم يتغير عن النسخة المتحققة (blob bdc576c3).
+- مصفوفة التقاطع (2026-11-02): reports/cross-check/ — 17 صفًا P1–P17 (A1/B7/C5/D4) مقابل dump كامل (41 بندًا)؛ مسودات: not-reported (P10 overflow-checks) وcontribute (Opp-1→#14، Opp-2→#28) — بانتظار قرارك.
+- open PRs: #39 (desktop)، #40 (TLS entropy→#15)، #41 (volume recovery→#14).
 - نُشر تعليقان على PR #13: pull/13#issuecomment-6549305835 وتعليق المراجعة.
 - مراقبة مستمرة: issue #14 (تعليق بيانات معتمد نُشر حرفيًا: issues/14#issuecomment-6566220344؛ إفساد غريغوري على Ubuntu يفشل بعد #31 بينما بيئتنا تمر) وسلسلة #15–#39.
 
@@ -43,6 +45,7 @@
 
 ## و) بنود مفتوحة
 - D2: منجزة — تعليق البيانات نُشر حرفيًا معتمدًا: issues/14#issuecomment-6566220344 (2026-11-02T00:31Z، بإذن صريح).
+- D5 (جديد): مسودات المصفوفة بانتظار قرارك — P10 (issue جديد) وOpp-1 (تعليق #14) وOpp-2 (تعليق #28) في reports/cross-check/؛ السقف اليومي مستهلك (منشوران بإذن) — النشر الأبكر 2026-11-03.
 - D3: إبطال التوكن القديم الملصوق سابقًا في المحادثة — إجراء المستخدم في إعدادات GitHub.
 - CI: آخر تشغيل 41364863523 (target=main@fbe6472e): doctor/check/test = 0/0/0 على 10.0.13 و10.1.2 — PASS (يُحدَّث تلقائيًا بعد كل تشغيل).
 - الجدولة: سلسلة 08:00 UTC (يُحدَّث حالة القالب تلقائيًا).
@@ -53,7 +56,7 @@
 - المستودعات الثلاثة: upstream [gmkurtzer/ginux](https://github.com/gmkurtzer/ginux) | fork [hafid-logic/ginux](https://github.com/hafid-logic/ginux) | watch [hafid-logic/ginux-watch](https://github.com/hafid-logic/ginux-watch)
 
 ## ح) آخر تحديث
-- التاريخ UTC: 2026-11-02T00:33:00Z
+- التاريخ UTC: 2026-11-02T01:10:00Z
 - آخر تشغيل CI: 41364863523 — https://github.com/hafid-logic/ginux-watch/actions/runs/41364863523
 
 ## سجل الجلسات مع Claude
@@ -64,3 +67,4 @@
 2. 2026-11-02 — تكملة الجلسة 2: run 1 (41359521470) فشل — rg مفقود على runner + خطأ مسار out/؛ إصلاح workflow في 5528f20؛ run 2 (41360402671) نجح: doctor/check/test = 0/0/0 على 10.0.13 (queue 1024) و10.1.2 (queue 256) على رأس PR #13 (59761169)؛ تقرير البيئة في reports/2026-11-02.md (مادة D2)؛ /dev/kvm موجود على runner وغير مستعمل (TCG).
 3. 2026-11-02 — الجلسة 3 (Review now، 00:00 UTC): PR #13 دُمج 23:24:48Z برأس تحققنا؛ موجة دمج #31–#38 على main → fbe6472e؛ verify على main (run 41364863523) PASS 0/0/0 على النسختين؛ #4 مفتوح؛ طلب gmkurtzer في #14 موجّه لـ CG-8663؛ PR #39 مفتوح.
 4. 2026-11-02 — تنفيذ مأذون (00:31 UTC): تعليق معتمد على #4 ثم إغلاقها (completed)؛ تعليق بيانات معتمد على #14 (تجاوز الحد اليومي بإذن صريح)؛ POLICY.md + approved/ دُفعا (9c0fd3c)؛ التحقق GET: النصان مطابقان حرفيًا لملفات approved/ و#4 closed/completed.
+5. 2026-11-02 — مصفوفة التقاطع: dump كامل (41 بندًا حتى #41) + 17 صفًا P1–P17 (A1/B7/C5/D4) + فحوص main (static mut 100→36؛ cpu.rs 42,752؛ FrameLease Copy باقٍ؛ doctor بلا إصدارات؛ الورقة تستشهد d11c126a الآن) + AGENTS.md خطوات 5b–5d + مسودتان بانتظار القرار (D5).
