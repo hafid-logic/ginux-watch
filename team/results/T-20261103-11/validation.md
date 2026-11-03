@@ -1,4 +1,4 @@
-# validation — T-20261103-11 — PASS — 2026-11-03T10:16:21Z
+# validation — T-20261103-11 — PASS — 2026-11-03T12:52:49Z
 
 - note: summary MEASURED line (section-level evidence): 'protocol 97.50 identical, volume 99.43 identical [MEASURED].'
 - note: evidence files: 9
