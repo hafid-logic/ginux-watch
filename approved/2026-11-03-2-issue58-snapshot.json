@@ -1,0 +1,59 @@
+{
+  "issue": {
+    "number": 58,
+    "title": "Offering fuzz targets for the PAX/OCI, ARP/IPv4/ICMP and volume-format parsers",
+    "state": "open",
+    "created_at": "2026-11-03T06:23:25Z",
+    "user": {
+      "login": "hafid-logic",
+      "id": 266947999,
+      "node_id": "U_kgDOD-lNnw",
+      "avatar_url": "https://avatars.githubusercontent.com/u/266947999?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/hafid-logic",
+      "html_url": "https://github.com/hafid-logic",
+      "followers_url": "https://api.github.com/users/hafid-logic/followers",
+      "following_url": "https://api.github.com/users/hafid-logic/following{/other_user}",
+      "gists_url": "https://api.github.com/users/hafid-logic/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/hafid-logic/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/hafid-logic/subscriptions",
+      "organizations_url": "https://api.github.com/users/hafid-logic/orgs",
+      "repos_url": "https://api.github.com/users/hafid-logic/repos",
+      "events_url": "https://api.github.com/users/hafid-logic/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/hafid-logic/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "html_url": "https://github.com/gmkurtzer/ginux/issues/58",
+    "comments": 1
+  },
+  "body_chars": 893,
+  "body_words": 128,
+  "body_verbatim": "While independently reviewing ginux@82df3d71, I built libFuzzer harnesses for three untrusted-input surfaces and would like to offer them upstream:\n- crates/oci tar+PAX (parse plus the traversal APIs used by published_rootfs.rs): 41.0M execs, 93.2% regions\n- crates/protocol-state ARP/IPv4/ICMP: 247.1M execs, 97.5% regions\n- crates/volume-format sectors: 87.8M execs, 99.4% regions\n- a 15.3M-exec differential run of the PAX parser against the tar crate: all differences were fail-closed\nAll runs use ASan and overflow-checks, committed seeds and dictionaries; no crashes or sanitizer reports. Fuzzing only finds crashes, not logic bugs, so this is not a safety claim. The harnesses are in hafid-logic/ginux-watch (fuzz/) and consume upstream read-only at the pinned commit.\nWould you prefer them under fuzz/ or tests/? A draft PR can follow if useful.\n(AI-assisted analysis, reviewed by me.)",
+  "comments": [
+    {
+      "id": 6597103730,
+      "user": "gmkurtzer",
+      "created_at": "2026-11-03T06:32:50Z",
+      "body_verbatim": "Thank you — these targets sound useful, and the stated limitations are appropriately scoped.\n\nPlease use a top-level fuzz/ directory rather than tests/. The existing tests/ tree is for deterministic conformance and QEMU checks, while libFuzzer targets, seed corpora, and dictionaries have a distinct toolchain and execution model.\n\nA draft PR against current main would be welcome. Please include:\n- the three target groups and their dictionaries/seeds;\n- a short fuzz/README with exact build/run commands and required cargo-fuzz/toolchain versions;\n- bounded smoke commands suitable for maintainer reproduction;\n- no generated crash artifacts or oversized evolved corpus; and\n- the pinned upstream commit and latest run summary in the PR description.\n\nKeeping the related harness plumbing in one draft PR is reasonable because it shares one fuzz workspace and review setup. We can split targets later only if review shows materially independent build or dependency concerns.",
+      "html_url": "https://github.com/gmkurtzer/ginux/issues/58#issuecomment-6597103730"
+    }
+  ],
+  "checks": {
+    "author_is_hafid_logic": true,
+    "state_open": true,
+    "word_count_le_120": false,
+    "has_ai_disclosure": true,
+    "has_watch_repo_link": true,
+    "has_pin_on_main": true,
+    "has_execs_number": true,
+    "has_coverage_number": true,
+    "has_flags": true,
+    "has_asan": true,
+    "asks_fuzz_vs_tests": true,
+    "asks_ci_preference": true,
+    "no_no_vulns_claim": true
+  },
+  "volume_format_mentioned": true
+}
