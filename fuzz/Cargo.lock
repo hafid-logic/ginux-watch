@@ -97,10 +97,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "ginux-protocol-state"
+version = "0.1.0"
+
+[[package]]
 name = "ginux-watch-fuzz"
 version = "0.0.0"
 dependencies = [
  "ginux-oci",
+ "ginux-protocol-state",
  "libfuzzer-sys",
 ]
 

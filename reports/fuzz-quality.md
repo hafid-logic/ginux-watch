@@ -130,3 +130,40 @@ next_child closures 0%→87.8%).
 (الطبقتان parse+traversal) عند pin 82df3d71، بoverflow-checks=true وASan، على corpus
 مبذور بحدود الأحجام (0، 512، 2^32، أقصى octal) — 41M exec بلا panic واحد. gzip يبقى
 خارج النطاق (لا محلل host-testable — §a).
+
+---
+
+# المحلل الثاني (v2.6-4): crates/protocol-state — [MEASURED 2026-11-03]
+
+**الاختيار:** المرتبة 1 من قائمة §d (بايتات شبكة خام ARP/IPv4/ICMP؛ دوال نقية؛ crate
+مضيف). harness جديد `protocol_surfaces` + `fuzz/corpus-seed-protocol/` (34 إطارًا من
+اختبارات الـ crate نفسها + حالات رفض/حدية بحساب checksum حقيقي) + `fuzz/protocol.dict`.
+
+**نمذجة أمينة للنواة:** LOCAL/PEER ثابتة (في النواة عنوان المضيف والند المتوقع ثوابت وقت
+التشغيل — الإطار وحده مدخل المهاجم)؛ سقف 65,600 بايت (النواة لا توصل أكثر من
+65,535+14 بايت لهذه المحللات؛ مدخلات >131,076 تفيض بمجمّع u32 في `checksum()` — حالة
+لا يمكن للنواة بلوغها ⇒ منع false positive). الـ state machine تُرصد الرد مرتين + ردًا
+ثانيًا مشتقًا بMAC مرسل مختلف (النواة ترى ردودًا متكررة/متعارضة عبر الزمن).
+
+**التشغيل:** 3×560 ثانية، ASan، dict — **247,112,565 exec** (~146.8k/s)، **صفر
+crashes** (EXIT=0 ×3، لا artifacts). تحقق إضافي بعد توسعة observe: 9,697,582 exec
+في 61 ثانية، لا crashes.
+
+**التغطية (llvm-cov على protocol-state/src/lib.rs@82df3d71):**
+
+| القياس | regions | functions | lines |
+|---|---|---|---|
+| seeds فقط (34) | 94.00% | 100% | 93.42% |
+| بعد 247M exec + توسعة observe | **97.50% (5 miss)** | **100%** | **97.37% (4 miss)** |
+
+counters: cov 221/ft 245 (بذور) → 247/308. new_units_added 63→1→3 — المحللات مقيدة
+بشدة (رفض مبكر عند أول فحص)، والتغطية العميقة جاءت من البذور الصالحة أكثر من الطفرات.
+
+**المتبقي (حواجز موثقة):** فروع `map_err` في `parse_arp_reply_v4` (try_into على شرائح
+بحجم ثابت لا تفشل — دفاعية ميتة)؛ فروع observe المتبقية تحتاج حالة عبر execs متعددة
+(النواة نفسها تملكها فقط عبر الزمن). `parse_ipv4_icmp_v0`/`parse_icmp_echo_request_v0`/
+`build_icmp_echo_reply_v0` **100% دوال**.
+
+**CI:** fuzz.yml شغّل الآن الهدفين (oci_surfaces + protocol_surfaces) بالبذور والقواميس
+والsanitizer الصريح. **الخلاصة:** 288M+ exec إضافية على سطح الشبكة بلا panic واحد —
+لا finding أمني ولا غير أمني؛ `reports/private/` غير مستخدم.
