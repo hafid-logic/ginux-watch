@@ -10,3 +10,6 @@ fuzz/coverage/
 # Security findings: LOCAL ONLY (POLICY: never in the public repo)
 reports/private/
 fuzz/corpus-protocol/
+# v2.7-2: generated differential state (seeds stay in fuzz/corpus-seed-diff/)
+fuzz/corpus-diff/
+fuzz/diff-dumps/
