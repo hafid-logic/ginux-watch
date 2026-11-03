@@ -20,10 +20,12 @@ permissions:
 jobs:
   oci-surfaces:
     runs-on: ubuntu-24.04
-    timeout-minutes: 25
+    timeout-minutes: 50
     env:
       MAX_SECONDS: ${{ github.event.inputs.max_seconds || '300' }}
-      UPSTREAM_PIN: "ecbb3142e0c332d1bfefe107322fdffdcdc3d38c"
+      # Pinned to current upstream main (v2.5-3, 2026-11-03): PAX parser
+      # changed since ecbb3142 (4294c0a7 "Parse PAX header chains iteratively").
+      UPSTREAM_PIN: "82df3d719e14246233d509799ad220c4c39e7088"
     steps:
       - name: Checkout watch repo
         uses: actions/checkout@v4
