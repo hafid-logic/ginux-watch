@@ -1,0 +1,11 @@
+seed_count_src=53
+seed_count_dst=53
+byte_compare_mismatches=0
+empty_files=0
+total_bytes=70650
+largest=t30_multi 4608
+second=t06_pax_chain 3584
+third=t17_replacement 3072
+oci.dict_bytes=1600 (cmp identical)
+tar_magic_spot_checks=t01_file,t06_pax_chain,t30_multi all 'ustar\000' at offset 257 (file: POSIX tar archive)
+fork_grep_c86945b1_kernel_src_published_rootfs_rs: entry_and_next_at_offset=1 find_index=7 next_child=1 copy_path=1 (blob exists)

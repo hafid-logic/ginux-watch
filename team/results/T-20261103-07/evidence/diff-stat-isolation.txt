@@ -1,0 +1,111 @@
+ fuzz/corpus-seed/j01_index_match        |   1 +
+ fuzz/corpus-seed/j02_manifest           |   1 +
+ fuzz/corpus-seed/j03_manifest_16_layers |   1 +
+ fuzz/corpus-seed/j04_config             |   1 +
+ fuzz/corpus-seed/j05_config_variant     |   1 +
+ fuzz/corpus-seed/j06_challenge          |   1 +
+ fuzz/corpus-seed/j07_token              |   1 +
+ fuzz/corpus-seed/j08_access_token       |   1 +
+ fuzz/corpus-seed/j09_short_digest       |   1 +
+ fuzz/corpus-seed/j10_index_windows      |   1 +
+ fuzz/corpus-seed/r00_ref                |   1 +
+ fuzz/corpus-seed/r01_ref                |   1 +
+ fuzz/corpus-seed/r02_ref                |   1 +
+ fuzz/corpus-seed/r03_ref                |   1 +
+ fuzz/corpus-seed/r04_ref                |   1 +
+ fuzz/corpus-seed/r05_ref                |   1 +
+ fuzz/corpus-seed/r06_ref                |   1 +
+ fuzz/corpus-seed/r07_ref                |   1 +
+ fuzz/corpus-seed/r08_ref                |   1 +
+ fuzz/corpus-seed/r09_ref                |   1 +
+ fuzz/corpus-seed/r10_ref                |   1 +
+ fuzz/corpus-seed/r11_ref                |   1 +
+ fuzz/corpus-seed/t01_file               | Bin 0 -> 2048 bytes
+ fuzz/corpus-seed/t02_symlink            | Bin 0 -> 1536 bytes
+ fuzz/corpus-seed/t03_hardlink           | Bin 0 -> 1536 bytes
+ fuzz/corpus-seed/t04_dir                | Bin 0 -> 2560 bytes
+ fuzz/corpus-seed/t05_pax_path           | Bin 0 -> 3072 bytes
+ fuzz/corpus-seed/t06_pax_chain          | Bin 0 -> 3584 bytes
+ fuzz/corpus-seed/t07_pax_dup            | Bin 0 -> 3072 bytes
+ fuzz/corpus-seed/t08_pax_dir_slash      | Bin 0 -> 2560 bytes
+ fuzz/corpus-seed/t09_prefix_split       | Bin 0 -> 2048 bytes
+ fuzz/corpus-seed/t09b_prefix_path       | Bin 0 -> 2048 bytes
+ fuzz/corpus-seed/t10_size0              | Bin 0 -> 1536 bytes
+ fuzz/corpus-seed/t11_size512            | Bin 0 -> 2048 bytes
+ fuzz/corpus-seed/t12_size513            | Bin 0 -> 2560 bytes
+ fuzz/corpus-seed/t13_size_2p32          | Bin 0 -> 1536 bytes
+ fuzz/corpus-seed/t14_size_max           | Bin 0 -> 1536 bytes
+ fuzz/corpus-seed/t15_whiteout           | Bin 0 -> 2560 bytes
+ fuzz/corpus-seed/t16_opaque             | Bin 0 -> 2048 bytes
+ fuzz/corpus-seed/t17_replacement        | Bin 0 -> 3072 bytes
+ fuzz/corpus-seed/t18_traverse           | Bin 0 -> 2048 bytes
+ fuzz/corpus-seed/t19_gnu_magic          | Bin 0 -> 2048 bytes
+ fuzz/corpus-seed/t20_corrupt            | Bin 0 -> 2048 bytes
+ fuzz/corpus-seed/t21_trailing           | Bin 0 -> 2049 bytes
+ fuzz/corpus-seed/t22_truncated          | Bin 0 -> 600 bytes
+ fuzz/corpus-seed/t23_empty              | Bin 0 -> 1024 bytes
+ fuzz/corpus-seed/t24_zero_nonzero       | Bin 0 -> 1536 bytes
+ fuzz/corpus-seed/t25_after_terminator   | Bin 0 -> 1536 bytes
+ fuzz/corpus-seed/t26_kind_L             | Bin 0 -> 2048 bytes
+ fuzz/corpus-seed/t27_mode_spaces        | Bin 0 -> 2048 bytes
+ fuzz/corpus-seed/t28_mode_blank         | Bin 0 -> 2048 bytes
+ fuzz/corpus-seed/t29_dot_component      | Bin 0 -> 2048 bytes
+ fuzz/corpus-seed/t30_multi              | Bin 0 -> 4608 bytes
+ fuzz/fuzz_targets/oci_surfaces.rs       | 164 ++++++++++++++++++++++++++++++++
+ fuzz/oci.dict                           |  58 +++++++++++
+ 55 files changed, 244 insertions(+)
+fuzz/corpus-seed/j01_index_match
+fuzz/corpus-seed/j02_manifest
+fuzz/corpus-seed/j03_manifest_16_layers
+fuzz/corpus-seed/j04_config
+fuzz/corpus-seed/j05_config_variant
+fuzz/corpus-seed/j06_challenge
+fuzz/corpus-seed/j07_token
+fuzz/corpus-seed/j08_access_token
+fuzz/corpus-seed/j09_short_digest
+fuzz/corpus-seed/j10_index_windows
+fuzz/corpus-seed/r00_ref
+fuzz/corpus-seed/r01_ref
+fuzz/corpus-seed/r02_ref
+fuzz/corpus-seed/r03_ref
+fuzz/corpus-seed/r04_ref
+fuzz/corpus-seed/r05_ref
+fuzz/corpus-seed/r06_ref
+fuzz/corpus-seed/r07_ref
+fuzz/corpus-seed/r08_ref
+fuzz/corpus-seed/r09_ref
+fuzz/corpus-seed/r10_ref
+fuzz/corpus-seed/r11_ref
+fuzz/corpus-seed/t01_file
+fuzz/corpus-seed/t02_symlink
+fuzz/corpus-seed/t03_hardlink
+fuzz/corpus-seed/t04_dir
+fuzz/corpus-seed/t05_pax_path
+fuzz/corpus-seed/t06_pax_chain
+fuzz/corpus-seed/t07_pax_dup
+fuzz/corpus-seed/t08_pax_dir_slash
+fuzz/corpus-seed/t09_prefix_split
+fuzz/corpus-seed/t09b_prefix_path
+fuzz/corpus-seed/t10_size0
+fuzz/corpus-seed/t11_size512
+fuzz/corpus-seed/t12_size513
+fuzz/corpus-seed/t13_size_2p32
+fuzz/corpus-seed/t14_size_max
+fuzz/corpus-seed/t15_whiteout
+fuzz/corpus-seed/t16_opaque
+fuzz/corpus-seed/t17_replacement
+fuzz/corpus-seed/t18_traverse
+fuzz/corpus-seed/t19_gnu_magic
+fuzz/corpus-seed/t20_corrupt
+fuzz/corpus-seed/t21_trailing
+fuzz/corpus-seed/t22_truncated
+fuzz/corpus-seed/t23_empty
+fuzz/corpus-seed/t24_zero_nonzero
+fuzz/corpus-seed/t25_after_terminator
+fuzz/corpus-seed/t26_kind_L
+fuzz/corpus-seed/t27_mode_spaces
+fuzz/corpus-seed/t28_mode_blank
+fuzz/corpus-seed/t29_dot_component
+fuzz/corpus-seed/t30_multi
+fuzz/fuzz_targets/oci_surfaces.rs
+fuzz/oci.dict

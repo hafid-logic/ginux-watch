@@ -1,0 +1,6 @@
+{
+  "duration_min": 4,
+  "tools": ["git", "cp", "cmp", "find", "od", "file", "stat", "diff", "awk", "grep"],
+  "verified_format": true,
+  "status": "done"
+}
