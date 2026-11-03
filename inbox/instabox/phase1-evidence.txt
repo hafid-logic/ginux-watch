@@ -1,0 +1,60 @@
+# phase1 evidence — commands + raw outputs
+# generated: 2026-10-30 05:38:37 UTC (Africa/Algiers local: 06:38)
+
+$ curl -sS -o artifacts/llms-full.txt -w "HTTP:%{http_code} bytes:%{size_download} time:%{time_total}s" --max-time 60 https://instabox.sh/llms-full.txt
+HTTP:200 bytes:235122 time:0.053132s
+
+$ grep -n "kvm|KVM|nested|/dev/kvm|vmx|svm" (rg) llms-full.txt
+1180:**No kernel tracing, no nested KVM.** The guest kernel has the eBPF syscall and JIT (root only: unprivileged BPF is off, so use `sudo`), and socket, cgroup and XDP programs load. What it lacks is the tracing side: no kprobes, no ftrace or tracepoints, and no BTF (`/sys/kernel/btf/vmlinux` is absent), so `bpftrace`, BCC tools and `perf probe` do not work and there is nothing to attach a tracing program to. There is also no `/dev/kvm` in the guest (the kernel is a KVM guest, not a KVM host), so Firecracker, QEMU with KVM, Docker-in-VM runtimes that need it, and nested microVMs cannot run; QEMU in pure emulation (`-accel tcg`) works, slowly.
+
+$ rg -n "qemu|QEMU|firecracker|bare metal|hypervisor" llms-full.txt (line hits only)
+1180:**No kernel tracing, no nested KVM.** The guest kernel has the eBPF syscall and JIT (root only: unprivileged BPF is off, so use `sudo`), and socket, cgroup
+1882:Every template but `ci` (Ubuntu 24.04) is Debian 13 (trixie), amd64, with systemd, on Linux 6.18.54 (`uname -r`: `6.18.54-instabox`) in a Firecracker micro
+
+$ sed -n "1745,1753p" llms-full.txt  (Free plan block)
+### Plans
+
+**Free**: $0
+
+- 1 machine, 4 vCPU / 8 GiB
+- 20 GiB disk (fixed)
+- 5 snapshots
+- 100 GiB egress / month
+
+
+$ rg -n "50 Mbit|egress / month|max-run.*480|fixed at 480" llms-full.txt
+1482:                                      (free plan: fixed at 480); the first of the idle and runtime limits pauses it
+1752:- 100 GiB egress / month
+1761:- 1 TiB egress / month
+1771:- 5 TiB egress / month
+1782:- 50 TiB egress / month
+1980:What a machine **sends** is capped at about **50 Mbit/s** (~6 MB/s), with little or no burst: uploads to the internet (pushing to a remote, pushing an image, posting a file), what it sends back over SSH and port forwards, and the responses a public port URL serves. That is a per-VM host limit (`vm_egress_mbit`), not your plan's monthly egress allowance. What a machine **receives** is not limited: `apt-get`, `npm install`, a model download or `instabox push` into the box run at the host's speed.
+
+$ rg -n "instabox-medium|spec_not_allowed|agent-browser or ci" llms-full.txt (free-plan constraints)
+1015:Send GitHub Actions jobs to instabox with runs-on: instabox-medium, or run a command on instabox from any CI.
+1019:| | `runs-on: instabox-medium` (recommended) | The CLI from any CI |
+1027:### 1. runs-on: instabox-medium
+1028:**Early access:** `runs-on: instabox-medium` is open to a few accounts for now, and the steps below work as written for them. Until it opens to yours, use the CLI from any CI below.
+1038:    runs-on: instabox-medium
+1051:| `instabox-medium` | 4 vCPU, 8 GiB |
+1054:The free plan runs `instabox-medium` only. Any other `instabox` label, `instabox` alone included, is refused.
+1178:Times are sent as whole seconds. On api.instabox.sh a sandbox is 4 vCPUs and 8 GiB unless `vcpus` and `memMiB` name another size of your plan (Pro: 2/4, 4/8, 8/16; Builder: 2/4 up to 16/32; Team:
+1417:| `template_not_allowed` | A template your plan does not offer: the free plan creates from agent-browser or ci only (403) |
+1891:| `ci` | Ubuntu 24.04, 6.18.54 | 2 / 4, 4 / 8 or 8 / 16 GiB, by `runs-on` label | 50 GiB | 20 GiB | For `runs-on: instabox-medium` jobs ([CI](https://instabox.sh/docs/ci.md)): GitHub's Actions ru
+2526:| 403 | `permission_denied`, `missing_scope` (the key lacks the scope), `template_not_allowed` (the free plan creates from agent-browser or ci only; a snapshot is not limited) |
+
+$ rg -n "exec --background|instabox jobs|up to 600" llms-full.txt
+432:instabox jobs logs job <job-id>
+923:A tool given a name instead of an ID looks the sandbox up first, which needs `machines:read`. Lifecycle tools wait up to 120 s by default (`wait_seconds`, at most 600; `wait: false` returns the op
+990:`exec` returns `stdout`, `stderr` and `exitCode` when the command exits (after `timeoutSeconds` it is killed: 60 by default, at most 600), or streams them as the command runs with `Accept: text/ev
+998:instabox exec --background box -- 'npm run build'   # detached job: prints its ID
+999:instabox jobs logs box <job> -f                     # follow it; exits with its code
+1255:| `timeoutMs` | `number` | the server's; sent as whole seconds, at most 600 000 |
+1488:                                      --timeout S: whole seconds before the command is killed (default 60, at most 600; exit 124);
+1493:exec --background <id-or-name> [--cwd D] [--env K=V ...] [--json] -- <cmd...>
+1875:| `exec` | 32 requests at once across your sandboxes, shared by commands, file reads, desktop, port-forward and Secret refresh calls (more get a retryable `429 quota_exceeded`); 10 minutes per co
+1906:- `exec` streams: `exec --stream` prints the output as the command writes it (over the API, `Accept: text/event-stream`; no 1 MiB cap); without it, the output arrives in one result when the comma
+3033:- `timeoutSeconds` (integer): Kill the command after this long (exit code 124). Default 60, at most 600.
+
+$ WebFetch https://instabox.sh/docs/limits.md  → "no mention" of KVM/nested/[/dev/kvm]
+$ WebFetch https://instabox.sh/docs/sdk.md → paragraph "No kernel tracing, no nested KVM." confirmed verbatim (live)

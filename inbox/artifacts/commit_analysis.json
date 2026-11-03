@@ -1,0 +1,2746 @@
+{
+ "summary": {
+  "pinned_commit": "d11c126a048a51fe7eb9c4105f31760add1027ea",
+  "total_commits_on_pin": 1063,
+  "head_total_commits": 1097,
+  "verb_histogram": {
+   "Add": 185,
+   "Implement": 39,
+   "Validate": 37,
+   "Support": 29,
+   "Enforce": 26,
+   "Complete": 25,
+   "Match": 21,
+   "Expose": 21,
+   "Expand": 21,
+   "Execute": 17,
+   "Fix": 17,
+   "Block": 16,
+   "Isolate": 15,
+   "Bind": 14,
+   "Reject": 13,
+   "Make": 13,
+   "Replace": 13,
+   "Map": 12,
+   "Bound": 11,
+   "Contain": 11
+  },
+  "repair_pool_size": 208,
+  "repair_pool_ratio": 0.196,
+  "sample_size": 110,
+  "sample_tags": {
+   "other": 49,
+   "logic_state_machine": 15,
+   "memory_resource": 9,
+   "driver_io_dma": 20,
+   "oci_storage": 10,
+   "authority_security": 3,
+   "abi_compat_gap": 21,
+   "concurrency_timing": 4
+  },
+  "deep_reads": 30,
+  "deep_unsafe_contact_commits": 8
+ },
+ "repair_pool": [
+  {
+   "hash": "0663bf6dea3bbe2aeda338c7e435b14960ed7600",
+   "date": "2026-10-10",
+   "subject": "Guard early kernel stacks and null page"
+  },
+  {
+   "hash": "a2474cdf49a356143ef1cf6dd95ba4df0ba1e10d",
+   "date": "2026-10-10",
+   "subject": "Handle a local APIC timer interrupt"
+  },
+  {
+   "hash": "ed317c37f8cfced8fc4ab621f391abce583743b1",
+   "date": "2026-10-10",
+   "subject": "Enforce capability authority derivation",
+   "tags": [
+    "authority_security"
+   ]
+  },
+  {
+   "hash": "e7c39f990cd0932994ac3c5a85adcbf3726dc5c6",
+   "date": "2026-10-10",
+   "subject": "Enforce W^X control-plane mappings"
+  },
+  {
+   "hash": "bcc3bf0014bc66491de0956a3e5fd39e81d68fae",
+   "date": "2026-10-10",
+   "subject": "Reject malformed boot manifests"
+  },
+  {
+   "hash": "db4551a5842008baefe894c1485fa4a60065b725",
+   "date": "2026-10-10",
+   "subject": "Enforce capabilities at the control call gate",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "d491409769cf10915fa6bd37daec563856a3e9b3",
+   "date": "2026-10-10",
+   "subject": "Bound control-plane syscall budgets"
+  },
+  {
+   "hash": "7a3262e8dd1f44fb0da54aac584a55c8a6757647",
+   "date": "2026-10-10",
+   "subject": "Contain ring-3 context faults",
+   "tags": [
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "ad8bf7763e2fbe151d1b247c3d15998fe217bed7",
+   "date": "2026-10-10",
+   "subject": "Validate bounded executable containers"
+  },
+  {
+   "hash": "edb2ea3fafba36e1e4d59dc7d5e59d73725301e9",
+   "date": "2026-10-10",
+   "subject": "Isolate service-domain authority",
+   "tags": [
+    "logic_state_machine",
+    "authority_security"
+   ]
+  },
+  {
+   "hash": "d6911ed2dcbfc344c4e5298863d0eeaed5d3c493",
+   "date": "2026-10-10",
+   "subject": "Verify stale service generation rejection",
+   "tags": [
+    "logic_state_machine"
+   ]
+  },
+  {
+   "hash": "7d43968cb0aa9d364a0bb8d82c0f7e711a937f87",
+   "date": "2026-10-10",
+   "subject": "Deliver service fault events",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "05c2dbc647287ecc5f452d346581f382325ac8c5",
+   "date": "2026-10-10",
+   "subject": "Enforce per-domain call budgets"
+  },
+  {
+   "hash": "19462c1ee56ae909ae59456b3ade3d3f7b710fc9",
+   "date": "2026-10-10",
+   "subject": "Enforce per-domain thread budgets",
+   "tags": [
+    "logic_state_machine"
+   ]
+  },
+  {
+   "hash": "c2382e10b0f032a9d6c2d81b99fe4e311d483d45",
+   "date": "2026-10-10",
+   "subject": "Isolate duplex IPC directions"
+  },
+  {
+   "hash": "b2cbdb89ec846ae195d1f0f87b3376c2cc16cebf",
+   "date": "2026-10-10",
+   "subject": "Reject stale physical frame leases",
+   "tags": [
+    "logic_state_machine",
+    "memory_resource"
+   ]
+  },
+  {
+   "hash": "23ab980f3f1ab322809347246b3fb1f52f948173",
+   "date": "2026-10-10",
+   "subject": "Enforce IPC bindings on direct delivery"
+  },
+  {
+   "hash": "0135b1a3e288832beb2990edffc456925b8d3e7e",
+   "date": "2026-10-10",
+   "subject": "Guard both ends of native kernel stacks"
+  },
+  {
+   "hash": "d644a7e50f3381dd6db3dd53ba2a121f957dbdbc",
+   "date": "2026-10-10",
+   "subject": "Enforce per-domain physical frame budgets",
+   "tags": [
+    "logic_state_machine",
+    "memory_resource"
+   ]
+  },
+  {
+   "hash": "16873f2ede689cfe39c1b34db0709f90275fc161",
+   "date": "2026-10-10",
+   "subject": "Report bounded lifecycle event overflow",
+   "tags": [
+    "logic_state_machine",
+    "memory_resource"
+   ]
+  },
+  {
+   "hash": "223cd33aaaedcb6a55da8f91f04783e728f55b91",
+   "date": "2026-10-10",
+   "subject": "Enforce supervisor access prevention"
+  },
+  {
+   "hash": "027b3b7be9adb1d95cf5b40f3a1e95aa623c4932",
+   "date": "2026-10-10",
+   "subject": "Prevent privileged user-mode instructions",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "d939f0ed60cd59e8c058ecbedb434de5d939e822",
+   "date": "2026-10-10",
+   "subject": "Prove UMIP fault containment in ring 3",
+   "tags": [
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "7eaa649510ded3f782ea37d7a1421f4b97f1d736",
+   "date": "2026-10-10",
+   "subject": "Validate loaded EFI image metadata"
+  },
+  {
+   "hash": "16e45cfa93d9c8e6194b0127f870dedd6ddf640d",
+   "date": "2026-10-10",
+   "subject": "Enforce kernel image W^X from PE sections",
+   "tags": [
+    "oci_storage"
+   ]
+  },
+  {
+   "hash": "351a6c1dfb803b5ae6869092860cfcfa5a64c0c0",
+   "date": "2026-10-10",
+   "subject": "Enforce PE image section permissions"
+  },
+  {
+   "hash": "506afddf2bb579742f07d6281335171e099a777c",
+   "date": "2026-10-10",
+   "subject": "Contain service page faults"
+  },
+  {
+   "hash": "bcb874a63af6e58163a58e868f932d0a70789b78",
+   "date": "2026-10-10",
+   "subject": "Harden control ABI copy boundaries"
+  },
+  {
+   "hash": "b78593b66d4059228be8f74c5a3303bb98115046",
+   "date": "2026-10-10",
+   "subject": "Retain structured service fault metadata"
+  },
+  {
+   "hash": "fb9201e0d6f0f3d6db2de380d1342b8141b8bc9e",
+   "date": "2026-10-10",
+   "subject": "Expose structured service fault details"
+  },
+  {
+   "hash": "e41b3a76407407197b9f22c4892cd84549dc5240",
+   "date": "2026-10-10",
+   "subject": "Enforce fault diagnostic authority",
+   "tags": [
+    "authority_security"
+   ]
+  },
+  {
+   "hash": "96aeb4679d8b8327e0e7d0ec38f0cae2d99b1191",
+   "date": "2026-10-10",
+   "subject": "Validate scheduler CR3 roots"
+  },
+  {
+   "hash": "cd59b7ae4a237176e26ebf6306db675cf085603d",
+   "date": "2026-10-10",
+   "subject": "Validate bounded user page tables",
+   "tags": [
+    "memory_resource"
+   ]
+  },
+  {
+   "hash": "c18742d50726fb1ec4e9b59f0a9ac073e41203f0",
+   "date": "2026-10-10",
+   "subject": "Bound service restart attempts"
+  },
+  {
+   "hash": "89b80634d11eadeab8bb920c160aad89611270e9",
+   "date": "2026-10-10",
+   "subject": "Validate scheduled user mappings",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "3897bba5835e55144d54aa7f1b68428933b72680",
+   "date": "2026-10-10",
+   "subject": "Contain exhausted service restarts"
+  },
+  {
+   "hash": "f97fa48b977cd811e2b98b8fe2f77dca7f47d46b",
+   "date": "2026-10-10",
+   "subject": "Validate user copies per page",
+   "tags": [
+    "memory_resource"
+   ]
+  },
+  {
+   "hash": "247ceac55ceba96910cf798be28a4af8d65366e3",
+   "date": "2026-10-10",
+   "subject": "Validate service resource disposal",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "6247a0f8463dc36c747e270724c6e0da13bbd997",
+   "date": "2026-10-10",
+   "subject": "Contain sequence exhaustion",
+   "tags": [
+    "logic_state_machine"
+   ]
+  },
+  {
+   "hash": "36b227de20028bc4d2f0841aea08267fb291250d",
+   "date": "2026-10-10",
+   "subject": "Resolve proof entry labels inline",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "c2655bfaf19b6d21ccfabce73f8c4ec527895ad6",
+   "date": "2026-10-10",
+   "subject": "Enforce auxiliary service quiescence",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "b058d216497d6fc23fa9fa8bb2c8a1ee70814c98",
+   "date": "2026-10-10",
+   "subject": "Summarize auxiliary retirement overflow"
+  },
+  {
+   "hash": "a13835c10ca1fd4a871cbbae942004d66c9d3d6b",
+   "date": "2026-10-10",
+   "subject": "Enforce per-domain admission limits"
+  },
+  {
+   "hash": "37866d3be14163d9a16f69694979e46db2036374",
+   "date": "2026-10-10",
+   "subject": "Contain identity generation exhaustion"
+  },
+  {
+   "hash": "a657f874479fe5e86422834aa09a4a99f8da4aef",
+   "date": "2026-10-10",
+   "subject": "Isolate per-service frame quarantines"
+  },
+  {
+   "hash": "d9782730237cc34ce491b6e6f198abfdc018241c",
+   "date": "2026-10-10",
+   "subject": "Define stop-only auxiliary fault policy"
+  },
+  {
+   "hash": "e7cc4271f0898b68558f0f55e36b33519defdcb9",
+   "date": "2026-10-10",
+   "subject": "Retain auxiliary address space ownership",
+   "tags": [
+    "logic_state_machine",
+    "memory_resource"
+   ]
+  },
+  {
+   "hash": "8d2f309b89f1ae41889d25be732e287e1e9ca139",
+   "date": "2026-10-10",
+   "subject": "Fail closed on auxiliary fault publication"
+  },
+  {
+   "hash": "7517918225d0135644a8bb72358819ec493935db",
+   "date": "2026-10-10",
+   "subject": "Restore kernel root before auxiliary release",
+   "tags": [
+    "oci_storage"
+   ]
+  },
+  {
+   "hash": "1a606e7629e0deb762ee4ab83c8a5a012a32500e",
+   "date": "2026-10-10",
+   "subject": "Execute stop-only auxiliary fault path",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "4545714a4ce8bd7a6dc26663142129d4d225f20b",
+   "date": "2026-10-11",
+   "subject": "Prove auxiliary load rollback"
+  },
+  {
+   "hash": "739bcd30a43f8ced4d30ff7afbe1f575654d967f",
+   "date": "2026-10-11",
+   "subject": "Validate auxiliary exit descriptor",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "80329745a36f590b48f43187ca71509e310adb0c",
+   "date": "2026-10-11",
+   "subject": "Validate auxiliary service identity",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "572bd4f783547d31415c50139deb108d99084f9d",
+   "date": "2026-10-11",
+   "subject": "Prove concurrent auxiliary isolation"
+  },
+  {
+   "hash": "6905de32bb5fdfb807d5a91cf8dab323f7c7ddcc",
+   "date": "2026-10-11",
+   "subject": "Stop yielded auxiliary workloads",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "c1de1c892b2c1de710a3367469e14eeb1b53c54c",
+   "date": "2026-10-11",
+   "subject": "Prove clean service exit publication"
+  },
+  {
+   "hash": "2d0364fd24dfed614bbb46a3a057286b1ac77a44",
+   "date": "2026-10-11",
+   "subject": "Reject invalid volatile storage commands"
+  },
+  {
+   "hash": "b35b1a746a5abc043ad1ecd065e43051805fb838",
+   "date": "2026-10-11",
+   "subject": "Validate network device commands",
+   "tags": [
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "242045c0eda7112a046588e2bb25b95c1a4460c9",
+   "date": "2026-10-11",
+   "subject": "Invalidate stale network gateways",
+   "tags": [
+    "logic_state_machine"
+   ]
+  },
+  {
+   "hash": "4012dcb558a9ae68be2b87782532227ed35db7c1",
+   "date": "2026-10-11",
+   "subject": "Prove read-only network observation",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "9c8b4bbabda9afb2a0623138eb5abb762406ce1d",
+   "date": "2026-10-11",
+   "subject": "Prove write-only network configuration",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "ebdd07b542cbd7e110389498ad52fa324c177c96",
+   "date": "2026-10-11",
+   "subject": "Contain network service faults",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "49d057f909daae484c8128349c3df207538057f3",
+   "date": "2026-10-11",
+   "subject": "Recover network observation after fault"
+  },
+  {
+   "hash": "7c96794e63c972faa07c4873b7f035eb343d8437",
+   "date": "2026-10-11",
+   "subject": "Enforce non-executable Linux GNU stack"
+  },
+  {
+   "hash": "08f9df4630ec88e30f9c15a69ac76241c0302442",
+   "date": "2026-10-11",
+   "subject": "Bound Linux copies to ELF memory",
+   "tags": [
+    "abi_compat_gap",
+    "memory_resource"
+   ]
+  },
+  {
+   "hash": "913b5ba116781cddf98bb095318fb2f0c8e808ad",
+   "date": "2026-10-11",
+   "subject": "Bound Linux copies to current heap",
+   "tags": [
+    "memory_resource"
+   ]
+  },
+  {
+   "hash": "56e5c9d628251a81c58eba7e9e15370b9c29b73a",
+   "date": "2026-10-11",
+   "subject": "Enforce directional Linux VMA copies",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "4d62ae5045b5dccf88d210fadfe4c73e84ca57f7",
+   "date": "2026-10-11",
+   "subject": "Validate bounded Linux GNU RELRO metadata",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "196d455675e3cb387dc8bd56239bd280ed53d273",
+   "date": "2026-10-11",
+   "subject": "Bound Linux ELF verifier stack use"
+  },
+  {
+   "hash": "9d07863ae3f08bd3194277a03dcd06499420f8d4",
+   "date": "2026-10-11",
+   "subject": "Enforce Linux probe text bounds",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "6e5b0134bb03578dbb11a5743adf2aa6ea3c2335",
+   "date": "2026-10-11",
+   "subject": "Bound Linux syscall stack movement",
+   "tags": [
+    "abi_compat_gap"
+   ]
+  },
+  {
+   "hash": "f134b19ca9847a85778daa818a0c7b7c666045d9",
+   "date": "2026-10-11",
+   "subject": "Reject page-aliasing Linux segments",
+   "tags": [
+    "memory_resource"
+   ]
+  },
+  {
+   "hash": "717ade1b0a41f10aa7df220b4bd339456377a3ff",
+   "date": "2026-10-11",
+   "subject": "Reject Linux entry metadata overlap",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "6d9cf39ddadce085d8ccfbb0b03a6c26edb97ea5",
+   "date": "2026-10-11",
+   "subject": "Validate bounded Linux relocation metadata"
+  },
+  {
+   "hash": "7498c5df43f65b5b442c4db32493a5568242c8d5",
+   "date": "2026-10-11",
+   "subject": "Reject unresolved embedded text relocations",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "b9eeed8e099faa0c5e0c0fd41188bdfbbb331a60",
+   "date": "2026-10-11",
+   "subject": "Resolve bounded Linux dynamic symbol",
+   "tags": [
+    "abi_compat_gap"
+   ]
+  },
+  {
+   "hash": "363398b6ba579d432bb7a1ab6b2ae583d13c989e",
+   "date": "2026-10-11",
+   "subject": "Bound Linux symbols with SysV hash"
+  },
+  {
+   "hash": "c329a838d0e0bd9cb77ea2f05c57ae6c18de57c3",
+   "date": "2026-10-11",
+   "subject": "Resolve Linux dependency path in userspace",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "03e61e4093733abb0b2a769d2f24723bd838c473",
+   "date": "2026-10-11",
+   "subject": "Prove read-only Linux dependency mappings"
+  },
+  {
+   "hash": "8f7f57bd8b11950ffc9b02ebd38d5a53bcc832f9",
+   "date": "2026-10-11",
+   "subject": "Validate bounded Linux dependency lists",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "9348a37d0d89c8c4bc72b7750220a08693e83de9",
+   "date": "2026-10-11",
+   "subject": "Isolate Linux dependency mapping slots",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "bcc069d3f9ece8613b39987b5d43e65699809da7",
+   "date": "2026-10-11",
+   "subject": "Resolve bounded Linux symbol providers"
+  },
+  {
+   "hash": "85e364e65f5ff9b09eeae94605908a2fcdc33836",
+   "date": "2026-10-11",
+   "subject": "Validate Linux relocation shapes in userspace",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "67d3fb3c586c2a3018d11ee5a4936044c39e0329",
+   "date": "2026-10-11",
+   "subject": "Validate bounded Linux TLS template",
+   "tags": [
+    "abi_compat_gap"
+   ]
+  },
+  {
+   "hash": "4b46a85bec2f40120304d7879efde9d3442ba60a",
+   "date": "2026-10-11",
+   "subject": "Resolve Linux TLS symbols at link time",
+   "tags": [
+    "abi_compat_gap"
+   ]
+  },
+  {
+   "hash": "2fc9fb57b9c4e14fd693c3b4aa52af194ffd916d",
+   "date": "2026-10-11",
+   "subject": "Bound Linux syscall copies to TLS"
+  },
+  {
+   "hash": "ff4f68d891ea5275adee8a5ca7f1e43feff2d7f6",
+   "date": "2026-10-11",
+   "subject": "Validate dependency TLS template metadata"
+  },
+  {
+   "hash": "b71564af0e6f01dbc8f698cfedfafca12c8c5d34",
+   "date": "2026-10-11",
+   "subject": "Isolate a second Linux TLS instance"
+  },
+  {
+   "hash": "78481614fb277e91aa6e1a99a15e625333ff2049",
+   "date": "2026-10-11",
+   "subject": "Isolate Linux thread exit state",
+   "tags": [
+    "logic_state_machine"
+   ]
+  },
+  {
+   "hash": "d61b0f61d12dbd6f92cf808c8101ce946d36cef1",
+   "date": "2026-10-11",
+   "subject": "Validate reused Linux child identity"
+  },
+  {
+   "hash": "e1458aa7c2306943b2f96cd7168d6550a2dd5180",
+   "date": "2026-10-11",
+   "subject": "Reject clone while Linux child is live",
+   "tags": [
+    "abi_compat_gap"
+   ]
+  },
+  {
+   "hash": "ef2bfaa7654ad929392b14c6389bcf291de3a814",
+   "date": "2026-10-11",
+   "subject": "Validate bounded initramfs archive"
+  },
+  {
+   "hash": "486c0502346c9e7b6ae5872e4bbbb620518dd235",
+   "date": "2026-10-11",
+   "subject": "Resolve measured files relative to dirfds"
+  },
+  {
+   "hash": "dbd3d7b73e1c4fb64c96b4147b85ccbc409a7766",
+   "date": "2026-10-11",
+   "subject": "Resolve measured directory children by index",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "7b80f0e6f79cc1883a846a43bdb6ddb94961efcb",
+   "date": "2026-10-11",
+   "subject": "Bound Linux exec argument vectors"
+  },
+  {
+   "hash": "a9b9f10fe2c082d4825b012c76a8ed3fb1be1c21",
+   "date": "2026-10-11",
+   "subject": "Resolve Linux exec from measured root",
+   "tags": [
+    "abi_compat_gap"
+   ]
+  },
+  {
+   "hash": "03f02eff04e196582cee2cf613307ee846eff5e6",
+   "date": "2026-10-11",
+   "subject": "Validate Linux copies across adjacent areas",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "4f7d803fddd53a8cf1b0d0affebbf39ab1f1842d",
+   "date": "2026-10-11",
+   "subject": "Validate interpreted exec auxiliary vectors"
+  },
+  {
+   "hash": "8ad04af13d9ec278d080c66c4ff13016dc53ebb4",
+   "date": "2026-10-11",
+   "subject": "Validate idempotent mmap protections"
+  },
+  {
+   "hash": "0942033b5f0ed4d647d90bc973501bd8cbc4b0fc",
+   "date": "2026-10-11",
+   "subject": "Restore bounded Linux signal contexts"
+  },
+  {
+   "hash": "26bac1745a1e80a402595d7b8637d95d31ad1dd0",
+   "date": "2026-10-11",
+   "subject": "Block Linux signal waits in scheduler",
+   "tags": [
+    "abi_compat_gap",
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "824196359ecdc88c865e3a242d8342cc311fef93",
+   "date": "2026-10-12",
+   "subject": "Block bounded Linux nanosleep"
+  },
+  {
+   "hash": "58356e3f187f2bb5fdbff36bbf0277fb6626ec0d",
+   "date": "2026-10-12",
+   "subject": "Block bounded Linux poll waits",
+   "tags": [
+    "concurrency_timing",
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "eecc68c9c67a9b59f977812ba792cbc193ae4b2d",
+   "date": "2026-10-12",
+   "subject": "Block bounded Linux epoll waits",
+   "tags": [
+    "abi_compat_gap",
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "2ea48f80d6c626fbd0060bfbde3b8d60b2fc2179",
+   "date": "2026-10-12",
+   "subject": "Block empty Linux eventfd reads",
+   "tags": [
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "20e32c89333a8b04d72f2c84fe40670c8f2340f8",
+   "date": "2026-10-12",
+   "subject": "Isolate Linux signal masks per thread",
+   "tags": [
+    "abi_compat_gap"
+   ]
+  },
+  {
+   "hash": "725980f21ef2dd188dd8a4d3e509ba61325f66b7",
+   "date": "2026-10-12",
+   "subject": "Block bounded Linux ppoll waits"
+  },
+  {
+   "hash": "b117b2d28a6513c3ca8e2948aeaaeda30652def1",
+   "date": "2026-10-12",
+   "subject": "Block masked Linux epoll waits",
+   "tags": [
+    "abi_compat_gap",
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "6599ac540af34c7ac3e6dce52b93916c344156f9",
+   "date": "2026-10-12",
+   "subject": "Block empty Linux pipe reads",
+   "tags": [
+    "abi_compat_gap",
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "1b25fac6deca052d11929ee297807c49b9f5ce5e",
+   "date": "2026-10-12",
+   "subject": "Block unexpired Linux timerfd reads"
+  },
+  {
+   "hash": "a6218b759358145e408eb233769c6c4d7f71f69e",
+   "date": "2026-10-12",
+   "subject": "Block empty Linux pipe readv"
+  },
+  {
+   "hash": "d43a5ff9de83fca61f1c4cc09ce8c989fdee3380",
+   "date": "2026-10-12",
+   "subject": "Block saturated Linux pipe writes"
+  },
+  {
+   "hash": "437b1690b7fef43f445f6574d30a0fc10a821b75",
+   "date": "2026-10-12",
+   "subject": "Block saturated Linux pipe writev"
+  },
+  {
+   "hash": "adf8e00a6aa5b419c622820293da7a5bed339b78",
+   "date": "2026-10-12",
+   "subject": "Block saturated Linux eventfd writes"
+  },
+  {
+   "hash": "da21452825e5aa3f384020b5c3a7ba21e492827b",
+   "date": "2026-10-12",
+   "subject": "Restore complete Linux process registers",
+   "tags": [
+    "oci_storage"
+   ]
+  },
+  {
+   "hash": "fb85214e1bbc12df016d8907cbef38e9e7b5c179",
+   "date": "2026-10-12",
+   "subject": "Validate bounded Linux device namespace"
+  },
+  {
+   "hash": "e1efc8594266305b0aaa33570c4c79098a929c3e",
+   "date": "2026-10-12",
+   "subject": "Validate bounded Linux signal lifecycle",
+   "tags": [
+    "abi_compat_gap",
+    "logic_state_machine"
+   ]
+  },
+  {
+   "hash": "34a237f7b03822a20aa82cf8be17e1b44e297636",
+   "date": "2026-10-12",
+   "subject": "Validate bounded Linux private futexes"
+  },
+  {
+   "hash": "43114af69b26da12e760bf12c74e0a279803d88c",
+   "date": "2026-10-12",
+   "subject": "Install crash-consistent volume record"
+  },
+  {
+   "hash": "fce04b88d947e4b7416b118e7b3870fad25d7857",
+   "date": "2026-10-12",
+   "subject": "Reject corrupt persistent media"
+  },
+  {
+   "hash": "cec5448edb8772e8a6d9e493528b02afc069e093",
+   "date": "2026-10-12",
+   "subject": "Isolate read-only virtio device grant"
+  },
+  {
+   "hash": "0bcb1c3ed2f382e232ae03cf3d84ec70bf2c4a02",
+   "date": "2026-10-12",
+   "subject": "Contain writable virtio control grant",
+   "tags": [
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "8e02c95f903436a3a74fc91edf895ebe33c47cc6",
+   "date": "2026-10-12",
+   "subject": "Isolate inactive virtio DMA lease",
+   "tags": [
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "0e27de4af202f848b6afb15cd75afea6bfc36414",
+   "date": "2026-10-12",
+   "subject": "Contain active idle virtio queue",
+   "tags": [
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "e01af6af67a3eb2e1ee28b64ed2e23359848afac",
+   "date": "2026-10-12",
+   "subject": "Validate DMA only after virtio quiescence"
+  },
+  {
+   "hash": "a252f603ff392849509953355f25b7046fcc4359",
+   "date": "2026-10-12",
+   "subject": "Validate virtio MSI-X discovery"
+  },
+  {
+   "hash": "e41aa9ab529eb48500c1d047748c0c766ef7b515",
+   "date": "2026-10-12",
+   "subject": "Block isolated virtio service on MSI-X"
+  },
+  {
+   "hash": "88596a89ba74c3ce35189a43371e965f2acb1f45",
+   "date": "2026-10-12",
+   "subject": "Bound isolated device waits with timer",
+   "tags": [
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "b994723aa116e02c91d32212cd75cec327ef0a4b",
+   "date": "2026-10-12",
+   "subject": "Prove isolated virtio durability sequence",
+   "tags": [
+    "logic_state_machine",
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "7cc8cf719bd5623726b68a23a58c94083d1c783a",
+   "date": "2026-10-12",
+   "subject": "Recover isolated virtio marker after reboot"
+  },
+  {
+   "hash": "7688e8b8de5371de139000cffe86039a2b706e58",
+   "date": "2026-10-12",
+   "subject": "Reject corrupt native volume media"
+  },
+  {
+   "hash": "59f8b0203d786684aad0907e7cf592063eb7528b",
+   "date": "2026-10-12",
+   "subject": "Contain incomplete native driver faults",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "1f139dac0cdbba07785dedc4bd52aa089fd27bd0",
+   "date": "2026-10-12",
+   "subject": "Recover native service after driver fault",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "79a306eabe22c79a3b6a19ffc41985b773953e76",
+   "date": "2026-10-12",
+   "subject": "Reject incompatible native service ABI"
+  },
+  {
+   "hash": "6d265dd8d7b3971d88f0828a456980398c7cc0aa",
+   "date": "2026-10-12",
+   "subject": "Validate structured native control descriptor"
+  },
+  {
+   "hash": "820ef1f8e387c8ade981cc92144220cd4c3f7d26",
+   "date": "2026-10-12",
+   "subject": "Reject malformed native control descriptors",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "544067d8314a173b0d53a9070ec788daed216f84",
+   "date": "2026-10-12",
+   "subject": "Resolve virtio IOMMU source scope",
+   "tags": [
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "57a4b9484e1f2e1e82a8ab531dc14288a276470e",
+   "date": "2026-10-12",
+   "subject": "Prove VT-d blocks unauthorized virtio DMA",
+   "tags": [
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "16f3da4348091c8d03df48c32a08acf6c819b487",
+   "date": "2026-10-12",
+   "subject": "Validate stable virtio network identity",
+   "tags": [
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "18b1d8e0dbfb01c61b5a29674586fec10424f1bd",
+   "date": "2026-10-12",
+   "subject": "Validate inert virtio network queues"
+  },
+  {
+   "hash": "7a2b7a4232c6980236da25bf66a653c2fd28bca2",
+   "date": "2026-10-12",
+   "subject": "Prove virtio network DMA confinement",
+   "tags": [
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "01b892930c8003b66ddb92d2535bdf2cb2407b3e",
+   "date": "2026-10-12",
+   "subject": "Reject malformed network bootstrap",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "b97d4f50ceb9e8fd6ce1daf5e616f17fda4d0684",
+   "date": "2026-10-12",
+   "subject": "Contain active network driver faults"
+  },
+  {
+   "hash": "d90c703d2f74e33011da64d03b1e4b7844cb2787",
+   "date": "2026-10-12",
+   "subject": "Block network service on TX interrupts"
+  },
+  {
+   "hash": "788a0688fcdde270e5294f6422e7ad708bd2db30",
+   "date": "2026-10-12",
+   "subject": "Contain malformed network replies"
+  },
+  {
+   "hash": "945a428e012aa3a91027b28b6125608f6d196e63",
+   "date": "2026-10-12",
+   "subject": "Bound packet waits with APIC deadlines",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "ef4e787ea084b45ebd6b692013e5a715b46b661b",
+   "date": "2026-10-12",
+   "subject": "Isolate Ethernet protocol parsing",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "4e603747dd995240f1a30ff3b8dee7a6ce9d98d7",
+   "date": "2026-10-12",
+   "subject": "Validate IPv4 frames in protocol service",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "732ee5d30bbec71978e326c6f6179652b9d6d442",
+   "date": "2026-10-12",
+   "subject": "Validate ICMP echo requests",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "a5a8e96c0a8518171e150f6a55e509ea8f66a965",
+   "date": "2026-10-12",
+   "subject": "Block full protocol egress without polling"
+  },
+  {
+   "hash": "96b66d7bcc434c947b61800e8c945f63fb61a143",
+   "date": "2026-10-12",
+   "subject": "Stop resident network service cleanly",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "9e02dda95b719a72e32405f072b4a53002047900",
+   "date": "2026-10-13",
+   "subject": "Reject unavailable container images"
+  },
+  {
+   "hash": "8c379da78dc0e1458db3cdb4885c99533bb4f4a6",
+   "date": "2026-10-13",
+   "subject": "Recover from empty controller input",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "616d9ad8f5a79cab282f9edb433f244b36511bb8",
+   "date": "2026-10-14",
+   "subject": "Fix OCI working directory path resolution"
+  },
+  {
+   "hash": "4fcf24e0adf0c2d2d1f72120d351654cbdc947b0",
+   "date": "2026-10-14",
+   "subject": "Fix OCI container restart cleanup",
+   "tags": [
+    "logic_state_machine",
+    "oci_storage"
+   ]
+  },
+  {
+   "hash": "399de724159d00a28e94b49cedd9bb81d95c5af3",
+   "date": "2026-10-14",
+   "subject": "Enforce native OCI platform selection",
+   "tags": [
+    "oci_storage"
+   ]
+  },
+  {
+   "hash": "2920c88fda5bb577ac41fa348c4fc71be9a3040b",
+   "date": "2026-10-14",
+   "subject": "Recover initial volume driver faults",
+   "tags": [
+    "oci_storage"
+   ]
+  },
+  {
+   "hash": "0e07506c4cf55d1e17b33f1f381169a9d398ae0c",
+   "date": "2026-10-14",
+   "subject": "Isolate OCI roots per container"
+  },
+  {
+   "hash": "738d87461a170a83abbf1b690d89b40f230a9b17",
+   "date": "2026-10-14",
+   "subject": "Isolate tmpfs per container",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "351357353050bfbcc999d81af5479a4780452943",
+   "date": "2026-10-14",
+   "subject": "Isolate container console state"
+  },
+  {
+   "hash": "c42203e2df6bd67c98426472d55b8a478144ca4b",
+   "date": "2026-10-14",
+   "subject": "Restore parent mmap state after fork",
+   "tags": [
+    "abi_compat_gap",
+    "logic_state_machine",
+    "oci_storage"
+   ]
+  },
+  {
+   "hash": "2efd4ad09d75ac3025cd3416ccd7aee0139a3b4e",
+   "date": "2026-10-14",
+   "subject": "Isolate OCI runtime memory by container"
+  },
+  {
+   "hash": "888e0a97b13e3917e2c37d0c0ae438c2af64e1fe",
+   "date": "2026-10-14",
+   "subject": "Remove volume recovery timing race",
+   "tags": [
+    "concurrency_timing",
+    "oci_storage"
+   ]
+  },
+  {
+   "hash": "68889507785db5807721e7edd7a0b0c0bd62220b",
+   "date": "2026-10-14",
+   "subject": "Update stability audit after volume fix",
+   "tags": [
+    "oci_storage"
+   ]
+  },
+  {
+   "hash": "8bcb8a360baa2bb4eefecb3c173dd62e2a3f7e5a",
+   "date": "2026-10-15",
+   "subject": "Fix expanded procfs directory enumeration"
+  },
+  {
+   "hash": "6eacd6681280646fd7af32c6e2ee1adb7da74307",
+   "date": "2026-10-15",
+   "subject": "Harden controller console input",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "41f1bcbb8523b2147835ce4441be81e75452f2f6",
+   "date": "2026-10-15",
+   "subject": "Fix controller backspace editing"
+  },
+  {
+   "hash": "1832a9c60207887f64319004962cff3a63b7ce41",
+   "date": "2026-10-15",
+   "subject": "Validate Linux compatibility ledger",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "afa828a54044de286e630fd1863b5492550f4638",
+   "date": "2026-10-15",
+   "subject": "Fix Linux directory probe semantics",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "b92e52c4fc711d9ff0e0351fa0343360291d6026",
+   "date": "2026-10-17",
+   "subject": "Enforce domain policy for host-global Linux calls"
+  },
+  {
+   "hash": "b34baee035f20e901321a1c74daf94022e314281",
+   "date": "2026-10-17",
+   "subject": "Enforce policy for Linux mount handles"
+  },
+  {
+   "hash": "af9af9349299b89812409d838ff03032ed90b76a",
+   "date": "2026-10-17",
+   "subject": "Fix Linux fixture random auxiliary data",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "89682f0bb2ab087cd279b79f7805bd78c67e8db2",
+   "date": "2026-10-17",
+   "subject": "Fix Linux process and descriptor conformance"
+  },
+  {
+   "hash": "a7f51473d8f2f3fd37d048421836c9a03a3c050a",
+   "date": "2026-10-17",
+   "subject": "Validate Linux process_mrelease pidfds",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "fc1528948702a8d8f8ab657e7716837a924e847e",
+   "date": "2026-10-17",
+   "subject": "Fix Linux runtime PTE metadata bits"
+  },
+  {
+   "hash": "a82e5b85ad1557975c4304c7b3586db7270b8d21",
+   "date": "2026-10-17",
+   "subject": "Handle Linux remap file pages boundary"
+  },
+  {
+   "hash": "53eec6faee6f5bf309e88aa7a7d303c05f60d10a",
+   "date": "2026-10-17",
+   "subject": "Recover ordinary robust futexes on exit"
+  },
+  {
+   "hash": "bdaf1f0d3ac28b61600a8357636c142b72f82164",
+   "date": "2026-10-17",
+   "subject": "Fix booted Linux conformance verifier"
+  },
+  {
+   "hash": "e73e64533f976d461100076e38e92f11e33dd34c",
+   "date": "2026-10-17",
+   "subject": "Repair Linux process verification",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "32a061a329f42e145fa0f89f258fed640fcd7a42",
+   "date": "2026-10-17",
+   "subject": "Isolate invalid process fixtures"
+  },
+  {
+   "hash": "77ccaaf69b94158dffc6a08dc87e7f22b6aef045",
+   "date": "2026-10-17",
+   "subject": "Correct Linux ABI ledger totals"
+  },
+  {
+   "hash": "bcff955bb0d7784acc53ef6538daa594a1aa1d54",
+   "date": "2026-10-18",
+   "subject": "Harden Linux getrandom compatibility",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "0db56ac791f0ec76c69b131772e7040f5a55fd47",
+   "date": "2026-10-18",
+   "subject": "Enforce mutable Linux resource limits"
+  },
+  {
+   "hash": "1846625463aa3306b29f2a3dd8883146b8ded62b",
+   "date": "2026-10-18",
+   "subject": "Enforce Linux file size limits",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "df6c5923f679dc11c2c1a5b61dcef07c9d83c038",
+   "date": "2026-10-18",
+   "subject": "Enforce Linux POSIX message queue limits",
+   "tags": [
+    "abi_compat_gap",
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "8c6f7c592a8413757cfc06495d6d33d09ad6e444",
+   "date": "2026-10-18",
+   "subject": "Enforce Unix in-flight descriptor limits",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "930cfdcbc66a56ec59a26767573705ee8256b519",
+   "date": "2026-10-18",
+   "subject": "Enforce Linux address space limits"
+  },
+  {
+   "hash": "7fcad85412520cabc30357c7e0e35f31647b395d",
+   "date": "2026-10-18",
+   "subject": "Validate Linux runtime pipe accounting",
+   "tags": [
+    "abi_compat_gap"
+   ]
+  },
+  {
+   "hash": "ec2bad46bf0be91614c4c88e8c96e2545189d1ee",
+   "date": "2026-10-18",
+   "subject": "Correct Linux pipe descriptor semantics",
+   "tags": [
+    "abi_compat_gap"
+   ]
+  },
+  {
+   "hash": "6eb6b672a2e0e2f41903d6c9291ff5406b5f4f27",
+   "date": "2026-10-18",
+   "subject": "Validate Linux poll readiness in ring 3",
+   "tags": [
+    "concurrency_timing",
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "4d8fabe6ccd91dd129e2da12875ffa09c1b87eb9",
+   "date": "2026-10-18",
+   "subject": "Validate Linux select descriptor semantics",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "eb81bdfd45381960f53483d6154154b341a7f2af",
+   "date": "2026-10-18",
+   "subject": "Validate Linux select wait arguments",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "ded64fb83ae769aa2187c50809859e329271fda4",
+   "date": "2026-10-18",
+   "subject": "Correct Linux scheduler UAPI semantics",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "d0454740700d470764e490014bc40e856e1286e8",
+   "date": "2026-10-18",
+   "subject": "Correct Linux process selector widths"
+  },
+  {
+   "hash": "3ed2e0880b2b98f380accb539ed3699a71892405",
+   "date": "2026-10-18",
+   "subject": "Correct Linux getgroups argument width"
+  },
+  {
+   "hash": "83e58db85a7b34c59ae01776eab4e033e3b4f39b",
+   "date": "2026-10-18",
+   "subject": "Enforce Linux mseal discard protection"
+  },
+  {
+   "hash": "e1e4ec631a11a2a57797676aa03d2e453145e99b",
+   "date": "2026-10-18",
+   "subject": "Correct Linux empty LSM queries"
+  },
+  {
+   "hash": "c010916d59c942d99e8cf7b3d846b843046a4f01",
+   "date": "2026-10-18",
+   "subject": "Enforce Linux post-exec process group barrier",
+   "tags": [
+    "abi_compat_gap"
+   ]
+  },
+  {
+   "hash": "70394f2ad6f1be6746dfc4b0a63b27b47dfd3c32",
+   "date": "2026-10-18",
+   "subject": "Restore stable OCI fork lifecycle",
+   "tags": [
+    "abi_compat_gap",
+    "logic_state_machine",
+    "oci_storage"
+   ]
+  },
+  {
+   "hash": "d89c6c0ac5e08e94826120c0bd6924a10c9dd393",
+   "date": "2026-10-18",
+   "subject": "Fix Rocky systemd generator exec",
+   "tags": [
+    "abi_compat_gap"
+   ]
+  },
+  {
+   "hash": "d767eb426ebb3568eb4604a964a3a83bec363552",
+   "date": "2026-10-19",
+   "subject": "Fix procfs mount identification for systemd"
+  },
+  {
+   "hash": "c0ebc31fc7e24548e7337468b19ee67bfd58b6a4",
+   "date": "2026-10-19",
+   "subject": "Fix systemd boot identity and shared mappings",
+   "tags": [
+    "abi_compat_gap"
+   ]
+  },
+  {
+   "hash": "6a79e3da2f606c487590bc739e0158384f8c726c",
+   "date": "2026-10-19",
+   "subject": "Fix pre-accept Unix socket delivery",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "a0e136b622ff522f1060f795c367be78b1653537",
+   "date": "2026-10-19",
+   "subject": "Fix Linux wait verification teardown"
+  },
+  {
+   "hash": "5df7abc96b5e064cc5ee8c4599fe3dd247fd165b",
+   "date": "2026-10-20",
+   "subject": "Fix detached Linux domain startup"
+  },
+  {
+   "hash": "f85b444ec374a12be10306fe4fbbe7d363683f47",
+   "date": "2026-10-21",
+   "subject": "Fix and verify paper rendering"
+  },
+  {
+   "hash": "7f898dd6e62e49ce998f08b73226b892293aabae",
+   "date": "2026-10-22",
+   "subject": "Tighten AI systems report"
+  },
+  {
+   "hash": "e477fcd0e056a28eb928d63483be2378b7f38ddf",
+   "date": "2026-10-23",
+   "subject": "Fix Linux thread yield scheduling",
+   "tags": [
+    "concurrency_timing"
+   ]
+  }
+ ],
+ "sample_110": [
+  {
+   "hash": "db4551a5842008baefe894c1485fa4a60065b725",
+   "date": "2026-10-10",
+   "subject": "Enforce capabilities at the control call gate",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "16873f2ede689cfe39c1b34db0709f90275fc161",
+   "date": "2026-10-10",
+   "subject": "Report bounded lifecycle event overflow",
+   "tags": [
+    "logic_state_machine",
+    "memory_resource"
+   ]
+  },
+  {
+   "hash": "7d43968cb0aa9d364a0bb8d82c0f7e711a937f87",
+   "date": "2026-10-10",
+   "subject": "Deliver service fault events",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "f97fa48b977cd811e2b98b8fe2f77dca7f47d46b",
+   "date": "2026-10-10",
+   "subject": "Validate user copies per page",
+   "tags": [
+    "memory_resource"
+   ]
+  },
+  {
+   "hash": "247ceac55ceba96910cf798be28a4af8d65366e3",
+   "date": "2026-10-10",
+   "subject": "Validate service resource disposal",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "19462c1ee56ae909ae59456b3ade3d3f7b710fc9",
+   "date": "2026-10-10",
+   "subject": "Enforce per-domain thread budgets",
+   "tags": [
+    "logic_state_machine"
+   ]
+  },
+  {
+   "hash": "d6911ed2dcbfc344c4e5298863d0eeaed5d3c493",
+   "date": "2026-10-10",
+   "subject": "Verify stale service generation rejection",
+   "tags": [
+    "logic_state_machine"
+   ]
+  },
+  {
+   "hash": "7a3262e8dd1f44fb0da54aac584a55c8a6757647",
+   "date": "2026-10-10",
+   "subject": "Contain ring-3 context faults",
+   "tags": [
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "36b227de20028bc4d2f0841aea08267fb291250d",
+   "date": "2026-10-10",
+   "subject": "Resolve proof entry labels inline",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "6247a0f8463dc36c747e270724c6e0da13bbd997",
+   "date": "2026-10-10",
+   "subject": "Contain sequence exhaustion",
+   "tags": [
+    "logic_state_machine"
+   ]
+  },
+  {
+   "hash": "1a606e7629e0deb762ee4ab83c8a5a012a32500e",
+   "date": "2026-10-10",
+   "subject": "Execute stop-only auxiliary fault path",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "16e45cfa93d9c8e6194b0127f870dedd6ddf640d",
+   "date": "2026-10-10",
+   "subject": "Enforce kernel image W^X from PE sections",
+   "tags": [
+    "oci_storage"
+   ]
+  },
+  {
+   "hash": "edb2ea3fafba36e1e4d59dc7d5e59d73725301e9",
+   "date": "2026-10-10",
+   "subject": "Isolate service-domain authority",
+   "tags": [
+    "logic_state_machine",
+    "authority_security"
+   ]
+  },
+  {
+   "hash": "e7cc4271f0898b68558f0f55e36b33519defdcb9",
+   "date": "2026-10-10",
+   "subject": "Retain auxiliary address space ownership",
+   "tags": [
+    "logic_state_machine",
+    "memory_resource"
+   ]
+  },
+  {
+   "hash": "ed317c37f8cfced8fc4ab621f391abce583743b1",
+   "date": "2026-10-10",
+   "subject": "Enforce capability authority derivation",
+   "tags": [
+    "authority_security"
+   ]
+  },
+  {
+   "hash": "027b3b7be9adb1d95cf5b40f3a1e95aa623c4932",
+   "date": "2026-10-10",
+   "subject": "Prevent privileged user-mode instructions",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "89b80634d11eadeab8bb920c160aad89611270e9",
+   "date": "2026-10-10",
+   "subject": "Validate scheduled user mappings",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "7517918225d0135644a8bb72358819ec493935db",
+   "date": "2026-10-10",
+   "subject": "Restore kernel root before auxiliary release",
+   "tags": [
+    "oci_storage"
+   ]
+  },
+  {
+   "hash": "d939f0ed60cd59e8c058ecbedb434de5d939e822",
+   "date": "2026-10-10",
+   "subject": "Prove UMIP fault containment in ring 3",
+   "tags": [
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "c2655bfaf19b6d21ccfabce73f8c4ec527895ad6",
+   "date": "2026-10-10",
+   "subject": "Enforce auxiliary service quiescence",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "d644a7e50f3381dd6db3dd53ba2a121f957dbdbc",
+   "date": "2026-10-10",
+   "subject": "Enforce per-domain physical frame budgets",
+   "tags": [
+    "logic_state_machine",
+    "memory_resource"
+   ]
+  },
+  {
+   "hash": "cd59b7ae4a237176e26ebf6306db675cf085603d",
+   "date": "2026-10-10",
+   "subject": "Validate bounded user page tables",
+   "tags": [
+    "memory_resource"
+   ]
+  },
+  {
+   "hash": "b2cbdb89ec846ae195d1f0f87b3376c2cc16cebf",
+   "date": "2026-10-10",
+   "subject": "Reject stale physical frame leases",
+   "tags": [
+    "logic_state_machine",
+    "memory_resource"
+   ]
+  },
+  {
+   "hash": "e41b3a76407407197b9f22c4892cd84549dc5240",
+   "date": "2026-10-10",
+   "subject": "Enforce fault diagnostic authority",
+   "tags": [
+    "authority_security"
+   ]
+  },
+  {
+   "hash": "08f9df4630ec88e30f9c15a69ac76241c0302442",
+   "date": "2026-10-11",
+   "subject": "Bound Linux copies to ELF memory",
+   "tags": [
+    "abi_compat_gap",
+    "memory_resource"
+   ]
+  },
+  {
+   "hash": "4d62ae5045b5dccf88d210fadfe4c73e84ca57f7",
+   "date": "2026-10-11",
+   "subject": "Validate bounded Linux GNU RELRO metadata",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "739bcd30a43f8ced4d30ff7afbe1f575654d967f",
+   "date": "2026-10-11",
+   "subject": "Validate auxiliary exit descriptor",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "e1458aa7c2306943b2f96cd7168d6550a2dd5180",
+   "date": "2026-10-11",
+   "subject": "Reject clone while Linux child is live",
+   "tags": [
+    "abi_compat_gap"
+   ]
+  },
+  {
+   "hash": "ebdd07b542cbd7e110389498ad52fa324c177c96",
+   "date": "2026-10-11",
+   "subject": "Contain network service faults",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "dbd3d7b73e1c4fb64c96b4147b85ccbc409a7766",
+   "date": "2026-10-11",
+   "subject": "Resolve measured directory children by index",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "80329745a36f590b48f43187ca71509e310adb0c",
+   "date": "2026-10-11",
+   "subject": "Validate auxiliary service identity",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "8f7f57bd8b11950ffc9b02ebd38d5a53bcc832f9",
+   "date": "2026-10-11",
+   "subject": "Validate bounded Linux dependency lists",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "78481614fb277e91aa6e1a99a15e625333ff2049",
+   "date": "2026-10-11",
+   "subject": "Isolate Linux thread exit state",
+   "tags": [
+    "logic_state_machine"
+   ]
+  },
+  {
+   "hash": "b9eeed8e099faa0c5e0c0fd41188bdfbbb331a60",
+   "date": "2026-10-11",
+   "subject": "Resolve bounded Linux dynamic symbol",
+   "tags": [
+    "abi_compat_gap"
+   ]
+  },
+  {
+   "hash": "56e5c9d628251a81c58eba7e9e15370b9c29b73a",
+   "date": "2026-10-11",
+   "subject": "Enforce directional Linux VMA copies",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "03f02eff04e196582cee2cf613307ee846eff5e6",
+   "date": "2026-10-11",
+   "subject": "Validate Linux copies across adjacent areas",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "7498c5df43f65b5b442c4db32493a5568242c8d5",
+   "date": "2026-10-11",
+   "subject": "Reject unresolved embedded text relocations",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "717ade1b0a41f10aa7df220b4bd339456377a3ff",
+   "date": "2026-10-11",
+   "subject": "Reject Linux entry metadata overlap",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "b35b1a746a5abc043ad1ecd065e43051805fb838",
+   "date": "2026-10-11",
+   "subject": "Validate network device commands",
+   "tags": [
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "a9b9f10fe2c082d4825b012c76a8ed3fb1be1c21",
+   "date": "2026-10-11",
+   "subject": "Resolve Linux exec from measured root",
+   "tags": [
+    "abi_compat_gap"
+   ]
+  },
+  {
+   "hash": "4b46a85bec2f40120304d7879efde9d3442ba60a",
+   "date": "2026-10-11",
+   "subject": "Resolve Linux TLS symbols at link time",
+   "tags": [
+    "abi_compat_gap"
+   ]
+  },
+  {
+   "hash": "9d07863ae3f08bd3194277a03dcd06499420f8d4",
+   "date": "2026-10-11",
+   "subject": "Enforce Linux probe text bounds",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "85e364e65f5ff9b09eeae94605908a2fcdc33836",
+   "date": "2026-10-11",
+   "subject": "Validate Linux relocation shapes in userspace",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "c329a838d0e0bd9cb77ea2f05c57ae6c18de57c3",
+   "date": "2026-10-11",
+   "subject": "Resolve Linux dependency path in userspace",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "f134b19ca9847a85778daa818a0c7b7c666045d9",
+   "date": "2026-10-11",
+   "subject": "Reject page-aliasing Linux segments",
+   "tags": [
+    "memory_resource"
+   ]
+  },
+  {
+   "hash": "242045c0eda7112a046588e2bb25b95c1a4460c9",
+   "date": "2026-10-11",
+   "subject": "Invalidate stale network gateways",
+   "tags": [
+    "logic_state_machine"
+   ]
+  },
+  {
+   "hash": "9348a37d0d89c8c4bc72b7750220a08693e83de9",
+   "date": "2026-10-11",
+   "subject": "Isolate Linux dependency mapping slots",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "9c8b4bbabda9afb2a0623138eb5abb762406ce1d",
+   "date": "2026-10-11",
+   "subject": "Prove write-only network configuration",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "67d3fb3c586c2a3018d11ee5a4936044c39e0329",
+   "date": "2026-10-11",
+   "subject": "Validate bounded Linux TLS template",
+   "tags": [
+    "abi_compat_gap"
+   ]
+  },
+  {
+   "hash": "6e5b0134bb03578dbb11a5743adf2aa6ea3c2335",
+   "date": "2026-10-11",
+   "subject": "Bound Linux syscall stack movement",
+   "tags": [
+    "abi_compat_gap"
+   ]
+  },
+  {
+   "hash": "26bac1745a1e80a402595d7b8637d95d31ad1dd0",
+   "date": "2026-10-11",
+   "subject": "Block Linux signal waits in scheduler",
+   "tags": [
+    "abi_compat_gap",
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "913b5ba116781cddf98bb095318fb2f0c8e808ad",
+   "date": "2026-10-11",
+   "subject": "Bound Linux copies to current heap",
+   "tags": [
+    "memory_resource"
+   ]
+  },
+  {
+   "hash": "4012dcb558a9ae68be2b87782532227ed35db7c1",
+   "date": "2026-10-11",
+   "subject": "Prove read-only network observation",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "6905de32bb5fdfb807d5a91cf8dab323f7c7ddcc",
+   "date": "2026-10-11",
+   "subject": "Stop yielded auxiliary workloads",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "544067d8314a173b0d53a9070ec788daed216f84",
+   "date": "2026-10-12",
+   "subject": "Resolve virtio IOMMU source scope",
+   "tags": [
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "ef4e787ea084b45ebd6b692013e5a715b46b661b",
+   "date": "2026-10-12",
+   "subject": "Isolate Ethernet protocol parsing",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "2ea48f80d6c626fbd0060bfbde3b8d60b2fc2179",
+   "date": "2026-10-12",
+   "subject": "Block empty Linux eventfd reads",
+   "tags": [
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "58356e3f187f2bb5fdbff36bbf0277fb6626ec0d",
+   "date": "2026-10-12",
+   "subject": "Block bounded Linux poll waits",
+   "tags": [
+    "concurrency_timing",
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "96b66d7bcc434c947b61800e8c945f63fb61a143",
+   "date": "2026-10-12",
+   "subject": "Stop resident network service cleanly",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "4e603747dd995240f1a30ff3b8dee7a6ce9d98d7",
+   "date": "2026-10-12",
+   "subject": "Validate IPv4 frames in protocol service",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "945a428e012aa3a91027b28b6125608f6d196e63",
+   "date": "2026-10-12",
+   "subject": "Bound packet waits with APIC deadlines",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "eecc68c9c67a9b59f977812ba792cbc193ae4b2d",
+   "date": "2026-10-12",
+   "subject": "Block bounded Linux epoll waits",
+   "tags": [
+    "abi_compat_gap",
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "e1efc8594266305b0aaa33570c4c79098a929c3e",
+   "date": "2026-10-12",
+   "subject": "Validate bounded Linux signal lifecycle",
+   "tags": [
+    "abi_compat_gap",
+    "logic_state_machine"
+   ]
+  },
+  {
+   "hash": "1f139dac0cdbba07785dedc4bd52aa089fd27bd0",
+   "date": "2026-10-12",
+   "subject": "Recover native service after driver fault",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "b994723aa116e02c91d32212cd75cec327ef0a4b",
+   "date": "2026-10-12",
+   "subject": "Prove isolated virtio durability sequence",
+   "tags": [
+    "logic_state_machine",
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "732ee5d30bbec71978e326c6f6179652b9d6d442",
+   "date": "2026-10-12",
+   "subject": "Validate ICMP echo requests",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "820ef1f8e387c8ade981cc92144220cd4c3f7d26",
+   "date": "2026-10-12",
+   "subject": "Reject malformed native control descriptors",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "7a2b7a4232c6980236da25bf66a653c2fd28bca2",
+   "date": "2026-10-12",
+   "subject": "Prove virtio network DMA confinement",
+   "tags": [
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "01b892930c8003b66ddb92d2535bdf2cb2407b3e",
+   "date": "2026-10-12",
+   "subject": "Reject malformed network bootstrap",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "da21452825e5aa3f384020b5c3a7ba21e492827b",
+   "date": "2026-10-12",
+   "subject": "Restore complete Linux process registers",
+   "tags": [
+    "oci_storage"
+   ]
+  },
+  {
+   "hash": "88596a89ba74c3ce35189a43371e965f2acb1f45",
+   "date": "2026-10-12",
+   "subject": "Bound isolated device waits with timer",
+   "tags": [
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "59f8b0203d786684aad0907e7cf592063eb7528b",
+   "date": "2026-10-12",
+   "subject": "Contain incomplete native driver faults",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "6599ac540af34c7ac3e6dce52b93916c344156f9",
+   "date": "2026-10-12",
+   "subject": "Block empty Linux pipe reads",
+   "tags": [
+    "abi_compat_gap",
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "0bcb1c3ed2f382e232ae03cf3d84ec70bf2c4a02",
+   "date": "2026-10-12",
+   "subject": "Contain writable virtio control grant",
+   "tags": [
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "b117b2d28a6513c3ca8e2948aeaaeda30652def1",
+   "date": "2026-10-12",
+   "subject": "Block masked Linux epoll waits",
+   "tags": [
+    "abi_compat_gap",
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "16f3da4348091c8d03df48c32a08acf6c819b487",
+   "date": "2026-10-12",
+   "subject": "Validate stable virtio network identity",
+   "tags": [
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "20e32c89333a8b04d72f2c84fe40670c8f2340f8",
+   "date": "2026-10-12",
+   "subject": "Isolate Linux signal masks per thread",
+   "tags": [
+    "abi_compat_gap"
+   ]
+  },
+  {
+   "hash": "57a4b9484e1f2e1e82a8ab531dc14288a276470e",
+   "date": "2026-10-12",
+   "subject": "Prove VT-d blocks unauthorized virtio DMA",
+   "tags": [
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "0e27de4af202f848b6afb15cd75afea6bfc36414",
+   "date": "2026-10-12",
+   "subject": "Contain active idle virtio queue",
+   "tags": [
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "8e02c95f903436a3a74fc91edf895ebe33c47cc6",
+   "date": "2026-10-12",
+   "subject": "Isolate inactive virtio DMA lease",
+   "tags": [
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "8c379da78dc0e1458db3cdb4885c99533bb4f4a6",
+   "date": "2026-10-13",
+   "subject": "Recover from empty controller input",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "c42203e2df6bd67c98426472d55b8a478144ca4b",
+   "date": "2026-10-14",
+   "subject": "Restore parent mmap state after fork",
+   "tags": [
+    "abi_compat_gap",
+    "logic_state_machine",
+    "oci_storage"
+   ]
+  },
+  {
+   "hash": "399de724159d00a28e94b49cedd9bb81d95c5af3",
+   "date": "2026-10-14",
+   "subject": "Enforce native OCI platform selection",
+   "tags": [
+    "oci_storage"
+   ]
+  },
+  {
+   "hash": "4fcf24e0adf0c2d2d1f72120d351654cbdc947b0",
+   "date": "2026-10-14",
+   "subject": "Fix OCI container restart cleanup",
+   "tags": [
+    "logic_state_machine",
+    "oci_storage"
+   ]
+  },
+  {
+   "hash": "68889507785db5807721e7edd7a0b0c0bd62220b",
+   "date": "2026-10-14",
+   "subject": "Update stability audit after volume fix",
+   "tags": [
+    "oci_storage"
+   ]
+  },
+  {
+   "hash": "2920c88fda5bb577ac41fa348c4fc71be9a3040b",
+   "date": "2026-10-14",
+   "subject": "Recover initial volume driver faults",
+   "tags": [
+    "oci_storage"
+   ]
+  },
+  {
+   "hash": "738d87461a170a83abbf1b690d89b40f230a9b17",
+   "date": "2026-10-14",
+   "subject": "Isolate tmpfs per container",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "888e0a97b13e3917e2c37d0c0ae438c2af64e1fe",
+   "date": "2026-10-14",
+   "subject": "Remove volume recovery timing race",
+   "tags": [
+    "concurrency_timing",
+    "oci_storage"
+   ]
+  },
+  {
+   "hash": "6eacd6681280646fd7af32c6e2ee1adb7da74307",
+   "date": "2026-10-15",
+   "subject": "Harden controller console input",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "afa828a54044de286e630fd1863b5492550f4638",
+   "date": "2026-10-15",
+   "subject": "Fix Linux directory probe semantics",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "1832a9c60207887f64319004962cff3a63b7ce41",
+   "date": "2026-10-15",
+   "subject": "Validate Linux compatibility ledger",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "af9af9349299b89812409d838ff03032ed90b76a",
+   "date": "2026-10-17",
+   "subject": "Fix Linux fixture random auxiliary data",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "a7f51473d8f2f3fd37d048421836c9a03a3c050a",
+   "date": "2026-10-17",
+   "subject": "Validate Linux process_mrelease pidfds",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "e73e64533f976d461100076e38e92f11e33dd34c",
+   "date": "2026-10-17",
+   "subject": "Repair Linux process verification",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "d89c6c0ac5e08e94826120c0bd6924a10c9dd393",
+   "date": "2026-10-18",
+   "subject": "Fix Rocky systemd generator exec",
+   "tags": [
+    "abi_compat_gap"
+   ]
+  },
+  {
+   "hash": "70394f2ad6f1be6746dfc4b0a63b27b47dfd3c32",
+   "date": "2026-10-18",
+   "subject": "Restore stable OCI fork lifecycle",
+   "tags": [
+    "abi_compat_gap",
+    "logic_state_machine",
+    "oci_storage"
+   ]
+  },
+  {
+   "hash": "ec2bad46bf0be91614c4c88e8c96e2545189d1ee",
+   "date": "2026-10-18",
+   "subject": "Correct Linux pipe descriptor semantics",
+   "tags": [
+    "abi_compat_gap"
+   ]
+  },
+  {
+   "hash": "c010916d59c942d99e8cf7b3d846b843046a4f01",
+   "date": "2026-10-18",
+   "subject": "Enforce Linux post-exec process group barrier",
+   "tags": [
+    "abi_compat_gap"
+   ]
+  },
+  {
+   "hash": "6eb6b672a2e0e2f41903d6c9291ff5406b5f4f27",
+   "date": "2026-10-18",
+   "subject": "Validate Linux poll readiness in ring 3",
+   "tags": [
+    "concurrency_timing",
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "8c6f7c592a8413757cfc06495d6d33d09ad6e444",
+   "date": "2026-10-18",
+   "subject": "Enforce Unix in-flight descriptor limits",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "7fcad85412520cabc30357c7e0e35f31647b395d",
+   "date": "2026-10-18",
+   "subject": "Validate Linux runtime pipe accounting",
+   "tags": [
+    "abi_compat_gap"
+   ]
+  },
+  {
+   "hash": "1846625463aa3306b29f2a3dd8883146b8ded62b",
+   "date": "2026-10-18",
+   "subject": "Enforce Linux file size limits",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "4d8fabe6ccd91dd129e2da12875ffa09c1b87eb9",
+   "date": "2026-10-18",
+   "subject": "Validate Linux select descriptor semantics",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "df6c5923f679dc11c2c1a5b61dcef07c9d83c038",
+   "date": "2026-10-18",
+   "subject": "Enforce Linux POSIX message queue limits",
+   "tags": [
+    "abi_compat_gap",
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "eb81bdfd45381960f53483d6154154b341a7f2af",
+   "date": "2026-10-18",
+   "subject": "Validate Linux select wait arguments",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "ded64fb83ae769aa2187c50809859e329271fda4",
+   "date": "2026-10-18",
+   "subject": "Correct Linux scheduler UAPI semantics",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "bcff955bb0d7784acc53ef6538daa594a1aa1d54",
+   "date": "2026-10-18",
+   "subject": "Harden Linux getrandom compatibility",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "6a79e3da2f606c487590bc739e0158384f8c726c",
+   "date": "2026-10-19",
+   "subject": "Fix pre-accept Unix socket delivery",
+   "tags": [
+    "other"
+   ]
+  },
+  {
+   "hash": "c0ebc31fc7e24548e7337468b19ee67bfd58b6a4",
+   "date": "2026-10-19",
+   "subject": "Fix systemd boot identity and shared mappings",
+   "tags": [
+    "abi_compat_gap"
+   ]
+  },
+  {
+   "hash": "e477fcd0e056a28eb928d63483be2378b7f38ddf",
+   "date": "2026-10-23",
+   "subject": "Fix Linux thread yield scheduling",
+   "tags": [
+    "concurrency_timing"
+   ]
+  }
+ ],
+ "deep_30": [
+  {
+   "hash": "db4551a58",
+   "date": "2026-10-10",
+   "subject": "Enforce capabilities at the control call gate",
+   "nfiles": 6,
+   "nlines_changed": 78,
+   "unsafe_contact_lines": 0,
+   "tags": [
+    "abi_compat_gap",
+    "logic_state_machine",
+    "concurrency_timing",
+    "driver_io_dma",
+    "oci_storage",
+    "authority_security"
+   ]
+  },
+  {
+   "hash": "16873f2ed",
+   "date": "2026-10-10",
+   "subject": "Report bounded lifecycle event overflow",
+   "nfiles": 5,
+   "nlines_changed": 72,
+   "unsafe_contact_lines": 0,
+   "tags": [
+    "abi_compat_gap",
+    "logic_state_machine",
+    "concurrency_timing",
+    "memory_resource",
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "7d43968cb",
+   "date": "2026-10-10",
+   "subject": "Deliver service fault events",
+   "nfiles": 13,
+   "nlines_changed": 198,
+   "unsafe_contact_lines": 0,
+   "tags": [
+    "abi_compat_gap",
+    "logic_state_machine"
+   ]
+  },
+  {
+   "hash": "f97fa48b9",
+   "date": "2026-10-10",
+   "subject": "Validate user copies per page",
+   "nfiles": 4,
+   "nlines_changed": 49,
+   "unsafe_contact_lines": 0,
+   "tags": [
+    "memory_resource"
+   ]
+  },
+  {
+   "hash": "247ceac55",
+   "date": "2026-10-10",
+   "subject": "Validate service resource disposal",
+   "nfiles": 2,
+   "nlines_changed": 20,
+   "unsafe_contact_lines": 0,
+   "tags": [
+    "logic_state_machine",
+    "memory_resource"
+   ]
+  },
+  {
+   "hash": "08f9df463",
+   "date": "2026-10-11",
+   "subject": "Bound Linux copies to ELF memory",
+   "nfiles": 7,
+   "nlines_changed": 100,
+   "unsafe_contact_lines": 8,
+   "tags": [
+    "abi_compat_gap",
+    "memory_resource"
+   ]
+  },
+  {
+   "hash": "4d62ae504",
+   "date": "2026-10-11",
+   "subject": "Validate bounded Linux GNU RELRO metadata",
+   "nfiles": 7,
+   "nlines_changed": 139,
+   "unsafe_contact_lines": 0,
+   "tags": [
+    "abi_compat_gap",
+    "oci_storage"
+   ]
+  },
+  {
+   "hash": "739bcd30a",
+   "date": "2026-10-11",
+   "subject": "Validate auxiliary exit descriptor",
+   "nfiles": 8,
+   "nlines_changed": 82,
+   "unsafe_contact_lines": 0,
+   "tags": [
+    "logic_state_machine",
+    "perf_regression"
+   ]
+  },
+  {
+   "hash": "e1458aa7c",
+   "date": "2026-10-11",
+   "subject": "Reject clone while Linux child is live",
+   "nfiles": 7,
+   "nlines_changed": 36,
+   "unsafe_contact_lines": 0,
+   "tags": [
+    "abi_compat_gap",
+    "logic_state_machine"
+   ]
+  },
+  {
+   "hash": "ebdd07b54",
+   "date": "2026-10-11",
+   "subject": "Contain network service faults",
+   "nfiles": 5,
+   "nlines_changed": 106,
+   "unsafe_contact_lines": 1,
+   "tags": [
+    "abi_compat_gap",
+    "logic_state_machine",
+    "memory_resource",
+    "driver_io_dma",
+    "oci_storage",
+    "authority_security"
+   ]
+  },
+  {
+   "hash": "dbd3d7b73",
+   "date": "2026-10-11",
+   "subject": "Resolve measured directory children by index",
+   "nfiles": 10,
+   "nlines_changed": 4637,
+   "unsafe_contact_lines": 0,
+   "tags": [
+    "abi_compat_gap",
+    "oci_storage"
+   ]
+  },
+  {
+   "hash": "80329745a",
+   "date": "2026-10-11",
+   "subject": "Validate auxiliary service identity",
+   "nfiles": 8,
+   "nlines_changed": 89,
+   "unsafe_contact_lines": 0,
+   "tags": [
+    "logic_state_machine"
+   ]
+  },
+  {
+   "hash": "8f7f57bd8",
+   "date": "2026-10-11",
+   "subject": "Validate bounded Linux dependency lists",
+   "nfiles": 10,
+   "nlines_changed": 286,
+   "unsafe_contact_lines": 0,
+   "tags": [
+    "abi_compat_gap",
+    "memory_resource",
+    "oci_storage"
+   ]
+  },
+  {
+   "hash": "78481614f",
+   "date": "2026-10-11",
+   "subject": "Isolate Linux thread exit state",
+   "nfiles": 6,
+   "nlines_changed": 143,
+   "unsafe_contact_lines": 0,
+   "tags": [
+    "abi_compat_gap",
+    "logic_state_machine"
+   ]
+  },
+  {
+   "hash": "b9eeed8e0",
+   "date": "2026-10-11",
+   "subject": "Resolve bounded Linux dynamic symbol",
+   "nfiles": 7,
+   "nlines_changed": 339,
+   "unsafe_contact_lines": 0,
+   "tags": [
+    "abi_compat_gap",
+    "oci_storage"
+   ]
+  },
+  {
+   "hash": "56e5c9d62",
+   "date": "2026-10-11",
+   "subject": "Enforce directional Linux VMA copies",
+   "nfiles": 8,
+   "nlines_changed": 57,
+   "unsafe_contact_lines": 0,
+   "tags": [
+    "abi_compat_gap",
+    "memory_resource",
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "03f02eff0",
+   "date": "2026-10-11",
+   "subject": "Validate Linux copies across adjacent areas",
+   "nfiles": 8,
+   "nlines_changed": 2042,
+   "unsafe_contact_lines": 0,
+   "tags": [
+    "abi_compat_gap",
+    "memory_resource",
+    "authority_security"
+   ]
+  },
+  {
+   "hash": "544067d83",
+   "date": "2026-10-12",
+   "subject": "Resolve virtio IOMMU source scope",
+   "nfiles": 7,
+   "nlines_changed": 193,
+   "unsafe_contact_lines": 10,
+   "tags": [
+    "abi_compat_gap",
+    "logic_state_machine",
+    "memory_resource",
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "ef4e787ea",
+   "date": "2026-10-12",
+   "subject": "Isolate Ethernet protocol parsing",
+   "nfiles": 21,
+   "nlines_changed": 1001,
+   "unsafe_contact_lines": 9,
+   "tags": [
+    "abi_compat_gap",
+    "logic_state_machine",
+    "concurrency_timing",
+    "memory_resource",
+    "driver_io_dma",
+    "oci_storage",
+    "authority_security"
+   ]
+  },
+  {
+   "hash": "2ea48f80d",
+   "date": "2026-10-12",
+   "subject": "Block empty Linux eventfd reads",
+   "nfiles": 7,
+   "nlines_changed": 2829,
+   "unsafe_contact_lines": 0,
+   "tags": [
+    "abi_compat_gap",
+    "logic_state_machine",
+    "concurrency_timing",
+    "memory_resource",
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "58356e3f1",
+   "date": "2026-10-12",
+   "subject": "Block bounded Linux poll waits",
+   "nfiles": 7,
+   "nlines_changed": 3063,
+   "unsafe_contact_lines": 0,
+   "tags": [
+    "abi_compat_gap",
+    "logic_state_machine",
+    "concurrency_timing",
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "96b66d7bc",
+   "date": "2026-10-12",
+   "subject": "Stop resident network service cleanly",
+   "nfiles": 19,
+   "nlines_changed": 1356,
+   "unsafe_contact_lines": 5,
+   "tags": [
+    "abi_compat_gap",
+    "logic_state_machine",
+    "concurrency_timing",
+    "memory_resource",
+    "driver_io_dma",
+    "authority_security"
+   ]
+  },
+  {
+   "hash": "4e603747d",
+   "date": "2026-10-12",
+   "subject": "Validate IPv4 frames in protocol service",
+   "nfiles": 15,
+   "nlines_changed": 1057,
+   "unsafe_contact_lines": 13,
+   "tags": [
+    "abi_compat_gap",
+    "logic_state_machine",
+    "memory_resource",
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "945a428e0",
+   "date": "2026-10-12",
+   "subject": "Bound packet waits with APIC deadlines",
+   "nfiles": 18,
+   "nlines_changed": 607,
+   "unsafe_contact_lines": 8,
+   "tags": [
+    "abi_compat_gap",
+    "logic_state_machine",
+    "concurrency_timing",
+    "memory_resource",
+    "driver_io_dma",
+    "oci_storage",
+    "authority_security"
+   ]
+  },
+  {
+   "hash": "eecc68c9c",
+   "date": "2026-10-12",
+   "subject": "Block bounded Linux epoll waits",
+   "nfiles": 7,
+   "nlines_changed": 3387,
+   "unsafe_contact_lines": 0,
+   "tags": [
+    "abi_compat_gap",
+    "concurrency_timing",
+    "driver_io_dma"
+   ]
+  },
+  {
+   "hash": "e1efc8594",
+   "date": "2026-10-12",
+   "subject": "Validate bounded Linux signal lifecycle",
+   "nfiles": 8,
+   "nlines_changed": 7009,
+   "unsafe_contact_lines": 0,
+   "tags": [
+    "abi_compat_gap",
+    "logic_state_machine"
+   ]
+  },
+  {
+   "hash": "8c379da78",
+   "date": "2026-10-13",
+   "subject": "Recover from empty controller input",
+   "nfiles": 3,
+   "nlines_changed": 13,
+   "unsafe_contact_lines": 0,
+   "tags": [
+    "memory_resource",
+    "perf_regression"
+   ]
+  },
+  {
+   "hash": "d89c6c0ac",
+   "date": "2026-10-18",
+   "subject": "Fix Rocky systemd generator exec",
+   "nfiles": 6,
+   "nlines_changed": 156,
+   "unsafe_contact_lines": 0,
+   "tags": [
+    "abi_compat_gap",
+    "logic_state_machine",
+    "memory_resource",
+    "driver_io_dma",
+    "oci_storage"
+   ]
+  },
+  {
+   "hash": "70394f2ad",
+   "date": "2026-10-18",
+   "subject": "Restore stable OCI fork lifecycle",
+   "nfiles": 5,
+   "nlines_changed": 112,
+   "unsafe_contact_lines": 0,
+   "tags": [
+    "abi_compat_gap",
+    "logic_state_machine",
+    "concurrency_timing",
+    "memory_resource",
+    "oci_storage"
+   ]
+  },
+  {
+   "hash": "6a79e3da2",
+   "date": "2026-10-19",
+   "subject": "Fix pre-accept Unix socket delivery",
+   "nfiles": 5,
+   "nlines_changed": 109,
+   "unsafe_contact_lines": 2,
+   "tags": [
+    "logic_state_machine",
+    "concurrency_timing",
+    "driver_io_dma",
+    "oci_storage"
+   ]
+  }
+ ]
+}

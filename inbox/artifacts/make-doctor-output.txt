@@ -1,0 +1,11 @@
+MISS cargo                    required
+MISS rustc                    required
+MISS clang                    required
+MISS qemu-system-x86_64       required
+MISS Q35 Intel IOMMU          required
+MISS virtio-blk platform DMA  required
+MISS virtio-net platform DMA  required
+MISS OVMF code                required (set OVMF_CODE)
+MISS OVMF variables           required (set OVMF_VARS)
+info host                     Linux/x86_64 via tcg
+make: *** [Makefile:70: doctor] Error 1
