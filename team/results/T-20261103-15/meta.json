@@ -1,0 +1,1 @@
+{"duration_min": 10, "tools": ["gh api (pulls/61/commits)", "git config --global/--local", "bash"], "verified_format": true, "status": "done"}
