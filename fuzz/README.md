@@ -13,6 +13,15 @@ upstream edits, zero rewrites). Two targets:
   Kernel-faithful fixed LOCAL/PEER endpoints; 65,600-byte cap (checksum u32
   accumulator overflow is kernel-unreachable). Seeds: `corpus-seed-protocol/`
   (34) + `protocol.dict`.
+- `volume_surfaces` — `crates/volume-format` (v2.7-3, rank-2 surface):
+  `Record::decode` -> `HostVolumeHeader::decode(payload)` kernel chain + the
+  `encode` producer side. Seeds: `corpus-seed-volume/` (26) + `volume.dict`.
+- `diff_pax_tar` + `diff_matrix` — v2.7-2 EXPERIMENTAL differential: the
+  ginux-oci PAX/tar semantics vs the reference `tar` crate on the same bytes
+  (record-only oracle, hash-deduped dumps; 33 crafted cases with a
+  1,638-byte minimal repro of the pseudo-entry class). Generated
+  `corpus-diff/` + `diff-dumps/` are git-ignored; `corpus-seed-diff/` (33)
+  is committed.
 
 Quality audit + measured rounds: `reports/fuzz-quality.md` (v2.6: 41M + 247M
 execs, zero crashes; source coverage 93.18% regions / 97.94% fns on oci,
