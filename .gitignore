@@ -9,3 +9,4 @@ fuzz/coverage/
 
 # Security findings: LOCAL ONLY (POLICY: never in the public repo)
 reports/private/
+fuzz/corpus-protocol/
