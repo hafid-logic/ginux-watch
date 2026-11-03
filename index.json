@@ -1,8 +1,72 @@
 {
- "generated_at_utc": "2026-11-03T02:51:57Z",
+ "generated_at_utc": "2026-11-03T10:41:18Z",
  "source_repo": "gmkurtzer/ginux",
- "item_count": 57,
+ "item_count": 60,
  "items": {
+  "60": {
+   "kind": "issue",
+   "title": "Ginux: \"S for Security\"",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "agentic",
+    "agents",
+    "based",
+    "com",
+    "couple",
+    "github",
+    "growing",
+    "hdae",
+    "https",
+    "instead"
+   ]
+  },
+  "59": {
+   "kind": "pr",
+   "title": "Fix domain-owned Linux payload page handling",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    "hdae/STATUS.md",
+    "hdae/gates-todo/37-linux-lazy-page-quota-regression.md",
+    "kernel/src/address_space.rs",
+    "kernel/src/arch/x86_64/cpu.rs",
+    "kernel/src/lib.rs",
+    "kernel/src/linux_process.rs"
+   ],
+   "keywords": [
+    "domain",
+    "owned",
+    "child",
+    "page",
+    "alpine",
+    "frames",
+    "linux",
+    "payload",
+    "128",
+    "backed"
+   ]
+  },
+  "58": {
+   "kind": "issue",
+   "title": "Offering fuzz targets for the PAX/OCI, ARP/IPv4/ICMP and volume-format parsers",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "crates",
+    "execs",
+    "fuzz",
+    "pax",
+    "regions",
+    "arp",
+    "crashes",
+    "format",
+    "ginux",
+    "harnesses"
+   ]
+  },
   "57": {
    "kind": "issue",
    "title": "Cannot start alpine/rocky domains",
@@ -25,8 +89,8 @@
   "56": {
    "kind": "pr",
    "title": "Drive the registry network clock from the calibrated TSC",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-03T06:32:05Z",
    "files": [
     "crates/native-abi/src/lib.rs",
     "kernel/src/arch/x86_64/cpu.rs",
@@ -254,7 +318,6 @@
    "state": "open",
    "merged_at": null,
    "files": [
-    "hdae/STATUS.md",
     "hdae/gates-done/38-bounded-blocking-socket-polls.md",
     "kernel/src/lib.rs",
     "kernel/src/linux_socket.rs",
@@ -671,7 +734,7 @@
   "30": {
    "kind": "issue",
    "title": "virtio-net common-capability length check off-by-seven: accepts 0x31, queue geometry reads u64 at 0x30",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -747,7 +810,7 @@
   "26": {
    "kind": "issue",
    "title": "Failed Linux init leaks six page-hierarchy frames (short-circuited release on the invalid path)",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -844,7 +907,7 @@
   "21": {
    "kind": "issue",
    "title": "getcwd off-by-one: 257-byte output buffer vs 258-byte requirement on 256-char paths — kernel panic",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -1340,18 +1403,85 @@
   }
  },
  "keywords": {
-  "ginux": [
-   57,
-   45,
-   42,
-   39,
-   23,
-   18,
-   12,
-   8,
+  "agentic": [
+   60
+  ],
+  "agents": [
+   60
+  ],
+  "based": [
+   60
+  ],
+  "com": [
+   60,
+   30,
+   29,
+   28,
+   27,
+   26,
+   25,
+   24,
+   22,
    5
   ],
+  "couple": [
+   60
+  ],
+  "github": [
+   60,
+   5
+  ],
+  "growing": [
+   60
+  ],
+  "hdae": [
+   60,
+   38,
+   37,
+   36,
+   13,
+   3
+  ],
+  "https": [
+   60,
+   29,
+   27,
+   24,
+   5
+  ],
+  "instead": [
+   60
+  ],
+  "domain": [
+   59,
+   57,
+   46,
+   39,
+   19
+  ],
+  "owned": [
+   59
+  ],
+  "child": [
+   59
+  ],
+  "page": [
+   59,
+   25
+  ],
+  "alpine": [
+   59,
+   57
+  ],
+  "frames": [
+   59,
+   53,
+   37,
+   27,
+   26
+  ],
   "linux": [
+   59,
    57,
    56,
    55,
@@ -1363,10 +1493,61 @@
    9,
    8
   ],
-  "fault": [
-   57
+  "payload": [
+   59,
+   34,
+   32
   ],
-  "alpine": [
+  "128": [
+   59
+  ],
+  "backed": [
+   59,
+   9
+  ],
+  "crates": [
+   58
+  ],
+  "execs": [
+   58
+  ],
+  "fuzz": [
+   58
+  ],
+  "pax": [
+   58,
+   44,
+   17
+  ],
+  "regions": [
+   58
+  ],
+  "arp": [
+   58
+  ],
+  "crashes": [
+   58
+  ],
+  "format": [
+   58,
+   23
+  ],
+  "ginux": [
+   58,
+   57,
+   45,
+   42,
+   39,
+   23,
+   18,
+   12,
+   8,
+   5
+  ],
+  "harnesses": [
+   58
+  ],
+  "fault": [
    57
   ],
   "init": [
@@ -1384,12 +1565,6 @@
   ],
   "549755813888": [
    57
-  ],
-  "domain": [
-   57,
-   46,
-   39,
-   19
   ],
   "failed": [
    57,
@@ -1543,12 +1718,6 @@
   ],
   "forced": [
    53
-  ],
-  "frames": [
-   53,
-   37,
-   27,
-   26
   ],
   "old": [
    53,
@@ -1796,10 +1965,6 @@
   "header": [
    44
   ],
-  "pax": [
-   44,
-   17
-  ],
   "000": [
    44
   ],
@@ -1940,13 +2105,6 @@
    25,
    18
   ],
-  "hdae": [
-   38,
-   37,
-   36,
-   13,
-   3
-  ],
   "array": [
    38
   ],
@@ -2016,10 +2174,6 @@
    34
   ],
   "pass": [
-   34,
-   32
-  ],
-  "payload": [
    34,
    32
   ],
@@ -2117,28 +2271,11 @@
   "accepts": [
    30
   ],
-  "com": [
-   30,
-   29,
-   28,
-   27,
-   26,
-   25,
-   24,
-   22,
-   5
-  ],
   "translation": [
    29
   ],
   "failure": [
    29
-  ],
-  "https": [
-   29,
-   27,
-   24,
-   5
   ],
   "inactive": [
    29
@@ -2178,9 +2315,6 @@
    8,
    7
   ],
-  "page": [
-   25
-  ],
   "sibling": [
    25
   ],
@@ -2204,9 +2338,6 @@
   ],
   "linuxactiveimagemapping": [
    24
-  ],
-  "format": [
-   23
   ],
   "offset": [
    23
@@ -2431,9 +2562,6 @@
   "policy": [
    9
   ],
-  "backed": [
-   9
-  ],
   "rocky": [
    8
   ],
@@ -2487,9 +2615,6 @@
   ],
   "autocompletion": [
    6
-  ],
-  "github": [
-   5
   ],
   "gmkurtzer": [
    5
