@@ -55,11 +55,16 @@ jobs:
       - name: Fuzz oci_surfaces
         run: |
           mkdir -p fuzz/corpus fuzz/artifacts
-          cargo fuzz run --target x86_64-unknown-linux-gnu oci_surfaces -- \
+          # v2.6-2: seeded corpus (fuzz/corpus-seed, committed) + dictionary for
+          # boundary fields; sanitizer address stated explicitly (was the
+          # implicit default in v2.5).
+          cargo fuzz run --target x86_64-unknown-linux-gnu --sanitizer address \
+            oci_surfaces -- \
             -max_total_time="${MAX_SECONDS}" \
             -rss_limit_mb=4096 \
             -artifact_prefix=fuzz/artifacts/ \
-            fuzz/corpus
+            -dict=fuzz/oci.dict \
+            fuzz/corpus fuzz/corpus-seed
 
       - name: Upload artifacts on crash
         if: failure()

@@ -72,3 +72,61 @@
 المصادر: llvm-cov/profdata أعلاه؛ `cargo fuzz build -v`؛
 `upstream/kernel/src/published_rootfs.rs@82df3d71`؛ diff PR #54 (C Cargo.toml +
 regression test في crates/oci).
+
+---
+
+# جولة v2.6-2 المقاسة (بعد الإصلاحات) — [MEASURED 2026-11-03]
+
+**الإصلاحات المنفذة:** (1) harness موسّع إلى طبقة الاستعلام كاملة بنمط نداء النواة
+(`metadata`/`from_metadata`/`entry_and_next_at_offset`/`entry_at_offset`/`find_index`/
+`next_child`/`copy_path` + استعلامات بمسارات مستخرجة من الأرشيف نفسه)؛ (2) seed corpus
+ملتزم (53) + `fuzz/oci.dict` (47 رمزًا حدّيًا)؛ (3) `--sanitizer address` صريح في
+fuzz.yml + `-dict` + `fuzz/corpus-seed` للـ CI. الحدود الحقيقية وoverflow-checks/ASan
+كانت سليمة أصلًا (§b) — بلا تغيير.
+
+**التشغيل:** 3 مقاطع × 560 ثانية (بيئة الجلسة تقتل العمليات الخلفية بين الاستدعاءات ⇒
+لا يمكن مقطع واحد 1800 ثانية؛ corpus مشترك دائم بين المقاطع = نفس جولة متصلة فعليًا) —
+ASan، dict، rss 2048. **الإجمالي: 41,000,918 exec في 1683 ثانية (~24.4k/s؛ أبطأ من
+58.9k/s في v2.5 لأن المدخلات الآن أرشيفات tar/PAX صالحة أثقل تحليلًا).**
+
+**Crashes: صفر** (EXIT=0 للمقاطع الثلاثة، لا artifacts، لا ERROR/SUMMARY/deadly signal
+في اللوحات). لا تصغير ولا تصنيف — لا يوجد ما يُصنَّف. `reports/private/` غير مستخدم.
+
+**مقارنة libFuzzer counters مع الجولة السابقة (v2.5 unseeded):**
+
+| الجولة | corpus | cov | ft | execs | crashes |
+|---|---|---|---|---|---|
+| v2.5 (41562800441) | فارغ | 1265 | 5428 | 106,140,505 | 0 |
+| v2.6 بداية (seeds فقط) | 53 | 929 | 2061 | — | — |
+| v2.6 نهاية (مقطع 3) | 10257 | **2040** | **8172** | 41,000,918 (3×560s) | 0 |
+
+counters ما زالت تنمو عند النهاية (new_units_added: 30310→5025→2847) — لم تستقر.
+
+**مقارنة التغطية المصدرية (llvm-cov على lib.rs@82df3d71):**
+
+| القياس | regions | functions | lines |
+|---|---|---|---|
+| A: harness v2.5 + seeds (قبل الإصلاح) | 66.27% (287 miss) | 65.98% (33 miss) | 68.06% (214 miss) |
+| B: harness موسّع + seeds | 89.89% (86 miss) | 97.94% (2 miss) | 95.52% (30 miss) |
+| C: harness موسّع + corpus كامل (41M exec) | **93.18% (58 miss)** | **97.94% (2 miss)** | **97.01% (20 miss)** |
+
+**الإسناد:** التوسعة الحarness = +23.6 نقطة regions / +32.0 دوال / +27.5 أسطر؛ الـ fuzzing
+فوق البذور = +3.3 regions / +1.5 أسطر فقط. السبب: البذور الحدودية + dictionary غطّت
+الفروع المنطقية مباشرة، و41M mutation أضاف حواف نادرة (whiteout_hides 0%→86.21%،
+next_child closures 0%→87.8%).
+
+**الفروع المتبقية غير المغطاة ولماذا (حواجز موثقة):**
+1. `TAR_MAX_ENTRIES` (>32768 إدخالًا): يتطلب أرشيفًا ≥16MB؛ `-max_len` الافتراضي 4096
+   ⇒ فرع غير قابل عمليًا للـ fuzz (لا اختبار upstream له أيضًا).
+2. فروع `from_metadata` الخطأية (terminator فاسد/غير مضروب 512): unreachable بنمط
+   النداء الأمين للنواة (إعادة فتح نفس البايتات غير المعدلة) — تتطلب harness بعد
+   تعديل البايتات = غير أمين.
+3. إغلاق `Vec::push` الفائض في `parse_registry_manifest`/`select_manifest`: serde-json-core
+   يرفض >16 عنصرًا أثناء إزالة التسلسل نفسها ⇒ الفرع الدفاعي بعده لا يُبلغ أبدًا.
+4. `parse_sha256_selector` 6/23 و`parse_entry` 18/143: فروع تحقق طول/أرقام نادرة —
+   قابلة نظريًا، لم تصبها 41M mutation (مرشحة لجولة لاحقة بقاموس hex موسع).
+
+**خلاصة الارتقاء:** harness الحالي يطابق الآن **سطح الاستخدام الفعلي للنواة** بالكامل
+(الطبقتان parse+traversal) عند pin 82df3d71، بoverflow-checks=true وASan، على corpus
+مبذور بحدود الأحجام (0، 512، 2^32، أقصى octal) — 41M exec بلا panic واحد. gzip يبقى
+خارج النطاق (لا محلل host-testable — §a).
