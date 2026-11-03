@@ -1,0 +1,248 @@
+name: fuzz-branch-verify
+
+# Verification of a fuzz/ PR branch on the account fork (hafid-logic/ginux),
+# mirroring builder-verify.yml (dispatch-only, fork-branch input, never
+# upstream) and fuzz.yml (pinned toolchain + cargo-fuzz, contents: read).
+# Jobs: (3a) make doctor/check/test with fuzz/ present; (3b) documented smoke
+# per target + 10-minute libFuzzer rounds + lcov coverage.
+
+on:
+  workflow_dispatch:
+    inputs:
+      fork_repo:
+        description: "fork repo holding the branch"
+        default: "hafid-logic/ginux"
+      fork_branch:
+        description: "branch to verify"
+        required: true
+      smoke_seconds:
+        description: "libFuzzer -max_total_time per smoke run"
+        default: "30"
+      round_seconds:
+        description: "libFuzzer -max_total_time per round"
+        default: "600"
+
+permissions:
+  contents: read
+
+env:
+  FORK_BRANCH: ${{ inputs.fork_branch || 'feature/fuzz-targets' }}
+  SMOKE_SECONDS: ${{ inputs.smoke_seconds || '30' }}
+  ROUND_SECONDS: ${{ inputs.round_seconds || '600' }}
+
+jobs:
+  # ---- 3a: upstream checks with fuzz/ present -----------------------------
+  upstream-checks:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    env:
+      QEMU_VERSION: "10.1.2"
+    steps:
+      - name: Checkout watch repo (QEMU pin list)
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Checkout fork branch (untrusted code, no credentials)
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.fork_repo || 'hafid-logic/ginux' }}
+          ref: refs/heads/${{ env.FORK_BRANCH }}
+          path: ginux
+          persist-credentials: false
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential ninja-build pkg-config python3-venv \
+            libglib2.0-dev libpixman-1-dev libslirp-dev libfdt-dev ovmf clang lld jq ripgrep
+
+      - name: Cache QEMU build
+        id: qemucache
+        uses: actions/cache@v4
+        with:
+          path: ~/qemu-${{ env.QEMU_VERSION }}
+          key: qemu-${{ env.QEMU_VERSION }}-ubuntu24.04-v1
+
+      - name: Build QEMU (cache miss)
+        if: steps.qemucache.outputs.cache-hit != 'true'
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP"
+          curl -fsSLO "https://download.qemu.org/qemu-${QEMU_VERSION}.tar.xz"
+          actual=$(sha256sum "qemu-${QEMU_VERSION}.tar.xz" | cut -d' ' -f1)
+          pinned=$(awk -v v="$QEMU_VERSION" '$1==v {print $2}' "$GITHUB_WORKSPACE/matrix/qemu-sha256.txt")
+          echo "QEMU ${QEMU_VERSION} sha256=${actual} pinned=${pinned:-none}"
+          if [ -n "${pinned:-}" ] && [ "$pinned" != "TBD" ] && [ "$pinned" != "$actual" ]; then
+            echo "sha256 mismatch"; exit 1
+          fi
+          tar xf "qemu-${QEMU_VERSION}.tar.xz" --exclude='*/roms/*'
+          cd "qemu-${QEMU_VERSION}"
+          ./configure --target-list=x86_64-softmmu --disable-docs --disable-user --disable-gtk \
+            --disable-sdl --disable-werror --enable-slirp --prefix="$HOME/qemu-${QEMU_VERSION}"
+          make -j"$(nproc)"
+          make install
+
+      - name: Prepare environment
+        run: |
+          set -euo pipefail
+          mkdir -p "$HOME/shim"
+          ln -sf "$HOME/qemu-${QEMU_VERSION}/bin/qemu-system-x86_64" "$HOME/shim/qemu-system-x86_64"
+          echo "$HOME/shim" >> "$GITHUB_PATH"
+          { echo "QEMU_SYSTEM_X86_64=$HOME/qemu-${QEMU_VERSION}/bin/qemu-system-x86_64"
+            echo "OVMF_CODE=/usr/share/OVMF/OVMF_CODE_4M.fd"
+            echo "OVMF_VARS=/usr/share/OVMF/OVMF_VARS_4M.fd"
+            echo "QEMU_ACCEL=tcg"; } >> "$GITHUB_ENV"
+          cd ginux && rustup show
+
+      - name: make doctor / check / architecture-check / test
+        working-directory: ginux
+        run: |
+          mkdir -p "$GITHUB_WORKSPACE/out"
+          set +e
+          OUT="$GITHUB_WORKSPACE/out"
+          { echo "branch_sha=$(git rev-parse HEAD)"; "$QEMU_SYSTEM_X86_64" --version | head -1; } | tee "$OUT/env.txt"
+          make doctor 2>&1 | tee "$OUT/doctor.log";                      d=${PIPESTATUS[0]}
+          make check 2>&1 | tee "$OUT/check.log";                        c=${PIPESTATUS[0]}
+          make architecture-check 2>&1 | tee "$OUT/architecture.log";    a=${PIPESTATUS[0]}
+          make reset-storage > /dev/null 2>&1
+          timeout 25m make test 2>&1 | tee "$OUT/test.log";              t=${PIPESTATUS[0]}
+          echo "doctor=$d check=$c architecture-check=$a test=$t" | tee "$OUT/status.txt"
+          {
+            echo "### upstream-checks @ ${{ env.FORK_BRANCH }} qemu=${QEMU_VERSION} (TCG)"
+            echo "| doctor | check | architecture-check | test | branch sha |"
+            echo "|---|---|---|---|---|"
+            echo "| $d | $c | $a | $t | $(git rev-parse --short HEAD) |"
+            echo
+            grep -E 'Boot test (passed|failed)|GINUX_KERNEL_(OK|PANIC)' "$OUT/test.log" | sort -u | head -8
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ "$t" != "0" ] || [ "$c" != "0" ] || [ "$a" != "0" ] || [ "$d" != "0" ]; then exit 1; fi
+
+      - name: Upload logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs-upstream-checks
+          path: out/
+          retention-days: 30
+
+  # ---- 3b: documented smoke run per target (<=60 s each) ------------------
+  fuzz-smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { target: oci_surfaces,       dict: oci.dict,       seeds: corpus-seed }
+          - { target: protocol_surfaces,  dict: protocol.dict,  seeds: corpus-seed-protocol }
+          - { target: volume_surfaces,    dict: volume.dict,    seeds: corpus-seed-volume }
+    steps:
+      - name: Checkout fork branch (untrusted code, no credentials)
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.fork_repo || 'hafid-logic/ginux' }}
+          ref: refs/heads/${{ env.FORK_BRANCH }}
+          persist-credentials: false
+
+      - name: Install clang/g++ and pinned toolchain + cargo-fuzz 0.13.2
+        run: |
+          sudo apt-get update && sudo apt-get install -y clang g++
+          cd fuzz && rustup show
+          cargo install cargo-fuzz --locked --version 0.13.2
+
+      - name: Smoke run (README command, verbatim)
+        working-directory: fuzz
+        run: |
+          mkdir -p corpus artifacts
+          cargo fuzz run --target x86_64-unknown-linux-gnu --sanitizer address \
+            ${{ matrix.target }} -- -max_total_time="${SMOKE_SECONDS}" -rss_limit_mb=4096 \
+            -artifact_prefix=artifacts/ -dict=${{ matrix.dict }} \
+            corpus ${{ matrix.seeds }} 2>&1 | tee smoke-${{ matrix.target }}.log
+          test ${PIPESTATUS[0]} -eq 0
+          ! ls artifacts/crash-* artifacts/oom-* artifacts/timeout-* artifacts/leak-* 2>/dev/null
+          tail -5 "smoke-${{ matrix.target }}.log" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload smoke logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-${{ matrix.target }}
+          path: fuzz/smoke-*.log
+          retention-days: 30
+
+  # ---- 3b: 10-minute round per target + coverage ---------------------------
+  fuzz-round:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { target: oci_surfaces,       dict: oci.dict,       seeds: corpus-seed }
+          - { target: protocol_surfaces,  dict: protocol.dict,  seeds: corpus-seed-protocol }
+          - { target: volume_surfaces,    dict: volume.dict,    seeds: corpus-seed-volume }
+    steps:
+      - name: Checkout fork branch (untrusted code, no credentials)
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.fork_repo || 'hafid-logic/ginux' }}
+          ref: refs/heads/${{ env.FORK_BRANCH }}
+          persist-credentials: false
+
+      - name: Install clang/g++ and pinned toolchain + cargo-fuzz 0.13.2
+        run: |
+          sudo apt-get update && sudo apt-get install -y clang g++
+          cd fuzz && rustup show
+          cargo install cargo-fuzz --locked --version 0.13.2
+
+      - name: 10-minute round
+        working-directory: fuzz
+        run: |
+          mkdir -p corpus artifacts
+          cargo fuzz run --target x86_64-unknown-linux-gnu --sanitizer address \
+            ${{ matrix.target }} -- -max_total_time="${ROUND_SECONDS}" -rss_limit_mb=4096 \
+            -artifact_prefix=artifacts/ -dict=${{ matrix.dict }} \
+            corpus ${{ matrix.seeds }} 2>&1 | tee round-${{ matrix.target }}.log
+          test ${PIPESTATUS[0]} -eq 0
+          ! ls artifacts/crash-* artifacts/oom-* artifacts/timeout-* artifacts/leak-* 2>/dev/null
+
+      - name: Coverage (lcov over committed seeds + evolved corpus)
+        if: success()
+        working-directory: fuzz
+        run: |
+          cargo fuzz coverage --target x86_64-unknown-linux-gnu ${{ matrix.target }} -- \
+            corpus ${{ matrix.seeds }} 2>&1 | tee coverage-${{ matrix.target }}.log
+          info="coverage/${{ matrix.target }}/lcov.info"
+          if [ -f "$info" ]; then
+            awk -F: '/^LF:/{lf+=$2} /^LH:/{lh+=$2} /^FNF:/{fnf+=$2} /^FNH:/{fnh+=$2}
+              END{printf "lines %.2f%% functions %.2f%% (LH/LF %d/%d, FNH/FNF %d/%d)\n",
+                  100*lh/lf, 100*fnh/fnf, lh, lf, fnh, fnf}' "$info" \
+              | tee coverage-summary-${{ matrix.target }}.txt
+          else
+            ls -la coverage/ || true
+          fi
+          { echo "### round + coverage: ${{ matrix.target }}"
+            grep -E '^#[0-9]+.*(cov:|ft:|corp:|exec/s:|Done)' "round-${{ matrix.target }}.log" | tail -4
+            cat "coverage-summary-${{ matrix.target }}.txt" 2>/dev/null || echo "lcov missing"
+            echo "crash artifacts: $(ls artifacts/ 2>/dev/null | wc -l)"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload round logs + coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: round-${{ matrix.target }}
+          path: |
+            fuzz/round-*.log
+            fuzz/coverage-*.log
+            fuzz/coverage-summary-*.txt
+          retention-days: 30
+
+      - name: Upload crash artifacts on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: crash-${{ matrix.target }}
+          path: fuzz/artifacts/
+          retention-days: 30
