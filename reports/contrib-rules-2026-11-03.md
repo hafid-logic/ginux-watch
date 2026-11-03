@@ -1,4 +1,4 @@
-# قواعد المساهمة في ginx عند c86945b1 — تقرير Card T-20261103-06
+# قواعد المساهمة في ginux عند c86945b1 — تقرير Card T-20261103-06
 
 المرجع: `gmkurtzer/ginux @ origin/main = c86945b1` (Merge PR #56). كل الاستشهادات بصيغة `ginux@c86945b1:<path>:<line>`. الشجرة في `work/ginux` تعديلاتها mode-only فقط (0 إضافات/0 حذوف، 256 ملفًا) [MEASURED: `git diff --stat`].
 
@@ -41,4 +41,4 @@
 - يوجد أيضًا `.agents/` و`.claude/` (شجرتا skills) و`hdae/` (حالة المشروع) [MEASURED: ls-tree].
 
 ## قرارات PR (المدخل لـ 2e)
-يجب على PR‏ fuzz/: license‏ Apache-2.0 ذاتي الإعلان؛ تثبيت deps بـ `=`؛ workspace منفصل خارج members الجذري؛ rust-toolchain محلي مقبول؛ رسالة imperative؛ لا حاجة لتعديل Makefile حتى يعمل `make check`/`make test` — لكنه في المقابل **لن يُبنى أو يُختبر في CI الغرباء إطلاقًا** (لا workflow ولا target يستدعيه)، ما يجعل إضافة workflow/Makefile target اختياريًا قرارًا مفتوحًا للمشرف [INFERRED]. شذوذات: .github موجود عكس فرضية البطاقة، وفلتر branches تالف في check.yml، و.gitignore الجذري لا يغطي fuzz/target أو fuzz/artifacts (سيضيف PR حاجته الخاصة) [MEASURED: .gitignore:1-5].
+يجب على PR‏ fuzz/: license‏ Apache-2.0 ذاتي الإعلان؛ تثبيت deps بـ `=`؛ workspace منفصل خارج members الجذري؛ rust-toolchain محلي مقبول؛ رسالة imperative؛ لا حاجة لتعديل Makefile حتى يعمل `make check`/`make test` — لكنه في المقابل **لن يُبنى أو يُختبر في CI الأصلي إطلاقًا** (لا workflow ولا target يستدعيه)، ما يجعل إضافة workflow/Makefile target اختياريًا قرارًا مفتوحًا للمشرف [INFERRED]. شذوذات: .github موجود عكس فرضية البطاقة، وفلتر branches تالف في check.yml، و.gitignore الجذري لا يغطي fuzz/target أو fuzz/artifacts (سيضيف PR حاجته الخاصة) [MEASURED: .gitignore:1-5].
