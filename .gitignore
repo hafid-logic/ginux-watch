@@ -13,3 +13,5 @@ fuzz/corpus-protocol/
 # v2.7-2: generated differential state (seeds stay in fuzz/corpus-seed-diff/)
 fuzz/corpus-diff/
 fuzz/diff-dumps/
+# v2.7-3: generated volume corpus (seeds stay in fuzz/corpus-seed-volume/)
+fuzz/corpus-volume/

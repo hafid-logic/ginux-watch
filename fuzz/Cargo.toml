@@ -14,6 +14,7 @@ cargo-fuzz = true
 # "sha256" matches the upstream default set (dep:sha2).
 ginux-oci = { path = "../upstream/crates/oci", default-features = false, features = ["sha256"] }
 ginux-protocol-state = { path = "../upstream/crates/protocol-state" }
+ginux-volume-format = { path = "../upstream/crates/volume-format" }
 libfuzzer-sys = "0.4"
 # Differential oracle (v2.7-2): reference tar/PAX semantics on the SAME input.
 tar = "0.4"
@@ -51,6 +52,15 @@ bench = false
 [[bin]]
 name = "diff_matrix"
 path = "fuzz_targets/diff_matrix.rs"
+test = false
+doc = false
+bench = false
+
+# v2.7-3: third instance — crates/volume-format (rank-2 untrusted surface,
+# kernel-faithful chain Record::decode -> HostVolumeHeader::decode(payload)).
+[[bin]]
+name = "volume_surfaces"
+path = "fuzz_targets/volume_surfaces.rs"
 test = false
 doc = false
 bench = false
