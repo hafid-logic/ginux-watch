@@ -1,0 +1,60 @@
+# T-20261103-12 evidence — deterministic verification 2026-11-03T10:14:28Z
+
+$ git rev-parse --short HEAD
+eccb0de7
+
+$ git diff --stat c86945b1..HEAD | tail -2
+ fuzz/volume.dict                                   |   9 +
+ 124 files changed, 849 insertions(+)
+
+$ git diff --name-only c86945b1..HEAD | grep -v '^fuzz/'  (expect empty, exit 1)
+grep exit=1
+
+$ git diff --name-only c86945b1..HEAD | grep -i toolchain
+fuzz/rust-toolchain.toml
+
+$ git ls-tree -r HEAD fuzz/corpus-seed fuzz/corpus-seed-protocol fuzz/corpus-seed-volume | wc -l
+113
+
+$ git ls-tree -rl HEAD <3 seed dirs> | awk '{s+=$4} END {print s}'  (bytes)
+83823
+
+$ per-dir file counts
+fuzz/corpus-seed 53
+fuzz/corpus-seed-protocol 34
+fuzz/corpus-seed-volume 26
+
+$ rg -c '^\[\[package\]\]' fuzz/Cargo.lock
+34
+
+$ rg -n 'libfuzzer' fuzz/Cargo.toml
+22:libfuzzer-sys = "=0.4.13"
+
+$ git show HEAD:fuzz/rust-toolchain.toml (channel/components)
+# recorded on issue #58. rustup auto-installs it (plus the two components
+channel = "nightly-2026-11-02"
+components = ["rust-src", "llvm-tools-preview"]
+
+$ git show HEAD:rust-toolchain.toml (root, untouched)
+channel = "1.99.0"
+targets = ["x86_64-unknown-uefi"]
+
+$ fuzz/ top-level entries
+fuzz/.gitignore
+fuzz/Cargo.lock
+fuzz/Cargo.toml
+fuzz/README.md
+fuzz/corpus-seed-protocol
+fuzz/corpus-seed-volume
+fuzz/corpus-seed
+fuzz/fuzz_targets
+fuzz/oci.dict
+fuzz/protocol.dict
+fuzz/rust-toolchain.toml
+fuzz/volume.dict
+
+$ wc -w ginux-watch/drafts/2026-11-03-v28-fuzz-pr.md
+278 /home/z/my-project/ginux-watch/drafts/2026-11-03-v28-fuzz-pr.md
+
+$ secret/placeholder scan of draft (rg 'ghp_|gho_|github_pat_|TODO|FIXME|XXX|TBD|placeholder|<your|<token' -i; expect no matches)
+no matches

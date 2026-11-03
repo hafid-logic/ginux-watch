@@ -1,0 +1,6 @@
+{
+  "duration_min": 14,
+  "tools": ["git", "rg", "wc", "awk", "Read"],
+  "verified_format": true,
+  "status": "done"
+}
