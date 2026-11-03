@@ -1,8 +1,27 @@
 {
- "generated_at_utc": "2026-11-02T22:05:39Z",
+ "generated_at_utc": "2026-11-03T00:47:47Z",
  "source_repo": "gmkurtzer/ginux",
- "item_count": 56,
+ "item_count": 57,
  "items": {
+  "57": {
+   "kind": "issue",
+   "title": "Cannot start alpine/rocky domains",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "ginux",
+    "linux",
+    "fault",
+    "alpine",
+    "init",
+    "oci",
+    "549755813888",
+    "domain",
+    "failed",
+    "saved"
+   ]
+  },
   "56": {
    "kind": "pr",
    "title": "Drive the registry network clock from the calibrated TSC",
@@ -257,8 +276,8 @@
   "46": {
    "kind": "pr",
    "title": "Enforce per-domain Linux memory limits",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-03T00:05:06Z",
    "files": [
     "hdae/STATUS.md",
     "hdae/gates-todo/36-domain-memory-accounting.md",
@@ -863,7 +882,7 @@
   "19": {
    "kind": "issue",
    "title": "Per-domain memory limits are not enforced (memory_limit_mib unused; both mmap and shmget bypass it)",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -1321,6 +1340,69 @@
   }
  },
  "keywords": {
+  "ginux": [
+   57,
+   45,
+   42,
+   39,
+   23,
+   18,
+   12,
+   8,
+   5
+  ],
+  "linux": [
+   57,
+   56,
+   55,
+   47,
+   46,
+   37,
+   14,
+   11,
+   9,
+   8
+  ],
+  "fault": [
+   57
+  ],
+  "alpine": [
+   57
+  ],
+  "init": [
+   57,
+   37,
+   26
+  ],
+  "oci": [
+   57,
+   52,
+   45,
+   42,
+   18,
+   17
+  ],
+  "549755813888": [
+   57
+  ],
+  "domain": [
+   57,
+   46,
+   39,
+   19
+  ],
+  "failed": [
+   57,
+   51,
+   37,
+   31,
+   29,
+   28,
+   26
+  ],
+  "saved": [
+   57
+  ],
   "clock": [
    56
   ],
@@ -1335,17 +1417,6 @@
   "per": [
    56,
    7
-  ],
-  "linux": [
-   56,
-   55,
-   47,
-   46,
-   37,
-   14,
-   11,
-   9,
-   8
   ],
   "polls": [
    56
@@ -1490,13 +1561,6 @@
    23,
    9
   ],
-  "oci": [
-   52,
-   45,
-   42,
-   18,
-   17
-  ],
   "unpack": [
    52
   ],
@@ -1528,14 +1592,6 @@
   "rollback": [
    51,
    29
-  ],
-  "failed": [
-   51,
-   37,
-   31,
-   29,
-   28,
-   26
   ],
   "activation": [
    51,
@@ -1683,11 +1739,6 @@
   "bound": [
    47
   ],
-  "domain": [
-   46,
-   39,
-   19
-  ],
   "enforce": [
    46
   ],
@@ -1719,16 +1770,6 @@
   "exact": [
    45,
    42
-  ],
-  "ginux": [
-   45,
-   42,
-   39,
-   23,
-   18,
-   12,
-   8,
-   5
   ],
   "hide": [
    45
@@ -1908,10 +1949,6 @@
   ],
   "array": [
    38
-  ],
-  "init": [
-   37,
-   26
   ],
   "invalid": [
    37
