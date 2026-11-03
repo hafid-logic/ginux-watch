@@ -1,0 +1,60 @@
+#4194304	pulse  cov: 131 ft: 202 corp: 40/3580b lim: 4096 exec/s: 76260 rss: 460Mb
+#4918934	REDUCE cov: 131 ft: 202 corp: 40/3579b lim: 4096 exec/s: 76858 rss: 462Mb L: 70/448 MS: 1 EraseBytes-
+#8307285	REDUCE cov: 131 ft: 202 corp: 40/3578b lim: 4096 exec/s: 76919 rss: 464Mb L: 71/448 MS: 1 EraseBytes-
+#8388608	pulse  cov: 131 ft: 202 corp: 40/3578b lim: 4096 exec/s: 76959 rss: 464Mb
+#8695653	REDUCE cov: 131 ft: 202 corp: 40/3457b lim: 4096 exec/s: 76952 rss: 464Mb L: 67/448 MS: 3 EraseBytes-ChangeASCIIInt-EraseBytes-
+#8764033	REDUCE cov: 131 ft: 202 corp: 40/3337b lim: 4096 exec/s: 76877 rss: 464Mb L: 70/448 MS: 5 CopyPart-ChangeASCIIInt-EraseBytes-CMP-EraseBytes- DE: "\357\271\362\000 \000\000\000"-
+#11543761	REDUCE cov: 131 ft: 202 corp: 40/3333b lim: 4096 exec/s: 77474 rss: 469Mb L: 48/448 MS: 3 ChangeBit-EraseBytes-ChangeASCIIInt-
+#12279981	REDUCE cov: 131 ft: 202 corp: 40/3316b lim: 4096 exec/s: 77232 rss: 469Mb L: 48/448 MS: 5 InsertByte-ChangeBinInt-PersAutoDict-EraseBytes-CrossOver- DE: "\377\377\377\377\377\377\377\377"-
+#12394139	REDUCE cov: 131 ft: 202 corp: 40/3308b lim: 4096 exec/s: 77463 rss: 469Mb L: 40/448 MS: 3 ChangeBit-InsertByte-EraseBytes-
+#12512600	REDUCE cov: 131 ft: 202 corp: 40/3305b lim: 4096 exec/s: 77238 rss: 469Mb L: 37/448 MS: 1 EraseBytes-
+#12538212	REDUCE cov: 131 ft: 202 corp: 40/3304b lim: 4096 exec/s: 77396 rss: 469Mb L: 66/448 MS: 2 ChangeASCIIInt-EraseBytes-
+#13046498	REDUCE cov: 131 ft: 202 corp: 40/3301b lim: 4096 exec/s: 77198 rss: 469Mb L: 34/448 MS: 1 EraseBytes-
+#13577836	REDUCE cov: 131 ft: 202 corp: 40/3299b lim: 4096 exec/s: 77146 rss: 469Mb L: 64/448 MS: 3 ChangeBit-ChangeBinInt-EraseBytes-
+#14010540	REDUCE cov: 131 ft: 202 corp: 40/3284b lim: 4096 exec/s: 77406 rss: 469Mb L: 175/448 MS: 4 EraseBytes-ChangeBit-ChangeBinInt-ManualDict- DE: "\001\000\000\000"-
+#14292776	REDUCE cov: 131 ft: 202 corp: 40/3283b lim: 4096 exec/s: 77258 rss: 469Mb L: 33/448 MS: 1 EraseBytes-
+#14313504	REDUCE cov: 131 ft: 202 corp: 40/3282b lim: 4096 exec/s: 77370 rss: 469Mb L: 69/448 MS: 3 InsertByte-ChangeASCIIInt-EraseBytes-
+#15481631	REDUCE cov: 131 ft: 202 corp: 40/3281b lim: 4096 exec/s: 77023 rss: 469Mb L: 32/448 MS: 2 CopyPart-EraseBytes-
+#16746295	REDUCE cov: 131 ft: 202 corp: 40/3276b lim: 4096 exec/s: 76817 rss: 469Mb L: 59/448 MS: 4 ChangeASCIIInt-ChangeASCIIInt-ManualDict-EraseBytes- DE: "\010\000\000\000\000\000\000\000"-
+#16777216	pulse  cov: 131 ft: 202 corp: 40/3276b lim: 4096 exec/s: 76959 rss: 469Mb
+#17337464	REDUCE cov: 131 ft: 202 corp: 40/3275b lim: 4096 exec/s: 76714 rss: 475Mb L: 68/448 MS: 4 ChangeASCIIInt-InsertRepeatedBytes-ManualDict-EraseBytes- DE: "\011\000\000\000\000\000\000\000"-
+#17521476	REDUCE cov: 131 ft: 202 corp: 40/3274b lim: 4096 exec/s: 76848 rss: 482Mb L: 47/448 MS: 2 ChangeBit-EraseBytes-
+#17535667	REDUCE cov: 131 ft: 202 corp: 40/3273b lim: 4096 exec/s: 76910 rss: 482Mb L: 46/448 MS: 1 EraseBytes-
+#17624354	REDUCE cov: 131 ft: 202 corp: 40/3272b lim: 4096 exec/s: 76962 rss: 482Mb L: 67/448 MS: 2 EraseBytes-ChangeASCIIInt-
+#17723812	REDUCE cov: 131 ft: 202 corp: 40/3268b lim: 4096 exec/s: 76726 rss: 482Mb L: 63/448 MS: 3 ChangeASCIIInt-EraseBytes-CMP- DE: "\000\000\000\000\000\000\000\000"-
+#18349670	REDUCE cov: 131 ft: 202 corp: 40/3259b lim: 4096 exec/s: 76776 rss: 483Mb L: 54/448 MS: 3 EraseBytes-InsertByte-ChangeBinInt-
+#18526105	REDUCE cov: 131 ft: 202 corp: 40/3255b lim: 4096 exec/s: 76871 rss: 487Mb L: 50/448 MS: 5 EraseBytes-ChangeBit-ChangeBinInt-ChangeByte-InsertByte-
+#19577132	REDUCE cov: 131 ft: 202 corp: 40/3254b lim: 4096 exec/s: 76773 rss: 497Mb L: 49/448 MS: 2 EraseBytes-ChangeBit-
+#20118315	REDUCE cov: 131 ft: 202 corp: 40/3248b lim: 4096 exec/s: 76787 rss: 501Mb L: 40/448 MS: 3 ChangeByte-EraseBytes-ChangeByte-
+#20216226	REDUCE cov: 131 ft: 202 corp: 40/3247b lim: 4096 exec/s: 76576 rss: 501Mb L: 39/448 MS: 1 EraseBytes-
+#20228622	REDUCE cov: 131 ft: 202 corp: 40/3246b lim: 4096 exec/s: 76623 rss: 501Mb L: 38/448 MS: 1 EraseBytes-
+#20231971	REDUCE cov: 131 ft: 202 corp: 40/3238b lim: 4096 exec/s: 76636 rss: 501Mb L: 51/448 MS: 4 EraseBytes-ManualDict-ChangeByte-ChangeBinInt- DE: "H\000"-
+#20236757	REDUCE cov: 131 ft: 202 corp: 40/3237b lim: 4096 exec/s: 76654 rss: 501Mb L: 37/448 MS: 1 EraseBytes-
+#21017083	REDUCE cov: 131 ft: 202 corp: 40/3236b lim: 4096 exec/s: 76704 rss: 501Mb L: 36/448 MS: 1 EraseBytes-
+#22886942	REDUCE cov: 131 ft: 202 corp: 40/3220b lim: 4096 exec/s: 76544 rss: 501Mb L: 33/448 MS: 4 ChangeByte-ChangeBit-ChangeBit-EraseBytes-
+#33554432	pulse  cov: 131 ft: 202 corp: 40/3220b lim: 4096 exec/s: 76959 rss: 513Mb
+#36023735	REDUCE cov: 131 ft: 202 corp: 40/3215b lim: 4096 exec/s: 76973 rss: 513Mb L: 46/448 MS: 3 ShuffleBytes-EraseBytes-ChangeBinInt-
+#46269525	DONE   cov: 131 ft: 202 corp: 40/3215b lim: 4096 exec/s: 76987 rss: 513Mb
+###### Recommended dictionary. ######
+"\377\377\377\377\377\377\377\377" # Uses: 140416
+"\001\000\000\000\000\000\001\016" # Uses: 140593
+"\376\377\377\377\377\377\377\377" # Uses: 140113
+"\354b\372\013\3731\336\012\231l\237\306\030\213\241;\375\374l\203\215 \356\233\373\240\022\207goZ\305" # Uses: 136176
+"L\357\357\244>\220J\356\205\247\304\017\202\357\370\345,\343\213\375pV\344u\331\305\263\002\035\215[\000" # Uses: 135498
+"\000\000{\315}\242k\000" # Uses: 139739
+"\210\000" # Uses: 140935
+"\327\303\373\311\233\177\375\374\013\2509\001 \263c\224\005\265\366\007\245I\2470\334\204c\300\302S\3406" # Uses: 135785
+"\212g\260\316\015\360\252\012l\240\030\270\333\260\2345\325Q7F\203\021;\200W>Y\222\232\336\314\021" # Uses: 135594
+"7\360\022\3728~\030\353eA\003\343\1776P\2135aXF\000\3716\335&Q\242j<tk\244" # Uses: 135561
+"/\000\000\000" # Uses: 140381
+"u\205M\322K\216\201\200s;\276\262\231\003M@\017 \270\323>\250\362\004f\222Q%\370\034\2264" # Uses: 135201
+"\377\377\377\377\377\377\377\234" # Uses: 140732
+"\024\376\273\027\016\237P[C%y\022nU\254\237\225R\354\026V\217\037i\012\242{\260Xgs\334" # Uses: 136006
+"\377\016" # Uses: 140601
+"\001\000\000\000\000\000\000\013" # Uses: 139817
+".\000\000\000\000\000\000\000" # Uses: 138211
+"\000\000\000\000" # Uses: 135728
+"\357\271\362\000 \000\000\000" # Uses: 111519
+"\000\000\000\000\000\000\000\000" # Uses: 84428
+###### End of recommended dictionary. ######
+Done 46269525 runs in 601 second(s)

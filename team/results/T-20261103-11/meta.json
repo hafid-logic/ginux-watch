@@ -1,0 +1,1 @@
+{"duration_min": 55, "tools": ["GitHub Actions fuzz-branch-verify.yml", "cargo-fuzz 0.13.2", "nightly-2026-11-02", "QEMU 10.1.2 TCG", "llvm-cov"], "verified_format": true, "status": "done"}
