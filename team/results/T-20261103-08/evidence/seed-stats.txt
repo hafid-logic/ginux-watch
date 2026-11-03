@@ -1,0 +1,20 @@
+# Byte-identity + seed measurements, 2026-11-03T07:35:57Z
+
+## harness sha256 (source vs worktree)
+e47d8cd64e26356df721fcd67ca3b63abddbf2fae71a0bbce5830a375741e6ad  /home/z/my-project/ginux-watch/fuzz/fuzz_targets/protocol_surfaces.rs
+e47d8cd64e26356df721fcd67ca3b63abddbf2fae71a0bbce5830a375741e6ad  /home/z/my-project/work/wt-fuzz-proto/fuzz/fuzz_targets/protocol_surfaces.rs
+
+## protocol.dict sha256 + size
+2a19ace2218a0bb350d51f90224606db9623d8064f3f8bc772078b817c81db48  /home/z/my-project/ginux-watch/fuzz/protocol.dict
+2a19ace2218a0bb350d51f90224606db9623d8064f3f8bc772078b817c81db48  /home/z/my-project/work/wt-fuzz-proto/fuzz/protocol.dict
+637 /home/z/my-project/work/wt-fuzz-proto/fuzz/protocol.dict
+
+## corpus dir diff -r (empty = identical)
+IDENTICAL
+
+## worktree seed stats (fuzz/corpus-seed-protocol/)
+COUNT: 34
+EMPTY: 0
+TOTAL_BYTES: 3110
+LARGEST: -rwxr-xr-x 1 z z 1442 Nov  3 07:33 p22_ipv4_maxish
+SMALLEST: -rwxr-xr-x 1 z z    7 Nov  3 07:33 p30_icmp_short7

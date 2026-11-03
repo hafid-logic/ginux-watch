@@ -1,0 +1,57 @@
+# API verification: git grep -n '<name>' c86945b1 -- crates/protocol-state/src/lib.rs
+# run in /home/z/my-project/work/fork at 2026-11-03T07:35:46Z
+
+== parse_arp_reply_v4 ==
+c86945b1:crates/protocol-state/src/lib.rs:27:pub fn parse_arp_reply_v4(
+c86945b1:crates/protocol-state/src/lib.rs:279:        let reply = parse_arp_reply_v4(&FRAME, LOCAL, PEER).unwrap();
+c86945b1:crates/protocol-state/src/lib.rs:289:            parse_arp_reply_v4(&frame, LOCAL, PEER),
+c86945b1:crates/protocol-state/src/lib.rs:295:            parse_arp_reply_v4(&frame, LOCAL, PEER),
+c86945b1:crates/protocol-state/src/lib.rs:302:        let reply = parse_arp_reply_v4(&FRAME, LOCAL, PEER).unwrap();
+
+== parse_ipv4_icmp_v0 ==
+c86945b1:crates/protocol-state/src/lib.rs:85:pub fn parse_ipv4_icmp_v0<'a>(
+c86945b1:crates/protocol-state/src/lib.rs:170:        let packet = parse_ipv4_icmp_v0(frame, local, peer).map_err(IcmpEchoReplyError::Ipv4)?;
+c86945b1:crates/protocol-state/src/lib.rs:321:        let packet = parse_ipv4_icmp_v0(&IPV4_FRAME, LOCAL, peer).unwrap();
+c86945b1:crates/protocol-state/src/lib.rs:337:            parse_ipv4_icmp_v0(&frame, LOCAL, peer),
+c86945b1:crates/protocol-state/src/lib.rs:345:            parse_ipv4_icmp_v0(&frame, LOCAL, peer),
+c86945b1:crates/protocol-state/src/lib.rs:353:            parse_ipv4_icmp_v0(&frame, LOCAL, peer),
+
+== parse_icmp_echo_request_v0 ==
+c86945b1:crates/protocol-state/src/lib.rs:147:pub fn parse_icmp_echo_request_v0(message: &[u8]) -> Result<IcmpEchoRequestV0<'_>, IcmpParseError> {
+c86945b1:crates/protocol-state/src/lib.rs:171:        parse_icmp_echo_request_v0(packet.payload).map_err(IcmpEchoReplyError::Icmp)?;
+c86945b1:crates/protocol-state/src/lib.rs:360:        let echo = parse_icmp_echo_request_v0(&IPV4_FRAME[34..]).unwrap();
+c86945b1:crates/protocol-state/src/lib.rs:372:            parse_icmp_echo_request_v0(&message),
+c86945b1:crates/protocol-state/src/lib.rs:378:            parse_icmp_echo_request_v0(&message),
+
+== build_icmp_echo_reply_v0 ==
+c86945b1:crates/protocol-state/src/lib.rs:164:pub fn build_icmp_echo_reply_v0(
+c86945b1:crates/protocol-state/src/lib.rs:390:        assert_eq!(build_icmp_echo_reply_v0(&mut frame, LOCAL, peer), Ok(()));
+c86945b1:crates/protocol-state/src/lib.rs:412:            build_icmp_echo_reply_v0(&mut frame, LOCAL, peer),
+
+== NeighborStateV4 methods (impl block) ==
+c86945b1:crates/protocol-state/src/lib.rs:219:    pub const fn new(peer_ipv4: u32) -> Self {
+c86945b1:crates/protocol-state/src/lib.rs:227:    pub fn observe(&mut self, reply: ArpReplyV4) -> NeighborObservation {
+c86945b1:crates/protocol-state/src/lib.rs:248:    pub const fn mac(&self) -> Option<[u8; 6]> {
+c86945b1:crates/protocol-state/src/lib.rs:252:    pub const fn accepted(&self) -> u64 {
+
+== types and pub fields ==
+c86945b1:crates/protocol-state/src/lib.rs:7:pub struct EndpointV4 {
+c86945b1:crates/protocol-state/src/lib.rs:212:pub struct NeighborStateV4 {
+c86945b1:crates/protocol-state/src/lib.rs:67:pub struct Ipv4PacketV0<'a> {
+c86945b1:crates/protocol-state/src/lib.rs:128:pub struct IcmpEchoRequestV0<'a> {
+pub struct EndpointV4 {
+    pub mac: [u8; 6],
+    pub ipv4: u32,
+}
+
+    pub source_ipv4: u32,
+    pub destination_ipv4: u32,
+    pub protocol: u8,
+    pub payload: &'a [u8],
+}
+
+pub struct IcmpEchoRequestV0<'a> {
+    pub identifier: u16,
+    pub sequence: u16,
+    pub payload: &'a [u8],
+}

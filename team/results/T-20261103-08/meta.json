@@ -1,0 +1,6 @@
+{
+  "duration_min": 10,
+  "tools": ["git", "coreutils (cp, diff, sha256sum, find, wc, ls, date)", "grep", "Read/Write file tools"],
+  "verified_format": true,
+  "status": "done"
+}

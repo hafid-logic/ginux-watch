@@ -1,0 +1,78 @@
+# Isolation check: git -C /home/z/my-project/work/wt-fuzz-proto diff --stat feature/fuzz-targets..card/protocol
+# 2026-11-03T07:35:57Z, commit card/protocol = 7991a4f597f2b2235d088978b9193dd19059c554
+
+ fuzz/corpus-seed-protocol/p01_arp_valid            | Bin 0 -> 42 bytes
+ fuzz/corpus-seed-protocol/p02_arp_mcast_sender     | Bin 0 -> 42 bytes
+ fuzz/corpus-seed-protocol/p03_arp_zero_sender      | Bin 0 -> 42 bytes
+ fuzz/corpus-seed-protocol/p04_arp_bcast_sender     | Bin 0 -> 42 bytes
+ fuzz/corpus-seed-protocol/p05_arp_wrong_target_mac | Bin 0 -> 42 bytes
+ fuzz/corpus-seed-protocol/p06_arp_wrong_sender_ip  | Bin 0 -> 42 bytes
+ fuzz/corpus-seed-protocol/p07_arp_wrong_hwtype     | Bin 0 -> 42 bytes
+ fuzz/corpus-seed-protocol/p08_arp_wrong_dst        | Bin 0 -> 42 bytes
+ fuzz/corpus-seed-protocol/p09_arp_len41            | Bin 0 -> 41 bytes
+ fuzz/corpus-seed-protocol/p10_arp_len43            | Bin 0 -> 43 bytes
+ fuzz/corpus-seed-protocol/p11_ipv4_valid           | Bin 0 -> 42 bytes
+ fuzz/corpus-seed-protocol/p12_ipv4_bad_cksum       | Bin 0 -> 42 bytes
+ fuzz/corpus-seed-protocol/p13_ipv4_fragment_mf     | Bin 0 -> 42 bytes
+ fuzz/corpus-seed-protocol/p14_ipv4_fragment_off    | Bin 0 -> 42 bytes
+ fuzz/corpus-seed-protocol/p15_ipv4_ttl0            | Bin 0 -> 42 bytes
+ fuzz/corpus-seed-protocol/p16_ipv4_proto6          | Bin 0 -> 42 bytes
+ fuzz/corpus-seed-protocol/p17_len_lt20             | Bin 0 -> 42 bytes
+ fuzz/corpus-seed-protocol/p17b_len_mismatch        | Bin 0 -> 42 bytes
+ fuzz/corpus-seed-protocol/p18_ipv4_src_swap        | Bin 0 -> 40 bytes
+ fuzz/corpus-seed-protocol/p19_ipv4_dst_swap        | Bin 0 -> 40 bytes
+ fuzz/corpus-seed-protocol/p20_ipv4_ver4            | Bin 0 -> 42 bytes
+ fuzz/corpus-seed-protocol/p21_ipv4_payload64       | Bin 0 -> 106 bytes
+ fuzz/corpus-seed-protocol/p22_ipv4_maxish          | Bin 0 -> 1442 bytes
+ fuzz/corpus-seed-protocol/p23_ipv4_hdr_only        | Bin 0 -> 34 bytes
+ fuzz/corpus-seed-protocol/p24_ident_edge           | Bin 0 -> 42 bytes
+ fuzz/corpus-seed-protocol/p25_short33              | Bin 0 -> 33 bytes
+ fuzz/corpus-seed-protocol/p26_icmp_valid           | Bin 0 -> 8 bytes
+ fuzz/corpus-seed-protocol/p27_icmp_type3           | Bin 0 -> 8 bytes
+ fuzz/corpus-seed-protocol/p28_icmp_code1           | Bin 0 -> 8 bytes
+ fuzz/corpus-seed-protocol/p29_icmp_bad_cksum       | Bin 0 -> 8 bytes
+ fuzz/corpus-seed-protocol/p30_icmp_short7          | Bin 0 -> 7 bytes
+ fuzz/corpus-seed-protocol/p31_icmp_payload512      | Bin 0 -> 520 bytes
+ fuzz/corpus-seed-protocol/p32_icmp_id_seq_edges    | Bin 0 -> 8 bytes
+ fuzz/corpus-seed-protocol/p33_icmp_reply_type0     | Bin 0 -> 8 bytes
+ fuzz/fuzz_targets/protocol_surfaces.rs             |  74 +++++++++++++++++++++
+ fuzz/protocol.dict                                 |  23 +++++++
+ 36 files changed, 97 insertions(+)
+
+# distinct directories touched:
+fuzz/corpus-seed-protocol/p01_arp_valid
+fuzz/corpus-seed-protocol/p02_arp_mcast_sender
+fuzz/corpus-seed-protocol/p03_arp_zero_sender
+fuzz/corpus-seed-protocol/p04_arp_bcast_sender
+fuzz/corpus-seed-protocol/p05_arp_wrong_target_mac
+fuzz/corpus-seed-protocol/p06_arp_wrong_sender_ip
+fuzz/corpus-seed-protocol/p07_arp_wrong_hwtype
+fuzz/corpus-seed-protocol/p08_arp_wrong_dst
+fuzz/corpus-seed-protocol/p09_arp_len41
+fuzz/corpus-seed-protocol/p10_arp_len43
+fuzz/corpus-seed-protocol/p11_ipv4_valid
+fuzz/corpus-seed-protocol/p12_ipv4_bad_cksum
+fuzz/corpus-seed-protocol/p13_ipv4_fragment_mf
+fuzz/corpus-seed-protocol/p14_ipv4_fragment_off
+fuzz/corpus-seed-protocol/p15_ipv4_ttl0
+fuzz/corpus-seed-protocol/p16_ipv4_proto6
+fuzz/corpus-seed-protocol/p17_len_lt20
+fuzz/corpus-seed-protocol/p17b_len_mismatch
+fuzz/corpus-seed-protocol/p18_ipv4_src_swap
+fuzz/corpus-seed-protocol/p19_ipv4_dst_swap
+fuzz/corpus-seed-protocol/p20_ipv4_ver4
+fuzz/corpus-seed-protocol/p21_ipv4_payload64
+fuzz/corpus-seed-protocol/p22_ipv4_maxish
+fuzz/corpus-seed-protocol/p23_ipv4_hdr_only
+fuzz/corpus-seed-protocol/p24_ident_edge
+fuzz/corpus-seed-protocol/p25_short33
+fuzz/corpus-seed-protocol/p26_icmp_valid
+fuzz/corpus-seed-protocol/p27_icmp_type3
+fuzz/corpus-seed-protocol/p28_icmp_code1
+fuzz/corpus-seed-protocol/p29_icmp_bad_cksum
+fuzz/corpus-seed-protocol/p30_icmp_short7
+fuzz/corpus-seed-protocol/p31_icmp_payload512
+fuzz/corpus-seed-protocol/p32_icmp_id_seq_edges
+fuzz/corpus-seed-protocol/p33_icmp_reply_type0
+fuzz/fuzz_targets/protocol_surfaces.rs
+fuzz/protocol.dict
