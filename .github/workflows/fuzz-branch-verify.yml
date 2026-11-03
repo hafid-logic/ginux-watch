@@ -213,15 +213,18 @@ jobs:
         run: |
           cargo fuzz coverage --target x86_64-unknown-linux-gnu ${{ matrix.target }} \
             corpus ${{ matrix.seeds }} 2>&1 | tee coverage-${{ matrix.target }}.log
-          info="coverage/${{ matrix.target }}/lcov.info"
-          if [ -f "$info" ]; then
-            awk -F: '/^LF:/{lf+=$2} /^LH:/{lh+=$2} /^FNF:/{fnf+=$2} /^FNH:/{fnh+=$2}
-              END{printf "lines %.2f%% functions %.2f%% (LH/LF %d/%d, FNH/FNF %d/%d)\n",
-                  100*lh/lf, 100*fnh/fnf, lh, lf, fnh, fnf}' "$info" \
-              | tee coverage-summary-${{ matrix.target }}.txt
-          else
-            ls -la coverage/ || true
-          fi
+          # cargo-fuzz 0.13.2 stops at coverage.profdata (no lcov export):
+          # summarise with llvm-cov report from the pinned toolchain instead.
+          LLVM_BIN="$(rustc --print sysroot)/lib/rustlib/x86_64-unknown-linux-gnu/bin"
+          "$LLVM_BIN/llvm-cov" report \
+            "target/x86_64-unknown-linux-gnu/release/${{ matrix.target }}" \
+            -instr-profile="coverage/${{ matrix.target }}/coverage.profdata" \
+            -summary-only -ignore-filename-regex='(fuzz_targets|registry|rustc/|\.cargo)' \
+            2>&1 | tee coverage-${{ matrix.target }}.log
+          # TOTAL row: $4 = regions cover %, $10 = lines cover %, $13 = functions cover %
+          tail -1 coverage-${{ matrix.target }}.log \
+            | awk '{printf "regions %s lines %s functions %s\n", $4, $10, $13}' \
+            | tee coverage-summary-${{ matrix.target }}.txt
           { echo "### round + coverage: ${{ matrix.target }}"
             grep -E '^#[0-9]+.*(cov:|ft:|corp:|exec/s:|Done)' "round-${{ matrix.target }}.log" | tail -4
             cat "coverage-summary-${{ matrix.target }}.txt" 2>/dev/null || echo "lcov missing"
