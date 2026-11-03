@@ -1,12 +1,360 @@
 {
- "generated_at_utc": "2026-11-03T10:41:18Z",
+ "generated_at_utc": "2026-11-03T18:21:10Z",
  "source_repo": "gmkurtzer/ginux",
- "item_count": 60,
+ "item_count": 76,
  "items": {
+  "76": {
+   "kind": "issue",
+   "title": "SO_REUSEADDR is silently ignored: wildcard+specific bind overlap returns EADDRINUSE in all option combinations (Linux allows it with reuse on both)",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "bind",
+    "eaddrinuse",
+    "linux",
+    "so_reuseaddr",
+    "both",
+    "same",
+    "specific",
+    "wildcard",
+    "binary",
+    "ginux"
+   ]
+  },
+  "75": {
+   "kind": "issue",
+   "title": "Network TCP backlog is not implemented: a second concurrent connection is RST despite listen(backlog=16) (peaceful-operation companion to #64)",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "backlog",
+    "accept",
+    "connection",
+    "listen",
+    "network",
+    "syn",
+    "client",
+    "clients",
+    "port",
+    "second"
+   ]
+  },
+  "74": {
+   "kind": "pr",
+   "title": "crust port - part I",
+   "state": "closed",
+   "merged_at": null,
+   "files": [
+    "crust_port.py",
+    "kernel/src/linux_aio.rs",
+    "kernel/src/linux_keyring.rs",
+    "kernel/src/linux_sysv_ipc.rs"
+   ],
+   "keywords": [
+    "crust",
+    "part",
+    "port"
+   ]
+  },
+  "73": {
+   "kind": "pr",
+   "title": "Bind registry DNS randomness and responses",
+   "state": "closed",
+   "merged_at": "2026-11-03T17:40:31Z",
+   "files": [
+    "boot/efi/src/generated_boot.rs",
+    "hdae/STATUS.md",
+    "hdae/gates-done/41-registry-dns-entropy-binding.md",
+    "hdae/gates-done/42-kernel-network-entropy-and-dns-fallback-removal.md",
+    "kernel/src/linux_socket.rs",
+    "services/network/src/registry.rs"
+   ],
+   "keywords": [
+    "bind",
+    "dns",
+    "fallback",
+    "registry",
+    "responses",
+    "160",
+    "accept",
+    "addresses",
+    "answer",
+    "backed"
+   ]
+  },
+  "72": {
+   "kind": "issue",
+   "title": "RST is reported as clean EOF (recv()==0) + ECONNREFUSED, and a graceful close reports POLLERR/ECONNREFUSED — terminal states collapse (differential vs Linux)",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "recv",
+    "so_error",
+    "linux",
+    "rst",
+    "econnrefused",
+    "eof",
+    "pollerr",
+    "clean",
+    "close",
+    "distinct"
+   ]
+  },
+  "71": {
+   "kind": "issue",
+   "title": "Kernel TCP time is driven by an API-call counter: keepalive 75s timer fired in 6.7 wall seconds under busy polling (11x acceleration; frozen when idle)",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "time",
+    "api",
+    "kernel",
+    "linux",
+    "wall",
+    "call",
+    "control",
+    "frozen",
+    "ginux",
+    "idle"
+   ]
+  },
+  "70": {
+   "kind": "pr",
+   "title": "Bound synchronous Linux poll waits",
+   "state": "closed",
+   "merged_at": "2026-11-03T16:40:24Z",
+   "files": [
+    "hdae/STATUS.md",
+    "hdae/gates-done/40-synchronous-poll-budget.md",
+    "kernel/src/arch/x86_64/cpu.rs",
+    "kernel/src/arch/x86_64/cpu/linux_poll.rs",
+    "kernel/src/lib.rs",
+    "kernel/src/linux_socket.rs",
+    "tests/qemu/boot.sh"
+   ],
+   "keywords": [
+    "poll",
+    "socket",
+    "synchronous",
+    "verification",
+    "waits",
+    "after",
+    "apply",
+    "blocking",
+    "boot",
+    "bound"
+   ]
+  },
+  "69": {
+   "kind": "issue",
+   "title": "Second connect() on a connected fast-path socket succeeds and yields two accepted connections (Linux: EINVAL)",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "connect",
+    "socket",
+    "fast",
+    "path",
+    "accepted",
+    "branch",
+    "connected",
+    "linux",
+    "peer",
+    "second"
+   ]
+  },
+  "68": {
+   "kind": "issue",
+   "title": "close() on a network TCP socket sends neither FIN nor RST — the peer never learns the connection ended (wire capture: FIN=0 RST=0)",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "close",
+    "fin",
+    "rst",
+    "network",
+    "never",
+    "peer",
+    "tcp",
+    "abort",
+    "data",
+    "socket"
+   ]
+  },
+  "67": {
+   "kind": "issue",
+   "title": "Local socket queues are unbounded and uncharged: 289 MiB queued with memory-mib=8 set (36x the limit, measured)",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "domain",
+    "memory",
+    "socket",
+    "mib",
+    "per",
+    "kernel",
+    "limit",
+    "local",
+    "path",
+    "peer"
+   ]
+  },
+  "66": {
+   "kind": "issue",
+   "title": "close() on a fast-path TCP socket leaks its queued RX pages — 289 MiB / whole frame pool exhausted in a loop (measured)",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "close",
+    "connector",
+    "local",
+    "branch",
+    "fast",
+    "handle",
+    "mib",
+    "only",
+    "page",
+    "path"
+   ]
+  },
+  "65": {
+   "kind": "issue",
+   "title": "Zero-window or silent peer holds a TCP socket forever — 64 such connections exhaust the whole socket table (Sockstress-class)",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "socket",
+    "tcp",
+    "window",
+    "zero",
+    "ack",
+    "forever",
+    "harness",
+    "peer",
+    "smoltcp",
+    "table"
+   ]
+  },
+  "64": {
+   "kind": "issue",
+   "title": "A single spoofed SYN permanently disables a listening port (half-open never expires; no TCP socket timeout is ever armed)",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "syn",
+    "socket",
+    "smoltcp",
+    "tcp",
+    "port",
+    "ack",
+    "linux_socket",
+    "listening",
+    "never",
+    "ginux"
+   ]
+  },
+  "63": {
+   "kind": "issue",
+   "title": "smoltcp random_seed is still unix_time ^ ipv4 — every pull DNS txid reproduced offline from the boot second (full 8-query sequence)",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "dns",
+    "boot",
+    "query",
+    "source",
+    "txid",
+    "every",
+    "match",
+    "second",
+    "still",
+    "boot_time"
+   ]
+  },
+  "62": {
+   "kind": "issue",
+   "title": "poll/ppoll/select with an infinite timeout spin forever under kernel_entry_lock — the socket-syscall budget (PR #47) does not cover the poll family",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "poll",
+    "socket",
+    "syscall",
+    "budget",
+    "duration",
+    "family",
+    "kernel_entry_lock",
+    "linux_poll",
+    "none",
+    "ppoll"
+   ]
+  },
+  "61": {
+   "kind": "pr",
+   "title": "fuzz: add libFuzzer targets for OCI, protocol-state and volume-format parsers",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    "fuzz/.gitignore",
+    "fuzz/Cargo.lock",
+    "fuzz/Cargo.toml",
+    "fuzz/README.md",
+    "fuzz/corpus-seed-protocol/p01_arp_valid",
+    "fuzz/corpus-seed-protocol/p02_arp_mcast_sender",
+    "fuzz/corpus-seed-protocol/p03_arp_zero_sender",
+    "fuzz/corpus-seed-protocol/p04_arp_bcast_sender",
+    "fuzz/corpus-seed-protocol/p05_arp_wrong_target_mac",
+    "fuzz/corpus-seed-protocol/p06_arp_wrong_sender_ip",
+    "fuzz/corpus-seed-protocol/p07_arp_wrong_hwtype",
+    "fuzz/corpus-seed-protocol/p08_arp_wrong_dst",
+    "fuzz/corpus-seed-protocol/p09_arp_len41",
+    "fuzz/corpus-seed-protocol/p10_arp_len43",
+    "fuzz/corpus-seed-protocol/p11_ipv4_valid",
+    "fuzz/corpus-seed-protocol/p12_ipv4_bad_cksum",
+    "fuzz/corpus-seed-protocol/p13_ipv4_fragment_mf",
+    "fuzz/corpus-seed-protocol/p14_ipv4_fragment_off",
+    "fuzz/corpus-seed-protocol/p15_ipv4_ttl0",
+    "fuzz/corpus-seed-protocol/p16_ipv4_proto6",
+    "fuzz/corpus-seed-protocol/p17_len_lt20",
+    "fuzz/corpus-seed-protocol/p17b_len_mismatch",
+    "fuzz/corpus-seed-protocol/p18_ipv4_src_swap",
+    "fuzz/corpus-seed-protocol/p19_ipv4_dst_swap",
+    "fuzz/corpus-seed-protocol/p20_ipv4_ver4",
+    "fuzz/corpus-seed-protocol/p21_ipv4_payload64",
+    "fuzz/corpus-seed-protocol/p22_ipv4_maxish",
+    "fuzz/corpus-seed-protocol/p23_ipv4_hdr_only",
+    "fuzz/corpus-seed-protocol/p24_ident_edge",
+    "fuzz/corpus-seed-protocol/p25_short33"
+   ],
+   "keywords": [
+    "fuzz",
+    "cargo",
+    "ginux",
+    "check",
+    "libfuzzer",
+    "per",
+    "root",
+    "run",
+    "seeds",
+    "smoke"
+   ]
+  },
   "60": {
    "kind": "issue",
    "title": "Ginux: \"S for Security\"",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -25,8 +373,8 @@
   "59": {
    "kind": "pr",
    "title": "Fix domain-owned Linux payload page handling",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-03T15:11:08Z",
    "files": [
     "hdae/STATUS.md",
     "hdae/gates-todo/37-linux-lazy-page-quota-regression.md",
@@ -70,7 +418,7 @@
   "57": {
    "kind": "issue",
    "title": "Cannot start alpine/rocky domains",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -289,10 +637,9 @@
   "48": {
    "kind": "pr",
    "title": "Exclude secret pages from remote process copies",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-03T15:40:34Z",
    "files": [
-    "hdae/STATUS.md",
     "hdae/gates-done/39-secret-process-vm-exclusion.md",
     "kernel/src/address_space.rs",
     "kernel/src/arch/x86_64/cpu.rs",
@@ -315,8 +662,8 @@
   "47": {
    "kind": "pr",
    "title": "Bound blocking Linux socket polls",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-03T15:05:54Z",
    "files": [
     "hdae/gates-done/38-bounded-blocking-socket-polls.md",
     "kernel/src/lib.rs",
@@ -848,7 +1195,7 @@
   "24": {
    "kind": "issue",
    "title": "process_vm_readv/writev bypass memfd_secret exclusion — remote read AND write of secret pages reproduced",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -888,7 +1235,7 @@
   "22": {
    "kind": "issue",
    "title": "Blocking socket syscalls busy-wait for a guest-chosen SO_RCVTIMEO while holding kernel_entry_lock",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -1403,6 +1750,490 @@
   }
  },
  "keywords": {
+  "bind": [
+   76,
+   73
+  ],
+  "eaddrinuse": [
+   76
+  ],
+  "linux": [
+   76,
+   72,
+   71,
+   69,
+   59,
+   57,
+   56,
+   55,
+   47,
+   46,
+   37,
+   14,
+   11,
+   9,
+   8
+  ],
+  "so_reuseaddr": [
+   76
+  ],
+  "both": [
+   76
+  ],
+  "same": [
+   76,
+   14
+  ],
+  "specific": [
+   76
+  ],
+  "wildcard": [
+   76
+  ],
+  "binary": [
+   76
+  ],
+  "ginux": [
+   76,
+   71,
+   64,
+   61,
+   58,
+   57,
+   45,
+   42,
+   39,
+   23,
+   18,
+   12,
+   8,
+   5
+  ],
+  "backlog": [
+   75
+  ],
+  "accept": [
+   75,
+   73,
+   13,
+   10
+  ],
+  "connection": [
+   75,
+   15
+  ],
+  "listen": [
+   75
+  ],
+  "network": [
+   75,
+   68
+  ],
+  "syn": [
+   75,
+   64
+  ],
+  "client": [
+   75
+  ],
+  "clients": [
+   75
+  ],
+  "port": [
+   75,
+   74,
+   64
+  ],
+  "second": [
+   75,
+   69,
+   63
+  ],
+  "crust": [
+   74
+  ],
+  "part": [
+   74
+  ],
+  "dns": [
+   73,
+   63
+  ],
+  "fallback": [
+   73
+  ],
+  "registry": [
+   73,
+   56,
+   40,
+   15
+  ],
+  "responses": [
+   73
+  ],
+  "160": [
+   73
+  ],
+  "addresses": [
+   73,
+   52
+  ],
+  "answer": [
+   73
+  ],
+  "backed": [
+   73,
+   59,
+   9
+  ],
+  "recv": [
+   72
+  ],
+  "so_error": [
+   72
+  ],
+  "rst": [
+   72,
+   68
+  ],
+  "econnrefused": [
+   72
+  ],
+  "eof": [
+   72
+  ],
+  "pollerr": [
+   72
+  ],
+  "clean": [
+   72
+  ],
+  "close": [
+   72,
+   68,
+   66
+  ],
+  "distinct": [
+   72
+  ],
+  "time": [
+   71,
+   56
+  ],
+  "api": [
+   71
+  ],
+  "kernel": [
+   71,
+   67,
+   50,
+   47,
+   46,
+   31,
+   24,
+   21,
+   19,
+   17,
+   13,
+   9,
+   7,
+   3
+  ],
+  "wall": [
+   71
+  ],
+  "call": [
+   71
+  ],
+  "control": [
+   71
+  ],
+  "frozen": [
+   71
+  ],
+  "idle": [
+   71
+  ],
+  "poll": [
+   70,
+   62,
+   56
+  ],
+  "socket": [
+   70,
+   69,
+   68,
+   67,
+   65,
+   64,
+   62,
+   47
+  ],
+  "synchronous": [
+   70
+  ],
+  "verification": [
+   70,
+   36
+  ],
+  "waits": [
+   70
+  ],
+  "after": [
+   70,
+   51,
+   50,
+   28,
+   25
+  ],
+  "apply": [
+   70,
+   45
+  ],
+  "blocking": [
+   70,
+   47,
+   22
+  ],
+  "boot": [
+   70,
+   63,
+   47,
+   41,
+   40,
+   36,
+   35,
+   31,
+   15,
+   14,
+   13,
+   9
+  ],
+  "bound": [
+   70,
+   47
+  ],
+  "connect": [
+   69
+  ],
+  "fast": [
+   69,
+   66
+  ],
+  "path": [
+   69,
+   67,
+   66,
+   38,
+   26,
+   25,
+   18
+  ],
+  "accepted": [
+   69
+  ],
+  "branch": [
+   69,
+   66
+  ],
+  "connected": [
+   69
+  ],
+  "peer": [
+   69,
+   68,
+   67,
+   65
+  ],
+  "fin": [
+   68
+  ],
+  "never": [
+   68,
+   64
+  ],
+  "tcp": [
+   68,
+   65,
+   64
+  ],
+  "abort": [
+   68
+  ],
+  "data": [
+   68,
+   33
+  ],
+  "domain": [
+   67,
+   59,
+   57,
+   46,
+   39,
+   19
+  ],
+  "memory": [
+   67,
+   46,
+   19
+  ],
+  "mib": [
+   67,
+   66,
+   19
+  ],
+  "per": [
+   67,
+   61,
+   56,
+   7
+  ],
+  "limit": [
+   67,
+   22
+  ],
+  "local": [
+   67,
+   66,
+   34
+  ],
+  "connector": [
+   66
+  ],
+  "handle": [
+   66
+  ],
+  "only": [
+   66,
+   32,
+   9
+  ],
+  "page": [
+   66,
+   59,
+   25
+  ],
+  "window": [
+   65
+  ],
+  "zero": [
+   65
+  ],
+  "ack": [
+   65,
+   64
+  ],
+  "forever": [
+   65
+  ],
+  "harness": [
+   65
+  ],
+  "smoltcp": [
+   65,
+   64
+  ],
+  "table": [
+   65
+  ],
+  "linux_socket": [
+   64
+  ],
+  "listening": [
+   64
+  ],
+  "query": [
+   63
+  ],
+  "source": [
+   63
+  ],
+  "txid": [
+   63
+  ],
+  "every": [
+   63
+  ],
+  "match": [
+   63
+  ],
+  "still": [
+   63
+  ],
+  "boot_time": [
+   63
+  ],
+  "syscall": [
+   62,
+   25
+  ],
+  "budget": [
+   62
+  ],
+  "duration": [
+   62
+  ],
+  "family": [
+   62
+  ],
+  "kernel_entry_lock": [
+   62
+  ],
+  "linux_poll": [
+   62
+  ],
+  "none": [
+   62
+  ],
+  "ppoll": [
+   62
+  ],
+  "fuzz": [
+   61,
+   58
+  ],
+  "cargo": [
+   61,
+   45,
+   44,
+   40,
+   23,
+   6
+  ],
+  "check": [
+   61,
+   54,
+   51,
+   50,
+   49,
+   48,
+   47,
+   46,
+   44,
+   40,
+   35,
+   23,
+   11,
+   10,
+   9,
+   4,
+   3
+  ],
+  "libfuzzer": [
+   61
+  ],
+  "root": [
+   61
+  ],
+  "run": [
+   61
+  ],
+  "seeds": [
+   61
+  ],
+  "smoke": [
+   61
+  ],
   "agentic": [
    60
   ],
@@ -1452,22 +2283,11 @@
   "instead": [
    60
   ],
-  "domain": [
-   59,
-   57,
-   46,
-   39,
-   19
-  ],
   "owned": [
    59
   ],
   "child": [
    59
-  ],
-  "page": [
-   59,
-   25
   ],
   "alpine": [
    59,
@@ -1480,19 +2300,6 @@
    27,
    26
   ],
-  "linux": [
-   59,
-   57,
-   56,
-   55,
-   47,
-   46,
-   37,
-   14,
-   11,
-   9,
-   8
-  ],
   "payload": [
    59,
    34,
@@ -1501,17 +2308,10 @@
   "128": [
    59
   ],
-  "backed": [
-   59,
-   9
-  ],
   "crates": [
    58
   ],
   "execs": [
-   58
-  ],
-  "fuzz": [
    58
   ],
   "pax": [
@@ -1531,18 +2331,6 @@
   "format": [
    58,
    23
-  ],
-  "ginux": [
-   58,
-   57,
-   45,
-   42,
-   39,
-   23,
-   18,
-   12,
-   8,
-   5
   ],
   "harnesses": [
    58
@@ -1581,27 +2369,12 @@
   "clock": [
    56
   ],
-  "poll": [
-   56
-  ],
-  "registry": [
-   56,
-   40,
-   15
-  ],
-  "per": [
-   56,
-   7
-  ],
   "polls": [
    56
   ],
   "service": [
    56,
    14
-  ],
-  "time": [
-   56
   ],
   "about": [
    56
@@ -1658,24 +2431,6 @@
   "capacity": [
    54,
    38
-  ],
-  "check": [
-   54,
-   51,
-   50,
-   49,
-   48,
-   47,
-   46,
-   44,
-   40,
-   35,
-   23,
-   11,
-   10,
-   9,
-   4,
-   3
   ],
   "checked": [
    54,
@@ -1736,9 +2491,6 @@
   "512": [
    52
   ],
-  "addresses": [
-   52
-  ],
   "adds": [
    52
   ],
@@ -1766,12 +2518,6 @@
    51,
    50,
    29
-  ],
-  "after": [
-   51,
-   50,
-   28,
-   25
   ],
   "iommu": [
    51,
@@ -1801,20 +2547,6 @@
   "dma": [
    50,
    28
-  ],
-  "kernel": [
-   50,
-   47,
-   46,
-   31,
-   24,
-   21,
-   19,
-   17,
-   13,
-   9,
-   7,
-   3
   ],
   "retirement": [
    50
@@ -1883,29 +2615,7 @@
   "copies": [
    48
   ],
-  "blocking": [
-   47,
-   22
-  ],
-  "socket": [
-   47
-  ],
   "absent": [
-   47
-  ],
-  "boot": [
-   47,
-   41,
-   40,
-   36,
-   35,
-   31,
-   15,
-   14,
-   13,
-   9
-  ],
-  "bound": [
    47
   ],
   "enforce": [
@@ -1914,10 +2624,6 @@
   "frame": [
    46,
    28
-  ],
-  "memory": [
-   46,
-   19
   ],
   "mmap": [
    46,
@@ -1928,13 +2634,6 @@
   ],
   "033": [
    46
-  ],
-  "cargo": [
-   45,
-   44,
-   40,
-   23,
-   6
   ],
   "exact": [
    45,
@@ -1957,9 +2656,6 @@
    45
   ],
   "adjacent": [
-   45
-  ],
-  "apply": [
    45
   ],
   "header": [
@@ -2099,12 +2795,6 @@
   "maximum": [
    38
   ],
-  "path": [
-   38,
-   26,
-   25,
-   18
-  ],
   "array": [
    38
   ],
@@ -2137,9 +2827,6 @@
    21
   ],
   "reject": [
-   36
-  ],
-  "verification": [
    36
   ],
   "parser": [
@@ -2192,9 +2879,6 @@
   "eight": [
    34
   ],
-  "local": [
-   34
-  ],
   "validation": [
    33
   ],
@@ -2207,9 +2891,6 @@
    33
   ],
   "malformed": [
-   33
-  ],
-  "data": [
    33
   ],
   "five": [
@@ -2236,10 +2917,6 @@
   ],
   "nonzero": [
    32
-  ],
-  "only": [
-   32,
-   9
   ],
   "width": [
    31
@@ -2318,9 +2995,6 @@
   "sibling": [
    25
   ],
-  "syscall": [
-   25
-  ],
   "writable": [
    25
   ],
@@ -2346,9 +3020,6 @@
    22
   ],
   "chosen": [
-   22
-  ],
-  "limit": [
    22
   ],
   "lock": [
@@ -2408,9 +3079,6 @@
   "memory_limit_mib": [
    19
   ],
-  "mib": [
-   19
-  ],
   "one": [
    19,
    15,
@@ -2461,17 +3129,11 @@
   "certificate": [
    15
   ],
-  "connection": [
-   15
-  ],
   "ephemeral": [
    15
   ],
   "identical": [
    15
-  ],
-  "same": [
-   14
   ],
   "your": [
    14
@@ -2494,10 +3156,6 @@
    13,
    10,
    4
-  ],
-  "accept": [
-   13,
-   10
   ],
   "contract": [
    13
