@@ -1,0 +1,112 @@
+name: readme-smoke
+
+# Verbatim verification of fuzz/README.md commands (user directive v2.9-1b):
+# runs the README smoke block exactly as written at a given fork SHA, on both
+# ubuntu-24.04 and macos-latest (the maintainer's OS family), with the ONLY
+# change being -max_total_time=30 -> 10 to bound runtime. Artifacts carry the
+# logs. Any failure prints the first 30 error lines literally.
+
+on:
+  workflow_dispatch:
+    inputs:
+      sha:
+        description: "hafid-logic/ginux commit SHA whose fuzz/README.md is verified"
+        required: true
+      smoke_seconds:
+        description: "replacement for README -max_total_time=30 (default 10)"
+        default: "10"
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    name: readme-smoke (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, macos-latest]
+    steps:
+      - name: Check out fork at requested SHA (untrusted code, no credentials)
+        uses: actions/checkout@v4
+        with:
+          repository: hafid-logic/ginux
+          ref: ${{ inputs.sha }}
+          persist-credentials: false
+
+      - name: Ensure README requirements (clang + g++ on Linux; Xcode CLT on macOS)
+        shell: bash
+        run: |
+          if [ "$RUNNER_OS" = "Linux" ]; then
+            sudo apt-get update -q
+            sudo apt-get install -y -q clang g++
+          fi
+          rustup --version
+
+      - name: Install cargo-fuzz (README verbatim)
+        shell: bash
+        run: |
+          set -o pipefail
+          if ! cargo install cargo-fuzz --locked --version 0.13.2 2>&1 | tee install.log; then
+            echo "=== FAILED: cargo install cargo-fuzz — first 30 error lines ==="
+            grep -iE "error|failed" install.log | head -30
+            exit 1
+          fi
+
+      # Smoke run block — verbatim from fuzz/README.md @ the dispatched SHA,
+      # with the documented single substitution: -max_total_time=30 -> 10.
+      - name: README smoke — oci_surfaces
+        working-directory: fuzz
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p corpus artifacts
+          if ! cargo fuzz run --sanitizer address \
+            oci_surfaces -- -max_total_time=${{ inputs.smoke_seconds || '10' }} -rss_limit_mb=4096 \
+            -artifact_prefix=artifacts/ -dict=oci.dict \
+            corpus corpus-seed 2>&1 | tee ../readme-smoke-oci_surfaces.log; then
+            echo "=== FAILED: oci_surfaces — first 30 error lines (literal) ==="
+            grep -inE "error|panicked|abort|assert|runtime error|AddressSanitizer|SUMMARY" ../readme-smoke-oci_surfaces.log | head -30
+            exit 1
+          fi
+
+      - name: README smoke — protocol_surfaces
+        working-directory: fuzz
+        shell: bash
+        run: |
+          set -o pipefail
+          if ! cargo fuzz run --sanitizer address \
+            protocol_surfaces -- -max_total_time=${{ inputs.smoke_seconds || '10' }} -rss_limit_mb=4096 \
+            -artifact_prefix=artifacts/ -dict=protocol.dict \
+            corpus corpus-seed-protocol 2>&1 | tee ../readme-smoke-protocol_surfaces.log; then
+            echo "=== FAILED: protocol_surfaces — first 30 error lines (literal) ==="
+            grep -inE "error|panicked|abort|assert|runtime error|AddressSanitizer|SUMMARY" ../readme-smoke-protocol_surfaces.log | head -30
+            exit 1
+          fi
+
+      - name: README smoke — volume_surfaces
+        working-directory: fuzz
+        shell: bash
+        run: |
+          set -o pipefail
+          if ! cargo fuzz run --sanitizer address \
+            volume_surfaces -- -max_total_time=${{ inputs.smoke_seconds || '10' }} -rss_limit_mb=4096 \
+            -artifact_prefix=artifacts/ -dict=volume.dict \
+            corpus corpus-seed-volume 2>&1 | tee ../readme-smoke-volume_surfaces.log; then
+            echo "=== FAILED: volume_surfaces — first 30 error lines (literal) ==="
+            grep -inE "error|panicked|abort|assert|runtime error|AddressSanitizer|SUMMARY" ../readme-smoke-volume_surfaces.log | head -30
+            exit 1
+          fi
+
+      - name: Upload smoke outputs (always)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: readme-smoke-${{ matrix.os }}-${{ inputs.sha }}
+          path: |
+            install.log
+            readme-smoke-*.log
+            fuzz/artifacts
+          if-no-files-found: warn
