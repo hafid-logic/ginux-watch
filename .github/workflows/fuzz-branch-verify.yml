@@ -216,8 +216,11 @@ jobs:
           # cargo-fuzz 0.13.2 stops at coverage.profdata (no lcov export):
           # summarise with llvm-cov report from the pinned toolchain instead.
           LLVM_BIN="$(rustc --print sysroot)/lib/rustlib/x86_64-unknown-linux-gnu/bin"
-          "$LLVM_BIN/llvm-cov" report \
-            "target/x86_64-unknown-linux-gnu/release/${{ matrix.target }}" \
+          # cargo-fuzz 0.13.2 builds the coverage binary under
+          # target/<host>/coverage/<triple>/release/<target> (separate target dir)
+          bin="target/x86_64-unknown-linux-gnu/coverage/x86_64-unknown-linux-gnu/release/${{ matrix.target }}"
+          [ -f "$bin" ] || bin="target/x86_64-unknown-linux-gnu/release/${{ matrix.target }}"
+          "$LLVM_BIN/llvm-cov" report "$bin" \
             -instr-profile="coverage/${{ matrix.target }}/coverage.profdata" \
             -summary-only -ignore-filename-regex='(fuzz_targets|registry|rustc/|\.cargo)' \
             2>&1 | tee coverage-${{ matrix.target }}.log
