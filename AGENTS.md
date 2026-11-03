@@ -67,6 +67,22 @@ If unattended authentication cannot be demonstrated, mark the setup BLOCKED; do 
 ## Language
 Reports: Arabic with English technical terms. Drafts and upstream text: English.
 
+## قواعد دائمة (Permanent rules — user directive v2.8 §6, 2026-11-03; applies to v2.8 and ALL later work)
+1. **Cards before execution**: split every directive into independent cards under
+   `team/tasks/open/` and run them on >= 3 parallel workers whenever independent tasks
+   exist. The supervisor executes only single small steps or strictly sequential
+   dependencies. Card examples for a build task: (a) rules reading, (b..d) one unit
+   per target, (e) shared docs/CI, (f) verification. Deliveries to the user start with
+   one line: "طُبّقت منهجية الفريق: N بطاقات، توازٍ X، زمن الجدار Y" — or a measured
+   reason why the methodology was not applied.
+2. **Actions, not local builds**: everything that does not need a model (builds, smoke
+   tests, fuzz rounds) runs in GitHub Actions; no heavy local compilation.
+3. **Path isolation**: each worker touches only its own paths (e.g. `fuzz/<target>/`);
+   the supervisor merges/writes shared files (Cargo.toml, README, CI).
+4. **Immediate results + critic**: every worker pushes its `team/results/` output as
+   soon as it finishes; an independent critic agent reviews user-facing text and ALL
+   numbers before they are shown to the user.
+
 ## Team mode (v2.1, 2026-11-02; hardened v2.2, 2026-11-03)
 Distributable work is carded under `team/` (PROTOCOL.md, roles/, routing.yml). The primary
 agent acts as SUPERVISOR: triage into cards, launch workers, merge results, draft for the
