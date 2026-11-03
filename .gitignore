@@ -6,3 +6,6 @@ upstream
 fuzz/artifacts/
 fuzz/corpus/
 fuzz/coverage/
+
+# Security findings: LOCAL ONLY (POLICY: never in the public repo)
+reports/private/
