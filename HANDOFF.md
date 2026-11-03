@@ -54,8 +54,8 @@
 - المستودعات الثلاثة: upstream [gmkurtzer/ginux](https://github.com/gmkurtzer/ginux) | fork [hafid-logic/ginux](https://github.com/hafid-logic/ginux) | watch [hafid-logic/ginux-watch](https://github.com/hafid-logic/ginux-watch)
 
 ## ح) آخر تحديث
-- التاريخ UTC: 2026-11-03T12:5xZ (جلسة 19 — v2.9: فتحتَ draft PR #61 يدويًا وعلّقت الرابط على #58؛ تسجيل approved + تحقق GET + تدقيق هوية + إصلاح scripts/session-init.sh؛ مراقبة قراءة فقط)
-- آخر تشغيل CI: fuzz-branch-verify run5 41614443506 (7/7 SUCCESS على feature/fuzz-targets@eccb0de7: checks 0/0/0/0 + rounds 172.8M + coverage)؛ قبله runs 1-4 لسلسلة تشخيص coverage (موثقة §14) وginux-verify 41558410745 (0/0/0 على النسختين)
+- التاريخ UTC: 2026-11-03T19:4xZ (جلسة 20 — v2.10: مراقبة ما بعد النشر قراءةً فقط: فحوص upstream خضراء 2/2 على رأس PR #61، تعليقا gmkurtzer، ready_for_review بيدك 19:17:55Z، main +39 إلى 144d8119؛ تسجيل v2.10 ودفع)
+- آخر تشغيل CI: upstream check 41627094862 على رأس PR #61 eccb0de7 = static ✓ + qemu ✓ (rerun qemu بعد فشل infra)؛ قبله fuzz-branch-verify run5 41614443506 (7/7 SUCCESS: rounds 172.8M + coverage) وginux-verify 41558410745 (0/0/0)
 
 ## سجل الجلسات مع Claude
 آخر 10 بنود من كتل التحديث ("دلتا الجلسة") التي يلصقها المستخدم؛ تُضاف كل كتلة جديدة بتاريخها ويُحذف الأقدم عند الزيادة (يُؤرشف في docs/HISTORY.md).
@@ -69,3 +69,5 @@
 18. 2026-11-03 (~09:5x–10:2x UTC) — v2.8: فرع fuzz جاهز eccb0de7 (124 ملفًا = c86945b1 + fuzz/ فقط) مُتحقق run5 41614443506 = 7/7 SUCCESS (checks 0/0/0/0؛ 172.8M execs صفر crashes؛ coverage regions 92.95/97.50/99.43%)؛ 7 بطاقات + critic (250/250 كلمة)؛ النص drafts/2026-11-03-v28-fuzz-pr.md — بلا فتح بانتظار اعتمادك (موسّع في docs/HISTORY.md).
 
 19. 2026-11-03 (~12:3x–13:0x UTC) — **v2.9: فتح PR #61 بيدك + تدقيق**: GET: 124 ملفًا كلها تحت fuzz/ (+849)؛ الوصف 245/250 كلمة = المعتمد + 3 تعديلات خفيفة؛ **لا فحوص منطلقة** (غيبي — تريگر check.yml العلوي push فقط)؛ الهوية: 10/11 noreply، الشاذ 701edf5 «Z User <z@container>» — أُصلح الجذر scripts/session-init.sh **بلا rebase/force**؛ حصة 2026-11-03 = 3 منشورات بيدك؛ 4 بطاقات T-13..16 + إغلاق T-12؛ مراقبة قراءة فقط (#61: 0/0، #58 بلا رد). التفصيل: approved/2026-11-03-3.md.
+
+20. 2026-11-03 (~19:4x UTC) — **v2.10: مراقبة ما بعد النشر (قراءة فقط)**: upstream checks على رأس #61 eccb0de7 خضراء 2/2 (run 41627094862: static+qemu؛ أول qemu فشل infra «hosted runner lost server communication while Homebrew was installing QEMU» وأعاد gmkurtzer التشغيل بنفسه)؛ تعليقا الصيانة 17:45Z/18:43Z بلا طلبات تغيير؛ جعلتَ الـ PR ready_for_review 19:17:55Z (draft=false، mergeable_state=clean)؛ main +39 إلى 144d8119 (بوابات hdae — صفر تداخل مع fuzz/ أو crates الثلاثة)؛ الهوية 10/11 noreply (الشاذ 701edf5 فقط)؛ لا فحص فاشل حاليًا ولا رد منا. التفصيل: reports/2026-11-03.md §16 + team/results/T-20261103-17/.
