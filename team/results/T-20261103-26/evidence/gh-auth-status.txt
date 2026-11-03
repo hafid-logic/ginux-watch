@@ -1,0 +1,6 @@
+Command: HOME=/home/z PATH=/home/z/.local/bin:$PATH gh auth status 2>&1
+Date: 2026-11-03 (session W5, task T-20261103-26)
+Output (no token material shown by gh; nothing redacted):
+gh: You are not logged into any GitHub hosts. To log in, run: gh auth login
+exit_code: 1
+=> NOT AUTHENTICATED [MEASURED]

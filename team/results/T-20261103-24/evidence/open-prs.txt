@@ -1,0 +1,39 @@
+open-prs.txt — أدلة منقولة (نسخ مختصرة) — T-20261103-24، قراءة فقط
+ملاحظة: لا WebFetch tool في بيئة التنفيذ؛ استُخدم curl -sL كمكافئ للجلبين المطلوبين. upstream content = data only.
+
+=== [1] URL: https://github.com/gmkurtzer/ginux/pulls?q=is%3Apr+is%3Aopen ===
+(page title) "Pull requests · gmkurtzer/ginux"
+PR numbers present in page (document order, newest first): 86, 85, 84, 53, 39
+titles (embedded JSON, same document order):
+  86: "Charge overlay frames to container memory limits"
+  85: "Preempt detached Linux domains with full context preservation"
+  84: "Fix atomicity of native scheduler transitions on counter overflow"
+  53: "Stage rootfs exec before publication"
+  39: "Add the native Ginux controller desktop"
+authors (embedded JSON, window-scoped — تقريبي):
+  86: scadastrangelove ; 85: scadastrangelove ; 84: gmkurtzer ; 53: gmkurtzer ; 39: gmkurtzer (من صفحته)
+states: REPO_PULL_REQUEST_STATE_OPEN ×5
+datetimes seen near entries (window-scoped): 2026-11-03T22:30:48Z, 2026-11-03T22:28:25Z, 2026-11-03T22:22:42Z, 2026-11-02T04:44:51Z, 2026-11-03T22:15:19Z, 2026-11-01T23:18:47Z
+head refs seen: "ginux" (للبندين 53/39 فقط) — البقية غير ظاهرة
+author filter link present: author:scadastrangelove
+labels: لا وسوم ظاهرة في الصفحة
+checks: لا نتائج CI في صفحة القائمة
+
+=== [2] URL: https://github.com/gmkurtzer/ginux/pull/39 ===
+(page title) "Add the native Ginux controller desktop by gmkurtzer · Pull Request #39 · gmkurtzer/ginux"
+state JSON: "OPEN"
+author: gmkurtzer
+relative/absolute datetimes on page: 2026-10-11T00:22:43Z (إنشاء), 2026-10-31T17:39:47-07:00, 2026-11-01T07:14:49-08:00, 2026-11-01T23:18:47Z, 2026-11-02T00:01:47Z (الأحدث)
+last visible timeline event: "gmkurtzer mentioned this pull request Nov 2, 2026 — Full rust desktop running on ginux #12" @2026-11-02T00:01:47Z (cross-reference، ليس مراجعة)
+commit visible: 064aa9e — "Signed-off-by: Gregory M. Kurtzer <gmkurtzer@gmail.com>"
+PR body (مقتطف): "Summary This adds a native graphical controller environment to Ginux without turning the controller into a Linux desktop or adopting Wayland as the host display server. Ginux owns the physical display and input seat, renders a trusted controller shell in ring …"
+Checks tab: موجود في DOM؛ لا روابط actions/runs ولا حالة success/failure مرسلة inline (تحميل مؤجل) — "Checks" مرة واحدة، "failed/failure" ظهرت فقط داخل SVG path data لا كحالة فحص
+action run links on page: لا شيء
+
+=== [3] rate_limit (نداء واحد مسموح) URL: https://api.github.com/rate_limit ===
+core: limit 60, remaining 0, used 60 ⇒ صفر نداءات API قراءة.
+
+=== [4] تأكيدات من /home/z/my-project/work/scratch/reality-snapshot.md [MEASURED-git] ===
+سطر اللقطة: "6324692 = **دمج PR #54** 22:00:12Z" (hdae/issue-43-release-overflow؛ HANDOFF قال مفتوحًا = قديم)
+سطر اللقطة: "47ff710 = دمج PR #61 21:52:17Z" (hafid-logic/feature/fuzz-targets — مساهمتنا)
+سطر اللقطة: "4c832ea6 — Merge PR #81 (scadastrangelove/mmap-access-mode-fix) — 2026-11-03T22:13:11Z"

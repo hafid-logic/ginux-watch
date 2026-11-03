@@ -1,0 +1,7 @@
+Command: git -C /home/z/my-project/work/ginux-watch log --oneline -3 upstream/main
+Output:
+4c832ea Merge pull request #81 from scadastrangelove/mmap-access-mode-fix
+5739ae2 Merge remote-tracking branch 'origin/main' into codex/pr81-tests
+6324692 Merge pull request #54 from gmkurtzer/hdae/issue-43-release-overflow
+=> upstream/main head = 4c832ea (full 4c832ea6 prefix) [MEASURED]
+Remotes: origin=https://github.com/hafid-logic/ginux-watch.git, upstream=https://github.com/gmkurtzer/ginux.git

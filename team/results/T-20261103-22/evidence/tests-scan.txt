@@ -1,0 +1,76 @@
+# evidence/tests-scan.txt — T-20261103-22 (W1)
+# method: git diff <merge>^1 <merge> scanned for: added '#[test]' occurrences, files matching test|fuzz, new boot-time verify_* fns in kernel/src/lib.rs|cpu.rs, new grep-markers in tests/qemu/boot.sh
+# upstream convention in this window: 'boot-gate' = boot-time self-check fn (kernel_fail on violation) + serial marker grepped by tests/qemu/boot.sh — not a #[test] unit test
+
+=== PR #47 merge feca3fc ===
+added_#[test]: 0
+test/fuzz files touched: tests/qemu/boot.sh 
+new boot.sh grep markers: 1
+new verify_*/kernel_fail lines (boot-gate): 2
+
+=== PR #59 merge 0fcd263 ===
+added_#[test]: 0
+test/fuzz files touched: none
+new boot.sh grep markers: 0
+new verify_*/kernel_fail lines (boot-gate): 2
+
+=== PR #48 merge 152be74 ===
+added_#[test]: 0
+test/fuzz files touched: tests/qemu/boot.sh 
+new boot.sh grep markers: 1
+new verify_*/kernel_fail lines (boot-gate): 0
+
+=== PR #70 merge 277187f ===
+added_#[test]: 0
+test/fuzz files touched: tests/qemu/boot.sh 
+new boot.sh grep markers: 1
+new verify_*/kernel_fail lines (boot-gate): 3
+
+=== PR #73 merge 5dd58ca ===
+added_#[test]: 0
+test/fuzz files touched: none
+new boot.sh grep markers: 0
+new verify_*/kernel_fail lines (boot-gate): 0
+
+=== PR #49 merge 9e7e298 ===
+added_#[test]: 0
+test/fuzz files touched: none
+new boot.sh grep markers: 0
+new verify_*/kernel_fail lines (boot-gate): 0
+
+=== PR #50 merge 144d811 ===
+added_#[test]: 0
+test/fuzz files touched: tests/qemu/boot.sh 
+new boot.sh grep markers: 1
+new verify_*/kernel_fail lines (boot-gate): 2
+
+=== PR #51 merge 8232ab5 ===
+added_#[test]: 0
+test/fuzz files touched: tests/qemu/boot.sh 
+new boot.sh grep markers: 1
+new verify_*/kernel_fail lines (boot-gate): 2
+
+=== PR #52 merge b4628fc ===
+added_#[test]: 0
+test/fuzz files touched: tests/qemu/boot.sh 
+new boot.sh grep markers: 1
+new verify_*/kernel_fail lines (boot-gate): 2
+
+=== PR #61 merge 47ff710 ===
+added_#[test]: 0
+test/fuzz files touched: fuzz/.gitignore fuzz/Cargo.lock fuzz/Cargo.toml fuzz/README.md fuzz/corpus-seed-protocol/p01_arp_valid fuzz/corpus-seed-protocol/p02_arp_mcast_sender fuzz/corpus-seed-protocol/p03_arp_zero_sender fuzz/corpus-seed-protocol/p04_arp_bcast_sender fuzz/corpus-seed-protocol/p05_arp_wrong_target_mac fuzz/corpus-seed-protocol/p06_arp_wrong_sender_ip fuzz/corpus-seed-protocol/p07_arp_wrong_hwtype fuzz/corpus-seed-protocol/p08_arp_wrong_dst fuzz/corpus-seed-protocol/p09_arp_len41 fuzz/corpus-seed-protocol/p10_arp_len43 fuzz/corpus-seed-protocol/p11_ipv4_valid fuzz/corpus-seed-protocol/p12_ipv4_bad_cksum fuzz/corpus-seed-protocol/p13_ipv4_fragment_mf fuzz/corpus-seed-protocol/p14_ipv4_fragment_off fuzz/corpus-seed-protocol/p15_ipv4_ttl0 fuzz/corpus-seed-protocol/p16_ipv4_proto6 fuzz/corpus-seed-protocol/p17_len_lt20 fuzz/corpus-seed-protocol/p17b_len_mismatch fuzz/corpus-seed-protocol/p18_ipv4_src_swap fuzz/corpus-seed-protocol/p19_ipv4_dst_swap fuzz/corpus-seed-protocol/p20_ipv4_ver4 fuzz/corpus-seed-protocol/p21_ipv4_payload64 fuzz/corpus-seed-protocol/p22_ipv4_maxish fuzz/corpus-seed-protocol/p23_ipv4_hdr_only fuzz/corpus-seed-protocol/p24_ident_edge fuzz/corpus-seed-protocol/p25_short33 fuzz/corpus-seed-protocol/p26_icmp_valid fuzz/corpus-seed-protocol/p27_icmp_type3 fuzz/corpus-seed-protocol/p28_icmp_code1 fuzz/corpus-seed-protocol/p29_icmp_bad_cksum fuzz/corpus-seed-protocol/p30_icmp_short7 fuzz/corpus-seed-protocol/p31_icmp_payload512 fuzz/corpus-seed-protocol/p32_icmp_id_seq_edges fuzz/corpus-seed-protocol/p33_icmp_reply_type0 fuzz/corpus-seed-volume/01-committed-gen7.bin fuzz/corpus-seed-volume/02-prepared-gen7.bin fuzz/corpus-seed-volume/03-committed-full-440.bin fuzz/corpus-seed-volume/04-committed-empty-payload.bin fuzz/corpus-seed-volume/05-committed-gen-max.bin fuzz/corpus-seed-volume/06-stale-digest-payload-flip.bin fuzz/corpus-seed-volume/07-digest-field-flip.bin fuzz/corpus-seed-volume/08-gen-zero.bin fuzz/corpus-seed-volume/09-length-over-capacity.bin fuzz/corpus-seed-volume/10-reserved-nonzero.bin fuzz/corpus-seed-volume/11-padding-nonzero.bin fuzz/corpus-seed-volume/12-magic-variant.bin fuzz/corpus-seed-volume/13-version-2.bin fuzz/corpus-seed-volume/14-header-size-73.bin fuzz/corpus-seed-volume/15-all-zero-sector.bin fuzz/corpus-seed-volume/16-all-ff-sector.bin fuzz/corpus-seed-volume/17-junk-sector.bin fuzz/corpus-seed-volume/18-committed-gen1-len255.bin fuzz/corpus-seed-volume/19-host-header-min-9.bin fuzz/corpus-seed-volume/20-host-header-131072.bin fuzz/corpus-seed-volume/21-host-header-sectors-8.bin fuzz/corpus-seed-volume/22-host-header-data-start-plus1.bin fuzz/corpus-seed-volume/23-host-header-data-sectors-plus1.bin fuzz/corpus-seed-volume/24-host-header-short-47.bin fuzz/corpus-seed-volume/25-host-header-bad-sector-size.bin fuzz/corpus-seed-volume/26-record-payload-host-header.bin fuzz/corpus-seed/j01_index_match fuzz/corpus-seed/j02_manifest fuzz/corpus-seed/j03_manifest_16_layers fuzz/corpus-seed/j04_config fuzz/corpus-seed/j05_config_variant fuzz/corpus-seed/j06_challenge fuzz/corpus-seed/j07_token fuzz/corpus-seed/j08_access_token fuzz/corpus-seed/j09_short_digest fuzz/corpus-seed/j10_index_windows fuzz/corpus-seed/r00_ref fuzz/corpus-seed/r01_ref fuzz/corpus-seed/r02_ref fuzz/corpus-seed/r03_ref fuzz/corpus-seed/r04_ref fuzz/corpus-seed/r05_ref fuzz/corpus-seed/r06_ref fuzz/corpus-seed/r07_ref fuzz/corpus-seed/r08_ref fuzz/corpus-seed/r09_ref fuzz/corpus-seed/r10_ref fuzz/corpus-seed/r11_ref fuzz/corpus-seed/t01_file fuzz/corpus-seed/t02_symlink fuzz/corpus-seed/t03_hardlink fuzz/corpus-seed/t04_dir fuzz/corpus-seed/t05_pax_path fuzz/corpus-seed/t06_pax_chain fuzz/corpus-seed/t07_pax_dup fuzz/corpus-seed/t08_pax_dir_slash fuzz/corpus-seed/t09_prefix_split fuzz/corpus-seed/t09b_prefix_path fuzz/corpus-seed/t10_size0 fuzz/corpus-seed/t11_size512 fuzz/corpus-seed/t12_size513 fuzz/corpus-seed/t13_size_2p32 fuzz/corpus-seed/t14_size_max fuzz/corpus-seed/t15_whiteout fuzz/corpus-seed/t16_opaque fuzz/corpus-seed/t17_replacement fuzz/corpus-seed/t18_traverse fuzz/corpus-seed/t19_gnu_magic fuzz/corpus-seed/t20_corrupt fuzz/corpus-seed/t21_trailing fuzz/corpus-seed/t22_truncated fuzz/corpus-seed/t23_empty fuzz/corpus-seed/t24_zero_nonzero fuzz/corpus-seed/t25_after_terminator fuzz/corpus-seed/t26_kind_L fuzz/corpus-seed/t27_mode_spaces fuzz/corpus-seed/t28_mode_blank fuzz/corpus-seed/t29_dot_component fuzz/corpus-seed/t30_multi fuzz/fuzz_targets/oci_surfaces.rs fuzz/fuzz_targets/protocol_surfaces.rs fuzz/fuzz_targets/volume_surfaces.rs fuzz/oci.dict fuzz/protocol.dict fuzz/rust-toolchain.toml fuzz/volume.dict 
+new boot.sh grep markers: 0
+new verify_*/kernel_fail lines (boot-gate): 0
+
+=== PR #54 merge 6324692 ===
+added_#[test]: 1
+test/fuzz files touched: none
+new boot.sh grep markers: 0
+new verify_*/kernel_fail lines (boot-gate): 0
+
+=== PR #81 merge 4c832ea ===
+added_#[test]: 0
+test/fuzz files touched: tests/qemu/boot.sh 
+new boot.sh grep markers: 1
+new verify_*/kernel_fail lines (boot-gate): 1
+

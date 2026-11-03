@@ -1,0 +1,143 @@
+dump-diff.txt — T-20261103-23 (W2 crosschecker) — مقارنة مبسطة
+========================================================================
+القاعدة: origin/data:upstream-dump.jsonl (76 بندًا, generated 2026-11-03T18:21:10Z @2e32b12)
+مقابل inbox/upstream-dump/issues.json (57 بندًا, ~2026-11-03T00:5xZ)
+ومقابل reports/cross-check/matrix.md (P1–P17, حالة 2026-11-02).
+كل الحالات أدناه [MEASURED] من الملفين المذكورين؛ التوقيتات UTC من الملف نفسه.
+
+## A) جرد dump الفرع data — 76 بندًا (n|kind|state|merged_at|updated_at)
+------------------------------------------------------------------------
+  1 | issue | closed | -                    | 2026-10-31T05:32:21Z
+  2 | issue | closed | -                    | 2026-10-31T05:31:44Z
+  3 | pr    | closed | 2026-10-30T03:43:29Z | 2026-10-30T03:43:29Z
+  4 | issue | closed | -                    | 2026-11-02T00:31:21Z
+  5 | issue | open   | -                    | 2026-10-31T12:41:39Z
+  6 | pr    | closed | -                    | 2026-11-01T22:52:46Z
+  7 | pr    | closed | 2026-10-31T01:57:52Z | 2026-10-31T05:29:59Z
+  8 | pr    | closed | 2026-10-31T05:28:14Z | 2026-10-31T05:29:49Z
+  9 | pr    | closed | 2026-10-31T16:01:51Z | 2026-10-31T16:01:51Z
+ 10 | pr    | closed | 2026-10-31T16:02:03Z | 2026-10-31T17:37:34Z
+ 11 | pr    | closed | -                    | 2026-10-31T15:09:50Z
+ 12 | issue | open   | -                    | 2026-11-03T11:37:03Z
+ 13 | pr    | closed | 2026-11-01T23:24:48Z | 2026-11-01T23:25:07Z
+ 14 | issue | closed | -                    | 2026-11-02T01:53:21Z
+ 15 | issue | closed | -                    | 2026-11-02T02:23:09Z
+ 16 | issue | closed | -                    | 2026-11-02T02:49:51Z
+ 17 | issue | closed | -                    | 2026-11-02T19:03:30Z
+ 18 | issue | closed | -                    | 2026-11-02T22:04:44Z
+ 19 | issue | closed | -                    | 2026-11-03T00:05:53Z
+ 20 | issue | open   | -                    | 2026-11-02T04:30:53Z
+ 21 | issue | closed | -                    | 2026-11-03T05:47:51Z
+ 22 | issue | closed | -                    | 2026-11-03T15:06:32Z
+ 23 | pr    | closed | 2026-11-01T23:32:45Z | 2026-11-01T23:32:45Z
+ 24 | issue | closed | -                    | 2026-11-03T15:41:01Z
+ 25 | issue | open   | -                    | 2026-11-03T17:45:32Z
+ 26 | issue | closed | -                    | 2026-11-03T05:47:46Z
+ 27 | issue | open   | -                    | 2026-11-02T04:44:53Z
+ 28 | issue | open   | -                    | 2026-11-02T03:58:01Z
+ 29 | issue | open   | -                    | 2026-11-02T04:05:26Z
+ 30 | issue | closed | -                    | 2026-11-03T05:47:42Z
+ 31 | pr    | closed | 2026-11-01T23:43:50Z | 2026-11-01T23:43:50Z
+ 32 | pr    | closed | 2026-11-01T23:44:00Z | 2026-11-01T23:44:01Z
+ 33 | pr    | closed | 2026-11-01T23:45:40Z | 2026-11-01T23:45:40Z
+ 34 | pr    | closed | 2026-11-01T23:45:55Z | 2026-11-01T23:45:55Z
+ 35 | pr    | closed | 2026-11-02T00:00:10Z | 2026-11-02T00:00:10Z
+ 36 | pr    | closed | 2026-11-02T00:00:27Z | 2026-11-03T05:48:16Z
+ 37 | pr    | closed | 2026-11-02T00:00:38Z | 2026-11-03T05:48:20Z
+ 38 | pr    | closed | 2026-11-02T00:00:48Z | 2026-11-03T05:48:23Z
+ 39 | pr    | open   | -                    | 2026-11-01T23:18:47Z
+ 40 | pr    | closed | 2026-11-02T02:22:53Z | 2026-11-02T02:22:57Z
+ 41 | pr    | closed | 2026-11-02T01:52:56Z | 2026-11-02T01:53:02Z
+ 42 | pr    | closed | 2026-11-02T02:49:30Z | 2026-11-02T02:49:58Z
+ 43 | issue | open   | -                    | 2026-11-02T16:24:45Z
+ 44 | pr    | closed | 2026-11-02T19:03:09Z | 2026-11-02T19:03:46Z
+ 45 | pr    | closed | 2026-11-02T22:04:26Z | 2026-11-02T22:05:02Z
+ 46 | pr    | closed | 2026-11-03T00:05:06Z | 2026-11-03T00:06:08Z
+ 47 | pr    | closed | 2026-11-03T15:05:54Z | 2026-11-03T15:07:09Z
+ 48 | pr    | closed | 2026-11-03T15:40:34Z | 2026-11-03T15:41:04Z
+ 49 | pr    | open   | -                    | 2026-11-03T17:45:33Z
+ 50 | pr    | open   | -                    | 2026-11-02T19:00:48Z
+ 51 | pr    | open   | -                    | 2026-11-02T19:00:49Z
+ 52 | pr    | open   | -                    | 2026-11-02T19:00:48Z
+ 53 | pr    | open   | -                    | 2026-11-02T04:45:16Z
+ 54 | pr    | open   | -                    | 2026-11-02T19:00:56Z
+ 55 | issue | closed | -                    | 2026-11-02T15:13:16Z
+ 56 | pr    | closed | 2026-11-03T06:32:05Z | 2026-11-03T06:32:05Z
+ 57 | issue | closed | -                    | 2026-11-03T15:42:08Z
+ 58 | issue | open   | -                    | 2026-11-03T11:55:32Z
+ 59 | pr    | closed | 2026-11-03T15:11:08Z | 2026-11-03T15:12:33Z
+ 60 | issue | closed | -                    | 2026-11-03T15:12:59Z
+ 61 | pr    | open   | -                    | 2026-11-03T17:45:45Z
+ 62 | issue | closed | -                    | 2026-11-03T16:40:48Z
+ 63 | issue | closed | -                    | 2026-11-03T17:40:54Z
+ 64 | issue | open   | -                    | 2026-11-03T16:49:09Z
+ 65 | issue | open   | -                    | 2026-11-03T16:49:08Z
+ 66 | issue | open   | -                    | 2026-11-03T16:49:19Z
+ 67 | issue | open   | -                    | 2026-11-03T16:49:09Z
+ 68 | issue | open   | -                    | 2026-11-03T16:49:21Z
+ 69 | issue | open   | -                    | 2026-11-03T17:52:02Z
+ 70 | pr    | closed | 2026-11-03T16:40:24Z | 2026-11-03T16:40:51Z
+ 71 | issue | open   | -                    | 2026-11-03T16:49:20Z
+ 72 | issue | open   | -                    | 2026-11-03T16:49:21Z
+ 73 | pr    | closed | 2026-11-03T17:40:31Z | 2026-11-03T17:41:18Z
+ 74 | pr    | closed | -                    | 2026-11-03T17:46:08Z
+ 75 | issue | open   | -                    | 2026-11-03T17:51:58Z
+ 76 | issue | open   | -                    | 2026-11-03T17:52:00Z
+
+## B) الفرق مقابل inbox (57): بنود جديدة + تغيّرات حالة على المشترك
+------------------------------------------------------------------------
+جديدة (19): [58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76]
+
+تغيّرات حالة (inbox -> data):
+#21: open -> closed  <- بدون PR جديد في dump؛ عنقود updated_at ~05:47Z يوحي بمسح صيانة [INFERRED]؛ السبب [UNVERIFIED]
+#22: open -> closed  <- دمج PR المقابل مقيس في git: #47 feca3fc 15:05:53Z
+#24: open -> closed  <- دمج PR المقابل مقيس في git: #48 152be74 15:40:33Z
+#26: open -> closed  <- بدون PR جديد في dump؛ عنقود updated_at ~05:47Z يوحي بمسح صيانة [INFERRED]؛ السبب [UNVERIFIED]
+#30: open -> closed  <- بدون PR جديد في dump؛ عنقود updated_at ~05:47Z يوحي بمسح صيانة [INFERRED]؛ السبب [UNVERIFIED]
+#47: open -> closed/2026-11-03T15:05:54Z
+#48: open -> closed/2026-11-03T15:40:34Z
+#56: open -> closed/2026-11-03T06:32:05Z  <- دمج #56 مقيس في git (06:32Z)
+#57: open -> closed  <- دمج PR المقابل مقيس في git: #59 0fcd263 15:11:08Z
+
+ملاحظة ترقيم: data مستمر 1–76 بلا فجوات؛ #77–#80 غير موجودة في أي من المصدرين [UNVERIFIED].
+
+## C) حالة كل بند متعلق بصفوف P (حسب dump data @18:21Z + دمجات git بعد التاريخ)
+------------------------------------------------------------------------
+#4 [P1] state=closed merged=- | #4 closed (إصلاح #10+#13) — الصف زالت [MEASURED]
+#5 [P3/P4/P6/P11] state=open merged=- | #5 tracking open — سياق الصفوف B [MEASURED]
+#17 [P2] state=closed merged=- | #17 closed 11-02 (دمج #44) [MEASURED]
+#18 [P2] state=closed merged=- | #18 closed 11-02 (دمج #45) [MEASURED]
+#19 [P2] state=closed merged=- | #19 closed 11-03T00:05 (دمج #46)؛ متجاوز جديد #67 open [MEASURED]
+#20 [P2] state=open merged=- | #20 open في dump؛ PR #52 دمج b4628fc 21:32:15Z بعدها [MEASURED-git]؛ الإغلاق [UNVERIFIED]
+#21 [P2] state=closed merged=- | #21 closed 05:47:51Z (دمج #38 سلفًا) [MEASURED]
+#22 [P2] state=closed merged=- | #22 closed 15:06:32Z عبر دمج #47 feca3fc 15:05:53Z [MEASURED]
+#24 [P2] state=closed merged=- | #24 closed 15:41:01Z عبر دمج #48 152be74 15:40:33Z [MEASURED]
+#25 [P6] state=open merged=- | #25 open في dump؛ PR #49 دمج 9e7e298 18:39:59Z بعدها [MEASURED-git]؛ الإغلاق [UNVERIFIED]
+#26 [P5(عائلة)/مسودة 2026-11-03-1] state=closed merged=- | #26 CLOSED updated_at 05:47:46Z — قبل دمجات اليوم كلها؛ بلا PR جديد في dump؛ سبب الإغلاق [UNVERIFIED]
+#27 [P5(عائلة)] state=open merged=- | #27 open؛ PR #53 ما زال open حتى رأس upstream/main (لا دمج له) [MEASURED]
+#28 [P5(عائلة)] state=open merged=- | #28 open في dump؛ PR #50 دمج 144d811 19:41:24Z بعدها [MEASURED-git]؛ الإغلاق [UNVERIFIED]
+#29 [P5(عائلة)] state=open merged=- | #29 open في dump؛ PR #51 دمج 8232ab5 20:41:14Z بعدها [MEASURED-git]؛ الإغلاق [UNVERIFIED]
+#43 [P10] state=open merged=- | #43 open في dump؛ PR #54 دمج 6324692 22:00:12Z بعدها [MEASURED-git]؛ الإغلاق [UNVERIFIED]
+#54 [P10] state=open merged=- | #54 open في dump @18:21Z ثم دمج 6324692 22:00:12Z [MEASURED-git] — overflow-checks=true على الرأس [MEASURED]
+#58 [—(مسودتنا v27)] state=open merged=- | #58 open — صار هدف المسودة/بُندنا
+#61 [—(مسودتنا v28)] state=open merged=- | #61 open في dump ثم دمج 47ff710 21:52:17Z [MEASURED-git]
+#62 [لا صف P] state=closed | #62 closed 16:40:48Z عبر دمج #70 277187f 16:40:24Z [MEASURED]
+#63 [لا صف P] state=closed | #63 closed 17:40:54Z عبر دمج #73 5dd58ca 17:40:31Z [MEASURED]
+#67 [P2 (ملاصق)] state=open merged=- | #67 open — ثالث متجاوز لثابت #19/memory_limit_mib [MEASURED]
+
+## D) دمجات اليوم على upstream/main (git log --merges, [MEASURED-git])
+------------------------------------------------------------------------
+4c832ea 2026-11-03T17:13:11-05:00 Merge pull request #81 from scadastrangelove/mmap-access-mode-fix
+5739ae2 2026-11-03T14:01:19-08:00 Merge remote-tracking branch 'origin/main' into codex/pr81-tests
+6324692 2026-11-03T17:00:12-05:00 Merge pull request #54 from gmkurtzer/hdae/issue-43-release-overflow
+47ff710 2026-11-03T16:52:17-05:00 Merge pull request #61 from hafid-logic/feature/fuzz-targets
+aa6ec20 2026-11-03T13:50:28-08:00 Merge remote-tracking branch 'origin/main' into hdae/issue-43-release-overflow
+b4628fc 2026-11-03T16:32:15-05:00 Merge pull request #52 from gmkurtzer/hdae/issue-20-gzip-unpack
+fa37edd 2026-11-03T12:44:57-08:00 Merge remote-tracking branch 'origin/main' into hdae/issue-20-gzip-unpack
+8232ab5 2026-11-03T15:41:14-05:00 Merge pull request #51 from gmkurtzer/hdae/issue-29-iommu-rollback-quarantine
+86df4b3 2026-11-03T11:50:00-08:00 Merge remote-tracking branch 'origin/main' into hdae/issue-29-iommu-rollback-quarantine
+144d811 2026-11-03T14:41:24-05:00 Merge pull request #50 from gmkurtzer/hdae/issue-28-dma-quarantine
+8664855 2026-11-03T10:41:49-08:00 Merge remote-tracking branch 'origin/main' into hdae/issue-28-dma-quarantine
+9e7e298 2026-11-03T13:39:59-05:00 Merge pull request #49 from gmkurtzer/hdae/issue-25-mprotect-shootdown
+ecbb137 2026-11-03T09:43:22-08:00 Merge remote-tracking branch 'origin/main' into hdae/issue-25-mprotect-shootdown
+5dd58ca 2026-11-03T12:40:31-05:00 Merge pull request #73 from gmkurtzer/hdae/issue-63-registry-dns-entropy

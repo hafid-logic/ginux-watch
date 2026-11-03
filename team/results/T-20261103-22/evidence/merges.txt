@@ -1,0 +1,191 @@
+# evidence/merges.txt — T-20261103-22 (W1, pr-reviewer)
+# generated: 2026-11-03T22:24:21Z
+# repo: /home/z/my-project/work/ginux-watch (upstream = gmkurtzer/ginux, fetched refs only — no git fetch performed)
+# range: c86945b (merge PR #56, 2026-11-03T06:32:04Z) .. upstream/main 4c832ea6
+
+## upstream/main head
+4c832ea685d8277a677e96f4b2c0fb755792d82d
+
+## git log --merges --format='%h %H %ci %s' c86945b..upstream/main
+(23 merges total: 12 'Merge pull request #NN' + 11 internal branch-sync merges 'Merge ... into ...')
+
+4c832ea 4c832ea685d8277a677e96f4b2c0fb755792d82d 2026-11-03 17:13:11 -0500 Merge pull request #81 from scadastrangelove/mmap-access-mode-fix
+5739ae2 5739ae247acef7b210db374a9f70bb679eb325f4 2026-11-03 14:01:19 -0800 Merge remote-tracking branch 'origin/main' into codex/pr81-tests
+6324692 6324692bb170f9ab0ed752f005a2a30e7c6eea7d 2026-11-03 17:00:12 -0500 Merge pull request #54 from gmkurtzer/hdae/issue-43-release-overflow
+47ff710 47ff71079897e057ba86c112b3eb45bd58d87d7d 2026-11-03 16:52:17 -0500 Merge pull request #61 from hafid-logic/feature/fuzz-targets
+aa6ec20 aa6ec207168a4dade7b4aa1e63de9b0988019bc6 2026-11-03 13:50:28 -0800 Merge remote-tracking branch 'origin/main' into hdae/issue-43-release-overflow
+b4628fc b4628fc2968e65b28197d77fc6a457479e19e49a 2026-11-03 16:32:15 -0500 Merge pull request #52 from gmkurtzer/hdae/issue-20-gzip-unpack
+fa37edd fa37eddafb251d64c6f5a71d043f37e8e7d2372f 2026-11-03 12:44:57 -0800 Merge remote-tracking branch 'origin/main' into hdae/issue-20-gzip-unpack
+8232ab5 8232ab5706afb68456f1fcf2a5555bd6b35aa83c 2026-11-03 15:41:14 -0500 Merge pull request #51 from gmkurtzer/hdae/issue-29-iommu-rollback-quarantine
+86df4b3 86df4b3b045f9966ab4a08132e8837f51371b510 2026-11-03 11:50:00 -0800 Merge remote-tracking branch 'origin/main' into hdae/issue-29-iommu-rollback-quarantine
+144d811 144d81197f6f93931a4ee0e08696f38da69c517c 2026-11-03 14:41:24 -0500 Merge pull request #50 from gmkurtzer/hdae/issue-28-dma-quarantine
+8664855 86648551fff1880685b0f3bb80a96e269ae810b5 2026-11-03 10:41:49 -0800 Merge remote-tracking branch 'origin/main' into hdae/issue-28-dma-quarantine
+9e7e298 9e7e2988199b0e9ac4ae55b689f3224991836919 2026-11-03 13:39:59 -0500 Merge pull request #49 from gmkurtzer/hdae/issue-25-mprotect-shootdown
+ecbb137 ecbb1372001b7de4466961344c9d6fdef08728bd 2026-11-03 09:43:22 -0800 Merge remote-tracking branch 'origin/main' into hdae/issue-25-mprotect-shootdown
+5dd58ca 5dd58ca4da5b346dc5875bc45fb608e87bdefb1b 2026-11-03 12:40:31 -0500 Merge pull request #73 from gmkurtzer/hdae/issue-63-registry-dns-entropy
+a48047e a48047e2df711fa1344e68760d72979953184c10 2026-11-03 08:44:57 -0800 Merge remote-tracking branch 'origin/main' into hdae/issue-63-registry-dns-entropy
+277187f 277187fbe2d807f8126d811e0443e9139ec37274 2026-11-03 11:40:24 -0500 Merge pull request #70 from gmkurtzer/hdae/issue-62-poll-budget
+152be74 152be742b584ea192839c4f19c3d6af1b8014a31 2026-11-03 10:40:33 -0500 Merge pull request #48 from gmkurtzer/hdae/issue-24-secret-process-vm
+4fda8d0 4fda8d0a6f197b94fb56ec011ff14d1f06f6ba33 2026-11-03 07:13:37 -0800 Merge current main into Gate 39
+0fcd263 0fcd2634fc14153c7a6bdd93039142bb9027b1bd 2026-11-03 10:11:08 -0500 Merge pull request #59 from gmkurtzer/hdae/issue-57-linux-lazy-page
+feca3fc feca3fc65b9c9c9d30a4fdaac3523cf7bf297679 2026-11-03 10:05:53 -0500 Merge pull request #47 from gmkurtzer/hdae/issue-22-blocking-sockets
+701edf5 701edf5b8bb3cd6f69b0311b3eda13be4d9504bf 2026-11-03 07:43:40 +0000 fuzz: merge per-target harness commits (oci, protocol-state, volume-format)
+05cfcf4 05cfcf481937b9497af8f2c5c300318a74771a7d 2026-11-02 22:37:09 -0800 Merge current main into Gate 38
+c2b6bf0 c2b6bf0e722375ceb7ca385361a02c973652b6d8 2026-11-02 22:33:17 -0800 Merge current main into Gate 37
+
+===============================================================
+## merge feca3fc : Merge pull request #47 from gmkurtzer/hdae/issue-22-blocking-sockets
+## parents: c86945b 05cfcf4
+## git diff feca3fc^1 feca3fc --stat (tail -25)
+ .../gates-done/38-bounded-blocking-socket-polls.md | 101 +++++++++++++++++++++
+ kernel/src/lib.rs                                  |   4 +
+ kernel/src/linux_socket.rs                         |  54 ++++++-----
+ tests/qemu/boot.sh                                 |   5 +
+ 4 files changed, 141 insertions(+), 23 deletions(-)
+
+===============================================================
+## merge 0fcd263 : Merge pull request #59 from gmkurtzer/hdae/issue-57-linux-lazy-page
+## parents: feca3fc c2b6bf0
+## git diff 0fcd263^1 0fcd263 --stat (tail -25)
+ hdae/STATUS.md                                     |  35 +++---
+ .../37-linux-lazy-page-quota-regression.md         | 120 +++++++++++++++++++++
+ kernel/src/address_space.rs                        |  72 +++++++------
+ kernel/src/arch/x86_64/cpu.rs                      |  13 ++-
+ kernel/src/lib.rs                                  |   4 +
+ kernel/src/linux_process.rs                        |  33 ++----
+ 6 files changed, 205 insertions(+), 72 deletions(-)
+
+===============================================================
+## merge 152be74 : Merge pull request #48 from gmkurtzer/hdae/issue-24-secret-process-vm
+## parents: 0fcd263 4fda8d0
+## git diff 152be74^1 152be74 --stat (tail -25)
+ hdae/gates-done/39-secret-process-vm-exclusion.md | 99 +++++++++++++++++++++++
+ kernel/src/address_space.rs                       | 54 +++++++++++--
+ kernel/src/arch/x86_64/cpu.rs                     | 44 +++++++++-
+ kernel/src/linux_process.rs                       | 28 ++++++-
+ tests/qemu/boot.sh                                |  4 +
+ 5 files changed, 218 insertions(+), 11 deletions(-)
+
+===============================================================
+## merge 277187f : Merge pull request #70 from gmkurtzer/hdae/issue-62-poll-budget
+## parents: 152be74 0eabe97
+## git diff 277187f^1 277187f --stat (tail -25)
+ hdae/STATUS.md                                | 14 ++---
+ hdae/gates-done/40-synchronous-poll-budget.md | 74 +++++++++++++++++++++++++++
+ kernel/src/arch/x86_64/cpu.rs                 |  4 ++
+ kernel/src/arch/x86_64/cpu/linux_poll.rs      | 11 +++-
+ kernel/src/lib.rs                             |  4 ++
+ kernel/src/linux_socket.rs                    |  2 +-
+ tests/qemu/boot.sh                            |  5 ++
+ 7 files changed, 105 insertions(+), 9 deletions(-)
+
+===============================================================
+## merge 5dd58ca : Merge pull request #73 from gmkurtzer/hdae/issue-63-registry-dns-entropy
+## parents: 277187f e7ff5a5
+## git diff 5dd58ca^1 5dd58ca --stat (tail -25)
+ boot/efi/src/generated_boot.rs                     | 15075 ++++++++++---------
+ hdae/STATUS.md                                     |    14 +-
+ hdae/gates-done/41-registry-dns-entropy-binding.md |    86 +
+ ...nel-network-entropy-and-dns-fallback-removal.md |    60 +
+ kernel/src/linux_socket.rs                         |     6 +-
+ services/network/src/registry.rs                   |   143 +-
+ 6 files changed, 7713 insertions(+), 7671 deletions(-)
+
+===============================================================
+## merge 9e7e298 : Merge pull request #49 from gmkurtzer/hdae/issue-25-mprotect-shootdown
+## parents: 5dd58ca ecbb137
+## git diff 9e7e298^1 9e7e298 --stat (tail -25)
+ hdae/STATUS.md                               | 21 ++++---
+ hdae/gates-done/40-mprotect-smp-shootdown.md | 93 ++++++++++++++++++++++++++++
+ kernel/src/address_space.rs                  |  6 +-
+ 3 files changed, 109 insertions(+), 11 deletions(-)
+
+===============================================================
+## merge 144d811 : Merge pull request #50 from gmkurtzer/hdae/issue-28-dma-quarantine
+## parents: 9e7e298 8664855
+## git diff 144d811^1 144d811 --stat (tail -25)
+ hdae/STATUS.md                               | 17 ++---
+ hdae/gates-done/42-runtime-dma-quarantine.md | 94 ++++++++++++++++++++++++++++
+ kernel/src/lib.rs                            | 46 ++++++++++++--
+ tests/qemu/boot.sh                           |  4 ++
+ 4 files changed, 149 insertions(+), 12 deletions(-)
+
+===============================================================
+## merge 8232ab5 : Merge pull request #51 from gmkurtzer/hdae/issue-29-iommu-rollback-quarantine
+## parents: 144d811 86df4b3
+## git diff 8232ab5^1 8232ab5 --stat (tail -25)
+ hdae/STATUS.md                                  |  29 +++--
+ hdae/gates-done/43-iommu-rollback-quarantine.md | 105 ++++++++++++++++
+ kernel/src/arch/x86_64/iommu.rs                 | 160 +++++++++++++++++++-----
+ kernel/src/lib.rs                               |  35 ++++--
+ tests/qemu/boot.sh                              |   1 +
+ 5 files changed, 277 insertions(+), 53 deletions(-)
+
+===============================================================
+## merge b4628fc : Merge pull request #52 from gmkurtzer/hdae/issue-20-gzip-unpack
+## parents: 8232ab5 570f1d9
+## git diff b4628fc^1 b4628fc --stat (tail -25)
+ hdae/STATUS.md                           | 26 +++++----
+ hdae/gates-done/37-bounded-oci-unpack.md | 97 ++++++++++++++++++++++++++++++++
+ kernel/src/image_store.rs                | 49 +++++++++++++---
+ kernel/src/lib.rs                        | 11 +++-
+ tests/qemu/boot.sh                       |  5 ++
+ 5 files changed, 169 insertions(+), 19 deletions(-)
+
+===============================================================
+## merge 47ff710 : Merge pull request #61 from hafid-logic/feature/fuzz-targets
+## parents: b4628fc f61c64a
+## git diff 47ff710^1 47ff710 --stat (tail -25)
+ fuzz/corpus-seed/t14_size_max                      | Bin 0 -> 1536 bytes
+ fuzz/corpus-seed/t15_whiteout                      | Bin 0 -> 2560 bytes
+ fuzz/corpus-seed/t16_opaque                        | Bin 0 -> 2048 bytes
+ fuzz/corpus-seed/t17_replacement                   | Bin 0 -> 3072 bytes
+ fuzz/corpus-seed/t18_traverse                      | Bin 0 -> 2048 bytes
+ fuzz/corpus-seed/t19_gnu_magic                     | Bin 0 -> 2048 bytes
+ fuzz/corpus-seed/t20_corrupt                       | Bin 0 -> 2048 bytes
+ fuzz/corpus-seed/t21_trailing                      | Bin 0 -> 2049 bytes
+ fuzz/corpus-seed/t22_truncated                     | Bin 0 -> 600 bytes
+ fuzz/corpus-seed/t23_empty                         | Bin 0 -> 1024 bytes
+ fuzz/corpus-seed/t24_zero_nonzero                  | Bin 0 -> 1536 bytes
+ fuzz/corpus-seed/t25_after_terminator              | Bin 0 -> 1536 bytes
+ fuzz/corpus-seed/t26_kind_L                        | Bin 0 -> 2048 bytes
+ fuzz/corpus-seed/t27_mode_spaces                   | Bin 0 -> 2048 bytes
+ fuzz/corpus-seed/t28_mode_blank                    | Bin 0 -> 2048 bytes
+ fuzz/corpus-seed/t29_dot_component                 | Bin 0 -> 2048 bytes
+ fuzz/corpus-seed/t30_multi                         | Bin 0 -> 4608 bytes
+ fuzz/fuzz_targets/oci_surfaces.rs                  | 164 ++++++++++++
+ fuzz/fuzz_targets/protocol_surfaces.rs             |  74 ++++++
+ fuzz/fuzz_targets/volume_surfaces.rs               |  57 ++++
+ fuzz/oci.dict                                      |  58 +++++
+ fuzz/protocol.dict                                 |  23 ++
+ fuzz/rust-toolchain.toml                           |   9 +
+ fuzz/volume.dict                                   |   9 +
+ 124 files changed, 860 insertions(+)
+
+===============================================================
+## merge 6324692 : Merge pull request #54 from gmkurtzer/hdae/issue-43-release-overflow
+## parents: 47ff710 aa6ec20
+## git diff 6324692^1 6324692 --stat (tail -25)
+ Cargo.toml                                    |     1 +
+ Makefile                                      |     1 +
+ boot/efi/src/generated_boot.rs                | 48880 ++++++++++++------------
+ crates/oci/src/lib.rs                         |     7 +
+ hdae/STATUS.md                                |    67 +-
+ hdae/gates-done/44-release-overflow-checks.md |   126 +
+ kernel/src/address_space.rs                   |     4 +-
+ kernel/src/arch/x86_64/cpu.rs                 |    51 +-
+ kernel/src/arch/x86_64/cpu/architecture.rs    |     2 +-
+ kernel/src/arch/x86_64/paging.rs              |    14 +-
+ kernel/src/initramfs.rs                       |     2 +-
+ kernel/src/linux_overlay.rs                   |     4 +-
+ tools/manifest-tool/src/main.rs               |     4 +-
+ 13 files changed, 24929 insertions(+), 24234 deletions(-)
+
+===============================================================
+## merge 4c832ea : Merge pull request #81 from scadastrangelove/mmap-access-mode-fix
+## parents: 6324692 5739ae2
+## git diff 4c832ea^1 4c832ea --stat (tail -25)
+ kernel/src/arch/x86_64/cpu.rs | 115 ++++++++++++++++++++++++++++++++++++++++++
+ tests/qemu/boot.sh            |   4 ++
+ 2 files changed, 119 insertions(+)
+

@@ -1,0 +1,168 @@
+name: ginux-verify
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "main, or an upstream PR number"
+        default: "main"
+      qemu_versions:
+        description: "JSON array of QEMU versions"
+        default: '["10.0.13","10.1.2"]'
+  schedule:
+    - cron: "23 4 * * *"
+
+permissions:
+  contents: read
+
+jobs:
+  discover:
+    runs-on: ubuntu-24.04
+    outputs:
+      targets: ${{ steps.pick.outputs.targets }}
+    steps:
+      - id: pick
+        env:
+          GH_TOKEN: ${{ github.token }}
+          INPUT_TARGET: ${{ github.event.inputs.target }}
+        run: |
+          set -euo pipefail
+          if [ -n "${INPUT_TARGET:-}" ]; then
+            if ! [[ "$INPUT_TARGET" =~ ^(main|[0-9]+)$ ]]; then echo "invalid target"; exit 1; fi
+            echo "targets=$(jq -cn --arg t "$INPUT_TARGET" '[$t]')" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          since=$(date -u -d '36 hours ago' +%Y-%m-%dT%H:%M:%SZ)
+          prs=$(gh api "repos/gmkurtzer/ginux/pulls?state=open&sort=updated&direction=desc&per_page=30" \
+            --jq "[.[] | select(.updated_at > \"$since\") | select(.draft|not) | .number] | .[0:2]")
+          echo "targets=$(jq -c '["main"] + map(tostring)' <<<"$prs")" >> "$GITHUB_OUTPUT"
+
+  verify:
+    needs: discover
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    strategy:
+      fail-fast: false
+      matrix:
+        target: ${{ fromJson(needs.discover.outputs.targets) }}
+        qemu: ${{ fromJson(github.event.inputs.qemu_versions || '["10.0.13","10.1.2"]') }}
+    env:
+      QEMU_VERSION: ${{ matrix.qemu }}
+      TARGET: ${{ matrix.target }}
+    steps:
+      - name: Checkout watch repo
+        uses: actions/checkout@v4
+        with:
+          path: watch
+          persist-credentials: false
+
+      - name: Resolve upstream ref
+        id: ref
+        run: |
+          if [ "$TARGET" = "main" ]; then echo "ref=refs/heads/main" >> "$GITHUB_OUTPUT"
+          else echo "ref=refs/pull/${TARGET}/head" >> "$GITHUB_OUTPUT"; fi
+
+      - name: Checkout upstream (untrusted code, no credentials)
+        uses: actions/checkout@v4
+        with:
+          repository: gmkurtzer/ginux
+          ref: ${{ steps.ref.outputs.ref }}
+          path: ginux
+          persist-credentials: false
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential ninja-build pkg-config python3-venv \
+            libglib2.0-dev libpixman-1-dev libslirp-dev libfdt-dev ovmf clang lld jq ripgrep
+          clang --version | head -1
+          ls /usr/share/OVMF/ | head -20
+
+      - name: Enable KVM if available (probe only)
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm || true
+          ls -l /dev/kvm || echo "no /dev/kvm"
+
+      - name: Cache QEMU build
+        id: qemucache
+        uses: actions/cache@v4
+        with:
+          path: ~/qemu-${{ matrix.qemu }}
+          key: qemu-${{ matrix.qemu }}-ubuntu24.04-v1
+
+      - name: Build QEMU (cache miss)
+        if: steps.qemucache.outputs.cache-hit != 'true'
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP"
+          curl -fsSLO "https://download.qemu.org/qemu-${QEMU_VERSION}.tar.xz"
+          actual=$(sha256sum "qemu-${QEMU_VERSION}.tar.xz" | cut -d' ' -f1)
+          pinned=$(awk -v v="$QEMU_VERSION" '$1==v {print $2}' "$GITHUB_WORKSPACE/watch/matrix/qemu-sha256.txt")
+          echo "QEMU ${QEMU_VERSION} sha256=${actual} pinned=${pinned:-none}"
+          if [ -n "${pinned:-}" ] && [ "$pinned" != "TBD" ] && [ "$pinned" != "$actual" ]; then
+            echo "sha256 mismatch"; exit 1
+          fi
+          tar xf "qemu-${QEMU_VERSION}.tar.xz" --exclude='*/roms/*'
+          cd "qemu-${QEMU_VERSION}"
+          ./configure --target-list=x86_64-softmmu --disable-docs --disable-user --disable-gtk \
+            --disable-sdl --disable-werror --enable-slirp --prefix="$HOME/qemu-${QEMU_VERSION}"
+          make -j"$(nproc)"
+          make install
+
+      - name: Prepare environment
+        run: |
+          set -euo pipefail
+          mkdir -p "$HOME/shim"
+          ln -sf "$HOME/qemu-${QEMU_VERSION}/bin/qemu-system-x86_64" "$HOME/shim/qemu-system-x86_64"
+          echo "$HOME/shim" >> "$GITHUB_PATH"
+          { echo "QEMU_SYSTEM_X86_64=$HOME/qemu-${QEMU_VERSION}/bin/qemu-system-x86_64"
+            echo "OVMF_CODE=/usr/share/OVMF/OVMF_CODE_4M.fd"
+            echo "OVMF_VARS=/usr/share/OVMF/OVMF_VARS_4M.fd"
+            echo "QEMU_ACCEL=tcg"; } >> "$GITHUB_ENV"
+          cd ginux && rustup show && rustup target add x86_64-unknown-none || true
+
+      - name: Capture runner environment (for upstream #14 comparison)
+        run: |
+          set +e
+          mkdir -p "$GITHUB_WORKSPACE/out"
+          { echo "== lscpu =="; lscpu
+            echo "== QEMU =="; "$HOME/qemu-${QEMU_VERSION}/bin/qemu-system-x86_64" --version | head -1
+            echo "== OVMF sizes =="; ls -l /usr/share/OVMF/OVMF_CODE_4M.fd /usr/share/OVMF/OVMF_VARS_4M.fd 2>&1
+            echo "== clang =="; clang --version | head -1
+            echo "== rustc =="; cd ginux && rustc --version && cargo --version
+            echo "== kvm =="; ls -l /dev/kvm 2>&1 || echo "no /dev/kvm"
+            echo "== os =="; cat /etc/os-release | head -2; } > "$GITHUB_WORKSPACE/out/env-details.txt" 2>&1
+          cat "$GITHUB_WORKSPACE/out/env-details.txt"
+
+      - name: doctor, check, test
+        id: run
+        working-directory: ginux
+        run: |
+          mkdir -p "$GITHUB_WORKSPACE/out"
+          set +e
+          OUT="$GITHUB_WORKSPACE/out"
+          { echo "upstream_sha=$(git rev-parse HEAD)"; "$QEMU_SYSTEM_X86_64" --version | head -1; } | tee "$OUT/env.txt"
+          make doctor 2>&1 | tee "$OUT/doctor.log";               d=${PIPESTATUS[0]}
+          make check 2>&1 | tee "$OUT/check.log";                 c=${PIPESTATUS[0]}
+          make reset-storage > /dev/null 2>&1
+          timeout 25m make test 2>&1 | tee "$OUT/test.log";       t=${PIPESTATUS[0]}
+          echo "doctor=$d check=$c test=$t" | tee "$OUT/status.txt"
+          {
+            echo "### target=${TARGET} qemu=${QEMU_VERSION} (TCG)"
+            echo "| doctor | check | test | upstream sha |"
+            echo "|---|---|---|---|"
+            echo "| $d | $c | $t | $(git rev-parse --short HEAD) |"
+            echo
+            grep -E 'virtio-net (receive|transmit) queue size|Boot test (passed|failed)|GINUX_KERNEL_(OK|PANIC)' "$OUT/test.log" | sort -u | head -8
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ "$t" != "0" ] || [ "$c" != "0" ]; then exit 1; fi
+
+      - name: Upload logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs-${{ matrix.target }}-qemu-${{ matrix.qemu }}
+          path: out/
+          retention-days: 30

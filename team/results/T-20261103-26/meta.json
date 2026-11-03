@@ -1,0 +1,6 @@
+{
+  "duration_min": 12,
+  "tools": ["gh-status", "webfetch-maybe"],
+  "verified_format": "manual",
+  "status": "blocked"
+}

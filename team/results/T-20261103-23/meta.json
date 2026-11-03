@@ -1,0 +1,6 @@
+{
+  "duration_min": 30,
+  "tools": ["git", "file-read"],
+  "verified_format": "manual",
+  "status": "done"
+}

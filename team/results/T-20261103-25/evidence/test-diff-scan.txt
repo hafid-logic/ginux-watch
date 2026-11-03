@@ -1,0 +1,107 @@
+# test-diff-scan.txt — T-20261103-25 (gap-finder W4) 2026-11-03
+# Method: git diff <merge>^1 <merge> --name-only + selective grep of full diff for: #[test] / cfg(test) / mod tests / tests/ path / boot.sh sanity grep / 'ginux:' paired prints. git-only, no build. [MEASURED]
+
+=== PR #47 (feca3fc) ===
+  file: hdae/gates-done/38-bounded-blocking-socket-polls.md
+  file: kernel/src/lib.rs
+  file: kernel/src/linux_socket.rs
+  file: tests/qemu/boot.sh
+  -- test-marker files (tests/ paths or +#[test] or +boot.sh sanity grep):
+    HIT: a/tests/qemu/boot.sh
+
+=== PR #48 (152be74) ===
+  file: hdae/gates-done/39-secret-process-vm-exclusion.md
+  file: kernel/src/address_space.rs
+  file: kernel/src/arch/x86_64/cpu.rs
+  file: kernel/src/linux_process.rs
+  file: tests/qemu/boot.sh
+  -- test-marker files (tests/ paths or +#[test] or +boot.sh sanity grep):
+    HIT: a/tests/qemu/boot.sh
+
+=== PR #49 (9e7e298) ===
+  file: hdae/STATUS.md
+  file: hdae/gates-done/40-mprotect-smp-shootdown.md
+  file: kernel/src/address_space.rs
+  -- test-marker files (tests/ paths or +#[test] or +boot.sh sanity grep):
+    none found
+
+=== PR #50 (144d811) ===
+  file: hdae/STATUS.md
+  file: hdae/gates-done/42-runtime-dma-quarantine.md
+  file: kernel/src/lib.rs
+  file: tests/qemu/boot.sh
+  -- test-marker files (tests/ paths or +#[test] or +boot.sh sanity grep):
+    HIT: a/tests/qemu/boot.sh
+
+=== PR #51 (8232ab5) ===
+  file: hdae/STATUS.md
+  file: hdae/gates-done/43-iommu-rollback-quarantine.md
+  file: kernel/src/arch/x86_64/iommu.rs
+  file: kernel/src/lib.rs
+  file: tests/qemu/boot.sh
+  -- test-marker files (tests/ paths or +#[test] or +boot.sh sanity grep):
+    HIT: a/tests/qemu/boot.sh
+
+=== PR #52 (b4628fc) ===
+  file: hdae/STATUS.md
+  file: hdae/gates-done/37-bounded-oci-unpack.md
+  file: kernel/src/image_store.rs
+  file: kernel/src/lib.rs
+  file: tests/qemu/boot.sh
+  -- test-marker files (tests/ paths or +#[test] or +boot.sh sanity grep):
+    HIT: a/tests/qemu/boot.sh
+
+=== PR #59 (0fcd263) ===
+  file: hdae/STATUS.md
+  file: hdae/gates-todo/37-linux-lazy-page-quota-regression.md
+  file: kernel/src/address_space.rs
+  file: kernel/src/arch/x86_64/cpu.rs
+  file: kernel/src/lib.rs
+  file: kernel/src/linux_process.rs
+  -- test-marker files (tests/ paths or +#[test] or +boot.sh sanity grep):
+    none found
+
+=== PR #70 (277187f) ===
+  file: hdae/STATUS.md
+  file: hdae/gates-done/40-synchronous-poll-budget.md
+  file: kernel/src/arch/x86_64/cpu.rs
+  file: kernel/src/arch/x86_64/cpu/linux_poll.rs
+  file: kernel/src/lib.rs
+  file: kernel/src/linux_socket.rs
+  file: tests/qemu/boot.sh
+  -- test-marker files (tests/ paths or +#[test] or +boot.sh sanity grep):
+    HIT: a/tests/qemu/boot.sh
+
+=== PR #73 (5dd58ca) ===
+  file: boot/efi/src/generated_boot.rs
+  file: hdae/STATUS.md
+  file: hdae/gates-done/41-registry-dns-entropy-binding.md
+  file: hdae/gates-done/42-kernel-network-entropy-and-dns-fallback-removal.md
+  file: kernel/src/linux_socket.rs
+  file: services/network/src/registry.rs
+  -- test-marker files (tests/ paths or +#[test] or +boot.sh sanity grep):
+    none found
+
+=== PR #54 (6324692) ===
+  file: Cargo.toml
+  file: Makefile
+  file: boot/efi/src/generated_boot.rs
+  file: crates/oci/src/lib.rs
+  file: hdae/STATUS.md
+  file: hdae/gates-done/44-release-overflow-checks.md
+  file: kernel/src/address_space.rs
+  file: kernel/src/arch/x86_64/cpu.rs
+  file: kernel/src/arch/x86_64/cpu/architecture.rs
+  file: kernel/src/arch/x86_64/paging.rs
+  file: kernel/src/initramfs.rs
+  file: kernel/src/linux_overlay.rs
+  file: tools/manifest-tool/src/main.rs
+  -- test-marker files (tests/ paths or +#[test] or +boot.sh sanity grep):
+    HIT: a/crates/oci/src/lib.rs
+
+=== PR #81 (4c832ea6) ===
+  file: kernel/src/arch/x86_64/cpu.rs
+  file: tests/qemu/boot.sh
+  -- test-marker files (tests/ paths or +#[test] or +boot.sh sanity grep):
+    HIT: a/tests/qemu/boot.sh
+

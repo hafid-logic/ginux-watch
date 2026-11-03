@@ -1,0 +1,18 @@
+{
+  "task_id": "T-20261103-22",
+  "worker": "W1",
+  "role": "pr-reviewer",
+  "duration_min": 35,
+  "tools": ["git"],
+  "verified_format": "manual",
+  "status": "done",
+  "api_calls": 0,
+  "git_writes": 0,
+  "upstream_comments": 0,
+  "scope": "upstream/main c86945b..4c832ea6 (12 PR merges)",
+  "deliverables": [
+    "team/results/T-20261103-22/result.md",
+    "team/results/T-20261103-22/evidence/merges.txt",
+    "team/results/T-20261103-22/evidence/tests-scan.txt"
+  ]
+}

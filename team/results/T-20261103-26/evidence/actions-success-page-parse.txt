@@ -1,0 +1,11 @@
+Single fetch (no auth, public HTML):
+  curl -sSL "https://github.com/hafid-logic/ginux-watch/actions?query=is%3Asuccess"
+  => HTTP 200, 327541 bytes
+Parsed from embedded JSON payload (react-app.embeddedData), query filter is:success:
+  ginux-verify runs visible: 2
+    run #9  -> https://github.com/hafid-logic/ginux-watch/actions/runs/41558410745
+    run #8  -> https://github.com/hafid-logic/ginux-watch/actions/runs/41554808432
+Note: the embedded payload in this HTML view does NOT expose per-run head_sha/createdAt
+fields, so coverage of upstream head 4c832ea6 by run #9/#8 is [UNVERIFIED].
+Run page for #9 fetched too (HTTP 200) but no headSha present in HTML => [UNVERIFIED].
+=> Listing succeeded partially: run ids/urls OBSERVED; sha-level coverage UNVERIFIED.
