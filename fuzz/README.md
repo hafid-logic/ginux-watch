@@ -1,10 +1,22 @@
-# fuzz/ — OCI surfaces harness (upstream read-only)
+# fuzz/ — upstream parser surfaces harnesses (upstream read-only)
 
-Fuzzing of `gmkurtzer/ginux` `crates/oci` parser surfaces from THIS repository,
-with upstream checked out pinned and unmodified (`upstream/` path dependency;
-zero upstream edits, zero rewrites). Target: `oci_surfaces` (tar/PAX rootfs,
-registry manifest, manifest index selection, image configuration, image
-reference, digest validation, bearer challenge/token, sha256 verify).
+Fuzzing of `gmkurtzer/ginux` parser surfaces from THIS repository, with
+upstream checked out pinned and unmodified (`upstream/` path dependency; zero
+upstream edits, zero rewrites). Two targets:
+
+- `oci_surfaces` — `crates/oci`: tar/PAX rootfs (parse + FULL traversal layer
+  mirroring kernel/src/published_rootfs.rs), registry manifest, index
+  selection, image configuration, image reference, digest validation, bearer
+  challenge/token, sha256 verify. Seeds: `corpus-seed/` (53) + `oci.dict`.
+- `protocol_surfaces` — `crates/protocol-state`: ARP reply, IPv4+ICMP,
+  ICMP echo request, echo-reply builder, neighbor state machine (v2.6-4).
+  Kernel-faithful fixed LOCAL/PEER endpoints; 65,600-byte cap (checksum u32
+  accumulator overflow is kernel-unreachable). Seeds: `corpus-seed-protocol/`
+  (34) + `protocol.dict`.
+
+Quality audit + measured rounds: `reports/fuzz-quality.md` (v2.6: 41M + 247M
+execs, zero crashes; source coverage 93.18% regions / 97.94% fns on oci,
+97.50% / 100% on protocol-state).
 
 ## Status: locally verified [MEASURED 2026-11-02, cargo-fuzz 0.13.2]
 
