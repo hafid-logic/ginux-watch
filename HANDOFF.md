@@ -53,8 +53,8 @@
 - المستودعات الثلاثة: upstream [gmkurtzer/ginux](https://github.com/gmkurtzer/ginux) | fork [hafid-logic/ginux](https://github.com/hafid-logic/ginux) | watch [hafid-logic/ginux-watch](https://github.com/hafid-logic/ginux-watch)
 
 ## ح) آخر تحديث
-- التاريخ UTC: 2026-11-03T07:1xZ (تحقق issue #58 المنشورة يدويًا: I-F58 MATCH 12/12 بنود + عدم مطابقة حرفية للمسودة المحفوظة موثقة + تسجيل ردّ الصيانة — قراءة فقط؛ جلسة 17)
-- آخر تشغيل CI: محلي بالكامل (cargo fuzz 0.13.2/nightly على upstream@82df3d71 path-dep)؛ قبله fuzz CI 41562800441 (106.1M execs) وginux-verify 41558410745 (0/0/0 على النسختين)
+- التاريخ UTC: 2026-11-03T10:2xZ (جلسة 18 — v2.8: فرع مسودة fuzz جاهز ومُتحقق run5، critic، نص 250 كلمة؛ بلا فتح PR — بانتظار اعتمادك؛ جلسة 18)
+- آخر تشغيل CI: fuzz-branch-verify run5 41614443506 (7/7 SUCCESS على feature/fuzz-targets@eccb0de7: checks 0/0/0/0 + rounds 172.8M + coverage)؛ قبله runs 1-4 لسلسلة تشخيص coverage (موثقة §14) وginux-verify 41558410745 (0/0/0 على النسختين)
 
 ## سجل الجلسات مع Claude
 آخر 10 بنود من كتل التحديث ("دلتا الجلسة") التي يلصقها المستخدم؛ تُضاف كل كتلة جديدة بتاريخها ويُحذف الأقدم عند الزيادة (يُؤرشف في docs/HISTORY.md).
@@ -62,8 +62,9 @@
 ### دلتا الجلسة
 8.–14. (2026-11-02..03 — مؤرشفة حرفيًا في docs/HISTORY.md، deltas 8-11 و12-14): نشر P10 بيدك (issue #43 مطابقة حرفية) + تعليق PR #54 حرفيًا (D5/D6)؛ team v2.1 وتوازي 57.1%؛ v2.3 (فجوة #26 سالبة، D10/D11، مصادقة، dump 57)؛ v2.4 (verify 41558410745 = 0/0/0؛ D8 مؤجلة + قاعدة «لا إعلان عمل غير مبني»؛ D9 تصميم؛ D12 #38 غير مضيفيًا)؛ v2.5 (fuzz 106,140,505 execs صفر crashes؛ fuzz.yml pin 82df3d71؛ قاعدة «لا تعليقات بلا نتيجة جديدة»).
 
-15. 2026-11-03 — v2.6 (قياس قبل التشغيل): جرد + أعلام + corpus سليمة [MEASURED]؛ harness موسّع لنداء النواة كاملًا + بذور 53 + oci.dict؛ جولة oci_surfaces 41M execs صفر crashes (تغطية A 66.27 → C 93.18 regions/97.94% دوال)؛ المحلل الثاني protocol-state 247M execs صفر crashes (97.50%/100%)؛ لا نشر — نتائج سالبة؛ درس: القواميس والبذور فقط تُلتزم. (النص الكامل: docs/HISTORY.md)
+15. 2026-11-03 — v2.6 (قياس قبل التشغيل): موسّع في docs/HISTORY.md (deltas 15-17).
 
-16. 2026-11-03 (05:0x–06:1x UTC) — توجيه v2.7: **(2) fuzz تفاضلي PAX↔tar**: 3×300s = 15,272,896 execs صفر crashes؛ 15,339 اختلافًا فريدًا → 5 أسباب جذرية (انحراف PAX-size = الاكتشاف التوافقي الوحيد؛ لا finding أمنيًا)؛ repro 1,638B (حالة 32)؛ **(3) volume_surfaces** (المثيل الثالث): 3×560s = 87,846,486 execs صفر crashes، تغطية C 99.43/100/100؛ بذور 26 + volume.dict + خطوة CI ثالثة؛ **(1) مسودة issue 115 كلمة لُصقت للمستخدم فقط بلا نشر**؛ dump محدث **سالبة** (البوابة التكرارية)؛ **(4) لا نشر**. (النص الكامل: docs/HISTORY.md، delta 16)
+16. 2026-11-03 (05:0x–06:1x UTC) — v2.7: موسّع في docs/HISTORY.md (deltas 15-17).
 
-17. 2026-11-03 (~07:1x UTC) — **نشرتَ مسودة fuzz يدويًا: issue #58** (06:23:25Z، hafid-logic، open)؛ تحقق GET: **I-F58 MATCH 12/12** (893 حرفًا/128 كلمة؛ الإرشاد ≤120 موثق)؛ **المنشور لا يطابق حرفيًا** المسودة المحفوظة drafts/2026-11-03-v27-fuzz-offer.md (115w): عدّلتَ قبل النشر — وسّعت العنوان +volume-format، حذفت functions% وسؤال CI الأسبوعي، أضفت fail-closed؛ الفروقات الثمانية في approved/2026-11-03-2.md + snapshot عبر scripts/verify_issue58.py؛ **ردّ الصيانة خلال 9 دقائق [OBSERVED، قراءة فقط]** (issuecomment-6597103730، 06:32:50Z): يرحب، fuzz/ علويًا لا tests/، draft PR مرحب به ضد main بشروط 5 (أهداف+dictionaries/seeds؛ fuzz/README دقيق؛ smoke محدود؛ لا artifacts/corpus منتفخ؛ pin+run summary في وصف PR) — PR واحد مقبول؛ **لا رد قبل اعتمادك**؛ أرقام المنشور موثقة داخليًا (reports/2026-11-03.md §13 + دلتا 16) — ملف fuzz-quality.md المستقل غير منشأ.
+17. 2026-11-03 (~07:1x UTC) — نشر #58 يدويًا + تحقق MATCH 12/12 + رد الصيانة: موسّع في docs/HISTORY.md (deltas 15-17) وفي قسم ج أعلاه.
+18. 2026-11-03 (~09:5x–10:2x UTC) — **v2.8: مسودة PR للfuzz جاهزة (بلا فتح)**: مزامنة fork main إلى c86945b1؛ فرع feature/fuzz-targets @eccb0de7 (fuzz/ فقط: Cargo.toml workspace مستقل + rust-toolchain nightly-2026-11-02 + 3 أهداف ببذور 113/83.8KB + Cargo.lock 34 حزمة + README؛ بلا tar تفاضلي وبلا CI) — 7 بطاقات (4 عمال متوازين) + مراحل push؛ run5 41614443506 = 7/7 SUCCESS: checks 0/0/0/0، جولات 172,752,682 execs صفر crashes، coverage regions 92.95/97.50/99.43% fns 97.94/100/100 [MEASURED]؛ critic مستقل REVISE→أُصلح (250/250 كلمة)؛ النص: drafts/2026-11-03-v28-fuzz-pr.md؛ **الفتح بانتظار اعتمادك** (device-flow ثم تضع الرابط على #58)؛ قراءة upstream: #54/#39 مفتوحان، #58 بلا ردود جديدة.
