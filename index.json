@@ -1,8 +1,223 @@
 {
- "generated_at_utc": "2026-11-03T18:21:10Z",
+ "generated_at_utc": "2026-11-03T23:56:21Z",
  "source_repo": "gmkurtzer/ginux",
- "item_count": 76,
+ "item_count": 85,
  "items": {
+  "86": {
+   "kind": "pr",
+   "title": "Charge overlay frames to container memory limits",
+   "state": "closed",
+   "merged_at": "2026-11-03T23:18:22Z",
+   "files": [
+    "hdae/STATUS.md",
+    "hdae/gates-todo/45-overlay-domain-memory-accounting.md",
+    "kernel/src/lib.rs",
+    "kernel/src/linux_overlay.rs",
+    "tests/qemu/boot.sh"
+   ],
+   "keywords": [
+    "overlay",
+    "container",
+    "frames",
+    "policy",
+    "domain",
+    "frame",
+    "host",
+    "owner",
+    "pass",
+    "active"
+   ]
+  },
+  "85": {
+   "kind": "pr",
+   "title": "Preempt detached Linux domains with full context preservation",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    "Makefile",
+    "crates/kernel-policy/src/lib.rs",
+    "docs/feedback-hardening/writable-globals.tsv",
+    "docs/scheduler/REVIEW.md",
+    "docs/scheduler/evidence/context-cpu1.json",
+    "docs/scheduler/evidence/context-cpu2.json",
+    "docs/scheduler/evidence/context-cpu4.json",
+    "docs/scheduler/evidence/full-boot-failure.txt",
+    "docs/scheduler/evidence/siblings-cpu1.json",
+    "docs/scheduler/evidence/signals-cpu1.json",
+    "docs/scheduler/evidence/spin-cpu1.json",
+    "docs/scheduler/evidence/spin-cpu2.json",
+    "docs/scheduler/evidence/spin-cpu4.json",
+    "docs/scheduler/evidence/stop-ap4.json",
+    "kernel/src/arch/x86_64/cpu.rs",
+    "kernel/src/arch/x86_64/cpu/execution.rs",
+    "kernel/src/arch/x86_64/cpu/linux_preempt.rs",
+    "kernel/src/arch/x86_64/cpu/linux_signal.rs",
+    "kernel/src/arch/x86_64/cpu/linux_syscall.rs",
+    "kernel/src/arch/x86_64/smp.rs",
+    "kernel/src/arch/x86_64/timer.rs",
+    "kernel/src/linux_process.rs",
+    "kernel/src/scheduler.rs",
+    "tests/host/scheduler.rs",
+    "tests/scheduler/README.md",
+    "tests/scheduler/context.S",
+    "tests/scheduler/context.c",
+    "tests/scheduler/make_layer.py",
+    "tests/scheduler/probe_context.py",
+    "tests/scheduler/probe_responsiveness.py"
+   ],
+   "keywords": [
+    "domain",
+    "pass",
+    "linux",
+    "cpu",
+    "detached",
+    "domains",
+    "lifecycle",
+    "resume",
+    "scheduler",
+    "state"
+   ]
+  },
+  "84": {
+   "kind": "pr",
+   "title": "Fix atomicity of native scheduler transitions on counter overflow",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    "Makefile",
+    "kernel/src/scheduler.rs",
+    "tests/host/scheduler.rs"
+   ],
+   "keywords": [
+    "overflow",
+    "scheduler",
+    "address",
+    "after",
+    "check",
+    "counter",
+    "full",
+    "linux",
+    "native",
+    "operation"
+   ]
+  },
+  "83": {
+   "kind": "issue",
+   "title": "Detached Linux domains without syscalls can starve the controller",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "domain",
+    "detached",
+    "controller",
+    "hog",
+    "image",
+    "4c832ea6",
+    "background",
+    "cpu",
+    "domains",
+    "linux"
+   ]
+  },
+  "82": {
+   "kind": "issue",
+   "title": "Native scheduler counter overflow can leave a partially committed transition",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "scheduler",
+    "counter",
+    "transition",
+    "counters",
+    "native",
+    "frame",
+    "state",
+    "255",
+    "4c832ea6",
+    "before"
+   ]
+  },
+  "81": {
+   "kind": "pr",
+   "title": "fix: reject MAP_SHARED mmap with PROT_WRITE on O_RDONLY descriptors",
+   "state": "closed",
+   "merged_at": "2026-11-03T22:13:11Z",
+   "files": [
+    "kernel/src/arch/x86_64/cpu.rs",
+    "tests/qemu/boot.sh"
+   ],
+   "keywords": [
+    "mmap",
+    "mapping",
+    "o_rdonly",
+    "prot_write",
+    "write",
+    "map_shared",
+    "path",
+    "access",
+    "com",
+    "content"
+   ]
+  },
+  "80": {
+   "kind": "issue",
+   "title": "Overlay layer allocates FrameOwner::KERNEL frames: per-domain memory limits bypassed by file writes (12.5 MiB at memory-mib=8, measured)",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "overlay",
+    "domain",
+    "kernel",
+    "memory",
+    "mib",
+    "frameowner",
+    "layer",
+    "tmpfs",
+    "allocation",
+    "allocations"
+   ]
+  },
+  "79": {
+   "kind": "issue",
+   "title": "/proc/self/fd/N reopen widens descriptor access mode without revalidation — O_RDONLY becomes writable (fix tested)",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "access",
+    "mode",
+    "let",
+    "proc",
+    "self",
+    "o_rdonly",
+    "original",
+    "path",
+    "reopen",
+    "tested"
+   ]
+  },
+  "78": {
+   "kind": "issue",
+   "title": "mmap(PROT_WRITE, MAP_SHARED) on an O_RDONLY descriptor succeeds and writes persist — bypasses fd access mode (fix tested)",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "mapping",
+    "mmap",
+    "o_rdonly",
+    "prot_write",
+    "20135",
+    "map_shared",
+    "state",
+    "tested",
+    "verified",
+    "com"
+   ]
+  },
   "76": {
    "kind": "issue",
    "title": "SO_REUSEADDR is silently ignored: wildcard+specific bind overlap returns EADDRINUSE in all option combinations (Linux allows it with reuse on both)",
@@ -304,8 +519,8 @@
   "61": {
    "kind": "pr",
    "title": "fuzz: add libFuzzer targets for OCI, protocol-state and volume-format parsers",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-03T21:52:18Z",
    "files": [
     "fuzz/.gitignore",
     "fuzz/Cargo.lock",
@@ -399,7 +614,7 @@
   "58": {
    "kind": "issue",
    "title": "Offering fuzz targets for the PAX/OCI, ARP/IPv4/ICMP and volume-format parsers",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -481,8 +696,8 @@
   "54": {
    "kind": "pr",
    "title": "Enable overflow checks in release builds",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-03T22:00:13Z",
    "files": [
     "Cargo.toml",
     "Makefile",
@@ -540,8 +755,8 @@
   "52": {
    "kind": "pr",
    "title": "Bound OCI rootfs unpack allocation",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-03T21:32:16Z",
    "files": [
     "hdae/STATUS.md",
     "hdae/gates-done/37-bounded-oci-unpack.md",
@@ -565,8 +780,8 @@
   "51": {
    "kind": "pr",
    "title": "Quarantine IOMMU tables after failed rollback",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-03T20:41:15Z",
    "files": [
     "hdae/STATUS.md",
     "hdae/gates-done/43-iommu-rollback-quarantine.md",
@@ -590,8 +805,8 @@
   "50": {
    "kind": "pr",
    "title": "Quarantine DMA after failed runtime teardown",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-03T19:41:25Z",
    "files": [
     "hdae/STATUS.md",
     "hdae/gates-done/42-runtime-dma-quarantine.md",
@@ -614,8 +829,8 @@
   "49": {
    "kind": "pr",
    "title": "Acknowledge SMP mprotect invalidation",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-03T18:40:00Z",
    "files": [
     "hdae/STATUS.md",
     "hdae/gates-done/40-mprotect-smp-shootdown.md",
@@ -764,7 +979,7 @@
   "43": {
    "kind": "issue",
    "title": "Release profile: overflow-checks not enabled (intentional?)",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -1100,7 +1315,7 @@
   "29": {
    "kind": "issue",
    "title": "Failed IOMMU activation rollback releases translation tables it may still be walking",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -1119,7 +1334,7 @@
   "28": {
    "kind": "issue",
    "title": "DMA frame is scrubbed/released after failed device or IOMMU teardown (revocation invariant not fail-closed)",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -1176,7 +1391,7 @@
   "25": {
    "kind": "issue",
    "title": "mprotect(PROT_READ) leaves a stale writable TLB on sibling CPUs — write succeeds after the syscall returns (SMP)",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -1273,7 +1488,7 @@
   "20": {
    "kind": "issue",
    "title": "gzip ISIZE trailer sizes a ring-0 allocate+zero before validation (up to ~4 GiB per layer)",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -1750,14 +1965,64 @@
   }
  },
  "keywords": {
-  "bind": [
-   76,
-   73
+  "overlay": [
+   86,
+   80
   ],
-  "eaddrinuse": [
-   76
+  "container": [
+   86
+  ],
+  "frames": [
+   86,
+   59,
+   53,
+   37,
+   27,
+   26
+  ],
+  "policy": [
+   86,
+   9
+  ],
+  "domain": [
+   86,
+   85,
+   83,
+   80,
+   67,
+   59,
+   57,
+   46,
+   39,
+   19
+  ],
+  "frame": [
+   86,
+   82,
+   46,
+   28
+  ],
+  "host": [
+   86,
+   33
+  ],
+  "owner": [
+   86
+  ],
+  "pass": [
+   86,
+   85,
+   34,
+   32
+  ],
+  "active": [
+   86,
+   49
   ],
   "linux": [
+   85,
+   84,
+   83,
    76,
    72,
    71,
@@ -1773,6 +2038,280 @@
    11,
    9,
    8
+  ],
+  "cpu": [
+   85,
+   83,
+   25,
+   19,
+   8,
+   7
+  ],
+  "detached": [
+   85,
+   83
+  ],
+  "domains": [
+   85,
+   83
+  ],
+  "lifecycle": [
+   85
+  ],
+  "resume": [
+   85
+  ],
+  "scheduler": [
+   85,
+   84,
+   82
+  ],
+  "state": [
+   85,
+   82,
+   78,
+   7
+  ],
+  "overflow": [
+   84,
+   54,
+   43
+  ],
+  "address": [
+   84,
+   31
+  ],
+  "after": [
+   84,
+   70,
+   51,
+   50,
+   28,
+   25
+  ],
+  "check": [
+   84,
+   61,
+   54,
+   51,
+   50,
+   49,
+   48,
+   47,
+   46,
+   44,
+   40,
+   35,
+   23,
+   11,
+   10,
+   9,
+   4,
+   3
+  ],
+  "counter": [
+   84,
+   82
+  ],
+  "full": [
+   84
+  ],
+  "native": [
+   84,
+   82,
+   39,
+   14
+  ],
+  "operation": [
+   84,
+   7
+  ],
+  "controller": [
+   83,
+   39
+  ],
+  "hog": [
+   83
+  ],
+  "image": [
+   83,
+   54,
+   27,
+   18,
+   16
+  ],
+  "4c832ea6": [
+   83,
+   82
+  ],
+  "background": [
+   83
+  ],
+  "transition": [
+   82
+  ],
+  "counters": [
+   82
+  ],
+  "255": [
+   82
+  ],
+  "before": [
+   82,
+   56,
+   53,
+   52,
+   49,
+   48,
+   28,
+   27,
+   20
+  ],
+  "mmap": [
+   81,
+   78,
+   46,
+   19
+  ],
+  "mapping": [
+   81,
+   78
+  ],
+  "o_rdonly": [
+   81,
+   79,
+   78
+  ],
+  "prot_write": [
+   81,
+   78
+  ],
+  "write": [
+   81
+  ],
+  "map_shared": [
+   81,
+   78
+  ],
+  "path": [
+   81,
+   79,
+   69,
+   67,
+   66,
+   38,
+   26,
+   25,
+   18
+  ],
+  "access": [
+   81,
+   79,
+   48
+  ],
+  "com": [
+   81,
+   78,
+   60,
+   30,
+   29,
+   28,
+   27,
+   26,
+   25,
+   24,
+   22,
+   5
+  ],
+  "content": [
+   81
+  ],
+  "kernel": [
+   80,
+   71,
+   67,
+   50,
+   47,
+   46,
+   31,
+   24,
+   21,
+   19,
+   17,
+   13,
+   9,
+   7,
+   3
+  ],
+  "memory": [
+   80,
+   67,
+   46,
+   19
+  ],
+  "mib": [
+   80,
+   67,
+   66,
+   19
+  ],
+  "frameowner": [
+   80
+  ],
+  "layer": [
+   80,
+   45,
+   20,
+   18,
+   17
+  ],
+  "tmpfs": [
+   80
+  ],
+  "allocation": [
+   80,
+   52,
+   20,
+   19
+  ],
+  "allocations": [
+   80
+  ],
+  "mode": [
+   79
+  ],
+  "let": [
+   79
+  ],
+  "proc": [
+   79
+  ],
+  "self": [
+   79
+  ],
+  "original": [
+   79
+  ],
+  "reopen": [
+   79
+  ],
+  "tested": [
+   79,
+   78,
+   31
+  ],
+  "20135": [
+   78
+  ],
+  "verified": [
+   78
+  ],
+  "bind": [
+   76,
+   73
+  ],
+  "eaddrinuse": [
+   76
   ],
   "so_reuseaddr": [
    76
@@ -1923,22 +2462,6 @@
   "api": [
    71
   ],
-  "kernel": [
-   71,
-   67,
-   50,
-   47,
-   46,
-   31,
-   24,
-   21,
-   19,
-   17,
-   13,
-   9,
-   7,
-   3
-  ],
   "wall": [
    71
   ],
@@ -1979,13 +2502,6 @@
   "waits": [
    70
   ],
-  "after": [
-   70,
-   51,
-   50,
-   28,
-   25
-  ],
   "apply": [
    70,
    45
@@ -2019,15 +2535,6 @@
   "fast": [
    69,
    66
-  ],
-  "path": [
-   69,
-   67,
-   66,
-   38,
-   26,
-   25,
-   18
   ],
   "accepted": [
    69
@@ -2063,24 +2570,6 @@
   "data": [
    68,
    33
-  ],
-  "domain": [
-   67,
-   59,
-   57,
-   46,
-   39,
-   19
-  ],
-  "memory": [
-   67,
-   46,
-   19
-  ],
-  "mib": [
-   67,
-   66,
-   19
   ],
   "per": [
    67,
@@ -2200,25 +2689,6 @@
    23,
    6
   ],
-  "check": [
-   61,
-   54,
-   51,
-   50,
-   49,
-   48,
-   47,
-   46,
-   44,
-   40,
-   35,
-   23,
-   11,
-   10,
-   9,
-   4,
-   3
-  ],
   "libfuzzer": [
    61
   ],
@@ -2242,18 +2712,6 @@
   ],
   "based": [
    60
-  ],
-  "com": [
-   60,
-   30,
-   29,
-   28,
-   27,
-   26,
-   25,
-   24,
-   22,
-   5
   ],
   "couple": [
    60
@@ -2292,13 +2750,6 @@
   "alpine": [
    59,
    57
-  ],
-  "frames": [
-   59,
-   53,
-   37,
-   27,
-   26
   ],
   "payload": [
    59,
@@ -2379,16 +2830,6 @@
   "about": [
    56
   ],
-  "before": [
-   56,
-   53,
-   52,
-   49,
-   48,
-   28,
-   27,
-   20
-  ],
   "honest": [
    55
   ],
@@ -2420,10 +2861,6 @@
    37,
    26
   ],
-  "overflow": [
-   54,
-   43
-  ],
   "bytes": [
    54,
    21
@@ -2439,12 +2876,6 @@
   "checks": [
    54,
    43
-  ],
-  "image": [
-   54,
-   27,
-   18,
-   16
   ],
   "now": [
    54
@@ -2493,11 +2924,6 @@
   ],
   "adds": [
    52
-  ],
-  "allocation": [
-   52,
-   20,
-   19
   ],
   "arithmetic": [
    52,
@@ -2588,9 +3014,6 @@
    49,
    25
   ],
-  "active": [
-   49
-  ],
   "process": [
    48
   ],
@@ -2606,9 +3029,6 @@
   "transfer": [
    48
   ],
-  "access": [
-   48
-  ],
   "authoritative": [
    48
   ],
@@ -2620,14 +3040,6 @@
   ],
   "enforce": [
    46
-  ],
-  "frame": [
-   46,
-   28
-  ],
-  "mmap": [
-   46,
-   19
   ],
   "sysv": [
    46
@@ -2641,12 +3053,6 @@
   ],
   "hide": [
    45
-  ],
-  "layer": [
-   45,
-   20,
-   18,
-   17
   ],
   "package": [
    45,
@@ -2765,9 +3171,6 @@
   "cannot": [
    40
   ],
-  "controller": [
-   39
-  ],
   "desktop": [
    39,
    12
@@ -2775,10 +3178,6 @@
   "display": [
    39,
    1
-  ],
-  "native": [
-   39,
-   14
   ],
   "graphical": [
    39
@@ -2860,10 +3259,6 @@
   "storage": [
    34
   ],
-  "pass": [
-   34,
-   32
-  ],
   "unchanged": [
    34
   ],
@@ -2901,9 +3296,6 @@
    33,
    17
   ],
-  "host": [
-   33
-  ],
   "padding": [
    32
   ],
@@ -2921,13 +3313,7 @@
   "width": [
    31
   ],
-  "address": [
-   31
-  ],
   "suite": [
-   31
-  ],
-  "tested": [
    31
   ],
   "0x30": [
@@ -2985,12 +3371,6 @@
   ],
   "each": [
    26
-  ],
-  "cpu": [
-   25,
-   19,
-   8,
-   7
   ],
   "sibling": [
    25
@@ -3217,9 +3597,6 @@
    10,
    4
   ],
-  "policy": [
-   9
-  ],
   "rocky": [
    8
   ],
@@ -3238,9 +3615,6 @@
   "performance": [
    8
   ],
-  "state": [
-   7
-  ],
   "global": [
    7
   ],
@@ -3248,9 +3622,6 @@
    7
   ],
   "explicit": [
-   7
-  ],
-  "operation": [
    7
   ],
   "command": [
