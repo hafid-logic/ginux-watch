@@ -1,0 +1,126 @@
+name: pr-a-mutants
+
+# v3.4 §2c (session 26, 2026-11-05): cargo-mutants proof for PR-A
+# (feature/tests-protocol-state — pure tests in crates/protocol-state).
+# Runs the SAME mutants recipe as feasibility-tests.yml (cargo-mutants v25,
+# --timeout 60, --jobs 2, full ginux-protocol-state crate) but against the
+# FORK branch instead of upstream main, so "before" (run 41905986161,
+# upstream main@4d4a53bb) and "after" (this workflow, fork branch) are
+# directly comparable per function.
+#
+# House rules identical to feasibility-tests.yml: fork branch is UNTRUSTED —
+# persist-credentials: false, contents: read only, no push, no commits;
+# results leave the run only as artifacts + step summary. Trigger:
+# workflow_dispatch ONLY.
+
+on:
+  workflow_dispatch:
+    inputs:
+      fork_repo:
+        description: "fork repo holding the branch"
+        default: "hafid-logic/ginux"
+      fork_branch:
+        description: "branch to mutate-test"
+        default: "feature/tests-protocol-state"
+
+concurrency:
+  group: pr-a-mutants
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: never
+
+jobs:
+  mutants:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout watch repo (parser scripts)
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Checkout fork branch (untrusted code, no credentials)
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.fork_repo }}
+          ref: refs/heads/${{ inputs.fork_branch }}
+          path: upstream
+          persist-credentials: false
+
+      - name: Record branch head
+        run: |
+          echo "BRANCH_SHA=$(git -C upstream rev-parse HEAD)" >> "$GITHUB_ENV"
+          echo "pr-a mutants: ${{ inputs.fork_repo }}@${{ inputs.fork_branch }} @ $(git -C upstream rev-parse --short HEAD)" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Cache cargo registry + target
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            upstream/target
+          key: pra-mut-${{ runner.os }}-v1-${{ hashFiles('upstream/**/Cargo.lock') }}
+          restore-keys: pra-mut-
+
+      - name: Activate pinned toolchain
+        working-directory: upstream
+        run: |
+          set -euo pipefail
+          rustup show
+
+      - name: Install cargo-mutants (prebuilt via taiki-e)
+        uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-mutants
+
+      - name: "Verify cargo-mutants (fallback: source build)"
+        run: |
+          set -euo pipefail
+          cargo mutants --version || cargo install cargo-mutants --locked
+
+      - name: Mutate ginux-protocol-state (graceful stop at 1020s)
+        working-directory: upstream
+        run: |
+          set -uo pipefail
+          timeout 1020 cargo mutants \
+            --package ginux-protocol-state \
+            --timeout 60 \
+            --jobs 2 2>&1 | tee mutants-stdout.log || true
+          ls -la mutants.out/ 2>/dev/null || true
+
+      - name: Collect mutants log tail (if any)
+        if: always()
+        working-directory: upstream
+        run: |
+          if [ -f mutants.out/debug.log ]; then
+            tail -n 200 mutants.out/debug.log > ../mutants-log-tail.txt
+          fi
+
+      - name: Summarize mutants (survivors → markdown)
+        if: always()
+        run: |
+          set -euo pipefail
+          python3 scripts/feasibility-mutants.py \
+            --tsv upstream/mutants.out/mutants.tsv \
+            --stdout-log upstream/mutants-stdout.log \
+            --out mutants-survived-pr-a.md \
+            --crate ginux-protocol-state
+          cat mutants-survived-pr-a.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload mutants artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr-a-mutants-ginux-protocol-state
+          path: |
+            mutants-survived-pr-a.md
+            mutants-log-tail.txt
+            upstream/mutants-stdout.log
+            upstream/mutants.out/mutants.tsv
+          if-no-files-found: warn
+          retention-days: 14
