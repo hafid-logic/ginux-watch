@@ -30,8 +30,10 @@ name: feasibility-tests
 #     grep the package names, sort -u. Empty result → ::warning:: + hardcoded
 #     10-crate fallback; missing priority parser crate → hard ::error:: (fail);
 #     count != 10 → ::warning:: (upstream Makefile changed).
-#   - cargo-mutants writes results incrementally to mutants.out/mutants.tsv, so a
-#     graceful `timeout 1020` stop still leaves partial results to summarize.
+#   - cargo-mutants v25 (observed in run 41905986161): stdout carries the full
+#     MISSED/CAUGHT lines and a final summary; mutants.out/mutants.tsv may NOT be
+#     written. So stdout is teed to mutants-stdout.log and the summarizer falls
+#     back to it (feasibility-mutants.py --stdout-log).
 
 on:
   workflow_dispatch:
@@ -229,8 +231,9 @@ jobs:
           cargo mutants --version || cargo install cargo-mutants --locked
 
       # `timeout 1020` (~17 min) stops cargo-mutants gracefully BEFORE the 20-min job
-      # timeout; `|| true` keeps any partial mutants.out/mutants.tsv usable by the
-      # always() summary/upload steps below.
+      # timeout; `|| true` keeps any partial results usable by the always() steps.
+      # stdout is teed (run-41905986161 lesson: MISSED lines live in stdout; the
+      # tsv may be absent in cargo-mutants v25) and mutants.out is listed for diagnosis.
       - name: Mutate ${{ matrix.crate }} (graceful stop at 1020s)
         working-directory: upstream
         run: |
@@ -238,7 +241,8 @@ jobs:
           timeout 1020 cargo mutants \
             --package ${{ matrix.crate }} \
             --timeout 60 \
-            --jobs 2 || true
+            --jobs 2 2>&1 | tee mutants-stdout.log || true
+          ls -la mutants.out/ 2>/dev/null || true
 
       - name: Collect mutants log tail (if any)
         if: always()
@@ -254,9 +258,10 @@ jobs:
           set -euo pipefail
           python3 scripts/feasibility-mutants.py \
             --tsv upstream/mutants.out/mutants.tsv \
-            --out mutants-survived.md \
+            --stdout-log upstream/mutants-stdout.log \
+            --out mutants-survived-${{ matrix.crate }}.md \
             --crate ${{ matrix.crate }}
-          cat mutants-survived.md >> "$GITHUB_STEP_SUMMARY"
+          cat mutants-survived-${{ matrix.crate }}.md >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload mutants artifacts
         if: always()
@@ -264,8 +269,9 @@ jobs:
         with:
           name: feasibility-mutants-${{ matrix.crate }}
           path: |
-            mutants-survived.md
+            mutants-survived-${{ matrix.crate }}.md
             mutants-log-tail.txt
+            upstream/mutants-stdout.log
             upstream/mutants.out/mutants.tsv
           if-no-files-found: warn
           retention-days: 14
