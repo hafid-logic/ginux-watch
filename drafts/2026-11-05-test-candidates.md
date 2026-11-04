@@ -173,3 +173,10 @@ reports/cross-check/matrix.md (صف P10)؛ drafts/2026-11-04-next-contributions.
 - **ترتيب التوصية:** C1 > C2 > C3+C4 (PR واحد) > C5. كل C1–C4 على نمط مسبوق بقَبول upstream لاختبارات صرف (#145 power-loss tests، #23/#32/#33) — لكن النافذة تُغلق 2026-11-05T07:59Z وبعدها تُغلق أي فتح دون مراجعة.
 
 **المصادر:** run [41905986161](https://github.com/hafid-logic/ginux-watch/actions/runs/41905986161) (artifacts + step logs)؛ reports/feasibility-2026-11-05.md؛ القسم 4d أعلاه (dump 2026-11-05)؛ README@cdf8038e (freeze).
+
+## تحديث v3.4 (2026-11-05، جلسة 26) — C1+C2 خرجا من الترشيح إلى البناء
+
+- **بوابة الاستبعاد (§3 التوجيه): KEEP** [MEASURED — team/results/T-20261105-02/result.md]: 78 PR في الـdump لا يلمس protocol-state؛ 0 PR/issues مفتوحة حيًا؛ آخر commit على ملف الكرين 2026-10-13 (قبل قاعدتنا)؛ و10 طفرات ناجية للدالتين على main@4d4a53bb (run 41905986161) تثبت عدم وجود تغطية. errata مسجل: حكم W2 الأول «DROP» كان ملوثًا بالذات (قرأ فرعنا المحلي ظنًا أنه main) وصُحح بواسطة المشرف إلى KEEP.
+- **C1+C2 → سلّم: branch** [MEASURED]: فرع `feature/tests-protocol-state` = `2b4e119e117d85294cc6da0f5c60727b68f359b6` في hafid-logic/ginux (من upstream main@4d4a53bb؛ fork main مُزامن ff من c86945b1)؛ +62 سطرًا في `crates/protocol-state/src/lib.rs` فقط (اختبارات صرفة؛ 4 #[test] + helper؛ commit "Test protocol-state checksum and ARP checks" بتوقيع -s وهوية noreply).
+- الإثبات الديناميكي (mutants قبل/بعد + make check/test على 10.0.13 و10.1.2): runs 41915470999 (pr-a-mutants) و41915447820 (builder-verify) — نتائجهما في reports/2026-11-05.md §2. الهدف: 0 ناجية للدالتين بعد (قبلها: 5+5 ناجية).
+- status: C1/C2 = branch → draft-PR (داخل fork فقط)؛ النشر إلى upstream = قرار المستخدم قبل cutoff 2026-11-05T07:59Z.
