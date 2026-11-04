@@ -1,4 +1,4 @@
-# validation — T-20261105-02 — FAIL — 2026-11-04T21:34:16Z
+# validation — T-20261105-02 — FAIL — 2026-11-04T21:40:24Z
 
 - FAIL: meta.json status invalid: 'complete'
 - note: summary MEASURED line (section-level evidence): '- `repos/gmkurtzer/ginux/pulls?state=all&sort=updated&direction=desc&p'
