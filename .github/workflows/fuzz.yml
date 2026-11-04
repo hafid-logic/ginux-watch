@@ -1,102 +1,188 @@
 name: fuzz
 
-# Weekly fuzzing of upstream crates/oci surfaces from this repository.
-# Upstream is checked out PINNED and untrusted: no credentials are persisted,
-# the job is contents: read, and it never writes to upstream.
+# v2 (v3.2 §1, 2026-11-04): weekly cron + repository_dispatch rounds over CURRENT
+# upstream main (no pin). Triggers:
+#   - workflow_dispatch (max_seconds input, default 1200 = 3x20min)
+#   - schedule: Mondays 05:30 UTC (kept from v1)
+#   - repository_dispatch type "fuzz-round" from team-watcher (parser crates
+#     touched) with client_payload.seconds (short round = 600) + reason
+# Upstream is untrusted: checkout with persist-credentials: false, the fuzz job
+# runs with contents: read only. The `record` job (separate, needs: fuzz) is the
+# only step with contents: write — it appends results to reports/fuzz-history.md
+# in THIS repository with [skip ci]. On crash: artifacts are uploaded; the agent
+# minimizes/classifies offline (security findings go to reports/private/ and the
+# user only, never upstream).
 
 on:
   workflow_dispatch:
     inputs:
       max_seconds:
-        description: "libFuzzer -max_total_time per run (seconds)"
-        default: "300"
+        description: "libFuzzer -max_total_time per target (seconds)"
+        default: "1200"
   schedule:
     # Mondays 05:30 UTC
     - cron: "30 5 * * 1"
+  repository_dispatch:
+    types: [fuzz-round]
+
+concurrency:
+  group: fuzz-round
+  cancel-in-progress: false
 
 permissions:
   contents: read
 
 jobs:
-  oci-surfaces:
+  fuzz:
     runs-on: ubuntu-24.04
-    timeout-minutes: 50
+    timeout-minutes: 65
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { target: oci_surfaces,       dict: oci.dict,       seeds: corpus-seed }
+          - { target: protocol_surfaces,  dict: protocol.dict,  seeds: corpus-seed-protocol }
+          - { target: volume_surfaces,    dict: volume.dict,    seeds: corpus-seed-volume }
     env:
-      MAX_SECONDS: ${{ github.event.inputs.max_seconds || '300' }}
-      # Pinned to current upstream main (v2.5-3, 2026-11-03): PAX parser
-      # changed since ecbb3142 (4294c0a7 "Parse PAX header chains iteratively").
-      UPSTREAM_PIN: "82df3d719e14246233d509799ad220c4c39e7088"
+      MAX_SECONDS: ${{ github.event.inputs.max_seconds || github.event.client_payload.seconds || '1200' }}
+      TRIGGER: ${{ github.event.client_payload.reason || github.event_name }}
     steps:
-      - name: Checkout watch repo
+      - name: Checkout watch repo (dictionaries + seeds)
         uses: actions/checkout@v4
         with:
           persist-credentials: false
 
-      - name: Checkout upstream (untrusted code, pinned, no credentials)
+      - name: Checkout upstream main (untrusted code, no credentials, no pin)
         uses: actions/checkout@v4
         with:
           repository: gmkurtzer/ginux
-          ref: ${{ env.UPSTREAM_PIN }}
+          ref: refs/heads/main
           path: upstream
           persist-credentials: false
 
-      - name: Install build dependencies
+      - name: Record upstream head
         run: |
-          sudo apt-get update
-          sudo apt-get install -y clang g++
+          echo "UPSTREAM_SHA=$(git -C upstream rev-parse HEAD)" >> "$GITHUB_ENV"
+          echo "upstream main @ $(git -C upstream rev-parse --short HEAD)" >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Install nightly toolchain + cargo-fuzz
+      - name: Install clang/g++ and pinned toolchain + cargo-fuzz 0.13.2
         run: |
-          rustup toolchain install nightly --profile minimal
-          rustup default nightly
-          rustup component add rust-src llvm-tools-preview
+          sudo apt-get update && sudo apt-get install -y clang g++
+          cd upstream/fuzz && rustup show
           cargo install cargo-fuzz --locked --version 0.13.2
 
-      - name: Fuzz oci_surfaces
+      - name: Fuzz round (${{ env.MAX_SECONDS }}s)
+        working-directory: upstream/fuzz
         run: |
-          mkdir -p fuzz/corpus fuzz/artifacts
-          # v2.6-2: seeded corpus (fuzz/corpus-seed, committed) + dictionary for
-          # boundary fields; sanitizer address stated explicitly (was the
-          # implicit default in v2.5).
+          mkdir -p corpus artifacts
+          set -o pipefail
           cargo fuzz run --target x86_64-unknown-linux-gnu --sanitizer address \
-            oci_surfaces -- \
+            ${{ matrix.target }} -- \
             -max_total_time="${MAX_SECONDS}" \
             -rss_limit_mb=4096 \
-            -artifact_prefix=fuzz/artifacts/ \
-            -dict=fuzz/oci.dict \
-            fuzz/corpus fuzz/corpus-seed
+            -print_final_stats=1 \
+            -artifact_prefix=artifacts/ \
+            -dict="$GITHUB_WORKSPACE/fuzz/${{ matrix.dict }}" \
+            corpus "$GITHUB_WORKSPACE/fuzz/${{ matrix.seeds }}" \
+            2>&1 | tee round-${{ matrix.target }}.log
+          test ${PIPESTATUS[0]} -eq 0
+          ! ls artifacts/crash-* artifacts/oom-* artifacts/timeout-* artifacts/leak-* 2>/dev/null
 
-      - name: Fuzz protocol_surfaces
+      - name: Coverage (llvm-cov summary over seeds + evolved corpus)
+        if: success()
+        working-directory: upstream/fuzz
         run: |
-          # v2.6-4: second untrusted-input parser surface (rank 1 of
-          # reports/fuzz-quality.md §d): ARP/IPv4/ICMP in crates/protocol-state.
-          mkdir -p fuzz/corpus-protocol
-          cargo fuzz run --target x86_64-unknown-linux-gnu --sanitizer address \
-            protocol_surfaces -- \
-            -max_total_time="${MAX_SECONDS}" \
-            -rss_limit_mb=4096 \
-            -artifact_prefix=fuzz/artifacts/ \
-            -dict=fuzz/protocol.dict \
-            fuzz/corpus-protocol fuzz/corpus-seed-protocol
+          cargo fuzz coverage --target x86_64-unknown-linux-gnu ${{ matrix.target }} \
+            corpus "$GITHUB_WORKSPACE/fuzz/${{ matrix.seeds }}" \
+            2>&1 | tail -3
+          LLVM_BIN="$(rustc --print sysroot)/lib/rustlib/x86_64-unknown-linux-gnu/bin"
+          bin="target/x86_64-unknown-linux-gnu/coverage/x86_64-unknown-linux-gnu/release/${{ matrix.target }}"
+          [ -f "$bin" ] || bin="target/x86_64-unknown-linux-gnu/release/${{ matrix.target }}"
+          "$LLVM_BIN/llvm-cov" report "$bin" \
+            -instr-profile="coverage/${{ matrix.target }}/coverage.profdata" \
+            -summary-only -ignore-filename-regex='(fuzz_targets|registry|rustc/|\.cargo)' \
+            2>&1 | tee coverage-${{ matrix.target }}.log
+          # TOTAL row (recipe of run5, fuzz-branch-verify): $4 regions %, $10 lines %, $13 functions %
+          tail -1 coverage-${{ matrix.target }}.log \
+            | awk '{printf "regions %s lines %s functions %s\n", $4, $10, $13}' \
+            | tee coverage-summary-${{ matrix.target }}.txt
 
-      - name: Fuzz volume_surfaces
+      - name: Collect results
+        if: always()
+        working-directory: upstream/fuzz
         run: |
-          # v2.7-3: third untrusted-input parser surface (rank 2 of
-          # reports/fuzz-quality.md §d): crates/volume-format sector decoding,
-          # kernel-faithful chain Record::decode -> HostVolumeHeader::decode.
-          mkdir -p fuzz/corpus-volume
-          cargo fuzz run --target x86_64-unknown-linux-gnu --sanitizer address \
-            volume_surfaces -- \
-            -max_total_time="${MAX_SECONDS}" \
-            -rss_limit_mb=4096 \
-            -artifact_prefix=fuzz/artifacts/ \
-            -dict=fuzz/volume.dict \
-            fuzz/corpus-volume fuzz/corpus-seed-volume
+          execs=$(grep -oE '^#[0-9]+' round-${{ matrix.target }}.log | tail -1 | tr -d '#' || echo 0)
+          stats_execs=$(grep -E '^stat::number_of_executed_units' round-${{ matrix.target }}.log | tail -1 | awk '{print $2}' || echo "")
+          covline=$(cat coverage-summary-${{ matrix.target }}.txt 2>/dev/null || echo "regions n/a lines n/a functions n/a")
+          crashes=$(ls artifacts/ 2>/dev/null | wc -l)
+          {
+            echo "run_id=${{ github.run_id }}"
+            echo "run_url=${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            echo "trigger=${TRIGGER}"
+            echo "upstream_sha=${UPSTREAM_SHA}"
+            echo "target=${{ matrix.target }}"
+            echo "seconds=${MAX_SECONDS}"
+            echo "execs=${stats_execs:-$execs}"
+            echo "$covline"
+            echo "crash_artifacts=${crashes}"
+            echo "round_conclusion=${{ job.status }}"
+          } > results-${{ matrix.target }}.txt
+          cat results-${{ matrix.target }}.txt
 
-      - name: Upload artifacts on crash
+      - name: Upload results + logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: results-${{ matrix.target }}
+          path: |
+            upstream/fuzz/results-*.txt
+            upstream/fuzz/round-*.log
+            upstream/fuzz/coverage-summary-*.txt
+          retention-days: 30
+
+      - name: Upload crash artifacts on failure
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: fuzz-crash
-          path: fuzz/artifacts/
+          name: crash-${{ matrix.target }}
+          path: upstream/fuzz/artifacts/
           retention-days: 30
+
+  record:
+    needs: [fuzz]
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout watch repo (writable)
+        uses: actions/checkout@v4
+
+      - name: Download round results
+        uses: actions/download-artifact@v4
+        with:
+          pattern: results-*
+          merge-multiple: true
+          path: round-results
+
+      - name: Update reports/fuzz-history.md
+        run: |
+          python3 scripts/record-fuzz-history.py \
+            --results-dir round-results \
+            --history reports/fuzz-history.md \
+            --date "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+
+      - name: Commit and push history
+        run: |
+          git config user.name "fuzz-record"
+          git config user.email "actions@users.noreply.github.com"
+          git add reports/fuzz-history.md
+          if ! git diff --cached --quiet; then
+            git commit -m "fuzz history: run ${{ github.run_id }} (head $(grep -h upstream_sha round-results/results-* | head -1 | cut -d= -f2 | cut -c1-8)) [skip ci]"
+            git push
+          else
+            echo "history unchanged"
+          fi

@@ -5,6 +5,7 @@ on:
   workflow_dispatch: {}
 permissions:
   contents: write
+  actions: write
 concurrency:
   group: team-watcher
   cancel-in-progress: false
@@ -17,14 +18,22 @@ jobs:
           fetch-depth: 0
       - name: Lease sweep (expired claim_until -> stale + requeue)
         run: python3 team/scripts/lease-sweep.py
+      - name: Upstream parser-crate watch (v3.2 §2)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 team/scripts/upstream-watch.py
       - name: Commit and push
         run: |
           git config user.name "team-watcher"
           git config user.email "actions@users.noreply.github.com"
-          git add -A team/tasks/
+          git add -A team/tasks/ matrix/upstream-watch.json
           if ! git diff --cached --quiet; then
-            git commit -m "lease sweep $(date -u +%Y-%m-%dT%H:%M:%SZ) [skip ci]"
+            msg="lease sweep $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            if git diff --cached --name-only | grep -q upstream-watch; then
+              msg="upstream watch + lease sweep $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            fi
+            git commit -m "$msg [skip ci]"
             git push
           else
-            echo "no expired leases"
+            echo "no changes"
           fi
