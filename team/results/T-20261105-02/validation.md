@@ -1,6 +1,6 @@
-# validation — T-20261105-02 — FAIL — 2026-11-04T21:22:09Z
+# validation — T-20261105-02 — FAIL — 2026-11-04T21:34:16Z
 
-- FAIL: meta.json missing
+- FAIL: meta.json status invalid: 'complete'
 - note: summary MEASURED line (section-level evidence): '- `repos/gmkurtzer/ginux/pulls?state=all&sort=updated&direction=desc&p'
 - note: summary MEASURED line (section-level evidence): '- نفس الاستعلام على issues: أحدث تحديث = **#150** في 2026-11-04T18:58:'
 - note: summary MEASURED line (section-level evidence): '- استعلام `checksum in:title,body`: total_count = **0** [MEASURED].'
