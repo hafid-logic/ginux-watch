@@ -1,13 +1,1118 @@
 {
- "generated_at_utc": "2026-11-04T14:14:00Z",
+ "generated_at_utc": "2026-11-04T21:13:48Z",
  "source_repo": "gmkurtzer/ginux",
- "item_count": 98,
+ "item_count": 150,
  "items": {
+  "151": {
+   "kind": "pr",
+   "title": "Release local pages when handled sockets close",
+   "state": "closed",
+   "merged_at": null,
+   "files": [
+    "hdae/STATUS.md",
+    "hdae/gates-todo/48-handled-socket-page-release.md",
+    "kernel/src/lib.rs",
+    "kernel/src/linux_socket.rs",
+    "tests/qemu/boot.sh"
+   ],
+   "keywords": [
+    "handled",
+    "cleanup",
+    "local",
+    "page",
+    "socket",
+    "before",
+    "close",
+    "final",
+    "ownership",
+    "pages"
+   ]
+  },
+  "150": {
+   "kind": "issue",
+   "title": "Tracking: priority, overlap and merge order of the open fixes from meleficarumvaldis",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "boot",
+    "fails",
+    "fixes",
+    "image",
+    "priority",
+    "138",
+    "139",
+    "amd",
+    "child",
+    "merge"
+   ]
+  },
+  "149": {
+   "kind": "pr",
+   "title": "Keep image entries visible in copied-up image directories",
+   "state": "closed",
+   "merged_at": "2026-11-04T18:52:28Z",
+   "files": [
+    "kernel/src/arch/x86_64/cpu.rs"
+   ],
+   "keywords": [
+    "directory",
+    "image",
+    "overlay",
+    "overlayfs",
+    "after",
+    "descriptor",
+    "entries",
+    "only",
+    "usr",
+    "chdir"
+   ]
+  },
+  "148": {
+   "kind": "pr",
+   "title": "Follow overlay symlinks mid-path and resolve relative link targets",
+   "state": "closed",
+   "merged_at": null,
+   "files": [
+    "kernel/src/arch/x86_64/cpu.rs"
+   ],
+   "keywords": [
+    "link",
+    "image",
+    "overlay",
+    "path",
+    "directory",
+    "one",
+    "followed",
+    "relative",
+    "run",
+    "symlink"
+   ]
+  },
+  "147": {
+   "kind": "pr",
+   "title": "Enforce POSIX, OFD and flock file locks between processes",
+   "state": "closed",
+   "merged_at": "2026-11-04T18:50:55Z",
+   "files": [
+    "Makefile",
+    "docs/feedback-hardening/writable-globals.tsv",
+    "kernel/src/arch/x86_64/cpu.rs",
+    "kernel/src/arch/x86_64/cpu/linux_abi.rs",
+    "kernel/src/arch/x86_64/cpu/linux_syscall.rs",
+    "kernel/src/lib.rs",
+    "kernel/src/linux_file_lock.rs",
+    "tests/qemu/boot.sh"
+   ],
+   "keywords": [
+    "locks",
+    "flock",
+    "lock",
+    "ofd",
+    "posix",
+    "descriptor",
+    "drops",
+    "processes",
+    "them",
+    "belong"
+   ]
+  },
+  "146": {
+   "kind": "pr",
+   "title": "Make pathname AF_UNIX binds create a socket file",
+   "state": "closed",
+   "merged_at": null,
+   "files": [
+    "kernel/src/arch/x86_64/cpu.rs",
+    "kernel/src/arch/x86_64/cpu/linux_abi.rs",
+    "kernel/src/linux_overlay.rs",
+    "kernel/src/linux_socket.rs"
+   ],
+   "keywords": [
+    "socket",
+    "inode",
+    "af_unix",
+    "bound",
+    "name",
+    "path",
+    "enoent",
+    "pathname",
+    "bind",
+    "create"
+   ]
+  },
+  "145": {
+   "kind": "pr",
+   "title": "Test every volume commit against power loss at each device operation",
+   "state": "closed",
+   "merged_at": "2026-11-04T18:49:17Z",
+   "files": [
+    "crates/volume-service/src/crash_tests.rs",
+    "crates/volume-service/src/lib.rs"
+   ],
+   "keywords": [
+    "commit",
+    "every",
+    "writes",
+    "one",
+    "sectors",
+    "subset",
+    "volume",
+    "disk",
+    "flush",
+    "full"
+   ]
+  },
+  "144": {
+   "kind": "pr",
+   "title": "Fix pwrite O_APPEND, SEEK_DATA/HOLE, fallocate and ftruncate ABI",
+   "state": "closed",
+   "merged_at": "2026-11-04T18:48:32Z",
+   "files": [
+    "kernel/src/arch/x86_64/cpu.rs",
+    "kernel/src/arch/x86_64/cpu/linux_abi.rs"
+   ],
+   "keywords": [
+    "descriptor",
+    "einval",
+    "mode",
+    "ebadf",
+    "eopnotsupp",
+    "negative",
+    "o_append",
+    "offset",
+    "before",
+    "fallocate"
+   ]
+  },
+  "143": {
+   "kind": "pr",
+   "title": "Implement renameat2(RENAME_EXCHANGE) for overlay entries",
+   "state": "closed",
+   "merged_at": null,
+   "files": [
+    "crates/kernel-policy/src/lib.rs",
+    "kernel/src/arch/x86_64/cpu.rs",
+    "kernel/src/arch/x86_64/cpu/linux_abi.rs",
+    "kernel/src/linux_overlay.rs",
+    "tests/qemu/boot.sh"
+   ],
+   "keywords": [
+    "einval",
+    "both",
+    "exchange",
+    "image",
+    "linux",
+    "namei",
+    "overlay",
+    "dir",
+    "directory",
+    "enoent"
+   ]
+  },
+  "142": {
+   "kind": "pr",
+   "title": "Fail O_CREAT|O_EXCL on an existing symlink with EEXIST",
+   "state": "closed",
+   "merged_at": "2026-11-04T18:46:52Z",
+   "files": [
+    "kernel/src/arch/x86_64/cpu.rs"
+   ],
+   "keywords": [
+    "link",
+    "dangling",
+    "o_creat",
+    "symlink",
+    "o_excl",
+    "eexist",
+    "check",
+    "component",
+    "existing",
+    "linux"
+   ]
+  },
+  "141": {
+   "kind": "pr",
+   "title": "Apply Linux path walk rules to file components and trailing slashes",
+   "state": "closed",
+   "merged_at": null,
+   "files": [
+    "crates/kernel-policy/src/lib.rs",
+    "kernel/src/arch/x86_64/cpu.rs"
+   ],
+   "keywords": [
+    "directory",
+    "enotdir",
+    "trailing",
+    "slash",
+    "unlink",
+    "component",
+    "path",
+    "eisdir",
+    "linux",
+    "name"
+   ]
+  },
+  "140": {
+   "kind": "pr",
+   "title": "Copy image files up for chmod by path and follow symlinks",
+   "state": "closed",
+   "merged_at": "2026-11-04T18:45:34Z",
+   "files": [
+    "kernel/src/arch/x86_64/cpu.rs"
+   ],
+   "keywords": [
+    "image",
+    "at_symlink_nofollow",
+    "chmod",
+    "copy",
+    "path",
+    "symlink",
+    "directory",
+    "erofs",
+    "same",
+    "already"
+   ]
+  },
+  "139": {
+   "kind": "pr",
+   "title": "Block application-CPU threads in futex wait and nanosleep",
+   "state": "closed",
+   "merged_at": null,
+   "files": [
+    "kernel/src/address_space.rs",
+    "kernel/src/arch/x86_64/cpu/linux_futex.rs",
+    "kernel/src/arch/x86_64/cpu/linux_poll.rs",
+    "kernel/src/arch/x86_64/cpu/linux_syscall.rs",
+    "kernel/src/arch/x86_64/cpu/linux_time.rs"
+   ],
+   "keywords": [
+    "thread",
+    "cpu",
+    "application",
+    "futex",
+    "kernel",
+    "loop",
+    "waiter",
+    "after",
+    "block",
+    "linux"
+   ]
+  },
+  "138": {
+   "kind": "pr",
+   "title": "Shoot down copy-on-write translations on all CPUs",
+   "state": "closed",
+   "merged_at": "2026-11-04T18:44:15Z",
+   "files": [
+    "kernel/src/address_space.rs"
+   ],
+   "keywords": [
+    "thread",
+    "cpu",
+    "domain",
+    "old",
+    "copy",
+    "entry",
+    "every",
+    "forked",
+    "one",
+    "read"
+   ]
+  },
+  "137": {
+   "kind": "pr",
+   "title": "Run runnable children while poll, select and sleep wait",
+   "state": "closed",
+   "merged_at": null,
+   "files": [
+    "kernel/src/arch/x86_64/cpu/linux_poll.rs",
+    "kernel/src/arch/x86_64/cpu/linux_time.rs"
+   ],
+   "keywords": [
+    "child",
+    "run",
+    "select",
+    "sleep",
+    "wait",
+    "poll",
+    "process",
+    "returned",
+    "time",
+    "while"
+   ]
+  },
+  "136": {
+   "kind": "pr",
+   "title": "Keep initramfs fallbacks out of OCI domains and behind whiteouts",
+   "state": "closed",
+   "merged_at": "2026-11-04T18:43:02Z",
+   "files": [
+    "kernel/src/arch/x86_64/cpu.rs"
+   ],
+   "keywords": [
+    "ginux",
+    "initramfs",
+    "domains",
+    "image",
+    "lib64",
+    "etc",
+    "oci",
+    "out",
+    "path",
+    "alpine"
+   ]
+  },
+  "135": {
+   "kind": "pr",
+   "title": "Kill only the faulting process on a Linux user CPU fault",
+   "state": "closed",
+   "merged_at": null,
+   "files": [
+    "kernel/src/arch/x86_64/cpu.rs",
+    "kernel/src/arch/x86_64/cpu/linux_abi.rs",
+    "kernel/src/arch/x86_64/cpu/linux_signal.rs"
+   ],
+   "keywords": [
+    "fault",
+    "linux",
+    "traps",
+    "handler",
+    "signal",
+    "child",
+    "domain",
+    "only",
+    "process",
+    "failed"
+   ]
+  },
+  "134": {
+   "kind": "pr",
+   "title": "List overlay changes when reading image directories",
+   "state": "closed",
+   "merged_at": "2026-11-04T18:41:43Z",
+   "files": [
+    "crates/kernel-policy/src/lib.rs",
+    "kernel/src/arch/x86_64/cpu.rs",
+    "kernel/src/linux_overlay.rs"
+   ],
+   "keywords": [
+    "overlay",
+    "image",
+    "lower",
+    "entries",
+    "upper",
+    "directories",
+    "entry",
+    "etc",
+    "getdents64",
+    "layer"
+   ]
+  },
+  "133": {
+   "kind": "pr",
+   "title": "Share one inode between overlay hard links and report st_nlink",
+   "state": "closed",
+   "merged_at": null,
+   "files": [
+    "kernel/src/arch/x86_64/cpu.rs",
+    "kernel/src/linux_overlay.rs",
+    "tests/qemu/boot.sh"
+   ],
+   "keywords": [
+    "name",
+    "inode",
+    "node",
+    "overlay",
+    "data",
+    "namei",
+    "one",
+    "hard",
+    "keeps",
+    "link"
+   ]
+  },
+  "132": {
+   "kind": "pr",
+   "title": "Zero truncated overlay data, keep extensions atomic, maintain times",
+   "state": "closed",
+   "merged_at": "2026-11-04T18:40:21Z",
+   "files": [
+    "kernel/src/arch/x86_64/cpu.rs",
+    "kernel/src/linux_overlay.rs"
+   ],
+   "keywords": [
+    "ctime",
+    "truncate",
+    "size",
+    "mtime",
+    "pages",
+    "write",
+    "bytes",
+    "domain",
+    "failed",
+    "now"
+   ]
+  },
+  "131": {
+   "kind": "pr",
+   "title": "Bind slot headers into the digest and never overwrite the live slot",
+   "state": "closed",
+   "merged_at": "2026-11-04T18:39:53Z",
+   "files": [
+    "crates/volume-service/src/lib.rs",
+    "docs/STORAGE.md"
+   ],
+   "keywords": [
+    "slot",
+    "generation",
+    "version",
+    "digest",
+    "only",
+    "volume",
+    "commit",
+    "payload",
+    "configuration",
+    "header"
+   ]
+  },
+  "130": {
+   "kind": "pr",
+   "title": "Fix posix_spawn clone, wait status of signal deaths and wait options",
+   "state": "closed",
+   "merged_at": "2026-11-04T18:39:25Z",
+   "files": [
+    "kernel/linux-system-init.S",
+    "kernel/src/arch/x86_64/cpu.rs",
+    "kernel/src/arch/x86_64/cpu/linux_abi.rs",
+    "kernel/src/arch/x86_64/cpu/linux_signal.rs",
+    "kernel/src/arch/x86_64/cpu/linux_syscall.rs",
+    "kernel/src/linux_process.rs"
+   ],
+   "keywords": [
+    "kernel",
+    "exit",
+    "signal",
+    "child",
+    "wait4",
+    "fork",
+    "sigchld",
+    "waitid",
+    "__wclone",
+    "clone"
+   ]
+  },
+  "129": {
+   "kind": "pr",
+   "title": "Match Linux signal generation, sigaction and sigaltstack rules",
+   "state": "closed",
+   "merged_at": null,
+   "files": [
+    "kernel/linux-exec-target.S",
+    "kernel/linux-probe.S",
+    "kernel/src/arch/x86_64/cpu.rs",
+    "kernel/src/arch/x86_64/cpu/linux_abi.rs",
+    "kernel/src/arch/x86_64/cpu/linux_signal.rs"
+   ],
+   "keywords": [
+    "signal",
+    "linux",
+    "kernel",
+    "kill",
+    "target",
+    "caller",
+    "never",
+    "process",
+    "blocked",
+    "first"
+   ]
+  },
+  "128": {
+   "kind": "pr",
+   "title": "Accept valid Linux arguments in runtime memory syscalls",
+   "state": "closed",
+   "merged_at": "2026-11-04T18:37:58Z",
+   "files": [
+    "kernel/src/arch/x86_64/cpu.rs"
+   ],
+   "keywords": [
+    "einval",
+    "linux",
+    "mmap",
+    "empty",
+    "mprotect",
+    "range",
+    "length",
+    "returned",
+    "before",
+    "madvise"
+   ]
+  },
+  "127": {
+   "kind": "pr",
+   "title": "Match Linux futex requeue, sleep and timerfd ABI details",
+   "state": "closed",
+   "merged_at": "2026-11-04T18:37:25Z",
+   "files": [
+    "kernel/linux-probe.S",
+    "kernel/src/arch/x86_64/cpu.rs",
+    "kernel/src/arch/x86_64/cpu/linux_futex.rs",
+    "kernel/src/arch/x86_64/cpu/linux_signal.rs",
+    "kernel/src/arch/x86_64/cpu/linux_syscall.rs",
+    "kernel/src/arch/x86_64/cpu/linux_time.rs"
+   ],
+   "keywords": [
+    "futex",
+    "linux",
+    "now",
+    "requeue",
+    "einval",
+    "sleep",
+    "clock_nanosleep",
+    "enosys",
+    "futex_requeue",
+    "kernel"
+   ]
+  },
+  "126": {
+   "kind": "pr",
+   "title": "Keep running fork children that exec twice; skip a waiting yielder",
+   "state": "closed",
+   "merged_at": "2026-11-04T18:36:44Z",
+   "files": [
+    "kernel/src/arch/x86_64/cpu.rs",
+    "kernel/src/scheduler.rs"
+   ],
+   "keywords": [
+    "child",
+    "exec",
+    "process",
+    "nice",
+    "executor",
+    "fork",
+    "pid",
+    "priority",
+    "env",
+    "flag"
+   ]
+  },
+  "125": {
+   "kind": "pr",
+   "title": "Withhold the first volume request from the device until notify",
+   "state": "closed",
+   "merged_at": "2026-11-04T18:35:52Z",
+   "files": [
+    "services/volume/src/main.rs",
+    "specs/services/volume-runtime-v0.md"
+   ],
+   "keywords": [
+    "self",
+    "device",
+    "volume",
+    "kvm",
+    "wait",
+    "passes",
+    "amd",
+    "available",
+    "fails",
+    "host"
+   ]
+  },
+  "124": {
+   "kind": "issue",
+   "title": "`MAP_SHARED|MAP_ANONYMOUS` memory is not shared between parent and child after fork; file `MAP_SHARED` mappings are private copies",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "map_shared",
+    "mapping",
+    "sees",
+    "parent",
+    "child",
+    "does",
+    "memory",
+    "shared",
+    "visible",
+    "each"
+   ]
+  },
+  "123": {
+   "kind": "issue",
+   "title": "utimensat/futimens/fchmod/fchown on an image directory make its image entries vanish from getdents and from lookups relative to that directory",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "yes",
+    "directory",
+    "etc",
+    "enoent",
+    "image",
+    "passwd",
+    "listed",
+    "same",
+    "base",
+    "linux"
+   ]
+  },
+  "122": {
+   "kind": "issue",
+   "title": "Linux personality: a symlink created at runtime cannot be used as a directory (`stat(\"link/file\")` is ENOENT), and relative symlink targets are resolved from the caller's cwd instead of the link's directory",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "link",
+    "linux",
+    "links",
+    "run",
+    "through",
+    "cwd",
+    "image",
+    "stat",
+    "symlink",
+    "target"
+   ]
+  },
+  "121": {
+   "kind": "issue",
+   "title": "fcntl F_SETLK/F_SETLKW/F_OFD_SETLK* do not record a lock, F_GETLK always reports F_UNLCK, flock() locks nothing and LOCK_UN fails with EINVAL",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "locks",
+    "lock",
+    "linux",
+    "same",
+    "einval",
+    "flock",
+    "lock_ex",
+    "lock_un",
+    "process",
+    "f_unlck"
+   ]
+  },
+  "120": {
+   "kind": "issue",
+   "title": "AF_UNIX: bind() to a pathname leaves no S_IFSOCK node in the filesystem (lstat ENOENT, no EADDRINUSE over existing files, unlink fails), and connect() compares path strings instead of finding the socket file",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "enoent",
+    "bind",
+    "eaddrinuse",
+    "sock",
+    "listed",
+    "connect",
+    "path",
+    "same",
+    "after",
+    "linux"
+   ]
+  },
+  "119": {
+   "kind": "issue",
+   "title": "File I/O ABI: pwrite/pwritev ignore O_APPEND and pwritev2 refuses RWF_(NO)APPEND; lseek SEEK_DATA/SEEK_HOLE unsupported; fallocate refuses FALLOC_FL_KEEP_SIZE and PUNCH_HOLE; ftruncate error order",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "enxio",
+    "einval",
+    "100",
+    "seek_data",
+    "seek_hole",
+    "size",
+    "0123xy",
+    "enotsup",
+    "o_append",
+    "fallocate"
+   ]
+  },
+  "118": {
+   "kind": "issue",
+   "title": "linux_renameat: RENAME_EXCHANGE is rejected with EINVAL, so atomic swaps (systemd, package managers, `mv --exchange`) fail",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "einval",
+    "exchange",
+    "swapped",
+    "enoent",
+    "one",
+    "swap",
+    "two",
+    "dir",
+    "kept",
+    "linux"
+   ]
+  },
+  "117": {
+   "kind": "issue",
+   "title": "openat: O_CREAT|O_EXCL follows a symlink in the last component; a dangling link makes the exclusive create succeed on the link target",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "symlink",
+    "o_creat",
+    "o_excl",
+    "tmp",
+    "dangling",
+    "link",
+    "creates",
+    "target",
+    "check",
+    "component"
+   ]
+  },
+  "116": {
+   "kind": "issue",
+   "title": "Linux personality: path walk ignores what the components are — ENOENT instead of ENOTDIR, trailing slashes ignored (`unlink(\"file/\")` deletes the file), `rmdir(\"d/.\")` removes `d`",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "enotdir",
+    "stat",
+    "image",
+    "mkdir",
+    "o_creat",
+    "symlink",
+    "unlink",
+    "enoent",
+    "linux",
+    "path"
+   ]
+  },
+  "115": {
+   "kind": "issue",
+   "title": "chmod/chown by path: EROFS on image-layer files (fchmod works), chmod does not follow symlinks, fchmodat2 flags give EINVAL",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "enoent",
+    "erofs",
+    "etc",
+    "mode",
+    "einval",
+    "image",
+    "chmod",
+    "604",
+    "symlink",
+    "target"
+   ]
+  },
+  "114": {
+   "kind": "issue",
+   "title": "With threads: stale TLB after copy-on-write corrupts memory; FUTEX_WAIT on the application CPU does not block; `sleep()` in a thread hangs the domain",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "cpu",
+    "threads",
+    "application",
+    "entry",
+    "thread",
+    "22a",
+    "copy",
+    "domain",
+    "futex_wait",
+    "linux"
+   ]
+  },
+  "113": {
+   "kind": "issue",
+   "title": "poll/ppoll/select on runtime pipes never run the vforked child, so CPython `subprocess` with captured output hangs; select without a ready peer returns ENOSYS; a child sleeping in `time.sleep()` cannot be killed by its parent",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "child",
+    "after",
+    "poll",
+    "select",
+    "parent",
+    "pipe",
+    "ready",
+    "before",
+    "enosys",
+    "exec"
+   ]
+  },
+  "112": {
+   "kind": "issue",
+   "title": "OCI domains see files from Ginux's embedded initramfs (`/init`, `/lib64/ld-ginux.so`, …), and `unlink` of an image file exposes the initramfs copy",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "ginux",
+    "image",
+    "enoent",
+    "initramfs",
+    "etc",
+    "false",
+    "stat",
+    "init",
+    "oci",
+    "branch"
+   ]
+  },
+  "111": {
+   "kind": "issue",
+   "title": "A CPU fault (#PF, #GP, #UD, #DE, …) in a non-init Linux process fails the whole domain instead of killing that process with the matching signal",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "child",
+    "ginux",
+    "linux",
+    "domain",
+    "failed",
+    "handler",
+    "signal",
+    "signaled",
+    "exit",
+    "fault"
+   ]
+  },
+  "110": {
+   "kind": "issue",
+   "title": "getdents64 on a directory that exists in the image returns only the image entries; overlay creations, deletions (whiteouts) and new subdirectories are invisible",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "overlay",
+    "image",
+    "yes",
+    "etc",
+    "listed",
+    "entries",
+    "ginux",
+    "dir",
+    "directories",
+    "linux"
+   ]
+  },
+  "109": {
+   "kind": "issue",
+   "title": "linux_overlay: hard links are copies (writes through one name are invisible through the other), st_nlink is always 1, symlink loops return EINVAL",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "nlink",
+    "name",
+    "one",
+    "same",
+    "hard",
+    "st_nlink",
+    "copy",
+    "data",
+    "einval",
+    "inode"
+   ]
+  },
+  "108": {
+   "kind": "issue",
+   "title": "linux_overlay: shrinking truncate keeps stale bytes that reappear on extension; files are created with mtime 0 and write/truncate never update mtime/ctime",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "truncate",
+    "mtime",
+    "yes",
+    "ctime",
+    "size",
+    "write",
+    "bytes",
+    "data",
+    "old",
+    "zero"
+   ]
+  },
+  "107": {
+   "kind": "issue",
+   "title": "Local-config/OCI-catalog slots: generation is outside the digest (bit flip ⇒ silent rollback), and commit target is derived from generation parity (can overwrite the live slot)",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "slot",
+    "generation",
+    "record",
+    "commit",
+    "digest",
+    "volume",
+    "config",
+    "header",
+    "only",
+    "bit"
+   ]
+  },
+  "106": {
+   "kind": "issue",
+   "title": "musl `posix_spawn`/`system` broken (clone `CLONE_VM|CLONE_VFORK|SIGCHLD` → EINVAL); `wait4` reports signal deaths as normal exits; `waitid` ignores `WEXITED`",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "posix_spawn",
+    "ginux",
+    "child",
+    "musl",
+    "linux",
+    "sigchld",
+    "system",
+    "true",
+    "bin",
+    "clone"
+   ]
+  },
+  "105": {
+   "kind": "issue",
+   "title": "Signal ABI divergences: kill(-1) signals the caller, SA_NOCLDSTOP handlers return ENOSYS, blocked ignored signals are discarded, SIG_IGN does not flush pending",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "kill",
+    "handler",
+    "sigusr1",
+    "caller",
+    "linux",
+    "sigchld",
+    "signal",
+    "einval",
+    "eperm",
+    "flags"
+   ]
+  },
+  "104": {
+   "kind": "issue",
+   "title": "Memory-syscall ABI divergences: valid prot/flag combinations and zero lengths return EINVAL/ENOMEM",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "einval",
+    "4096",
+    "mmap",
+    "fixed",
+    "address",
+    "same",
+    "anon",
+    "mremap",
+    "private",
+    "prot"
+   ]
+  },
+  "103": {
+   "kind": "issue",
+   "title": "futex/time ABI divergences: FUTEX_REQUEUE/CMP_REQUEUE → EINVAL, \"sleep forever\" timespecs → EINVAL, timerfd read(64) → EINVAL, clock_nanosleep clock/flag checks",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "einval",
+    "cpu",
+    "futex",
+    "same",
+    "clock_nanosleep",
+    "ginux",
+    "only",
+    "timerfd",
+    "enosys",
+    "linux"
+   ]
+  },
+  "102": {
+   "kind": "issue",
+   "title": "Fork child is dropped after its second execve (`nice cmd &`, `env cmd &`, subshell exec); yielding PID 1 re-picks itself over other runnable processes",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "low_done",
+    "loop",
+    "exec",
+    "nice",
+    "after",
+    "both",
+    "child",
+    "only",
+    "env",
+    "pid"
+   ]
+  },
+  "101": {
+   "kind": "pr",
+   "title": "Reject repeated TCP connects",
+   "state": "closed",
+   "merged_at": null,
+   "files": [
+    "hdae/STATUS.md",
+    "hdae/gates-todo/47-tcp-reconnect-guard.md",
+    "kernel/src/arch/x86_64/cpu.rs",
+    "kernel/src/arch/x86_64/cpu/linux_abi.rs",
+    "kernel/src/lib.rs",
+    "kernel/src/linux_socket.rs",
+    "tests/qemu/boot.sh"
+   ],
+   "keywords": [
+    "tcp",
+    "connect",
+    "guard",
+    "local",
+    "reconnect",
+    "result",
+    "socket",
+    "allocation",
+    "already",
+    "before"
+   ]
+  },
+  "100": {
+   "kind": "pr",
+   "title": "Drive kernel TCP from monotonic time",
+   "state": "closed",
+   "merged_at": "2026-11-04T17:46:51Z",
+   "files": [
+    "hdae/STATUS.md",
+    "hdae/gates-todo/46-kernel-tcp-monotonic-clock.md",
+    "kernel/src/arch/x86_64/cpu/linux_signal.rs",
+    "kernel/src/lib.rs",
+    "kernel/src/linux_socket.rs",
+    "tests/qemu/boot.sh"
+   ],
+   "keywords": [
+    "kernel",
+    "monotonic",
+    "clock",
+    "network",
+    "tcp",
+    "time",
+    "accelerate",
+    "api",
+    "boot",
+    "busy"
+   ]
+  },
   "99": {
    "kind": "pr",
    "title": "Fix the clone() thread ABI so musl pthread_create works",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-04T15:18:24Z",
    "files": [
     "kernel/linux-probe.S",
     "kernel/src/arch/x86_64/cpu.rs",
@@ -30,7 +1135,7 @@
   "98": {
    "kind": "issue",
    "title": "x86-64 clone(): child_tid is read from r8 and tls from r9 (Linux: r10 and r8); unaligned child stacks and CLONE_DETACHED are rejected. Every musl `pthread_create` fails.",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -49,12 +1154,15 @@
   "97": {
    "kind": "pr",
    "title": "Relocate the EFI image below 4 GiB before entering the kernel",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-04T18:56:14Z",
    "files": [
+    ".github/workflows/check.yml",
+    "Makefile",
     "boot/efi/src/main.rs",
     "kernel/src/lib.rs",
-    "kernel/src/pe.rs"
+    "kernel/src/pe.rs",
+    "tests/qemu/efi-load-above-4g.sh"
    ],
    "keywords": [
     "gib",
@@ -72,7 +1180,7 @@
   "96": {
    "kind": "issue",
    "title": "Boot panics when firmware loads `GINUX.EFI` above 4 GiB (any guest with ≥ 4 GiB RAM)",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -91,8 +1199,8 @@
   "95": {
    "kind": "pr",
    "title": "Accept UTF-8 and space characters in OCI layer paths",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-04T15:18:15Z",
    "files": [
     "crates/oci/src/lib.rs"
    ],
@@ -112,7 +1220,7 @@
   "94": {
    "kind": "issue",
    "title": "OCI unpack rejects every image whose layers contain a UTF-8 or space file name (e.g. the Mozilla CA bundle)",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -131,8 +1239,8 @@
   "93": {
    "kind": "pr",
    "title": "Force RPL 3 in the SYSRET selector base for AMD",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-04T15:18:08Z",
    "files": [
     "kernel/src/arch/x86_64/cpu.rs"
    ],
@@ -152,7 +1260,7 @@
   "92": {
    "kind": "issue",
    "title": "`make test` panics under KVM on AMD: SYSRET base 0x20 yields user SS = 0x28 and IRETQ faults with #GP(0x28)",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -171,14 +1279,17 @@
   "91": {
    "kind": "pr",
    "title": "Follow overlay symlinks in stat and fix open flag and preadv2 handling",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [
     "crates/kernel-policy/src/lib.rs",
+    "docs/feedback-hardening/writable-globals.tsv",
     "kernel/src/arch/x86_64/cpu.rs",
     "kernel/src/arch/x86_64/cpu/linux_abi.rs",
     "kernel/src/arch/x86_64/cpu/linux_syscall.rs",
-    "kernel/src/linux_overlay.rs"
+    "kernel/src/lib.rs",
+    "kernel/src/linux_overlay.rs",
+    "tests/qemu/boot.sh"
    ],
    "keywords": [
     "bits",
@@ -196,13 +1307,16 @@
   "90": {
    "kind": "pr",
    "title": "Stop overlay open, rmdir and rename from destroying image files",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-04T17:39:25Z",
    "files": [
     "crates/kernel-policy/src/lib.rs",
+    "docs/feedback-hardening/writable-globals.tsv",
     "kernel/src/arch/x86_64/cpu.rs",
     "kernel/src/arch/x86_64/cpu/linux_abi.rs",
-    "kernel/src/linux_overlay.rs"
+    "kernel/src/lib.rs",
+    "kernel/src/linux_overlay.rs",
+    "tests/qemu/boot.sh"
    ],
    "keywords": [
     "image",
@@ -220,7 +1334,7 @@
   "89": {
    "kind": "issue",
    "title": "Overlay/rootfs data loss: `open(O_RDONLY|O_CREAT)` empties image files, `rmdir` removes non-empty image directories, `rename(a, a)` deletes `a`",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -239,8 +1353,8 @@
   "88": {
    "kind": "pr",
    "title": "Reject writable shared mappings of descriptors not open for writing",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-04T15:17:59Z",
    "files": [
     "kernel/src/arch/x86_64/cpu.rs",
     "kernel/src/linux_overlay.rs",
@@ -262,8 +1376,8 @@
   "87": {
    "kind": "pr",
    "title": "Install the bare-metal target and find openSUSE OVMF",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-04T15:17:49Z",
    "files": [
     "rust-toolchain.toml",
     "tools/qemu/common.sh"
@@ -309,7 +1423,7 @@
   "85": {
    "kind": "pr",
    "title": "Preempt detached Linux domains with full context preservation",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [
     ".github/workflows/scheduler.yml",
@@ -382,7 +1496,7 @@
   "83": {
    "kind": "issue",
    "title": "Detached Linux domains without syscalls can starve the controller",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -461,7 +1575,7 @@
   "79": {
    "kind": "issue",
    "title": "/proc/self/fd/N reopen widens descriptor access mode without revalidation — O_RDONLY becomes writable (fix tested)",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -499,7 +1613,7 @@
   "76": {
    "kind": "issue",
    "title": "SO_REUSEADDR is silently ignored: wildcard+specific bind overlap returns EADDRINUSE in all option combinations (Linux allows it with reuse on both)",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -518,7 +1632,7 @@
   "75": {
    "kind": "issue",
    "title": "Network TCP backlog is not implemented: a second concurrent connection is RST despite listen(backlog=16) (peaceful-operation companion to #64)",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -580,7 +1694,7 @@
   "72": {
    "kind": "issue",
    "title": "RST is reported as clean EOF (recv()==0) + ECONNREFUSED, and a graceful close reports POLLERR/ECONNREFUSED — terminal states collapse (differential vs Linux)",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -599,7 +1713,7 @@
   "71": {
    "kind": "issue",
    "title": "Kernel TCP time is driven by an API-call counter: keepalive 75s timer fired in 6.7 wall seconds under busy polling (11x acceleration; frozen when idle)",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -645,7 +1759,7 @@
   "69": {
    "kind": "issue",
    "title": "Second connect() on a connected fast-path socket succeeds and yields two accepted connections (Linux: EINVAL)",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -664,7 +1778,7 @@
   "68": {
    "kind": "issue",
    "title": "close() on a network TCP socket sends neither FIN nor RST — the peer never learns the connection ended (wire capture: FIN=0 RST=0)",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -683,7 +1797,7 @@
   "67": {
    "kind": "issue",
    "title": "Local socket queues are unbounded and uncharged: 289 MiB queued with memory-mib=8 set (36x the limit, measured)",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -702,7 +1816,7 @@
   "66": {
    "kind": "issue",
    "title": "close() on a fast-path TCP socket leaks its queued RX pages — 289 MiB / whole frame pool exhausted in a loop (measured)",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -721,7 +1835,7 @@
   "65": {
    "kind": "issue",
    "title": "Zero-window or silent peer holds a TCP socket forever — 64 such connections exhaust the whole socket table (Sockstress-class)",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -740,7 +1854,7 @@
   "64": {
    "kind": "issue",
    "title": "A single spoofed SYN permanently disables a listening port (half-open never expires; no TCP socket timeout is ever armed)",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -1007,7 +2121,7 @@
   "53": {
    "kind": "pr",
    "title": "Stage rootfs exec before publication",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [
     "hdae/STATUS.md",
@@ -1631,7 +2745,7 @@
   "27": {
    "kind": "issue",
    "title": "rootfs exec is non-transactional: late failures leave a mixed old/new image and leaked frames",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -1922,7 +3036,7 @@
   "12": {
    "kind": "issue",
    "title": "Full rust desktop running on ginux",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -2144,7 +3258,7 @@
   "5": {
    "kind": "issue",
    "title": "Tracking: technical criticism of Ginux collected from public reviews",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -2243,82 +3357,472 @@
   }
  },
  "keywords": {
-  "clone": [
-   99,
-   98
+  "handled": [
+   151
   ],
-  "child_tid": [
-   99
+  "cleanup": [
+   151
   ],
-  "fork": [
-   99,
-   95
+  "local": [
+   151,
+   101,
+   67,
+   66,
+   34
   ],
-  "musl": [
-   99,
-   98
+  "page": [
+   151,
+   66,
+   59,
+   25
   ],
-  "rvdende": [
-   99,
-   97,
-   95,
-   93
+  "socket": [
+   151,
+   146,
+   101,
+   70,
+   69,
+   68,
+   67,
+   65,
+   64,
+   62,
+   47
   ],
-  "thread": [
-   99,
-   8
+  "before": [
+   151,
+   144,
+   128,
+   113,
+   101,
+   90,
+   82,
+   56,
+   53,
+   52,
+   49,
+   48,
+   28,
+   27,
+   20
   ],
-  "tls": [
-   99,
-   98,
-   40,
-   15
+  "close": [
+   151,
+   72,
+   68,
+   66
   ],
-  "ginux": [
-   99,
-   97,
-   96,
-   95,
-   94,
+  "final": [
+   151
+  ],
+  "ownership": [
+   151,
+   7
+  ],
+  "pages": [
+   151,
+   132
+  ],
+  "boot": [
+   150,
+   100,
    93,
    92,
-   76,
-   71,
-   64,
-   61,
-   58,
-   57,
-   45,
-   42,
-   39,
-   23,
-   18,
-   12,
-   8,
-   5
+   70,
+   63,
+   47,
+   41,
+   40,
+   36,
+   35,
+   31,
+   15,
+   14,
+   13,
+   9
   ],
-  "kernel": [
-   99,
-   98,
+  "fails": [
+   150,
+   125,
+   94,
+   14
+  ],
+  "fixes": [
+   150
+  ],
+  "image": [
+   150,
+   149,
+   148,
+   143,
+   140,
+   136,
+   134,
+   123,
+   122,
+   116,
+   115,
+   112,
+   110,
    97,
    96,
-   80,
-   71,
-   67,
+   94,
+   90,
+   89,
+   83,
+   54,
+   27,
+   18,
+   16
+  ],
+  "priority": [
+   150,
+   126
+  ],
+  "138": [
+   150
+  ],
+  "139": [
+   150
+  ],
+  "amd": [
+   150,
+   125,
+   93
+  ],
+  "child": [
+   150,
+   137,
+   135,
+   130,
+   126,
+   124,
+   113,
+   111,
+   106,
+   102,
+   98,
+   59
+  ],
+  "merge": [
+   150
+  ],
+  "directory": [
+   149,
+   148,
+   143,
+   141,
+   140,
+   123,
+   90,
+   89,
+   18
+  ],
+  "overlay": [
+   149,
+   148,
+   143,
+   134,
+   133,
+   110,
+   91,
+   90,
+   89,
+   86,
+   80
+  ],
+  "overlayfs": [
+   149
+  ],
+  "after": [
+   149,
+   139,
+   120,
+   113,
+   102,
+   84,
+   70,
+   51,
    50,
-   47,
-   46,
-   31,
-   24,
-   21,
+   28,
+   25
+  ],
+  "descriptor": [
+   149,
+   147,
+   144,
+   88
+  ],
+  "entries": [
+   149,
+   134,
+   110,
+   11
+  ],
+  "only": [
+   149,
+   135,
+   131,
+   107,
+   103,
+   102,
+   90,
+   89,
+   66,
+   32,
+   9
+  ],
+  "usr": [
+   149
+  ],
+  "chdir": [
+   149,
+   91
+  ],
+  "link": [
+   148,
+   142,
+   133,
+   122,
+   117
+  ],
+  "path": [
+   148,
+   146,
+   141,
+   140,
+   136,
+   120,
+   116,
+   94,
+   81,
+   79,
+   69,
+   67,
+   66,
+   38,
+   26,
+   25,
+   18
+  ],
+  "one": [
+   148,
+   145,
+   138,
+   133,
+   118,
+   109,
    19,
-   17,
-   13,
-   9,
-   7,
-   3
+   15,
+   5
+  ],
+  "followed": [
+   148
+  ],
+  "relative": [
+   148
+  ],
+  "run": [
+   148,
+   137,
+   122,
+   61
+  ],
+  "symlink": [
+   148,
+   142,
+   140,
+   122,
+   117,
+   116,
+   115
+  ],
+  "locks": [
+   147,
+   121
+  ],
+  "flock": [
+   147,
+   121
+  ],
+  "lock": [
+   147,
+   121,
+   22
+  ],
+  "ofd": [
+   147
+  ],
+  "posix": [
+   147
+  ],
+  "drops": [
+   147
+  ],
+  "processes": [
+   147
+  ],
+  "them": [
+   147
+  ],
+  "belong": [
+   147
+  ],
+  "inode": [
+   146,
+   133,
+   109
+  ],
+  "af_unix": [
+   146
+  ],
+  "bound": [
+   146,
+   70,
+   47
+  ],
+  "name": [
+   146,
+   141,
+   133,
+   109,
+   18
+  ],
+  "enoent": [
+   146,
+   143,
+   123,
+   120,
+   118,
+   116,
+   115,
+   112
+  ],
+  "pathname": [
+   146
+  ],
+  "bind": [
+   146,
+   120,
+   76,
+   73
+  ],
+  "create": [
+   146
+  ],
+  "commit": [
+   145,
+   131,
+   107,
+   53,
+   5
+  ],
+  "every": [
+   145,
+   138,
+   95,
+   63
+  ],
+  "writes": [
+   145,
+   34
+  ],
+  "sectors": [
+   145
+  ],
+  "subset": [
+   145
+  ],
+  "volume": [
+   145,
+   131,
+   125,
+   107,
+   33,
+   23,
+   14
+  ],
+  "disk": [
+   145
+  ],
+  "flush": [
+   145
+  ],
+  "full": [
+   145,
+   84
+  ],
+  "einval": [
+   144,
+   143,
+   128,
+   127,
+   121,
+   119,
+   118,
+   115,
+   109,
+   105,
+   104,
+   103,
+   91
+  ],
+  "mode": [
+   144,
+   115,
+   79
+  ],
+  "ebadf": [
+   144
+  ],
+  "eopnotsupp": [
+   144
+  ],
+  "negative": [
+   144
+  ],
+  "o_append": [
+   144,
+   119
+  ],
+  "offset": [
+   144,
+   23
+  ],
+  "fallocate": [
+   144,
+   119
+  ],
+  "both": [
+   143,
+   102,
+   76
+  ],
+  "exchange": [
+   143,
+   118
   ],
   "linux": [
+   143,
+   142,
+   141,
+   139,
+   135,
+   129,
+   128,
+   127,
+   123,
+   122,
+   121,
+   120,
+   118,
+   116,
+   114,
+   111,
+   110,
+   106,
+   105,
+   103,
    99,
    98,
    88,
@@ -2341,6 +3845,946 @@
    9,
    8
   ],
+  "namei": [
+   143,
+   133
+  ],
+  "dir": [
+   143,
+   118,
+   110
+  ],
+  "dangling": [
+   142,
+   117
+  ],
+  "o_creat": [
+   142,
+   117,
+   116,
+   90,
+   89
+  ],
+  "o_excl": [
+   142,
+   117
+  ],
+  "eexist": [
+   142
+  ],
+  "check": [
+   142,
+   117,
+   90,
+   88,
+   87,
+   84,
+   61,
+   54,
+   51,
+   50,
+   49,
+   48,
+   47,
+   46,
+   44,
+   40,
+   35,
+   23,
+   11,
+   10,
+   9,
+   4,
+   3
+  ],
+  "component": [
+   142,
+   141,
+   117
+  ],
+  "existing": [
+   142,
+   49,
+   47,
+   38,
+   34
+  ],
+  "enotdir": [
+   141,
+   116,
+   90
+  ],
+  "trailing": [
+   141
+  ],
+  "slash": [
+   141
+  ],
+  "unlink": [
+   141,
+   116
+  ],
+  "eisdir": [
+   141,
+   89
+  ],
+  "at_symlink_nofollow": [
+   140
+  ],
+  "chmod": [
+   140,
+   115
+  ],
+  "copy": [
+   140,
+   138,
+   114,
+   109,
+   97,
+   24
+  ],
+  "erofs": [
+   140,
+   115
+  ],
+  "same": [
+   140,
+   123,
+   121,
+   120,
+   109,
+   104,
+   103,
+   76,
+   14
+  ],
+  "already": [
+   140,
+   101
+  ],
+  "thread": [
+   139,
+   138,
+   114,
+   99,
+   8
+  ],
+  "cpu": [
+   139,
+   138,
+   114,
+   103,
+   92,
+   85,
+   83,
+   25,
+   19,
+   8,
+   7
+  ],
+  "application": [
+   139,
+   114
+  ],
+  "futex": [
+   139,
+   127,
+   103,
+   8
+  ],
+  "kernel": [
+   139,
+   130,
+   129,
+   127,
+   100,
+   99,
+   98,
+   97,
+   96,
+   80,
+   71,
+   67,
+   50,
+   47,
+   46,
+   31,
+   24,
+   21,
+   19,
+   17,
+   13,
+   9,
+   7,
+   3
+  ],
+  "loop": [
+   139,
+   102
+  ],
+  "waiter": [
+   139
+  ],
+  "block": [
+   139,
+   41,
+   30
+  ],
+  "domain": [
+   138,
+   135,
+   132,
+   114,
+   111,
+   94,
+   86,
+   85,
+   83,
+   80,
+   67,
+   59,
+   57,
+   46,
+   39,
+   19
+  ],
+  "old": [
+   138,
+   108,
+   53,
+   27
+  ],
+  "entry": [
+   138,
+   134,
+   114,
+   17,
+   10,
+   7
+  ],
+  "forked": [
+   138
+  ],
+  "read": [
+   138
+  ],
+  "select": [
+   137,
+   113
+  ],
+  "sleep": [
+   137,
+   127
+  ],
+  "wait": [
+   137,
+   125
+  ],
+  "poll": [
+   137,
+   113,
+   70,
+   62,
+   56
+  ],
+  "process": [
+   137,
+   135,
+   129,
+   126,
+   121,
+   48
+  ],
+  "returned": [
+   137,
+   128
+  ],
+  "time": [
+   137,
+   100,
+   71,
+   56
+  ],
+  "while": [
+   137
+  ],
+  "ginux": [
+   136,
+   112,
+   111,
+   110,
+   106,
+   103,
+   99,
+   97,
+   96,
+   95,
+   94,
+   93,
+   92,
+   76,
+   71,
+   64,
+   61,
+   58,
+   57,
+   45,
+   42,
+   39,
+   23,
+   18,
+   12,
+   8,
+   5
+  ],
+  "initramfs": [
+   136,
+   112
+  ],
+  "domains": [
+   136,
+   83
+  ],
+  "lib64": [
+   136
+  ],
+  "etc": [
+   136,
+   134,
+   123,
+   115,
+   112,
+   110,
+   89
+  ],
+  "oci": [
+   136,
+   112,
+   95,
+   94,
+   57,
+   52,
+   45,
+   42,
+   18,
+   17
+  ],
+  "out": [
+   136
+  ],
+  "alpine": [
+   136,
+   94,
+   59,
+   57
+  ],
+  "fault": [
+   135,
+   111,
+   57
+  ],
+  "traps": [
+   135
+  ],
+  "handler": [
+   135,
+   111,
+   105
+  ],
+  "signal": [
+   135,
+   130,
+   129,
+   111,
+   105
+  ],
+  "failed": [
+   135,
+   132,
+   111,
+   91,
+   57,
+   51,
+   37,
+   31,
+   29,
+   28,
+   26
+  ],
+  "lower": [
+   134
+  ],
+  "upper": [
+   134
+  ],
+  "directories": [
+   134,
+   110
+  ],
+  "getdents64": [
+   134
+  ],
+  "layer": [
+   134,
+   80,
+   45,
+   20,
+   18,
+   17
+  ],
+  "node": [
+   133
+  ],
+  "data": [
+   133,
+   109,
+   108,
+   68,
+   33
+  ],
+  "hard": [
+   133,
+   109
+  ],
+  "keeps": [
+   133
+  ],
+  "ctime": [
+   132,
+   108
+  ],
+  "truncate": [
+   132,
+   108
+  ],
+  "size": [
+   132,
+   119,
+   108,
+   43,
+   38,
+   13,
+   4
+  ],
+  "mtime": [
+   132,
+   108
+  ],
+  "write": [
+   132,
+   108,
+   88,
+   81
+  ],
+  "bytes": [
+   132,
+   108,
+   54,
+   21
+  ],
+  "now": [
+   132,
+   127,
+   54
+  ],
+  "slot": [
+   131,
+   107
+  ],
+  "generation": [
+   131,
+   107,
+   41
+  ],
+  "version": [
+   131
+  ],
+  "digest": [
+   131,
+   107,
+   32,
+   23,
+   16
+  ],
+  "payload": [
+   131,
+   59,
+   34,
+   32
+  ],
+  "configuration": [
+   131,
+   34
+  ],
+  "header": [
+   131,
+   107,
+   44
+  ],
+  "exit": [
+   130,
+   111
+  ],
+  "wait4": [
+   130
+  ],
+  "fork": [
+   130,
+   126,
+   99,
+   95
+  ],
+  "sigchld": [
+   130,
+   106,
+   105
+  ],
+  "waitid": [
+   130
+  ],
+  "__wclone": [
+   130
+  ],
+  "clone": [
+   130,
+   106,
+   99,
+   98
+  ],
+  "kill": [
+   129,
+   105
+  ],
+  "target": [
+   129,
+   122,
+   117,
+   115,
+   87
+  ],
+  "caller": [
+   129,
+   105
+  ],
+  "never": [
+   129,
+   68,
+   64
+  ],
+  "blocked": [
+   129
+  ],
+  "first": [
+   129
+  ],
+  "mmap": [
+   128,
+   104,
+   81,
+   78,
+   46,
+   19
+  ],
+  "empty": [
+   128
+  ],
+  "mprotect": [
+   128,
+   49,
+   25
+  ],
+  "range": [
+   128
+  ],
+  "length": [
+   128,
+   36,
+   30,
+   21
+  ],
+  "madvise": [
+   128
+  ],
+  "requeue": [
+   127
+  ],
+  "clock_nanosleep": [
+   127,
+   103
+  ],
+  "enosys": [
+   127,
+   113,
+   103,
+   11
+  ],
+  "futex_requeue": [
+   127
+  ],
+  "exec": [
+   126,
+   113,
+   102,
+   53
+  ],
+  "nice": [
+   126,
+   102
+  ],
+  "executor": [
+   126
+  ],
+  "pid": [
+   126,
+   102
+  ],
+  "env": [
+   126,
+   102
+  ],
+  "flag": [
+   126
+  ],
+  "self": [
+   125,
+   79
+  ],
+  "device": [
+   125,
+   30,
+   29,
+   28,
+   1
+  ],
+  "kvm": [
+   125,
+   92
+  ],
+  "passes": [
+   125,
+   35,
+   33,
+   32
+  ],
+  "available": [
+   125,
+   22
+  ],
+  "host": [
+   125,
+   92,
+   86,
+   33
+  ],
+  "map_shared": [
+   124,
+   81,
+   78
+  ],
+  "mapping": [
+   124,
+   88,
+   81,
+   78
+  ],
+  "sees": [
+   124
+  ],
+  "parent": [
+   124,
+   113
+  ],
+  "does": [
+   124
+  ],
+  "memory": [
+   124,
+   80,
+   67,
+   46,
+   19
+  ],
+  "shared": [
+   124,
+   88
+  ],
+  "visible": [
+   124
+  ],
+  "each": [
+   124,
+   26
+  ],
+  "yes": [
+   123,
+   110,
+   108
+  ],
+  "passwd": [
+   123
+  ],
+  "listed": [
+   123,
+   120,
+   110
+  ],
+  "base": [
+   123,
+   97,
+   93,
+   18
+  ],
+  "links": [
+   122
+  ],
+  "through": [
+   122
+  ],
+  "cwd": [
+   122
+  ],
+  "stat": [
+   122,
+   116,
+   112,
+   91
+  ],
+  "lock_ex": [
+   121
+  ],
+  "lock_un": [
+   121
+  ],
+  "f_unlck": [
+   121
+  ],
+  "eaddrinuse": [
+   120,
+   76
+  ],
+  "sock": [
+   120
+  ],
+  "connect": [
+   120,
+   101,
+   69
+  ],
+  "enxio": [
+   119
+  ],
+  "100": [
+   119
+  ],
+  "seek_data": [
+   119
+  ],
+  "seek_hole": [
+   119
+  ],
+  "0123xy": [
+   119
+  ],
+  "enotsup": [
+   119
+  ],
+  "swapped": [
+   118
+  ],
+  "swap": [
+   118
+  ],
+  "two": [
+   118
+  ],
+  "kept": [
+   118
+  ],
+  "tmp": [
+   117,
+   89
+  ],
+  "creates": [
+   117
+  ],
+  "mkdir": [
+   116
+  ],
+  "604": [
+   115
+  ],
+  "threads": [
+   114
+  ],
+  "22a": [
+   114
+  ],
+  "futex_wait": [
+   114
+  ],
+  "pipe": [
+   113
+  ],
+  "ready": [
+   113
+  ],
+  "false": [
+   112
+  ],
+  "init": [
+   112,
+   57,
+   37,
+   26
+  ],
+  "branch": [
+   112,
+   69,
+   66
+  ],
+  "signaled": [
+   111
+  ],
+  "nlink": [
+   109
+  ],
+  "st_nlink": [
+   109
+  ],
+  "zero": [
+   108,
+   65
+  ],
+  "record": [
+   107,
+   32
+  ],
+  "config": [
+   107
+  ],
+  "bit": [
+   107,
+   91
+  ],
+  "posix_spawn": [
+   106
+  ],
+  "musl": [
+   106,
+   99,
+   98
+  ],
+  "system": [
+   106
+  ],
+  "true": [
+   106
+  ],
+  "bin": [
+   106
+  ],
+  "sigusr1": [
+   105
+  ],
+  "eperm": [
+   105
+  ],
+  "flags": [
+   105,
+   91
+  ],
+  "4096": [
+   104
+  ],
+  "fixed": [
+   104
+  ],
+  "address": [
+   104,
+   84,
+   31
+  ],
+  "anon": [
+   104
+  ],
+  "mremap": [
+   104
+  ],
+  "private": [
+   104
+  ],
+  "prot": [
+   104
+  ],
+  "timerfd": [
+   103
+  ],
+  "low_done": [
+   102
+  ],
+  "tcp": [
+   101,
+   100,
+   68,
+   65,
+   64
+  ],
+  "guard": [
+   101,
+   27,
+   23
+  ],
+  "reconnect": [
+   101
+  ],
+  "result": [
+   101
+  ],
+  "allocation": [
+   101,
+   80,
+   52,
+   20,
+   19
+  ],
+  "monotonic": [
+   100
+  ],
+  "clock": [
+   100,
+   56
+  ],
+  "network": [
+   100,
+   75,
+   68
+  ],
+  "accelerate": [
+   100
+  ],
+  "api": [
+   100,
+   71
+  ],
+  "busy": [
+   100,
+   22
+  ],
+  "child_tid": [
+   99
+  ],
+  "rvdende": [
+   99,
+   97,
+   95,
+   93
+  ],
+  "tls": [
+   99,
+   98,
+   40,
+   15
+  ],
   "r10": [
    98
   ],
@@ -2353,26 +4797,10 @@
   "abi": [
    98
   ],
-  "child": [
-   98,
-   59
-  ],
   "gib": [
    97,
    96,
    20
-  ],
-  "image": [
-   97,
-   96,
-   94,
-   90,
-   89,
-   83,
-   54,
-   27,
-   18,
-   16
   ],
   "efi": [
    97,
@@ -2382,17 +4810,8 @@
    97,
    96
   ],
-  "base": [
-   97,
-   93,
-   18
-  ],
   "below": [
    97
-  ],
-  "copy": [
-   97,
-   24
   ],
   "above": [
    96
@@ -2406,16 +4825,6 @@
   "guest": [
    96,
    22
-  ],
-  "oci": [
-   95,
-   94,
-   57,
-   52,
-   45,
-   42,
-   18,
-   17
   ],
   "paths": [
    95
@@ -2446,52 +4855,14 @@
    22,
    5
   ],
-  "every": [
-   95,
-   63
-  ],
-  "path": [
-   94,
-   81,
-   79,
-   69,
-   67,
-   66,
-   38,
-   26,
-   25,
-   18
-  ],
   "byte": [
    94,
    21,
    20,
    6
   ],
-  "alpine": [
-   94,
-   59,
-   57
-  ],
   "certificates": [
    94
-  ],
-  "domain": [
-   94,
-   86,
-   85,
-   83,
-   80,
-   67,
-   59,
-   57,
-   46,
-   39,
-   19
-  ],
-  "fails": [
-   94,
-   14
   ],
   "iter": [
    94
@@ -2499,9 +4870,6 @@
   "rpl": [
    93,
    92
-  ],
-  "amd": [
-   93
   ],
   "sysret": [
    93
@@ -2513,22 +4881,6 @@
    93,
    92
   ],
-  "boot": [
-   93,
-   92,
-   70,
-   63,
-   47,
-   41,
-   40,
-   36,
-   35,
-   31,
-   15,
-   14,
-   13,
-   9
-  ],
   "qemu": [
    92,
    87,
@@ -2538,55 +4890,13 @@
    13,
    4
   ],
-  "cpu": [
-   92,
-   85,
-   83,
-   25,
-   19,
-   8,
-   7
-  ],
   "exception": [
    92
-  ],
-  "host": [
-   92,
-   86,
-   33
   ],
   "iretq": [
    92
   ],
-  "kvm": [
-   92
-  ],
   "bits": [
-   91
-  ],
-  "failed": [
-   91,
-   57,
-   51,
-   37,
-   31,
-   29,
-   28,
-   26
-  ],
-  "stat": [
-   91
-  ],
-  "bit": [
-   91
-  ],
-  "chdir": [
-   91
-  ],
-  "einval": [
-   91
-  ],
-  "flags": [
    91
   ],
   "follow": [
@@ -2596,84 +4906,14 @@
    91,
    60
   ],
-  "overlay": [
-   91,
-   90,
-   89,
-   86,
-   80
-  ],
-  "o_creat": [
-   90,
-   89
-  ],
   "rmdir": [
    90,
    89
   ],
-  "directory": [
-   90,
-   89,
-   18
-  ],
-  "before": [
-   90,
-   82,
-   56,
-   53,
-   52,
-   49,
-   48,
-   28,
-   27,
-   20
-  ],
-  "check": [
-   90,
-   88,
-   87,
-   84,
-   61,
-   54,
-   51,
-   50,
-   49,
-   48,
-   47,
-   46,
-   44,
-   40,
-   35,
-   23,
-   11,
-   10,
-   9,
-   4,
-   3
-  ],
-  "enotdir": [
-   90
-  ],
   "o_directory": [
    90
   ],
-  "only": [
-   90,
-   89,
-   66,
-   32,
-   9
-  ],
-  "etc": [
-   89
-  ],
   "rename": [
-   89
-  ],
-  "tmp": [
-   89
-  ],
-  "eisdir": [
    89
   ],
   "eacces": [
@@ -2684,22 +4924,7 @@
    81,
    78
   ],
-  "shared": [
-   88
-  ],
   "back": [
-   88
-  ],
-  "mapping": [
-   88,
-   81,
-   78
-  ],
-  "write": [
-   88,
-   81
-  ],
-  "descriptor": [
    88
   ],
   "descriptors": [
@@ -2721,9 +4946,6 @@
    87
   ],
   "rustup": [
-   87
-  ],
-  "target": [
    87
   ],
   "toml": [
@@ -2794,24 +5016,9 @@
    54,
    43
   ],
-  "address": [
-   84,
-   31
-  ],
-  "after": [
-   84,
-   70,
-   51,
-   50,
-   28,
-   25
-  ],
   "counter": [
    84,
    82
-  ],
-  "full": [
-   84
   ],
   "native": [
    84,
@@ -2833,9 +5040,6 @@
   "background": [
    83
   ],
-  "domains": [
-   83
-  ],
   "transition": [
    82
   ],
@@ -2850,19 +5054,9 @@
   "255": [
    82
   ],
-  "mmap": [
-   81,
-   78,
-   46,
-   19
-  ],
   "o_rdonly": [
    81,
    79,
-   78
-  ],
-  "map_shared": [
-   81,
    78
   ],
   "access": [
@@ -2873,12 +5067,6 @@
   "content": [
    81
   ],
-  "memory": [
-   80,
-   67,
-   46,
-   19
-  ],
   "mib": [
    80,
    67,
@@ -2888,35 +5076,16 @@
   "frameowner": [
    80
   ],
-  "layer": [
-   80,
-   45,
-   20,
-   18,
-   17
-  ],
   "tmpfs": [
    80
   ],
-  "allocation": [
-   80,
-   52,
-   20,
-   19
-  ],
   "allocations": [
    80
-  ],
-  "mode": [
-   79
   ],
   "let": [
    79
   ],
   "proc": [
-   79
-  ],
-  "self": [
    79
   ],
   "original": [
@@ -2936,22 +5105,8 @@
   "verified": [
    78
   ],
-  "bind": [
-   76,
-   73
-  ],
-  "eaddrinuse": [
-   76
-  ],
   "so_reuseaddr": [
    76
-  ],
-  "both": [
-   76
-  ],
-  "same": [
-   76,
-   14
   ],
   "specific": [
    76
@@ -2977,10 +5132,6 @@
   ],
   "listen": [
    75
-  ],
-  "network": [
-   75,
-   68
   ],
   "syn": [
    75,
@@ -3061,20 +5212,8 @@
   "clean": [
    72
   ],
-  "close": [
-   72,
-   68,
-   66
-  ],
   "distinct": [
    72
-  ],
-  "time": [
-   71,
-   56
-  ],
-  "api": [
-   71
   ],
   "wall": [
    71
@@ -3090,21 +5229,6 @@
   ],
   "idle": [
    71
-  ],
-  "poll": [
-   70,
-   62,
-   56
-  ],
-  "socket": [
-   70,
-   69,
-   68,
-   67,
-   65,
-   64,
-   62,
-   47
   ],
   "synchronous": [
    70
@@ -3125,23 +5249,12 @@
    47,
    22
   ],
-  "bound": [
-   70,
-   47
-  ],
-  "connect": [
-   69
-  ],
   "fast": [
    69,
    66
   ],
   "accepted": [
    69
-  ],
-  "branch": [
-   69,
-   66
   ],
   "connected": [
    69
@@ -3155,21 +5268,8 @@
   "fin": [
    68
   ],
-  "never": [
-   68,
-   64
-  ],
-  "tcp": [
-   68,
-   65,
-   64
-  ],
   "abort": [
    68
-  ],
-  "data": [
-   68,
-   33
   ],
   "per": [
    67,
@@ -3181,26 +5281,13 @@
    67,
    22
   ],
-  "local": [
-   67,
-   66,
-   34
-  ],
   "connector": [
    66
   ],
   "handle": [
    66
   ],
-  "page": [
-   66,
-   59,
-   25
-  ],
   "window": [
-   65
-  ],
-  "zero": [
    65
   ],
   "ack": [
@@ -3287,9 +5374,6 @@
   "root": [
    61
   ],
-  "run": [
-   61
-  ],
   "seeds": [
    61
   ],
@@ -3333,11 +5417,6 @@
   "owned": [
    59
   ],
-  "payload": [
-   59,
-   34,
-   32
-  ],
   "128": [
    59
   ],
@@ -3368,22 +5447,11 @@
   "harnesses": [
    58
   ],
-  "fault": [
-   57
-  ],
-  "init": [
-   57,
-   37,
-   26
-  ],
   "549755813888": [
    57
   ],
   "saved": [
    57
-  ],
-  "clock": [
-   56
   ],
   "polls": [
    56
@@ -3426,10 +5494,6 @@
    37,
    26
   ],
-  "bytes": [
-   54,
-   21
-  ],
   "capacity": [
    54,
    38
@@ -3442,14 +5506,8 @@
    54,
    43
   ],
-  "now": [
-   54
-  ],
   "regression": [
    54
-  ],
-  "exec": [
-   53
   ],
   "hierarchy": [
    53,
@@ -3463,16 +5521,8 @@
    53,
    52
   ],
-  "commit": [
-   53,
-   5
-  ],
   "forced": [
    53
-  ],
-  "old": [
-   53,
-   27
   ],
   "passed": [
    53,
@@ -3554,16 +5604,6 @@
   "any": [
    50
   ],
-  "mprotect": [
-   49,
-   25
-  ],
-  "existing": [
-   49,
-   47,
-   38,
-   34
-  ],
   "shootdown": [
    49
   ],
@@ -3578,9 +5618,6 @@
   "acknowledged": [
    49,
    25
-  ],
-  "process": [
-   48
   ],
   "remote": [
    48,
@@ -3629,9 +5666,6 @@
   "adjacent": [
    45
   ],
-  "header": [
-   44
-  ],
   "000": [
    44
   ],
@@ -3646,12 +5680,6 @@
   ],
   "profile": [
    43
-  ],
-  "size": [
-   43,
-   38,
-   13,
-   4
   ],
   "build": [
    43
@@ -3688,13 +5716,6 @@
   ],
   "verify": [
    42
-  ],
-  "block": [
-   41,
-   30
-  ],
-  "generation": [
-   41
   ],
   "drain": [
    41
@@ -3771,11 +5792,6 @@
    36,
    30
   ],
-  "length": [
-   36,
-   30,
-   21
-  ],
   "reject": [
    36
   ],
@@ -3783,11 +5799,6 @@
    35,
    31,
    6
-  ],
-  "passes": [
-   35,
-   33,
-   32
   ],
   "section": [
    35
@@ -3813,12 +5824,6 @@
   "unchanged": [
    34
   ],
-  "writes": [
-   34
-  ],
-  "configuration": [
-   34
-  ],
   "durable": [
    34
   ],
@@ -3827,11 +5832,6 @@
   ],
   "validation": [
    33
-  ],
-  "volume": [
-   33,
-   23,
-   14
   ],
   "geometry": [
    33
@@ -3850,14 +5850,6 @@
   "padding": [
    32
   ],
-  "record": [
-   32
-  ],
-  "digest": [
-   32,
-   23,
-   16
-  ],
   "nonzero": [
    32
   ],
@@ -3869,12 +5861,6 @@
   ],
   "0x30": [
    30
-  ],
-  "device": [
-   30,
-   29,
-   28,
-   1
   ],
   "u64": [
    30
@@ -3910,17 +5896,10 @@
   "fallible": [
    27
   ],
-  "guard": [
-   27,
-   23
-  ],
   "late": [
    27
   ],
   "valid": [
-   26
-  ],
-  "each": [
    26
   ],
   "sibling": [
@@ -3941,19 +5920,7 @@
   "linuxactiveimagemapping": [
    24
   ],
-  "offset": [
-   23
-  ],
   "chosen": [
-   22
-  ],
-  "lock": [
-   22
-  ],
-  "available": [
-   22
-  ],
-  "busy": [
    22
   ],
   "dynamic": [
@@ -3996,11 +5963,6 @@
   "memory_limit_mib": [
    19
   ],
-  "one": [
-   19,
-   15,
-   5
-  ],
   "allocated": [
    19
   ],
@@ -4008,16 +5970,8 @@
    18,
    15
   ],
-  "name": [
-   18
-  ],
   "depth": [
    17
-  ],
-  "entry": [
-   17,
-   10,
-   7
   ],
   "src": [
    17
@@ -4098,12 +6052,6 @@
   "complete": [
    11
   ],
-  "enosys": [
-   11
-  ],
-  "entries": [
-   11
-  ],
   "reclassify": [
    11
   ],
@@ -4131,9 +6079,6 @@
   "matched": [
    8
   ],
-  "futex": [
-   8
-  ],
   "parity": [
    8
   ],
@@ -4141,9 +6086,6 @@
    8
   ],
   "global": [
-   7
-  ],
-  "ownership": [
    7
   ],
   "explicit": [
