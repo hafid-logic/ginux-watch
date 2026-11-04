@@ -8,12 +8,12 @@
 - المستودعات: upstream [gmkurtzer/ginux](https://github.com/gmkurtzer/ginux) (قراءة فقط) | fork [hafid-logic/ginux](https://github.com/hafid-logic/ginux) (كتابة) | watch hafid-logic/ginux-watch (سجلاتنا وتقاريرنا).
 - قبل أي commit/merge: `bash scripts/session-init.sh` (يعيّن الاسم والبريد ويتحقق بـ`git config --get`؛ بدونها يقع commit بهوية «Z User» — وقع في 701edf5). **rustc غير مثبت افتراضيًا في الصندوق** (harness صغير: rustup في /tmp؛ البناء الثقيل Actions فقط).
 
-## 2) حالة الخيوط — آخر تحقق حي: 2026-11-04T00:0x–00:5xZ (جلسة 22، API GET حي)
+## 2) حالة الخيوط — آخر تحقق حي: 2026-11-04T01:5x–02:2xZ (جلسة 23، API GET حي)
 - **القاعدة #5 في AGENTS.md (v3.0):** أعد التحقق الحي قبل الاعتماد على هذا الملف؛ المغلقات تُقلم من watchlist كل جولة.
-- **upstream main: `d11670e4f2fc`** («Merge PR #86»، 23:18:22Z؛ فحوص HEAD 2/2 ✓). المتتابع: 6324692b (دمج **#54**) ← 47ff7107 (دمج **#61**) ← 144d8119. **errata:** 6324692b هو دمج #54 (22:00:13Z، 0 reviews) لا «main بعد دمج #61» كما سُجل في الجلسة 21. تعليقنا على #61 (21:32:42Z) يحوي حرفيًا `<sha>` غير معبأ — سجل فقط.
-- **مغلقة (مُقلمة من watchlist):** #54 MERGED (P10/F9 زالت)؛ #61 MERGED 21:52:18Z (124 ملفًا كلها fuzz/؛ هوية الـ12 commits: 10/12 noreply، 701edf5 «Z User»، f61c64a8 بريد Gmail شخصي — لا إجراء، لا rebase أبدًا)؛ #58 closed/completed («Resolved by merged PR #61»)؛ #14 closed/completed 11-02 (بواسطة #41)؛ #26 closed/completed (بواسطة #37)؛ #43 closed/completed 22:00:44Z.
+- **upstream main: `7fdc880e6697`** («Merge PR #84»، 2026-11-04T00:18:27Z — الرأس الذي شُغّل عليه fuzz الدوري). المتتابع: d11670e4 (دمج **#86**) ← 6324692b (دمج **#54**) ← 47ff7107 (دمج **#61**) ← 144d8119. **جولة fuzz الدورية v3.1 على هذا الرأس: 338.7M exec، صفر crashes؛ تغطية: oci 93.18/97.01، protocol 97.50/97.37، volume 99.43/100 (regions/lines). **errata:** 6324692b هو دمج #54 (22:00:13Z، 0 reviews) لا «main بعد دمج #61» كما سُجل في الجلسة 21. تعليقنا على #61 (21:32:42Z) يحوي حرفيًا `<sha>` غير معبأ — سجل فقط.
+- **مغلقة (مُقلمة من watchlist):** #54 MERGED (P10/F9 زالت)؛ #61 MERGED 21:52:18Z (124 ملفًا كلها fuzz/؛ هوية الـ12 commits: 10/12 noreply، 701edf5 «Z User»، f61c64a8 بريد Gmail شخصي — لا إجراء، لا rebase أبدًا)؛ #58 closed/completed («Resolved by merged PR #61»)؛ #14 closed/completed 11-02 (بواسطة #41)؛ #26 closed/completed (بواسطة #37)؛ #43 closed/completed 22:00:44Z؛ **#84 MERGED 2026-11-04T00:18:27Z (merge 7fdc880e).**
 - **P10 مُصلَح فعلًا على main [MEASURED]:** `overflow-checks=true` (Cargo.toml:33) + المواقع الخمسة كلها checked/lazy (linux_overlay.rs:540 checked_sub؛ cpu.rs 22656/24132/25313/37897 عبر linux_decimal) + regression `#[should_panic]` في ginux-oci — matrix P10 = D (زالت)؛ الإحصاء A=1,B=7,C=4,D=5.
-- **مفتوح نراقبه:** **#84** PR (scheduler atomicity →#82؛ clean، فحوص 2/2، head 006f9b3، تحقق أولي من الصيانة)؛ **#85** draft متراكب على #84 (→#83، 34 ملفًا)؛ **#53** dirty بلا فحوص (checkpoint only)؛ **#39** dirty (80 ملفًا؛ فحوص قديمة 2/2).
+- **مفتوح نراقبه:** **#85** draft (→#83؛ 34 ملفًا؛ «Depends on #84» — **#84 دُمجت ⇒ حُرّرت**؛ الفحوص 2/2 على رأس قديم تُعاد عند المراجعة)؛ **#53** dirty بلا فحوص (checkpoint only)؛ **#39** dirty (80 ملفًا؛ فحوص قديمة 2/2).
 - **موجة TCP (64–76):** 10 issues مفتوحة كلها مؤكدة من الصيانة (64 SYN نصفي، 65 zero-window، 66 تسريب RX، 67 طوابير غير محسوبة — 289MiB تحت memory-mib=8، 68 بلا FIN/RST، 69 connect مكرر، 71 زمن بعدّاد API، 72 RST→EOF، 75 backlog، 76 SO_REUSEADDR)؛ #70/#73 مدموجة؛ **#74 شاذ** (مغلق غير مدموج، brentharts، head=main، بلا فحوص).
 - **فجوتا #49/#73 (v3.0-4):** كلتاهما PRs مدموجة upstream (تحلان #25/#63) — #49 غير host-testable (NMI shootdown/no_std)؛ #73 mutation A/B متمايز (A تفشل/B تنجح) لكن المسار حُذف upstream ⇒ **لا بناء في fork، لا draft PR، لا «ملاحظة فجوة»** — fork لم يُمَس.
 - **ginux-verify 41745108449 على main@d11670e4: doctor=0 check=0 test=0 على 10.0.13 و10.1.2** (Boot test passed + GINUX_KERNEL_OK ×2). فشل scheduled أمس 41631941550 (main@10.1.2 فقط) مُتجاوَز.
@@ -31,7 +31,7 @@
 
 ## 5) الانتظارات
 - **على المستخدم:** أي نشر جديد = إذن جديد؛ قرار تدوير `work/instabox/credentials.json.manual-backup` (سر محلي بapiKey — لا يُدفع أبدًا).
-- **على الوكيل:** مراقبة قراءة-فقط: #84/#85 حتى الدمج (#85 يُراجع بعده)، #53/#39 dirty، موجة TCP المفتوحة، #74 الشاذ؛ كل مراجعة تبدأ بتحقق حي (قاعدة #5).
+- **على الوكيل:** مراقبة قراءة-فقط: #85 (حُرّرت بعد دمج #84)، #53/#39 dirty، موجة TCP المفتوحة، #74 الشاذ؛ كل مراجعة تبدأ بتحقق حي (قاعدة #5).
 
 ## 6) الجدولة — مرتبطة بسياق جلسة الوكيل + خطة احتياط (v3.0-2)
 - **cron job 501093** (أُعيد إنشاؤه 2026-11-04 بعد موت 498132 بالدوران) — يومي 09:00 Africa/Algiers: تحقق حي قراءة-فقط + تحديث STATE + تسليم ≤8 أسطر. إعادة الإنشاء: kind=cron، `0 0 9 * * ?`، tz=Africa/Algiers.
@@ -44,10 +44,10 @@
 - **تضارب الدفع بعد الدوران** («fetch first»): `git pull --rebase origin main` ثم push. **ضوضاء filemode:** `git config core.filemode false`.
 
 ## 8) أرشيف وفهرس
-- الجلسات ≤21: docs/HISTORY.md + reports/2026-11-03.md §1-§17 + git history. الجلسة 22 (v3.0): reports/2026-11-04.md §1-§7.
+- الجلسات ≤21: docs/HISTORY.md + reports/2026-11-03.md §1-§17 + git history. الجلسة 22 (v3.0): reports/2026-11-04.md §1-§7. الجلسة 23 (v3.1): fuzz دوري + جدوى الهدف الرابع + أفكار ≤5 — تفصيلها STATE last_run.
 - روابط: [STATE.md](STATE.md) | [POLICY.md](POLICY.md) | [AGENTS.md](AGENTS.md) | [docs/RECOVERY.md](docs/RECOVERY.md) | [docs/HISTORY.md](docs/HISTORY.md) | [reports/](reports/) | inbox/.
 
 ## 9) سجل الجلسات (آخر 3)
-- **20.** 2026-11-03 (~19:4xZ) — v2.10: فحوص upstream خضراء 2/2 على eccb0de7؛ ready_for_review 19:17:55Z؛ main +39. reports §16.
 - **21.** 2026-11-03 (~22:0x–22:3xZ) — v2.9-تنفيذ: دمج #61 مكتشف؛ readme-smoke SUCCESS 2/2؛ تنظيف work/ (84% حرة)؛ HANDOFF ≤1200 + RECOVERY جديد؛ اختبار استعادة PASS. reports §17.
 - **22.** 2026-11-04 (00:0x–00:5xZ) — **v3.0 (وكيل الأول):** تحقق حي شامل (#54 مدموج 6324692b — errata نسبة الدمج؛ #58/#14/#26 مغلقة؛ main d11670e4)؛ قلم المغلقات من watchlist + قاعدة #5 في AGENTS.md؛ RECOVERY §6 احتياط Actions؛ cron جديد 501093؛ P10 مؤكدة الزوال (matrix D)؛ مصفوفة حية 18/18 (#84/#85 نظيفة، #53/#39 dirty، TCP wave 10 مفتوحة مؤكدة، #74 شاذ)؛ فجوتا #49/#73 = مدموجتان upstream (mutation A/B متمايز ل#73) ⇒ لا بناء/draft PR؛ ginux-verify 41745108449 = 0/0/0 على d11670e4. reports/2026-11-04.md.
+- **23.** 2026-11-04 (01:0x–02:2xZ) — **v3.1 (دوري):** fuzz 3×1920 ث على main@7fdc880e = 338.7M exec **صفر crashes**؛ تغطية llvm-cov: oci 93.18/97.01، protocol 97.50/97.37، volume 99.43/100؛ جدوى الهدف الرابع **سالبة** (PAX مغطى بـoci_surfaces؛ TCP/DNS smoltcp خارجي + no_std؛ المرشح المستقبلي: parse_dhcp_reply)؛ أفكار المساهمة ≤5 في drafts/ (بلا نشر)؛ #84 دُمجت (7fdc880e) وقُلمت من watchlist و#85 حُرّرت؛ درس: عمليات الخلفية تُقتل بين استدعاءات Bash ⇒ قطع أمامية 480 ث.
