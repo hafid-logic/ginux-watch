@@ -1,4 +1,4 @@
-# validation — T-20261103-03-par — PASS — 2026-11-03T19:47:28Z
+# validation — T-20261103-03-par — PASS — 2026-11-04T02:22:30Z
 
 - note: summary MEASURED line (section-level evidence): 'All recorded in this session; each is a [MEASURED] command + result:'
 - all gates passed
