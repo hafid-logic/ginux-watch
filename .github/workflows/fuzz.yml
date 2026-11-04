@@ -104,9 +104,10 @@ jobs:
             -instr-profile="coverage/${{ matrix.target }}/coverage.profdata" \
             -summary-only -ignore-filename-regex='(fuzz_targets|registry|rustc/|\.cargo)' \
             2>&1 | tee coverage-${{ matrix.target }}.log
-          # TOTAL row (recipe of run5, fuzz-branch-verify): $4 regions %, $10 lines %, $13 functions %
+          # TOTAL row (recipe of run5, fuzz-branch-verify): $4 regions %, $10 lines %,
+          # $13 functions % (absent on current llvm-cov summary -> n/a)
           tail -1 coverage-${{ matrix.target }}.log \
-            | awk '{printf "regions %s lines %s functions %s\n", $4, $10, $13}' \
+            | awk '{printf "regions %s lines %s functions %s\n", $4, $10, ($13 ? $13 : "n/a")}' \
             | tee coverage-summary-${{ matrix.target }}.txt
 
       - name: Collect results
@@ -116,7 +117,11 @@ jobs:
           execs=$(grep -oE '^#[0-9]+' round-${{ matrix.target }}.log | tail -1 | tr -d '#' || echo 0)
           stats_execs=$(grep -E '^stat::number_of_executed_units' round-${{ matrix.target }}.log | tail -1 | awk '{print $2}' || echo "")
           covline=$(cat coverage-summary-${{ matrix.target }}.txt 2>/dev/null || echo "regions n/a lines n/a functions n/a")
-          crashes=$(ls artifacts/ 2>/dev/null | wc -l)
+          # count only real crash artifacts — cargo-fuzz pre-creates an empty
+          # per-target subdir under artifacts/ (false positive on plain `ls`).
+          crashes=$(ls artifacts/crash-* artifacts/oom-* artifacts/timeout-* artifacts/leak-* \
+                       artifacts/*/crash-* artifacts/*/oom-* artifacts/*/timeout-* artifacts/*/leak-* \
+                       2>/dev/null | wc -l)
           {
             echo "run_id=${{ github.run_id }}"
             echo "run_url=${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
