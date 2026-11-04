@@ -1,8 +1,286 @@
 {
- "generated_at_utc": "2026-11-04T05:52:06Z",
+ "generated_at_utc": "2026-11-04T14:14:00Z",
  "source_repo": "gmkurtzer/ginux",
- "item_count": 85,
+ "item_count": 98,
  "items": {
+  "99": {
+   "kind": "pr",
+   "title": "Fix the clone() thread ABI so musl pthread_create works",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    "kernel/linux-probe.S",
+    "kernel/src/arch/x86_64/cpu.rs",
+    "kernel/src/arch/x86_64/cpu/linux_abi.rs",
+    "kernel/src/arch/x86_64/cpu/linux_syscall.rs"
+   ],
+   "keywords": [
+    "clone",
+    "child_tid",
+    "fork",
+    "musl",
+    "rvdende",
+    "thread",
+    "tls",
+    "ginux",
+    "kernel",
+    "linux"
+   ]
+  },
+  "98": {
+   "kind": "issue",
+   "title": "x86-64 clone(): child_tid is read from r8 and tls from r9 (Linux: r10 and r8); unaligned child stacks and CLONE_DETACHED are rejected. Every musl `pthread_create` fails.",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "linux",
+    "clone",
+    "musl",
+    "r10",
+    "tls",
+    "clone_detached",
+    "kernel",
+    "probe",
+    "abi",
+    "child"
+   ]
+  },
+  "97": {
+   "kind": "pr",
+   "title": "Relocate the EFI image below 4 GiB before entering the kernel",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    "boot/efi/src/main.rs",
+    "kernel/src/lib.rs",
+    "kernel/src/pe.rs"
+   ],
+   "keywords": [
+    "gib",
+    "image",
+    "efi",
+    "kernel",
+    "rvdende",
+    "firmware",
+    "ginux",
+    "base",
+    "below",
+    "copy"
+   ]
+  },
+  "96": {
+   "kind": "issue",
+   "title": "Boot panics when firmware loads `GINUX.EFI` above 4 GiB (any guest with ≥ 4 GiB RAM)",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "gib",
+    "ginux",
+    "image",
+    "above",
+    "efi",
+    "kernel",
+    "ram",
+    "boots",
+    "firmware",
+    "guest"
+   ]
+  },
+  "95": {
+   "kind": "pr",
+   "title": "Accept UTF-8 and space characters in OCI layer paths",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    "crates/oci/src/lib.rs"
+   ],
+   "keywords": [
+    "ginux",
+    "oci",
+    "paths",
+    "rvdende",
+    "main",
+    "space",
+    "ascii",
+    "com",
+    "every",
+    "fork"
+   ]
+  },
+  "94": {
+   "kind": "issue",
+   "title": "OCI unpack rejects every image whose layers contain a UTF-8 or space file name (e.g. the Mozilla CA bundle)",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "path",
+    "byte",
+    "image",
+    "oci",
+    "alpine",
+    "certificates",
+    "ginux",
+    "domain",
+    "fails",
+    "iter"
+   ]
+  },
+  "93": {
+   "kind": "pr",
+   "title": "Force RPL 3 in the SYSRET selector base for AMD",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    "kernel/src/arch/x86_64/cpu.rs"
+   ],
+   "keywords": [
+    "rpl",
+    "ginux",
+    "amd",
+    "sysret",
+    "rvdende",
+    "base",
+    "main",
+    "star",
+    "0x28",
+    "boot"
+   ]
+  },
+  "92": {
+   "kind": "issue",
+   "title": "`make test` panics under KVM on AMD: SYSRET base 0x20 yields user SS = 0x28 and IRETQ faults with #GP(0x28)",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "ginux",
+    "qemu",
+    "0x28",
+    "cpu",
+    "rpl",
+    "boot",
+    "exception",
+    "host",
+    "iretq",
+    "kvm"
+   ]
+  },
+  "91": {
+   "kind": "pr",
+   "title": "Follow overlay symlinks in stat and fix open flag and preadv2 handling",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    "crates/kernel-policy/src/lib.rs",
+    "kernel/src/arch/x86_64/cpu.rs",
+    "kernel/src/arch/x86_64/cpu/linux_abi.rs",
+    "kernel/src/arch/x86_64/cpu/linux_syscall.rs",
+    "kernel/src/linux_overlay.rs"
+   ],
+   "keywords": [
+    "bits",
+    "failed",
+    "stat",
+    "bit",
+    "chdir",
+    "einval",
+    "flags",
+    "follow",
+    "instead",
+    "overlay"
+   ]
+  },
+  "90": {
+   "kind": "pr",
+   "title": "Stop overlay open, rmdir and rename from destroying image files",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    "crates/kernel-policy/src/lib.rs",
+    "kernel/src/arch/x86_64/cpu.rs",
+    "kernel/src/arch/x86_64/cpu/linux_abi.rs",
+    "kernel/src/linux_overlay.rs"
+   ],
+   "keywords": [
+    "image",
+    "o_creat",
+    "rmdir",
+    "directory",
+    "before",
+    "check",
+    "overlay",
+    "enotdir",
+    "o_directory",
+    "only"
+   ]
+  },
+  "89": {
+   "kind": "issue",
+   "title": "Overlay/rootfs data loss: `open(O_RDONLY|O_CREAT)` empties image files, `rmdir` removes non-empty image directories, `rename(a, a)` deletes `a`",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "etc",
+    "image",
+    "o_creat",
+    "only",
+    "overlay",
+    "rename",
+    "rmdir",
+    "tmp",
+    "directory",
+    "eisdir"
+   ]
+  },
+  "88": {
+   "kind": "pr",
+   "title": "Reject writable shared mappings of descriptors not open for writing",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    "kernel/src/arch/x86_64/cpu.rs",
+    "kernel/src/linux_overlay.rs",
+    "tests/qemu/boot.sh"
+   ],
+   "keywords": [
+    "eacces",
+    "prot_write",
+    "shared",
+    "back",
+    "linux",
+    "mapping",
+    "write",
+    "descriptor",
+    "check",
+    "descriptors"
+   ]
+  },
+  "87": {
+   "kind": "pr",
+   "title": "Install the bare-metal target and find openSUSE OVMF",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    "rust-toolchain.toml",
+    "tools/qemu/common.sh"
+   ],
+   "keywords": [
+    "x86_64",
+    "ovmf",
+    "qemu",
+    "unknown",
+    "check",
+    "could",
+    "opensuse",
+    "rustup",
+    "target",
+    "toml"
+   ]
+  },
   "86": {
    "kind": "pr",
    "title": "Charge overlay frames to container memory limits",
@@ -34,10 +312,12 @@
    "state": "open",
    "merged_at": null,
    "files": [
+    ".github/workflows/scheduler.yml",
     "Makefile",
     "crates/kernel-policy/src/lib.rs",
     "docs/feedback-hardening/writable-globals.tsv",
     "docs/scheduler/REVIEW.md",
+    "docs/scheduler/evidence/acceptance-20261104.json",
     "docs/scheduler/evidence/context-cpu1.json",
     "docs/scheduler/evidence/context-cpu2.json",
     "docs/scheduler/evidence/context-cpu4.json",
@@ -48,6 +328,8 @@
     "docs/scheduler/evidence/spin-cpu2.json",
     "docs/scheduler/evidence/spin-cpu4.json",
     "docs/scheduler/evidence/stop-ap4.json",
+    "hdae/STATUS.md",
+    "hdae/gates-todo/46-scheduler-reproducible-acceptance.md",
     "kernel/src/arch/x86_64/cpu.rs",
     "kernel/src/arch/x86_64/cpu/execution.rs",
     "kernel/src/arch/x86_64/cpu/linux_preempt.rs",
@@ -58,24 +340,20 @@
     "kernel/src/linux_process.rs",
     "kernel/src/scheduler.rs",
     "tests/host/scheduler.rs",
-    "tests/scheduler/README.md",
-    "tests/scheduler/context.S",
-    "tests/scheduler/context.c",
-    "tests/scheduler/make_layer.py",
-    "tests/scheduler/probe_context.py",
-    "tests/scheduler/probe_responsiveness.py"
+    "tests/scheduler/.gitignore",
+    "tests/scheduler/README.md"
    ],
    "keywords": [
     "domain",
-    "pass",
     "linux",
+    "tcg",
+    "context",
+    "controller",
     "cpu",
     "detached",
-    "domains",
-    "lifecycle",
-    "resume",
+    "matrix",
     "scheduler",
-    "state"
+    "separate"
    ]
   },
   "84": {
@@ -1965,61 +2243,85 @@
   }
  },
  "keywords": {
-  "overlay": [
-   86,
-   80
+  "clone": [
+   99,
+   98
   ],
-  "container": [
-   86
+  "child_tid": [
+   99
   ],
-  "frames": [
-   86,
-   59,
-   53,
-   37,
-   27,
-   26
+  "fork": [
+   99,
+   95
   ],
-  "policy": [
-   86,
-   9
+  "musl": [
+   99,
+   98
   ],
-  "domain": [
-   86,
-   85,
-   83,
-   80,
-   67,
-   59,
+  "rvdende": [
+   99,
+   97,
+   95,
+   93
+  ],
+  "thread": [
+   99,
+   8
+  ],
+  "tls": [
+   99,
+   98,
+   40,
+   15
+  ],
+  "ginux": [
+   99,
+   97,
+   96,
+   95,
+   94,
+   93,
+   92,
+   76,
+   71,
+   64,
+   61,
+   58,
    57,
-   46,
+   45,
+   42,
    39,
-   19
+   23,
+   18,
+   12,
+   8,
+   5
   ],
-  "frame": [
-   86,
-   82,
+  "kernel": [
+   99,
+   98,
+   97,
+   96,
+   80,
+   71,
+   67,
+   50,
+   47,
    46,
-   28
-  ],
-  "host": [
-   86,
-   33
-  ],
-  "owner": [
-   86
-  ],
-  "pass": [
-   86,
-   85,
-   34,
-   32
-  ],
-  "active": [
-   86,
-   49
+   31,
+   24,
+   21,
+   19,
+   17,
+   13,
+   9,
+   7,
+   3
   ],
   "linux": [
+   99,
+   98,
+   88,
    85,
    84,
    83,
@@ -2039,7 +2341,205 @@
    9,
    8
   ],
+  "r10": [
+   98
+  ],
+  "clone_detached": [
+   98
+  ],
+  "probe": [
+   98
+  ],
+  "abi": [
+   98
+  ],
+  "child": [
+   98,
+   59
+  ],
+  "gib": [
+   97,
+   96,
+   20
+  ],
+  "image": [
+   97,
+   96,
+   94,
+   90,
+   89,
+   83,
+   54,
+   27,
+   18,
+   16
+  ],
+  "efi": [
+   97,
+   96
+  ],
+  "firmware": [
+   97,
+   96
+  ],
+  "base": [
+   97,
+   93,
+   18
+  ],
+  "below": [
+   97
+  ],
+  "copy": [
+   97,
+   24
+  ],
+  "above": [
+   96
+  ],
+  "ram": [
+   96
+  ],
+  "boots": [
+   96
+  ],
+  "guest": [
+   96,
+   22
+  ],
+  "oci": [
+   95,
+   94,
+   57,
+   52,
+   45,
+   42,
+   18,
+   17
+  ],
+  "paths": [
+   95
+  ],
+  "main": [
+   95,
+   93,
+   5
+  ],
+  "space": [
+   95
+  ],
+  "ascii": [
+   95
+  ],
+  "com": [
+   95,
+   81,
+   78,
+   60,
+   30,
+   29,
+   28,
+   27,
+   26,
+   25,
+   24,
+   22,
+   5
+  ],
+  "every": [
+   95,
+   63
+  ],
+  "path": [
+   94,
+   81,
+   79,
+   69,
+   67,
+   66,
+   38,
+   26,
+   25,
+   18
+  ],
+  "byte": [
+   94,
+   21,
+   20,
+   6
+  ],
+  "alpine": [
+   94,
+   59,
+   57
+  ],
+  "certificates": [
+   94
+  ],
+  "domain": [
+   94,
+   86,
+   85,
+   83,
+   80,
+   67,
+   59,
+   57,
+   46,
+   39,
+   19
+  ],
+  "fails": [
+   94,
+   14
+  ],
+  "iter": [
+   94
+  ],
+  "rpl": [
+   93,
+   92
+  ],
+  "amd": [
+   93
+  ],
+  "sysret": [
+   93
+  ],
+  "star": [
+   93
+  ],
+  "0x28": [
+   93,
+   92
+  ],
+  "boot": [
+   93,
+   92,
+   70,
+   63,
+   47,
+   41,
+   40,
+   36,
+   35,
+   31,
+   15,
+   14,
+   13,
+   9
+  ],
+  "qemu": [
+   92,
+   87,
+   41,
+   35,
+   31,
+   13,
+   4
+  ],
   "cpu": [
+   92,
    85,
    83,
    25,
@@ -2047,49 +2547,91 @@
    8,
    7
   ],
-  "detached": [
-   85,
-   83
+  "exception": [
+   92
   ],
-  "domains": [
-   85,
-   83
+  "host": [
+   92,
+   86,
+   33
   ],
-  "lifecycle": [
-   85
+  "iretq": [
+   92
   ],
-  "resume": [
-   85
+  "kvm": [
+   92
   ],
-  "scheduler": [
-   85,
-   84,
-   82
+  "bits": [
+   91
   ],
-  "state": [
-   85,
-   82,
-   78,
-   7
-  ],
-  "overflow": [
-   84,
-   54,
-   43
-  ],
-  "address": [
-   84,
-   31
-  ],
-  "after": [
-   84,
-   70,
+  "failed": [
+   91,
+   57,
    51,
-   50,
+   37,
+   31,
+   29,
    28,
-   25
+   26
+  ],
+  "stat": [
+   91
+  ],
+  "bit": [
+   91
+  ],
+  "chdir": [
+   91
+  ],
+  "einval": [
+   91
+  ],
+  "flags": [
+   91
+  ],
+  "follow": [
+   91
+  ],
+  "instead": [
+   91,
+   60
+  ],
+  "overlay": [
+   91,
+   90,
+   89,
+   86,
+   80
+  ],
+  "o_creat": [
+   90,
+   89
+  ],
+  "rmdir": [
+   90,
+   89
+  ],
+  "directory": [
+   90,
+   89,
+   18
+  ],
+  "before": [
+   90,
+   82,
+   56,
+   53,
+   52,
+   49,
+   48,
+   28,
+   27,
+   20
   ],
   "check": [
+   90,
+   88,
+   87,
    84,
    61,
    54,
@@ -2109,6 +2651,161 @@
    4,
    3
   ],
+  "enotdir": [
+   90
+  ],
+  "o_directory": [
+   90
+  ],
+  "only": [
+   90,
+   89,
+   66,
+   32,
+   9
+  ],
+  "etc": [
+   89
+  ],
+  "rename": [
+   89
+  ],
+  "tmp": [
+   89
+  ],
+  "eisdir": [
+   89
+  ],
+  "eacces": [
+   88
+  ],
+  "prot_write": [
+   88,
+   81,
+   78
+  ],
+  "shared": [
+   88
+  ],
+  "back": [
+   88
+  ],
+  "mapping": [
+   88,
+   81,
+   78
+  ],
+  "write": [
+   88,
+   81
+  ],
+  "descriptor": [
+   88
+  ],
+  "descriptors": [
+   88
+  ],
+  "x86_64": [
+   87
+  ],
+  "ovmf": [
+   87
+  ],
+  "unknown": [
+   87
+  ],
+  "could": [
+   87
+  ],
+  "opensuse": [
+   87
+  ],
+  "rustup": [
+   87
+  ],
+  "target": [
+   87
+  ],
+  "toml": [
+   87
+  ],
+  "container": [
+   86
+  ],
+  "frames": [
+   86,
+   59,
+   53,
+   37,
+   27,
+   26
+  ],
+  "policy": [
+   86,
+   9
+  ],
+  "frame": [
+   86,
+   82,
+   46,
+   28
+  ],
+  "owner": [
+   86
+  ],
+  "pass": [
+   86,
+   34,
+   32
+  ],
+  "active": [
+   86,
+   49
+  ],
+  "tcg": [
+   85,
+   41
+  ],
+  "context": [
+   85
+  ],
+  "controller": [
+   85,
+   83,
+   39
+  ],
+  "detached": [
+   85,
+   83
+  ],
+  "matrix": [
+   85
+  ],
+  "scheduler": [
+   85,
+   84,
+   82
+  ],
+  "separate": [
+   85
+  ],
+  "overflow": [
+   84,
+   54,
+   43
+  ],
+  "address": [
+   84,
+   31
+  ],
+  "after": [
+   84,
+   70,
+   51,
+   50,
+   28,
+   25
+  ],
   "counter": [
    84,
    82
@@ -2126,19 +2823,8 @@
    84,
    7
   ],
-  "controller": [
-   83,
-   39
-  ],
   "hog": [
    83
-  ],
-  "image": [
-   83,
-   54,
-   27,
-   18,
-   16
   ],
   "4c832ea6": [
    83,
@@ -2147,25 +2833,22 @@
   "background": [
    83
   ],
+  "domains": [
+   83
+  ],
   "transition": [
    82
   ],
   "counters": [
    82
   ],
+  "state": [
+   82,
+   78,
+   7
+  ],
   "255": [
    82
-  ],
-  "before": [
-   82,
-   56,
-   53,
-   52,
-   49,
-   48,
-   28,
-   27,
-   20
   ],
   "mmap": [
    81,
@@ -2173,75 +2856,22 @@
    46,
    19
   ],
-  "mapping": [
-   81,
-   78
-  ],
   "o_rdonly": [
    81,
    79,
    78
   ],
-  "prot_write": [
-   81,
-   78
-  ],
-  "write": [
-   81
-  ],
   "map_shared": [
    81,
    78
-  ],
-  "path": [
-   81,
-   79,
-   69,
-   67,
-   66,
-   38,
-   26,
-   25,
-   18
   ],
   "access": [
    81,
    79,
    48
   ],
-  "com": [
-   81,
-   78,
-   60,
-   30,
-   29,
-   28,
-   27,
-   26,
-   25,
-   24,
-   22,
-   5
-  ],
   "content": [
    81
-  ],
-  "kernel": [
-   80,
-   71,
-   67,
-   50,
-   47,
-   46,
-   31,
-   24,
-   21,
-   19,
-   17,
-   13,
-   9,
-   7,
-   3
   ],
   "memory": [
    80,
@@ -2331,22 +2961,6 @@
   ],
   "binary": [
    76
-  ],
-  "ginux": [
-   76,
-   71,
-   64,
-   61,
-   58,
-   57,
-   45,
-   42,
-   39,
-   23,
-   18,
-   12,
-   8,
-   5
   ],
   "backlog": [
    75
@@ -2511,20 +3125,6 @@
    47,
    22
   ],
-  "boot": [
-   70,
-   63,
-   47,
-   41,
-   40,
-   36,
-   35,
-   31,
-   15,
-   14,
-   13,
-   9
-  ],
   "bound": [
    70,
    47
@@ -2592,11 +3192,6 @@
   "handle": [
    66
   ],
-  "only": [
-   66,
-   32,
-   9
-  ],
   "page": [
    66,
    59,
@@ -2638,9 +3233,6 @@
    63
   ],
   "txid": [
-   63
-  ],
-  "every": [
    63
   ],
   "match": [
@@ -2738,18 +3330,8 @@
    24,
    5
   ],
-  "instead": [
-   60
-  ],
   "owned": [
    59
-  ],
-  "child": [
-   59
-  ],
-  "alpine": [
-   59,
-   57
   ],
   "payload": [
    59,
@@ -2794,25 +3376,8 @@
    37,
    26
   ],
-  "oci": [
-   57,
-   52,
-   45,
-   42,
-   18,
-   17
-  ],
   "549755813888": [
    57
-  ],
-  "failed": [
-   57,
-   51,
-   37,
-   31,
-   29,
-   28,
-   26
   ],
   "saved": [
    57
@@ -3124,13 +3689,6 @@
   "verify": [
    42
   ],
-  "qemu": [
-   41,
-   35,
-   31,
-   13,
-   4
-  ],
   "block": [
    41,
    30
@@ -3150,13 +3708,6 @@
   ],
   "stale": [
    41
-  ],
-  "tcg": [
-   41
-  ],
-  "tls": [
-   40,
-   15
   ],
   "entropy": [
    40
@@ -3384,9 +3935,6 @@
   "b05": [
    24
   ],
-  "copy": [
-   24
-  ],
   "exclusion": [
    24
   ],
@@ -3395,9 +3943,6 @@
   ],
   "offset": [
    23
-  ],
-  "guest": [
-   22
   ],
   "chosen": [
    22
@@ -3417,11 +3962,6 @@
   "error": [
    22
   ],
-  "byte": [
-   21,
-   20,
-   6
-  ],
   "258": [
    21
   ],
@@ -3440,9 +3980,6 @@
   ],
   "buffer": [
    21
-  ],
-  "gib": [
-   20
   ],
   "gzip": [
    20
@@ -3466,12 +4003,6 @@
   ],
   "allocated": [
    19
-  ],
-  "directory": [
-   18
-  ],
-  "base": [
-   18
   ],
   "key": [
    18,
@@ -3516,9 +4047,6 @@
    15
   ],
   "your": [
-   14
-  ],
-  "fails": [
    14
   ],
   "faults": [
@@ -3600,9 +4128,6 @@
   "rocky": [
    8
   ],
-  "thread": [
-   8
-  ],
   "matched": [
    8
   ],
@@ -3646,9 +4171,6 @@
    6
   ],
   "gmkurtzer": [
-   5
-  ],
-  "main": [
    5
   ],
   "hardening": [
