@@ -1,5 +1,12 @@
 {
- "last_seen_sha": "c8d1265306067fcf4bb5554af54aa790a49329fa",
- "last_checked": "2026-11-04T04:02:26Z",
- "last_dispatch": null
+ "last_seen_sha": "f45f1e4fa63fd0dfb794e5914b9fd9ec47486c3e",
+ "last_checked": "2026-11-04T17:38:02Z",
+ "last_dispatch": {
+  "at": "2026-11-04T17:38:02Z",
+  "range": "c8d12653..f45f1e4f",
+  "files": [
+   "crates/oci/src/lib.rs"
+  ],
+  "truncated": false
+ }
 }
