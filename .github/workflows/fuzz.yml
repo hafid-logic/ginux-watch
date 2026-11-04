@@ -184,6 +184,9 @@ jobs:
         run: |
           git config user.name "fuzz-record"
           git config user.email "actions@users.noreply.github.com"
+          # s25 fix: the 2026-11-04T17:49Z record job lost a push race vs team-watcher
+          # ("fetch first", run 41879122802) — integrate remote main before pushing.
+          git pull --rebase --autostash origin main
           git add reports/fuzz-history.md
           if ! git diff --cached --quiet; then
             git commit -m "fuzz history: run ${{ github.run_id }} (head $(grep -h upstream_sha round-results/results-* | head -1 | cut -d= -f2 | cut -c1-8)) [skip ci]"

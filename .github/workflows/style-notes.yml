@@ -1,0 +1,163 @@
+name: style-notes
+
+# v1 (v3.3 §2, 2026-11-04): monthly STYLE-NOTES.md — a measured profile of the
+# upstream (gmkurtzer/ginux) commit/PR/review style. Triggers:
+#   - workflow_dispatch
+#   - schedule: first of month 06:00 UTC
+# Upstream is untrusted: public clone with no auth, workflow keeps
+# contents: read and checkout uses persist-credentials: false. NO commit,
+# NO push — the report leaves as an artifact (style-notes-md, 30 days) and is
+# appended to the job summary. The dump refresh uses gh api with the same
+# --jq schema as the committed inbox/upstream-dump/*-all-*.json files; if gh
+# fails for a stream, we fall back to the newest committed dump file. No
+# secrets beyond the workflow's own github.token are used or stored.
+
+on:
+  workflow_dispatch:
+  schedule:
+    # First of month 06:00 UTC
+    - cron: "0 6 1 * *"
+
+concurrency:
+  group: style-notes
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  style-notes:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout watch repo (script + committed dump fallback)
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Clone upstream main (public, no auth, no pin)
+        run: git clone --quiet --filter=blob:none https://github.com/gmkurtzer/ginux upstream
+
+      - name: Refresh upstream dumps (gh api, best-effort; fallback to committed inbox)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -uo pipefail
+          TODAY="$(date -u +%F)"
+          mkdir -p dump
+          # Same schema as the committed inbox/upstream-dump dumps:
+          #   pulls:    {additions,base,changed_files,closed_at,created_at,
+          #              deletions,draft,head,labels,merge_commit_sha,merged_at,
+          #              number,state,title,updated_at,user}
+          #   reviews:  {body,id,pr,state,submitted_at,user}
+          #   comments: {body,created_at,id,pr,user}
+          ok_pulls=0
+
+          if gh api --paginate "repos/gmkurtzer/ginux/pulls?state=all&per_page=100" \
+               > dump/pulls-raw.json 2>> dump/gh.err; then
+            jq -c -s 'add | map({
+                additions: .additions,
+                base: .base.ref,
+                changed_files: .changed_files,
+                closed_at: .closed_at,
+                created_at: .created_at,
+                deletions: .deletions,
+                draft: .draft,
+                head: .head.ref,
+                labels: [.labels[].name],
+                merge_commit_sha: .merge_commit_sha,
+                merged_at: .merged_at,
+                number: .number,
+                state: .state,
+                title: .title,
+                updated_at: .updated_at,
+                user: .user.login})' dump/pulls-raw.json \
+              > dump/pulls-all-"$TODAY".json
+            [ -s dump/pulls-all-"$TODAY".json ] && ok_pulls=1
+          fi
+
+          ok_reviews=0
+          ok_comments=0
+          if [ "$ok_pulls" -eq 1 ]; then
+            : > dump/reviews.ndjson
+            : > dump/comments.ndjson
+            for n in $(jq -r '.[].number' dump/pulls-all-"$TODAY".json); do
+              # gh --paginate prints pages as concatenated JSON arrays; jq
+              # filters each page into one compact array per line of *.ndjson
+              if gh api --paginate "repos/gmkurtzer/ginux/pulls/$n/reviews?per_page=100" 2>> dump/gh.err \
+                   | jq -c '[.[] | {body: .body, id: .id, pr: '"$n"', state: .state,
+                                    submitted_at: .submitted_at, user: .user.login}]' \
+                   >> dump/reviews.ndjson; then
+                ok_reviews=$((ok_reviews + 1))
+              fi
+              if gh api --paginate "repos/gmkurtzer/ginux/issues/$n/comments?per_page=100" 2>> dump/gh.err \
+                   | jq -c '[.[] | {body: .body, created_at: .created_at, id: .id,
+                                    pr: '"$n"', user: .user.login}]' \
+                   >> dump/comments.ndjson; then
+                ok_comments=$((ok_comments + 1))
+              fi
+              sleep 0.1
+            done
+            jq -c -s 'add' dump/reviews.ndjson > dump/reviews-all-"$TODAY".json
+            jq -c -s 'add' dump/comments.ndjson > dump/comments-all-"$TODAY".json
+            [ -s dump/reviews-all-"$TODAY".json ] || ok_reviews=0
+            [ -s dump/comments-all-"$TODAY".json ] || ok_comments=0
+          fi
+
+          pick() { # $1 = glob pattern ; echoes newest file or /dev/null
+            local f
+            f="$(ls -1 $1 2>/dev/null | sort | tail -1 || true)"
+            echo "${f:-/dev/null}"
+          }
+
+          if [ "$ok_pulls" -eq 1 ]; then
+            echo "PULLS_FILE=dump/pulls-all-$TODAY.json" >> "$GITHUB_ENV"
+          else
+            echo "PULLS_FILE=$(pick 'inbox/upstream-dump/pulls-all-*.json')" >> "$GITHUB_ENV"
+          fi
+          if [ "$ok_reviews" -eq 1 ]; then
+            echo "REVIEWS_FILE=dump/reviews-all-$TODAY.json" >> "$GITHUB_ENV"
+          else
+            echo "REVIEWS_FILE=$(pick 'inbox/upstream-dump/reviews-all-*.json')" >> "$GITHUB_ENV"
+          fi
+          if [ "$ok_comments" -eq 1 ]; then
+            echo "COMMENTS_FILE=dump/comments-all-$TODAY.json" >> "$GITHUB_ENV"
+          else
+            echo "COMMENTS_FILE=$(pick 'inbox/upstream-dump/comments-all-*.json')" >> "$GITHUB_ENV"
+          fi
+          {
+            echo "dump refresh: pulls_ok=$ok_pulls reviews_prs=$ok_reviews comments_prs=$ok_comments (fallback: inbox)"
+            tail -2 dump/gh.err 2>/dev/null || true
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Generate STYLE-NOTES.md
+        run: |
+          bash scripts/style-notes.sh \
+            --repo upstream \
+            --pulls "${PULLS_FILE:-/dev/null}" \
+            --reviews "${REVIEWS_FILE:-/dev/null}" \
+            --comments "${COMMENTS_FILE:-/dev/null}" \
+            --since-days 30 \
+            --out STYLE-NOTES.md
+          echo "### style-notes" >> "$GITHUB_STEP_SUMMARY"
+          head -25 STYLE-NOTES.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload STYLE-NOTES artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: style-notes-md
+          path: STYLE-NOTES.md
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: Append full report to job summary
+        if: always()
+        run: |
+          if [ -f STYLE-NOTES.md ]; then
+            cat STYLE-NOTES.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "STYLE-NOTES.md was not generated" >> "$GITHUB_STEP_SUMMARY"
+          fi

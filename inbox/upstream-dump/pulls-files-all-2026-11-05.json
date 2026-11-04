@@ -1,0 +1,3866 @@
+[
+  {
+    "additions": 12,
+    "deletions": 34,
+    "filename": "hdae/STATUS.md",
+    "pr": 151
+  },
+  {
+    "additions": 85,
+    "deletions": 0,
+    "filename": "hdae/gates-todo/48-handled-socket-page-release.md",
+    "pr": 151
+  },
+  {
+    "additions": 4,
+    "deletions": 0,
+    "filename": "kernel/src/lib.rs",
+    "pr": 151
+  },
+  {
+    "additions": 41,
+    "deletions": 7,
+    "filename": "kernel/src/linux_socket.rs",
+    "pr": 151
+  },
+  {
+    "additions": 4,
+    "deletions": 0,
+    "filename": "tests/qemu/boot.sh",
+    "pr": 151
+  },
+  {
+    "additions": 47,
+    "deletions": 4,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 149
+  },
+  {
+    "additions": 239,
+    "deletions": 32,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 148
+  },
+  {
+    "additions": 7,
+    "deletions": 1,
+    "filename": "Makefile",
+    "pr": 147
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/writable-globals.tsv",
+    "pr": 147
+  },
+  {
+    "additions": 460,
+    "deletions": 17,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 147
+  },
+  {
+    "additions": 2,
+    "deletions": 0,
+    "filename": "kernel/src/arch/x86_64/cpu/linux_abi.rs",
+    "pr": 147
+  },
+  {
+    "additions": 9,
+    "deletions": 2,
+    "filename": "kernel/src/arch/x86_64/cpu/linux_syscall.rs",
+    "pr": 147
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "kernel/src/lib.rs",
+    "pr": 147
+  },
+  {
+    "additions": 410,
+    "deletions": 0,
+    "filename": "kernel/src/linux_file_lock.rs",
+    "pr": 147
+  },
+  {
+    "additions": 5,
+    "deletions": 0,
+    "filename": "tests/qemu/boot.sh",
+    "pr": 147
+  },
+  {
+    "additions": 84,
+    "deletions": 5,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 146
+  },
+  {
+    "additions": 2,
+    "deletions": 0,
+    "filename": "kernel/src/arch/x86_64/cpu/linux_abi.rs",
+    "pr": 146
+  },
+  {
+    "additions": 14,
+    "deletions": 2,
+    "filename": "kernel/src/linux_overlay.rs",
+    "pr": 146
+  },
+  {
+    "additions": 33,
+    "deletions": 8,
+    "filename": "kernel/src/linux_socket.rs",
+    "pr": 146
+  },
+  {
+    "additions": 305,
+    "deletions": 0,
+    "filename": "crates/volume-service/src/crash_tests.rs",
+    "pr": 145
+  },
+  {
+    "additions": 3,
+    "deletions": 0,
+    "filename": "crates/volume-service/src/lib.rs",
+    "pr": 145
+  },
+  {
+    "additions": 155,
+    "deletions": 22,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 144
+  },
+  {
+    "additions": 18,
+    "deletions": 0,
+    "filename": "kernel/src/arch/x86_64/cpu/linux_abi.rs",
+    "pr": 144
+  },
+  {
+    "additions": 45,
+    "deletions": 0,
+    "filename": "crates/kernel-policy/src/lib.rs",
+    "pr": 143
+  },
+  {
+    "additions": 144,
+    "deletions": 1,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 143
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "kernel/src/arch/x86_64/cpu/linux_abi.rs",
+    "pr": 143
+  },
+  {
+    "additions": 50,
+    "deletions": 0,
+    "filename": "kernel/src/linux_overlay.rs",
+    "pr": 143
+  },
+  {
+    "additions": 5,
+    "deletions": 0,
+    "filename": "tests/qemu/boot.sh",
+    "pr": 143
+  },
+  {
+    "additions": 9,
+    "deletions": 0,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 142
+  },
+  {
+    "additions": 52,
+    "deletions": 0,
+    "filename": "crates/kernel-policy/src/lib.rs",
+    "pr": 141
+  },
+  {
+    "additions": 255,
+    "deletions": 14,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 141
+  },
+  {
+    "additions": 113,
+    "deletions": 26,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 140
+  },
+  {
+    "additions": 22,
+    "deletions": 12,
+    "filename": "kernel/src/address_space.rs",
+    "pr": 139
+  },
+  {
+    "additions": 37,
+    "deletions": 0,
+    "filename": "kernel/src/arch/x86_64/cpu/linux_futex.rs",
+    "pr": 139
+  },
+  {
+    "additions": 12,
+    "deletions": 0,
+    "filename": "kernel/src/arch/x86_64/cpu/linux_poll.rs",
+    "pr": 139
+  },
+  {
+    "additions": 9,
+    "deletions": 0,
+    "filename": "kernel/src/arch/x86_64/cpu/linux_syscall.rs",
+    "pr": 139
+  },
+  {
+    "additions": 20,
+    "deletions": 1,
+    "filename": "kernel/src/arch/x86_64/cpu/linux_time.rs",
+    "pr": 139
+  },
+  {
+    "additions": 22,
+    "deletions": 12,
+    "filename": "kernel/src/address_space.rs",
+    "pr": 138
+  },
+  {
+    "additions": 143,
+    "deletions": 30,
+    "filename": "kernel/src/arch/x86_64/cpu/linux_poll.rs",
+    "pr": 137
+  },
+  {
+    "additions": 14,
+    "deletions": 0,
+    "filename": "kernel/src/arch/x86_64/cpu/linux_time.rs",
+    "pr": 137
+  },
+  {
+    "additions": 10,
+    "deletions": 0,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 136
+  },
+  {
+    "additions": 29,
+    "deletions": 9,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 135
+  },
+  {
+    "additions": 6,
+    "deletions": 0,
+    "filename": "kernel/src/arch/x86_64/cpu/linux_abi.rs",
+    "pr": 135
+  },
+  {
+    "additions": 70,
+    "deletions": 15,
+    "filename": "kernel/src/arch/x86_64/cpu/linux_signal.rs",
+    "pr": 135
+  },
+  {
+    "additions": 142,
+    "deletions": 0,
+    "filename": "crates/kernel-policy/src/lib.rs",
+    "pr": 134
+  },
+  {
+    "additions": 69,
+    "deletions": 11,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 134
+  },
+  {
+    "additions": 11,
+    "deletions": 1,
+    "filename": "kernel/src/linux_overlay.rs",
+    "pr": 134
+  },
+  {
+    "additions": 128,
+    "deletions": 28,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 133
+  },
+  {
+    "additions": 138,
+    "deletions": 11,
+    "filename": "kernel/src/linux_overlay.rs",
+    "pr": 133
+  },
+  {
+    "additions": 5,
+    "deletions": 0,
+    "filename": "tests/qemu/boot.sh",
+    "pr": 133
+  },
+  {
+    "additions": 9,
+    "deletions": 3,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 132
+  },
+  {
+    "additions": 81,
+    "deletions": 5,
+    "filename": "kernel/src/linux_overlay.rs",
+    "pr": 132
+  },
+  {
+    "additions": 130,
+    "deletions": 10,
+    "filename": "crates/volume-service/src/lib.rs",
+    "pr": 131
+  },
+  {
+    "additions": 4,
+    "deletions": 1,
+    "filename": "docs/STORAGE.md",
+    "pr": 131
+  },
+  {
+    "additions": 3,
+    "deletions": 5,
+    "filename": "kernel/linux-system-init.S",
+    "pr": 130
+  },
+  {
+    "additions": 233,
+    "deletions": 83,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 130
+  },
+  {
+    "additions": 6,
+    "deletions": 0,
+    "filename": "kernel/src/arch/x86_64/cpu/linux_abi.rs",
+    "pr": 130
+  },
+  {
+    "additions": 4,
+    "deletions": 1,
+    "filename": "kernel/src/arch/x86_64/cpu/linux_signal.rs",
+    "pr": 130
+  },
+  {
+    "additions": 37,
+    "deletions": 3,
+    "filename": "kernel/src/arch/x86_64/cpu/linux_syscall.rs",
+    "pr": 130
+  },
+  {
+    "additions": 106,
+    "deletions": 29,
+    "filename": "kernel/src/linux_process.rs",
+    "pr": 130
+  },
+  {
+    "additions": 8,
+    "deletions": 4,
+    "filename": "kernel/linux-exec-target.S",
+    "pr": 129
+  },
+  {
+    "additions": 7,
+    "deletions": 1,
+    "filename": "kernel/linux-probe.S",
+    "pr": 129
+  },
+  {
+    "additions": 58,
+    "deletions": 4,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 129
+  },
+  {
+    "additions": 14,
+    "deletions": 0,
+    "filename": "kernel/src/arch/x86_64/cpu/linux_abi.rs",
+    "pr": 129
+  },
+  {
+    "additions": 122,
+    "deletions": 89,
+    "filename": "kernel/src/arch/x86_64/cpu/linux_signal.rs",
+    "pr": 129
+  },
+  {
+    "additions": 285,
+    "deletions": 65,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 128
+  },
+  {
+    "additions": 3,
+    "deletions": 1,
+    "filename": "kernel/linux-probe.S",
+    "pr": 127
+  },
+  {
+    "additions": 57,
+    "deletions": 28,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 127
+  },
+  {
+    "additions": 140,
+    "deletions": 43,
+    "filename": "kernel/src/arch/x86_64/cpu/linux_futex.rs",
+    "pr": 127
+  },
+  {
+    "additions": 13,
+    "deletions": 2,
+    "filename": "kernel/src/arch/x86_64/cpu/linux_signal.rs",
+    "pr": 127
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "kernel/src/arch/x86_64/cpu/linux_syscall.rs",
+    "pr": 127
+  },
+  {
+    "additions": 61,
+    "deletions": 33,
+    "filename": "kernel/src/arch/x86_64/cpu/linux_time.rs",
+    "pr": 127
+  },
+  {
+    "additions": 10,
+    "deletions": 9,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 126
+  },
+  {
+    "additions": 11,
+    "deletions": 2,
+    "filename": "kernel/src/scheduler.rs",
+    "pr": 126
+  },
+  {
+    "additions": 10,
+    "deletions": 4,
+    "filename": "services/volume/src/main.rs",
+    "pr": 125
+  },
+  {
+    "additions": 5,
+    "deletions": 4,
+    "filename": "specs/services/volume-runtime-v0.md",
+    "pr": 125
+  },
+  {
+    "additions": 12,
+    "deletions": 34,
+    "filename": "hdae/STATUS.md",
+    "pr": 101
+  },
+  {
+    "additions": 85,
+    "deletions": 0,
+    "filename": "hdae/gates-todo/47-tcp-reconnect-guard.md",
+    "pr": 101
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 101
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "kernel/src/arch/x86_64/cpu/linux_abi.rs",
+    "pr": 101
+  },
+  {
+    "additions": 4,
+    "deletions": 0,
+    "filename": "kernel/src/lib.rs",
+    "pr": 101
+  },
+  {
+    "additions": 15,
+    "deletions": 0,
+    "filename": "kernel/src/linux_socket.rs",
+    "pr": 101
+  },
+  {
+    "additions": 4,
+    "deletions": 0,
+    "filename": "tests/qemu/boot.sh",
+    "pr": 101
+  },
+  {
+    "additions": 13,
+    "deletions": 34,
+    "filename": "hdae/STATUS.md",
+    "pr": 100
+  },
+  {
+    "additions": 91,
+    "deletions": 0,
+    "filename": "hdae/gates-todo/46-kernel-tcp-monotonic-clock.md",
+    "pr": 100
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "kernel/src/arch/x86_64/cpu/linux_signal.rs",
+    "pr": 100
+  },
+  {
+    "additions": 4,
+    "deletions": 0,
+    "filename": "kernel/src/lib.rs",
+    "pr": 100
+  },
+  {
+    "additions": 57,
+    "deletions": 8,
+    "filename": "kernel/src/linux_socket.rs",
+    "pr": 100
+  },
+  {
+    "additions": 4,
+    "deletions": 0,
+    "filename": "tests/qemu/boot.sh",
+    "pr": 100
+  },
+  {
+    "additions": 11,
+    "deletions": 9,
+    "filename": "kernel/linux-probe.S",
+    "pr": 99
+  },
+  {
+    "additions": 12,
+    "deletions": 5,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 99
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "kernel/src/arch/x86_64/cpu/linux_abi.rs",
+    "pr": 99
+  },
+  {
+    "additions": 1,
+    "deletions": 1,
+    "filename": "kernel/src/arch/x86_64/cpu/linux_syscall.rs",
+    "pr": 99
+  },
+  {
+    "additions": 4,
+    "deletions": 0,
+    "filename": ".github/workflows/check.yml",
+    "pr": 97
+  },
+  {
+    "additions": 5,
+    "deletions": 1,
+    "filename": "Makefile",
+    "pr": 97
+  },
+  {
+    "additions": 105,
+    "deletions": 3,
+    "filename": "boot/efi/src/main.rs",
+    "pr": 97
+  },
+  {
+    "additions": 2,
+    "deletions": 0,
+    "filename": "kernel/src/lib.rs",
+    "pr": 97
+  },
+  {
+    "additions": 150,
+    "deletions": 0,
+    "filename": "kernel/src/pe.rs",
+    "pr": 97
+  },
+  {
+    "additions": 151,
+    "deletions": 0,
+    "filename": "tests/qemu/efi-load-above-4g.sh",
+    "pr": 97
+  },
+  {
+    "additions": 24,
+    "deletions": 1,
+    "filename": "crates/oci/src/lib.rs",
+    "pr": 95
+  },
+  {
+    "additions": 5,
+    "deletions": 1,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 93
+  },
+  {
+    "additions": 15,
+    "deletions": 0,
+    "filename": "crates/kernel-policy/src/lib.rs",
+    "pr": 91
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/writable-globals.tsv",
+    "pr": 91
+  },
+  {
+    "additions": 332,
+    "deletions": 55,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 91
+  },
+  {
+    "additions": 24,
+    "deletions": 0,
+    "filename": "kernel/src/arch/x86_64/cpu/linux_abi.rs",
+    "pr": 91
+  },
+  {
+    "additions": 24,
+    "deletions": 20,
+    "filename": "kernel/src/arch/x86_64/cpu/linux_syscall.rs",
+    "pr": 91
+  },
+  {
+    "additions": 6,
+    "deletions": 0,
+    "filename": "kernel/src/lib.rs",
+    "pr": 91
+  },
+  {
+    "additions": 327,
+    "deletions": 15,
+    "filename": "kernel/src/linux_overlay.rs",
+    "pr": 91
+  },
+  {
+    "additions": 5,
+    "deletions": 0,
+    "filename": "tests/qemu/boot.sh",
+    "pr": 91
+  },
+  {
+    "additions": 15,
+    "deletions": 0,
+    "filename": "crates/kernel-policy/src/lib.rs",
+    "pr": 90
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/writable-globals.tsv",
+    "pr": 90
+  },
+  {
+    "additions": 183,
+    "deletions": 32,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 90
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "kernel/src/arch/x86_64/cpu/linux_abi.rs",
+    "pr": 90
+  },
+  {
+    "additions": 6,
+    "deletions": 0,
+    "filename": "kernel/src/lib.rs",
+    "pr": 90
+  },
+  {
+    "additions": 327,
+    "deletions": 15,
+    "filename": "kernel/src/linux_overlay.rs",
+    "pr": 90
+  },
+  {
+    "additions": 5,
+    "deletions": 0,
+    "filename": "tests/qemu/boot.sh",
+    "pr": 90
+  },
+  {
+    "additions": 151,
+    "deletions": 2,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 88
+  },
+  {
+    "additions": 15,
+    "deletions": 3,
+    "filename": "kernel/src/linux_overlay.rs",
+    "pr": 88
+  },
+  {
+    "additions": 4,
+    "deletions": 0,
+    "filename": "tests/qemu/boot.sh",
+    "pr": 88
+  },
+  {
+    "additions": 1,
+    "deletions": 1,
+    "filename": "rust-toolchain.toml",
+    "pr": 87
+  },
+  {
+    "additions": 4,
+    "deletions": 2,
+    "filename": "tools/qemu/common.sh",
+    "pr": 87
+  },
+  {
+    "additions": 25,
+    "deletions": 10,
+    "filename": "hdae/STATUS.md",
+    "pr": 86
+  },
+  {
+    "additions": 100,
+    "deletions": 0,
+    "filename": "hdae/gates-todo/45-overlay-domain-memory-accounting.md",
+    "pr": 86
+  },
+  {
+    "additions": 4,
+    "deletions": 0,
+    "filename": "kernel/src/lib.rs",
+    "pr": 86
+  },
+  {
+    "additions": 94,
+    "deletions": 20,
+    "filename": "kernel/src/linux_overlay.rs",
+    "pr": 86
+  },
+  {
+    "additions": 5,
+    "deletions": 0,
+    "filename": "tests/qemu/boot.sh",
+    "pr": 86
+  },
+  {
+    "additions": 61,
+    "deletions": 0,
+    "filename": ".github/workflows/scheduler.yml",
+    "pr": 85
+  },
+  {
+    "additions": 5,
+    "deletions": 0,
+    "filename": "Makefile",
+    "pr": 85
+  },
+  {
+    "additions": 27,
+    "deletions": 0,
+    "filename": "crates/kernel-policy/src/lib.rs",
+    "pr": 85
+  },
+  {
+    "additions": 3,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/writable-globals.tsv",
+    "pr": 85
+  },
+  {
+    "additions": 153,
+    "deletions": 0,
+    "filename": "docs/scheduler/REVIEW.md",
+    "pr": 85
+  },
+  {
+    "additions": 800,
+    "deletions": 0,
+    "filename": "docs/scheduler/evidence/acceptance-20261104.json",
+    "pr": 85
+  },
+  {
+    "additions": 106,
+    "deletions": 0,
+    "filename": "docs/scheduler/evidence/context-cpu1.json",
+    "pr": 85
+  },
+  {
+    "additions": 106,
+    "deletions": 0,
+    "filename": "docs/scheduler/evidence/context-cpu2.json",
+    "pr": 85
+  },
+  {
+    "additions": 106,
+    "deletions": 0,
+    "filename": "docs/scheduler/evidence/context-cpu4.json",
+    "pr": 85
+  },
+  {
+    "additions": 24,
+    "deletions": 0,
+    "filename": "docs/scheduler/evidence/full-boot-failure.txt",
+    "pr": 85
+  },
+  {
+    "additions": 106,
+    "deletions": 0,
+    "filename": "docs/scheduler/evidence/siblings-cpu1.json",
+    "pr": 85
+  },
+  {
+    "additions": 106,
+    "deletions": 0,
+    "filename": "docs/scheduler/evidence/signals-cpu1.json",
+    "pr": 85
+  },
+  {
+    "additions": 444,
+    "deletions": 0,
+    "filename": "docs/scheduler/evidence/spin-cpu1.json",
+    "pr": 85
+  },
+  {
+    "additions": 147,
+    "deletions": 0,
+    "filename": "docs/scheduler/evidence/spin-cpu2.json",
+    "pr": 85
+  },
+  {
+    "additions": 147,
+    "deletions": 0,
+    "filename": "docs/scheduler/evidence/spin-cpu4.json",
+    "pr": 85
+  },
+  {
+    "additions": 125,
+    "deletions": 0,
+    "filename": "docs/scheduler/evidence/stop-ap4.json",
+    "pr": 85
+  },
+  {
+    "additions": 17,
+    "deletions": 0,
+    "filename": "hdae/STATUS.md",
+    "pr": 85
+  },
+  {
+    "additions": 77,
+    "deletions": 0,
+    "filename": "hdae/gates-todo/46-scheduler-reproducible-acceptance.md",
+    "pr": 85
+  },
+  {
+    "additions": 162,
+    "deletions": 28,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 85
+  },
+  {
+    "additions": 89,
+    "deletions": 2,
+    "filename": "kernel/src/arch/x86_64/cpu/execution.rs",
+    "pr": 85
+  },
+  {
+    "additions": 153,
+    "deletions": 0,
+    "filename": "kernel/src/arch/x86_64/cpu/linux_preempt.rs",
+    "pr": 85
+  },
+  {
+    "additions": 12,
+    "deletions": 30,
+    "filename": "kernel/src/arch/x86_64/cpu/linux_signal.rs",
+    "pr": 85
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "kernel/src/arch/x86_64/cpu/linux_syscall.rs",
+    "pr": 85
+  },
+  {
+    "additions": 166,
+    "deletions": 5,
+    "filename": "kernel/src/arch/x86_64/smp.rs",
+    "pr": 85
+  },
+  {
+    "additions": 56,
+    "deletions": 9,
+    "filename": "kernel/src/arch/x86_64/timer.rs",
+    "pr": 85
+  },
+  {
+    "additions": 16,
+    "deletions": 8,
+    "filename": "kernel/src/linux_process.rs",
+    "pr": 85
+  },
+  {
+    "additions": 3,
+    "deletions": 3,
+    "filename": "kernel/src/scheduler.rs",
+    "pr": 85
+  },
+  {
+    "additions": 12,
+    "deletions": 0,
+    "filename": "tests/host/scheduler.rs",
+    "pr": 85
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "tests/scheduler/.gitignore",
+    "pr": 85
+  },
+  {
+    "additions": 105,
+    "deletions": 0,
+    "filename": "tests/scheduler/README.md",
+    "pr": 85
+  },
+  {
+    "additions": 200,
+    "deletions": 0,
+    "filename": "tests/scheduler/context.S",
+    "pr": 85
+  },
+  {
+    "additions": 73,
+    "deletions": 0,
+    "filename": "tests/scheduler/context.c",
+    "pr": 85
+  },
+  {
+    "additions": 21,
+    "deletions": 0,
+    "filename": "tests/scheduler/make_layer.py",
+    "pr": 85
+  },
+  {
+    "additions": 73,
+    "deletions": 0,
+    "filename": "tests/scheduler/prepare.py",
+    "pr": 85
+  },
+  {
+    "additions": 167,
+    "deletions": 0,
+    "filename": "tests/scheduler/probe_context.py",
+    "pr": 85
+  },
+  {
+    "additions": 166,
+    "deletions": 0,
+    "filename": "tests/scheduler/probe_responsiveness.py",
+    "pr": 85
+  },
+  {
+    "additions": 98,
+    "deletions": 0,
+    "filename": "tests/scheduler/run.py",
+    "pr": 85
+  },
+  {
+    "additions": 43,
+    "deletions": 0,
+    "filename": "tests/scheduler/signal_wait.c",
+    "pr": 85
+  },
+  {
+    "additions": 14,
+    "deletions": 0,
+    "filename": "tests/scheduler/spin.c",
+    "pr": 85
+  },
+  {
+    "additions": 4,
+    "deletions": 2,
+    "filename": "tools/architecture/check-kernel-unsafe.sh",
+    "pr": 85
+  },
+  {
+    "additions": 2,
+    "deletions": 2,
+    "filename": "tools/architecture/check-x86-runtime-owner.sh",
+    "pr": 85
+  },
+  {
+    "additions": 14,
+    "deletions": 4,
+    "filename": "tools/manifest-tool/src/bin/seed-benchmark-cache.rs",
+    "pr": 85
+  },
+  {
+    "additions": 7,
+    "deletions": 1,
+    "filename": "Makefile",
+    "pr": 84
+  },
+  {
+    "additions": 34,
+    "deletions": 20,
+    "filename": "kernel/src/scheduler.rs",
+    "pr": 84
+  },
+  {
+    "additions": 402,
+    "deletions": 0,
+    "filename": "tests/host/scheduler.rs",
+    "pr": 84
+  },
+  {
+    "additions": 115,
+    "deletions": 0,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 81
+  },
+  {
+    "additions": 4,
+    "deletions": 0,
+    "filename": "tests/qemu/boot.sh",
+    "pr": 81
+  },
+  {
+    "additions": 419,
+    "deletions": 0,
+    "filename": "crust_port.py",
+    "pr": 74
+  },
+  {
+    "additions": 1,
+    "deletions": 1,
+    "filename": "kernel/src/linux_aio.rs",
+    "pr": 74
+  },
+  {
+    "additions": 2,
+    "deletions": 2,
+    "filename": "kernel/src/linux_keyring.rs",
+    "pr": 74
+  },
+  {
+    "additions": 1,
+    "deletions": 1,
+    "filename": "kernel/src/linux_sysv_ipc.rs",
+    "pr": 74
+  },
+  {
+    "additions": 7548,
+    "deletions": 7527,
+    "filename": "boot/efi/src/generated_boot.rs",
+    "pr": 73
+  },
+  {
+    "additions": 7,
+    "deletions": 7,
+    "filename": "hdae/STATUS.md",
+    "pr": 73
+  },
+  {
+    "additions": 86,
+    "deletions": 0,
+    "filename": "hdae/gates-done/41-registry-dns-entropy-binding.md",
+    "pr": 73
+  },
+  {
+    "additions": 60,
+    "deletions": 0,
+    "filename": "hdae/gates-done/42-kernel-network-entropy-and-dns-fallback-removal.md",
+    "pr": 73
+  },
+  {
+    "additions": 5,
+    "deletions": 1,
+    "filename": "kernel/src/linux_socket.rs",
+    "pr": 73
+  },
+  {
+    "additions": 7,
+    "deletions": 136,
+    "filename": "services/network/src/registry.rs",
+    "pr": 73
+  },
+  {
+    "additions": 7,
+    "deletions": 7,
+    "filename": "hdae/STATUS.md",
+    "pr": 70
+  },
+  {
+    "additions": 74,
+    "deletions": 0,
+    "filename": "hdae/gates-done/40-synchronous-poll-budget.md",
+    "pr": 70
+  },
+  {
+    "additions": 4,
+    "deletions": 0,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 70
+  },
+  {
+    "additions": 10,
+    "deletions": 1,
+    "filename": "kernel/src/arch/x86_64/cpu/linux_poll.rs",
+    "pr": 70
+  },
+  {
+    "additions": 4,
+    "deletions": 0,
+    "filename": "kernel/src/lib.rs",
+    "pr": 70
+  },
+  {
+    "additions": 1,
+    "deletions": 1,
+    "filename": "kernel/src/linux_socket.rs",
+    "pr": 70
+  },
+  {
+    "additions": 5,
+    "deletions": 0,
+    "filename": "tests/qemu/boot.sh",
+    "pr": 70
+  },
+  {
+    "additions": 12,
+    "deletions": 0,
+    "filename": "fuzz/.gitignore",
+    "pr": 61
+  },
+  {
+    "additions": 290,
+    "deletions": 0,
+    "filename": "fuzz/Cargo.lock",
+    "pr": 61
+  },
+  {
+    "additions": 48,
+    "deletions": 0,
+    "filename": "fuzz/Cargo.toml",
+    "pr": 61
+  },
+  {
+    "additions": 93,
+    "deletions": 0,
+    "filename": "fuzz/README.md",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-protocol/p01_arp_valid",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-protocol/p02_arp_mcast_sender",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-protocol/p03_arp_zero_sender",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-protocol/p04_arp_bcast_sender",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-protocol/p05_arp_wrong_target_mac",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-protocol/p06_arp_wrong_sender_ip",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-protocol/p07_arp_wrong_hwtype",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-protocol/p08_arp_wrong_dst",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-protocol/p09_arp_len41",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-protocol/p10_arp_len43",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-protocol/p11_ipv4_valid",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-protocol/p12_ipv4_bad_cksum",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-protocol/p13_ipv4_fragment_mf",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-protocol/p14_ipv4_fragment_off",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-protocol/p15_ipv4_ttl0",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-protocol/p16_ipv4_proto6",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-protocol/p17_len_lt20",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-protocol/p17b_len_mismatch",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-protocol/p18_ipv4_src_swap",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-protocol/p19_ipv4_dst_swap",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-protocol/p20_ipv4_ver4",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-protocol/p21_ipv4_payload64",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-protocol/p22_ipv4_maxish",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-protocol/p23_ipv4_hdr_only",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-protocol/p24_ident_edge",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-protocol/p25_short33",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-protocol/p26_icmp_valid",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-protocol/p27_icmp_type3",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-protocol/p28_icmp_code1",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-protocol/p29_icmp_bad_cksum",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-protocol/p30_icmp_short7",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-protocol/p31_icmp_payload512",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-protocol/p32_icmp_id_seq_edges",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-protocol/p33_icmp_reply_type0",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-volume/01-committed-gen7.bin",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-volume/02-prepared-gen7.bin",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-volume/03-committed-full-440.bin",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-volume/04-committed-empty-payload.bin",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-volume/05-committed-gen-max.bin",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-volume/06-stale-digest-payload-flip.bin",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-volume/07-digest-field-flip.bin",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-volume/08-gen-zero.bin",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-volume/09-length-over-capacity.bin",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-volume/10-reserved-nonzero.bin",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-volume/11-padding-nonzero.bin",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-volume/12-magic-variant.bin",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-volume/13-version-2.bin",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-volume/14-header-size-73.bin",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-volume/15-all-zero-sector.bin",
+    "pr": 61
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-volume/16-all-ff-sector.bin",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-volume/17-junk-sector.bin",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-volume/18-committed-gen1-len255.bin",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-volume/19-host-header-min-9.bin",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-volume/20-host-header-131072.bin",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-volume/21-host-header-sectors-8.bin",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-volume/22-host-header-data-start-plus1.bin",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-volume/23-host-header-data-sectors-plus1.bin",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-volume/24-host-header-short-47.bin",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-volume/25-host-header-bad-sector-size.bin",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed-volume/26-record-payload-host-header.bin",
+    "pr": 61
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed/j01_index_match",
+    "pr": 61
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed/j02_manifest",
+    "pr": 61
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed/j03_manifest_16_layers",
+    "pr": 61
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed/j04_config",
+    "pr": 61
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed/j05_config_variant",
+    "pr": 61
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed/j06_challenge",
+    "pr": 61
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed/j07_token",
+    "pr": 61
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed/j08_access_token",
+    "pr": 61
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed/j09_short_digest",
+    "pr": 61
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed/j10_index_windows",
+    "pr": 61
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed/r00_ref",
+    "pr": 61
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed/r01_ref",
+    "pr": 61
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed/r02_ref",
+    "pr": 61
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed/r03_ref",
+    "pr": 61
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed/r04_ref",
+    "pr": 61
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed/r05_ref",
+    "pr": 61
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed/r06_ref",
+    "pr": 61
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed/r07_ref",
+    "pr": 61
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed/r08_ref",
+    "pr": 61
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed/r09_ref",
+    "pr": 61
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed/r10_ref",
+    "pr": 61
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed/r11_ref",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed/t01_file",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed/t02_symlink",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed/t03_hardlink",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed/t04_dir",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed/t05_pax_path",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed/t06_pax_chain",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed/t07_pax_dup",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed/t08_pax_dir_slash",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed/t09_prefix_split",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed/t09b_prefix_path",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed/t10_size0",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed/t11_size512",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed/t12_size513",
+    "pr": 61
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "fuzz/corpus-seed/t13_size_2p32",
+    "pr": 61
+  },
+  {
+    "additions": 23,
+    "deletions": 12,
+    "filename": "hdae/STATUS.md",
+    "pr": 59
+  },
+  {
+    "additions": 120,
+    "deletions": 0,
+    "filename": "hdae/gates-todo/37-linux-lazy-page-quota-regression.md",
+    "pr": 59
+  },
+  {
+    "additions": 38,
+    "deletions": 34,
+    "filename": "kernel/src/address_space.rs",
+    "pr": 59
+  },
+  {
+    "additions": 9,
+    "deletions": 4,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 59
+  },
+  {
+    "additions": 4,
+    "deletions": 0,
+    "filename": "kernel/src/lib.rs",
+    "pr": 59
+  },
+  {
+    "additions": 11,
+    "deletions": 22,
+    "filename": "kernel/src/linux_process.rs",
+    "pr": 59
+  },
+  {
+    "additions": 8,
+    "deletions": 0,
+    "filename": "crates/native-abi/src/lib.rs",
+    "pr": 56
+  },
+  {
+    "additions": 4,
+    "deletions": 0,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 56
+  },
+  {
+    "additions": 144,
+    "deletions": 34,
+    "filename": "services/network/src/registry.rs",
+    "pr": 56
+  },
+  {
+    "additions": 2,
+    "deletions": 0,
+    "filename": "specs/abi/native-service-lifecycle-v0.h",
+    "pr": 56
+  },
+  {
+    "additions": 4,
+    "deletions": 0,
+    "filename": "tests/abi/native-service-v0.c",
+    "pr": 56
+  },
+  {
+    "additions": 2,
+    "deletions": 1,
+    "filename": "tests/qemu/alpine-shell.sh",
+    "pr": 56
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "Cargo.toml",
+    "pr": 54
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "Makefile",
+    "pr": 54
+  },
+  {
+    "additions": 24736,
+    "deletions": 24144,
+    "filename": "boot/efi/src/generated_boot.rs",
+    "pr": 54
+  },
+  {
+    "additions": 7,
+    "deletions": 0,
+    "filename": "crates/oci/src/lib.rs",
+    "pr": 54
+  },
+  {
+    "additions": 15,
+    "deletions": 52,
+    "filename": "hdae/STATUS.md",
+    "pr": 54
+  },
+  {
+    "additions": 126,
+    "deletions": 0,
+    "filename": "hdae/gates-done/44-release-overflow-checks.md",
+    "pr": 54
+  },
+  {
+    "additions": 2,
+    "deletions": 2,
+    "filename": "kernel/src/address_space.rs",
+    "pr": 54
+  },
+  {
+    "additions": 25,
+    "deletions": 26,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 54
+  },
+  {
+    "additions": 1,
+    "deletions": 1,
+    "filename": "kernel/src/arch/x86_64/cpu/architecture.rs",
+    "pr": 54
+  },
+  {
+    "additions": 9,
+    "deletions": 5,
+    "filename": "kernel/src/arch/x86_64/paging.rs",
+    "pr": 54
+  },
+  {
+    "additions": 1,
+    "deletions": 1,
+    "filename": "kernel/src/initramfs.rs",
+    "pr": 54
+  },
+  {
+    "additions": 3,
+    "deletions": 1,
+    "filename": "kernel/src/linux_overlay.rs",
+    "pr": 54
+  },
+  {
+    "additions": 2,
+    "deletions": 2,
+    "filename": "tools/manifest-tool/src/main.rs",
+    "pr": 54
+  },
+  {
+    "additions": 125,
+    "deletions": 76,
+    "filename": "hdae/STATUS.md",
+    "pr": 53
+  },
+  {
+    "additions": 128,
+    "deletions": 0,
+    "filename": "hdae/gates-todo/41-transactional-rootfs-exec.md",
+    "pr": 53
+  },
+  {
+    "additions": 20,
+    "deletions": 11,
+    "filename": "kernel/src/address_space.rs",
+    "pr": 53
+  },
+  {
+    "additions": 186,
+    "deletions": 192,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 53
+  },
+  {
+    "additions": 0,
+    "deletions": 52,
+    "filename": "kernel/src/linux_process.rs",
+    "pr": 53
+  },
+  {
+    "additions": 5,
+    "deletions": 0,
+    "filename": "tests/qemu/boot.sh",
+    "pr": 53
+  },
+  {
+    "additions": 15,
+    "deletions": 11,
+    "filename": "hdae/STATUS.md",
+    "pr": 52
+  },
+  {
+    "additions": 97,
+    "deletions": 0,
+    "filename": "hdae/gates-done/37-bounded-oci-unpack.md",
+    "pr": 52
+  },
+  {
+    "additions": 42,
+    "deletions": 7,
+    "filename": "kernel/src/image_store.rs",
+    "pr": 52
+  },
+  {
+    "additions": 10,
+    "deletions": 1,
+    "filename": "kernel/src/lib.rs",
+    "pr": 52
+  },
+  {
+    "additions": 5,
+    "deletions": 0,
+    "filename": "tests/qemu/boot.sh",
+    "pr": 52
+  },
+  {
+    "additions": 19,
+    "deletions": 10,
+    "filename": "hdae/STATUS.md",
+    "pr": 51
+  },
+  {
+    "additions": 105,
+    "deletions": 0,
+    "filename": "hdae/gates-done/43-iommu-rollback-quarantine.md",
+    "pr": 51
+  },
+  {
+    "additions": 129,
+    "deletions": 31,
+    "filename": "kernel/src/arch/x86_64/iommu.rs",
+    "pr": 51
+  },
+  {
+    "additions": 23,
+    "deletions": 12,
+    "filename": "kernel/src/lib.rs",
+    "pr": 51
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "tests/qemu/boot.sh",
+    "pr": 51
+  },
+  {
+    "additions": 9,
+    "deletions": 8,
+    "filename": "hdae/STATUS.md",
+    "pr": 50
+  },
+  {
+    "additions": 94,
+    "deletions": 0,
+    "filename": "hdae/gates-done/42-runtime-dma-quarantine.md",
+    "pr": 50
+  },
+  {
+    "additions": 42,
+    "deletions": 4,
+    "filename": "kernel/src/lib.rs",
+    "pr": 50
+  },
+  {
+    "additions": 4,
+    "deletions": 0,
+    "filename": "tests/qemu/boot.sh",
+    "pr": 50
+  },
+  {
+    "additions": 11,
+    "deletions": 10,
+    "filename": "hdae/STATUS.md",
+    "pr": 49
+  },
+  {
+    "additions": 93,
+    "deletions": 0,
+    "filename": "hdae/gates-done/40-mprotect-smp-shootdown.md",
+    "pr": 49
+  },
+  {
+    "additions": 5,
+    "deletions": 1,
+    "filename": "kernel/src/address_space.rs",
+    "pr": 49
+  },
+  {
+    "additions": 99,
+    "deletions": 0,
+    "filename": "hdae/gates-done/39-secret-process-vm-exclusion.md",
+    "pr": 48
+  },
+  {
+    "additions": 48,
+    "deletions": 6,
+    "filename": "kernel/src/address_space.rs",
+    "pr": 48
+  },
+  {
+    "additions": 43,
+    "deletions": 1,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 48
+  },
+  {
+    "additions": 24,
+    "deletions": 4,
+    "filename": "kernel/src/linux_process.rs",
+    "pr": 48
+  },
+  {
+    "additions": 4,
+    "deletions": 0,
+    "filename": "tests/qemu/boot.sh",
+    "pr": 48
+  },
+  {
+    "additions": 101,
+    "deletions": 0,
+    "filename": "hdae/gates-done/38-bounded-blocking-socket-polls.md",
+    "pr": 47
+  },
+  {
+    "additions": 4,
+    "deletions": 0,
+    "filename": "kernel/src/lib.rs",
+    "pr": 47
+  },
+  {
+    "additions": 31,
+    "deletions": 23,
+    "filename": "kernel/src/linux_socket.rs",
+    "pr": 47
+  },
+  {
+    "additions": 5,
+    "deletions": 0,
+    "filename": "tests/qemu/boot.sh",
+    "pr": 47
+  },
+  {
+    "additions": 21,
+    "deletions": 8,
+    "filename": "hdae/STATUS.md",
+    "pr": 46
+  },
+  {
+    "additions": 118,
+    "deletions": 0,
+    "filename": "hdae/gates-todo/36-domain-memory-accounting.md",
+    "pr": 46
+  },
+  {
+    "additions": 29,
+    "deletions": 39,
+    "filename": "kernel/src/address_space.rs",
+    "pr": 46
+  },
+  {
+    "additions": 117,
+    "deletions": 97,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 46
+  },
+  {
+    "additions": 11,
+    "deletions": 0,
+    "filename": "kernel/src/domain.rs",
+    "pr": 46
+  },
+  {
+    "additions": 8,
+    "deletions": 0,
+    "filename": "kernel/src/lib.rs",
+    "pr": 46
+  },
+  {
+    "additions": 77,
+    "deletions": 41,
+    "filename": "kernel/src/linux_process.rs",
+    "pr": 46
+  },
+  {
+    "additions": 76,
+    "deletions": 35,
+    "filename": "kernel/src/linux_sysv_ipc.rs",
+    "pr": 46
+  },
+  {
+    "additions": 35,
+    "deletions": 10,
+    "filename": "kernel/src/linux_tmpfs.rs",
+    "pr": 46
+  },
+  {
+    "additions": 159,
+    "deletions": 9,
+    "filename": "kernel/src/memory.rs",
+    "pr": 46
+  },
+  {
+    "additions": 10,
+    "deletions": 0,
+    "filename": "tests/qemu/boot.sh",
+    "pr": 46
+  },
+  {
+    "additions": 29,
+    "deletions": 7,
+    "filename": "crates/oci/src/lib.rs",
+    "pr": 45
+  },
+  {
+    "additions": 10,
+    "deletions": 9,
+    "filename": "hdae/STATUS.md",
+    "pr": 45
+  },
+  {
+    "additions": 96,
+    "deletions": 0,
+    "filename": "hdae/gates-todo/35-directory-whiteout-subtrees.md",
+    "pr": 45
+  },
+  {
+    "additions": 6,
+    "deletions": 1,
+    "filename": "kernel/src/published_rootfs.rs",
+    "pr": 45
+  },
+  {
+    "additions": 108,
+    "deletions": 71,
+    "filename": "crates/oci/src/lib.rs",
+    "pr": 44
+  },
+  {
+    "additions": 12,
+    "deletions": 10,
+    "filename": "hdae/STATUS.md",
+    "pr": 44
+  },
+  {
+    "additions": 88,
+    "deletions": 0,
+    "filename": "hdae/gates-todo/34-iterative-pax-chain.md",
+    "pr": 44
+  },
+  {
+    "additions": 9998,
+    "deletions": 9971,
+    "filename": "boot/efi/src/generated_boot.rs",
+    "pr": 42
+  },
+  {
+    "additions": 47,
+    "deletions": 0,
+    "filename": "crates/oci/src/lib.rs",
+    "pr": 42
+  },
+  {
+    "additions": 10,
+    "deletions": 13,
+    "filename": "hdae/STATUS.md",
+    "pr": 42
+  },
+  {
+    "additions": 105,
+    "deletions": 0,
+    "filename": "hdae/gates-todo/33-pinned-manifest-digest.md",
+    "pr": 42
+  },
+  {
+    "additions": 4,
+    "deletions": 0,
+    "filename": "services/network/src/registry.rs",
+    "pr": 42
+  },
+  {
+    "additions": 31,
+    "deletions": 0,
+    "filename": ".github/workflows/issue-14-linux-repro.yml",
+    "pr": 41
+  },
+  {
+    "additions": 12,
+    "deletions": 12,
+    "filename": "hdae/STATUS.md",
+    "pr": 41
+  },
+  {
+    "additions": 155,
+    "deletions": 0,
+    "filename": "hdae/gates-todo/20-linux-native-volume-recovery.md",
+    "pr": 41
+  },
+  {
+    "additions": 70,
+    "deletions": 3,
+    "filename": "kernel/src/arch/x86_64/pci.rs",
+    "pr": 41
+  },
+  {
+    "additions": 10,
+    "deletions": 0,
+    "filename": "tests/qemu/boot.sh",
+    "pr": 41
+  },
+  {
+    "additions": 2,
+    "deletions": 0,
+    "filename": "tools/qemu/common.sh",
+    "pr": 41
+  },
+  {
+    "additions": 4,
+    "deletions": 4,
+    "filename": "tools/qemu/run.sh",
+    "pr": 41
+  },
+  {
+    "additions": 4723,
+    "deletions": 4713,
+    "filename": "boot/efi/src/generated_boot.rs",
+    "pr": 40
+  },
+  {
+    "additions": 12,
+    "deletions": 10,
+    "filename": "hdae/STATUS.md",
+    "pr": 40
+  },
+  {
+    "additions": 102,
+    "deletions": 0,
+    "filename": "hdae/gates-todo/32-tls-client-entropy.md",
+    "pr": 40
+  },
+  {
+    "additions": 30,
+    "deletions": 7,
+    "filename": "services/network/src/registry.rs",
+    "pr": 40
+  },
+  {
+    "additions": 1,
+    "deletions": 1,
+    "filename": "ARCHITECTURE.md",
+    "pr": 39
+  },
+  {
+    "additions": 64,
+    "deletions": 0,
+    "filename": "Cargo.lock",
+    "pr": 39
+  },
+  {
+    "additions": 9,
+    "deletions": 0,
+    "filename": "Cargo.toml",
+    "pr": 39
+  },
+  {
+    "additions": 89,
+    "deletions": 3,
+    "filename": "Makefile",
+    "pr": 39
+  },
+  {
+    "additions": 19,
+    "deletions": 5,
+    "filename": "README.md",
+    "pr": 39
+  },
+  {
+    "additions": 8901,
+    "deletions": 3599,
+    "filename": "boot/efi/src/generated_boot.rs",
+    "pr": 39
+  },
+  {
+    "additions": 143,
+    "deletions": 0,
+    "filename": "boot/efi/src/main.rs",
+    "pr": 39
+  },
+  {
+    "additions": 2,
+    "deletions": 0,
+    "filename": "boot/manifest-v0.conf",
+    "pr": 39
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "control-plane/runtime/Cargo.toml",
+    "pr": 39
+  },
+  {
+    "additions": 486,
+    "deletions": 61,
+    "filename": "control-plane/runtime/src/main.rs",
+    "pr": 39
+  },
+  {
+    "additions": 11,
+    "deletions": 0,
+    "filename": "crates/controller-ui/Cargo.toml",
+    "pr": 39
+  },
+  {
+    "additions": 1768,
+    "deletions": 0,
+    "filename": "crates/controller-ui/src/lib.rs",
+    "pr": 39
+  },
+  {
+    "additions": 14,
+    "deletions": 0,
+    "filename": "crates/desktop-recovery/Cargo.toml",
+    "pr": 39
+  },
+  {
+    "additions": 400,
+    "deletions": 0,
+    "filename": "crates/desktop-recovery/src/lib.rs",
+    "pr": 39
+  },
+  {
+    "additions": 9,
+    "deletions": 0,
+    "filename": "crates/display-protocol/Cargo.toml",
+    "pr": 39
+  },
+  {
+    "additions": 1346,
+    "deletions": 0,
+    "filename": "crates/display-protocol/src/lib.rs",
+    "pr": 39
+  },
+  {
+    "additions": 9,
+    "deletions": 0,
+    "filename": "crates/domain-display/Cargo.toml",
+    "pr": 39
+  },
+  {
+    "additions": 414,
+    "deletions": 0,
+    "filename": "crates/domain-display/src/lib.rs",
+    "pr": 39
+  },
+  {
+    "additions": 11,
+    "deletions": 0,
+    "filename": "crates/domain-presentation/Cargo.toml",
+    "pr": 39
+  },
+  {
+    "additions": 543,
+    "deletions": 0,
+    "filename": "crates/domain-presentation/src/lib.rs",
+    "pr": 39
+  },
+  {
+    "additions": 221,
+    "deletions": 0,
+    "filename": "crates/native-abi/src/lib.rs",
+    "pr": 39
+  },
+  {
+    "additions": 8,
+    "deletions": 0,
+    "filename": "crates/wayland-domain/Cargo.toml",
+    "pr": 39
+  },
+  {
+    "additions": 571,
+    "deletions": 0,
+    "filename": "crates/wayland-domain/src/lib.rs",
+    "pr": 39
+  },
+  {
+    "additions": 9,
+    "deletions": 0,
+    "filename": "crates/windowing/Cargo.toml",
+    "pr": 39
+  },
+  {
+    "additions": 472,
+    "deletions": 0,
+    "filename": "crates/windowing/src/inter_13.rs",
+    "pr": 39
+  },
+  {
+    "additions": 714,
+    "deletions": 0,
+    "filename": "crates/windowing/src/inter_16.rs",
+    "pr": 39
+  },
+  {
+    "additions": 1382,
+    "deletions": 0,
+    "filename": "crates/windowing/src/lib.rs",
+    "pr": 39
+  },
+  {
+    "additions": 443,
+    "deletions": 0,
+    "filename": "docs/CONTROLLER-DESKTOP.md",
+    "pr": 39
+  },
+  {
+    "additions": 143,
+    "deletions": 0,
+    "filename": "docs/decisions/0003-controller-desktop.md",
+    "pr": 39
+  },
+  {
+    "additions": 1,
+    "deletions": 1,
+    "filename": "docs/feedback-hardening/GATE-14-CRITICISM-RECONCILIATION.md",
+    "pr": 39
+  },
+  {
+    "additions": 4,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/writable-globals.tsv",
+    "pr": 39
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "docs/images/controller-desktop-concept-v1.png",
+    "pr": 39
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "docs/images/controller-desktop-concept-v2.png",
+    "pr": 39
+  },
+  {
+    "additions": 0,
+    "deletions": 0,
+    "filename": "docs/images/controller-desktop-final.png",
+    "pr": 39
+  },
+  {
+    "additions": 63,
+    "deletions": 54,
+    "filename": "hdae/ARCHITECTURE.md",
+    "pr": 39
+  },
+  {
+    "additions": 48,
+    "deletions": 70,
+    "filename": "hdae/PLAN.md",
+    "pr": 39
+  },
+  {
+    "additions": 48,
+    "deletions": 53,
+    "filename": "hdae/PROJECT.md",
+    "pr": 39
+  },
+  {
+    "additions": 76,
+    "deletions": 112,
+    "filename": "hdae/STATUS.md",
+    "pr": 39
+  },
+  {
+    "additions": 90,
+    "deletions": 0,
+    "filename": "hdae/gates-done/19-controller-desktop-architecture.md",
+    "pr": 39
+  },
+  {
+    "additions": 84,
+    "deletions": 0,
+    "filename": "hdae/gates-done/20-graphical-controller-runtime.md",
+    "pr": 39
+  },
+  {
+    "additions": 88,
+    "deletions": 0,
+    "filename": "hdae/gates-done/21-controller-display-input-devices.md",
+    "pr": 39
+  },
+  {
+    "additions": 84,
+    "deletions": 0,
+    "filename": "hdae/gates-done/22-native-display-protocol.md",
+    "pr": 39
+  },
+  {
+    "additions": 86,
+    "deletions": 0,
+    "filename": "hdae/gates-done/23-seat-focus-resource-leasing.md",
+    "pr": 39
+  },
+  {
+    "additions": 82,
+    "deletions": 0,
+    "filename": "hdae/gates-done/24-native-windowing-system.md",
+    "pr": 39
+  },
+  {
+    "additions": 83,
+    "deletions": 0,
+    "filename": "hdae/gates-done/25-graphical-controller-application.md",
+    "pr": 39
+  },
+  {
+    "additions": 76,
+    "deletions": 0,
+    "filename": "hdae/gates-done/26-domain-display-input-bridge.md",
+    "pr": 39
+  },
+  {
+    "additions": 82,
+    "deletions": 0,
+    "filename": "hdae/gates-done/27-linux-wayland-environment.md",
+    "pr": 39
+  },
+  {
+    "additions": 82,
+    "deletions": 0,
+    "filename": "hdae/gates-done/28-windowed-fullscreen-domain-experience.md",
+    "pr": 39
+  },
+  {
+    "additions": 87,
+    "deletions": 0,
+    "filename": "hdae/gates-done/29-controller-desktop-recovery.md",
+    "pr": 39
+  },
+  {
+    "additions": 150,
+    "deletions": 0,
+    "filename": "hdae/gates-done/30-controller-desktop-qualification.md",
+    "pr": 39
+  },
+  {
+    "additions": 353,
+    "deletions": 0,
+    "filename": "hdae/gates-done/31-controller-desktop-visual-design.md",
+    "pr": 39
+  },
+  {
+    "additions": 481,
+    "deletions": 17,
+    "filename": "kernel/src/address_space.rs",
+    "pr": 39
+  },
+  {
+    "additions": 203,
+    "deletions": 23,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 39
+  },
+  {
+    "additions": 145,
+    "deletions": 21,
+    "filename": "kernel/src/arch/x86_64/paging.rs",
+    "pr": 39
+  },
+  {
+    "additions": 2,
+    "deletions": 2,
+    "filename": "kernel/src/arch/x86_64/pci.rs",
+    "pr": 39
+  },
+  {
+    "additions": 634,
+    "deletions": 0,
+    "filename": "kernel/src/controller_devices.rs",
+    "pr": 39
+  },
+  {
+    "additions": 41,
+    "deletions": 6,
+    "filename": "kernel/src/domain.rs",
+    "pr": 39
+  },
+  {
+    "additions": 12,
+    "deletions": 3,
+    "filename": "kernel/src/initramfs.rs",
+    "pr": 39
+  },
+  {
+    "additions": 95,
+    "deletions": 9,
+    "filename": "kernel/src/lib.rs",
+    "pr": 39
+  },
+  {
+    "additions": 18,
+    "deletions": 0,
+    "filename": "kernel/src/linux_elf.rs",
+    "pr": 39
+  },
+  {
+    "additions": 1,
+    "deletions": 1,
+    "filename": "kernel/src/manifest.rs",
+    "pr": 39
+  },
+  {
+    "additions": 3,
+    "deletions": 1,
+    "filename": "kernel/src/memory.rs",
+    "pr": 39
+  },
+  {
+    "additions": 22,
+    "deletions": 0,
+    "filename": "services/graphics/Cargo.toml",
+    "pr": 39
+  },
+  {
+    "additions": 384,
+    "deletions": 0,
+    "filename": "services/graphics/src/main.rs",
+    "pr": 39
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "specs/abi/control-v4.rs",
+    "pr": 39
+  },
+  {
+    "additions": 41,
+    "deletions": 0,
+    "filename": "specs/abi/native-service-lifecycle-v0.h",
+    "pr": 39
+  },
+  {
+    "additions": 6,
+    "deletions": 4,
+    "filename": "specs/kernel/linux-abi-test-v0.md",
+    "pr": 39
+  },
+  {
+    "additions": 63,
+    "deletions": 2,
+    "filename": "tests/qemu/boot.sh",
+    "pr": 39
+  },
+  {
+    "additions": 2,
+    "deletions": 8,
+    "filename": "tests/qemu/controller-console.sh",
+    "pr": 39
+  },
+  {
+    "additions": 36,
+    "deletions": 0,
+    "filename": "tests/qemu/controller-desktop-stress.sh",
+    "pr": 39
+  },
+  {
+    "additions": 435,
+    "deletions": 0,
+    "filename": "tests/qemu/controller-desktop-visible.sh",
+    "pr": 39
+  },
+  {
+    "additions": 3,
+    "deletions": 3,
+    "filename": "tests/qemu/linux-abi-report.sh",
+    "pr": 39
+  },
+  {
+    "additions": 93,
+    "deletions": 0,
+    "filename": "third_party/fonts/Inter-OFL.txt",
+    "pr": 39
+  },
+  {
+    "additions": 2,
+    "deletions": 2,
+    "filename": "tools/architecture/check-kernel-unsafe.sh",
+    "pr": 39
+  },
+  {
+    "additions": 2,
+    "deletions": 2,
+    "filename": "tools/architecture/check-x86-runtime-owner.sh",
+    "pr": 39
+  },
+  {
+    "additions": 10,
+    "deletions": 0,
+    "filename": "tools/desktop-qualification/Cargo.toml",
+    "pr": 39
+  },
+  {
+    "additions": 164,
+    "deletions": 0,
+    "filename": "tools/desktop-qualification/src/main.rs",
+    "pr": 39
+  },
+  {
+    "additions": 95,
+    "deletions": 0,
+    "filename": "tools/fonts/generate-controller-font.c",
+    "pr": 39
+  },
+  {
+    "additions": 19,
+    "deletions": 11,
+    "filename": "tools/manifest-tool/src/main.rs",
+    "pr": 39
+  },
+  {
+    "additions": 4,
+    "deletions": 2,
+    "filename": "tools/qemu/run.sh",
+    "pr": 39
+  },
+  {
+    "additions": 79,
+    "deletions": 0,
+    "filename": "hdae/gates-todo/23-getcwd-maximum-path-capacity.md",
+    "pr": 38
+  },
+  {
+    "additions": 1,
+    "deletions": 1,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 38
+  },
+  {
+    "additions": 81,
+    "deletions": 0,
+    "filename": "hdae/gates-todo/22-failed-linux-init-frame-release.md",
+    "pr": 37
+  },
+  {
+    "additions": 2,
+    "deletions": 3,
+    "filename": "kernel/src/address_space.rs",
+    "pr": 37
+  },
+  {
+    "additions": 74,
+    "deletions": 0,
+    "filename": "hdae/gates-todo/21-virtio-net-common-capability-length.md",
+    "pr": 36
+  },
+  {
+    "additions": 14,
+    "deletions": 8,
+    "filename": "kernel/src/arch/x86_64/pci.rs",
+    "pr": 36
+  },
+  {
+    "additions": 7,
+    "deletions": 0,
+    "filename": "Makefile",
+    "pr": 35
+  },
+  {
+    "additions": 107,
+    "deletions": 0,
+    "filename": "kernel/src/pe.rs",
+    "pr": 35
+  },
+  {
+    "additions": 60,
+    "deletions": 0,
+    "filename": "crates/volume-service/src/lib.rs",
+    "pr": 34
+  },
+  {
+    "additions": 25,
+    "deletions": 0,
+    "filename": "crates/volume-format/src/lib.rs",
+    "pr": 33
+  },
+  {
+    "additions": 18,
+    "deletions": 0,
+    "filename": "crates/volume-format/src/lib.rs",
+    "pr": 32
+  },
+  {
+    "additions": 1,
+    "deletions": 1,
+    "filename": "tools/qemu/run.sh",
+    "pr": 31
+  },
+  {
+    "additions": 13,
+    "deletions": 0,
+    "filename": "crates/volume-format/src/lib.rs",
+    "pr": 23
+  },
+  {
+    "additions": 12,
+    "deletions": 10,
+    "filename": "hdae/STATUS.md",
+    "pr": 13
+  },
+  {
+    "additions": 96,
+    "deletions": 0,
+    "filename": "hdae/gates-todo/19-qemu-boot-queue-size-contract.md",
+    "pr": 13
+  },
+  {
+    "additions": 2,
+    "deletions": 2,
+    "filename": "tests/qemu/boot.sh",
+    "pr": 13
+  },
+  {
+    "additions": 1,
+    "deletions": 1,
+    "filename": "control-plane/runtime/build.rs",
+    "pr": 11
+  },
+  {
+    "additions": 31,
+    "deletions": 30,
+    "filename": "docs/LINUX-COMPATIBILITY.md",
+    "pr": 11
+  },
+  {
+    "additions": 84,
+    "deletions": 0,
+    "filename": "hdae/gates-todo/18-compatibility-ledger-semantics.md",
+    "pr": 11
+  },
+  {
+    "additions": 6,
+    "deletions": 3,
+    "filename": "tools/architecture/check-linux-compat.sh",
+    "pr": 11
+  },
+  {
+    "additions": 75,
+    "deletions": 0,
+    "filename": "hdae/gates-todo/13-virtio-queue-size-compatibility.md",
+    "pr": 10
+  },
+  {
+    "additions": 6,
+    "deletions": 2,
+    "filename": "kernel/src/arch/x86_64/pci.rs",
+    "pr": 10
+  },
+  {
+    "additions": 29,
+    "deletions": 0,
+    "filename": ".github/workflows/check.yml",
+    "pr": 9
+  },
+  {
+    "additions": 5,
+    "deletions": 0,
+    "filename": "Cargo.lock",
+    "pr": 9
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "Cargo.toml",
+    "pr": 9
+  },
+  {
+    "additions": 3,
+    "deletions": 0,
+    "filename": "Makefile",
+    "pr": 9
+  },
+  {
+    "additions": 27,
+    "deletions": 27,
+    "filename": "boot/efi/src/generated_boot.rs",
+    "pr": 9
+  },
+  {
+    "additions": 1,
+    "deletions": 1,
+    "filename": "control-plane/runtime/build.rs",
+    "pr": 9
+  },
+  {
+    "additions": 9,
+    "deletions": 0,
+    "filename": "crates/kernel-policy/Cargo.toml",
+    "pr": 9
+  },
+  {
+    "additions": 85,
+    "deletions": 0,
+    "filename": "crates/kernel-policy/src/lib.rs",
+    "pr": 9
+  },
+  {
+    "additions": 31,
+    "deletions": 30,
+    "filename": "docs/LINUX-COMPATIBILITY.md",
+    "pr": 9
+  },
+  {
+    "additions": 63,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/GATE-14-CRITICISM-RECONCILIATION.md",
+    "pr": 9
+  },
+  {
+    "additions": 7,
+    "deletions": 8,
+    "filename": "hdae/STATUS.md",
+    "pr": 9
+  },
+  {
+    "additions": 96,
+    "deletions": 0,
+    "filename": "hdae/gates-todo/14-post-hardening-criticism-reconciliation.md",
+    "pr": 9
+  },
+  {
+    "additions": 69,
+    "deletions": 0,
+    "filename": "hdae/gates-todo/15-linux-personality-decomposition.md",
+    "pr": 9
+  },
+  {
+    "additions": 72,
+    "deletions": 0,
+    "filename": "hdae/gates-todo/16-kernel-unsafe-lint-enforcement.md",
+    "pr": 9
+  },
+  {
+    "additions": 98,
+    "deletions": 0,
+    "filename": "hdae/gates-todo/17-ci-kernel-policy-tests.md",
+    "pr": 9
+  },
+  {
+    "additions": 86,
+    "deletions": 0,
+    "filename": "hdae/gates-todo/18-compatibility-ledger-semantics.md",
+    "pr": 9
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "kernel/Cargo.toml",
+    "pr": 9
+  },
+  {
+    "additions": 3,
+    "deletions": 1,
+    "filename": "kernel/packet-wait.S",
+    "pr": 9
+  },
+  {
+    "additions": 5,
+    "deletions": 129,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 9
+  },
+  {
+    "additions": 121,
+    "deletions": 0,
+    "filename": "kernel/src/arch/x86_64/cpu/linux_random.rs",
+    "pr": 9
+  },
+  {
+    "additions": 3,
+    "deletions": 17,
+    "filename": "kernel/src/arch/x86_64/iommu.rs",
+    "pr": 9
+  },
+  {
+    "additions": 9,
+    "deletions": 3,
+    "filename": "tests/qemu/boot.sh",
+    "pr": 9
+  },
+  {
+    "additions": 24,
+    "deletions": 0,
+    "filename": "tools/architecture/check-kernel-unsafe.sh",
+    "pr": 9
+  },
+  {
+    "additions": 6,
+    "deletions": 3,
+    "filename": "tools/architecture/check-linux-compat.sh",
+    "pr": 9
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "tools/architecture/check.sh",
+    "pr": 9
+  },
+  {
+    "additions": 27,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/GATE-12-BASELINE.md",
+    "pr": 8
+  },
+  {
+    "additions": 66,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/GATE-12-PERFORMANCE-PARITY.md",
+    "pr": 8
+  },
+  {
+    "additions": 15,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-12-results/README.md",
+    "pr": 8
+  },
+  {
+    "additions": 7,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-12-results/boot-topology-comparison.tsv",
+    "pr": 8
+  },
+  {
+    "additions": 6,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-12-results/environment.tsv",
+    "pr": 8
+  },
+  {
+    "additions": 25,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-12-results/topology-comparison.tsv",
+    "pr": 8
+  },
+  {
+    "additions": 49,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-12-results/topology-scaling.tsv",
+    "pr": 8
+  },
+  {
+    "additions": 7,
+    "deletions": 3,
+    "filename": "docs/feedback-hardening/writable-globals.tsv",
+    "pr": 8
+  },
+  {
+    "additions": 4,
+    "deletions": 0,
+    "filename": "hdae/ARCHITECTURE.md",
+    "pr": 8
+  },
+  {
+    "additions": 17,
+    "deletions": 0,
+    "filename": "hdae/PLAN.md",
+    "pr": 8
+  },
+  {
+    "additions": 10,
+    "deletions": 0,
+    "filename": "hdae/PROJECT.md",
+    "pr": 8
+  },
+  {
+    "additions": 36,
+    "deletions": 12,
+    "filename": "hdae/STATUS.md",
+    "pr": 8
+  },
+  {
+    "additions": 152,
+    "deletions": 0,
+    "filename": "hdae/gates-done/12-up-smp-performance-parity.md",
+    "pr": 8
+  },
+  {
+    "additions": 11,
+    "deletions": 0,
+    "filename": "kernel/src/address_space.rs",
+    "pr": 8
+  },
+  {
+    "additions": 47,
+    "deletions": 0,
+    "filename": "kernel/src/arch/x86_64/cpu.rs",
+    "pr": 8
+  },
+  {
+    "additions": 420,
+    "deletions": 107,
+    "filename": "kernel/src/arch/x86_64/cpu/linux_futex.rs",
+    "pr": 8
+  },
+  {
+    "additions": 23,
+    "deletions": 0,
+    "filename": "kernel/src/arch/x86_64/cpu/linux_signal.rs",
+    "pr": 8
+  },
+  {
+    "additions": 29,
+    "deletions": 11,
+    "filename": "kernel/src/arch/x86_64/cpu/linux_syscall.rs",
+    "pr": 8
+  },
+  {
+    "additions": 36,
+    "deletions": 21,
+    "filename": "kernel/src/arch/x86_64/smp.rs",
+    "pr": 8
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": "kernel/src/sync.rs",
+    "pr": 8
+  },
+  {
+    "additions": 5,
+    "deletions": 5,
+    "filename": "tests/qemu/rocky-smp-futex.sh",
+    "pr": 8
+  },
+  {
+    "additions": 1,
+    "deletions": 2,
+    "filename": ".hdae/manifest",
+    "pr": 7
+  },
+  {
+    "additions": 78,
+    "deletions": 41,
+    "filename": ".hdae/skills/hdae-development/SKILL.md",
+    "pr": 7
+  },
+  {
+    "additions": 44,
+    "deletions": 11,
+    "filename": ".hdae/skills/hdae-development/references/hdae-method.md",
+    "pr": 7
+  },
+  {
+    "additions": 24,
+    "deletions": 1,
+    "filename": "Makefile",
+    "pr": 7
+  },
+  {
+    "additions": 1,
+    "deletions": 1,
+    "filename": "README.md",
+    "pr": 7
+  },
+  {
+    "additions": 21848,
+    "deletions": 12975,
+    "filename": "boot/efi/src/generated_boot.rs",
+    "pr": 7
+  },
+  {
+    "additions": 77,
+    "deletions": 234,
+    "filename": "docs/FEEDBACK-HARDENING-RESEARCH.md",
+    "pr": 7
+  },
+  {
+    "additions": 12,
+    "deletions": 8,
+    "filename": "docs/LINUX-COMPATIBILITY.md",
+    "pr": 7
+  },
+  {
+    "additions": 2,
+    "deletions": 0,
+    "filename": "docs/ROADMAP.md",
+    "pr": 7
+  },
+  {
+    "additions": 57,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/GATE-1-BASELINE.md",
+    "pr": 7
+  },
+  {
+    "additions": 51,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/GATE-10-QUALIFICATION.md",
+    "pr": 7
+  },
+  {
+    "additions": 96,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/GATE-11-TOPOLOGY-BENCHMARKS.md",
+    "pr": 7
+  },
+  {
+    "additions": 59,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/GATE-11.6-SMP-THREAD-CONTEXT.md",
+    "pr": 7
+  },
+  {
+    "additions": 39,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/GATE-3-USER-ACCESS.md",
+    "pr": 7
+  },
+  {
+    "additions": 46,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/GATE-4-STATE-OWNERSHIP.md",
+    "pr": 7
+  },
+  {
+    "additions": 59,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/GATE-5-RUNTIME-OWNERSHIP.md",
+    "pr": 7
+  },
+  {
+    "additions": 77,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/SYNCHRONIZATION.md",
+    "pr": 7
+  },
+  {
+    "additions": 101,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/X86-DECOMPOSITION.md",
+    "pr": 7
+  },
+  {
+    "additions": 16,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/README.md",
+    "pr": 7
+  },
+  {
+    "additions": 6,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/architecture-check.log",
+    "pr": 7
+  },
+  {
+    "additions": 12,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/architecture-hardening.log",
+    "pr": 7
+  },
+  {
+    "additions": 69,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/diagnostic-test-oci-cache-explicit-dns.log",
+    "pr": 7
+  },
+  {
+    "additions": 69,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/diagnostic-test-oci-cache-pcap.log",
+    "pr": 7
+  },
+  {
+    "additions": 21,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/environment.md",
+    "pr": 7
+  },
+  {
+    "additions": 6,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/final-architecture-check.log",
+    "pr": 7
+  },
+  {
+    "additions": 17,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/final-benchmark-compare.log",
+    "pr": 7
+  },
+  {
+    "additions": 36,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/final-benchmark-ginux-boot.log",
+    "pr": 7
+  },
+  {
+    "additions": 16,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/final-benchmark-ginux-sysbench.log",
+    "pr": 7
+  },
+  {
+    "additions": 6,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/final-hardening-reproduction.log",
+    "pr": 7
+  },
+  {
+    "additions": 206,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/final-make-check.log",
+    "pr": 7
+  },
+  {
+    "additions": 16,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/final-make-test-domain-responsiveness.log",
+    "pr": 7
+  },
+  {
+    "additions": 16,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/final-make-test-linux-abi.log",
+    "pr": 7
+  },
+  {
+    "additions": 16,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/final-make-test-multi-domain.log",
+    "pr": 7
+  },
+  {
+    "additions": 16,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/final-make-test-oci-cache.log",
+    "pr": 7
+  },
+  {
+    "additions": 16,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/final-make-test-rocky-dnf.log",
+    "pr": 7
+  },
+  {
+    "additions": 27,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/final-make-test-smp-ap-ownership.log",
+    "pr": 7
+  },
+  {
+    "additions": 26,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/final-make-test-smp.log",
+    "pr": 7
+  },
+  {
+    "additions": 16,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/final-make-test-storage.log",
+    "pr": 7
+  },
+  {
+    "additions": 1337,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/final-make-test.log",
+    "pr": 7
+  },
+  {
+    "additions": 6,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/final-reproduce-hardening-feedback.log",
+    "pr": 7
+  },
+  {
+    "additions": 19,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/final-scaling-1vcpu.log",
+    "pr": 7
+  },
+  {
+    "additions": 19,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/final-scaling-2vcpu.log",
+    "pr": 7
+  },
+  {
+    "additions": 16,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/final-test-domain-responsiveness.log",
+    "pr": 7
+  },
+  {
+    "additions": 16,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/final-test-linux-abi.log",
+    "pr": 7
+  },
+  {
+    "additions": 16,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/final-test-multi-domain.log",
+    "pr": 7
+  },
+  {
+    "additions": 16,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/final-test-oci-cache.log",
+    "pr": 7
+  },
+  {
+    "additions": 16,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/final-test-rocky-dnf.log",
+    "pr": 7
+  },
+  {
+    "additions": 26,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/final-test-rocky-systemd.log",
+    "pr": 7
+  },
+  {
+    "additions": 26,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/final-test-smp.log",
+    "pr": 7
+  },
+  {
+    "additions": 16,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/final-test-storage.log",
+    "pr": 7
+  },
+  {
+    "additions": 17,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/fresh-benchmark-compare.log",
+    "pr": 7
+  },
+  {
+    "additions": 52,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/fresh-benchmark-ginux-sysbench.log",
+    "pr": 7
+  },
+  {
+    "additions": 206,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-check.log",
+    "pr": 7
+  },
+  {
+    "additions": 560,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-1vcpu-diagnostic.log",
+    "pr": 7
+  },
+  {
+    "additions": 1336,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-after-clone-stack-fix.log",
+    "pr": 7
+  },
+  {
+    "additions": 562,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-attempt-1.log",
+    "pr": 7
+  },
+  {
+    "additions": 563,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-attempt-2.log",
+    "pr": 7
+  },
+  {
+    "additions": 564,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-attempt-3.log",
+    "pr": 7
+  },
+  {
+    "additions": 564,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-attempt-4.log",
+    "pr": 7
+  },
+  {
+    "additions": 16,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-domain-responsiveness.log",
+    "pr": 7
+  },
+  {
+    "additions": 1336,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-final-runtime-fixes.log",
+    "pr": 7
+  },
+  {
+    "additions": 16,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-linux-abi-package-platform-fix.log",
+    "pr": 7
+  },
+  {
+    "additions": 16,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-linux-abi-signal-statfs-fix.log",
+    "pr": 7
+  },
+  {
+    "additions": 16,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-linux-abi.log",
+    "pr": 7
+  },
+  {
+    "additions": 69,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-oci-cache-1vcpu.log",
+    "pr": 7
+  },
+  {
+    "additions": 51,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-oci-cache-attempt-1.log",
+    "pr": 7
+  },
+  {
+    "additions": 52,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-oci-cache-attempt-2.log",
+    "pr": 7
+  },
+  {
+    "additions": 52,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-oci-cache-attempt-3.log",
+    "pr": 7
+  },
+  {
+    "additions": 52,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-oci-cache-attempt-4.log",
+    "pr": 7
+  },
+  {
+    "additions": 51,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-oci-cache-attempt-5.log",
+    "pr": 7
+  },
+  {
+    "additions": 89,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-oci-cache-attempt-6.log",
+    "pr": 7
+  },
+  {
+    "additions": 69,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-oci-cache-retry.log",
+    "pr": 7
+  },
+  {
+    "additions": 16,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-oci-cache.log",
+    "pr": 7
+  },
+  {
+    "additions": 285,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-rocky-dnf-1vcpu-diagnostic.log",
+    "pr": 7
+  },
+  {
+    "additions": 285,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-rocky-dnf-attempt-1.log",
+    "pr": 7
+  },
+  {
+    "additions": 360,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-rocky-dnf-capacity-fix.log",
+    "pr": 7
+  },
+  {
+    "additions": 16,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-rocky-dnf-descendant-scheduling.log",
+    "pr": 7
+  },
+  {
+    "additions": 268,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-rocky-dnf-diagnostic.log",
+    "pr": 7
+  },
+  {
+    "additions": 16,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-rocky-dnf-process-context-fix.log",
+    "pr": 7
+  },
+  {
+    "additions": 340,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-rocky-dnf-signal-fix.log",
+    "pr": 7
+  },
+  {
+    "additions": 16,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-rocky-dnf-socket-restart.log",
+    "pr": 7
+  },
+  {
+    "additions": 15,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-rocky-dnf-wait-loop.log",
+    "pr": 7
+  },
+  {
+    "additions": 16,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-rocky-dnf.log",
+    "pr": 7
+  },
+  {
+    "additions": 251,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-rocky-systemd-after-clone-stack-fix.log",
+    "pr": 7
+  },
+  {
+    "additions": 252,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-rocky-systemd-after-exec-signal-fix.log",
+    "pr": 7
+  },
+  {
+    "additions": 339,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-rocky-systemd-all-exec-trace.log",
+    "pr": 7
+  },
+  {
+    "additions": 258,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-rocky-systemd-callback-diagnostic.log",
+    "pr": 7
+  },
+  {
+    "additions": 339,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-rocky-systemd-callback-trace.log",
+    "pr": 7
+  },
+  {
+    "additions": 339,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-rocky-systemd-entry-context-trace.log",
+    "pr": 7
+  },
+  {
+    "additions": 339,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-rocky-systemd-exec-context-trace.log",
+    "pr": 7
+  },
+  {
+    "additions": 339,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-rocky-systemd-exec-dispatch-trace.log",
+    "pr": 7
+  },
+  {
+    "additions": 339,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-rocky-systemd-exec-return-trace.log",
+    "pr": 7
+  },
+  {
+    "additions": 224,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-rocky-systemd-exec-success-nonreturn.log",
+    "pr": 7
+  },
+  {
+    "additions": 254,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-rocky-systemd-fault-diagnostic.log",
+    "pr": 7
+  },
+  {
+    "additions": 339,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-rocky-systemd-guard-trace.log",
+    "pr": 7
+  },
+  {
+    "additions": 339,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-rocky-systemd-resume-context-trace.log",
+    "pr": 7
+  },
+  {
+    "additions": 23,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-rocky-systemd-runtime-capacity.log",
+    "pr": 7
+  },
+  {
+    "additions": 26,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-rocky-systemd-runtime-eight-2g.log",
+    "pr": 7
+  },
+  {
+    "additions": 48,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-rocky-systemd-runtime-eight.log",
+    "pr": 7
+  },
+  {
+    "additions": 27,
+    "deletions": 0,
+    "filename": "docs/feedback-hardening/gate-10-results/make-test-rocky-systemd-runtime-seven.log",
+    "pr": 7
+  },
+  {
+    "additions": 2,
+    "deletions": 1,
+    "filename": "crates/command/src/lib.rs",
+    "pr": 6
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": ".agents/skills/hdae-development",
+    "pr": 3
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": ".agents/skills/pr-issue-review",
+    "pr": 3
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": ".claude/skills/hdae-development",
+    "pr": 3
+  },
+  {
+    "additions": 1,
+    "deletions": 0,
+    "filename": ".claude/skills/pr-issue-review",
+    "pr": 3
+  },
+  {
+    "additions": 78,
+    "deletions": 0,
+    "filename": "README.md",
+    "pr": 3
+  },
+  {
+    "additions": 272,
+    "deletions": 0,
+    "filename": "docs/FEEDBACK-HARDENING-RESEARCH.md",
+    "pr": 3
+  },
+  {
+    "additions": 11,
+    "deletions": 0,
+    "filename": "docs/ROADMAP.md",
+    "pr": 3
+  },
+  {
+    "additions": 81,
+    "deletions": 0,
+    "filename": "skills/README.md",
+    "pr": 3
+  },
+  {
+    "additions": 118,
+    "deletions": 0,
+    "filename": "skills/hdae-development/SKILL.md",
+    "pr": 3
+  },
+  {
+    "additions": 4,
+    "deletions": 0,
+    "filename": "skills/hdae-development/agents/openai.yaml",
+    "pr": 3
+  },
+  {
+    "additions": 147,
+    "deletions": 0,
+    "filename": "skills/hdae-development/references/hdae-method.md",
+    "pr": 3
+  },
+  {
+    "additions": 80,
+    "deletions": 0,
+    "filename": "skills/pr-issue-review/SKILL.md",
+    "pr": 3
+  },
+  {
+    "additions": 4,
+    "deletions": 0,
+    "filename": "skills/pr-issue-review/agents/openai.yaml",
+    "pr": 3
+  },
+  {
+    "additions": 122,
+    "deletions": 0,
+    "filename": "skills/pr-issue-review/references/review-workflow.md",
+    "pr": 3
+  }
+]

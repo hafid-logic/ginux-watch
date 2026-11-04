@@ -1,0 +1,346 @@
+name: feasibility-tests
+
+# v3.3 §4a–4c (worker W3, session 25, 2026-11-05): pure test-based feasibility probe
+# (جدوى الاختبارات الصرفة) over CURRENT upstream main — read-only checkout of upstream,
+# no upstream modifications, nothing pushed anywhere, results leave the run ONLY as
+# artifacts (artifacts-only, house rule of fuzz.yml).
+#
+#   §4a coverage — ONE `cargo llvm-cov --lcov` invocation over exactly the crates that
+#                  upstream `make check` runs `cargo test --package` for (list derived
+#                  from upstream/Makefile with a hardcoded 10-crate fallback), then
+#                  lcov → markdown: summary table + uncovered pub fns / uncovered
+#                  branches for the 3 parser crates.
+#   §4b mutants  — cargo-mutants on the 3 smallest host-tested crates (2 of them
+#                  parser crates), one matrix job each, `timeout 1020` inside a
+#                  STRICT 20-min job; partial mutants.tsv is still summarized/uploaded.
+#   §4c clippy   — `cargo clippy --message-format json -W clippy::arithmetic_side_effects`
+#                  census on the 3 parser crates → deduped arithmetic-sites report.
+#
+# House rules (same trust model as fuzz.yml): upstream is UNTRUSTED — checked out with
+# persist-credentials: false; workflow + every job are contents: read; no token needed
+# (public clones, implicit GITHUB_TOKEN only); NO contents: write, NO commits, NO push.
+# Trigger: workflow_dispatch ONLY (feasibility probe, not a recurring round).
+#
+# Upstream structure assumptions (each failure surfaces loudly in the step logs):
+#   - gmkurtzer/ginux pins its toolchain via rust-toolchain.toml at repo root:
+#     `cd upstream && rustup show` activates the pinned toolchain. If the file is
+#     missing, rustup silently falls back to the runner default toolchain.
+#   - upstream/Makefile has a `check:` target containing literal
+#     `cargo test --package <name>` lines. Derivation: sed from `check:` to EOF,
+#     grep the package names, sort -u. Empty result → ::warning:: + hardcoded
+#     10-crate fallback; missing priority parser crate → hard ::error:: (fail);
+#     count != 10 → ::warning:: (upstream Makefile changed).
+#   - cargo-mutants writes results incrementally to mutants.out/mutants.tsv, so a
+#     graceful `timeout 1020` stop still leaves partial results to summarize.
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: feasibility-tests
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: never
+
+jobs:
+  coverage:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout watch repo (parser scripts)
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Checkout upstream main (untrusted code, no credentials, no pin)
+        uses: actions/checkout@v4
+        with:
+          repository: gmkurtzer/ginux
+          ref: refs/heads/main
+          path: upstream
+          persist-credentials: false
+
+      - name: Record upstream head
+        run: |
+          echo "UPSTREAM_SHA=$(git -C upstream rev-parse HEAD)" >> "$GITHUB_ENV"
+          {
+            echo "## feasibility-tests — coverage (§4a)"
+            echo "- upstream main @ $(git -C upstream rev-parse --short HEAD)"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Cache cargo registry + upstream target
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            upstream/target
+          key: feasibility-cov-${{ runner.os }}-v1-${{ hashFiles('upstream/**/Cargo.lock') }}
+          restore-keys: feasibility-
+
+      - name: Activate pinned toolchain + llvm-tools/clippy components
+        working-directory: upstream
+        run: |
+          set -euo pipefail
+          rustup show
+          rustup component add llvm-tools-preview clippy
+
+      - name: Install cargo-llvm-cov (prebuilt via taiki-e)
+        uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-llvm-cov
+
+      - name: "Verify cargo-llvm-cov (fallback: source build)"
+        run: |
+          set -euo pipefail
+          cargo llvm-cov --version || cargo install cargo-llvm-cov --locked
+
+      - name: Derive host-tested crate list from upstream Makefile (fallback + verify)
+        working-directory: upstream
+        run: |
+          set -euo pipefail
+          sed -n '/^check:/,$p' Makefile \
+            | grep -oE 'cargo test --package [a-z0-9_-]+' \
+            | awk '{print $4}' \
+            | sort -u > crates.txt || true
+          if [ ! -s crates.txt ]; then
+            echo "::warning::Makefile derivation produced nothing — using hardcoded 10-crate fallback"
+            cat > crates.txt <<'EOF'
+          ginux-native-abi
+          ginux-kernel-policy
+          ginux-command
+          ginux-oci
+          ginux-oci-cache
+          ginux-image-store
+          ginux-runtime-memory
+          ginux-protocol-state
+          ginux-volume-format
+          ginux-volume-service
+          EOF
+          fi
+          for p in ginux-oci ginux-protocol-state ginux-volume-format; do
+            grep -qx "$p" crates.txt || { echo "::error::priority crate $p missing from derived list"; exit 1; }
+          done
+          n=$(wc -l < crates.txt)
+          if [ "$n" -ne 10 ]; then
+            echo "::warning::derived crate count is $n, expected 10 (upstream Makefile changed?)"
+          fi
+          PKG_ARGS=""
+          while IFS= read -r p; do PKG_ARGS="$PKG_ARGS -p $p"; done < crates.txt
+          echo "PKG_ARGS=$PKG_ARGS" >> "$GITHUB_ENV"
+          echo "derived crates ($n):$(tr '\n' ' ' < crates.txt)"
+          echo "- derived crates ($n): $(tr '\n' ' ' < crates.txt)" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Run llvm-cov over the host-tested crates (one invocation)
+        working-directory: upstream
+        run: |
+          set -euo pipefail
+          cargo llvm-cov $PKG_ARGS --lcov --output-path lcov.info
+
+      - name: lcov → markdown summary + uncovered details
+        working-directory: upstream
+        run: |
+          set -euo pipefail
+          python3 ../scripts/feasibility-coverage.py lcov.info \
+            --src crates \
+            --out coverage-summary.md \
+            --details coverage-details.md \
+            --priority ginux-oci,ginux-protocol-state,ginux-volume-format
+          cat coverage-summary.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload coverage artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: feasibility-coverage
+          path: |
+            upstream/coverage-summary.md
+            upstream/coverage-details.md
+            upstream/lcov.info
+          if-no-files-found: warn
+          retention-days: 14
+
+  mutants:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        # §4b: the smallest host-tested crates — 2 parser crates + kernel-policy (85 LOC).
+        crate:
+          - ginux-volume-format
+          - ginux-protocol-state
+          - ginux-kernel-policy
+    steps:
+      - name: Checkout watch repo (parser scripts)
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Checkout upstream main (untrusted code, no credentials, no pin)
+        uses: actions/checkout@v4
+        with:
+          repository: gmkurtzer/ginux
+          ref: refs/heads/main
+          path: upstream
+          persist-credentials: false
+
+      - name: Record upstream head
+        run: |
+          echo "UPSTREAM_SHA=$(git -C upstream rev-parse HEAD)" >> "$GITHUB_ENV"
+          echo "mutants: upstream main @ $(git -C upstream rev-parse --short HEAD), crate ${{ matrix.crate }}" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Cache cargo registry + upstream target
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            upstream/target
+          key: feasibility-mut-${{ matrix.crate }}-${{ runner.os }}-v1-${{ hashFiles('upstream/**/Cargo.lock') }}
+          restore-keys: feasibility-
+
+      - name: Activate pinned toolchain (no clippy needed here)
+        working-directory: upstream
+        run: |
+          set -euo pipefail
+          rustup show
+
+      # cargo-mutants install strategy: taiki-e/install-action@v2 downloads a prebuilt
+      # release binary (fast). The next step verifies it and falls back to a source
+      # build (`cargo install cargo-mutants --locked`) on any failure. We deliberately
+      # do NOT curl a release asset by URL: cargo-mutants release asset naming
+      # (cargo-mutants-v<ver>-<target>.tar.gz) changed across releases, so a hardcoded
+      # URL would be brittle.
+      - name: Install cargo-mutants (prebuilt via taiki-e)
+        uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-mutants
+
+      - name: "Verify cargo-mutants (fallback: source build)"
+        run: |
+          set -euo pipefail
+          cargo mutants --version || cargo install cargo-mutants --locked
+
+      # `timeout 1020` (~17 min) stops cargo-mutants gracefully BEFORE the 20-min job
+      # timeout; `|| true` keeps any partial mutants.out/mutants.tsv usable by the
+      # always() summary/upload steps below.
+      - name: Mutate ${{ matrix.crate }} (graceful stop at 1020s)
+        working-directory: upstream
+        run: |
+          set -uo pipefail
+          timeout 1020 cargo mutants \
+            --package ${{ matrix.crate }} \
+            --timeout 60 \
+            --jobs 2 || true
+
+      - name: Collect mutants log tail (if any)
+        if: always()
+        working-directory: upstream
+        run: |
+          if [ -f mutants.out/debug.log ]; then
+            tail -n 200 mutants.out/debug.log > ../mutants-log-tail.txt
+          fi
+
+      - name: Summarize mutants (survivors → markdown)
+        if: always()
+        run: |
+          set -euo pipefail
+          python3 scripts/feasibility-mutants.py \
+            --tsv upstream/mutants.out/mutants.tsv \
+            --out mutants-survived.md \
+            --crate ${{ matrix.crate }}
+          cat mutants-survived.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload mutants artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: feasibility-mutants-${{ matrix.crate }}
+          path: |
+            mutants-survived.md
+            mutants-log-tail.txt
+            upstream/mutants.out/mutants.tsv
+          if-no-files-found: warn
+          retention-days: 14
+
+  clippy:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout watch repo (parser scripts)
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Checkout upstream main (untrusted code, no credentials, no pin)
+        uses: actions/checkout@v4
+        with:
+          repository: gmkurtzer/ginux
+          ref: refs/heads/main
+          path: upstream
+          persist-credentials: false
+
+      - name: Record upstream head
+        run: |
+          echo "UPSTREAM_SHA=$(git -C upstream rev-parse HEAD)" >> "$GITHUB_ENV"
+          echo "clippy census: upstream main @ $(git -C upstream rev-parse --short HEAD)" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Cache cargo registry + upstream target
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            upstream/target
+          key: feasibility-clippy-${{ runner.os }}-v1-${{ hashFiles('upstream/**/Cargo.lock') }}
+          restore-keys: feasibility-
+
+      - name: Activate pinned toolchain + clippy component
+        working-directory: upstream
+        run: |
+          set -euo pipefail
+          rustup show
+          rustup component add clippy
+
+      # -W (NOT -D): warnings must not fail the build; a real cargo/clippy ERROR still
+      # fails this step via pipefail — no `|| true` here, per §4c. The JSON stream is
+      # mixed with cargo's stderr progress lines; the parser skips non-JSON lines.
+      - name: Clippy census on parser crates (-W clippy::arithmetic_side_effects)
+        working-directory: upstream
+        run: |
+          set -o pipefail
+          cargo clippy \
+            --package ginux-oci \
+            --package ginux-protocol-state \
+            --package ginux-volume-format \
+            --message-format json \
+            -- -W clippy::arithmetic_side_effects 2>&1 | tee clippy.json
+
+      - name: Extract arithmetic sites (JSON → markdown)
+        if: always()
+        run: |
+          set -euo pipefail
+          python3 scripts/feasibility-clippy.py \
+            --json upstream/clippy.json \
+            --out arithmetic-sites.md \
+            --crates ginux-oci,ginux-protocol-state,ginux-volume-format
+          cat arithmetic-sites.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload clippy artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: feasibility-clippy
+          path: |
+            arithmetic-sites.md
+            upstream/clippy.json
+          if-no-files-found: warn
+          retention-days: 14

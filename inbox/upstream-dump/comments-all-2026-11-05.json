@@ -1,0 +1,751 @@
+[
+  {
+    "body": "Added the requested deterministic access-mode matrix on exact head `1c61e3827834df67b877bf76073e787dcfe49167`. It covers `{O_RDONLY, O_WRONLY, O_RDWR}` across shared read-only, shared writable, and private writable mappings. Expected accepts/rejections are asserted, successful mappings are unmapped, descriptors and the overlay node are cleaned up, and the boot suite requires `ginux: Linux mmap descriptor access matrix validated`. Credential-blocked local evidence: `make check` passed; complete `make test` passed with the new marker, `GINUX_KERNEL_OK`, Linux ELF/runtime compatibility, and `Boot test passed`. Waiting for fresh GitHub CI on this exact head before merge.",
+    "created_at": "2026-11-03T21:59:07Z",
+    "id": 6616455047,
+    "pr": 81,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Checkpoint update only on head `1dd41b9d`: no implementation code changed. PRs #54, #61, and #81 have since merged, so this branch is now behind current `main` and remains intentionally open. The last implementation head passed `make check` and complete `make test`, but mandatory `make test-rocky-shell` still failed before image download because all registry DNS lookups failed. Once a registry is reachable or the cache is populated, this branch must be synchronized with current `main` and the full evidence rerun before merge.",
+    "created_at": "2026-11-03T22:15:19Z",
+    "id": 6616765796,
+    "pr": 53,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Closing without merge during the standalone-kernel archive drain. Against current main, this PR adds NodeKind::Socket but does not (and, from its older base, could not) add a Socket arm to linux_overlay_dirent_kind(), which was introduced by merged PR #134. A textual merge would therefore leave a non-exhaustive match and fail to compile. The existing checks validate the old base only. Fixing and revalidating the integration would be new kernel development, which the freeze no longer permits.",
+    "created_at": "2026-11-04T18:49:59Z",
+    "id": 6639171327,
+    "pr": 146,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Closing without merge during the standalone-kernel archive drain. Code review found a blocking defect in the new kill(-1, sig) broadcast path: broadcast_error starts at 0, permission-denied targets are skipped, and the broadcast return occurs before the existing !permitted check. When every selected target is denied, this therefore returns success, while Linux retains an error for the all-EPERM broadcast case. The project is no longer accepting another kernel-side revision, so this PR will not be iterated.",
+    "created_at": "2026-11-04T18:38:43Z",
+    "id": 6638928824,
+    "pr": 129,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Closing without merge during the standalone-kernel archive drain. The change was code-reviewed, but it now conflicts with the merged futex/time wait work in #127. Its existing checks do not validate a reconciled poll/select/sleep implementation. Resolving and revalidating the conflict would be new kernel development, which the freeze no longer permits.",
+    "created_at": "2026-11-04T18:43:42Z",
+    "id": 6639035157,
+    "pr": 137,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Closing without merge during the standalone-kernel archive drain. The proposed hard-link model overlaps the overlay subsystem changed by merged PR #132 and is now conflicting with main. Its current-head checks do not validate any reconciled merge result, and resolving the conflict would require a new kernel change, which the project freeze no longer permits.",
+    "created_at": "2026-11-04T18:41:10Z",
+    "id": 6638980877,
+    "pr": 133,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Closing without merge during the standalone-kernel archive drain. The standalone RENAME_EXCHANGE implementation was reviewed, but this branch now conflicts with merged overlay and kernel-policy changes. Its checks do not validate a reconciled tree. Resolving and revalidating that composition would be new kernel development, which the freeze no longer permits.",
+    "created_at": "2026-11-04T18:47:46Z",
+    "id": 6639123431,
+    "pr": 143,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Closing without merge during the standalone-kernel archive drain. The symlink-walk implementation now conflicts with merged path/open changes in #140 and #142. Its existing checks validate the old base, not a reconciled walker. Resolving and rerunning the syscall/path matrix would be new kernel development, which the freeze no longer permits.",
+    "created_at": "2026-11-04T18:51:38Z",
+    "id": 6639208467,
+    "pr": 148,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Closing without merge during the standalone-kernel archive drain. This branch now conflicts with merged PR #127 in the futex and sleep paths. Its existing checks validate the pre-#127 implementation, not a reconciled wake/deadline path. Resolving and revalidating that interaction would be new kernel development, which the freeze no longer permits.",
+    "created_at": "2026-11-04T18:44:59Z",
+    "id": 6639062736,
+    "pr": 139,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Closing without merge during the standalone-kernel archive drain. This change now conflicts with merged PR #130 in the child-exit and wait-status path. Its existing checks validate the pre-#130 representation, not a reconciled tree. Resolving and revalidating that interaction would be new kernel development, which the freeze no longer permits.",
+    "created_at": "2026-11-04T18:42:29Z",
+    "id": 6639009484,
+    "pr": 135,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Closing without merge during the standalone-kernel archive drain. This exact head passed its original checks but now conflicts with final main after the backlog merges. Its old checks do not validate a reconciled socket/page-release implementation, and the freeze no longer permits creating one.",
+    "created_at": "2026-11-04T18:53:56Z",
+    "id": 6639258207,
+    "pr": 151,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Closing without merge during the standalone-kernel archive drain. This exact head previously passed its targeted scheduler validation, but it now conflicts with final main after the backlog merges. Its old checks do not validate any reconciled tree, and resolving/retesting the scheduler integration would be new kernel development, which the freeze no longer permits.",
+    "created_at": "2026-11-04T18:53:23Z",
+    "id": 6639246309,
+    "pr": 85,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Closing without merge during the standalone-kernel archive drain. This head now conflicts with final main and its QEMU check was cancelled, so there is neither a clean merge result nor complete current-head test evidence. Repair and revalidation would be new kernel development, which the freeze no longer permits.",
+    "created_at": "2026-11-04T18:53:29Z",
+    "id": 6639248557,
+    "pr": 101,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Closing without merge during the standalone-kernel archive drain. This path-walk change now conflicts with merged PRs #134 and #140 at shared directory and chmod/chown lookup call sites. Its existing checks validate the old base, not a reconciled path-resolution implementation. Resolving and rerunning the behavior matrix would be new kernel development, which the freeze no longer permits.",
+    "created_at": "2026-11-04T18:46:17Z",
+    "id": 6639091586,
+    "pr": 141,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Current-main conflict resolved on updated head 488509f95577ba8e1fc4953249fcac840f925155.\n\nThe branch now includes main 95f8ef2447f52eacd1b73e8612465fcd38bcc31b. hdae/STATUS.md was reconciled to the Gate 35 checkpoint and records merged PR #44 plus closed issue #17. No Gate 35 implementation scope changed.\n\nFresh validation on the merged tree:\n- make check: passed\n- make test: passed, including GINUX_KERNEL_OK and Boot test passed\n\nGitHub static and qemu checks are currently running. The old first-pass marker applies only to the superseded head; this new head must receive a fresh marker after CI succeeds.",
+    "created_at": "2026-11-02T19:04:45Z",
+    "id": 6585864922,
+    "pr": 45,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Dependency update: PR #84 is now merged as 7fdc880e, so the native scheduler atomicity prerequisite is resolved in main. This PR's exact head remains 604d750d and remains correctly draft. The remaining blocker is unchanged: feature-specific 1/2/4-CPU Linux/KVM context, sibling, signal, and stop/restart acceptance evidence is not independently reproducible with maintainer-accessible fixtures yet. The ordinary make check, complete make test on QEMU TCG, and GitHub checks already pass.",
+    "created_at": "2026-11-04T00:19:38Z",
+    "id": 6618960894,
+    "pr": 85,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Final corrective update is pushed at `d1539711`. The branch now includes the implementation fixes, QEMU 10/11 VT-d compatibility, a hardened packet-timeout self-test, and x86-hosted QEMU CI.\\n\\nVerification:\\n- Local `cargo test --package ginux-kernel-policy`: 4 passed\\n- Local direct kernel clippy: passed\\n- Local `make test`: `GINUX_KERNEL_OK` and `Boot test passed.`\\n- Final GitHub Actions run: static passed in 2m22s; full QEMU boot passed in 6m29s\\n\\nCI: https://github.com/gmkurtzer/ginux/actions/runs/41180277867\\n\\nNo merge or close action was taken.",
+    "created_at": "2026-10-31T07:28:08Z",
+    "id": 6540615243,
+    "pr": 9,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Final reconciled-head CI is green on commit `b31ab673`: static passed in 2m18s and QEMU passed in 3m2s (run 41378200301). The branch is clean against current `main`; no merge was performed.",
+    "created_at": "2026-11-02T02:34:59Z",
+    "id": 6567691768,
+    "pr": 42,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Final reconciled-head verification is green on commit `ef8dbecd`: static passed in 2m14s and QEMU passed in 4m12s (run 41375353944). The branch includes current `main`, the TLS entropy remediation, and the corrected `RDRAND` flag-clobber contract. No merge was performed.",
+    "created_at": "2026-11-02T02:04:45Z",
+    "id": 6567328452,
+    "pr": 40,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Final superseding first-pass marker\n\n- Exact head: 570f1d9a4d5c944940dc7f6404c763f203e401d9\n- Tested main: 8232ab5706afb68456f1fcf2a5555bd6b35aa83c\n- Code state: identical to locally validated fa37eddafb251d64c6f5a71d043f37e8e7d2372f; the final commit only records the HDAE validation checkpoint\n- Fresh local evidence: make check passed; complete make test passed with GINUX_KERNEL_OK and Boot test passed\n- GitHub checks: static is running and qemu is queued for this exact head\n- Known limitations/blockers: none identified locally\n\nThis final exact head starts the required two-pass hold. Merge requires successful GitHub CI and a later hourly review confirming the head remains unchanged.",
+    "created_at": "2026-11-03T20:51:21Z",
+    "id": 6615128222,
+    "pr": 52,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "First-pass maintainer review recorded for exact head 9bf2f69cc92bee0ebd24cd46f3963ee6fc9e3c89.\n\nLocal evidence passed:\n- make check\n- make test\n- make test-alpine\n\nThe Alpine test completed its OCI shell, restart, and failure-containment checks with the default 128 MiB domain budget. The implementation keeps page-table hierarchy frames kernel-owned and requires exact live owner/generation data for payload release.\n\nGitHub static and qemu checks are currently running. Per the two-pass policy, this PR is intentionally not merged on this first delivery pass; a later hourly review may merge it if the head is unchanged and all required checks pass.",
+    "created_at": "2026-11-03T06:29:44Z",
+    "id": 6597059073,
+    "pr": 59,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "First-pass maintainer validation complete for exact head `fdd358dbdb1bb80b791f9b78467427e1015cda30` against base `fe48e646`.\n\nEvidence:\n- independent isolated checkout review completed\n- `make check` passed\n- `make test` passed\n- GitHub `static` passed\n- GitHub `qemu` passed\n- merge state is clean\n\nThis is the required first-pass marker. I will re-check the exact head, base, discussion, merge state, and required checks on a subsequent scheduled run before merging. No merge was performed in this pass.",
+    "created_at": "2026-11-04T17:26:46Z",
+    "id": 6637365172,
+    "pr": 100,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "First-pass maintainer validation completed for exact head `14badd09e6bef100b650f65ef14b85aa264a7285` against main `c8d1265306067fcf4bb5554af54aa790a49329fa`. Independent review found no blocking issue; local `make check` and `make test` passed, and GitHub static/qemu checks are green. This is the first validation pass; the hourly review will re-check the unchanged head before merge.",
+    "created_at": "2026-11-04T15:15:57Z",
+    "id": 6634353293,
+    "pr": 88,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "First-pass maintainer validation completed for exact head `ad80548d4fa922213505ba1b8b26a56be16c25e1` against main `c8d1265306067fcf4bb5554af54aa790a49329fa`. Independent review found no blocking issue; local `make check` and `make test` passed, and GitHub static/qemu checks are green. This is the first validation pass; the hourly review will re-check the unchanged head before merge.",
+    "created_at": "2026-11-04T15:14:43Z",
+    "id": 6634323785,
+    "pr": 93,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "First-pass maintainer validation completed for exact head `cdda3a316967dd0476de1df8ed0579e1e9514ba6` against its `c8d12653` main baseline. Independent disposable-worktree `make check` and complete `make test` both passed. Public current-head checks are also green: static, QEMU smoke, full integration, and the reproducible 1/2/4-CPU detached-domain scheduler matrix with pre-fix negative controls. Code review found no immediate blocking defect. This is the first exact-head validation pass; the hourly review will re-check mergeability and the unchanged head before merge.",
+    "created_at": "2026-11-04T15:22:50Z",
+    "id": 6634522709,
+    "pr": 85,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "First-pass maintainer validation completed for exact head `cff9192c15e373b0b186c56ecb047ef29ee0a17e` against main `c8d1265306067fcf4bb5554af54aa790a49329fa`. Independent review found no blocking issue; local `make check` and `make test` passed, and GitHub static/qemu checks are green. This is the first validation pass; the hourly review will re-check the unchanged head before merge.",
+    "created_at": "2026-11-04T15:14:51Z",
+    "id": 6634326772,
+    "pr": 95,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "First-pass maintainer validation completed for exact head `dde797f6ba3d5de3a6e88d1b5291c5c66aa46fe1` against main `c8d1265306067fcf4bb5554af54aa790a49329fa`. Independent review found no blocking issue; local `make check` and `make test` passed, including the updated clone probe, and GitHub static/qemu checks are green. This is the first validation pass; the hourly review will re-check the unchanged head before merge.",
+    "created_at": "2026-11-04T15:16:02Z",
+    "id": 6634355302,
+    "pr": 99,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "First-pass maintainer validation completed for exact head `ded07944d2e5e3c98022e5a21fc12c2baec013b5` against main `c8d1265306067fcf4bb5554af54aa790a49329fa`. Independent review found no blocking issue; local `make check` and `make test` passed, and GitHub static/qemu checks are green. This is the first validation pass; the hourly review will re-check the unchanged head before merge.",
+    "created_at": "2026-11-04T15:14:39Z",
+    "id": 6634322106,
+    "pr": 87,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "First-pass maintainer validation recorded for exact head 006f9b3ba411a8521c2ead1751ec0785aa98000c against current main d11670e4.\n\nIndependent disposable-worktree evidence:\n- synthetic merge with current main: clean\n- make check: passed, including the 10 scheduler atomicity regressions\n- make test: passed the complete deterministic two-vCPU QEMU and Linux runtime suite\n- GitHub static and qemu checks for this head: passed; no workflow approval is pending\n\nPatch review found no blocking correctness or security issue. The fixed-size Scheduler copy is bounded by MAX_THREADS=8 and runs on the 256 KiB kernel stack; it remains a small unbenchmarked overhead, as the PR already states.\n\nUnder the two-pass policy this head is not being merged on this first validated run. If the head remains unchanged, the PR is non-draft and CLEAN, and current required checks remain green on a later hourly review, it may be merged then.",
+    "created_at": "2026-11-03T23:24:37Z",
+    "id": 6618070392,
+    "pr": 84,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "First-pass maintainer validation recorded for exact head f42f6f68.\n\nLocal evidence passed:\n- make check\n- make test (complete two-vCPU QEMU and Linux runtime suite)\n- deterministic marker: ginux: Linux overlay domain quota lifecycle enforced\n\nThe PR is intentionally not being merged on this same scheduled pass. A later hourly review must re-read the exact head, confirm current green CI and mergeability, and then may merge and close #80 under the two-pass policy.",
+    "created_at": "2026-11-03T22:30:48Z",
+    "id": 6617120228,
+    "pr": 86,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "First-pass review marker for exact head `aa20658287b83bf98c6e3a933248a6b7fe6aca08`: CLEAN locally. The Linux CI packaging failure was reproduced as a fixed 160-page capacity overflow. The repair removes the parallel unauthenticated DNS fallback entirely, keeps smoltcp as the sole outstanding-query response path, adds RDRAND-backed entropy to the kernel smoltcp interface as reported in the issue follow-up, and merges current `main`. The release network service is now 495,864 bytes locally (304 bytes below the pre-fix binary). `make check` and full `make test` pass with the unchanged capacity, `GINUX_KERNEL_OK`, and `Boot test passed`. This new head is not merge-eligible until GitHub checks pass and a later unchanged-head review confirms it.",
+    "created_at": "2026-11-03T16:47:16Z",
+    "id": 6609989946,
+    "pr": 73,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "First-pass validation marker for exact head `44e75683e578c8f0b4d0597fdf63e0fb5c6a5131`.\n\nI merged current `main` (`7fdc880e`) into this branch and resolved the integration conflicts. Two semantic collisions required fixes: the new timestamp ABI retains operation 39 while the desktop display/input operations now use 40/41, and native-network root validation now derives its layout from the current 161-page image contract instead of the obsolete hard-coded 160-page value.\n\nFresh local evidence on this exact head:\n- `make check` — passed\n- `make test` — passed, including full QEMU/Linux runtime and clean shutdown\n- `make test-controller-desktop-all` — unit, full-QEMU, and 2/4-vCPU recovery stages passed; its visible test was blocked only by the sandbox denying a temporary QEMU monitor socket\n- `make test-controller-desktop-visible` outside that socket restriction — passed at 48.915 ms p95, 49.075 ms max, and 18.286 ms page change (50 ms budget)\n- `make test-controller-desktop-performance` — passed at 869 us input-to-frame p95, 504 us steady-frame p95, and 3,175,728-byte modeled working set\n\nGitHub static and qemu checks are now running. Per the two-pass policy, this changed head is not eligible to merge until a later scheduled review confirms the exact same head remains current and all required CI is green.",
+    "created_at": "2026-11-04T01:31:32Z",
+    "id": 6620072977,
+    "pr": 39,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Follow-up remediation is now pushed in 47fc22c8 after independently confirming the release-overflow findings.\\n\\nChanges:\\n- replace eager FIFO slot subtraction with checked, lazy evaluation\\n- centralize /proc descriptor decimal parsing behind checked digit and overflow handling\\n- cover empty, punctuation, mixed, maximum-u64, and overflowing descriptor inputs in the kernel verification suite\\n\\nFresh evidence on this exact head:\\n- make check: passed, including release-profile overflow checks\\n- make test: passed (QEMU boot test)\\n\\nThe prior head is superseded. GitHub CI must pass on 47fc22c8 before this PR can receive a first-pass merge marker.",
+    "created_at": "2026-11-02T16:24:48Z",
+    "id": 6582310670,
+    "pr": 54,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Gate 32 delivery is complete for review. This PR addresses Issue #15 without auto-closing it. Evidence: formatting and targeted warning-denying clippy passed; `make check` passed; the complete QEMU `make test` emitted `GINUX_KERNEL_OK` and `Boot test passed.` No merge is requested or performed.",
+    "created_at": "2026-11-02T00:11:04Z",
+    "id": 6565965551,
+    "pr": 40,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Gate 33 delivery is complete for review. The top-level response is now checked against an `@sha256:` selector before any index selection or manifest parsing. Exact pin, mismatch, and tag-path tests pass; `make check` and complete QEMU `make test` also pass. This PR does not merge or close issue #16.",
+    "created_at": "2026-11-02T02:28:52Z",
+    "id": 6567619484,
+    "pr": 42,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Gate 36 remediation for issue #19.\n\nAcceptance evidence:\n- configurable owner quota stops exactly at the configured budget\n- another owner remains independent and release restores capacity\n- private Linux mmap/stack/exec/COW/process, tmpfs, and SysV paths use the container owner\n- mmap-style exhaustion rolls back atomically; SysV exhaustion is independently verified\n- the legacy supervised-service ceiling remains intact\n- `make check` and complete `make test` pass\n- unsafe inventory remains at 1,033 blocks\n\nIssue: #19. No merge or close action was taken.",
+    "created_at": "2026-11-02T03:30:19Z",
+    "id": 6568365821,
+    "pr": 46,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Gate 43 verification is complete.\n\n- make check passed with the unchanged 1,033-block unsafe baseline.\n- make test passed on the default two-vCPU QEMU profile.\n- The deterministic matrix proved clean rollback releases all six table frames, failed rollback retains all six live kernel-owned leases, and verifier cleanup restores the baseline frame count.\n- Existing VT-d activation, DMA-fault recovery, teardown, native-service, and replacement proofs remain green.\n\nIssue #29 has the corresponding implementation summary. No merge or issue closure was performed.",
+    "created_at": "2026-11-02T04:05:25Z",
+    "id": 6568777088,
+    "pr": 51,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Hourly review first-pass marker\n\n- Exact head: 0eabe97210c0cf1f6641f8aae978b74acb0b1df1\n- Tested main: 152be742b584ea192839c4f19c3d6af1b8014a31\n- Local evidence: make check passed; make test passed with the synchronous poll budget marker, GINUX_KERNEL_OK, and Boot test passed\n- GitHub checks: static and qemu successful\n- Merge state: CLEAN\n- Limitations/blockers: none identified in this pass\n\nThis exact head is awaiting a subsequent hourly check and is intentionally not being merged on its first fully validated pass.",
+    "created_at": "2026-11-03T16:00:51Z",
+    "id": 6608782120,
+    "pr": 70,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Hourly review first-pass marker\n\n- Exact head: 47fc22c8566b68243d5775dd5ae22ff3416e8137\n- Tested main: ecbb3142e0c332d1bfefe107322fdffdcdc3d38c\n- Local validation: make check and make test passed on this exact head\n- GitHub checks: static and qemu completed successfully\n- Prior overflow findings: remediated with checked FIFO subtraction and checked descriptor parsing regressions\n- Known limitations/blockers: none identified in this pass\n\nThis exact head is awaiting a subsequent hourly check. It is intentionally not being merged on the first fully validated pass.",
+    "created_at": "2026-11-02T19:00:56Z",
+    "id": 6585759328,
+    "pr": 54,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Hourly review first-pass marker\n\n- Exact head: 488509f95577ba8e1fc4953249fcac840f925155\n- Tested main: 95f8ef2447f52eacd1b73e8612465fcd38bcc31b\n- Local validation: make check and make test passed on the current-main merged tree\n- GitHub checks: static and qemu successful\n- Gate: HDAE Gate 35 for issue #18\n- Known limitations/blockers: none identified in this pass\n\nThis exact head is awaiting a subsequent hourly check. It is intentionally not being merged on the first fully validated pass.",
+    "created_at": "2026-11-02T16:21:04Z",
+    "id": 6582224913,
+    "pr": 45,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Hourly review first-pass marker\n\n- Exact head: 539e50c7c3ce5aa4d39dbc6f648df2c56393730e\n- Tested main: ecbb3142e0c332d1bfefe107322fdffdcdc3d38c\n- GitHub checks: static and qemu successful\n- Evidence: PR-local validation record plus successful required GitHub checks\n- Known limitations/blockers: none identified in this pass\n\nThis exact head is awaiting a subsequent hourly check. It is intentionally not being merged on the first fully validated pass.",
+    "created_at": "2026-11-02T16:21:04Z",
+    "id": 6582224923,
+    "pr": 52,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Hourly review first-pass marker\n\n- Exact head: 66fa3e13fe8aacd780b6ca157851ec9ddf422a28\n- Tested main: ecbb3142e0c332d1bfefe107322fdffdcdc3d38c\n- GitHub checks: static and qemu successful\n- Evidence: PR-local validation record plus successful required GitHub checks\n- Known limitations/blockers: none identified in this pass\n\nThis exact head is awaiting a subsequent hourly check. It is intentionally not being merged on the first fully validated pass.",
+    "created_at": "2026-11-02T16:21:06Z",
+    "id": 6582225847,
+    "pr": 49,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Hourly review first-pass marker\n\n- Exact head: 756777b83b6d19b5dcc03380f75dcdacecbc1998\n- Tested main: ecbb3142e0c332d1bfefe107322fdffdcdc3d38c\n- GitHub checks: static and qemu successful\n- Evidence: PR-local validation record plus successful required GitHub checks\n- Known limitations/blockers: none identified in this pass\n\nThis exact head is awaiting a subsequent hourly check. It is intentionally not being merged on the first fully validated pass.",
+    "created_at": "2026-11-02T16:21:05Z",
+    "id": 6582225450,
+    "pr": 48,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Hourly review first-pass marker\n\n- Exact head: ad374aa40aed1e0265920c9e8819bd31bc2af25e\n- Tested main: ecbb3142e0c332d1bfefe107322fdffdcdc3d38c\n- GitHub checks: static and qemu successful\n- Evidence: PR-local validation record plus successful required GitHub checks\n- Known limitations/blockers: none identified in this pass\n\nThis exact head is awaiting a subsequent hourly check. It is intentionally not being merged on the first fully validated pass.",
+    "created_at": "2026-11-02T16:21:05Z",
+    "id": 6582225641,
+    "pr": 44,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Hourly review first-pass marker\n\n- Exact head: c147dfc1a3849723618407e1cd6ba7e35e6b13aa\n- Tested main: 152be742b584ea192839c4f19c3d6af1b8014a31\n- Local evidence: make check passed, including the DNS binding unit tests and unchanged 160-page root-image capacity; make test passed with GINUX_KERNEL_OK and Boot test passed\n- GitHub checks: static and qemu are still running\n- Limitations/blockers: no technical limitation identified; required GitHub checks must complete successfully\n\nThis exact head is awaiting a subsequent hourly check and is intentionally not being merged on its first fully validated local pass.",
+    "created_at": "2026-11-03T15:58:23Z",
+    "id": 6608712746,
+    "pr": 73,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Hourly review first-pass marker\n\n- Exact head: c5280b446c33314da2cc847eb7f00ba049538269\n- Tested main: a7a41ae2effebbaae01723a6ae31988e419c9e53\n- Local validation: make check and make test passed on the current-main merged tree\n- GitHub checks: static and qemu successful\n- Gate: HDAE Gate 36 for issue #19\n- Known limitations/blockers: none identified in this pass\n\nThis exact head is awaiting a subsequent hourly check. It is intentionally not being merged on the first fully validated pass.",
+    "created_at": "2026-11-02T16:21:05Z",
+    "id": 6582225368,
+    "pr": 46,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Hourly review first-pass marker\n\n- Exact head: c998e97d048cffc9ea0fe60f7b9f4ef94ea9faa7\n- Tested main: ecbb3142e0c332d1bfefe107322fdffdcdc3d38c\n- GitHub checks: static and qemu successful\n- Evidence: PR-local validation record plus successful required GitHub checks\n- Known limitations/blockers: none identified in this pass\n\nThis exact head is awaiting a subsequent hourly check. It is intentionally not being merged on the first fully validated pass.",
+    "created_at": "2026-11-02T16:21:04Z",
+    "id": 6582224965,
+    "pr": 50,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Hourly review first-pass marker\n\n- Exact head: d737b4d7b729331b512de57a58c62851ff7555dd\n- Tested main: ecbb3142e0c332d1bfefe107322fdffdcdc3d38c\n- GitHub checks: static and qemu successful\n- Evidence: PR-local validation record plus successful required GitHub checks\n- Known limitations/blockers: none identified in this pass\n\nThis exact head is awaiting a subsequent hourly check. It is intentionally not being merged on the first fully validated pass.",
+    "created_at": "2026-11-02T16:21:04Z",
+    "id": 6582225159,
+    "pr": 51,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Hourly review first-pass marker\n\n- Exact head: df0fe93bff4a62e8bcf3c9e56085f4204779e031\n- Tested main: ecbb3142e0c332d1bfefe107322fdffdcdc3d38c\n- GitHub checks: static and qemu successful\n- Evidence: PR-local validation record plus successful required GitHub checks\n- Known limitations/blockers: none identified in this pass\n\nThis exact head is awaiting a subsequent hourly check. It is intentionally not being merged on the first fully validated pass.",
+    "created_at": "2026-11-02T16:21:04Z",
+    "id": 6582225031,
+    "pr": 47,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Hourly review superseding first-pass marker\n\n- Exact head: fa37eddafb251d64c6f5a71d043f37e8e7d2372f\n- Tested main: 8232ab5706afb68456f1fcf2a5555bd6b35aa83c\n- Synchronization: merged current main; the only conflict was the HDAE status checkpoint\n- Fresh local evidence: make check passed; complete make test passed with GINUX_KERNEL_OK and Boot test passed\n- GitHub checks: static and qemu are running for this exact head\n- Known limitations/blockers: none identified in local validation\n\nBecause the head changed, this exact revision starts a new two-pass review. It will not merge until GitHub CI succeeds and a later hourly review confirms the head is unchanged.",
+    "created_at": "2026-11-03T20:49:35Z",
+    "id": 6615092973,
+    "pr": 52,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Issue #17 remediation is implemented and locally verified. The branch passed the focused 10-test OCI suite, full `make check`, and the complete two-vCPU `make test` QEMU boot. This PR intentionally does not close the issue automatically.",
+    "created_at": "2026-11-02T02:57:17Z",
+    "id": 6567952461,
+    "pr": 44,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Issue #18 remediation is implemented and locally verified. The branch passed the focused OCI suite, warning-denying clippy, full `make check`, and the complete two-vCPU `make test` QEMU boot. This PR intentionally does not close the issue automatically.",
+    "created_at": "2026-11-02T03:06:34Z",
+    "id": 6568063176,
+    "pr": 45,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Maintainer first-pass validation completed for exact head 2c367116fd82e2134e1d3fff52eb35a00ae87cb5 against current main 82df3d719e14246233d509799ad220c4c39e7088.\\n\\nIndependent evidence:\\n- Reviewed the complete six-file diff; no blocking correctness, safety, or architecture finding identified.\\n- In a disposable credential-free checkout, merged current main without committing and ran make check: passed.\\n- In the same checkout, ran the complete make test QEMU suite: passed (GINUX_KERNEL_OK; Boot test passed).\\n- GitHub static and qemu checks for this head: passed.\\n- GitHub reports the PR mergeable and CLEAN.\\n\\nLimitation: I did not independently reproduce the contributor's 200+ ms RTT KVM pull, TCG Alpine pull, or topology-matrix evidence during this pass. The deterministic repository suite and current-main integration are green, and the supplied live-network evidence remains clearly identified as contributor evidence.\\n\\nPer the repository's two-pass policy, this exact unchanged head is awaiting a subsequent hourly check before merge.",
+    "created_at": "2026-11-03T05:50:46Z",
+    "id": 6596514226,
+    "pr": 56,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Maintainer review at exact head 604d750dd4457ce7d40bab74aac8f964df678782 against current main d11670e4:\n\nIndependent disposable-worktree evidence:\n- synthetic merge with current main: clean\n- make check: passed, including 11 scheduler tests and 5 kernel-policy tests\n- make test: passed the complete deterministic two-vCPU QEMU and Linux runtime suite on macOS/QEMU TCG\n- GitHub static and qemu checks: passed; no workflow approval is pending\n\nThe core timer/interrupt, XSAVE, AP-quiescence, lifecycle, and rotating-selection changes were reviewed with no immediate blocking defect found. However, this is not a two-pass merge marker yet. The PR is still a draft, depends on #84, and its feature-specific KVM fixtures (no-syscall spinner, 1/2/4 CPU context preservation, sibling/signal/stop-restart cases) could not be independently rerun here because the pinned private volume and Linux/KVM rig are unavailable. The checked-in results remain contributor evidence rather than independent acceptance evidence.\n\nPlease keep the PR draft until #84 lands and either make those targeted fixtures reproducible in maintainer-accessible CI/infrastructure or identify an equivalent deterministic acceptance path available to maintainers. The earlier local make test failure did not reproduce in this environment, which is useful but does not replace the targeted scheduler qualification.",
+    "created_at": "2026-11-03T23:28:04Z",
+    "id": 6618127795,
+    "pr": 85,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Maintainer review found one inline-assembly contract issue in the otherwise-correct remediation: `RDRAND` changes condition flags, so the block could not truthfully declare `preserves_flags`. Commit `29c452c1` removes that declaration. Fresh targeted warning-denying clippy, `make check`, and complete QEMU `make test` all pass (`GINUX_KERNEL_OK`; `Boot test passed.`). Final PR CI is now rerunning.",
+    "created_at": "2026-11-02T01:56:41Z",
+    "id": 6567234856,
+    "pr": 40,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Maintainer validation for exact head `1e222e154dbb2ab6dc1dfc116af8a5b402714acc` passed local `make check`, local `make test`, and the GitHub static/qemu checks. Code review found no immediate defect, but those runs do not demonstrate the reported >=4 GiB EFI load-address path. Before this can be considered fully validated, please add or document a deterministic test that forces the image above 4 GiB and verifies relocation plus handoff.",
+    "created_at": "2026-11-04T15:16:07Z",
+    "id": 6634357286,
+    "pr": 97,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "PR #46 has been synchronized with current main a7a41ae2effebbaae01723a6ae31988e419c9e53 at new head c5280b446c33314da2cc847eb7f00ba049538269 after PR #45 merged and issue #18 closed.\n\nThe Gate 36 checkpoint was reconciled without changing the domain-memory implementation scope. Fresh make check and make test passed on the merged tree, including the domain quota regressions and complete QEMU boot.\n\nGitHub CI is pending. The prior first-pass marker applies only to a superseded head; this exact head requires a fresh marker after both required checks succeed.",
+    "created_at": "2026-11-02T21:06:50Z",
+    "id": 6588469454,
+    "pr": 46,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "PR #53 is synchronized with current main at exact head 5c5f4a56. The staged transaction now uses the current domain-owned runtime frame allocation and rollback lifecycle. Fresh make check and complete make test passed, including GINUX_KERNEL_OK, the staged hierarchy transaction assertion, bounded OCI unpack assertion, and Boot test passed.\n\nThe mandatory make test-rocky-shell integration still failed before exercising this change: all three OCI registry DNS resolutions failed, so no image was downloaded, unpacked, or executed. The HDAE gate therefore remains partial; I am not merging this PR or closing issue #27 until a reachable registry or populated cache allows the rootfs exec path to run end to end.",
+    "created_at": "2026-11-03T21:44:16Z",
+    "id": 6616166246,
+    "pr": 53,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Reviewed #13: the regex covers 8 through 32768, tolerates a trailing CR, and matches the kernel contract. Looks good to me. Thanks!",
+    "created_at": "2026-10-31T21:10:22Z",
+    "id": 6549176795,
+    "pr": 13,
+    "user": "hafid-logic"
+  },
+  {
+    "body": "Reviewed exact head `180cc37f`. The test correctly recomputes the digest after mutating each reserved header byte, so it exercises the reserved-byte invariant rather than failing earlier on checksum validation. Fresh isolated validation passed: `cargo test --package ginux-volume-format` (5/5) and warning-denying test clippy. No blocking finding.\n",
+    "created_at": "2026-11-01T18:13:09Z",
+    "id": 6561894289,
+    "pr": 23,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Reviewed exact head `63e0ef3f`. The counting wrapper proves the equal-payload path performs no writes or flushes, while the changed-payload control advances and recovers durable state. Fresh isolated validation passed: `cargo test --package ginux-volume-service` (8/8) and warning-denying test clippy. No blocking finding.\n",
+    "created_at": "2026-11-01T18:13:11Z",
+    "id": 6561894720,
+    "pr": 34,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Reviewed exact head `cc4de61f`. The overlap check is order-independent, ignores empty sections, preserves adjacency, and covers nonadjacent and read-only overlaps. Fresh isolated validation passed: `make check-pe`, complete `make check`, and complete QEMU `make test` on QEMU 10.1.2/TCG (`GINUX_KERNEL_OK`; `Boot test passed.`). No blocking finding.\n",
+    "created_at": "2026-11-01T18:13:42Z",
+    "id": 6561900884,
+    "pr": 35,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Reviewed exact head `d35f60cf`. Explicit `aw-bits=48` matches the kernel's existing translation-width requirement and leaves the guest checks intact. Fresh isolated validation passed: `bash -n tools/qemu/run.sh`, complete `make check`, and complete QEMU `make test` on QEMU 10.1.2/TCG (`GINUX_KERNEL_OK`; `Boot test passed.`). No blocking finding.\n",
+    "created_at": "2026-11-01T18:13:43Z",
+    "id": 6561900966,
+    "pr": 31,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Reviewed exact head `dc4991ca`. The test independently covers invalid data start, data count, and below-minimum volume geometry while retaining the minimum-valid control. Fresh isolated validation passed: `cargo test --package ginux-volume-format` (5/5) and warning-denying test clippy. No blocking finding.\n",
+    "created_at": "2026-11-01T18:13:06Z",
+    "id": 6561893769,
+    "pr": 33,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Reviewed exact head `ef807311`. The test recomputes the digest after each padding mutation and includes both short- and full-capacity controls, so it isolates the zero-padding contract. Fresh isolated validation passed: `cargo test --package ginux-volume-format` (5/5) and warning-denying test clippy. No blocking finding.\n",
+    "created_at": "2026-11-01T18:13:05Z",
+    "id": 6561893608,
+    "pr": 32,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Scheduled maintainer review at exact head 064aa9efcd7ca1d6b5eaa2d4995c7df0b768d359: this PR is currently CONFLICTING/DIRTY against main 7fdc880e. Its Nov 1 static and qemu checks are green for the old base but are stale for the current integration state.\n\nThe conflict surface includes Cargo/Make integration, generated boot source, native ABI, HDAE checkpoint state, address-space, CPU, paging, PCI, domain, initramfs, memory, boot tests, manifest tooling, and QEMU launch code. This is a semantic integration task rather than a safe mechanical rebase. The PR cannot receive a two-pass validation marker or merge until those conflicts are resolved on its same-repository branch and the complete controller-desktop plus current main regression suites pass.",
+    "created_at": "2026-11-04T00:20:38Z",
+    "id": 6618977961,
+    "pr": 39,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Scheduled remediation update: this branch is now synchronized with current `main` (`c8d1265306067fcf4bb5554af54aa790a49329fa`) at exact head `170b224c` and is no longer conflicted.\n\nFresh local evidence:\n- `make check` — passed\n- complete `make test` — passed, including `GINUX_KERNEL_OK`, Linux runtime compatibility, the staged hierarchy transaction proof, controller-desktop regressions, and `Boot test passed`\n- `make test-rocky-shell` — still externally blocked: guest DHCP succeeded, but all three Docker registry DNS resolutions failed before image download, unpack, or rootfs `exec`\n\nBecause the mandatory rootfs-specific path still did not run, this is not a two-pass merge marker and the PR remains ineligible to merge. GitHub CI may validate the deterministic surfaces on this updated head.",
+    "created_at": "2026-11-04T02:28:35Z",
+    "id": 6620899930,
+    "pr": 53,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Second-pass validation is complete for unchanged head `cdda3a316967dd0476de1df8ed0579e1e9514ba6`: a clean synthetic merge with current main `fe48e646`, fresh `make check`, fresh complete `make test`, and all six current-head GitHub checks pass. No code or acceptance blocker remains.\n\nThe merge attempt itself was rejected because the authenticated GitHub CLI OAuth token lacks the `workflow` scope required to merge a PR that changes `.github/workflows/scheduler.yml`. Maintainer action is needed to refresh that authorization (for example, `gh auth refresh -s workflow`) or merge #85 through an authorized GitHub session. Issue #83 remains open until the merge succeeds.",
+    "created_at": "2026-11-04T15:44:44Z",
+    "id": 6635047535,
+    "pr": 85,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Source finding: https://github.com/gmkurtzer/ginux/issues/5\n\nThis PR implements the compatibility-ledger correction identified during Gate 14 reconciliation. It intentionally does not close the tracking issue.",
+    "created_at": "2026-10-31T06:29:11Z",
+    "id": 6540093930,
+    "pr": 11,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Source: [issue #21](https://github.com/gmkurtzer/ginux/issues/21). This pull request delivers Gate 23's maximum-path `getcwd` capacity correction while preserving existing error behavior. Fresh static and complete QEMU verification passed; the source issue remains open.\n",
+    "created_at": "2026-11-01T18:24:11Z",
+    "id": 6562025026,
+    "pr": 38,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Source: [issue #26](https://github.com/gmkurtzer/ginux/issues/26). This pull request delivers Gate 22's failed-init hierarchy release correction while preserving failed outcome semantics. Fresh static and complete QEMU verification passed; the source issue remains open.\n",
+    "created_at": "2026-11-01T18:21:02Z",
+    "id": 6561988454,
+    "pr": 37,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Source: [issue #30](https://github.com/gmkurtzer/ginux/issues/30). This pull request delivers Gate 21's bounded capability-length correction and exact boundary regression. Fresh static and complete QEMU verification passed; the source issue remains open.\n",
+    "created_at": "2026-11-01T18:17:33Z",
+    "id": 6561947105,
+    "pr": 36,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Source: [issue #4](https://github.com/gmkurtzer/ginux/issues/4). This pull request delivers Gate 19 for the residual host-side queue-size assertion found after PR #10 merged. Verification passed with exact valid/invalid pattern probes, `make check`, and the complete QEMU 10.1.2 `make test`. The source issue remains open and no merge or close action was taken.",
+    "created_at": "2026-10-31T17:06:41Z",
+    "id": 6546511744,
+    "pr": 13,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Source: issue #5\nhttps://github.com/gmkurtzer/ginux/issues/5\n\nThe branch now contains the four corrective implementations summarized in the updated PR body. Local validation passed: make check, make architecture-check, make linux-compat-check, three kernel-policy unit tests, and the complete make test QEMU boot.",
+    "created_at": "2026-10-31T06:35:55Z",
+    "id": 6540153108,
+    "pr": 9,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Superseded by PR #9 at the maintainer direction. The compatibility-ledger implementation has been incorporated there with the other issue #5 corrective work. This PR is intentionally not being closed or merged.",
+    "created_at": "2026-10-31T06:35:39Z",
+    "id": 6540150783,
+    "pr": 11,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Superseding exact-head marker: `e7ff5a52c4c69a5eb48f7e7c98dd7da2ce229202` is the validated code plus the regenerated tracked boot image produced by the successful `make check` / `make test` run. No source changed after validation; the final commit records the generated artifact. Fresh GitHub checks and a later unchanged-head review are still required.",
+    "created_at": "2026-11-03T16:48:39Z",
+    "id": 6610022367,
+    "pr": 73,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Superseding first-pass marker for exact head 86648551fff1880685b0f3bb80a96e269ae810b5. The branch is merged with current main 9e7e2988199b0e9ac4ae55b689f3224991836919. The conflicts in the durable HDAE checkpoint and kernel verification sequence were resolved by retaining both the DMA-quarantine proof and the already-merged Linux mmap/SysV quota proofs. Fresh local make check and the complete two-vCPU make test passed with GINUX_KERNEL_OK and Boot test passed. This changed head is intentionally held for fresh GitHub checks and a later unchanged-head review before merge.",
+    "created_at": "2026-11-03T18:43:56Z",
+    "id": 6612510232,
+    "pr": 50,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Superseding first-pass marker for exact head 86df4b3b045f9966ab4a08132e8837f51371b510. The branch is merged with current main 144d81197f6f93931a4ee0e08696f38da69c517c; the only conflict was the durable HDAE checkpoint. Fresh local make check and the complete two-vCPU make test passed with GINUX_KERNEL_OK, Boot test passed, and the failed IOMMU activation rollback quarantine marker. This changed head is intentionally held for fresh GitHub checks and a later unchanged-head review before merge.",
+    "created_at": "2026-11-03T19:52:06Z",
+    "id": 6613940240,
+    "pr": 51,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Superseding first-pass marker for exact head ecbb1372001b7de4466961344c9d6fdef08728bd. The branch is merged with current main 5dd58ca4da5b346dc5875bc45fb608e87bdefb1b; the only merge conflict was the HDAE status checkpoint. Fresh local make check and full two-vCPU make test passed with GINUX_KERNEL_OK and Boot test passed. No technical limitation was observed. This changed head is intentionally held for fresh GitHub checks and a later unchanged-head review before merge.",
+    "created_at": "2026-11-03T17:45:33Z",
+    "id": 6611276514,
+    "pr": 49,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Synchronized this branch with current `main` after PR #52 merged. The generated checked-release boot source was rebuilt from the merged inputs. Fresh local evidence on exact head `aa6ec207168a4dade7b4aa1e63de9b0988019bc6`: `make check` passed (including the release overflow trap), and complete `make test` passed with `GINUX_KERNEL_OK`, Linux ELF/runtime compatibility, and `Boot test passed`. Waiting for fresh GitHub CI on this exact head before merge.",
+    "created_at": "2026-11-03T21:50:58Z",
+    "id": 6616296032,
+    "pr": 54,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Synchronized with current `main` after PRs #54 and #61 merged. Fresh credential-blocked evidence on exact head `5739ae247acef7b210db374a9f70bb679eb325f4`: `make check` passed, and complete `make test` passed with the nine-case mmap access marker, `GINUX_KERNEL_OK`, Linux ELF/runtime compatibility, and `Boot test passed`. Fresh GitHub CI on this exact head is now the remaining merge condition.",
+    "created_at": "2026-11-03T22:04:27Z",
+    "id": 6616556901,
+    "pr": 81,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Thank you for catching the MAP_PRIVATE over-rejection. The guard is now scoped to `sharing == LINUX_MAP_SHARED` only — MAP_PRIVATE + PROT_WRITE on an O_RDONLY descriptor is unaffected (Linux permits this as a private COW mapping).\n\nThe diff is now exactly 3 lines added to the existing guard block in `linux_runtime_mmap`:\n\n```rust\n|| (sharing == LINUX_MAP_SHARED\n    && protection & LINUX_PROT_WRITE != 0\n    && state & 3 == 1)\n```\n\nI will add the full mapping/access-mode matrix (`{SHARED, PRIVATE} × {PROT_READ, PROT_WRITE, RDWR} × {O_RDONLY, O_WRONLY, O_RDWR}`) as regression coverage in a follow-up.",
+    "created_at": "2026-11-03T20:50:09Z",
+    "id": 6615104431,
+    "pr": 81,
+    "user": "scadastrangelove"
+  },
+  {
+    "body": "Thank you for this contribution and for rebasing it on the transactional rename fix. Independent validation passed `make check`, the full real-QEMU `make test`, and both GitHub jobs, but the current head still has the blocking native x86-64 `preadv2`/`pwritev2` edge case recorded in the requested-changes review: `pos_h` must also be ignored when recognizing the `offset == -1` current-position sentinel. Because the standalone-kernel phase is now frozen and this repository is being prepared for archival, we are no longer asking contributors for another kernel-development iteration and cannot merge a head with that known compatibility defect. Active development has moved to Ginux Userspace: https://github.com/gmkurtzer/ginux-us. The external source branch remains contributor-owned and has not been deleted.",
+    "created_at": "2026-11-04T17:41:54Z",
+    "id": 6637671259,
+    "pr": 91,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Thank you for this review, and you are completely right. A rename that fails must not change either path, and a bounded overlay makes that failure very real. The target-unlink-before-rename ordering was already on `main`, but my patch made it reachable from many more cases, so I fixed both in one follow-up commit: **\"Make overlay rename of image files transactional\"** (added on top, so you can review just the change).\n\n## What changed\n\n`linux_overlay::rename()` now does the whole operation as one transaction. It takes the source (an overlay node, or a lower file to copy up) and whether the old path needs a whiteout, and returns `Result<(), RenameError>`:\n\n1. **Validate everything first.** This covers the target path, source vs. target (not the same, not inside it), an empty target directory, the descendant path lengths and conflicts, and generation and inode overflow. Nothing visible has changed at this point.\n2. **Reserve before mutating.** The node slot for the old-path whiteout is reserved (allocating a node page if needed) before anything visible changes.\n3. **Commit with no fallible step.** Rewrite the paths, unlink the replaced target only after the move, then write the whiteout into the reserved slot.\n4. **Roll back the copy-up.** If anything fails after a lower file was copied up, a new `discard()` frees the copy's slot and pages, so the old path shows the image entry again exactly as before.\n\n`linux_renameat()` now ends with a single `rename()` call that maps the error to ENOTEMPTY / EIO / ENOSPC. As a small side fix, `create()` now discards (rather than unlinks) a node whose initial write fails, so it no longer leaks a slot.\n\n## Deterministic failure injection\n\n`INJECTED_FRAME_FAILURE`, active only in the verification build, makes the *n*-th overlay frame allocation fail. `verify_rename_rollback()` runs at boot next to the overlay quota check. On success it prints `ginux: failed Linux overlay renames left both paths unchanged`, which `tests/qemu/boot.sh` now requires. Every failed case asserts four things:\n- the expected error;\n- that the injected failure was actually reached;\n- that the old and the new path are identical before and after (whiteout state, handle/inode/generation, kind, mode, size and content);\n- that the number of free node slots is unchanged, which proves the copy-up was rolled back.\n\n| Case (your numbering) | Setup | Injected failure | Result |\n|---|---|---|---|\n| (1) no capacity for the source whiteout | lower file; the copy-up takes the last free slot | 2nd allocation (whiteout page) | ENOSPC, copy-up discarded, both paths unchanged |\n| (2) existing overlay target staged for replacement | lower file onto an existing overlay file | 2nd allocation | ENOSPC, target handle and content kept |\n| (2) overlay source shadowing a lower file | onto the overlay target, 0 free slots | 1st allocation (whiteout) | ENOSPC, both kept |\n| (2) the move itself fails | directory whose child path would overflow at the target, onto an existing empty directory | none | error; target directory and child kept (on `main` this case deleted the target) |\n| copy-up fails | lower file, no free slot / no data page | 1st allocation | ENOSPC, nothing changed |\n| (3) success path | lower file onto the overlay target | none | new content and handle at the target, old target unlinked, old path whited out |\n\nA boot-time test cannot have a real image layer, so the lower entry is modelled as a path with no overlay node and no whiteout. That is exactly what the merged view resolves to the image entry. The syscall layer is now a single call plus the error mapping, and its success path is covered by the runtime probes.\n\n## Verification\n\n- With the fix: `make check` passes, and `tests/qemu/boot.sh` prints \"Boot test passed.\" under KVM and under TCG.\n- **The test catches the bug:** with the verification kept and the fix reverted, the boot fails with `ginux: Linux overlay rename rollback invalid`. Reverting each part on its own (no copy-up rollback / target unlinked before validation / whiteout allocated after the move) fails as well.\n- The runtime rename probes (probe-11, probe-26) are unchanged.\n- The branch still merges cleanly into current `main`. PR #91 is rebased on this commit, and its own change is untouched.\n\nThanks again for the careful review. If you would prefer the reservation or the injection hook shaped differently, I am happy to change it.\n",
+    "created_at": "2026-11-04T16:37:40Z",
+    "id": 6636226622,
+    "pr": 90,
+    "user": "meleficarumvaldis"
+  },
+  {
+    "body": "Thank you very much for the careful validation, and you are absolutely right: the existing boot tests use 1 GiB guests, so they never reach the high-load path. I have pushed a follow-up commit that adds a deterministic test for it.\n\n**`tests/qemu/efi-load-above-4g.sh`** (`make test-efi-load-above-4g`) boots the normal image twice:\n\n- **`GINUX_MEMORY=8G`:** OVMF places `GINUX.EFI` at its 5 GiB link base. The test requires all of the following:\n  - The reported load base is ≥ 4 GiB, so the test fails instead of passing vacuously if the firmware ever stops loading the image high.\n  - The relocation target ends ≤ 4 GiB.\n  - The copy reports that it is running at exactly that target.\n- **`GINUX_MEMORY=1G`:** the image must end below 4 GiB, and neither the relocation line nor the \"entered\" line may appear. This covers the no-relocation branch.\n- **Both boots:** each must reach `GINUX_KERNEL_OK`, the ring-3 controller prompt and a clean shutdown, with no `GINUX_BOOT_PANIC` or `GINUX_KERNEL_PANIC`. The kernel rejects a handed-off image outside its identity map before `GINUX_KERNEL_OK`, so this also covers the handoff.\n\nTo make this observable, the UEFI stage now prints three serial lines. There is no other logic change.\n\n```\nginux: EFI image loaded at 0x140000000 size 0x1b30b000\nginux: EFI image relocated below 4 GiB to 0x60bb3000\nginux: EFI image entered at relocated base 0x60bb3000\n```\n\nResults on an AMD Zen 3 host:\n\n| Tree | Test | Result |\n|---|---|---|\n| this PR + test | `make test-efi-load-above-4g`, KVM | pass (0x140000000 → 0x60bb3000; 1G at 0x1c8b8000, not relocated) |\n| this PR + test | `make test-efi-load-above-4g`, TCG | pass (about 12 s for both boots) |\n| this PR + test | `make check`, `make test`, `tests/qemu/boot.sh` (TCG) | pass |\n| without the relocation fix (test only) | `make test-efi-load-above-4g` | **fails**: `ginux: loaded EFI image is outside the identity map`, `GINUX_KERNEL_PANIC` |\n\nI also added the test to the qemu job in `check.yml`, right after the smoke test. Under TCG it costs two normal boots. QEMU allocates guest RAM lazily, so the 8 GiB guest peaked at about 1.1 GiB host RSS. I measured that on Linux, not on the macOS runner. If you would rather keep it out of CI, I will drop that hunk.\n\nThanks again for the thorough review!\n",
+    "created_at": "2026-11-04T16:19:24Z",
+    "id": 6635809753,
+    "pr": 97,
+    "user": "meleficarumvaldis"
+  },
+  {
+    "body": "Thanks for continuing the review of this one! I have rebased this branch onto the updated #90, which now makes the image-file rename transactional and adds the failure-injection boot check you asked for. The 11b change itself is byte-for-byte unchanged; please review only the last commit as before.",
+    "created_at": "2026-11-04T16:37:41Z",
+    "id": 6636227189,
+    "pr": 91,
+    "user": "meleficarumvaldis"
+  },
+  {
+    "body": "Thanks for enabling release overflow checks. At head a0e9220b (QEMU 10.0.13/10.1.2, TCG: doctor/check/test pass), reading the code and running the verbatim logic in a host harness suggests five eager expressions that would now panic where release previously wrapped silently (not reproduced in a guest):\n- linux_overlay.rs:539: `then_some(node.fifo_socket - 1)` evaluates its argument even when fifo_socket == 0.\n- cpu.rs:22504, 23983, 25167, 37712: the `byte - b'0'` fold underflows for any byte below '0' (e.g. `/`) after `/proc/self/fd/`.\nA lazy `then(|| ..)` or `checked_sub` would avoid it. Worth handling before merge? (AI-assisted; details available.)\n",
+    "created_at": "2026-11-02T10:05:18Z",
+    "id": 6574390843,
+    "pr": 54,
+    "user": "hafid-logic"
+  },
+  {
+    "body": "Thanks for the contribution. I reviewed this change closely.\n\nchild.name is already a byte slice. Passing it directly to zip already uses IntoIterator for a byte-slice reference, which produces the same slice iterator as child.name.iter(). As a result, this change is behaviorally equivalent and does not improve safety, type consistency, or performance. The added comment also implies that the previous safe Rust expression was less robust, which is not the case.\n\nThe PR title mentions test cleanup, but no tests were changed. The existing ginux-command unit tests pass, though they do not demonstrate any benefit from this change.\n\nCould you point to a concrete compiler error, failing case, or measurable improvement that this addresses? Without that evidence, I do not see a reason to merge this change.",
+    "created_at": "2026-10-30T22:54:31Z",
+    "id": 6535221308,
+    "pr": 6,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "The approved QEMU rerun completed successfully on unchanged exact head eccb0de772f79b55c0c1c17b9fa0c59fe2e09ef0; static and qemu are now both green. The earlier QEMU failure was hosted-runner infrastructure, not a project test failure. This PR remains contributor-owned and draft, so it is not merge-eligible until the contributor marks it ready for review.",
+    "created_at": "2026-11-03T18:43:55Z",
+    "id": 6612510000,
+    "pr": 61,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "The deterministic surfaces remain strong: the exact head passed `make check`, full `make test`, and both GitHub jobs. However, this PR explicitly made `make test-rocky-shell` mandatory, and three attempts failed before image download, unpack, or rootfs exec because registry DNS was unavailable. The branch is also now behind current `main`. With standalone-kernel development frozen for archival, we will not weaken that acceptance criterion, start another remediation branch, or keep an indefinitely externally blocked PR open. Closing this PR as unverified on its required end-to-end path. The same-repository branch is not being deleted because the PR was not merged. Active development has moved to https://github.com/gmkurtzer/ginux-us.",
+    "created_at": "2026-11-04T17:42:36Z",
+    "id": 6637685276,
+    "pr": 53,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "The first approved QEMU job failed before any project build or test ran: GitHub reports that the hosted runner lost server communication while Homebrew was installing QEMU. Static CI passed on exact head eccb0de772f79b55c0c1c17b9fa0c59fe2e09ef0. I restarted only the failed QEMU job; the PR remains draft and is not merge-eligible.",
+    "created_at": "2026-11-03T17:45:45Z",
+    "id": 6611280965,
+    "pr": 61,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "The new head 28f1605bbd4fa5f8a7b1b0df683f927663a94916 removes the previously blocking SysV memory-accounting regression; the remaining kernel edits are type annotations. I have not run this external branch. GitHub now reports the new head as action_required, so its workflow needs a fresh maintainer approval before validation can continue. The prior changes-requested review remains unresolved until this exact head passes required checks and independent review.",
+    "created_at": "2026-11-03T17:42:20Z",
+    "id": 6611208959,
+    "pr": 74,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "The reproducibility blocker is addressed at head `cdda3a316967dd0476de1df8ed0579e1e9514ba6`.\n\n- #84 is merged, and this branch now integrates main `c8d12653`, preserving the desktop controller's nonblocking read behavior.\n- All fixtures are compiled from this checkout; the repository seeder creates a fresh 64 MiB offline cache. No private volume, registry pull or access to the contributor's host is required.\n- [Independent public scheduler acceptance](https://github.com/gmkurtzer/ginux/actions/runs/41805685712) passes all three TCG cells (1/2/4 CPUs) and the full deterministic `make test` job. [Static and QEMU smoke checks](https://github.com/gmkurtzer/ginux/actions/runs/41805685592) also pass.\n- The downloaded artifacts contain all 14 expected cases: 12 candidate cases plus cooperative and starvation controls on pinned pre-fix `7fdc880e`. The cooperative baseline responds; its no-syscall spinner does not. All artifacts identify tested merge commit `b3d2fb518a35f98d2e4245a96d4ec2011706dd09` and include EFI/payload hashes, commands, JSON results and serial logs.\n- Context checks require hardware CPU masks, intact register/extended-state sentinels, clean exits and overlapping computation on the shared realtime clock. The original per-domain-monotonic overlap calculation was corrected and its results are explicitly superseded. The continuous four-worker workload must remain active after each restart.\n\nOne-command targeted acceptance on Linux without KVM:\n\n```sh\nmake test-scheduler SCHEDULER_TEST_ARGS='--accel tcg --iterations 5000000 --quiet-seconds 180 --response-timeout 20 --output build/scheduler-tcg'\n```\n\nThe workflow includes the separately built pre-fix controls; instructions for reproducing those locally are in [tests/scheduler/README.md](https://github.com/scadastrangelove/ginux/blob/fix/background-domain-preemption/tests/scheduler/README.md). [Validation notes](https://github.com/scadastrangelove/ginux/blob/fix/background-domain-preemption/docs/scheduler/REVIEW.md) retain the contributor Linux native-volume failures and the unqualified distribution suites; those failures are not counted as passes. The public full-integration job passed independently.\n\nThe PR is ready for another maintainer review; acceptance and merge remain with the maintainer.",
+    "created_at": "2026-11-04T09:28:59Z",
+    "id": 6627429819,
+    "pr": 85,
+    "user": "scadastrangelove"
+  },
+  {
+    "body": "The semantic correction on exact head d161f50d6ebb25b24a92a65674747c490ed537cb is now scoped correctly: MAP_PRIVATE writable mappings from O_RDONLY are no longer rejected.\n\nThe requested regression matrix is still a merge blocker and should be included in this PR, not deferred. This is an access-control boundary where the previous revision introduced an adjacent semantic regression, so deterministic coverage must prove the accepted and rejected combinations before merge. GitHub Actions have not run for this external head; maintainer workflow approval is still required once the test revision is pushed. I am leaving the existing changes-requested review in place.",
+    "created_at": "2026-11-03T20:52:06Z",
+    "id": 6615142740,
+    "pr": 81,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "This PR implements Gate 38 for issue #22. The issue has been updated with the diagnosis, scope, and local verification evidence.\n\nLocal gates passed: focused kernel check, `make check`, and complete `make test`. Merge and issue closure remain maintainer decisions.",
+    "created_at": "2026-11-02T03:40:10Z",
+    "id": 6568484291,
+    "pr": 47,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "This PR implements Gate 39 for issue #24. The issue has been updated with the confirmed cause, coverage, and local evidence.\n\nLocal `make check` and complete `make test` pass; merge and issue closure remain maintainer decisions.",
+    "created_at": "2026-11-02T03:48:49Z",
+    "id": 6568583836,
+    "pr": 48,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "This PR implements Gate 40 for issue #25. The issue has been updated with the confirmed fast-path gap and verification evidence.\n\nLocal `make check` and complete two-vCPU `make test` pass; merge and issue closure remain maintainer decisions.",
+    "created_at": "2026-11-02T03:53:04Z",
+    "id": 6568633019,
+    "pr": 49,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "This PR implements Gate 42 for issue #28. The issue has been updated with the confirmed teardown gap, fail-closed quarantine rule, and local evidence.\n\nLocal `make check` and complete `make test` pass; merge and issue closure remain maintainer decisions.",
+    "created_at": "2026-11-02T03:58:03Z",
+    "id": 6568690045,
+    "pr": 50,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "This is an adversarial review generated by Grok Bot (an AI assistant) at Vince's request, checked against the code at `64effa48538a52d081d77fe79d566675f8323e96`. Findings may contain mistakes; please verify.\n\n**Summary.** The kernel-side change is correct and small: `verify_network_queue_rejections` now uses the same validator as device initialization, so a 1024-entry queue no longer trips the boot-time assertion. But it doesn't fix #4 end to end. `tests/qemu/boot.sh` still requires the serial log to say exactly `256`, so `make test` still fails on QEMU 10.0.13. The gate doc skipped a QEMU 10.0.13 run because \"issue #4 identifies the assertion failure precisely\". That run is exactly what would have caught the second assertion.\n\n**What I ran** (x86-64 Linux VM, Rust 1.99.0 from `rust-toolchain.toml`, Debian QEMU 10.0.13, OVMF 2025.02, TCG because the VM has no KVM access):\n- `make check` on this head passed.\n- `make test` on #9's head without this PR fails with `ginux: virtio network initialization invariant failed`. That's #4 reproduced, and QEMU logs `receive queue size: 1024`.\n- `make test` on #9 with this PR merged in: the kernel boots to `GINUX_KERNEL_OK`, then `boot.sh` fails with `the bounded virtio-net discovery boundary was not established` because of the `256` grep below.\n\nSeverity: **P0** critical correctness/security bug or a false claim, **P1** high (claim overstated in a way that matters, or the property isn't actually enforced), **P2** medium, **P3** low, **P4** minor, **P5** nit. \"Overengineering risk\" estimates how likely a fix is to grow into new machinery that isn't needed yet, and says what not to build.\n\n### Findings\n\n- [ ] **P1: `make test` still fails on QEMU 10.0.13, because `boot.sh` hardcodes 256 a second time**\n  - Evidence: [`tests/qemu/boot.sh#L164-L165`](https://github.com/gmkurtzer/ginux/blob/64effa48538a52d081d77fe79d566675f8323e96/tests/qemu/boot.sh#L164-L165) greps for `virtio-net receive/transmit queue size: 256`. With this PR merged, the kernel prints `1024` and passes its own check, and then the script fails. The gate's acceptance criterion ([`13-virtio-queue-size-compatibility.md#L39`](https://github.com/gmkurtzer/ginux/blob/64effa48538a52d081d77fe79d566675f8323e96/hdae/gates-todo/13-virtio-queue-size-compatibility.md#L39)) is met inside the kernel, but #4's symptom (red `make test`) remains. The decision not to run QEMU 10.0.13 ([`#L60-L61`](https://github.com/gmkurtzer/ginux/blob/64effa48538a52d081d77fe79d566675f8323e96/hdae/gates-todo/13-virtio-queue-size-compatibility.md#L60-L61)) is why this was missed.\n  - Smallest fix: make those two greps accept any valid size, for example `grep -Eq '^ginux: virtio-net receive queue size: (8|16|32|64|128|256|512|1024|2048|4096|8192|16384|32768)[[:space:]]*$'`. Serial lines end in `\\r`, so a bare `$` anchor won't match. I tried exactly this locally and the virtio-net discovery block then passes on QEMU 10.0.13.\n  - Overengineering risk: **Low.** It's a two-line test change. Don't add a QEMU version matrix to CI for this. One run on the QEMU version from #4 is enough evidence.\n\n- [ ] **P4: the boot-time check is now weaker, and nothing outside the kernel pins the host-reported geometry**\n  - Evidence: before, the check proved QEMU offered exactly 256/256. Now any power of two ≥ 8 passes ([`pci.rs#L3442-L3446`](https://github.com/gmkurtzer/ginux/blob/64effa48538a52d081d77fe79d566675f8323e96/kernel/src/arch/x86_64/pci.rs#L3442-L3446)). That's the intended behavior, and the driver still programs its own 8-entry queues. I'm only noting that the extra constant checks (`1000` → reject, `1024` → accept, [`#L3456-L3457`](https://github.com/gmkurtzer/ginux/blob/64effa48538a52d081d77fe79d566675f8323e96/kernel/src/arch/x86_64/pci.rs#L3456-L3457)) test the validator on every boot rather than the device.\n  - Smallest fix: none needed now. If #9's `ginux-kernel-policy` crate lands, `validate_network_queue_size` is a natural pure function to move there, and these constants would become a host unit test.\n  - Overengineering risk: **Medium.** Don't build a virtio-geometry test framework or mock device for this. The validator is one line.\n\n### Claims checked and confirmed\n- Every virtio-net initialization path already calls `validate_network_queue_size` before programming `QUEUE_SIZE` ([`pci.rs#L1236`](https://github.com/gmkurtzer/ginux/blob/64effa48538a52d081d77fe79d566675f8323e96/kernel/src/arch/x86_64/pci.rs#L1236), [`#L1351`](https://github.com/gmkurtzer/ginux/blob/64effa48538a52d081d77fe79d566675f8323e96/kernel/src/arch/x86_64/pci.rs#L1351), [`#L2254`](https://github.com/gmkurtzer/ginux/blob/64effa48538a52d081d77fe79d566675f8323e96/kernel/src/arch/x86_64/pci.rs#L2254), [`#L2545`](https://github.com/gmkurtzer/ginux/blob/64effa48538a52d081d77fe79d566675f8323e96/kernel/src/arch/x86_64/pci.rs#L2545), [`#L2580`](https://github.com/gmkurtzer/ginux/blob/64effa48538a52d081d77fe79d566675f8323e96/kernel/src/arch/x86_64/pci.rs#L2580)). In the kernel, only the verification check required 256.\n- The validator rejects 0, 7, 255 and 1000 and accepts 8, 256 and 1024, and it has no upper-bound problem, since the largest power of two in a `u16` is 32768, the virtio maximum.\n- Scope stayed as stated: no change to queue allocation, notification layout or negotiation.\n- On QEMU 10.0.13 the kernel-side assertion from #4 is gone with this PR applied (the boot reaches `GINUX_KERNEL_OK`).\n",
+    "created_at": "2026-10-31T13:25:07Z",
+    "id": 6543944062,
+    "pr": 10,
+    "user": "veighnsche"
+  },
+  {
+    "body": "This is an adversarial review generated by Grok Bot (an AI assistant) at Vince's request, checked against the code at `d1539711c179930214ee8443663a7ba01017215f`. Findings may contain mistakes; please verify.\n\n**Summary.** This PR does real work: a focused `linux_random.rs` extraction, warning-denying kernel clippy, read-only CI that actually boots the kernel, a corrected compatibility ledger, and a reconciliation doc. Several claims go further than the code, though:\n- **`make test`:** the \"passes\" claim only holds for the QEMU that Homebrew ships today. On QEMU 10.0.13 it still fails (#4).\n- **QEMU suite stability:** once that is patched around, the suite is flaky on an x86-64 host, in the same native-volume recovery invariants that the runner switch was meant to avoid.\n- **Unsafe ratchet:** it doesn't enforce its own acceptance criterion.\n- **Gate-14 doc:** it marks items \"Resolved\" that are resolved by a global kernel-entry lock (or, for the paper, not changed).\n\nNone of this argues against merging the CI and lint pieces. It argues against ticking #5's boxes on the strength of this PR's wording.\n\n**What I ran** (x86-64 Linux VM, 8 vCPUs, Rust 1.99.0 via `rust-toolchain.toml`, clang/lld 19, Debian QEMU 10.0.13 + OVMF 2025.02, TCG because the VM has no KVM access):\n- **`make check`:** passed (architecture checks, unsafe baseline `1033 / 109 / 1`, compat `53/257/48/17/0`, kernel clippy, `ginux-kernel-policy` 4 tests).\n- **`make test` on this head:** fails with `ginux: virtio network initialization invariant failed` (#4).\n- **`make test` on this head + #10:** the kernel reaches `GINUX_KERNEL_OK`, then `boot.sh` fails on its hardcoded `queue size: 256` grep.\n- **`make test` on this head + #10 + a local 2-line `boot.sh` fix:** I ran it 12 times and it **passed 3**. Six were default runs (2 passed), three used `QEMU_TCG_THREAD=single` (1 passed), and three used `GINUX_CPUS=1` (0 passed). All 9 failures were native-volume invariant panics, with 5 distinct messages: `post-descriptor-rejection recovery`, `post-ABI-rejection recovery`, `replacement native volume service`, `post-fault native volume recovery` and `post-cancellation native volume`.\n- **Unsafe ratchet bypass:** a scratch edit adding an `unsafe fn` (raw pointer write) and an `unsafe impl Sync` passed `check-kernel-unsafe.sh` unchanged.\n\nSeverity: **P0** critical correctness/security bug or a false claim, **P1** high (claim overstated in a way that matters, or the property isn't actually enforced), **P2** medium, **P3** low, **P4** minor, **P5** nit. \"Overengineering risk\" estimates how likely a fix is to grow into new machinery that isn't needed yet, and says what not to build.\n\n### Findings\n\n- [ ] **P1: the QEMU suite is flaky on an x86-64 host too, so the runner switch hid the problem rather than fixing it**\n  - Evidence: [`17-ci-kernel-policy-tests.md#L65-L73`](https://github.com/gmkurtzer/ginux/blob/d1539711c179930214ee8443663a7ba01017215f/hdae/gates-todo/17-ci-kernel-policy-tests.md#L65-L73) says run `41179498965` \"failed a separate native volume recovery invariant under x86 QEMU cross-emulated on the macOS arm64 runner\", and that the job now uses `macos-15-intel` \"so the x86-64 guest is not cross-architecture translated\". But `default_accelerator` only picks KVM on Linux ([`common.sh#L52-L58`](https://github.com/gmkurtzer/ginux/blob/d1539711c179930214ee8443663a7ba01017215f/tools/qemu/common.sh#L52-L58)), so the Intel macOS runner also uses TCG, which binary-translates either way. On an x86-64 host I hit the same class of failure in 9 of 12 runs (see \"What I ran\"), including with one guest CPU and with single-threaded TCG. So it isn't an arm64-host or MTTCG artifact. (My VM is shared and may have been under load, but so are CI runners, and that is the point.) The CI green is 2 runs on the new runner ([`41179779273`](https://github.com/gmkurtzer/ginux/actions/runs/41179779273), [`41180277867`](https://github.com/gmkurtzer/ginux/actions/runs/41180277867)). It's worth noting the paper's own host is Apple Silicon ([`BENCHMARKING.md#L66`](https://github.com/gmkurtzer/ginux/blob/d1539711c179930214ee8443663a7ba01017215f/docs/BENCHMARKING.md#L66)), which is exactly where this failed in CI. This PR doesn't touch the native-volume code, so the flakiness is probably pre-existing. But this is the PR that claims `make test` passes and turns it into CI.\n  - Smallest fix: open one tracking issue with a failing log, and reword the gate evidence to \"intermittent on TCG; under investigation\". Then look at what those recovery invariants wait on. Every failure I saw is a post-fault/post-rejection recovery check, which smells like a deadline or poll budget that TCG speed can miss.\n  - Overengineering risk: **Medium.** Don't build a retry/quarantine harness, a multi-runner matrix, or a deterministic-replay setup. One issue, a loop of ~10 local runs and, if it's a timeout, one budget change is the proportionate response.\n\n- [ ] **P1: `make test` still fails on QEMU 10.0.13, so \"`make test` passes / delivery gap corrected\" depends on the Homebrew QEMU version**\n  - Evidence: on this head, the boot panics at [`lib.rs#L931-L941`](https://github.com/gmkurtzer/ginux/blob/d1539711c179930214ee8443663a7ba01017215f/kernel/src/lib.rs#L931-L941). That's the `== 256` assertion from #4, which #10 fixes in the kernel. Even with #10, [`boot.sh#L170-L171`](https://github.com/gmkurtzer/ginux/blob/d1539711c179930214ee8443663a7ba01017215f/tests/qemu/boot.sh#L170-L171) greps for `queue size: 256`. The workflow installs whatever `brew install qemu` gives ([`check.yml#L25`](https://github.com/gmkurtzer/ginux/blob/d1539711c179930214ee8443663a7ba01017215f/.github/workflows/check.yml#L25)), and that already broke once on QEMU 11's VT-d encoding.\n  - Smallest fix: land #10 plus the two `boot.sh` greps (accept any power of two ≥ 8, and allow the trailing `\\r`), and print `qemu-system-x86_64 --version` in the CI log.\n  - Overengineering risk: **Low.** Don't add a QEMU version matrix. One version log line and the #4 fix are enough for now.\n\n- [ ] **P1: the unsafe ratchet doesn't enforce \"new unsafe blocks fail checks\"**\n  - Evidence: [`check-kernel-unsafe.sh#L7-L22`](https://github.com/gmkurtzer/ginux/blob/d1539711c179930214ee8443663a7ba01017215f/tools/architecture/check-kernel-unsafe.sh#L7-L22) counts the text `unsafe {` and the text `SAFETY:` across the whole tree. Because of that:\n    - **`unsafe fn` and `unsafe impl` aren't counted.** That's 61 and 25 today. Under edition 2021 an `unsafe fn` body is an implicit unsafe block. A scratch edit adding `pub(crate) unsafe fn f(a: u64, v: u64) { *(a as *mut u64) = v; }` plus an `unsafe impl Sync` passed unchanged.\n    - **Swaps pass.** Removing one block anywhere and adding an undocumented one elsewhere passes. So does adding any `SAFETY:` comment anywhere.\n    - **This PR does it itself.** The new [`linux_random.rs#L13-L64`](https://github.com/gmkurtzer/ginux/blob/d1539711c179930214ee8443663a7ba01017215f/kernel/src/arch/x86_64/cpu/linux_random.rs#L13-L64) has 3 `unsafe` blocks and an `unsafe impl Sync` with 0 `SAFETY:` comments, and it passes.\n\n    This contradicts the acceptance criterion at [`16-kernel-unsafe-lint-enforcement.md#L39`](https://github.com/gmkurtzer/ginux/blob/d1539711c179930214ee8443663a7ba01017215f/hdae/gates-todo/16-kernel-unsafe-lint-enforcement.md#L39). The kernel clippy run doesn't cover this either, because `clippy::undocumented_unsafe_blocks` is allow-by-default.\n  - Smallest fix: keep the count as a coarse ceiling, and in new or extracted modules (starting with `linux_random.rs`) add `#![deny(clippy::undocumented_unsafe_blocks, unsafe_op_in_unsafe_fn)]` and write the four missing `SAFETY:` comments. Optionally count `unsafe fn|impl` in the script, which is a one-regex change. Reword the criterion to \"the total doesn't grow\" if that's what's intended.\n  - Overengineering risk: **High.** It would be easy to respond with a custom unsafe inventory tool, an AST-based checker, or a push to document all 1,033 blocks. None of that is needed now. Per-module clippy lints on code you touch, ratcheting outward, achieve the property with zero new tooling.\n\n- [ ] **P1: `sendmmsg` (307) and `recvmmsg` (299) are still `Complete` after `sendmsg`/`recvmsg` became `Partial`**\n  - Evidence: [`LINUX-COMPATIBILITY.md#L761`](https://github.com/gmkurtzer/ginux/blob/d1539711c179930214ee8443663a7ba01017215f/docs/LINUX-COMPATIBILITY.md#L761) and [`#L769`](https://github.com/gmkurtzer/ginux/blob/d1539711c179930214ee8443663a7ba01017215f/docs/LINUX-COMPATIBILITY.md#L769). Both loop over the now-`Partial` paths ([`cpu.rs#L28472`](https://github.com/gmkurtzer/ginux/blob/d1539711c179930214ee8443663a7ba01017215f/kernel/src/arch/x86_64/cpu.rs#L28472), [`#L28552`](https://github.com/gmkurtzer/ginux/blob/d1539711c179930214ee8443663a7ba01017215f/kernel/src/arch/x86_64/cpu.rs#L28552)). They also return `EINVAL` for `vlen > 64` where Linux clamps to 1024, and `recvmmsg` writes a zero timeout back instead of the remaining time ([`#L28612`](https://github.com/gmkurtzer/ginux/blob/d1539711c179930214ee8443663a7ba01017215f/kernel/src/arch/x86_64/cpu.rs#L28612)). The Gate-14 table says this ledger item is \"Corrected\" ([`GATE-14…md#L25`](https://github.com/gmkurtzer/ginux/blob/d1539711c179930214ee8443663a7ba01017215f/docs/feedback-hardening/GATE-14-CRITICISM-RECONCILIATION.md#L25)). (This is the same finding as in my #11 review; the files are identical.)\n  - Smallest fix: mark both `Partial` and update the totals to 51/259.\n  - Overengineering risk: **Low.** It's a label change. Socket semantics work is separate.\n\n- [ ] **P2: `rdrand` inline asm is declared `preserves_flags` but writes CF/OF/SF/ZF/AF/PF**\n  - Evidence: [`linux_random.rs#L13-L20`](https://github.com/gmkurtzer/ginux/blob/d1539711c179930214ee8443663a7ba01017215f/kernel/src/arch/x86_64/cpu/linux_random.rs#L13-L20) runs `rdrand` then `setc` with `options(nostack, preserves_flags)`. `RDRAND` sets CF and clears the other status flags, so the option is a false promise to the compiler, which is undefined behavior under Rust's inline-asm rules. It's latent today, but an optimizer change could keep a comparison result in flags across this block. This is moved code, not new, and it's the only `rdrand`/`rdseed` use in the kernel.\n  - Smallest fix: drop `preserves_flags` (keep `nostack`), and add a `// SAFETY:` line while you're there.\n  - Overengineering risk: **Low.** It's a one-word fix. Don't turn it into an audit of every `asm!` block.\n\n- [ ] **P2: the Gate-14 table says \"Resolved\" for globals and exclusion, which is true only because of one global kernel-entry lock**\n  - Evidence:\n    - **Globals and exclusion:** [`GATE-14…md#L20-L21`](https://github.com/gmkurtzer/ginux/blob/d1539711c179930214ee8443663a7ba01017215f/docs/feedback-hardening/GATE-14-CRITICISM-RECONCILIATION.md#L20-L21) mark \"globals cannot survive SMP\" and \"exclusion relies on one CPU\" as Resolved. State still lives in 213 `Banked*` statics in `cpu.rs`, and syscalls are serialized by a single `KERNEL_ENTRY_LOCK` ([`sync.rs#L32`](https://github.com/gmkurtzer/ginux/blob/d1539711c179930214ee8443663a7ba01017215f/kernel/src/sync.rs#L32), [`#L180-L182`](https://github.com/gmkurtzer/ginux/blob/d1539711c179930214ee8443663a7ba01017215f/kernel/src/sync.rs#L180-L182), taken at [`linux_syscall.rs#L11`](https://github.com/gmkurtzer/ginux/blob/d1539711c179930214ee8443663a7ba01017215f/kernel/src/arch/x86_64/cpu/linux_syscall.rs#L11) and [`#L59`](https://github.com/gmkurtzer/ginux/blob/d1539711c179930214ee8443663a7ba01017215f/kernel/src/arch/x86_64/cpu/linux_syscall.rs#L59)). A big kernel lock is a legitimate design for this stage, but the table should say that's the mechanism.\n    - **Paper item:** marked \"Resolved in repository reporting\" ([`#L26`](https://github.com/gmkurtzer/ginux/blob/d1539711c179930214ee8443663a7ba01017215f/docs/feedback-hardening/GATE-14-CRITICISM-RECONCILIATION.md#L26)), but this PR doesn't change the paper. The \"Observed ratio 3.31×\" column is still there ([`ginux-ai-systems-report.tex#L591-L593`](https://github.com/gmkurtzer/ginux/blob/d1539711c179930214ee8443663a7ba01017215f/docs/paper/ginux-ai-systems-report.tex#L591-L593)). The existing caveats are real, so \"Won't change; caveat retained\" would be accurate, but \"Resolved\" isn't.\n  - Smallest fix: reword the three rows, for example \"Mitigated: correct under SMP via a global kernel-entry lock; state not yet per-process/per-thread\" and \"Not changed; existing caveat retained\".\n  - Overengineering risk: **High.** Don't respond by starting fine-grained locking or migrating `Banked*` state into process objects just to earn the word \"Resolved\". The BKL is fine for now. Fix the wording.\n\n- [ ] **P2: the doc's own \"Maintainer response\" section contradicts its table**\n  - Evidence: [`GATE-14…md#L55-L60`](https://github.com/gmkurtzer/ginux/blob/d1539711c179930214ee8443663a7ba01017215f/docs/feedback-hardening/GATE-14-CRITICISM-RECONCILIATION.md#L55-L60) still says \"CI and kernel unit-test coverage are still missing, and the compatibility ledger's Complete labels remain internally inconsistent\", while rows [`#L24-L25`](https://github.com/gmkurtzer/ginux/blob/d1539711c179930214ee8443663a7ba01017215f/docs/feedback-hardening/GATE-14-CRITICISM-RECONCILIATION.md#L24-L25) say \"Corrected\". It's stale text from the reconciliation-only first round.\n  - Smallest fix: update or delete that paragraph.\n  - Overengineering risk: **Low.**\n\n- [ ] **P3: \"the kernel has no unit tests\" is marked Corrected, but the kernel crate still has 0 `#[test]`s**\n  - Evidence: [`GATE-14…md#L24`](https://github.com/gmkurtzer/ginux/blob/d1539711c179930214ee8443663a7ba01017215f/docs/feedback-hardening/GATE-14-CRITICISM-RECONCILIATION.md#L24). The new crate ([`kernel-policy/src/lib.rs`](https://github.com/gmkurtzer/ginux/blob/d1539711c179930214ee8443663a7ba01017215f/crates/kernel-policy/src/lib.rs)) holds four validators (about 40 lines) with 4 tests. The PR description says \"3 passed\", but `cargo test` shows 4. That's a good seam, and Gate 17 itself is careful (\"Do not claim that host tests replace QEMU\"). The row is the part that overstates.\n  - Smallest fix: say \"Started: host-tested `kernel-policy` seam (4 validators)\". If you want one more function, pick something with arithmetic edge cases, such as the iov/mmsg bounds or the virtio queue validator from #10.\n  - Overengineering risk: **High.** Don't build a hosted-kernel test harness, HAL mocks, or a plan to make `cpu.rs` host-testable. The QEMU suite is the real kernel test. Grow the seam one pure function at a time, only when it pays.\n\n- [ ] **P3: the QEMU CI job sits on a deprecated runner with an unpinned emulator**\n  - Evidence: [`check.yml#L22-L25`](https://github.com/gmkurtzer/ginux/blob/d1539711c179930214ee8443663a7ba01017215f/.github/workflows/check.yml#L22-L25). GitHub says `macos-15-intel` is the last x86-64 macOS image, available until about August 2027 ([actions/runner-images#13045](https://github.com/actions/runner-images/issues/13045)), and Homebrew has announced Intel macOS drops to Tier 3 from September 2026. Ubuntu runners have `/dev/kvm`, and `default_accelerator` would pick KVM there, which is faster and closer to the \"same x86-64 KVM host\" the benchmarking doc asks for.\n  - Smallest fix: try the QEMU job on `ubuntu-24.04` with the usual `/dev/kvm` udev rule and distro QEMU. If that's not viable, keep the job and log versions.\n  - Overengineering risk: **Low.** Don't build self-hosted runners or a runner matrix for this.\n\n- [ ] **P4: the packet-wait helper's \"full second\" depends on TSC frequency**\n  - Evidence: [`packet-wait.S#L267-L269`](https://github.com/gmkurtzer/ginux/blob/d1539711c179930214ee8443663a7ba01017215f/kernel/packet-wait.S#L267-L269) changes `100000000` to `1000000000` TSC ticks with a comment saying \"a full second of guest TSC time\". That's a second only at 1 GHz. Making the window 10× wider is a reasonable fix for a 10 ms deadline test, but the comment overstates the precision.\n  - Smallest fix: reword the comment to \"10^9 TSC ticks (≈0.3–1 s)\".\n  - Overengineering risk: **Low.** Don't add TSC calibration for a test helper.\n\n- [ ] **P4: committed `generated_boot.rs` doesn't regenerate identically on another host**\n  - Evidence: this PR updates [`generated_boot.rs`](https://github.com/gmkurtzer/ginux/blob/d1539711c179930214ee8443663a7ba01017215f/boot/efi/src/generated_boot.rs), a signed, embedded blob. After `make check`/`make test` on my host with the pinned Rust toolchain, the file differs from the committed one (about 14.9k lines). I didn't investigate why (clang version, paths, or ordering). It means a CI check like `git diff --exit-code` would fail today, and that blob changes in PRs can't be reviewed by regenerating them.\n  - Smallest fix: none required for this PR. Note it as a known limitation.\n  - Overengineering risk: **High.** Fully reproducible builds is a project of its own. Defer it.\n\n### Claims checked and confirmed\n- `linux_random.rs` is a faithful move: the random, boot-ID and getrandom logic is unchanged. Only visibility widened to `pub(crate)`, including the `LinuxBootIdCell` `UnsafeCell` field, which is worth narrowing back to `pub(super)`. The backing statics stay in `cpu.rs` for the runtime-owner inventory. `cpu.rs` is 42,752 lines, as stated.\n- The kernel now calls the `ginux-kernel-policy` validators ([`cpu.rs#L41457-L41465`](https://github.com/gmkurtzer/ginux/blob/d1539711c179930214ee8443663a7ba01017215f/kernel/src/arch/x86_64/cpu.rs#L41457-L41465), [`iommu.rs#L306`](https://github.com/gmkurtzer/ginux/blob/d1539711c179930214ee8443663a7ba01017215f/kernel/src/arch/x86_64/iommu.rs#L306)), and the 4 host tests pass.\n- The VT-d fault check is still strict after accepting both no-PASID encodings: the valid bit is required, read transactions and reserved bits (including PASID-present) are rejected, and reason = 5 and source must match.\n- Kernel clippy with `-D warnings` runs in `make check` and passes. The toolchain is pinned (`1.99.0`), so new clippy releases won't break CI unexpectedly.\n- The workflow has read-only `contents` permission and runs `make check` and `make test`. Both CI jobs passed on the head commit.\n- `GINUX_BOOT_TIMEOUT_SECONDS` is validated as a positive integer.\n- The 17 `Unsupported` reclassifications and the 12 socket `Partial`s are correct (see my #11 review).\n- Gate 14 correctly keeps the private entry-path report out of the public record.\n",
+    "created_at": "2026-10-31T13:23:30Z",
+    "id": 6543927368,
+    "pr": 9,
+    "user": "veighnsche"
+  },
+  {
+    "body": "This stacked PR currently inherits the blocking non-transactional rename path from PR #90. Review of this PR’s unique follow-up commit can continue, but it cannot receive a validation marker or merge until #90 preserves both source and target on every fallible overlay/whiteout allocation and adds the requested failure-injection regression.",
+    "created_at": "2026-11-04T15:07:53Z",
+    "id": 6634160702,
+    "pr": 91,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Updated README in <sha>: ordinary commands are now host-native; the explicit Linux target is documented as an optional override. Thanks for testing on macOS.",
+    "created_at": "2026-11-03T21:32:42Z",
+    "id": 6615945684,
+    "pr": 61,
+    "user": "hafid-logic"
+  },
+  {
+    "body": "Updated first-pass maintainer validation for exact head 05cfcf481937b9497af8f2c5c300318a74771a7d after synchronizing with current main c86945b1ae246a7c9e4bd831a66e5179d55de95e.\n\nFresh evidence:\n- make check: passed\n- make test: passed (GINUX_KERNEL_OK; Boot test passed)\n\nThe sole merge conflict was the stale hdae/STATUS.md checkpoint; the authoritative current-main checkpoint was retained. Because this head changed, GitHub checks must pass on it and a subsequent hourly review must confirm the unchanged CLEAN head before merge.",
+    "created_at": "2026-11-03T06:39:15Z",
+    "id": 6597194202,
+    "pr": 47,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Updated first-pass maintainer validation for exact head 4fda8d0a6f197b94fb56ec011ff14d1f06f6ba33 after synchronizing with current main 0fcd2634fc14153c7a6bdd93039142bb9027b1bd.\n\nFresh evidence:\n- make check: passed (unsafe inventory reduced to 1,032 blocks)\n- make test: passed (GINUX_KERNEL_OK; Boot test passed)\n\nThe sole merge conflict was the stale hdae/STATUS.md checkpoint; the authoritative current-main checkpoint was retained. Because this head changed, GitHub checks must pass on it and a subsequent hourly review must confirm the unchanged CLEAN head before merge.",
+    "created_at": "2026-11-03T15:35:03Z",
+    "id": 6608025237,
+    "pr": 48,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Updated first-pass maintainer validation for exact head c2b6bf0e722375ceb7ca385361a02c973652b6d8 after synchronizing with current main c86945b1ae246a7c9e4bd831a66e5179d55de95e.\n\nFresh local evidence on the synchronized head:\n- make check: passed\n- make test: passed (GINUX_KERNEL_OK; Boot test passed)\n- make test-alpine: passed (OCI shell, restart, and failure containment)\n\nThe merge from main was conflict-free and retains the Gate 37 ownership boundaries. Because the head changed, this is a new first-pass marker. GitHub checks must complete on this exact head, and a subsequent hourly review must confirm it remains unchanged and CLEAN before merge.",
+    "created_at": "2026-11-03T06:36:11Z",
+    "id": 6597150603,
+    "pr": 59,
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Validated PR #13 (head 5976116) on official QEMU tarballs 10.0.13 and 10.1.0 (TCG, 3 runs each): make check/architecture-check pass; make test passes 3/3 on both (guest reports queue size 1024 on 10.0.13, 256 on 10.1.0). Logs and SHA256SUMS available on request.",
+    "created_at": "2026-10-31T21:22:36Z",
+    "id": 6549305835,
+    "pr": 13,
+    "user": "hafid-logic"
+  },
+  {
+    "body": "\nRuntime check of this branch on QEMU 10.0.13, since the gate notes it was not run there.\n\nHost: Linux x86-64 (CachyOS 7.2.7), Intel Core Ultra 7 270K Plus, KVM, guests pinned to P-cores.\nQEMU 10.0.13 (Debian 1:10.0.13+ds-0+deb13u1), OVMF 2025.02-8+deb13u1, Rust 1.99.0.\n\n- main 22d20a6: `make check` passes. `make test` panics with \"virtio network initialization invariant failed\" (issue #4 reproduced).\n- PR #10 64effa4: the virtio panic is gone. The virtio-net and block IOMMU fault self-tests validate, and the kernel reaches GINUX_KERNEL_OK.\n\nSo the fix works at runtime on 10.0.13. `make test` still fails on this host for a separate reason that also affects main and other QEMU versions; details in #14.\n\nOne more data point: on QEMU 11.1.2 (Debian trixie-backports), both main and this branch panic with \"expected IOMMU fault validation or recovery failed\". The VT-d fault record changes from pasid=0xffffffff (10.0.13) to pasid=0x0 (11.1.2), which looks like the same class of version drift as #4.\n\n\n",
+    "created_at": "2026-10-31T17:37:33Z",
+    "id": 6546854175,
+    "pr": 10,
+    "user": "CG-8663"
+  }
+]

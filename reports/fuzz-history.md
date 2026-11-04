@@ -16,3 +16,6 @@ prior sessions — read comparatively, not absolutely.
 > تصحيح 2026-11-04 (جلسة 24): صفوف run 41770788551 سُجلت `crashes=1` خطأً — عدّاد `ls artifacts/`
 > أحصى مجلد cargo-fuzz الذاتي الفارغ (artifacts/<target>/). الدليل: «Done ... runs» وخروج 0 ولا أسطر
 > ERROR/crash في السجلات؛ صفر ملفات crash-*/oom-*/timeout-*/leak-*. العدّاد أُصلح في fuzz.yml.
+| 2026-11-04T17:50:00Z | parser-crate-touched c8d12653..f45f1e4f | f45f1e4f | oci_surfaces | 600 | 26648962 | 93.31% | 97.31% | - | 0 | https://github.com/hafid-logic/ginux-watch/actions/runs/41879122802 |
+| 2026-11-04T17:50:00Z | parser-crate-touched c8d12653..f45f1e4f | f45f1e4f | protocol_surfaces | 600 | 160579926 | 97.50% | 97.37% | - | 0 | https://github.com/hafid-logic/ginux-watch/actions/runs/41879122802 |
+| 2026-11-04T17:50:00Z | parser-crate-touched c8d12653..f45f1e4f | f45f1e4f | volume_surfaces | 600 | 87912787 | 99.43% | 100.00% | - | 0 | https://github.com/hafid-logic/ginux-watch/actions/runs/41879122802 |

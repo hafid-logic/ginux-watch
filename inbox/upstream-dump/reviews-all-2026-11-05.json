@@ -1,0 +1,66 @@
+[
+  {
+    "body": "Approved on exact head `5739ae247acef7b210db374a9f70bb679eb325f4`. The shared-writable access check is correctly limited to MAP_SHARED, and the requested deterministic nine-case access-mode matrix is included. Credential-blocked local `make check` and complete `make test` passed after synchronization with current main; fresh GitHub `static` and `qemu` checks are green.",
+    "id": 5760224798,
+    "pr": 81,
+    "state": "APPROVED",
+    "submitted_at": "2026-11-03T22:13:09Z",
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Blocking ABI edge case at exact head `8ba5c709415094423f71d051813679afdc85791d`:\n\nThe new x86-64 handling correctly makes `pos_l` the complete native offset and ignores `pos_h` in the ordinary positioned path, matching upstream Linux `pos_from_hilo()`. However, the `preadv2`/`pwritev2` `offset == -1` guards additionally require `register(1) == 0`. On native x86-64, `pos_h` is ignored for this sentinel too. Therefore a raw syscall with `pos_l == UINT64_MAX`, nonzero ignored `pos_h`, and supported flags does not dispatch to the current-file-offset readv/writev behavior as Linux does.\n\nPlease remove the `pos_h == 0` condition from both sentinel guards and add a deterministic raw-syscall regression proving that a nonzero `pos_h` is ignored for `offset == -1`. Upstream reference: https://github.com/torvalds/linux/blob/master/fs/read_write.c (`pos_from_hilo`, `preadv2`, and `pwritev2`).\n\nOther independent evidence passed: incremental code review against PR #90, `make check`, full `make test` with real QEMU, and both GitHub checks. I am withholding approval only for this compatibility mismatch.",
+    "id": 5772873151,
+    "pr": 91,
+    "state": "CHANGES_REQUESTED",
+    "submitted_at": "2026-11-04T17:33:30Z",
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Blocking correctness finding: the new lower-file rename path is still non-transactional under overlay-capacity failure. It unlinks an existing target, renames the copied-up source to the destination, and only then calls `whiteout(old_path)`. If that final allocation fails, the syscall returns ENOSPC after the destination has already changed and the old lower entry becomes visible again; if `rename()` itself fails after target unlink, the prior target is already lost. This violates rename atomicity and is especially risky in a bounded overlay.\n\nPlease preflight/reserve every fallible overlay mutation before changing either visible path, or add an explicit rollback that restores both source and target exactly. Add deterministic failure injection covering (1) insufficient capacity for the source whiteout, (2) failure after an existing target is staged for replacement, and (3) proof that both paths and contents remain unchanged on every failed rename.",
+    "id": 5770635443,
+    "pr": 90,
+    "state": "CHANGES_REQUESTED",
+    "submitted_at": "2026-11-04T15:07:51Z",
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Blocking reproducibility finding on exact head eccb0de772f79b55c0c1c17b9fa0c59fe2e09ef0, tested against current main 144d81197f6f93931a4ee0e08696f38da69c517c in a disposable credential-free checkout. Root make check and the complete two-vCPU make test passed with GINUX_KERNEL_OK and Boot test passed. cargo-fuzz 0.13.2 built all three targets natively on aarch64-apple-darwin, and bounded 5-second ASan smoke runs for oci_surfaces, protocol_surfaces, and volume_surfaces all exited 0 without artifacts. GitHub static and qemu checks are also green. However, the exact README command hard-codes --target x86_64-unknown-linux-gnu and fails on the maintainer's macOS host because libfuzzer-sys requires x86_64-linux-gnu-g++; even with that cross compiler, the resulting Linux executable would not run natively. This conflicts with the requested maintainer-reproducible smoke instructions. Please make the ordinary commands host-native (for example, omit --target or derive rustc's host triple), and document the explicit Linux target only as an optional Linux-specific override with its additional requirements. No harness correctness defect was found, but this head is not fully validated for merge until the documented commands reproduce on a supported maintainer host.",
+    "id": 5758537709,
+    "pr": 61,
+    "state": "CHANGES_REQUESTED",
+    "submitted_at": "2026-11-03T19:48:12Z",
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Blocking semantic regression on exact head b7c7b7668cb0c67561487447645dc48194507505: the new condition is not restricted to MAP_SHARED. As written, every PROT_WRITE mapping on an O_RDONLY overlay descriptor is rejected, including MAP_PRIVATE, but Linux permits a private writable copy-on-write mapping from a read-only descriptor. Please include sharing == LINUX_MAP_SHARED in the guard and use the existing LINUX_PROT_WRITE and descriptor constants rather than numeric literals. Add a deterministic access-mode matrix covering O_RDONLY/O_WRONLY/O_RDWR across MAP_SHARED read-only, MAP_SHARED writable, and MAP_PRIVATE writable mappings; the shared writable case should require O_RDWR under this implementation's existing read requirement. GitHub Actions for this external head is also action_required and has not been approved or run, so I did not execute this contributor branch.",
+    "id": 5759190259,
+    "pr": 81,
+    "state": "CHANGES_REQUESTED",
+    "submitted_at": "2026-11-03T20:42:56Z",
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "The rewritten transactional rename path resolves the prior blocking finding at exact head `650ed63a84f1d8e29aa66137a9292369fb09c843`.\n\nIndependent first-pass evidence:\n- reviewed the prevalidation, reservation, copy-up rollback, target replacement, and whiteout ordering\n- deterministic allocation-failure cases preserve both paths and node-slot accounting\n- `make check` passed\n- `make test` passed, including real-QEMU `failed Linux overlay renames left both paths unchanged`\n- GitHub `static` and `qemu` passed\n- merge state is clean\n\nApproved as the required first-pass marker. I will re-check this exact head, base, discussion, merge state, and checks on a subsequent scheduled run before merge.",
+    "id": 5772818710,
+    "pr": 90,
+    "state": "APPROVED",
+    "submitted_at": "2026-11-04T17:29:43Z",
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "This cannot merge as written. The `linux_sysv_ipc.rs` changes revert the domain-owned, quota-enforced allocation introduced for container memory accounting: SysV payload and metadata frames move back to `FrameOwner::KERNEL`, `allocate_frames_with_owner_limit` is removed, and the quota regression check is deleted. That reopens cross-domain/global memory exhaustion and directly conflicts with the current memory-budget invariant. Please keep this PR scoped to the Crust survey tool and the non-semantic type annotations; do not rewrite allocator ownership or remove its verification. GitHub Actions is also currently `action_required`, so maintainer approval is still needed before CI can validate a revised head. I did not run code from this external branch.",
+    "id": 5756153923,
+    "pr": 74,
+    "state": "CHANGES_REQUESTED",
+    "submitted_at": "2026-11-03T16:48:01Z",
+    "user": "gmkurtzer"
+  },
+  {
+    "body": "Verified exact head `f61c64a8785135f3e38c52f392e70c12ef1ae6da`. The only change since the previously validated head is `fuzz/README.md`: ordinary build/run/coverage commands are now host-native, coverage derives the rustc host triple, and the explicit Linux target is correctly documented as an optional Linux-only override. This resolves the requested reproducibility change. The earlier credential-free native macOS validation built all three targets and completed bounded ASan runs without artifacts; current `static` and `qemu` CI are green.",
+    "id": 5759994935,
+    "pr": 61,
+    "state": "APPROVED",
+    "submitted_at": "2026-11-03T21:52:14Z",
+    "user": "gmkurtzer"
+  }
+]
