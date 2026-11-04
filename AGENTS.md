@@ -79,8 +79,13 @@ Reports: Arabic with English technical terms. Drafts and upstream text: English.
    per target, (e) shared docs/CI, (f) verification. Deliveries to the user start with
    one line: "طُبّقت منهجية الفريق: N بطاقات، توازٍ X، زمن الجدار Y" — or a measured
    reason why the methodology was not applied.
-2. **Actions, not local builds**: everything that does not need a model (builds, smoke
-   tests, fuzz rounds) runs in GitHub Actions; no heavy local compilation.
+2. **Actions, not local builds** (hardened v3.2, 2026-11-04, session 24): fuzz rounds
+   AND heavy builds run in GitHub Actions ONLY (`workflow_dispatch`/`repository_dispatch`
+   + `gh run watch`); never locally, not even chunked foreground runs. Concrete failure
+   recorded: a stale post-recycle clone re-attempted v3.1's local round on 2026-11-04 and
+   the long foreground call was cancelled mid-run by the gateway ("context canceled") —
+   6.53M execs on oci_surfaces discarded, 0 crashes (reports/2026-11-04.md §8.1). Local
+   work is limited to: editing, greps, small verification scripts.
 3. **Path isolation**: each worker touches only its own paths (e.g. `fuzz/<target>/`);
    the supervisor merges/writes shared files (Cargo.toml, README, CI).
 4. **Immediate results + critic**: every worker pushes its `team/results/` output as
