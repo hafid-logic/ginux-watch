@@ -1,5 +1,5 @@
 {
- "generated_at_utc": "2026-11-03T23:56:21Z",
+ "generated_at_utc": "2026-11-04T05:52:06Z",
  "source_repo": "gmkurtzer/ginux",
  "item_count": 85,
  "items": {
@@ -81,8 +81,8 @@
   "84": {
    "kind": "pr",
    "title": "Fix atomicity of native scheduler transitions on counter overflow",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-04T00:18:28Z",
    "files": [
     "Makefile",
     "kernel/src/scheduler.rs",
@@ -123,7 +123,7 @@
   "82": {
    "kind": "issue",
    "title": "Native scheduler counter overflow can leave a partially committed transition",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -1074,8 +1074,8 @@
   "39": {
    "kind": "pr",
    "title": "Add the native Ginux controller desktop",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-04T02:18:34Z",
    "files": [
     "ARCHITECTURE.md",
     "Cargo.lock",
