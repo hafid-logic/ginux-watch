@@ -31,7 +31,7 @@
 - لا عمل جديد إلا عند تحقق شرط منها + قرار مستخدم صريح. تدوير `work/instabox/credentials.json.manual-backup` يبقى قرارًا محليًا.
 
 ## 6) الجدولة (v3.6 §2d — وضع المراقبة الخفيفة)
-- **cron 501093 اليومي حُذف.** البديل: (1) **job لمرة واحدة 3a/3b** 09:05 Africa/Algiers يوم 2026-11-05 (أسماء tag/الفرع الأرشيفي + SHA في archive/INDEX.md، ثم ginux-verify مرة واحدة على رأس tag `bootable-kernel-final` (10.0.13+10.1.2) كشهادة نهائية، ثم يُعطّل cron الـverify كليًا — «بعدها يتوقف»)؛ (2) **مراجعة خفيفة كل 3 أيام** 09:00 Africa/Algiers: `0 0 9 */3 * ?` tz=Africa/Algiers — تقرأ digests الـmonitor وstate/monitor.json وتحدث HANDOFF عند تغيّر فقط.
+- **cron 501093 اليومي حُذف.** (1) **job لمرة واحدة 3a/3b = 504855: أُنجز 08:05–08:14Z يوم 2026-11-05** — 3a مسجّل في archive/INDEX.md وشهادة verify run 41992088138 (doctor=0 check=0 test=0 على 10.0.13 و10.1.2 على رأس tag `bootable-kernel-final`)؛ cron ginux-verify عُطّل كليًا («بعدها يتوقف»)؛ (2) **الباقي فقط: مراجعة خفيفة كل 3 أيام** 09:00 Africa/Algiers: `0 0 9 */3 * ?` tz=Africa/Algiers — تقرأ digests الـmonitor وstate/monitor.json وتحدث HANDOFF عند تغيّر فقط.
 - **المراقبة المستمرة بلا وكيل:** `monitor.yml` كل 6 ساعات + dispatch (قراءة فقط؛ digest issue عند تغيّر مهم — الإشعار يصل هاتفك). حالة كل workflow وإعادة تفعيلها: **docs/RECOVERY.md §8**. المراجعة العميقة عند الطلب فقط.
 - استرجاع بعد دوران الصندوق: docs/RECOVERY.md من الصفر (هوية + مصادقة + استنساخ + إعادة cron).
 

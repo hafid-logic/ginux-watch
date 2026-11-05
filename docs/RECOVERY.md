@@ -57,7 +57,7 @@ git clone https://github.com/hafid-logic/ginux-watch
 |---|---|---|
 | fuzz.yml | **cron معطّل** (السطر موجود معلّقًا)؛ dispatch يدوي شغال | أزل التعليق عن `- cron: "30 5 * * 1"` في `.github/workflows/fuzz.yml` |
 | team-watcher → fuzz | **مُعطّل من المصدر**: `DISPATCH_FUZZ_ROUND = False` في `team/scripts/upstream-watch.py` (شرط الدمج يُسجل ولا يطلق) | اجعلها `True` |
-| ginux-verify.yml | **أسبوعي** (Mondays 04:23 UTC بدل اليومي)؛ يقبل الآن tags/branches في input | يومي: `- cron: "23 4 * * *"`؛ **بعد شهادة 3b يُعطّل كليًا** بنفس الأسلوب؛ أزل التعليق |
+| ginux-verify.yml | **cron معطّل** (السطر موجود معلّقًا) بعد شهادة 3b 2026-11-05 (run 41992088138: doctor=0 check=0 test=0 على 10.0.13 و10.1.2 — «بعدها يتوقف»)؛ dispatch يدوي شغال ويقبل tags/branches | أزل التعليق عن `- cron: "23 4 * * 1"` في `.github/workflows/ginux-verify.yml` |
 | monitor.yml | **جديد** — كل 6 ساعات + dispatch؛ قراءة فقط؛ digest issue عند تغيّر مهم | إيقافه: علّق `- cron: "0 */6 * * *"` |
 | team-indexer.yml / team-watcher.yml (الlease sweep) | بلا تغيير (ساعي / ربع ساعي) | — |
 | style-notes.yml (شهري) / team-validator.yml / builder-verify.yml / pr-a-mutants.yml / feasibility-tests.yml / fuzz-branch-verify.yml / readme-smoke.yml | بلا cron (push/dispatch فقط) — بلا تغيير | — |
