@@ -1,4 +1,4 @@
-# validation — T-20261105-04 — PASS — 2026-11-05T06:35:26Z
+# validation — T-20261105-04 — PASS — 2026-11-05T20:22:16Z
 
 - note: summary MEASURED line (section-level evidence): '4. كل الطوابع UTC [MEASURED] من pulls-all/comments JSON + git log (aut'
 - all gates passed
