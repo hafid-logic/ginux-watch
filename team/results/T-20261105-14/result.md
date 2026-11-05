@@ -7,9 +7,9 @@ As-of: 2026-11-05T20:16–20:22Z. Upstream main pinned `0e06a9860250b655a094761c
 
 ## أصولنا الآن (inputs كما هي)
 - fuzz/ 5 harnesses (oci/protocol/volume + diff_pax_tar/diff_matrix) — تستهدف مسارات قديمة.
-- archive/pr-a-protocol-state-tests/ (+71/−0؛ C1 checksum + C2 arp؛ mutants 0/0).
-- STATE F1–F9: كلها محسومة على الشجرة القديمة؛ F9/#54 أُصلحت upstream ثم **ضاع إرثها** (انظر فرصة 6).
-- matrix P1–P17: الصفوف المرتبطة بالنواة (P5/P14…) صارت C moot على main.
+- archive/pr-a-protocol-state-tests/ (+71/−0؛ C1 checksum + C2 arp؛ mutants 0/0). [MEASURED: archive/pr-a-protocol-state-tests/README.md + pr-description.md (+71/−0 موثقة؛ mutants-after run 41916256214 = 0 على الدالتين)]
+- STATE F1–F9: كلها محسومة على الشجرة القديمة؛ F9/#54 أُصلحت upstream ثم **ضاع إرثها** (انظر فرصة 6). [OBSERVED: STATE.md F1–F9 + F9 سطر RESOLVED [MEASURED 2026-11-03T22:00:13Z]]
+- matrix P1–P17: الصفوف المرتبطة بالنواة (P5/P14…) صارت C moot على main. [OBSERVED: reports/cross-check/matrix.md + STATE.md جلسة 25]
 
 ## (أ) fuzz — حكم لكل هدف [MEASURED: tree @0e06a986 + contents API، 20:17–20:20Z]
 | الهدف | المسار القديم | على main @0e06a986 | الحكم |
