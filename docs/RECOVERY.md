@@ -34,13 +34,9 @@ git clone https://github.com/hafid-logic/ginux-watch
 
 ## 6) الجدولة — وضع المراقبة الخفيفة (توجيه v3.6 §2d، 2026-11-05)
 - **قاعدة:** مهمات cron (المراجعة الدورية) تعيش داخل سياق جلسة الوكيل الحالي — تموت بدوران الصندوق أو انتهاء الجلسة. لا تعتمدها وحدها.
-- **المرجع الحالي (بعد v3.6):** cron job **501093 حُذف**؛ حل محله:
-  1. **job لمرة واحدة 3a/3b = 504855** بعد الـcutoff (08:05 UTC = 09:05 Africa/Algiers يوم 2026-11-05): يتحقق من tag الإصدار والفرع الأرشيفي ويسجلهما في archive/INDEX.md، ويشغّل ginux-verify مرة واحدة على رأس الtag (10.0.13+10.1.2) ويسجل الشهادة، ثم يعطّل cron الـverify كليًا («بعدها يتوقف»). إعادة إنشائه إن فات: kind=one_time، expr بالـepoch-millis (مثال 2026-11-05T08:05Z = 1793865900000) — صيغة «yyyy-MM-dd HH:mm:ss» تُقاس بتوقيت خادم الجدولة ولا تُقبل ماضية.
-  2. **مراجعة خفيفة كل 3 أيام = 504856، 09:00 Africa/Algiers**: kind=cron، صيغة 6 خانات، tz=Africa/Algiers:
-```text
-0 0 9 */3 * ?
-```
-  تقرأ digests الـmonitor (issues بعنوان monitor digest) وstate/monitor.json وتحدث HANDOFF عند تغيّر فقط.
+- **المرجع الحالي (بعد v4.0):** cron job 501093 **حُذف**؛ **one_time 504855 (3a/3b) أُنجز وأُرشف 08:05–08:14Z** (شهادة 3b في archive/INDEX.md)؛ **cron 504856 (كل 3 أيام) أُلغي**؛ الحالي:
+  1. **مراجعة يومية = 507000، 09:00 Africa/Algiers**: kind=cron، `0 0 9 * * ?`، tz=Africa/Algiers — وضع v4.0 (دراسة/تحقق/تحضير، لا نشر)، لمدة 7 أيام ثم تُقيَّم (~2026-11-12). إن فات وأُريد إعادته: kind=cron بالصيغة نفسها.
+  2. **monitor.yml كل 6 ساعات + dispatch** (بلا وكيل — يفتح digest issue عند تغيّر مهم).
 - **خطة احتياط بلا وكيل (Actions):** بعد v3.6 صار `monitor.yml` هو المراقبة المستمرة (كل 6 ساعات، يفتح digest issue عند تغيّر مهم) — تنبيهك يصل عبر إشعار الـissue. `team-indexer.yml` (ساعي) و`team-watcher.yml` (ربع ساعي) بلا تغيير.
 - **المراجعة العميقة** (تدقيق مصفوفة كامل، بناء فجوات): تُطلق **عند الطلب فقط** بأمر المستخدم.
 
@@ -57,7 +53,7 @@ git clone https://github.com/hafid-logic/ginux-watch
 |---|---|---|
 | fuzz.yml | **cron معطّل** (السطر موجود معلّقًا)؛ dispatch يدوي شغال | أزل التعليق عن `- cron: "30 5 * * 1"` في `.github/workflows/fuzz.yml` |
 | team-watcher → fuzz | **مُعطّل من المصدر**: `DISPATCH_FUZZ_ROUND = False` في `team/scripts/upstream-watch.py` (شرط الدمج يُسجل ولا يطلق) | اجعلها `True` |
-| ginux-verify.yml | **cron معطّل** (السطر موجود معلّقًا) بعد شهادة 3b 2026-11-05 (run 41992088138: doctor=0 check=0 test=0 على 10.0.13 و10.1.2 — «بعدها يتوقف»)؛ dispatch يدوي شغال ويقبل tags/branches | أزل التعليق عن `- cron: "23 4 * * 1"` في `.github/workflows/ginux-verify.yml` |
+| ginux-verify.yml | **cron معطّل** (السطر موجود معلّقًا) بعد شهادة 3b 2026-11-05 (run 41992088138: doctor=0 check=0 test=0 على 10.0.13 و10.1.2 — «بعدها يتوقف»)؛ **ملاحظة e918d29 (W2/T-20261105-12): مفتاح `schedule:` نفسه معلّق** لأن المفتاح الفارغ كان يسبب 422 على dispatch؛ على main الحالي البوابة تحتاج Rocky-VM وستفشل عمدًا (run 42102046103)؛ dispatch اليدوي شغال ويقبل tags/branches | أزل التعليق عن مفتاح `schedule:` **وعن** `- cron: "23 4 * * 1"` في `.github/workflows/ginux-verify.yml` |
 | monitor.yml | **جديد** — كل 6 ساعات + dispatch؛ قراءة فقط؛ digest issue عند تغيّر مهم | إيقافه: علّق `- cron: "0 */6 * * *"` |
 | team-indexer.yml / team-watcher.yml (الlease sweep) | بلا تغيير (ساعي / ربع ساعي) | — |
 | style-notes.yml (شهري) / team-validator.yml / builder-verify.yml / pr-a-mutants.yml / feasibility-tests.yml / fuzz-branch-verify.yml / readme-smoke.yml | بلا cron (push/dispatch فقط) — بلا تغيير | — |
