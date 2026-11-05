@@ -1,12 +1,23 @@
 {
- "last_seen_sha": "4d4a53bbcc09b16e56aa5eb671ac815f16f2b82f",
- "last_checked": "2026-11-04T22:52:02Z",
+ "last_seen_sha": "d337713bfdc79605a8fbef41a09db0d4e04464bc",
+ "last_checked": "2026-11-05T02:56:29Z",
  "last_dispatch": {
-  "at": "2026-11-04T17:38:02Z",
-  "range": "c8d12653..f45f1e4f",
+  "at": "2026-11-05T02:56:29Z",
+  "range": "4d4a53bb..d337713b",
   "files": [
-   "crates/oci/src/lib.rs"
+   "crates/display-protocol/Cargo.toml",
+   "crates/display-protocol/src/lib.rs",
+   "crates/image-store/Cargo.toml",
+   "crates/image-store/src/lib.rs",
+   "crates/oci-cache/Cargo.toml",
+   "crates/oci-cache/src/lib.rs",
+   "crates/oci/Cargo.toml",
+   "crates/oci/src/lib.rs",
+   "crates/protocol-state/Cargo.toml",
+   "crates/protocol-state/src/lib.rs",
+   "crates/volume-format/Cargo.toml",
+   "crates/volume-format/src/lib.rs"
   ],
-  "truncated": false
+  "truncated": true
  }
 }
