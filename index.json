@@ -1,8 +1,58 @@
 {
- "generated_at_utc": "2026-11-04T21:13:48Z",
+ "generated_at_utc": "2026-11-05T02:10:06Z",
  "source_repo": "gmkurtzer/ginux",
- "item_count": 150,
+ "item_count": 151,
  "items": {
+  "152": {
+   "kind": "pr",
+   "title": "Transition Ginux to the userspace-kernel architecture",
+   "state": "closed",
+   "merged_at": "2026-11-04T23:15:51Z",
+   "files": [
+    ".cargo/config.toml",
+    ".github/workflows/check.yml",
+    ".github/workflows/issue-14-linux-repro.yml",
+    ".gitignore",
+    ".hdae/manifest",
+    ".hdae/skills/hdae-development/SKILL.md",
+    ".hdae/skills/hdae-development/references/hdae-method.md",
+    ".hdae/skills/pr-issue-review/SKILL.md",
+    ".hdae/skills/pr-issue-review/references/review-workflow.md",
+    "ARCHITECTURE.md",
+    "Cargo.lock",
+    "Cargo.toml",
+    "Makefile",
+    "README.md",
+    "boot/efi/Cargo.toml",
+    "boot/efi/src/generated_boot.rs",
+    "boot/efi/src/main.rs",
+    "boot/manifest-v0.conf",
+    "config/domain-gate4.toml",
+    "config/domain-gate5.toml",
+    "config/domain-gate6.toml",
+    "config/domain-gate7.toml",
+    "config/domain-gate8.toml",
+    "config/rocky-domain-image.env",
+    "config/rocky-domain-oci.env",
+    "config/rocky-host-image.CHECKSUM",
+    "config/rocky-host-image.env",
+    "control-plane/bootstrap.hex",
+    "control-plane/runtime/Cargo.toml",
+    "control-plane/runtime/build.rs"
+   ],
+   "keywords": [
+    "kernel",
+    "source",
+    "userspace",
+    "standalone",
+    "final",
+    "2306c2e",
+    "accepted",
+    "bootable",
+    "both",
+    "check"
+   ]
+  },
   "151": {
    "kind": "pr",
    "title": "Release local pages when handled sockets close",
@@ -3357,6 +3407,89 @@
   }
  },
  "keywords": {
+  "kernel": [
+   152,
+   139,
+   130,
+   129,
+   127,
+   100,
+   99,
+   98,
+   97,
+   96,
+   80,
+   71,
+   67,
+   50,
+   47,
+   46,
+   31,
+   24,
+   21,
+   19,
+   17,
+   13,
+   9,
+   7,
+   3
+  ],
+  "source": [
+   152,
+   63
+  ],
+  "userspace": [
+   152
+  ],
+  "standalone": [
+   152
+  ],
+  "final": [
+   152,
+   151
+  ],
+  "2306c2e": [
+   152
+  ],
+  "accepted": [
+   152,
+   69
+  ],
+  "bootable": [
+   152
+  ],
+  "both": [
+   152,
+   143,
+   102,
+   76
+  ],
+  "check": [
+   152,
+   142,
+   117,
+   90,
+   88,
+   87,
+   84,
+   61,
+   54,
+   51,
+   50,
+   49,
+   48,
+   47,
+   46,
+   44,
+   40,
+   35,
+   23,
+   11,
+   10,
+   9,
+   4,
+   3
+  ],
   "handled": [
    151
   ],
@@ -3411,9 +3544,6 @@
    72,
    68,
    66
-  ],
-  "final": [
-   151
   ],
   "ownership": [
    151,
@@ -3793,11 +3923,6 @@
    144,
    119
   ],
-  "both": [
-   143,
-   102,
-   76
-  ],
   "exchange": [
    143,
    118
@@ -3871,31 +3996,6 @@
   ],
   "eexist": [
    142
-  ],
-  "check": [
-   142,
-   117,
-   90,
-   88,
-   87,
-   84,
-   61,
-   54,
-   51,
-   50,
-   49,
-   48,
-   47,
-   46,
-   44,
-   40,
-   35,
-   23,
-   11,
-   10,
-   9,
-   4,
-   3
   ],
   "component": [
    142,
@@ -3991,32 +4091,6 @@
    127,
    103,
    8
-  ],
-  "kernel": [
-   139,
-   130,
-   129,
-   127,
-   100,
-   99,
-   98,
-   97,
-   96,
-   80,
-   71,
-   67,
-   50,
-   47,
-   46,
-   31,
-   24,
-   21,
-   19,
-   17,
-   13,
-   9,
-   7,
-   3
   ],
   "loop": [
    139,
@@ -5253,9 +5327,6 @@
    69,
    66
   ],
-  "accepted": [
-   69
-  ],
   "connected": [
    69
   ],
@@ -5314,9 +5385,6 @@
    64
   ],
   "query": [
-   63
-  ],
-  "source": [
    63
   ],
   "txid": [
