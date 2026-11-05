@@ -4,8 +4,12 @@ on:
   workflow_dispatch:
     inputs:
       target:
-        description: "main, or an upstream PR number"
-        default: "main"
+        # v4.1 (2026-11-06): default pinned to the archived standalone head.
+        # bootable-kernel-final = 7fb74071 (tag object) -> 4d4a53bb (commit, 10.0.13+10.1.2).
+        # Verify on main is EXPECTED to fail (2/0/2, run 42102046103): post-#152 main
+        # requires a Rocky 10.2 VM + reference host. Expected; do not chase.
+        description: "tag (default, pinned), main, or an upstream PR number"
+        default: "bootable-kernel-final"
       qemu_versions:
         description: "JSON array of QEMU versions"
         default: '["10.0.13","10.1.2"]'
