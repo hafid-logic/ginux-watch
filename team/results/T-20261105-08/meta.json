@@ -1,0 +1,7 @@
+{
+ "id": "T-20261105-08",
+ "status": "done",
+ "duration_min": 14,
+ "tools": "python3, gh api read-only dry-run",
+ "verified_format": true
+}

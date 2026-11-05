@@ -1,0 +1,134 @@
+{
+  "as_of": {
+    "start": "2026-11-05T05:48:28Z",
+    "end": "2026-11-05T05:49:39Z"
+  },
+  "repo": "gmkurtzer/ginux",
+  "pulls_open": {
+    "as_of": "2026-11-05T05:49:39Z",
+    "count": 2
+  },
+  "issues_open": {
+    "as_of": "2026-11-05T05:49:39Z",
+    "count": 0
+  },
+  "latest_number": {
+    "as_of": "2026-11-05T05:49:39Z",
+    "value": 154
+  },
+  "main": {
+    "as_of": "2026-11-05T05:49:39Z",
+    "sha": "d337713bfdc79605a8fbef41a09db0d4e04464bc",
+    "committer_date": "2026-11-04T23:15:51Z"
+  },
+  "last5_merges": {
+    "as_of": "2026-11-05T05:49:39Z",
+    "items": [
+      {
+        "sha": "d337713b",
+        "date": "2026-11-04T23:15:51Z",
+        "message": "Merge pull request #152 from gmkurtzer/codex/userspace-transition"
+      },
+      {
+        "sha": "2306c2e5",
+        "date": "2026-11-04T19:52:50Z",
+        "message": "Merge pull request #10 from gmkurtzer/hdae/virtual-kernel-views"
+      },
+      {
+        "sha": "22268a6c",
+        "date": "2026-11-04T19:52:32Z",
+        "message": "Merge pull request #9 from gmkurtzer/hdae/ginux-rename"
+      },
+      {
+        "sha": "0e98a846",
+        "date": "2026-11-04T19:52:08Z",
+        "message": "Merge pull request #8 from gmkurtzer/hdae/ginux-us-rename"
+      },
+      {
+        "sha": "7f7d94fa",
+        "date": "2026-11-04T18:56:14Z",
+        "message": "Merge pull request #97 from meleficarumvaldis/fix/06-relocate-efi-image-below-4g"
+      }
+    ]
+  },
+  "readme": {
+    "as_of": "2026-11-05T05:49:39Z",
+    "sha": "13816227df0ed7d1a040943769f9afc5f8734168",
+    "cutoff_present": false,
+    "pacific_literal_present": false,
+    "pivot_word_hits": 1
+  },
+  "tags": {
+    "as_of": "2026-11-05T05:49:39Z",
+    "items": [
+      {
+        "name": "research-v1-baseline",
+        "sha": "36503bda2d87465765e1b94e65f9d100f27ed5be"
+      },
+      {
+        "name": "bootable-kernel-final",
+        "sha": "4d4a53bbcc09b16e56aa5eb671ac815f16f2b82f"
+      }
+    ]
+  },
+  "branches": {
+    "as_of": "2026-11-05T05:49:39Z",
+    "total": 3,
+    "archive_named": []
+  },
+  "ginux_us": {
+    "as_of": "2026-11-05T05:49:39Z",
+    "exists": false,
+    "api_result": {
+      "message": "Not Found",
+      "documentation_url": "https://docs.github.com/rest/repos/repos#get-a-repository",
+      "status": "404"
+    }
+  },
+  "watched": {
+    "as_of": "2026-11-05T05:49:39Z",
+    "items": {
+      "4": {
+        "state": "closed",
+        "updated_at": "2026-11-02T00:31:21Z",
+        "closed_at": "2026-11-02T00:31:21Z",
+        "comments": 9
+      },
+      "14": {
+        "state": "closed",
+        "updated_at": "2026-11-02T01:53:21Z",
+        "closed_at": "2026-11-02T01:53:21Z",
+        "comments": 5
+      },
+      "43": {
+        "state": "closed",
+        "updated_at": "2026-11-03T22:00:44Z",
+        "closed_at": "2026-11-03T22:00:44Z",
+        "comments": 3
+      },
+      "54": {
+        "state": "closed",
+        "updated_at": "2026-11-04T23:28:35Z",
+        "closed_at": "2026-11-03T22:00:13Z",
+        "comments": 4
+      },
+      "58": {
+        "state": "closed",
+        "updated_at": "2026-11-03T21:52:21Z",
+        "closed_at": "2026-11-03T21:52:21Z",
+        "comments": 4
+      },
+      "61": {
+        "state": "closed",
+        "updated_at": "2026-11-03T21:52:18Z",
+        "closed_at": "2026-11-03T21:52:18Z",
+        "comments": 3
+      }
+    }
+  },
+  "search": {
+    "as_of": "2026-11-05T05:49:39Z",
+    "involves_hafid_logic": 7,
+    "mentions_hafid_logic": 0
+  }
+}

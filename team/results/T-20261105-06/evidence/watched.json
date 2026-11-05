@@ -1,0 +1,41 @@
+{
+  "as_of": "2026-11-05T05:49:39Z",
+  "items": {
+    "4": {
+      "state": "closed",
+      "updated_at": "2026-11-02T00:31:21Z",
+      "closed_at": "2026-11-02T00:31:21Z",
+      "comments": 9
+    },
+    "14": {
+      "state": "closed",
+      "updated_at": "2026-11-02T01:53:21Z",
+      "closed_at": "2026-11-02T01:53:21Z",
+      "comments": 5
+    },
+    "43": {
+      "state": "closed",
+      "updated_at": "2026-11-03T22:00:44Z",
+      "closed_at": "2026-11-03T22:00:44Z",
+      "comments": 3
+    },
+    "54": {
+      "state": "closed",
+      "updated_at": "2026-11-04T23:28:35Z",
+      "closed_at": "2026-11-03T22:00:13Z",
+      "comments": 4
+    },
+    "58": {
+      "state": "closed",
+      "updated_at": "2026-11-03T21:52:21Z",
+      "closed_at": "2026-11-03T21:52:21Z",
+      "comments": 4
+    },
+    "61": {
+      "state": "closed",
+      "updated_at": "2026-11-03T21:52:18Z",
+      "closed_at": "2026-11-03T21:52:18Z",
+      "comments": 3
+    }
+  }
+}

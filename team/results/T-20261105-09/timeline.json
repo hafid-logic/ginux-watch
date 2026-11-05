@@ -1,0 +1,149 @@
+{
+  "task": "T-20261105-09",
+  "worker": "W4 (indexer)",
+  "generated_utc": "2026-11-05T05:59:12Z",
+  "method": "jq/python3 over inbox/upstream-dump + allowed reports/docs",
+  "caveats": [
+    "issues.json is a stale snapshot: max updated_at = 2026-11-03T00:41:16Z, numbers 1-57 only; cannot confirm/deny events after that (e.g. #43 close 2026-11-03T22:00:44Z, #58 close).",
+    "pulls-files-all-2026-11-05.json caps at 100 file rows per PR (PR #61 = 100 rows, PR #7 = 100 of 293 in digest.md:45); the 124-file count for PR #61 rests on docs/HISTORY.md:88 (GET at open time)."
+  ],
+  "verified": [
+    {
+      "claim": 1,
+      "item": "Issue #4 first comment / PR #13 / close",
+      "verdict": "OK",
+      "values": {
+        "first_upstream_comment": {"id": 6536812972, "created_at": "2026-10-31T00:55:19Z", "user": "hafid-logic", "source": "inbox/upstream-dump/comments/4.json"},
+        "pr_13": {"merged_at": "2026-11-01T23:24:48Z", "merge_commit_sha": "e0af862712380e812322faa39397c0b75b72e3bb", "head_sha": "597611695b3c7d29b96d8fa6e439de4b290669b1", "source": "inbox/upstream-dump/pulls/13.json"},
+        "issue_4_close": {"closed_at": "2026-11-02T00:31:21Z", "closed_by": "hafid-logic", "state_reason": "completed", "closing_comment_id": 6566218531, "source": "inbox/upstream-dump/issues.json + comments/4.json"}
+      }
+    },
+    {
+      "claim": 2,
+      "item": "Issue #14 data comment / close by PR #41",
+      "verdict": "OK",
+      "values": {
+        "data_comment": {"id": 6566220344, "created_at": "2026-11-02T00:31:29Z", "user": "hafid-logic", "source": "inbox/upstream-dump/comments/14.json"},
+        "issue_14_close": {"closed_at": "2026-11-02T01:53:21Z", "state_reason": "completed", "by_pr": 41, "pr_41_merged_at": "2026-11-02T01:52:56Z", "source": "inbox/upstream-dump/issues.json + pulls-all #41 + STATE.md:7"}
+      }
+    },
+    {
+      "claim": 3,
+      "item": "Issue #43 open / maintainer reply / close",
+      "verdict": "ERRATA (reply date); close documented but outside dump snapshot",
+      "values": {
+        "opened_at": "2026-11-02T02:47:39Z", "opened_by": "hafid-logic", "source": "inbox/upstream-dump/issues.json",
+        "maintainer_reply": {"claimed": "2026-11-03T04:59:39Z", "correct": "2026-11-02T04:59:39Z", "comment_id": 6569452479, "user": "gmkurtzer", "source": "inbox/upstream-dump/comments/43.json"},
+        "close_completed": {"value": "2026-11-03T22:00:44Z", "source": "reports/metrics.md:182", "corroboration": "reports/2026-11-05.md:17 (0 open issues live @2026-11-04T21:04Z) + STATE.md:36; not covered by stale issues.json; PR #54 body 'Addresses issue #43 without closing it' (inbox/upstream-dump/digest.md:287)"}
+      }
+    },
+    {
+      "claim": 4,
+      "item": "PR #54 evidence comment / merge",
+      "verdict": "OK",
+      "values": {
+        "evidence_comment": {"id": 6574390843, "created_at": "2026-11-02T10:05:18Z", "user": "hafid-logic", "source": "inbox/upstream-dump/comments-all-2026-11-05.json pr=54"},
+        "merge": {"merged_at": "2026-11-03T22:00:13Z", "merge_commit_sha": "6324692bb170f9ab0ed752f005a2a30e7c6eea7d", "source": "inbox/upstream-dump/pulls-all-2026-11-05.json"}
+      }
+    },
+    {
+      "claim": 5,
+      "item": "Issue #58 open / welcome reply / close by PR #61",
+      "verdict": "OK",
+      "values": {
+        "opened_at": "2026-11-03T06:23:25Z", "opened_by": "hafid-logic", "welcome_reply": {"at": "2026-11-03T06:32:50Z", "comment": "issuecomment-6597103730"}, "source": "docs/HISTORY.md:82",
+        "close": {"closed_completed_at": "2026-11-03T21:52:21Z", "by_pr": 61, "source": "STATE.md:7"},
+        "note": "#58 outside issues.json snapshot (numbers 1-57, ends 2026-11-03T00:41:16Z) - consistent with its creation time"
+      }
+    },
+    {
+      "claim": 6,
+      "item": "PR #61 lifecycle, files, reviews",
+      "verdict": "OK",
+      "values": {
+        "opened_at": "2026-11-03T11:23:07Z", "opened_by": "hafid-logic", "source": "inbox/upstream-dump/pulls-all-2026-11-05.json",
+        "files": {"claimed": "124 all under fuzz/", "source": "docs/HISTORY.md:88", "dump_rows": 100, "dump_non_fuzz": 0, "note": "100-per-page cap (PR #7 also 100 of 293)"},
+        "changes_requested": {"state": "CHANGES_REQUESTED", "submitted_at": "2026-11-03T19:48:12Z", "user": "gmkurtzer", "review_id": 5758537709, "source": "inbox/upstream-dump/reviews-all-2026-11-05.json"},
+        "ready_for_review": {"at": "2026-11-03T19:17:55Z", "source": "STATE.md:11 + docs/HISTORY.md:90"},
+        "merge": {"merged_at": "2026-11-03T21:52:18Z", "merge_commit_sha": "47ff71079897e057ba86c112b3eb45bd58d87d7d", "head_sha": "f61c64a8785135f3e38c52f392e70c12ef1ae6da", "source": "pulls-all + reviews-all id 5759994935"}
+      }
+    },
+    {
+      "claim": 7,
+      "item": "Freeze commits and cutoff",
+      "verdict": "OK",
+      "values": {
+        "cdf8038e": {"subject": "Set standalone kernel contribution cutoff", "author_date": "2026-11-04T10:30:51-08:00 (=18:30:51Z)", "source": "reports/2026-11-05.md:7"},
+        "036e0272": {"subject": "Invite standalone kernel forks", "source": "reports/2026-11-05.md:8"},
+        "main_head_4d4a53bb": {"subject": "Clarify kernel transition and ABI contracts", "source": "reports/2026-11-05.md:8,18"},
+        "cutoff": {"claimed": "2026-11-05T07:59Z", "basis": "11:59PM Pacific Nov 4, PST UTC-8 (DST ended 2026-11-01)", "arithmetic": "23:59+8h=07:59Z OK", "source": "reports/2026-11-05.md:9 + STATE.md:3"}
+      }
+    },
+    {
+      "claim": 8,
+      "item": "Fuzz rounds (reports/fuzz-history.md, all recorded rounds)",
+      "verdict": "OK",
+      "values": {
+        "round_1": {"date": "2026-11-04T04:25:02Z", "head": "c8d12653", "run": 41770788551, "targets": [
+          {"target": "oci_surfaces", "execs": 70649687, "crashes": 0},
+          {"target": "protocol_surfaces", "execs": 252674296, "crashes": 0},
+          {"target": "volume_surfaces", "execs": 97633959, "crashes": 0}
+        ], "total_execs": 420957942, "errata_note": "crashes originally mis-recorded 1, corrected (fuzz-history.md:16-18)"},
+        "round_2": {"date": "2026-11-04T17:50:00Z", "head": "f45f1e4f", "run": 41879122802, "targets": [
+          {"target": "oci_surfaces", "execs": 26648962, "crashes": 0},
+          {"target": "protocol_surfaces", "execs": 160579926, "crashes": 0},
+          {"target": "volume_surfaces", "execs": 87912787, "crashes": 0}
+        ], "total_execs": 275141675},
+        "cumulative_execs": 696099617,
+        "cross_check": "STATE.md:4 records round 41879122802 = 275,141,675 execs zero crashes",
+        "source": "reports/fuzz-history.md:12-21"
+      }
+    },
+    {
+      "claim": 9,
+      "item": "Dropped/unsuccessful items",
+      "verdict": "OK (all confirmed; 2 documentary caveats)",
+      "values": {
+        "Opp-1_Opp-2": {"dropped": "2026-11-03", "Opp-1_reason": "duplicates our #4 comment 2026-10-31T00:55:19Z (doctor-versions)", "Opp-2_reason": "ignores runtime can_release enforcement memory.rs:528-550", "source": "STATE.md:45 (D7) + reports/metrics.md:130"},
+        "D10": {"gap": "#26/PR#37", "reason": "not buildable under 'one change + one test'", "source": "STATE.md:47"},
+        "D8": {"item": "PR #37 'I will work on' draft deferred, needs fixture", "artifacts": ["fork branch b04e7a74", "hafid-logic/ginux#1", "CI run 41542581308"], "source": "STATE.md:43"},
+        "D12": {"item": "#38 getcwd not host-testable", "source": "STATE.md:49"},
+        "D11": {"item": "#41 card broken trigger (issue-14 repro workflow, broken YAML + no matching branch)", "source": "STATE.md:48", "caveat": "exact filename issue-14-linux-repro.yml only in non-allowed sources (team/results/T-20261103-03-par/result.md:44)"},
+        "gaps_49_73": {"date": "2026-11-04", "reason": "both upstream-merged (#25/#63), no build in fork", "source": "STATE.md:7"},
+        "C3_C5": {"status": "never built (freeze window; only C1+C2 built as PR-A in fork)", "source": "reports/2026-11-05.md:23,38 + STATE.md:4", "caveat": "C1-C5 enumeration lives in drafts/2026-11-05-test-candidates.md:168-170 (outside allowed set)"},
+        "PR_A": {"status": "never sent upstream (fork-only draft hafid-logic/ginux#2)", "source": "reports/2026-11-05.md:38"}
+      }
+    },
+    {
+      "claim": 10,
+      "item": "Final metrics v3.4 (arithmetic recomputed in python)",
+      "verdict": "OK",
+      "values": {
+        "net_contribution": {"value": "65/82 = 79.27% -> 79.3%", "recomputed": true, "source": "reports/metrics.md:157"},
+        "critic_rejections": {"factual_error": 4, "number": 2, "other": 1, "style": 0, "reference": 0, "source": "reports/metrics.md:167-171 + reports/2026-11-05.md:44"},
+        "detection_to_acceptance": {
+          "43": {"start": "2026-11-02T01:22:12Z", "end": "2026-11-03T22:00:44Z", "recomputed": "44h38m32s", "claimed": "44h38m32s", "match": true, "caveat": "end event outside stale issues.json snapshot"},
+          "54": {"start": "2026-11-02T09:44:01Z", "end": "2026-11-03T22:00:13Z", "recomputed": "36h16m12s", "claimed": "36h16m12s", "match": true},
+          "61": {"start": "2026-11-02T09:28:08Z", "end": "2026-11-03T21:52:18Z", "recomputed": "36h24m10s", "claimed": "36h24m10s", "match": true},
+          "4": {"start": "2026-11-01T22:21:45Z", "end": "2026-11-01T23:24:48Z", "recomputed": "1h03m03s", "claimed": "1h03m03s", "match": true, "unsettled": true, "alternative_basis": {"start": "2026-10-30T02:42:53Z", "recomputed": "68h41m55s", "claimed": "68h41m55s", "match": true}},
+          "source": "reports/metrics.md:181-186"
+        },
+        "parallelism": {"pilot": "57.1%", "real_batch": "69.8% (1-424/1404=69.80%)", "recomputed": true, "source": "reports/metrics.md:38,53"}
+      }
+    },
+    {
+      "claim": 11,
+      "item": "Dump totals (2026-11-05)",
+      "verdict": "OK",
+      "values": {
+        "total_prs": 78, "merged": 61, "closed_unmerged": 17, "open": 0,
+        "closed_unmerged_numbers": [6, 11, 53, 74, 85, 91, 101, 129, 133, 135, 137, 139, 141, 143, 146, 148, 151],
+        "file_rows": 644,
+        "source": "inbox/upstream-dump/pulls-all-2026-11-05.json + pulls-files-all-2026-11-05.json (python count)"
+      }
+    }
+  ],
+  "errata": [
+    {"claim": 3, "field": "maintainer reply on issue #43", "claimed": "2026-11-03T04:59:39Z", "corrected": "2026-11-02T04:59:39Z", "evidence": "inbox/upstream-dump/comments/43.json id 6569452479"}
+  ]
+}

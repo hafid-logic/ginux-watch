@@ -1,0 +1,80 @@
+diff --git a/crates/protocol-state/src/lib.rs b/crates/protocol-state/src/lib.rs
+index 7263be47..7ad0a09b 100644
+--- a/crates/protocol-state/src/lib.rs
++++ b/crates/protocol-state/src/lib.rs
+@@ -414,4 +414,75 @@ mod tests {
+         );
+         assert_eq!(frame, before);
+     }
++
++    fn reply_with(mutate: impl FnOnce(&mut [u8; 42])) -> Result<ArpReplyV4, ArpParseError> {
++        let mut frame = FRAME;
++        mutate(&mut frame);
++        parse_arp_reply_v4(&frame, LOCAL, PEER)
++    }
++
++    #[test]
++    fn pins_checksum_reference_values() {
++        // RFC 1071 worked example: even length, one carry fold.
++        assert_eq!(
++            checksum(&[0x00, 0x01, 0xf2, 0x03, 0xf4, 0xf5, 0xf6, 0xf7]),
++            0x220d
++        );
++        // Known ICMP echo request header before its stored checksum.
++        assert_eq!(checksum(&[0x08, 0x00, 0xbe, 0xef, 0x00, 0x01]), 0x390f);
++        // With the stored checksum the sum is zero, as the parsers expect.
++        assert_eq!(
++            checksum(&[0x08, 0x00, 0x39, 0x0f, 0xbe, 0xef, 0x00, 0x01]),
++            0
++        );
++        // Boundary: an empty byte slice.
++        assert_eq!(checksum(&[]), 0xffff);
++    }
++
++    #[test]
++    fn pins_checksum_odd_length_and_carry_folds() {
++        // Odd length: the trailing byte rides in the high half.
++        assert_eq!(checksum(&[0x01, 0x02, 0x03]), 0xfbfd);
++        assert_eq!(checksum(&[0x01]), 0xfeff);
++        // Odd length with a carry fold across the whole chain.
++        assert_eq!(
++            checksum(&[0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff]),
++            0x00ff
++        );
++        // Even length where the fold feeds a carry back in.
++        assert_eq!(checksum(&[0xff, 0xff, 0x00, 0x01]), 0xfffe);
++    }
++
++    #[test]
++    fn rejects_arp_header_single_field_violations() {
++        assert_eq!(reply_with(|f| f[15] = 0x06), Err(ArpParseError::ArpHeader));
++        assert_eq!(reply_with(|f| f[17] = 0x06), Err(ArpParseError::ArpHeader));
++        assert_eq!(reply_with(|f| f[18] = 0x08), Err(ArpParseError::ArpHeader));
++        assert_eq!(reply_with(|f| f[19] = 0x10), Err(ArpParseError::ArpHeader));
++        assert_eq!(reply_with(|f| f[21] = 0x03), Err(ArpParseError::ArpHeader));
++    }
++
++    #[test]
++    fn rejects_sender_and_target_single_field_violations() {
++        // Sender MAC zero, consistent in both positions.
++        assert_eq!(
++            reply_with(|f| {
++                f[6..12].fill(0);
++                f[22..28].fill(0);
++            }),
++            Err(ArpParseError::Sender)
++        );
++        // Sender MAC multicast, consistent in both positions.
++        assert_eq!(
++            reply_with(|f| {
++                f[6..12].fill(0x03);
++                f[22..28].fill(0x03);
++            }),
++            Err(ArpParseError::Sender)
++        );
++        // Target MAC wrong, target IPv4 still ours.
++        assert_eq!(reply_with(|f| f[32] ^= 0x04), Err(ArpParseError::Target));
++        // Target IPv4 wrong, target MAC still ours.
++        assert_eq!(reply_with(|f| f[41] ^= 0x01), Err(ArpParseError::Target));
++    }
+ }

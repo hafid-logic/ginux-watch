@@ -1,0 +1,203 @@
+=== T-20261105-06 api-commands.txt ===
+# as-of start: 2026-11-05T05:48:28Z
+
+$ /home/z/my-project/work/bin/gh api 'repos/gmkurtzer/ginux/pulls?state=open&per_page=100'
+exit=0 [len=2]
+154	open	ginux: connect native fork/exec/threads/waits/pipes to managed supervision	veighnsche	2026-11-05T05:36:31Z
+153	open	feat(init): add configured native launch with faithful completion	veighnsche	2026-11-05T03:07:08Z
+
+$ /home/z/my-project/work/bin/gh api 'repos/gmkurtzer/ginux/issues?state=open&per_page=100' (filter .pull_request==null)
+exit=0 [len_all=2, len_nonpr=0]
+
+$ /home/z/my-project/work/bin/gh api repos/gmkurtzer/ginux/commits/main
+exit=0
+{
+  "sha": "d337713bfdc79605a8fbef41a09db0d4e04464bc",
+  "date": "2026-11-04T23:15:51Z",
+  "msg": "Merge pull request #152 from gmkurtzer/codex/userspace-transition"
+}
+
+$ /home/z/my-project/work/bin/gh api 'repos/gmkurtzer/ginux/commits?per_page=40' (filter message startswith Merge)
+exit=0
+d337713b	2026-11-04T23:15:51Z	Merge pull request #152 from gmkurtzer/codex/userspace-transition
+2306c2e5	2026-11-04T19:52:50Z	Merge pull request #10 from gmkurtzer/hdae/virtual-kernel-views
+22268a6c	2026-11-04T19:52:32Z	Merge pull request #9 from gmkurtzer/hdae/ginux-rename
+0e98a846	2026-11-04T19:52:08Z	Merge pull request #8 from gmkurtzer/hdae/ginux-us-rename
+7f7d94fa	2026-11-04T18:56:14Z	Merge pull request #97 from meleficarumvaldis/fix/06-relocate-efi-image-below-4g
+
+$ /home/z/my-project/work/bin/gh api repos/gmkurtzer/ginux/readme (metadata)
+exit=0
+{
+  "sha": "13816227df0ed7d1a040943769f9afc5f8734168",
+  "path": "README.md",
+  "size": 8357,
+  "encoding": "base64"
+}
+
+$ /home/z/my-project/work/bin/gh api repos/gmkurtzer/ginux/readme -H 'Accept: application/vnd.github.raw+json' (raw)
+exit=0
+cutoff_hits(case-insens): 0
+pacific_hits: 0
+
+$ /home/z/my-project/work/bin/gh api 'repos/gmkurtzer/ginux/tags?per_page=10'
+exit=0
+research-v1-baseline	36503bda2d87465765e1b94e65f9d100f27ed5be
+bootable-kernel-final	4d4a53bbcc09b16e56aa5eb671ac815f16f2b82f
+
+$ /home/z/my-project/work/bin/gh api 'repos/gmkurtzer/ginux/branches?per_page=100'
+exit=0
+total_branches: 3
+archive_named:
+all_branch_names: bootable-kernel codex/userspace-transition main 
+
+$ /home/z/my-project/work/bin/gh api repos/gmkurtzer/ginux-us
+gh: Not Found (HTTP 404)
+exit=1
+{
+  "full_name": null,
+  "pushed_at": null,
+  "default_branch": null,
+  "has_issues": null,
+  "open_issues_count": null,
+  "created_at": null
+}
+
+$ /home/z/my-project/work/bin/gh api repos/gmkurtzer/ginux-us/readme (README sha)
+gh: Not Found (HTTP 404)
+exit=1
+{
+  "sha": null,
+  "path": null
+}
+
+$ /home/z/my-project/work/bin/gh api repos/gmkurtzer/ginux-us/contents/CONTRIBUTING.md
+gh: Not Found (HTTP 404)
+exit=1
+{
+  "path": null,
+  "sha": null,
+  "size": null
+}
+
+$ /home/z/my-project/work/bin/gh api 'repos/gmkurtzer/ginux-us/commits?per_page=3'
+gh: Not Found (HTTP 404)
+exit=1
+jq: error (at ginux-us-commits.json:0): Cannot index string with string "sha"
+
+$ /home/z/my-project/work/bin/gh api repos/gmkurtzer/ginux/issues/4
+exit=0
+{
+  "number": 4,
+  "state": "closed",
+  "title": "Runtime gates fail on QEMU 10.0.13: virtio-net queue size is 1024, check requires 256.",
+  "updated_at": "2026-11-02T00:31:21Z",
+  "closed_at": "2026-11-02T00:31:21Z",
+  "comments": 9
+}
+
+$ /home/z/my-project/work/bin/gh api repos/gmkurtzer/ginux/issues/14
+exit=0
+{
+  "number": 14,
+  "state": "closed",
+  "title": "make test fails on Linux/x86-64: native volume service faults, storage falls back to tmpfs",
+  "updated_at": "2026-11-02T01:53:21Z",
+  "closed_at": "2026-11-02T01:53:21Z",
+  "comments": 5
+}
+
+$ /home/z/my-project/work/bin/gh api repos/gmkurtzer/ginux/issues/43
+exit=0
+{
+  "number": 43,
+  "state": "closed",
+  "title": "Release profile: overflow-checks not enabled (intentional?)",
+  "updated_at": "2026-11-03T22:00:44Z",
+  "closed_at": "2026-11-03T22:00:44Z",
+  "comments": 3
+}
+
+$ /home/z/my-project/work/bin/gh api repos/gmkurtzer/ginux/issues/54
+exit=0
+{
+  "number": 54,
+  "state": "closed",
+  "title": "Enable overflow checks in release builds",
+  "updated_at": "2026-11-04T23:28:35Z",
+  "closed_at": "2026-11-03T22:00:13Z",
+  "comments": 4
+}
+
+$ /home/z/my-project/work/bin/gh api repos/gmkurtzer/ginux/issues/58
+exit=0
+{
+  "number": 58,
+  "state": "closed",
+  "title": "Offering fuzz targets for the PAX/OCI, ARP/IPv4/ICMP and volume-format parsers",
+  "updated_at": "2026-11-03T21:52:21Z",
+  "closed_at": "2026-11-03T21:52:21Z",
+  "comments": 4
+}
+
+$ /home/z/my-project/work/bin/gh api repos/gmkurtzer/ginux/issues/61
+exit=0
+{
+  "number": 61,
+  "state": "closed",
+  "title": "fuzz: add libFuzzer targets for OCI, protocol-state and volume-format parsers",
+  "updated_at": "2026-11-03T21:52:18Z",
+  "closed_at": "2026-11-03T21:52:18Z",
+  "comments": 3
+}
+
+$ /home/z/my-project/work/bin/gh api 'search/issues?q=repo:gmkurtzer/ginux+involves:hafid-logic&per_page=1'
+exit=0
+{
+  "total_count": 7,
+  "incomplete_results": false
+}
+
+$ /home/z/my-project/work/bin/gh api 'search/issues?q=repo:gmkurtzer/ginux+mentions:hafid-logic&per_page=1'
+exit=0
+{
+  "total_count": 0,
+  "incomplete_results": false
+}
+# as-of end: 2026-11-05T05:49:39Z
+
+$ /home/z/my-project/work/bin/gh api 'repos/gmkurtzer/ginux/commits?path=README.md&per_page=1' (extra: README last change)
+exit=0
+c334af40	2026-11-04T22:30:06Z	Retain project license in userspace transition
+
+$ /home/z/my-project/work/bin/gh api repos/gmkurtzer/ginux/commits/c334af40 (files touched — verify README rewrite)
+exit=0
+LICENSE	added	201	0
+NOTICE	added	4	0
+README.md	modified	5	0
+hdae/gates-todo/8.5-unified-repository-transition.md	modified	8	3
+
+$ /home/z/my-project/work/bin/gh api 'repos/gmkurtzer/ginux/commits?path=README.md&per_page=10' (extra: README history)
+exit=0
+c334af40	2026-11-04T22:30:06Z	Retain project license in userspace transition
+167c3c0b	2026-11-04T22:14:12Z	Document unified userspace-kernel project
+00ed72f5	2026-11-04T16:19:59Z	Rename project to Ginux
+1f609dd5	2026-11-04T15:16:41Z	Rename project to Ginux-us
+1b2c37d2	2026-11-03T21:35:21Z	Record Gate 4 verification evidence
+0618630b	2026-11-03T19:13:27Z	Run Ginus as a Rocky host process
+30e1c384	2026-11-03T18:57:30Z	Add matched Gate 1 benchmark controls
+407d3aea	2026-11-03T18:23:20Z	Define Ginus HDAE project gates
+14f63ed8	2026-11-03T16:58:54Z	Initial commit
+
+$ /home/z/my-project/work/bin/gh api -i repos/gmkurtzer/ginux-us | head -12 (check for redirect headers)
+HTTP/2.0 404 Not Found
+Access-Control-Allow-Origin: *
+Access-Control-Expose-Headers: ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning
+Content-Security-Policy: default-src 'none'
+Content-Type: application/json; charset=utf-8
+Date: Thu, 05 Nov 2026 05:51:19 GMT
+Referrer-Policy: origin-when-cross-origin, strict-origin-when-cross-origin
+Server: github.com
+Strict-Transport-Security: max-age=31536000; includeSubdomains; preload
+Vary: Accept-Encoding, Accept, X-Requested-With
+X-Accepted-Oauth-Scopes: repo
+X-Content-Type-Options: nosniff
