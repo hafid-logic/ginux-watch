@@ -10,7 +10,11 @@ on:
         description: "JSON array of QEMU versions"
         default: '["10.0.13","10.1.2"]'
   schedule:
-    - cron: "23 4 * * *"
+    # v3.6 §2a (2026-11-05): reduced daily -> weekly (Mondays 04:23 UTC) during the
+    # archive/light-monitoring phase. Re-enable daily: restore "23 4 * * *".
+    # v3.6 §3b: after the final certificate run on the archive tag, this cron is
+    # DISABLED entirely ("then it stops") — see docs/RECOVERY.md §8.
+    - cron: "23 4 * * 1"
 
 permissions:
   contents: read
@@ -28,7 +32,9 @@ jobs:
         run: |
           set -euo pipefail
           if [ -n "${INPUT_TARGET:-}" ]; then
-            if ! [[ "$INPUT_TARGET" =~ ^(main|[0-9]+)$ ]]; then echo "invalid target"; exit 1; fi
+            # v3.6 §3b: tags/branches allowed (e.g. bootable-kernel-final) to verify
+            # the archived standalone-kernel head, not only main/PRs.
+            if ! [[ "$INPUT_TARGET" =~ ^(main|[0-9]+|[A-Za-z0-9][A-Za-z0-9._/-]*)$ ]]; then echo "invalid target"; exit 1; fi
             echo "targets=$(jq -cn --arg t "$INPUT_TARGET" '[$t]')" >> "$GITHUB_OUTPUT"
             exit 0
           fi
@@ -60,7 +66,8 @@ jobs:
         id: ref
         run: |
           if [ "$TARGET" = "main" ]; then echo "ref=refs/heads/main" >> "$GITHUB_OUTPUT"
-          else echo "ref=refs/pull/${TARGET}/head" >> "$GITHUB_OUTPUT"; fi
+          elif [[ "$TARGET" =~ ^[0-9]+$ ]]; then echo "ref=refs/pull/${TARGET}/head" >> "$GITHUB_OUTPUT"
+          else echo "ref=refs/tags/${TARGET}" >> "$GITHUB_OUTPUT"; fi
 
       - name: Checkout upstream (untrusted code, no credentials)
         uses: actions/checkout@v4

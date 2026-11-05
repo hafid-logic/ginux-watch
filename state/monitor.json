@@ -1,0 +1,69 @@
+{
+ "checked_utc": "2026-11-05T06:06:56Z",
+ "ginux": {
+  "main_sha": "d337713bfdc79605a8fbef41a09db0d4e04464bc",
+  "readme_sha": "13816227df0ed7d1a040943769f9afc5f8734168",
+  "cutoff_present": false,
+  "pivot_literal_present": false,
+  "tags": [
+   {
+    "name": "research-v1-baseline",
+    "sha": "36503bda2d87465765e1b94e65f9d100f27ed5be"
+   },
+   {
+    "name": "bootable-kernel-final",
+    "sha": "4d4a53bbcc09b16e56aa5eb671ac815f16f2b82f"
+   }
+  ],
+  "archive_branches": [
+   "bootable-kernel"
+  ],
+  "open_issues": 0,
+  "open_prs": 2,
+  "latest_number": 154,
+  "last_push_utc": "2026-11-04T23:28:42Z"
+ },
+ "ginux_us": {
+  "exists": false,
+  "pushed_at": null,
+  "default_branch": null,
+  "has_issues": false,
+  "readme_sha": null,
+  "contributing": false,
+  "first_commits": [
+   null,
+   null,
+   null
+  ]
+ },
+ "watched": {
+  "4": {
+   "state": "closed",
+   "updated_at": "2026-11-02T00:31:21Z"
+  },
+  "14": {
+   "state": "closed",
+   "updated_at": "2026-11-02T01:53:21Z"
+  },
+  "43": {
+   "state": "closed",
+   "updated_at": "2026-11-03T22:00:44Z"
+  },
+  "54": {
+   "state": "closed",
+   "updated_at": "2026-11-04T23:28:35Z"
+  },
+  "58": {
+   "state": "closed",
+   "updated_at": "2026-11-03T21:52:21Z"
+  },
+  "61": {
+   "state": "closed",
+   "updated_at": "2026-11-03T21:52:18Z"
+  }
+ },
+ "mentions": {
+  "involves": 7,
+  "mentions": 0
+ }
+}

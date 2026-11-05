@@ -32,6 +32,11 @@ PARSER_PREFIXES = (
     "crates/display-protocol/",
 )
 
+# Disabled 2026-11-05 (v3.6 §2a — archive/light-monitoring phase): no fuzz rounds are
+# dispatched on parser-crate merges while upstream ginux is in archive/userspace pivot.
+# Re-enable: set to True (docs/RECOVERY.md §8). Comparison/state updates still run.
+DISPATCH_FUZZ_ROUND = False
+
 
 def gh(*args: str) -> str:
     return subprocess.run(
@@ -77,7 +82,7 @@ def main() -> int:
     if touched:
         out += [f"  {p}" for p in touched[:12]]
 
-    if parser_touched:
+    if parser_touched and DISPATCH_FUZZ_ROUND:
         gh(
             "api",
             "-X",

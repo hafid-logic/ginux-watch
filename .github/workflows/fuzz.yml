@@ -20,8 +20,12 @@ on:
         description: "libFuzzer -max_total_time per target (seconds)"
         default: "1200"
   schedule:
-    # Mondays 05:30 UTC
-    - cron: "30 5 * * 1"
+    # DISABLED 2026-11-05 (v3.6 §2a — archive/light-monitoring phase; cron not deleted):
+    #   - cron: "30 5 * * 1"
+    # Re-enable: uncomment the cron line above (weekly Mondays 05:30 UTC) — docs/RECOVERY.md §8.
+    # Note: the team-watcher -> repository_dispatch("fuzz-round") source is also disabled
+    # (team/scripts/upstream-watch.py DISPATCH_FUZZ_ROUND=False); workflow_dispatch stays
+    # available for manual rounds.
   repository_dispatch:
     types: [fuzz-round]
 

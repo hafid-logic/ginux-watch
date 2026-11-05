@@ -1,0 +1,30 @@
+# monitor.yml — light upstream monitor: snapshots ginux/ginux-us + watched items every 6h.
+# v3.6 §2b/2c: built-in GITHUB_TOKEN only; ONE digest issue on significant change; no digest otherwise.
+# Upstream access is READ-ONLY (gh api GET); the only writes are state/monitor.json + digest issue in this repo.
+name: monitor
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: monitor
+  cancel-in-progress: false
+
+jobs:
+  monitor:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: monitor upstream (read-only) + digest issue on change
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/monitor.py
