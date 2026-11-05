@@ -1,8 +1,1039 @@
 {
- "generated_at_utc": "2026-11-05T10:40:52Z",
+ "generated_at_utc": "2026-11-05T18:40:36Z",
  "source_repo": "gmkurtzer/ginux",
- "item_count": 153,
+ "item_count": 203,
  "items": {
+  "204": {
+   "kind": "pr",
+   "title": "fix(init): keep the native loop in control of fork, signal stops and int 0x80",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    ".github/workflows/check.yml",
+    "Makefile",
+    "README.md",
+    "crates/ginux-init/src/dispatch.rs",
+    "crates/ginux-init/src/launch.rs",
+    "crates/ginux-init/src/main.rs",
+    "scripts/test-native-supervision.py",
+    "tests/fixtures/native-fixture.c"
+   ],
+   "keywords": [
+    "native",
+    "fork",
+    "stop",
+    "syscall",
+    "launch",
+    "0x80",
+    "abi",
+    "check",
+    "fixture",
+    "init"
+   ]
+  },
+  "203": {
+   "kind": "issue",
+   "title": "native: `ginux native` runs fork children, syscalls after a plain SIGTRAP stop and int 0x80 calls outside the balanced policy",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "stop",
+    "fork",
+    "loop",
+    "native",
+    "0x80",
+    "entry",
+    "syscall",
+    "exit",
+    "host",
+    "runs"
+   ]
+  },
+  "202": {
+   "kind": "issue",
+   "title": "Thank you: Ginux has been a great project to run an autonomous build-and-test pipeline against",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "against",
+    "pipeline",
+    "agent",
+    "autonomous",
+    "checks",
+    "every",
+    "ginux",
+    "host",
+    "linux",
+    "main"
+   ]
+  },
+  "201": {
+   "kind": "pr",
+   "title": "fix(scripts): verify the Rocky host image before caching it",
+   "state": "closed",
+   "merged_at": "2026-11-05T18:17:48Z",
+   "files": [
+    "scripts/fetch-rocky-host.sh"
+   ],
+   "keywords": [
+    "rocky",
+    "host",
+    "cache",
+    "download",
+    "fetch",
+    "image",
+    "entry",
+    "verify",
+    "exit",
+    "fails"
+   ]
+  },
+  "200": {
+   "kind": "issue",
+   "title": "fetch-rocky-host.sh: a corrupt cached host image is never fetched again",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "host",
+    "rocky",
+    "cache",
+    "image",
+    "fetch",
+    "download",
+    "mirror",
+    "corrupt",
+    "same",
+    "checksum"
+   ]
+  },
+  "199": {
+   "kind": "pr",
+   "title": "fix(scripts): boot the Rocky host image that was verified",
+   "state": "closed",
+   "merged_at": "2026-11-05T18:16:46Z",
+   "files": [
+    "scripts/start-rocky-host.sh"
+   ],
+   "keywords": [
+    "host",
+    "rocky",
+    "cache",
+    "override",
+    "image",
+    "rocky_image_path",
+    "domain",
+    "booted",
+    "prepare",
+    "verify"
+   ]
+  },
+  "198": {
+   "kind": "issue",
+   "title": "scripts: `start-rocky-host.sh` boots the cached host image while its prepare step verifies `ROCKY_IMAGE_PATH`",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "rocky",
+    "cache",
+    "host",
+    "override",
+    "scripts",
+    "image",
+    "rocky_image_path",
+    "backing",
+    "booted",
+    "corrupt"
+   ]
+  },
+  "197": {
+   "kind": "pr",
+   "title": "fix(init): report domain and vfs input errors through domain_fail",
+   "state": "closed",
+   "merged_at": "2026-11-05T18:16:01Z",
+   "files": [
+    "crates/ginux-init/src/launch.rs",
+    "crates/ginux-init/src/main.rs",
+    "scripts/test-domain.sh",
+    "scripts/test-vfs.sh"
+   ],
+   "keywords": [
+    "failed",
+    "fixture",
+    "vfs",
+    "fail",
+    "index",
+    "gate3",
+    "reason",
+    "missing",
+    "state",
+    "cleanup"
+   ]
+  },
+  "196": {
+   "kind": "issue",
+   "title": "init: `domain` and `vfs` report missing or invalid input files as `GATE3: FAIL` and skip `domain_fail`",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "domain",
+    "failed",
+    "fail",
+    "gate3",
+    "vfs",
+    "gate",
+    "fixture",
+    "index",
+    "invalid",
+    "managed"
+   ]
+  },
+  "195": {
+   "kind": "pr",
+   "title": "test(process): check that inherited descriptors never reach the tracee",
+   "state": "closed",
+   "merged_at": "2026-11-05T18:15:04Z",
+   "files": [
+    "scripts/test-process-native.py",
+    "tests/fixtures/process-review-fixture.c"
+   ],
+   "keywords": [
+    "pass",
+    "close",
+    "check",
+    "close_range",
+    "inherited",
+    "process",
+    "194",
+    "disabled",
+    "fails",
+    "host"
+   ]
+  },
+  "194": {
+   "kind": "issue",
+   "title": "test(process): inherited_fds passes with either descriptor layer removed",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "main",
+    "read",
+    "dup",
+    "close_range",
+    "descriptor",
+    "host",
+    "process",
+    "disabled",
+    "fixture",
+    "ginux"
+   ]
+  },
+  "193": {
+   "kind": "pr",
+   "title": "fix(vfs-index): reject GNU sparse files instead of misindexing them",
+   "state": "closed",
+   "merged_at": "2026-11-05T17:17:32Z",
+   "files": [
+    "crates/ginux-vfs-index/src/main.rs",
+    "scripts/test-oci-layers.sh"
+   ],
+   "keywords": [
+    "sparse",
+    "gnu",
+    "tar",
+    "index",
+    "entry",
+    "writes",
+    "both",
+    "header",
+    "layers",
+    "main"
+   ]
+  },
+  "192": {
+   "kind": "issue",
+   "title": "vfs-index: GNU sparse files from `tar --sparse` are indexed under GNUSparseFile.<pid> with the wrong size and content",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "sparse",
+    "gnu",
+    "size",
+    "tar",
+    "index",
+    "name",
+    "format",
+    "real",
+    "content",
+    "entry"
+   ]
+  },
+  "191": {
+   "kind": "pr",
+   "title": "fix(process): keep Linux signal state rules for sigprocmask, fork and exec",
+   "state": "closed",
+   "merged_at": "2026-11-05T17:16:06Z",
+   "files": [
+    "crates/ginux-process/src/lib.rs"
+   ],
+   "keywords": [
+    "signal",
+    "mask",
+    "handler",
+    "linux",
+    "still",
+    "threads",
+    "dispositions",
+    "exec",
+    "fork",
+    "kept"
+   ]
+  },
+  "190": {
+   "kind": "issue",
+   "title": "process: ProcessTable lets SIGKILL/SIGSTOP be masked, and fork/exec drop signal state Linux keeps",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "table",
+    "init",
+    "signal",
+    "linux",
+    "unwrap",
+    "mask",
+    "pending",
+    "exec",
+    "fork",
+    "sigkill"
+   ]
+  },
+  "189": {
+   "kind": "pr",
+   "title": "fix(runtime): align the initial stack and terminate it with an auxv",
+   "state": "closed",
+   "merged_at": "2026-11-05T17:15:13Z",
+   "files": [
+    "crates/ginux-runtime/src/lib.rs"
+   ],
+   "keywords": [
+    "runtime",
+    "argc",
+    "auxv",
+    "envc",
+    "pass",
+    "rsp",
+    "ginux",
+    "at_null",
+    "at_pagesz",
+    "check"
+   ]
+  },
+  "188": {
+   "kind": "issue",
+   "title": "runtime interpreter: initial stack has no auxiliary vector, and rsp is misaligned when argc + envc is even",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "fixture",
+    "runtime",
+    "stack",
+    "argc",
+    "rsp",
+    "null",
+    "aligned",
+    "envc",
+    "envp",
+    "auxv"
+   ]
+  },
+  "187": {
+   "kind": "pr",
+   "title": "fix(launch): drop whole audit records at the byte budget",
+   "state": "closed",
+   "merged_at": "2026-11-05T17:14:15Z",
+   "files": [
+    "crates/ginux-init/src/launch.rs",
+    "scripts/test-launch.py"
+   ],
+   "keywords": [
+    "audit",
+    "record",
+    "budget",
+    "check",
+    "ginux",
+    "launch",
+    "byte",
+    "65536",
+    "buffer",
+    "notice"
+   ]
+  },
+  "186": {
+   "kind": "issue",
+   "title": "launch: the audit byte budget cuts a record in half and glues the truncation notice onto it",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "audit",
+    "ginux",
+    "record",
+    "budget",
+    "launch",
+    "notice",
+    "phase",
+    "sequence",
+    "syscall",
+    "entry"
+   ]
+  },
+  "185": {
+   "kind": "pr",
+   "title": "fix(process): await the death of tasks killed in a supervised stop",
+   "state": "closed",
+   "merged_at": "2026-11-05T17:13:22Z",
+   "files": [
+    "Makefile",
+    "crates/ginux-init/src/main.rs",
+    "scripts/test-process-native.py",
+    "tests/fixtures/process-review-fixture.c"
+   ],
+   "keywords": [
+    "killed",
+    "stop",
+    "read",
+    "task",
+    "fails",
+    "before",
+    "death",
+    "domain",
+    "event",
+    "exec"
+   ]
+  },
+  "184": {
+   "kind": "issue",
+   "title": "process-native: a fatal signal in a multithreaded child fails the domain instead of reporting the group's death",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "process",
+    "failed",
+    "thread",
+    "child",
+    "domain",
+    "native",
+    "ginux",
+    "main",
+    "status",
+    "100"
+   ]
+  },
+  "183": {
+   "kind": "pr",
+   "title": "build: make test-kernel-views and test-process-native build what they run",
+   "state": "closed",
+   "merged_at": "2026-11-05T16:15:33Z",
+   "files": [
+    "Makefile"
+   ],
+   "keywords": [
+    "build",
+    "process",
+    "kernel",
+    "native",
+    "views",
+    "fixtures",
+    "host",
+    "target",
+    "binary",
+    "building"
+   ]
+  },
+  "182": {
+   "kind": "issue",
+   "title": "make test-kernel-views and test-process-native run stale binaries",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "build",
+    "process",
+    "kernel",
+    "views",
+    "fixtures",
+    "native",
+    "run",
+    "runs",
+    "targets",
+    "artifacts"
+   ]
+  },
+  "181": {
+   "kind": "pr",
+   "title": "fix(devices): check the block backend size and time the bench without fsync",
+   "state": "closed",
+   "merged_at": "2026-11-05T16:12:09Z",
+   "files": [
+    "crates/ginux-init/src/main.rs",
+    "crates/ginux-init/src/supervisor.rs",
+    "scripts/test-devices.sh"
+   ],
+   "keywords": [
+    "bench",
+    "pass",
+    "block",
+    "devices",
+    "fail",
+    "1024",
+    "backend",
+    "before",
+    "check",
+    "gate"
+   ]
+  },
+  "180": {
+   "kind": "issue",
+   "title": "devices gate accepts an empty block image and grows it; device-bench times an fsync",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "pass",
+    "fsync",
+    "bench",
+    "block",
+    "grows",
+    "image",
+    "4096",
+    "about",
+    "before",
+    "close"
+   ]
+  },
+  "179": {
+   "kind": "issue",
+   "title": "balanced profile: read-only syscalls missing from the surface break common programs (getcwd, dup, chdir, uname, sleep, xattr reads)",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "works",
+    "bash",
+    "fail",
+    "fails",
+    "getcwd",
+    "read",
+    "chdir",
+    "dup",
+    "every",
+    "ginux"
+   ]
+  },
+  "178": {
+   "kind": "issue",
+   "title": "balanced profile: read/write/pread above their bounds fail with EPERM instead of a short transfer",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "write",
+    "bytes",
+    "ginux",
+    "1024",
+    "4097",
+    "mib",
+    "read",
+    "4096",
+    "arg2",
+    "arguments"
+   ]
+  },
+  "177": {
+   "kind": "pr",
+   "title": "fix(process): let fatal signals kill the task in process-native",
+   "state": "closed",
+   "merged_at": "2026-11-05T15:16:54Z",
+   "files": [
+    "Makefile",
+    "crates/ginux-init/src/main.rs",
+    "scripts/test-process-native.py",
+    "tests/fixtures/process-review-fixture.c"
+   ],
+   "keywords": [
+    "core",
+    "signal",
+    "task",
+    "linux",
+    "still",
+    "default",
+    "existing",
+    "never",
+    "stop",
+    "supervisor"
+   ]
+  },
+  "176": {
+   "kind": "issue",
+   "title": "process-native: a fatal signal in one task fails the whole domain; kill with an invalid signal returns ENOSYS",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "signal",
+    "process",
+    "domain",
+    "kill",
+    "native",
+    "unexpected",
+    "child",
+    "enosys",
+    "fatal",
+    "ginux"
+   ]
+  },
+  "175": {
+   "kind": "pr",
+   "title": "fix(vfs-index): reject truncated tars, keep last duplicates, read GNU long names",
+   "state": "closed",
+   "merged_at": "2026-11-05T15:16:12Z",
+   "files": [
+    "crates/ginux-vfs-index/src/main.rs",
+    "scripts/test-oci-layers.sh"
+   ],
+   "keywords": [
+    "entry",
+    "tar",
+    "gnu",
+    "index",
+    "pax",
+    "archive",
+    "both",
+    "end",
+    "main",
+    "duplicates"
+   ]
+  },
+  "174": {
+   "kind": "issue",
+   "title": "vfs-index: truncated tars accepted, first duplicate wins, GNU long names truncated",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "tar",
+    "index",
+    "gnu",
+    "mode",
+    "plain",
+    "truncated",
+    "data",
+    "appended",
+    "archive",
+    "assemble"
+   ]
+  },
+  "173": {
+   "kind": "pr",
+   "title": "test: make gate checks fail when the checked behaviour breaks",
+   "state": "closed",
+   "merged_at": "2026-11-05T15:15:22Z",
+   "files": [
+    "scripts/bench-devices.sh",
+    "scripts/test-config.sh",
+    "scripts/test-devices.sh",
+    "scripts/test-domain.sh",
+    "scripts/test-native-vfs.sh"
+   ],
+   "keywords": [
+    "pass",
+    "scripts",
+    "require",
+    "config",
+    "domain",
+    "log",
+    "bench",
+    "block",
+    "devices",
+    "exit"
+   ]
+  },
+  "172": {
+   "kind": "issue",
+   "title": "several gate test scripts pass while the property they report is broken",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "scripts",
+    "domain",
+    "checked",
+    "config",
+    "pass",
+    "gate",
+    "bench",
+    "bytes",
+    "devices",
+    "equivalent"
+   ]
+  },
+  "171": {
+   "kind": "pr",
+   "title": "fix(runtime): fail closed on REX.B 0x90 and keep only 8 exit-status bits",
+   "state": "closed",
+   "merged_at": "2026-11-05T15:14:27Z",
+   "files": [
+    "crates/ginux-runtime/src/lib.rs"
+   ],
+   "keywords": [
+    "pass",
+    "check",
+    "runtime",
+    "0x90",
+    "170",
+    "does",
+    "exit",
+    "fails",
+    "main",
+    "only"
+   ]
+  },
+  "170": {
+   "kind": "issue",
+   "title": "runtime interpreter: REX.B 0x90 runs as NOP, and exit status is not truncated to 8 bits",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "exit",
+    "rax",
+    "status",
+    "interpreter",
+    "rex",
+    "0x11",
+    "0x22",
+    "0x90",
+    "256",
+    "does"
+   ]
+  },
+  "169": {
+   "kind": "pr",
+   "title": "fix(check-name): fail when rg or find fails instead of passing",
+   "state": "closed",
+   "merged_at": "2026-11-05T14:14:01Z",
+   "files": [
+    "scripts/check-name.sh",
+    "scripts/doctor.sh"
+   ],
+   "keywords": [
+    "exit",
+    "pass",
+    "check",
+    "find",
+    "name",
+    "status",
+    "failed",
+    "168",
+    "after",
+    "arm64"
+   ]
+  },
+  "168": {
+   "kind": "issue",
+   "title": "check-name.sh passes when rg is missing or fails",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "check",
+    "exit",
+    "name",
+    "grep",
+    "pass",
+    "stale",
+    "status",
+    "fails",
+    "doctor",
+    "exits"
+   ]
+  },
+  "167": {
+   "kind": "pr",
+   "title": "fix(vfs-index): keep hard links from OCI layers",
+   "state": "closed",
+   "merged_at": "2026-11-05T14:12:52Z",
+   "files": [
+    "crates/ginux-vfs-index/src/main.rs",
+    "scripts/test-oci-layers.sh"
+   ],
+   "keywords": [
+    "link",
+    "layer",
+    "hard",
+    "target",
+    "links",
+    "index",
+    "regular",
+    "assembled",
+    "data",
+    "tar"
+   ]
+  },
+  "166": {
+   "kind": "issue",
+   "title": "vfs-index drops hard links from OCI layers: 1398 files missing from the Rocky rootfs, /etc/localtime dangling",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "etc",
+    "index",
+    "tar",
+    "layer",
+    "usr",
+    "share",
+    "zoneinfo",
+    "base",
+    "hard",
+    "utc"
+   ]
+  },
+  "165": {
+   "kind": "pr",
+   "title": "fix(init): report usage for unknown or incomplete commands",
+   "state": "closed",
+   "merged_at": "2026-11-05T14:11:54Z",
+   "files": [
+    "crates/ginux-init/src/launch.rs",
+    "crates/ginux-init/src/main.rs",
+    "scripts/test-launch.py"
+   ],
+   "keywords": [
+    "ginux",
+    "usage",
+    "config",
+    "launch",
+    "command",
+    "demonstration",
+    "help",
+    "check",
+    "exit",
+    "incomplete"
+   ]
+  },
+  "164": {
+   "kind": "issue",
+   "title": "ginux: unknown or incomplete commands run the Gate 1 demonstration instead of reporting usage",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "ginux",
+    "launch",
+    "payload",
+    "usage",
+    "config",
+    "demonstration",
+    "incomplete",
+    "interception",
+    "ptrace",
+    "after"
+   ]
+  },
+  "163": {
+   "kind": "issue",
+   "title": "balanced profile: the getrandom bound checks flags instead of buflen",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "256",
+    "getrandom",
+    "flags",
+    "glibc",
+    "bound",
+    "buflen",
+    "buf",
+    "318",
+    "arg1",
+    "byte"
+   ]
+  },
+  "162": {
+   "kind": "pr",
+   "title": "fix(core): mediate rt_sigreturn so signal handlers can return",
+   "state": "closed",
+   "merged_at": "2026-11-05T13:12:40Z",
+   "files": [
+    "crates/ginux-core/src/lib.rs",
+    "scripts/test-launch.py",
+    "tests/fixtures/launch-fixture.c"
+   ],
+   "keywords": [
+    "handler",
+    "exit",
+    "launch",
+    "rt_sigreturn",
+    "check",
+    "syscall",
+    "core",
+    "entry",
+    "read",
+    "runs"
+   ]
+  },
+  "161": {
+   "kind": "issue",
+   "title": "balanced profile denies rt_sigreturn, so every signal handler crashes on return",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "signal",
+    "ginux",
+    "workload",
+    "handler",
+    "audit",
+    "launch",
+    "phase",
+    "rt_sigreturn",
+    "surface",
+    "syscall"
+   ]
+  },
+  "160": {
+   "kind": "pr",
+   "title": "test(domain): make the lifecycle helper check able to fail",
+   "state": "closed",
+   "merged_at": "2026-11-05T13:11:44Z",
+   "files": [
+    "scripts/test-domain.sh"
+   ],
+   "keywords": [
+    "domain",
+    "helper",
+    "lifecycle",
+    "helper_pid",
+    "kill",
+    "snippet",
+    "check",
+    "159",
+    "bash",
+    "continues"
+   ]
+  },
+  "159": {
+   "kind": "issue",
+   "title": "test-domain.sh: the lifecycle helper-gone check can never fail",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "helper",
+    "kill",
+    "helper_pid",
+    "lifecycle",
+    "set",
+    "continued",
+    "dev",
+    "null",
+    "snippet",
+    "check"
+   ]
+  },
+  "158": {
+   "kind": "pr",
+   "title": "fix(domain): size the normalized config for the largest accepted config",
+   "state": "closed",
+   "merged_at": "2026-11-05T12:12:43Z",
+   "files": [
+    "crates/ginux-domain/src/lib.rs",
+    "scripts/test-launch.py"
+   ],
+   "keywords": [
+    "buffer",
+    "bytes",
+    "config",
+    "unit",
+    "byte",
+    "ginux",
+    "launch",
+    "check",
+    "domain",
+    "every"
+   ]
+  },
+  "157": {
+   "kind": "issue",
+   "title": "config: a config within the documented limits is rejected as value-too-long (NormalizedConfig is 4096 bytes)",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "bytes",
+    "config",
+    "each",
+    "ginux",
+    "launch",
+    "long",
+    "too",
+    "environment",
+    "128",
+    "256"
+   ]
+  },
+  "156": {
+   "kind": "pr",
+   "title": "fix(core): allow read-only directory opens in the balanced profile",
+   "state": "closed",
+   "merged_at": "2026-11-05T12:11:37Z",
+   "files": [
+    "crates/ginux-core/src/lib.rs",
+    "scripts/test-launch.py",
+    "tests/fixtures/launch-fixture.c"
+   ],
+   "keywords": [
+    "o_directory",
+    "mask",
+    "launch",
+    "pass",
+    "directory",
+    "list",
+    "only",
+    "unit",
+    "__o_tmpfile",
+    "check"
+   ]
+  },
+  "155": {
+   "kind": "issue",
+   "title": "balanced profile denies every directory open: O_DIRECTORY matches the O_TMPFILE mask",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "ginux",
+    "audit",
+    "directory",
+    "o_directory",
+    "action",
+    "entry",
+    "image",
+    "phase",
+    "result",
+    "sequence"
+   ]
+  },
   "154": {
    "kind": "pr",
    "title": "feat(process): supervise native processes with managed ownership",
@@ -3476,6 +4507,12 @@
  },
  "keywords": {
   "native": [
+   204,
+   203,
+   184,
+   183,
+   182,
+   176,
    154,
    153,
    84,
@@ -3483,71 +4520,67 @@
    39,
    14
   ],
-  "process": [
-   154,
-   137,
-   135,
-   129,
+  "fork": [
+   204,
+   203,
+   191,
+   190,
+   130,
    126,
-   121,
-   48
+   99,
+   95
   ],
-  "scenarios": [
-   154
+  "stop": [
+   204,
+   203,
+   185,
+   177
   ],
-  "recipe": [
-   154,
-   153
-  ],
-  "command": [
-   154,
-   6
-  ],
-  "configured": [
-   154
-  ],
-  "descriptor": [
-   154,
-   149,
-   147,
-   144,
-   88
-  ],
-  "exec": [
-   154,
-   126,
-   113,
-   102,
-   53
-  ],
-  "existing": [
-   154,
-   153,
-   142,
-   49,
-   47,
-   38,
-   34
-  ],
-  "general": [
-   154
-  ],
-  "failures": [
-   153,
-   27
-  ],
-  "result": [
-   153,
-   101
-  ],
-  "unit": [
-   153,
-   6
+  "syscall": [
+   204,
+   203,
+   186,
+   162,
+   161,
+   62,
+   25
   ],
   "launch": [
+   204,
+   187,
+   186,
+   165,
+   164,
+   162,
+   161,
+   158,
+   157,
+   156,
    153
   ],
+  "0x80": [
+   204,
+   203
+  ],
+  "abi": [
+   204,
+   98
+  ],
   "check": [
+   204,
+   195,
+   189,
+   187,
+   181,
+   171,
+   169,
+   168,
+   165,
+   162,
+   160,
+   159,
+   158,
+   156,
    153,
    152,
    142,
@@ -3574,13 +4607,790 @@
    4,
    3
   ],
-  "job": [
-   153
+  "fixture": [
+   204,
+   197,
+   196,
+   194,
+   188
   ],
-  "workload": [
-   153
+  "init": [
+   204,
+   190,
+   112,
+   57,
+   37,
+   26
+  ],
+  "loop": [
+   203,
+   139,
+   102
+  ],
+  "entry": [
+   203,
+   201,
+   193,
+   192,
+   186,
+   175,
+   162,
+   155,
+   138,
+   134,
+   114,
+   17,
+   10,
+   7
+  ],
+  "exit": [
+   203,
+   201,
+   173,
+   171,
+   170,
+   169,
+   168,
+   165,
+   162,
+   130,
+   111
+  ],
+  "host": [
+   203,
+   202,
+   201,
+   200,
+   199,
+   198,
+   195,
+   194,
+   183,
+   125,
+   92,
+   86,
+   33
+  ],
+  "runs": [
+   203,
+   182,
+   162
+  ],
+  "against": [
+   202
+  ],
+  "pipeline": [
+   202
+  ],
+  "agent": [
+   202
+  ],
+  "autonomous": [
+   202
+  ],
+  "checks": [
+   202,
+   54,
+   43
+  ],
+  "every": [
+   202,
+   179,
+   158,
+   145,
+   138,
+   95,
+   63
+  ],
+  "ginux": [
+   202,
+   194,
+   189,
+   187,
+   186,
+   184,
+   179,
+   178,
+   176,
+   165,
+   164,
+   161,
+   158,
+   157,
+   155,
+   136,
+   112,
+   111,
+   110,
+   106,
+   103,
+   99,
+   97,
+   96,
+   95,
+   94,
+   93,
+   92,
+   76,
+   71,
+   64,
+   61,
+   58,
+   57,
+   45,
+   42,
+   39,
+   23,
+   18,
+   12,
+   8,
+   5
+  ],
+  "linux": [
+   202,
+   191,
+   190,
+   177,
+   143,
+   142,
+   141,
+   139,
+   135,
+   129,
+   128,
+   127,
+   123,
+   122,
+   121,
+   120,
+   118,
+   116,
+   114,
+   111,
+   110,
+   106,
+   105,
+   103,
+   99,
+   98,
+   88,
+   85,
+   84,
+   83,
+   76,
+   72,
+   71,
+   69,
+   59,
+   57,
+   56,
+   55,
+   47,
+   46,
+   37,
+   14,
+   11,
+   9,
+   8
+  ],
+  "main": [
+   202,
+   194,
+   193,
+   184,
+   175,
+   171,
+   95,
+   93,
+   5
+  ],
+  "rocky": [
+   201,
+   200,
+   199,
+   198,
+   8
+  ],
+  "cache": [
+   201,
+   200,
+   199,
+   198,
+   51,
+   17
+  ],
+  "download": [
+   201,
+   200
+  ],
+  "fetch": [
+   201,
+   200
+  ],
+  "image": [
+   201,
+   200,
+   199,
+   198,
+   180,
+   155,
+   150,
+   149,
+   148,
+   143,
+   140,
+   136,
+   134,
+   123,
+   122,
+   116,
+   115,
+   112,
+   110,
+   97,
+   96,
+   94,
+   90,
+   89,
+   83,
+   54,
+   27,
+   18,
+   16
+  ],
+  "verify": [
+   201,
+   199,
+   42
+  ],
+  "fails": [
+   201,
+   195,
+   185,
+   179,
+   171,
+   168,
+   150,
+   125,
+   94,
+   14
+  ],
+  "mirror": [
+   200
+  ],
+  "corrupt": [
+   200,
+   198
+  ],
+  "same": [
+   200,
+   140,
+   123,
+   121,
+   120,
+   109,
+   104,
+   103,
+   76,
+   14
+  ],
+  "checksum": [
+   200
+  ],
+  "override": [
+   199,
+   198
+  ],
+  "rocky_image_path": [
+   199,
+   198
+  ],
+  "domain": [
+   199,
+   196,
+   185,
+   184,
+   176,
+   173,
+   172,
+   160,
+   158,
+   138,
+   135,
+   132,
+   114,
+   111,
+   94,
+   86,
+   85,
+   83,
+   80,
+   67,
+   59,
+   57,
+   46,
+   39,
+   19
+  ],
+  "booted": [
+   199,
+   198
+  ],
+  "prepare": [
+   199
+  ],
+  "scripts": [
+   198,
+   173,
+   172
+  ],
+  "backing": [
+   198
+  ],
+  "failed": [
+   197,
+   196,
+   184,
+   169,
+   135,
+   132,
+   111,
+   91,
+   57,
+   51,
+   37,
+   31,
+   29,
+   28,
+   26
+  ],
+  "vfs": [
+   197,
+   196
+  ],
+  "fail": [
+   197,
+   196,
+   181,
+   179,
+   28,
+   4
+  ],
+  "index": [
+   197,
+   196,
+   193,
+   192,
+   175,
+   174,
+   167,
+   166,
+   42
+  ],
+  "gate3": [
+   197,
+   196
+  ],
+  "reason": [
+   197
+  ],
+  "missing": [
+   197
+  ],
+  "state": [
+   197,
+   82,
+   78,
+   7
+  ],
+  "cleanup": [
+   197,
+   151
+  ],
+  "gate": [
+   196,
+   181,
+   172
+  ],
+  "invalid": [
+   196,
+   37
+  ],
+  "managed": [
+   196
+  ],
+  "pass": [
+   195,
+   189,
+   181,
+   180,
+   173,
+   172,
+   171,
+   169,
+   168,
+   156,
+   86,
+   34,
+   32
+  ],
+  "close": [
+   195,
+   180,
+   151,
+   72,
+   68,
+   66
+  ],
+  "close_range": [
+   195,
+   194
+  ],
+  "inherited": [
+   195
+  ],
+  "process": [
+   195,
+   194,
+   184,
+   183,
+   182,
+   176,
+   154,
+   137,
+   135,
+   129,
+   126,
+   121,
+   48
+  ],
+  "194": [
+   195
+  ],
+  "disabled": [
+   195,
+   194
+  ],
+  "read": [
+   194,
+   185,
+   179,
+   178,
+   162,
+   138
+  ],
+  "dup": [
+   194,
+   179
+  ],
+  "descriptor": [
+   194,
+   154,
+   149,
+   147,
+   144,
+   88
+  ],
+  "sparse": [
+   193,
+   192
+  ],
+  "gnu": [
+   193,
+   192,
+   175,
+   174
+  ],
+  "tar": [
+   193,
+   192,
+   175,
+   174,
+   167,
+   166
+  ],
+  "writes": [
+   193,
+   145,
+   34
+  ],
+  "both": [
+   193,
+   175,
+   152,
+   143,
+   102,
+   76
+  ],
+  "header": [
+   193,
+   131,
+   107,
+   44
+  ],
+  "layers": [
+   193
+  ],
+  "size": [
+   192,
+   132,
+   119,
+   108,
+   43,
+   38,
+   13,
+   4
+  ],
+  "name": [
+   192,
+   169,
+   168,
+   146,
+   141,
+   133,
+   109,
+   18
+  ],
+  "format": [
+   192,
+   58,
+   23
+  ],
+  "real": [
+   192
+  ],
+  "content": [
+   192,
+   81
+  ],
+  "signal": [
+   191,
+   190,
+   177,
+   176,
+   161,
+   135,
+   130,
+   129,
+   111,
+   105
+  ],
+  "mask": [
+   191,
+   190,
+   156
+  ],
+  "handler": [
+   191,
+   162,
+   161,
+   135,
+   111,
+   105
+  ],
+  "still": [
+   191,
+   177,
+   63
+  ],
+  "threads": [
+   191,
+   114
+  ],
+  "dispositions": [
+   191
+  ],
+  "exec": [
+   191,
+   190,
+   185,
+   154,
+   126,
+   113,
+   102,
+   53
+  ],
+  "kept": [
+   191,
+   118
+  ],
+  "table": [
+   190,
+   65
+  ],
+  "unwrap": [
+   190
+  ],
+  "pending": [
+   190
+  ],
+  "sigkill": [
+   190
+  ],
+  "runtime": [
+   189,
+   188,
+   171,
+   50
+  ],
+  "argc": [
+   189,
+   188
+  ],
+  "auxv": [
+   189,
+   188
+  ],
+  "envc": [
+   189,
+   188
+  ],
+  "rsp": [
+   189,
+   188
+  ],
+  "at_null": [
+   189
+  ],
+  "at_pagesz": [
+   189
+  ],
+  "stack": [
+   188
+  ],
+  "null": [
+   188,
+   159
+  ],
+  "aligned": [
+   188
+  ],
+  "envp": [
+   188
+  ],
+  "audit": [
+   187,
+   186,
+   161,
+   155
+  ],
+  "record": [
+   187,
+   186,
+   107,
+   32
+  ],
+  "budget": [
+   187,
+   186,
+   62
+  ],
+  "byte": [
+   187,
+   163,
+   158,
+   94,
+   21,
+   20,
+   6
+  ],
+  "65536": [
+   187
+  ],
+  "buffer": [
+   187,
+   158,
+   21
+  ],
+  "notice": [
+   187,
+   186
+  ],
+  "phase": [
+   186,
+   161,
+   155
+  ],
+  "sequence": [
+   186,
+   155
+  ],
+  "killed": [
+   185
+  ],
+  "task": [
+   185,
+   177
+  ],
+  "before": [
+   185,
+   181,
+   180,
+   151,
+   144,
+   128,
+   113,
+   101,
+   90,
+   82,
+   56,
+   53,
+   52,
+   49,
+   48,
+   28,
+   27,
+   20
+  ],
+  "death": [
+   185
+  ],
+  "event": [
+   185
+  ],
+  "thread": [
+   184,
+   139,
+   138,
+   114,
+   99,
+   8
+  ],
+  "child": [
+   184,
+   176,
+   150,
+   137,
+   135,
+   130,
+   126,
+   124,
+   113,
+   111,
+   106,
+   102,
+   98,
+   59
+  ],
+  "status": [
+   184,
+   170,
+   169,
+   168,
+   11
+  ],
+  "100": [
+   184,
+   119
+  ],
+  "build": [
+   183,
+   182,
+   43
   ],
   "kernel": [
+   183,
+   182,
    152,
    139,
    130,
@@ -3607,6 +5417,582 @@
    7,
    3
   ],
+  "views": [
+   183,
+   182
+  ],
+  "fixtures": [
+   183,
+   182
+  ],
+  "target": [
+   183,
+   167,
+   129,
+   122,
+   117,
+   115,
+   87
+  ],
+  "binary": [
+   183,
+   76
+  ],
+  "building": [
+   183
+  ],
+  "run": [
+   182,
+   148,
+   137,
+   122,
+   61
+  ],
+  "targets": [
+   182,
+   45
+  ],
+  "artifacts": [
+   182
+  ],
+  "bench": [
+   181,
+   180,
+   173,
+   172
+  ],
+  "block": [
+   181,
+   180,
+   173,
+   139,
+   41,
+   30
+  ],
+  "devices": [
+   181,
+   173,
+   172
+  ],
+  "1024": [
+   181,
+   178,
+   13,
+   10,
+   4
+  ],
+  "backend": [
+   181
+  ],
+  "fsync": [
+   180
+  ],
+  "grows": [
+   180
+  ],
+  "4096": [
+   180,
+   178,
+   104
+  ],
+  "about": [
+   180,
+   56
+  ],
+  "works": [
+   179
+  ],
+  "bash": [
+   179,
+   160
+  ],
+  "getcwd": [
+   179,
+   38
+  ],
+  "chdir": [
+   179,
+   149,
+   91
+  ],
+  "write": [
+   178,
+   132,
+   108,
+   88,
+   81
+  ],
+  "bytes": [
+   178,
+   172,
+   158,
+   157,
+   132,
+   108,
+   54,
+   21
+  ],
+  "4097": [
+   178
+  ],
+  "mib": [
+   178,
+   80,
+   67,
+   66,
+   19
+  ],
+  "arg2": [
+   178
+  ],
+  "arguments": [
+   178
+  ],
+  "core": [
+   177,
+   162
+  ],
+  "default": [
+   177
+  ],
+  "existing": [
+   177,
+   154,
+   153,
+   142,
+   49,
+   47,
+   38,
+   34
+  ],
+  "never": [
+   177,
+   129,
+   68,
+   64
+  ],
+  "supervisor": [
+   177
+  ],
+  "kill": [
+   176,
+   160,
+   159,
+   129,
+   105
+  ],
+  "unexpected": [
+   176
+  ],
+  "enosys": [
+   176,
+   127,
+   113,
+   103,
+   11
+  ],
+  "fatal": [
+   176
+  ],
+  "pax": [
+   175,
+   58,
+   44,
+   17
+  ],
+  "archive": [
+   175,
+   174,
+   44
+  ],
+  "end": [
+   175
+  ],
+  "duplicates": [
+   175
+  ],
+  "mode": [
+   174,
+   144,
+   115,
+   79
+  ],
+  "plain": [
+   174
+  ],
+  "truncated": [
+   174
+  ],
+  "data": [
+   174,
+   167,
+   133,
+   109,
+   108,
+   68,
+   33
+  ],
+  "appended": [
+   174
+  ],
+  "assemble": [
+   174
+  ],
+  "require": [
+   173
+  ],
+  "config": [
+   173,
+   172,
+   165,
+   164,
+   158,
+   157,
+   107
+  ],
+  "log": [
+   173
+  ],
+  "checked": [
+   172,
+   54,
+   44
+  ],
+  "equivalent": [
+   172
+  ],
+  "0x90": [
+   171,
+   170
+  ],
+  "170": [
+   171
+  ],
+  "does": [
+   171,
+   170,
+   124
+  ],
+  "only": [
+   171,
+   156,
+   149,
+   135,
+   131,
+   107,
+   103,
+   102,
+   90,
+   89,
+   66,
+   32,
+   9
+  ],
+  "rax": [
+   170
+  ],
+  "interpreter": [
+   170
+  ],
+  "rex": [
+   170
+  ],
+  "0x11": [
+   170
+  ],
+  "0x22": [
+   170
+  ],
+  "256": [
+   170,
+   163,
+   157,
+   21,
+   17,
+   10,
+   4
+  ],
+  "find": [
+   169
+  ],
+  "168": [
+   169
+  ],
+  "after": [
+   169,
+   164,
+   149,
+   139,
+   120,
+   113,
+   102,
+   84,
+   70,
+   51,
+   50,
+   28,
+   25
+  ],
+  "arm64": [
+   169
+  ],
+  "grep": [
+   168
+  ],
+  "stale": [
+   168,
+   41
+  ],
+  "doctor": [
+   168
+  ],
+  "exits": [
+   168
+  ],
+  "link": [
+   167,
+   148,
+   142,
+   133,
+   122,
+   117
+  ],
+  "layer": [
+   167,
+   166,
+   134,
+   80,
+   45,
+   20,
+   18,
+   17
+  ],
+  "hard": [
+   167,
+   166,
+   133,
+   109
+  ],
+  "links": [
+   167,
+   122
+  ],
+  "regular": [
+   167
+  ],
+  "assembled": [
+   167
+  ],
+  "etc": [
+   166,
+   136,
+   134,
+   123,
+   115,
+   112,
+   110,
+   89
+  ],
+  "usr": [
+   166,
+   149
+  ],
+  "share": [
+   166
+  ],
+  "zoneinfo": [
+   166
+  ],
+  "base": [
+   166,
+   123,
+   97,
+   93,
+   18
+  ],
+  "utc": [
+   166
+  ],
+  "usage": [
+   165,
+   164
+  ],
+  "command": [
+   165,
+   154,
+   6
+  ],
+  "demonstration": [
+   165,
+   164
+  ],
+  "help": [
+   165
+  ],
+  "incomplete": [
+   165,
+   164
+  ],
+  "payload": [
+   164,
+   131,
+   59,
+   34,
+   32
+  ],
+  "interception": [
+   164
+  ],
+  "ptrace": [
+   164
+  ],
+  "getrandom": [
+   163
+  ],
+  "flags": [
+   163,
+   105,
+   91
+  ],
+  "glibc": [
+   163
+  ],
+  "bound": [
+   163,
+   146,
+   70,
+   47
+  ],
+  "buflen": [
+   163
+  ],
+  "buf": [
+   163
+  ],
+  "318": [
+   163
+  ],
+  "arg1": [
+   163
+  ],
+  "rt_sigreturn": [
+   162,
+   161
+  ],
+  "workload": [
+   161,
+   153
+  ],
+  "surface": [
+   161
+  ],
+  "helper": [
+   160,
+   159
+  ],
+  "lifecycle": [
+   160,
+   159
+  ],
+  "helper_pid": [
+   160,
+   159
+  ],
+  "snippet": [
+   160,
+   159
+  ],
+  "159": [
+   160
+  ],
+  "continues": [
+   160
+  ],
+  "set": [
+   159
+  ],
+  "continued": [
+   159
+  ],
+  "dev": [
+   159
+  ],
+  "unit": [
+   158,
+   156,
+   153,
+   6
+  ],
+  "each": [
+   157,
+   124,
+   26
+  ],
+  "long": [
+   157
+  ],
+  "too": [
+   157
+  ],
+  "environment": [
+   157
+  ],
+  "128": [
+   157,
+   59
+  ],
+  "o_directory": [
+   156,
+   155,
+   90
+  ],
+  "directory": [
+   156,
+   155,
+   149,
+   148,
+   143,
+   141,
+   140,
+   123,
+   90,
+   89,
+   18
+  ],
+  "list": [
+   156
+  ],
+  "__o_tmpfile": [
+   156
+  ],
+  "action": [
+   155
+  ],
+  "result": [
+   155,
+   153,
+   101
+  ],
+  "scenarios": [
+   154
+  ],
+  "recipe": [
+   154,
+   153
+  ],
+  "configured": [
+   154
+  ],
+  "general": [
+   154
+  ],
+  "failures": [
+   153,
+   27
+  ],
+  "job": [
+   153
+  ],
   "source": [
    152,
    63
@@ -3631,16 +6017,7 @@
   "bootable": [
    152
   ],
-  "both": [
-   152,
-   143,
-   102,
-   76
-  ],
   "handled": [
-   151
-  ],
-  "cleanup": [
    151
   ],
   "local": [
@@ -3669,29 +6046,6 @@
    62,
    47
   ],
-  "before": [
-   151,
-   144,
-   128,
-   113,
-   101,
-   90,
-   82,
-   56,
-   53,
-   52,
-   49,
-   48,
-   28,
-   27,
-   20
-  ],
-  "close": [
-   151,
-   72,
-   68,
-   66
-  ],
   "ownership": [
    151,
    7
@@ -3718,39 +6072,8 @@
    13,
    9
   ],
-  "fails": [
-   150,
-   125,
-   94,
-   14
-  ],
   "fixes": [
    150
-  ],
-  "image": [
-   150,
-   149,
-   148,
-   143,
-   140,
-   136,
-   134,
-   123,
-   122,
-   116,
-   115,
-   112,
-   110,
-   97,
-   96,
-   94,
-   90,
-   89,
-   83,
-   54,
-   27,
-   18,
-   16
   ],
   "priority": [
    150,
@@ -3767,33 +6090,8 @@
    125,
    93
   ],
-  "child": [
-   150,
-   137,
-   135,
-   130,
-   126,
-   124,
-   113,
-   111,
-   106,
-   102,
-   98,
-   59
-  ],
   "merge": [
    150
-  ],
-  "directory": [
-   149,
-   148,
-   143,
-   141,
-   140,
-   123,
-   90,
-   89,
-   18
   ],
   "overlay": [
    149,
@@ -3811,51 +6109,11 @@
   "overlayfs": [
    149
   ],
-  "after": [
-   149,
-   139,
-   120,
-   113,
-   102,
-   84,
-   70,
-   51,
-   50,
-   28,
-   25
-  ],
   "entries": [
    149,
    134,
    110,
    11
-  ],
-  "only": [
-   149,
-   135,
-   131,
-   107,
-   103,
-   102,
-   90,
-   89,
-   66,
-   32,
-   9
-  ],
-  "usr": [
-   149
-  ],
-  "chdir": [
-   149,
-   91
-  ],
-  "link": [
-   148,
-   142,
-   133,
-   122,
-   117
   ],
   "path": [
    148,
@@ -3892,12 +6150,6 @@
   ],
   "relative": [
    148
-  ],
-  "run": [
-   148,
-   137,
-   122,
-   61
   ],
   "symlink": [
    148,
@@ -3947,18 +6199,6 @@
   "af_unix": [
    146
   ],
-  "bound": [
-   146,
-   70,
-   47
-  ],
-  "name": [
-   146,
-   141,
-   133,
-   109,
-   18
-  ],
   "enoent": [
    146,
    143,
@@ -3987,16 +6227,6 @@
    107,
    53,
    5
-  ],
-  "every": [
-   145,
-   138,
-   95,
-   63
-  ],
-  "writes": [
-   145,
-   34
   ],
   "sectors": [
    145
@@ -4038,11 +6268,6 @@
    103,
    91
   ],
-  "mode": [
-   144,
-   115,
-   79
-  ],
   "ebadf": [
    144
   ],
@@ -4067,49 +6292,6 @@
   "exchange": [
    143,
    118
-  ],
-  "linux": [
-   143,
-   142,
-   141,
-   139,
-   135,
-   129,
-   128,
-   127,
-   123,
-   122,
-   121,
-   120,
-   118,
-   116,
-   114,
-   111,
-   110,
-   106,
-   105,
-   103,
-   99,
-   98,
-   88,
-   85,
-   84,
-   83,
-   76,
-   72,
-   71,
-   69,
-   59,
-   57,
-   56,
-   55,
-   47,
-   46,
-   37,
-   14,
-   11,
-   9,
-   8
   ],
   "namei": [
    143,
@@ -4181,27 +6363,9 @@
    140,
    115
   ],
-  "same": [
-   140,
-   123,
-   121,
-   120,
-   109,
-   104,
-   103,
-   76,
-   14
-  ],
   "already": [
    140,
    101
-  ],
-  "thread": [
-   139,
-   138,
-   114,
-   99,
-   8
   ],
   "cpu": [
    139,
@@ -4226,35 +6390,8 @@
    103,
    8
   ],
-  "loop": [
-   139,
-   102
-  ],
   "waiter": [
    139
-  ],
-  "block": [
-   139,
-   41,
-   30
-  ],
-  "domain": [
-   138,
-   135,
-   132,
-   114,
-   111,
-   94,
-   86,
-   85,
-   83,
-   80,
-   67,
-   59,
-   57,
-   46,
-   39,
-   19
   ],
   "old": [
    138,
@@ -4262,18 +6399,7 @@
    53,
    27
   ],
-  "entry": [
-   138,
-   134,
-   114,
-   17,
-   10,
-   7
-  ],
   "forked": [
-   138
-  ],
-  "read": [
    138
   ],
   "select": [
@@ -4308,35 +6434,6 @@
   "while": [
    137
   ],
-  "ginux": [
-   136,
-   112,
-   111,
-   110,
-   106,
-   103,
-   99,
-   97,
-   96,
-   95,
-   94,
-   93,
-   92,
-   76,
-   71,
-   64,
-   61,
-   58,
-   57,
-   45,
-   42,
-   39,
-   23,
-   18,
-   12,
-   8,
-   5
-  ],
   "initramfs": [
    136,
    112
@@ -4347,15 +6444,6 @@
   ],
   "lib64": [
    136
-  ],
-  "etc": [
-   136,
-   134,
-   123,
-   115,
-   112,
-   110,
-   89
   ],
   "oci": [
    136,
@@ -4386,31 +6474,6 @@
   "traps": [
    135
   ],
-  "handler": [
-   135,
-   111,
-   105
-  ],
-  "signal": [
-   135,
-   130,
-   129,
-   111,
-   105
-  ],
-  "failed": [
-   135,
-   132,
-   111,
-   91,
-   57,
-   51,
-   37,
-   31,
-   29,
-   28,
-   26
-  ],
   "lower": [
    134
   ],
@@ -4424,27 +6487,8 @@
   "getdents64": [
    134
   ],
-  "layer": [
-   134,
-   80,
-   45,
-   20,
-   18,
-   17
-  ],
   "node": [
    133
-  ],
-  "data": [
-   133,
-   109,
-   108,
-   68,
-   33
-  ],
-  "hard": [
-   133,
-   109
   ],
   "keeps": [
    133
@@ -4457,30 +6501,9 @@
    132,
    108
   ],
-  "size": [
-   132,
-   119,
-   108,
-   43,
-   38,
-   13,
-   4
-  ],
   "mtime": [
    132,
    108
-  ],
-  "write": [
-   132,
-   108,
-   88,
-   81
-  ],
-  "bytes": [
-   132,
-   108,
-   54,
-   21
   ],
   "now": [
    132,
@@ -4506,33 +6529,12 @@
    23,
    16
   ],
-  "payload": [
-   131,
-   59,
-   34,
-   32
-  ],
   "configuration": [
    131,
    34
   ],
-  "header": [
-   131,
-   107,
-   44
-  ],
-  "exit": [
-   130,
-   111
-  ],
   "wait4": [
    130
-  ],
-  "fork": [
-   130,
-   126,
-   99,
-   95
   ],
   "sigchld": [
    130,
@@ -4551,25 +6553,9 @@
    99,
    98
   ],
-  "kill": [
-   129,
-   105
-  ],
-  "target": [
-   129,
-   122,
-   117,
-   115,
-   87
-  ],
   "caller": [
    129,
    105
-  ],
-  "never": [
-   129,
-   68,
-   64
   ],
   "blocked": [
    129
@@ -4611,12 +6597,6 @@
   "clock_nanosleep": [
    127,
    103
-  ],
-  "enosys": [
-   127,
-   113,
-   103,
-   11
   ],
   "futex_requeue": [
    127
@@ -4664,12 +6644,6 @@
    125,
    22
   ],
-  "host": [
-   125,
-   92,
-   86,
-   33
-  ],
   "map_shared": [
    124,
    81,
@@ -4688,9 +6662,6 @@
    124,
    113
   ],
-  "does": [
-   124
-  ],
   "memory": [
    124,
    80,
@@ -4705,10 +6676,6 @@
   "visible": [
    124
   ],
-  "each": [
-   124,
-   26
-  ],
   "yes": [
    123,
    110,
@@ -4721,15 +6688,6 @@
    123,
    120,
    110
-  ],
-  "base": [
-   123,
-   97,
-   93,
-   18
-  ],
-  "links": [
-   122
   ],
   "through": [
    122
@@ -4767,9 +6725,6 @@
   "enxio": [
    119
   ],
-  "100": [
-   119
-  ],
   "seek_data": [
    119
   ],
@@ -4791,9 +6746,6 @@
   "two": [
    118
   ],
-  "kept": [
-   118
-  ],
   "tmp": [
    117,
    89
@@ -4806,9 +6758,6 @@
   ],
   "604": [
    115
-  ],
-  "threads": [
-   114
   ],
   "22a": [
    114
@@ -4824,12 +6773,6 @@
   ],
   "false": [
    112
-  ],
-  "init": [
-   112,
-   57,
-   37,
-   26
   ],
   "branch": [
    112,
@@ -4848,13 +6791,6 @@
   "zero": [
    108,
    65
-  ],
-  "record": [
-   107,
-   32
-  ],
-  "config": [
-   107
   ],
   "bit": [
    107,
@@ -4882,13 +6818,6 @@
   ],
   "eperm": [
    105
-  ],
-  "flags": [
-   105,
-   91
-  ],
-  "4096": [
-   104
   ],
   "fixed": [
    104
@@ -4985,9 +6914,6 @@
   "probe": [
    98
   ],
-  "abi": [
-   98
-  ],
   "gib": [
    97,
    96,
@@ -5020,11 +6946,6 @@
   "paths": [
    95
   ],
-  "main": [
-   95,
-   93,
-   5
-  ],
   "space": [
    95
   ],
@@ -5045,12 +6966,6 @@
    24,
    22,
    5
-  ],
-  "byte": [
-   94,
-   21,
-   20,
-   6
   ],
   "certificates": [
    94
@@ -5100,9 +7015,6 @@
   "rmdir": [
    90,
    89
-  ],
-  "o_directory": [
-   90
   ],
   "rename": [
    89
@@ -5166,11 +7078,6 @@
   "owner": [
    86
   ],
-  "pass": [
-   86,
-   34,
-   32
-  ],
   "active": [
    86,
    49
@@ -5231,11 +7138,6 @@
   "counters": [
    82
   ],
-  "state": [
-   82,
-   78,
-   7
-  ],
   "255": [
    82
   ],
@@ -5248,15 +7150,6 @@
    81,
    79,
    48
-  ],
-  "content": [
-   81
-  ],
-  "mib": [
-   80,
-   67,
-   66,
-   19
   ],
   "frameowner": [
    80
@@ -5297,9 +7190,6 @@
    76
   ],
   "wildcard": [
-   76
-  ],
-  "binary": [
    76
   ],
   "backlog": [
@@ -5486,9 +7376,6 @@
    65,
    64
   ],
-  "table": [
-   65
-  ],
   "linux_socket": [
    64
   ],
@@ -5504,18 +7391,8 @@
   "match": [
    63
   ],
-  "still": [
-   63
-  ],
   "boot_time": [
    63
-  ],
-  "syscall": [
-   62,
-   25
-  ],
-  "budget": [
-   62
   ],
   "duration": [
    62
@@ -5596,19 +7473,11 @@
   "owned": [
    59
   ],
-  "128": [
-   59
-  ],
   "crates": [
    58
   ],
   "execs": [
    58
-  ],
-  "pax": [
-   58,
-   44,
-   17
   ],
   "regions": [
    58
@@ -5618,10 +7487,6 @@
   ],
   "crashes": [
    58
-  ],
-  "format": [
-   58,
-   23
   ],
   "harnesses": [
    58
@@ -5638,9 +7503,6 @@
   "service": [
    56,
    14
-  ],
-  "about": [
-   56
   ],
   "honest": [
    55
@@ -5676,14 +7538,6 @@
   "capacity": [
    54,
    38
-  ],
-  "checked": [
-   54,
-   44
-  ],
-  "checks": [
-   54,
-   43
   ],
   "regression": [
    54
@@ -5760,18 +7614,11 @@
    10,
    9
   ],
-  "cache": [
-   51,
-   17
-  ],
   "dma": [
    50,
    28
   ],
   "retirement": [
-   50
-  ],
-  "runtime": [
    50
   ],
   "teardown": [
@@ -5839,16 +7686,10 @@
    45,
    23
   ],
-  "targets": [
-   45
-  ],
   "adjacent": [
    45
   ],
   "000": [
-   44
-  ],
-  "archive": [
    44
   ],
   "chaining": [
@@ -5858,9 +7699,6 @@
    44
   ],
   "profile": [
-   43
-  ],
-  "build": [
    43
   ],
   "builds": [
@@ -5879,9 +7717,6 @@
    42,
    16
   ],
-  "index": [
-   42
-  ],
   "level": [
    42,
    16
@@ -5893,9 +7728,6 @@
    42,
    16
   ],
-  "verify": [
-   42
-  ],
   "drain": [
    41
   ],
@@ -5905,9 +7737,6 @@
   "recovery": [
    41,
    39
-  ],
-  "stale": [
-   41
   ],
   "entropy": [
    40
@@ -5939,17 +7768,11 @@
   "focus": [
    39
   ],
-  "getcwd": [
-   38
-  ],
   "maximum": [
    38
   ],
   "array": [
    38
-  ],
-  "invalid": [
-   37
   ],
   "suspended": [
    37
@@ -6059,10 +7882,6 @@
   "inactive": [
    29
   ],
-  "fail": [
-   28,
-   4
-  ],
   "finish": [
    28
   ],
@@ -6108,21 +7927,12 @@
   "258": [
    21
   ],
-  "256": [
-   21,
-   17,
-   10,
-   4
-  ],
   "257": [
    21
   ],
   "output": [
    21,
    20
-  ],
-  "buffer": [
-   21
   ],
   "gzip": [
    20
@@ -6185,11 +7995,6 @@
   "here": [
    14
   ],
-  "1024": [
-   13,
-   10,
-   4
-  ],
   "queue": [
    13,
    10,
@@ -6231,9 +8036,6 @@
   "reclassify": [
    11
   ],
-  "status": [
-   11
-  ],
   "architecture": [
    11,
    10,
@@ -6248,9 +8050,6 @@
   "assertion": [
    10,
    4
-  ],
-  "rocky": [
-   8
   ],
   "matched": [
    8
