@@ -215,3 +215,36 @@ Other independent evidence passed: incremental code review against PR #90, `make
 - comments: `comments-all-2026-11-05.json` (107 سجلًا) — `comments-all-2026-11-05.json` — [MEASURED], as-of 2026-11-04T20:33:32Z
 - تاريخ التوليد: 2026-11-04T20:33:32Z UTC
 - ملاحظات منهجية: merge commits مستثناة من أقسام git؛ الملفات الثنائية (binary numstat `-`) مستثناة من الأحجام والـ churn؛ حقول `additions/deletions/changed_files` في dump الـ PRs تأتي `null` من API القائمة (GitHub quirk) ولا يستخدمها هذا التقرير؛ كيان `user`/`head` يُقرأ بصيغة الـ dump المسطّحة أو صيغة API الخام على السواء؛ بعض أجسام التعليقات تحوي `\n` حرفيًا (quirk في سكربت الـ dump) وتُطبّع إلى ` / ` في الاقتباسات.
+
+## userspace era — 2026-11-05 (v4.0, T-20261105-13)
+
+*القسم أُضيف append-only بواسطة W3 (الوحيد المصرّح له بهذا الملف). الأرقام من GitHub API للقراءة فقط (gh 2.103.3، GH_CONFIG_DIR خارج المستودع) — لحظة الجلب as-of 2026-11-05T20:16–20:20Z. الأدلة: team/results/T-20261105-13/evidence/.*
+
+### نافذة القياس
+
+الـ24 PR مدموجة بعد `d337713b` (2026-11-04T23:15:51Z) حتى اللحظة: #153 #154 #156 #158 #160 #162 #165 #167 #169 #171 #173 #175 #177 #183 #185 #187 #189 #191 #193 #195 #197 #199 #201 #204 — 22 من meleficarumvaldis + 2 من veighnsche — `gh api repos/gmkurtzer/ginux/pulls/N` — [MEASURED], as-of 2026-11-05T20:17Z. مغلقة بلا دمج في النافذة: **0** — search/issues `is:unmerged closed:>2026-11-04T23:15:51Z` — [MEASURED], as-of 2026-11-05T20:18Z.
+
+### الإحصاءات [MEASURED]
+
+| المقياس | القيمة | المصدر |
+|---|---|---|
+| time-to-merge median (كل الـ24) | 39.2 دقيقة (mean 48.0؛ مدى 10.6–242.4) | prs-derived.jsonl — [MEASURED], 2026-11-05T20:23Z |
+| time-to-merge median (meleficarumvaldis فقط، n=22) | 37.6 دقيقة (mean 34.4؛ مدى 10.6–58.8) | prs-derived.jsonl — [MEASURED], 2026-11-05T20:23Z |
+| حجم PR median (add+del) | 55.5 سطرًا (adds median 51.5 / dels median 5.0؛ mean 299.2 — ذيل من #153 2578 و#154 2681) | prs-meta.jsonl — [MEASURED], 2026-11-05T20:23Z |
+| التصنيفات (من بادئة العنوان conventional) | fix 18، test 3، feat(feature) 2، build(chore) 1 | prs-derived.jsonl — [MEASURED], 2026-11-05T20:23Z |
+| المناطق المهيمنة (main area) | ginux-init 8، scripts+tests 6، ginux-vfs-index 3، ginux-runtime 2، ginux-core 2، ginux-domain 1، ginux-process 1، build 1 | prs-files-engagement.jsonl — [MEASURED], 2026-11-05T20:18Z |
+| انخراط المالك owner engagement | 2/24 PR بتعليقات فقط (5 تعليقات: gmkurtzer ×3 + veighnsche ×2 على #153/#154)؛ **0 review** على الـ24؛ كل الـ24 `merged_by=gmkurtzer` | prs-files-engagement.jsonl + API — [MEASURED], 2026-11-05T20:19Z |
+| إيقاع الدمج | دمجات meleficarumvaldis تتجمع في الدقائق :11–:17 من كل ساعة (موجة كل ساعة)؛ فجوات الدمج المتتالي median 1.0 دقيقة؛ فجوات الفتح median 12.5 دقيقة | prs-derived.jsonl — [MEASURED], 2026-11-05T20:23Z |
+
+### نمط meleficarumvaldis مقارنة بنمطنا السابق [MEASURED/INFERRED]
+
+- **meleficarumvaldis:** batch/hourly cadence — يفتح PRs متتالية كل ~12.5 دقيقة ودمجها في موجة ساعية واحدة عند الدقائق :11–:17؛ PR صغير (median 55.5 سطرًا)، بادئة conventional صارمة `fix(scope):`، غالبًا fix (18/22) لكل منها سكربت اختبار مرافق غالبًا؛ دمج صامت (0 reviews، 0 تعليقات مالك على 20/22).
+- **نمطنا السابق:** زمن اكتشاف→قبول وسيطه 39.57h ≈ 2374 دقيقة (أربع مساهمات #4/#43/#54/#61؛ v3.3 method) — reports/metrics.md §3 — [MEASURED], as-of 2026-11-04. أي **~63× أبطأ** من وسيط meleficarumvaldis 37.6 دقيقة [INFERRED: قسمة الوسيطين]. حجم commit تاريخيًا: median 161 سطرًا (adds 127/dels 22) فوق 1424 commit — STYLE-NOTES §1 أعلاه — [MEASURED], as-of 2026-11-04؛ أي PR meleficarumvaldis النموذجي أصغر ~3× من commitنا النموذجي [INFERRED].
+- **سبب الفارق [INFERRED]:** مساهماتنا كانت مسوح/عثور على عيوب تحتاج بناءً وتحققًا (QEMU، fuzz)؛ نمط اليوم هو fixes صغيرة محكومة برسالة `fix(scope):` + اختبار مرفق، فيقبلها المالك بالدفعة الساعية دون مراجعة نصية.
+
+### ما يُقبل سريعًا الآن (3-4 bullets)
+
+- **fix صغير (≤ ~60 سطرًا) ببادئة `fix(scope):` واختبار مرفق في نفس الـPR** — 18/22 fix، الوسيط 37.6 دقيقة [MEASURED].
+- **تحكيم fail-closed في vfs-index/runtime/process** (رفض tars مقطوعة، أسماء GNU طويلة، REX.B، sigreturn) — كلها قبلت خلال ≤ 59 دقيقة [MEASURED].
+- **أدوات اختبار تجعل الفحص قادرًا على الفشل** (`test: make … able to fail`) وerror-reporting في init — 3 test PRs بوسيط 49 دقيقة [MEASURED].
+- **إصلاحات integrity للسكربتات** (تحقق hashes قبل reuse، تحقق صورة قبل cache) — #199/#201 قبلتا في 19–26 دقيقة [MEASURED].

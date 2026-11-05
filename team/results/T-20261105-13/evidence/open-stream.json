@@ -1,0 +1,61 @@
+{
+ "open_prs": [
+  {
+   "n": 206,
+   "title": "fix(process): keep the stdio write rule for descriptor aliases",
+   "author": "meleficarumvaldis",
+   "created": "2026-11-05T19:28:24Z",
+   "add": 106,
+   "del": 21
+  },
+  {
+   "n": 207,
+   "title": "feat(console): support bounded polling of standard descriptors",
+   "author": "veighnsche",
+   "created": "2026-11-05T19:42:00Z",
+   "add": 82,
+   "del": 7
+  },
+  {
+   "n": 209,
+   "title": "fix(scripts): verify cached Rocky domain rootfs hashes before reuse",
+   "author": "meleficarumvaldis",
+   "created": "2026-11-05T19:53:28Z",
+   "add": 14,
+   "del": 1
+  }
+ ],
+ "open_issues": [
+  {
+   "n": 163,
+   "title": "balanced profile: the getrandom bound checks flags instead of buflen",
+   "author": "meleficarumvaldis",
+   "created": "2026-11-05T12:45:14Z"
+  },
+  {
+   "n": 178,
+   "title": "balanced profile: read/write/pread above their bounds fail with EPERM instead of a short transfer",
+   "author": "meleficarumvaldis",
+   "created": "2026-11-05T15:16:18Z"
+  },
+  {
+   "n": 179,
+   "title": "balanced profile: read-only syscalls missing from the surface break common programs (getcwd, dup, chdir, uname, sleep, xattr reads)",
+   "author": "meleficarumvaldis",
+   "created": "2026-11-05T15:16:20Z"
+  },
+  {
+   "n": 205,
+   "title": "process: descriptor aliases of stdio bypass the process-native write rule",
+   "author": "meleficarumvaldis",
+   "created": "2026-11-05T19:28:20Z"
+  },
+  {
+   "n": 208,
+   "title": "scripts: `prepare-rocky-domain.sh` records rootfs and manifest hashes but reuses the cache without checking them",
+   "author": "meleficarumvaldis",
+   "created": "2026-11-05T19:53:24Z"
+  }
+ ],
+ "fetched": "2026-11-05T20:20:21Z"
+}

@@ -1,0 +1,4 @@
+# closed-unmerged verification
+query: repo:gmkurtzer/ginux is:pr closed:>2026-11-04T23:15:51Z is:unmerged
+fetched: 2026-11-05T20:20:20Z
+total_count=0

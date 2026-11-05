@@ -1,0 +1,61 @@
+=== ptrace ===
+26
+crates/ginux-init/src/supervisor.rs
+hdae/ARCHITECTURE.md
+docs/gate-4-domain-lifecycle.md
+scripts/demo-gate-7.sh
+hdae/PLAN.md
+hdae/STATUS.md
+README.md
+hdae/gates-done/7-process-runtime.md
+docs/gate-1-foundation.md
+hdae/gates-done/5-virtual-vfs-userspace.md
+crates/ginux-init/src/process_hooks.rs
+hdae/PROJECT.md
+hdae/gates-deferred/14-unicorn-execution-backend.md
+crates/ginux-domain/src/lib.rs
+crates/ginux-init/src/launch.rs
+hdae/gates-done/1-foundation-interception.md
+crates/ginux-init/src/main.rs
+config/domain-gate8.toml
+config/domain-gate6.toml
+config/domain-gate5.toml
+config/domain-gate7.toml
+scripts/test-process.sh
+scripts/test-native-vfs.sh
+scripts/test-process-native.py
+scripts/test-launch.py
+tests/fixtures/domain-gate4-performance.toml
+=== seccomp ===
+2
+README.md
+docs/gate-1-foundation.md
+=== userfaultfd ===
+0
+=== pidfd ===
+0
+=== clone3 ===
+1
+crates/ginux-init/src/process_hooks.rs
+=== supervisor ===
+20
+crates/ginux-init/src/supervisor.rs
+scripts/demo-gate-5.sh
+hdae/gates-done/5-virtual-vfs-userspace.md
+README.md
+crates/ginux-init/src/fs_hooks.rs
+hdae/STATUS.md
+crates/ginux-init/src/channel_hooks.rs
+hdae/gates-done/7.75-ginux-rename.md
+hdae/gates-done/7.5-ginux-us-rename.md
+hdae/ARCHITECTURE.md
+crates/ginux-init/src/launch.rs
+crates/ginux-init/src/dispatch.rs
+hdae/gates-done/7-process-runtime.md
+crates/ginux-init/src/main.rs
+crates/ginux-process/src/lib.rs
+crates/ginux-init/src/process_hooks.rs
+scripts/test-launch.py
+scripts/test-native-vfs.sh
+tests/fixtures/native-fixture.c
+tests/fixtures/process-review-fixture.c
