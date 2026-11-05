@@ -9,14 +9,11 @@ on:
       qemu_versions:
         description: "JSON array of QEMU versions"
         default: '["10.0.13","10.1.2"]'
-  schedule:
-    # v3.6 §2a (2026-11-05): reduced daily -> weekly (Mondays 04:23 UTC) during the
-    # archive/light-monitoring phase. Re-enable daily: restore "23 4 * * *".
-    # DISABLED 2026-11-05 (v3.6 §3b — final certificate run succeeded on the archive
-    # tag bootable-kernel-final @4d4a53bb: doctor=0 check=0 test=0 on QEMU 10.0.13
-    # and 10.1.2, run 41992088138 — after this it stops). Manual dispatch still works.
-    # Re-enable: uncomment the cron line below (weekly Mondays 04:23 UTC) — docs/RECOVERY.md §8.
-    # - cron: "23 4 * * 1"
+  # schedule: (disabled 2026-11-05, 78c864f — an empty `schedule:` key with only
+  # comments under it makes GitHub reject the whole workflow on dispatch: HTTP 422
+  # "Unexpected value ''". Re-enabling requires uncommenting BOTH this key and the
+  # cron line below.)
+  # - cron: "23 4 * * 1"
 
 permissions:
   contents: read
