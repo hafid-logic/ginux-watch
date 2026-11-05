@@ -1,3 +1,6 @@
-# validation — T-20261105-12 — FAIL — 2026-11-05T20:22:16Z
+# validation — T-20261105-12 — PASS — 2026-11-05T20:22:53Z
 
-- FAIL: result.md missing
+- note: summary MEASURED line (section-level evidence): '- [MEASURED] `make test-cgroup test-block test-network` — plain cargo '
+- note: summary MEASURED line (section-level evidence): '- [MEASURED] NOT runnable without QEMU/Rocky: `make test` as a whole, '
+- note: evidence files: 7
+- all gates passed

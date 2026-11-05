@@ -1,4 +1,4 @@
-# validation — T-20261105-13 — PASS — 2026-11-05T20:22:16Z
+# validation — T-20261105-13 — PASS — 2026-11-05T20:22:53Z
 
 - note: summary MEASURED line (section-level evidence): '- **PR #206** — «fix(process): keep the stdio write rule for descripto'
 - note: summary MEASURED line (section-level evidence): '- **PR #207** — «feat(console): support bounded polling of standard de'
