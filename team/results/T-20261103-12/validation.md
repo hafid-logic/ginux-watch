@@ -1,4 +1,4 @@
-# validation — T-20261103-12 — FAIL — 2026-11-05T06:12:11Z
+# validation — T-20261103-12 — FAIL — 2026-11-05T06:35:26Z
 
 - FAIL: placeholder/overstatement words: FIXME, TODO, XXX
 - note: summary MEASURED line (section-level evidence): "- 83,823 bytes [MEASURED]: `git ls-tree -rl … | awk '{s+=$4}'`. Draft "
