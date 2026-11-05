@@ -1,0 +1,6 @@
+{
+  "duration_min": 8,
+  "tools": "gh api, gh run, actions",
+  "verified_format": "result.md",
+  "status": "done"
+}
