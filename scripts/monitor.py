@@ -111,8 +111,7 @@ def blank_snapshot():
         "ginux": {
             "main_sha": None,
             "readme_sha": None,
-            "cutoff_present": None,
-            "pivot_literal_present": None,
+            "release_count": None,
             "tags": [],
             "archive_branches": [],
             "open_issues": None,
@@ -130,7 +129,7 @@ def blank_snapshot():
             "first_commits": [None, None, None],
         },
         "watched": {n: {"state": None, "updated_at": None} for n in WATCHED},
-        "mentions": {"involves": None, "mentions": None},
+        "mentions": {"involves": None, "mentions": None, "repo_name": None},
     }
 
 
@@ -167,13 +166,14 @@ def sec_main_sha(snap):
 
 
 def sec_readme(snap):
+    # v4.0 §0b (2026-11-05): cutoff/pivot literals are historical — README tracked by sha only.
     meta = gh_json(f"repos/{UPSTREAM}/readme")
-    raw = gh_text(
-        f"repos/{UPSTREAM}/readme", "-H", "Accept: application/vnd.github.raw+json"
-    ).lower()
     snap["ginux"]["readme_sha"] = meta.get("sha")
-    snap["ginux"]["cutoff_present"] = "cutoff" in raw
-    snap["ginux"]["pivot_literal_present"] = "11:59 p.m. pacific" in raw
+
+
+def sec_releases(snap):
+    rel = gh_json(f"repos/{UPSTREAM}/releases?per_page=100")
+    snap["ginux"]["release_count"] = len(rel)
 
 
 def sec_tags(snap):
@@ -223,7 +223,11 @@ def sec_mentions(snap):
     men = gh_json(
         f"search/issues?q=repo:{UPSTREAM}+mentions:{OUR_LOGIN}&per_page=1"
     ).get("total_count")
-    snap["mentions"] = {"involves": inv, "mentions": men}
+    # v4.0 §0b: also catch references to our WATCH repo name upstream.
+    rep = gh_json(
+        f"search/issues?q=repo:{UPSTREAM}+ginux-watch&per_page=1"
+    ).get("total_count")
+    snap["mentions"] = {"involves": inv, "mentions": men, "repo_name": rep}
 
 
 def sec_us(snap):
@@ -275,6 +279,7 @@ SECTIONS = [
     ("ginux.main_sha", sec_main_sha),
     ("ginux.readme", sec_readme),
     ("ginux.tags", sec_tags),
+    ("ginux.releases", sec_releases),
     ("ginux.branches", sec_branches),
     ("ginux.counts", sec_counts),
     ("ginux.pushed_at", sec_pushed_at),
@@ -333,10 +338,7 @@ def fmt_val(v, limit=100):
 
 def pick_link(changes):
     paths = [p for p, _, _ in changes]
-    if any(
-        p in ("ginux.readme_sha", "ginux.cutoff_present", "ginux.pivot_literal_present")
-        for p in paths
-    ):
+    if any(p == "ginux.readme_sha" for p in paths):
         return f"https://raw.githubusercontent.com/{UPSTREAM}/main/README.md"
     ids = sorted(
         {p.split(".")[1] for p in paths if p.startswith("watched.")}, key=int
@@ -351,16 +353,20 @@ def pick_link(changes):
 def decide(changes):
     """(نعم/لا, short reason) — decision-critical changes first."""
     paths = [p for p, _, _ in changes]
-    if "ginux.cutoff_present" in paths or "ginux.pivot_literal_present" in paths:
-        return "نعم", "تغيّر نص التقطوع (cutoff) في README"
+    # v4.0 §0b: freeze-text indicators removed — significant = main progress,
+    # our watched items, mentions of us/our repo, ginux-us, releases/tags, README direction.
     if "ginux.main_sha" in paths:
         return "نعم", "التزام جديد على main في المنبع"
     if any(p.startswith("watched.") for p in paths):
         return "نعم", "تحديث على أحد عناصرنا المراقَبة"
     if any(p.startswith("mentions.") for p in paths):
-        return "نعم", "إشارة/رد جديد يخص حسابنا"
+        return "نعم", "إشارة/رد جديد يخص حسابنا أو مستودعنا"
     if any(p.startswith("ginux_us.") for p in paths):
         return "نعم", "تطوّر في ginux-us"
+    if "ginux.release_count" in paths:
+        return "نعم", "Release جديد في المنبع"
+    if "ginux.readme_sha" in paths:
+        return "نعم", "تغيّر README المنبع (اتجاه/توثيق)"
     if "ginux.latest_number" in paths:
         return "نعم", "عنصر جديد (issue/PR) في المنبع"
     return "لا", "تغييرات منخفضة الأهمية فقط (وسوم/فروع/عدّادات)"

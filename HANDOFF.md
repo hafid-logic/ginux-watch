@@ -8,11 +8,12 @@
 - المستودعات: upstream [gmkurtzer/ginux](https://github.com/gmkurtzer/ginux) (قراءة فقط) | fork [hafid-logic/ginux](https://github.com/hafid-logic/ginux) (كتابة) | watch hafid-logic/ginux-watch (سجلاتنا وتقاريرنا).
 - قبل أي commit/merge: `bash scripts/session-init.sh` (يعيّن الاسم والبريد ويتحقق بـ`git config --get`؛ بدونها يقع commit بهوية «Z User» — وقع في 701edf5). **rustc غير مثبت افتراضيًا في الصندوق** (harness صغير: rustup في /tmp؛ البناء الثقيل Actions فقط).
 
-## الحالة (توجيه v3.6، 2026-11-05): **المرحلة 1 (النواة المستقلة): مكتملة ومؤرشفة. الآن: مراقبة خفيفة. لا إجراء معلق.**
+## الحالة (توجيه v4.0، 2026-11-05): **وضع «دراسة/تحقق/تحضير» — القراءة والتحقق والتحضير مسموحة؛ النشر (issue/PR/تعليق/رد) ممنوع إلا بنص حرفي معتمد في approved/. الكتابة فقط في ginux-watch.**
 
-## 2) آخر تحقق حي: 2026-11-05T05:48–06:06Z (جلسة 27، API حي: team/results/T-20261105-06/)
-- **الرأس الحقيقي:** upstream main = **`d337713b`** (دمج PR #152 «userspace transition»، 2026-11-04T23:15:51Z). نص الـcutoff/الfreeze **زال من README** (إعادة كتابة `167c3c0b` 22:14:12Z؛ «cutoff» 0 إصابات) — الfreeze موثق تاريخيًا فقط (reports/2026-11-05.md §1). **أرشيف النواة المستقلة:** فرع `bootable-kernel` + tag `bootable-kernel-final` على `4d4a53bb` (آخر main مستقل). **ginux-us: 404** (لا redirect). مفتوح الآن: **2 PR (#153/#154، veighnsche، userspace، فُتحتا قبل الـcutoff)، 0 issues**. mentions 7/0. #54 تحرك 23:28:35Z بعد الإغلاق بلا تعليقات/مراجعات (حركة head — غير محسوم).
-- **مراقبتنا:** state/monitor.json مبذور (06:06Z) + monitor.yml كل 6 ساعات؛ أول digest صدر يدويًا: ginux-watch#1. بنودنا الستة (#4 #14 #43 #54 #58 #61) مغلقة كلها.
+## 2) آخر تحقق حي: 2026-11-05T20:09Z (v4.0 §0a، API قراءة فقط)
+- **upstream main = `0e06a986`** (دمج PR #204، 2026-11-05T19:15:58Z)؛ **59 commit و24 PR مدموجًا منذ `d337713b`** (22 من meleficarumvaldis + 2 من veighnsche #153/#154؛ 0 أُغلقت دون دمج؛ المالك يدمج على إيقاع ساعي تقريبًا). مفتوح الآن: **3 PRs** (#206/#209 meleficarumvaldis، #207 veighnsche) و**5 issues** (كلها meleficarumvaldis: #163/#178/#179/#205/#208). الفروع/الوسوم كما هي (3 فروع، وسمان، 0 releases)؛ **ginux-us 404**؛ upstream CI = `.github/workflows/check.yml` فقط؛ README: **userspace kernel** (عملية Linux عادية) والنواة المستقلة مؤرشفة في bootable-kernel/bootable-kernel-final. **لا mention لنا ولا رد موجّه** (mentions = بنودنا المغلقة فقط؛ involves 7/mentions 0/repo_name 4) — لا مُشغّل توقف.
+- سابقة (05:48–06:06Z، جلسة 27): d337713b + تفاصيل الأرشفة — التفاصيل في docs/ARCHIVE-ginux-standalone.md وSTATE.md.
+- **مراقبتنا (v4.0 §0b):** مؤشرا freeze-text حُذفا من monitor.py/state؛ يُراقب الآن: تقدّم main، الوسوم/Releases (release_count)، ginux-us، mentions (حسابنا/مستودعنا)، عناصرنا الستة. state/monitor.json مُبذّر حيًا 20:12Z.
 - تاريخ المرحلة 1 كاملًا: **docs/ARCHIVE-ginux-standalone.md** + archive/INDEX.md + STATE.md + docs/HISTORY.md. دروسها: docs/LESSONS.md.
 
 ## 3) القرارات D1–D12 (سطر لكل)
