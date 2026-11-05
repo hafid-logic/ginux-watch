@@ -111,6 +111,9 @@ Reports: Arabic with English technical terms. Drafts and upstream text: English.
     أي مستودع تابع لـ gmkurtzer (ginux أو ginux-us إن ظهر) — نص الfreeze زال من README لكن القاعدة أصلب لا أضعف.
     الكتابة الوحيدة المسموحة: hafid-logic/ginux-watch (+ فرع fork hafid-logic/ginux كما هو بلا تعديل).
     المراقبة قراءة فقط: monitor.yml (كل 6 ساعات) + المراجعة الدورية على digests.
+16. **بلا عرض ملفات في الواجهة** (توجيه المستخدم، 2026-11-05): التسليم نصًا في المحادثة (≤10 أسطر) دون
+    إرفاق ملفات أو سرد مسارات download/ أو رفعها للعرض إلا إذا طلب المستخدم ذلك صراحةً — عرض الملفات
+    يعيق المستخدم. الملفات تبقى في مواضعها وتُشار للنص عند الحاجة فقط.
 
 ## Team mode (v2.1, 2026-11-02; hardened v2.2, 2026-11-03)
 Distributable work is carded under `team/` (PROTOCOL.md, roles/, routing.yml). The primary
