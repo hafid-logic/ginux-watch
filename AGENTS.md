@@ -107,6 +107,10 @@ Reports: Arabic with English technical terms. Drafts and upstream text: English.
 13. **الأعمال الثقيلة** (llvm-cov، cargo-mutants، clippy على upstream، fuzz): GitHub Actions فقط (dispatch + gh run watch)، لا محليًا.
 14. **ميزتنا/ليست ميزتنا**: ما ليس ميزتنا: سرعة الإصلاح (وكيل المشرف أسرع).
     ميزتنا: تحقق مستقل، أدوات لا تنتجها أتمتته، أسئلة مؤيدة بدليل.
+15. **لا نشر في مستودعات غريغوري حتى قرار جديد** (توجيه v3.6، 2026-11-05): لا issue/PR/تعليق/رد في
+    أي مستودع تابع لـ gmkurtzer (ginux أو ginux-us إن ظهر) — نص الfreeze زال من README لكن القاعدة أصلب لا أضعف.
+    الكتابة الوحيدة المسموحة: hafid-logic/ginux-watch (+ فرع fork hafid-logic/ginux كما هو بلا تعديل).
+    المراقبة قراءة فقط: monitor.yml (كل 6 ساعات) + المراجعة الدورية على digests.
 
 ## Team mode (v2.1, 2026-11-02; hardened v2.2, 2026-11-03)
 Distributable work is carded under `team/` (PROTOCOL.md, roles/, routing.yml). The primary

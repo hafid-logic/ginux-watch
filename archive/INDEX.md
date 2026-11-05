@@ -15,7 +15,7 @@
 - [docs/HISTORY.md](../docs/HISTORY.md) — دلتا الجلسات 1–21 المؤرشفة حرفيًا.
 - [reports/cross-check/matrix.md](../reports/cross-check/matrix.md) + [contribute.md](../reports/cross-check/contribute.md) — مصفوفة P1–P17 (P10 = D زالت) والمسودات المسقطة (Opp-1/2).
 - [approved/](../approved/) — النصوص السبعة المنشورة upstream بيد المستخدم (كلها مدموجة/مغلقة now).
-- [STATE.md](../STATE.md) §Our findings — F1–F9 (F1/F9/P10 محلولة upstream؛ F2–F8/F7 مسجلة).
+- [STATE.md](../STATE.md) §Our findings — F1–F9 (F1/F9/P10 محلولة upstream؛ F2–F8 مسجلة).
 - [reports/2026-11-05-pra-diff.patch](../reports/2026-11-05-pra-diff.patch) — النسخة الأصلية للـpatch (نسخة الأرشيف في pr-a-protocol-state-tests/).
 
 ## ما بعد الـcutoff (§3a/§3b — يُملأ بعد 2026-11-05T07:59Z بواسطة job مجدول)

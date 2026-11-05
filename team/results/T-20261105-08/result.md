@@ -16,7 +16,7 @@
 ## أدلة التشغيل الجاف [MEASURED]
 - [MEASURED] تشغيلان جافّان من جذر المستودع (gh 2.103.3): evidence/dryrun-1.txt — snapshot كاملًا + `baseline` + exit=0؛ evidence/dryrun-2.txt — snapshot مطابق → `no changes` + exit=0. تحقّق برمجي من صيغة ملف الحالة: indent=1، ensure_ascii=False، سطر ختامي، والمفاتيح exact.
 - [MEASURED] محاكاة تغيّر بتعديل main_sha/cutoff_present في نسخة /tmp: evidence/dryrun-3.txt — diff سطرين + معاينة digest من 5 أسطر برابط README الصحيح و`يحتاج قرارًا؟ نعم`.
-- [MEASURED] حالة تالفة → مسار baseline؛ إغراق بـ20 تغييرًا → 10 أسطر بالضبط (6 نقاط + سطر فائض).
+- (code-verified، لا MEASURED — critic T-20261105-10): حالتا التلف/الإغراق (20 تغييرًا → 10 أسطر بالضبط، BULLET_CAP=6 وBODY_CAP=10 في scripts/monitor.py) مثبتتان بالفحص البرمجي للمصدر فقط، لم تُنفذا تشغيلًا حيًا ولا ملف evidence لهما.
 
 ## حدود وقيود (limitations)
 - search API محدود المعدل (~30 طلب/دقيقة)؛ نستخدم طلبين لكل دورة، وفشلها يُسجَّل كفشل قسم مع إبقاء القيمة السابقة.
