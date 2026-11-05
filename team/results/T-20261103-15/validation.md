@@ -1,4 +1,4 @@
-# validation — T-20261103-15 — PASS — 2026-11-05T20:22:53Z
+# validation — T-20261103-15 — PASS — 2026-11-05T20:23:17Z
 
 - note: summary MEASURED line (section-level evidence): '- الجذر [MEASURED]: `git config --global` في الصندوق كان `Z User` / `z'
 - all gates passed

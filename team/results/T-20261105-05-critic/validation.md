@@ -1,4 +1,4 @@
-# validation — T-20261105-05-critic — PASS — 2026-11-05T20:22:53Z
+# validation — T-20261105-05-critic — PASS — 2026-11-05T20:23:17Z
 
 - note: summary MEASURED line (section-level evidence): '- **H — ladder/labels:** §2 موسومة [MEASURED] بروابط runs الرئيسية ✓؛ '
 - all gates passed
