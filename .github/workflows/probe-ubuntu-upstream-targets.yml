@@ -1,0 +1,74 @@
+name: probe-ubuntu-upstream-targets
+
+# v5.0-A (2026-11-06): one-shot experimental probe — which upstream test targets
+# work on plain ubuntu-24.04 WITHOUT the Rocky 10.2 VM, measured in OUR repo at a
+# pinned upstream SHA (64a3e3f7 = main at the 2026-11-06T00:47Z gate). READ-ONLY
+# wrt upstream: public clone, no token, no push. Triggers only when this file
+# itself changes (plus manual dispatch).
+
+on:
+  push:
+    branches: [main]
+    paths: [".github/workflows/probe-ubuntu-upstream-targets.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  upstream-meta:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: record upstream heads
+        run: |
+          git ls-remote https://github.com/gmkurtzer/ginux.git refs/heads/main
+          echo "pinned probe SHA: 64a3e3f7"
+
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: clone upstream at pinned SHA
+        run: |
+          git clone -q https://github.com/gmkurtzer/ginux.git src
+          git -C src checkout -q 64a3e3f7
+          git -C src rev-parse HEAD
+      - name: toolchain (mirror upstream CI setup)
+        run: rustup target add x86_64-unknown-linux-gnu && rustup component add clippy rustfmt
+      - name: make check
+        run: make -C src check
+
+  test-unit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: clone upstream at pinned SHA
+        run: |
+          git clone -q https://github.com/gmkurtzer/ginux.git src
+          git -C src checkout -q 64a3e3f7
+          git -C src rev-parse HEAD
+      - name: toolchain
+        run: rustup target add x86_64-unknown-linux-gnu
+      - name: make test-unit
+        run: make -C src test-unit
+
+  launch-native:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: clone upstream at pinned SHA
+        run: |
+          git clone -q https://github.com/gmkurtzer/ginux.git src
+          git -C src checkout -q 64a3e3f7
+          git -C src rev-parse HEAD
+      - name: toolchain
+        run: rustup target add x86_64-unknown-linux-gnu
+      - name: build + fixtures
+        run: make -C src build build-launch-fixture build-process-fixtures
+      - name: sudo make test-launch
+        run: sudo make -C src test-launch
+      - name: sudo make test-native-supervision
+        run: sudo make -C src test-native-supervision
+      - name: make test-process-native
+        run: make -C src test-process-native

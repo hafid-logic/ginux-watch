@@ -1,0 +1,39 @@
+name: probe-macos-arm64
+
+# v5.0-A (2026-11-06): one-shot experimental probe — is macOS arm64 available for
+# public repos, and can a minimal Rust build run there? READ-ONLY wrt upstream.
+# Triggers only when this file itself changes (plus manual dispatch).
+
+on:
+  push:
+    branches: [main]
+    paths: [".github/workflows/probe-macos-arm64.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  arch:
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [macos-15, macos-14, macos-latest]
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 20
+    steps:
+      - name: runner identity
+        run: |
+          echo "matrix-runner=${{ matrix.runner }}"
+          uname -m
+          sw_vers
+          sysctl -n machdep.cpu.brand_string || true
+      - name: rust minimal probe
+        run: |
+          export PATH="$HOME/.cargo/bin:$PATH"
+          rustup --version || curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --profile minimal
+          rustc --version && cargo --version
+          mkdir -p /tmp/probe/src && cd /tmp/probe
+          printf '[package]\nname="probe"\nversion="0.1.0"\nedition="2021"\n' > Cargo.toml
+          printf 'fn main(){println!("build-ok")}\n' > src/main.rs
+          cargo build -q --release && ./target/release/probe
