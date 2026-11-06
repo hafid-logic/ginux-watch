@@ -130,10 +130,15 @@ int main(int argc, char **argv){
   if (g_mode_t3) {
     unlink("/tmp/poc207-fifo");
     if (mkfifo("/tmp/poc207-fifo", 0600)) die("mkfifo");
-    /* open writer, then close: reader's later poll() returns POLLHUP deterministically */
+    /* a nonblocking writer open fails ENXIO on a writer-less fifo: hold a dummy
+       reader first, then open+close the writer so the tracee's later poll on
+       its own read end returns POLLHUP deterministically */
+    int rd0 = open("/tmp/poc207-fifo", O_RDONLY | O_NONBLOCK);
+    if (rd0 < 0) die("open fifo dummy reader");
     int w = open("/tmp/poc207-fifo", O_WRONLY | O_NONBLOCK);
     if (w < 0) die("open fifo writer");
     close(w);
+    (void)rd0; /* held until process exit; does not affect tracee POLLHUP */
   }
 
   g_leader = fork();
@@ -155,6 +160,11 @@ int main(int argc, char **argv){
   /* attach via SEIZE, then resume straight into emulation */
   if (ptrace(PTRACE_SEIZE, g_leader, NULL,
         (void*)(unsigned long)(PTRACE_O_TRACESYSGOOD|PTRACE_O_TRACECLONE))) die("SEIZE");
+  /* seizing a group-stopped tracee re-reports it as PTRACE_EVENT_STOP: consume
+     that stop BEFORE the first emulation resume (resume-before-delivery races
+     the tracer bookkeeping) */
+  if (waitpid(g_leader,&st,__WALL)<0) die("wait seize-stop");
+  fprintf(stderr,"FIRST_EVENT st=0x%x\n", st);
   if (ptrace(PTRACE_SYSEMU, g_leader, NULL, NULL)) die("SYSEMU resume");
 
   long polls=0, denied=0, t1_hits=0, t3_hits=0, snap_sentinel=0, peek_fail=0;
