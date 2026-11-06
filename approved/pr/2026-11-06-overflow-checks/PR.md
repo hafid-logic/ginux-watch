@@ -1,8 +1,8 @@
 # PR draft — Restore `overflow-checks = true` in `[profile.release]` + release-only regression test
 
 **Status: DRAFT — NOT PUBLISHED. Publication is Abdelhafid's manual call, by hand.**
-**Prepared:** 2026-11-06 (v5.3-4) | **Updated (v5.5, session 40):** child-process canary replaced by a plain `#[should_panic]` regression test (A/B MEASURED on the pinned SHA); Makefile command unified with the `test-unit` lines (`RUSTFLAGS=''`, linker override omitted — reason below); Actions re-run dispatched with the final command.
-**Head SHA (gate ب):** `3f2fe7dfadd4b40e235d982a6a3d386dc6490177` (upstream main, re-confirmed 07:5xZ via `git ls-remote` — v5.4 session)
+**Prepared:** 2026-11-06 (v5.3-4) | **Updated (v5.5, session 40):** child-process canary replaced by a plain `#[should_panic]` regression test (A/B MEASURED on the pinned SHA); Makefile command unified with the `test-unit` lines (`RUSTFLAGS=''`, linker override omitted — reason below). | **Updated (v5.6, session 41):** v5.5 dispatch COMPLETED (run 42195146548): C1=101/C2=0/C3=0 on the runner, 65/65 both modes both OSes, sizes byte-identical, timing 203.0→200.1 ms — PR body numbers switched to this same-run A/B (cross-run medians not comparable); AI disclosure set to the exact v5.6 string; evidence permalink re-pinned to `8f855b7d`.
+**Head SHA (gate ب):** `3f2fe7dfadd4b40e235d982a6a3d386dc6490177` (upstream main, re-confirmed ~10:0xZ session 41 via `git ls-remote`; Cargo.toml/Makefile sha256-identical to pinned copies)
 
 ## Gate checklist (POLICY v5.2-1, items أ–د)
 
@@ -12,7 +12,7 @@
 - **(ب) defect reproduced on main head at submission moment** [MEASURED, v5.5 A/B on pristine `3f2fe7df`, rustc 1.99.0, same command ± env flag]:
   - `RUSTFLAGS='' CARGO_TARGET_DIR=<ext> cargo test --release -p ginux-vfs-index --test overflow_checks_release` (no flag) → **FAILED**, exit 101, literal: `note: test did not panic as expected at crates/ginux-vfs-index/tests/overflow_checks_release.rs:16:4`.
   - same + `CARGO_PROFILE_RELEASE_OVERFLOW_CHECKS=true` → **ok. 1 passed**, exit 0.
-  - Local run reproduced both directions; Actions re-run with the final command dispatched (see reviewer notes).
+  - Local run reproduced both directions; **Actions re-run with the final command COMPLETED (run 42195146548, 09:27Z): C1 exit 101, C2 exit 0, C3 exit 0 on ubuntu-24.04; C1=101/C2=0 on macOS arm64 too.**
 - **(ج) clean rebase:** branch is cut from `3f2fe7df` (main head) by construction; diff = 3 files, +24 lines, zero removals → cannot conflict.
 - **(د) last-7-days duplicate check (raw+dump+search together)** [MEASURED]:
   - search `overflow-checks` (repo-wide): 10 hits; only open item = **#222 itself**; all else closed.
@@ -48,11 +48,12 @@
 >
 > A 2-line `make test-release-overflow` target runs it with the same `RUSTFLAGS=''` convention as `test-unit`. Known limitation, stated explicitly: the target is not wired into `make check` or CI; wiring it in is a ≤3-line follow-up proposed separately.
 >
-> Measured at SHA 3f2fe7df: `make test-unit` 65/65 with the flag on ubuntu-24.04 and macOS arm64; the test fails on pristine main and passes with the flag; `ginux` 122,720 → 122,680 bytes (−40; runner-side cause not established); `ginux-vfs-index` +1,608 (+0.46%); scan timing median 223.2 → 222.5 ms (ranges 221.0–225.9 / 219.2–228.2, overlapping). Rocky VM targets were not exercised. Numbers, variance, limits: https://github.com/hafid-logic/ginux-watch/blob/c1c4948c0314dda1336d9ae5d961a9b101201348/inbox/evidence/2026-11-06-222-evidence/03-release-runtime-cost.md. Prepared with AI assistance; reviewed by me
+> Measured at SHA 3f2fe7df (latest completed probe run, ubuntu-24.04): `make test-unit` 65/65 with the flag (and baseline) on ubuntu-24.04 and macOS arm64; `ginux` 122,720 → 122,680 bytes (−40; cause not established); `ginux-vfs-index` +1,608 (+0.46%); scan timing median 203.0 → 200.1 ms (ranges 201.7–205.9 / 198.2–202.7, overlapping; 12 alternating pairs). Rocky VM targets were not exercised. Numbers, variance, limits: https://github.com/hafid-logic/ginux-watch/blob/8f855b7d6c91ad901e618c96fb1ce960607e3e60/inbox/evidence/2026-11-06-222-evidence/03-release-runtime-cost.md. Prepared with AI assistance, reviewed by me.
 
 ## Conflict + duplication notes for the reviewer (Abdelhafid)
 
-- v5.5 resolved the old `RUSTFLAGS='-C linker=cc'` concern by measurement: the unified `RUSTFLAGS=''` command links and discriminates with `.cargo/config.toml` untouched (A/B above); the Actions re-run in session 40 repeats it on the runner.
+- v5.5 resolved the old `RUSTFLAGS='-C linker=cc'` concern by measurement: the unified `RUSTFLAGS=''` command links and discriminates with `.cargo/config.toml` untouched (A/B above); the Actions re-run with the final command completed on the runner (run 42195146548: C1=101/C2=0/C3=0).
 - Separate follow-up item (not in this PR): wire `test-release-overflow` into the CI job's run list — a ≤3-line addition, proposable once this lands.
 - If you prefer no Makefile touch at all, drop hunk 2; the test still runs via the documented cargo invocation. (Directive asked to state the CI cost explicitly: it is 2 lines.)
-- Circuit-breaker check before publish: #222 comments must still be 1 (owner reply only), #207 must have no activity after 2026-11-06T07:5xZ; re-check live immediately before posting.
+- v5.6 additions for the reviewer: the v5.5 re-run completed AFTER the v5.5 delivery (run 42195146548) — its numbers are appended to evidence memo 03; the PR body now quotes the latest completed run (same-run A/B valid). Separate v5.6 finding, NOT part of this PR: the #207 harness detector was recalibrated (old ~18% divergence figures were a stdin-contamination artifact; corrected numbers + controls in memo 04). No upstream text mentions the old figures.
+- Circuit-breaker check before publish (re-verified live in session 41, ~09:50Z): #222 comments = 2 (ours + owner reply 05:29:33Z, nothing after); #207 latest activity 2026-11-05 (maintainer review at `e7f5f552`), nothing after; re-check live immediately before posting. Upstream main still `3f2fe7df` with byte-identical Cargo.toml/Makefile (sha256-checked vs pinned copies this session).
