@@ -48,7 +48,7 @@
 >
 > A 2-line `make test-release-overflow` target runs it with the same `RUSTFLAGS=''` convention as `test-unit`. Known limitation, stated explicitly: the target is not wired into `make check` or CI; wiring it in is a ≤3-line follow-up proposed separately.
 >
-> Measured at SHA 3f2fe7df: `make test-unit` 65/65 with the flag on ubuntu-24.04 and macOS arm64; the test fails on pristine main and passes with the flag; `ginux` 122,720 → 122,680 bytes (−40; runner-side cause not established); `ginux-vfs-index` +1,608 (+0.46%); scan timing median 223.2 → 222.5 ms (ranges 221.0–225.9 / 219.2–228.2, overlapping). Rocky VM targets were not exercised. Numbers, variance, limits: HEAD1PERM/evidence. Prepared with AI assistance; reviewed by me
+> Measured at SHA 3f2fe7df: `make test-unit` 65/65 with the flag on ubuntu-24.04 and macOS arm64; the test fails on pristine main and passes with the flag; `ginux` 122,720 → 122,680 bytes (−40; runner-side cause not established); `ginux-vfs-index` +1,608 (+0.46%); scan timing median 223.2 → 222.5 ms (ranges 221.0–225.9 / 219.2–228.2, overlapping). Rocky VM targets were not exercised. Numbers, variance, limits: https://github.com/hafid-logic/ginux-watch/blob/c1c4948c0314dda1336d9ae5d961a9b101201348/inbox/evidence/2026-11-06-222-evidence/03-release-runtime-cost.md. Prepared with AI assistance; reviewed by me
 
 ## Conflict + duplication notes for the reviewer (Abdelhafid)
 
