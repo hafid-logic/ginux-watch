@@ -1,7 +1,7 @@
 # PR draft — Restore `overflow-checks = true` in `[profile.release]` + release canary
 
 **Status: DRAFT — NOT PUBLISHED. Publication is Abdelhafid's manual call, by hand.**
-**Prepared:** 2026-11-06 (directive v5.3-4) | **Head SHA (gate ب):** `3f2fe7dfadd4b40e235d982a6a3d386dc6490177` (upstream main, confirmed 06:3xZ)
+**Prepared:** 2026-11-06 (directive v5.3-4) | **Head SHA (gate ب):** `3f2fe7dfadd4b40e235d982a6a3d386dc6490177` (upstream main, re-confirmed 07:5xZ via `git ls-remote` — v5.4 session)
 
 ## Gate checklist (POLICY v5.2-1, items أ–د)
 
@@ -14,7 +14,7 @@
 - **(د) last-7-days duplicate check (raw+dump+search together)** [MEASURED]:
   - search `overflow-checks` (repo-wide): 10 hits; only open item = **#222 itself**; all else closed.
   - search `overflow created:>2026-10-30`: #222/#54/#43/#84/#82/#47/#52 — none open, none discussing vfs-index overflow.
-  - **Precedent found:** PR **#54** "Enable overflow checks in release builds" — **authored by gmkurtzer, MERGED 2026-11-03T22:00:13Z**, added the exact line `overflow-checks = true` to `[profile.release]`. The transition PR **#152** (merged 2026-11-04T23:15:51Z) replaced Cargo.toml from the userspace source `2306c2e` which predates #54 — the setting was lost in the transition, exactly as the maintainer reconstructed in his #222 reply.
+  - **Precedent found:** PR **#54** "Enable overflow checks in release builds" — **authored by gmkurtzer, MERGED 2026-11-03T22:00:13Z**, added the exact line `overflow-checks = true` to `[profile.release]`. The transition PR **#152** (merged 2026-11-04T23:15:51Z) replaced Cargo.toml from the userspace source `2306c2e` which predates #54 — the setting was not carried across the architecture transition, exactly as the maintainer reconstructed in his #222 reply.
 
 ## The diff (PR.diff, +67/-0, 3 files)
 
@@ -39,20 +39,20 @@
 
 > **Title:** Restore `overflow-checks = true` in `[profile.release]` (+ release-only regression canary)
 >
-> This restores the release-profile overflow checks that were lost in the architecture transition, and adds a small release-only canary so the setting cannot silently regress again. Follows up on #222.
+> This restores the release-profile overflow checks that were not carried across the architecture transition, and adds a small release-only canary so the setting cannot silently regress again. Follows up on #222.
 >
-> **Provenance.** PR #54 ("Enable overflow checks in release builds") added `overflow-checks = true` to `[profile.release]` and was merged 2026-11-03. The userspace-kernel transition (#152) then replaced the manifest from the new source tree, which predated that change, so the setting was dropped without a documented decision — as reconstructed in the maintainer's reply on #222 ("the removal was not documented as an intentional overflow-policy decision ... I found no rationale ... saying release overflow checks were deliberately disabled").
+> **Provenance.** PR #54 ("Enable overflow checks in release builds") added `overflow-checks = true` to `[profile.release]` and was merged 2026-11-03. The userspace-kernel transition (#152) then replaced the manifest from the new source tree, which predated that change, so the setting was not carried across the architecture transition; the omission carries no documented decision — as reconstructed in the maintainer's reply on #222 ("the removal was not documented as an intentional overflow-policy decision ... I found no rationale ... saying release overflow checks were deliberately disabled").
 >
 > **What this PR does.**
 > 1. Restores the exact line from #54: `overflow-checks = true` under `[profile.release]`.
 > 2. Adds `crates/ginux-vfs-index/tests/overflow_checks_release.rs`: a release-only canary that fails when the setting is absent and passes when present. Because the release profile sets `panic = "abort"`, a `#[should_panic]` cannot observe the panic; the canary instead re-executes the test binary as a child process and asserts the child does not survive an intentional `u64::MAX + 1`. Note that **debug test runs cannot detect this regression** (overflow checks are on by default in dev profiles), which is why `make test-unit` never caught it — only a `--release` test run discriminates.
-> 3. Adds a 2-line `make test-release-overflow` target running the canary under release.
+> 3. Adds a 2-line `make test-release-overflow` target running the canary under release. **Known limitation, stated explicitly: this target is not wired into `make check` or upstream CI** (upstream `make check` runs `check-name` only, Makefile:72; CI invokes `check`, `test-unit`, and the launch/native suites), so until wired the canary runs only when invoked directly. Wiring it in would be a ≤3-line change; we propose that as a separate follow-up rather than expanding this PR.
 >
-> **Measured evidence that the cost is small** (Actions probe run 42178425135, pinned SHA 3f2fe7df):
-> - Unit suite: `make test-unit` 65/65 passing with the flag on ubuntu-24.04 and macOS arm64.
+> **Measured evidence — numbers, variance, limits** (Actions probe run 42178425135, pinned SHA 3f2fe7df):
+> - Unit suite: `make test-unit` 65/65 passing with the flag on ubuntu-24.04 and macOS arm64 (2 runs each).
 > - Launch + native supervision suites: PASS with the flag on ubuntu-24.04.
-> - Self-start binaries (upstream link config): release size delta with the flag is between −56 and +24 bytes across all five (e.g. `ginux` 122,720 → 122,680); the only std tooling binary gains +1,608 bytes on `ginux-vfs-index` (+0.46%).
-> - `ginux-vfs-index` scan over a generated 50k-entry tar (220 MiB), 12 alternating runs per build: runner median 223.2 ms (base) vs 222.5 ms (flag), ranges overlap; a local sandbox reproduction of the same protocol showed the worst case, +4.9 ms median (+4.4%).
+> - Binary sizes (bytes, same SHA, same runner): `ginux` 122,720 → 122,680 (−40); the other four self-start fixtures stay within −56…+24; the std tooling binary `ginux-vfs-index` gains +1,608 (+0.46%). Flag arrival was verified mechanically, not inferred: the flag step compiles with `-C overflow-checks=on` in its rustc invocations, and the canary discriminates behaviorally on the same runner (flag build panics on an intentional overflow; baseline wraps silently). A same-SHA local rebuild reproduces the mechanism (8/8 rustc units with `-C overflow-checks=on`; `ginux` +296 bytes = .text +75 / .eh_frame +216 / .eh_frame_hdr +8). Why the lld-linked runner `ginux` measures 40 bytes smaller is not established (runner artifacts were not retained) — recorded as measured, no interpretation offered.
+> - Scan timing (`ginux-vfs-index`, generated 50,003-entry / 220 MiB tar, 12+12 alternating order-swapped runs): runner median 223.2 ms base, range 221.0–225.9, vs 222.5 ms flag, range 219.2–228.2 — medians differ by −0.7 ms, ranges overlap. A local sandbox reproduction of the same protocol measured +4.9 ms median (+4.4%), the worst observed environment. Limits: Rocky-rootfs boot-time and long-running supervised paths were not measured (the probe does not provision the Rocky host).
 > - `scan_layer` sites flagged in #222: adversarial matrix executed (max-octal / base-256 / truncated-declared-size / EFBIG bound) — no defect found within the matrix; memo with limits available.
 >
 > **Runners.** ubuntu-24.04 (unit, launch, native supervision, canary, sizes, timing) and macOS arm64/macos-15 (unit, canary; note: the freestanding `ginux-init` does not compile on aarch64 — x86_64-specific) were exercised on the pinned SHA; the Rocky 10.2 VM targets (test-intercept, test-runtime, image tests) were NOT exercised — they require the Rocky host environment which the probe does not provision.
@@ -63,5 +63,6 @@
 ## Conflict + duplication notes for the reviewer (Abdelhafid)
 
 - The `RUSTFLAGS='-C linker=cc'` in the Makefile target is the piece I least like: it exists only because upstream `.cargo/config.toml` attaches freestanding link flags to the linux-gnu target and they break std test binaries. If the runner probe shows a cleaner override works, swap it in before publishing.
+- Separate follow-up item (not in this PR): wire `test-release-overflow` into the CI job's run list — a ≤3-line addition, proposable once this lands.
 - If you prefer no Makefile touch at all, drop hunk 2; the canary still runs via the documented cargo invocation. (Directive asked to state the CI cost explicitly: it is 2 lines.)
 - Circuit-breaker check before publish: #222 comments must still be 1 (owner reply only), no change-request on any of our PRs.

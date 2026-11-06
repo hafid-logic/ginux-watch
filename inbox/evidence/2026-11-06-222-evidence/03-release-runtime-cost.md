@@ -39,10 +39,38 @@ Runner reference (ubuntu-24.04, run 42178425135) [MEASURED]:
 | `process-native-fixture` | 1,528 | 1,520 | −8 (−0.52%) |
 | `ginux-vfs-index` (cc link override) | 353,584 | 355,192 | **+1,608 (+0.46%)** |
 
-Self-start binaries: flag cost is within tens of bytes (some even shrink —
-section-layout noise), i.e. effectively zero. macOS arm64: `ginux-init` does
-not compile there at all (43 errors, x86_64-specific freestanding code) and
+Self-start binaries: on the runner the flag moves sizes by tens of bytes, and
+`ginux` measures 40 bytes SMALLER with the flag — flag arrival itself is
+verified mechanically (section below); the shrink mechanism is not established
+and no interpretation is offered [INFERRED: unproven]. macOS arm64: `ginux-init`
+does not compile there at all (43 errors, x86_64-specific freestanding code) and
 vfs-index sizes were not captured in that step — stated as such.
+
+## Flag-arrival verification (mechanical, v5.4-3)
+
+Question: with the flag ON, `ginux` measured −40 B on the runner. Verify the
+flag actually reached codegen — mechanically, not by inference.
+
+- Local same-SHA rebuild (`3f2fe7df`, documented cc+nostdlib link deviation)
+  [MEASURED]: baseline verbose build shows **0** `overflow-checks` rustc
+  options; flag build (`CARGO_PROFILE_RELEASE_OVERFLOW_CHECKS=true`, the exact
+  env mechanism the probe sets at `probe-overflow-evidence.yml:46`) shows
+  **`-C overflow-checks=on` on 8/8** rustc unit invocations.
+- Sizes reproduced exactly: base 125,888 B / flag 126,184 B (**+296 B**),
+  matching the local table above. Section deltas [MEASURED]: `.text` +75,
+  `.eh_frame` +216, `.eh_frame_hdr` +8 — accounts for +299 B before alignment.
+- Binary panic-string probe ("attempt to … with overflow"): **0 matches in
+  BOTH builds** [MEASURED] — not a usable arrival discriminator under
+  `panic = "abort"` + `strip`; the rustc-invocation and canary checks are the
+  discriminators used.
+- Runner side [MEASURED]: run 42178425135 retained no artifacts (artifacts
+  total_count = 0), so the −40 B runner binary cannot be re-inspected
+  byte-wise. Runner-side flag arrival rests on: (a) the workflow env line
+  (file:line above), (b) behavioral canary C1=101 (flag build panics) vs
+  C2=0 (baseline wraps) on the same runner.
+- Why the runner's lld-linked binary is 40 bytes smaller with the flag: not
+  established; recorded as measured layout variation, no interpretation
+  offered [INFERRED — unproven].
 
 ## Results — scan runtime (50,003-entry tar, ~220 MiB)
 

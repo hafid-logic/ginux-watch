@@ -44,8 +44,9 @@ pinned main head `3f2fe7df`, read-only wrt upstream:
 
 Debug runs cannot detect the regression: overflow-checks are on by default in
 dev profiles, so `make test-unit` (debug) stays green even when the release
-setting is absent. Only a `--release` test run discriminates — this is why the
-loss of the setting went unnoticed since the #152 transition.
+setting is absent. Only a `--release` test run discriminates — which is why
+the omission (the setting was not carried across the architecture transition)
+went unnoticed.
 
 ## Linking deviation note (transparency)
 
