@@ -18,6 +18,9 @@
 - [STATE.md](../STATE.md) §Our findings — F1–F9 (F1/F9/P10 محلولة upstream؛ F2–F8 مسجلة).
 - [reports/2026-11-05-pra-diff.patch](../reports/2026-11-05-pra-diff.patch) — النسخة الأصلية للـpatch (نسخة الأرشيف في pr-a-protocol-state-tests/).
 
+## المرشحون المتقادمون (outdated — بند v6.3-2، قاعدة METHODOLOGY 11)
+- [2026-11-06-boot-queue-size-patch-outdated.md](2026-11-06-boot-queue-size-patch-outdated.md) — patch خارجي (2026-10-31) يستهدف `tests/qemu/boot.sh` **غير الموجود** على upstream/main منذ تحول userspace (#152)؛ فُحص أمنيًا (نظيف: لا أسرار/ضارة) وأُرشف متقادمًا بلا تقييم v5.2 كامل؛ خارج قائمة المرشحين حتى تعيد المالك تقديمه مع توفر هدفه.
+
 ## ما بعد الـcutoff (§3a/§3b — يُملأ بعد 2026-11-05T07:59Z بواسطة job مجدول)
 - [3a live 08:06Z]: tag الإصدار الأخير `bootable-kernel-final` @`4d4a53bbcc09b16e56aa5eb671ac815f16f2b82f` (commit 2026-11-04T19:07:17Z) — بلا تغيير عن المعروف؛ tag أساس أقدم `research-v1-baseline` @`36503bda`؛ الفرع الأرشيفي `bootable-kernel` @`4d4a53bb` مطابق للـtag؛ لا releases.
 - جديد بعد 05:48Z: فرع `codex/userspace-transition` @`5f500042` (رأسه 2026-11-04T22:46:50Z؛ لحظة إنشاء الفرع نفسه غير قابلة للقراءة عبر API)؛ `main` تقدمت بعد الـcutoff إلى @`6361bbd5` (دمج PR #153 من LevitateOS/ginux-recipe/g01-launch 07:09:35Z + إصلاح CI d8b011be 06:16:08Z).

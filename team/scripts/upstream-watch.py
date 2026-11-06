@@ -37,6 +37,63 @@ PARSER_PREFIXES = (
 # Re-enable: set to True (docs/RECOVERY.md §8). Comparison/state updates still run.
 DISPATCH_FUZZ_ROUND = False
 
+# v6.3-3: watched upstream threads (read-only, internal GITHUB_TOKEN).
+# #222 overflow-checks issue, #207 pollfd PR, #227 our restore-overflow-checks PR.
+# PRs are issues in the REST API, so /issues/{n} covers both kinds.
+THREADS = (222, 207, 227)
+
+
+def watch_threads(state, now, out) -> None:
+    """Record comment count + last comment time per watched thread.
+
+    Read-only against the public upstream repo; never posts, never reacts
+    (fixed rules). Snapshot lands in matrix/upstream-watch.json under
+    "threads_watch"; deltas vs the previous snapshot are reported in `out`
+    (and thus in the workflow commit summary). Runs on EVERY sweep,
+    including unchanged-head and first-run paths.
+    """
+    prev = state.get("threads_watch", {})
+    snap = {}
+    for n in THREADS:
+        try:
+            issue = json.loads(gh("api", f"repos/{UPSTREAM}/issues/{n}"))
+            comments = json.loads(
+                gh("api", f"repos/{UPSTREAM}/issues/{n}/comments?per_page=100")
+            )
+        except (subprocess.CalledProcessError, json.JSONDecodeError):
+            out.append(f"threads_watch #{n}: api error (kept previous snapshot)")
+            snap[str(n)] = prev.get(str(n), {"api_error": True, "checked": now})
+            continue
+        last = comments[-1] if comments else None
+        snap[str(n)] = {
+            "state": issue.get("state"),
+            "comments": issue.get("comments"),
+            "updated_at": issue.get("updated_at"),
+            "last_comment_at": last.get("created_at") if last else None,
+            "last_comment_author": (last.get("user") or {}).get("login") if last else None,
+            "checked": now,
+        }
+    state["threads_watch"] = snap
+    for n in THREADS:
+        cur, old = snap.get(str(n)), prev.get(str(n))
+        if cur is None:
+            continue
+        if old is None:
+            out.append(
+                f"threads_watch #{n} baseline: comments={cur.get('comments')} "
+                f"last={cur.get('last_comment_at')} state={cur.get('state')}"
+            )
+        elif (
+            cur.get("comments") != old.get("comments")
+            or cur.get("last_comment_at") != old.get("last_comment_at")
+            or cur.get("state") != old.get("state")
+        ):
+            out.append(
+                f"threads_watch #{n} CHANGED: comments {old.get('comments')}->"
+                f"{cur.get('comments')} last={cur.get('last_comment_at')} "
+                f"state {old.get('state')}->{cur.get('state')}"
+            )
+
 
 def gh(*args: str) -> str:
     return subprocess.run(
@@ -53,6 +110,7 @@ def main() -> int:
     head = json.loads(gh("api", f"repos/{UPSTREAM}/commits/main"))["sha"]
     last = state.get("last_seen_sha")
     out = [f"upstream main: last={str(last)[:8]} new={head[:8]}"]
+    watch_threads(state, now, out)
 
     if not last:
         state.update({"last_seen_sha": head, "last_checked": now})
