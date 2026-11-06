@@ -1,63 +1,20 @@
-//! Regression canary: release builds must keep overflow-checks active.
+//! Release-only regression: `[profile.release]` must keep overflow checks on.
 //!
-//! Why not `#[should_panic]`: the workspace release profile sets
-//! `panic = "abort"`, so a panicking test aborts the whole harness instead of
-//! unwinding into it — a should_panic test cannot observe the panic. The
-//! canary therefore re-executes this test binary as a child process and
-//! asserts that the child does NOT survive an intentional `u64` overflow:
+//! `cargo test` builds test targets with `panic = "unwind"` even when the
+//! profile sets `panic = "abort"` (MEASURED: `#[should_panic]` passes under
+//! `cargo test --release` with rustc 1.99.0), so a plain `#[should_panic]`
+//! discriminates:
 //!
-//! - release, `overflow-checks = true`  -> child panics (SIGABRT under panic=abort) -> PASS
-//! - release, `overflow-checks` absent  -> child wraps silently and exits 0   -> FAIL
-//! - debug (overflow-checks on by default) -> child panics -> PASS either way
+//! - release with `overflow-checks = true` -> the add panics -> PASS
+//! - release without the flag              -> the add wraps silently -> FAIL
+//! - debug (overflow checks on by default) -> PASS either way
 //!
-//! Debug runs therefore cannot detect the regression; only `cargo test
-//! --release` discriminates. Because the release profile also sets
-//! `panic = "abort"`, build the harness with unwind for the check itself:
-//!
-//!   CARGO_PROFILE_RELEASE_PANIC=unwind cargo test --release \
-//!       -p ginux-vfs-index --test overflow_checks_release
-//!
-//! (only the test harness needs unwind; the child's abort/unwind both count
-//! as failure, and the stderr assertion pins the exact panic message).
-
-const CHILD_ENV: &str = "OVERFLOW_CANARY_CHILD";
+//! Only `cargo test --release` discriminates.
 
 #[test]
+#[should_panic(expected = "attempt to add with overflow")]
 fn release_profile_keeps_overflow_checks_active() {
-    if std::env::var_os(CHILD_ENV).is_some() {
-        return; // inside the spawned child: only canary_child does work
-    }
-    let exe = std::env::current_exe().expect("current_exe");
-    let out = std::process::Command::new(&exe)
-        .env(CHILD_ENV, "1")
-        .args(["canary_child", "--exact", "--quiet"])
-        .output()
-        .expect("spawn canary child");
-    let stderr = String::from_utf8_lossy(&out.stderr);
-    let stdout = String::from_utf8_lossy(&out.stdout);
-    // libtest routes a panicking test's message through the captured-stdout
-    // "failures:" section (not raw stderr), so search both streams.
-    let text = format!("{stdout}{stderr}");
-    assert!(
-        !out.status.success(),
-        "overflow checks are NOT active in this profile: intentional \
-         u64::MAX + 1 wrapped silently (status {0:?})",
-        out.status
-    );
-    assert!(
-        text.contains("attempt to add with overflow"),
-        "child failed for an unexpected reason (status {0:?}):\n{1}",
-        out.status,
-        text
-    );
-}
-
-#[test]
-fn canary_child() {
-    if std::env::var_os(CHILD_ENV).is_none() {
-        return; // parent harness run: nothing to do
-    }
     let a: u64 = std::hint::black_box(u64::MAX);
     let b: u64 = std::hint::black_box(1);
-    std::hint::black_box(a + b); // wraps to 0 without overflow-checks; panics with them
+    let _ = std::hint::black_box(a + b);
 }

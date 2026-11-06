@@ -5,6 +5,8 @@ name: probe-overflow-evidence
 # at a pinned upstream SHA (3f2fe7df = main at probe time), plus the T1-T3 PoC
 # for PR #207. READ-ONLY wrt upstream: public clone, no push. Triggers only
 # when this file itself changes on the probe branch (plus manual dispatch).
+# v5.5 (session 40): canary replaced by the 20-line should_panic regression test;
+# C1/C2/C3 use the unified RUSTFLAGS='' command with .cargo/config.toml untouched.
 
 on:
   push:
@@ -88,31 +90,25 @@ jobs:
           cd src
           mkdir -p crates/ginux-vfs-index/tests
           cp ../approved/pr/2026-11-06-overflow-checks/overflow_checks_release.rs crates/ginux-vfs-index/tests/
-          mv .cargo/config.toml .cargo/config.toml.probe-bak   # freestanding link flags not for std test bins
-          RUSTFLAGS="-C linker=cc" CARGO_TARGET_DIR=../art-c1 \
+          RUSTFLAGS='' CARGO_TARGET_DIR=../art-c1 \
             cargo test --release -p ginux-vfs-index --test overflow_checks_release 2>&1 | tail -6
           rc=${PIPESTATUS[0]}
-          mv .cargo/config.toml.probe-bak .cargo/config.toml
           echo "CANARY_C1_EXIT=$rc"
-          [ "$rc" = "101" ] && echo "C1 PASS-AS-EXPECTED (test failed on pristine main = defect reproduced)" || echo "C1 UNEXPECTED exit=$rc"
+          [ "$rc" = "101" ] && echo "C1 PASS-AS-EXPECTED (should_panic test failed on pristine main = defect reproduced)" || echo "C1 UNEXPECTED exit=$rc"
       - name: canary — release WITH flag must PASS
         run: |
           cd src
-          mv .cargo/config.toml .cargo/config.toml.probe-bak
-          RUSTFLAGS="-C linker=cc" CARGO_TARGET_DIR=../art-c2 CARGO_PROFILE_RELEASE_OVERFLOW_CHECKS=true \
+          RUSTFLAGS='' CARGO_TARGET_DIR=../art-c2 CARGO_PROFILE_RELEASE_OVERFLOW_CHECKS=true \
             cargo test --release -p ginux-vfs-index --test overflow_checks_release 2>&1 | tail -4
           rc=${PIPESTATUS[0]}
-          mv .cargo/config.toml.probe-bak .cargo/config.toml
           echo "CANARY_C2_EXIT=$rc"
           [ "$rc" = "0" ] && echo "C2 PASS-AS-EXPECTED (fix works)" || echo "C2 UNEXPECTED exit=$rc"
       - name: canary — debug cannot detect (must PASS either way)
         run: |
           cd src
-          mv .cargo/config.toml .cargo/config.toml.probe-bak
-          RUSTFLAGS="-C linker=cc" CARGO_TARGET_DIR=../art-c3 \
+          RUSTFLAGS='' CARGO_TARGET_DIR=../art-c3 \
             cargo test -p ginux-vfs-index --test overflow_checks_release 2>&1 | tail -3
           rc=${PIPESTATUS[0]}
-          mv .cargo/config.toml.probe-bak .cargo/config.toml
           echo "CANARY_C3_DEBUG_EXIT=$rc"
 
       - name: vfs-index scan timing — 12 alternating runs per binary, median+range
