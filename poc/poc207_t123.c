@@ -113,6 +113,38 @@ static int cmpd(const void *a, const void *b){
   double x = *(const double*)a, y = *(const double*)b;
   return x<y?-1:(x>y?1:0);
 }
+/* v5.3 revision: PTRACE_SYSCALL supervision instead of PTRACE_SYSEMU.
+ * Rationale [MEASURED 2026-11-06, both sandbox and ubuntu-24.04 runner]:
+ * resuming a SYSEMU-armed syscall-entry stop with PTRACE_SYSCALL does not
+ * reliably execute the syscall (mmap returned -ENOSYS, exit_group was
+ * skipped), so a SYSEMU-based passthrough is not dependable here.
+ * PTRACE_SYSCALL has no such ambiguity and preserves the structural question
+ * under test: the gate decides from a PEEKDATA snapshot taken at the poll()
+ * entry-stop, while the kernel copies the LIVE pollfd array from tracee
+ * memory when the syscall is actually executed at resume. A PTRACE_SYSCALL
+ * supervisor has a LARGER decision latency than ginux's SYSEMU supervisor,
+ * which only widens the racing window — a detection-favorable measurement.
+ * Emulation for denied polls = classic orig_rax = -1 trick (kernel skips the
+ * real syscall, returns -ENOSYS; we overwrite rax with -EBUSY at the exit
+ * stop). */
+
+struct pend {
+  pid_t tid;
+  int used, allow, have1;
+  unsigned long addr;
+  int32_t snap1;
+};
+static struct pend g_pend[64];
+
+static struct pend *pend_get(pid_t t, int create){
+  struct pend *free_slot = NULL;
+  for (int i=0;i<64;i++) {
+    if (g_pend[i].used && g_pend[i].tid == t) return &g_pend[i];
+    if (!g_pend[i].used && !free_slot) free_slot = &g_pend[i];
+  }
+  if (create && free_slot) { memset(free_slot,0,sizeof *free_slot); free_slot->used=1; free_slot->tid=t; return free_slot; }
+  return NULL;
+}
 
 static long peek_word(pid_t t, unsigned long addr, unsigned long *out){
   errno = 0;
@@ -155,21 +187,19 @@ int main(int argc, char **argv){
   /* child parks itself with SIGSTOP right after exec; WUNTRACED is required
      to see that job-control stop from a non-traced child */
   if (waitpid(g_leader,&st,WUNTRACED)<0) die("wait pre-stop");
-  if (getenv("POC207_DEBUG")) fprintf(stderr,"PREWAIT st=0x%x stopped=%d sig=%d exited=%d code=%d\n", st, WIFSTOPPED(st), WIFSTOPPED(st)?WSTOPSIG(st):0, WIFEXITED(st), WIFEXITED(st)?WEXITSTATUS(st):-1);
+  if (getenv("POC207_DEBUG")) fprintf(stderr,"PREWAIT st=0x%x stopped=%d sig=%d\n", st, WIFSTOPPED(st), WIFSTOPPED(st)?WSTOPSIG(st):0);
   if (!WIFSTOPPED(st)) { fprintf(stderr,"child did not stop\n"); kill(g_leader,SIGKILL); _exit(110); }
-  /* attach via SEIZE, then resume straight into emulation */
   if (ptrace(PTRACE_SEIZE, g_leader, NULL,
         (void*)(unsigned long)(PTRACE_O_TRACESYSGOOD|PTRACE_O_TRACECLONE))) die("SEIZE");
-  /* seizing a group-stopped tracee re-reports it as PTRACE_EVENT_STOP: consume
-     that stop BEFORE the first emulation resume (resume-before-delivery races
-     the tracer bookkeeping) */
+  /* seizing a group-stopped tracee re-reports it as PTRACE_EVENT_STOP */
   if (waitpid(g_leader,&st,__WALL)<0) die("wait seize-stop");
   fprintf(stderr,"FIRST_EVENT st=0x%x\n", st);
-  if (ptrace(PTRACE_SYSEMU, g_leader, NULL, NULL)) die("SYSEMU resume");
+  if (ptrace(PTRACE_SYSCALL, g_leader, NULL, NULL)) die("SYSCALL resume");
 
   long polls=0, denied=0, t1_hits=0, t3_hits=0, snap_sentinel=0, peek_fail=0;
   double t0 = now_s();
   int leader_live = 1;
+  int first_ev = 1;
 
   while (leader_live) {
     if (now_s() - t0 > (double)g_wall_cap_s) break;
@@ -183,21 +213,20 @@ int main(int argc, char **argv){
     }
     int sig = WSTOPSIG(st);
     unsigned event = (unsigned)st >> 16;
-    if (getenv("POC207_DEBUG")) fprintf(stderr,"EV t=%d sig=%d event=%u\n", t, sig, event);
+    if (first_ev) { fprintf(stderr,"FIRST_EVENT st=0x%x\n", st); first_ev = 0; }
 
     if (sig == SIGTRAP && event == PTRACE_EVENT_CLONE) {
       unsigned long ntid = 0;
       ptrace(PTRACE_GETEVENTMSG, t, NULL, &ntid);
       g_sibling_tid = (pid_t)ntid;
-      ptrace(PTRACE_SYSEMU, (pid_t)ntid, NULL, NULL);
-      ptrace(PTRACE_SYSEMU, t, NULL, NULL);
+      ptrace(PTRACE_SYSCALL, (pid_t)ntid, NULL, NULL);
+      ptrace(PTRACE_SYSCALL, t, NULL, NULL);
       continue;
     }
     if (sig == SIGTRAP && event == PTRACE_EVENT_EXIT) {
       ptrace(PTRACE_CONT, t, NULL, NULL);
       continue;
     }
-    /* group/signal stops: swallow benign ones; faults are fatal and reported */
     if (sig != (SIGTRAP|0x80)) {
       if (sig == SIGSEGV || sig == SIGILL || sig == SIGBUS || sig == SIGFPE) {
         fprintf(stderr,"FATAL tracee fault sig=%d tid=%d (aborting harness run)\n", sig, t);
@@ -205,98 +234,83 @@ int main(int argc, char **argv){
         leader_live = 0;
         break;
       }
-      ptrace(PTRACE_SYSEMU, t, NULL, NULL);
+      ptrace(PTRACE_SYSCALL, t, NULL, NULL);
       continue;
     }
 
-    /* syscall stop: classify */
     struct ptrace_syscall_info si; memset(&si,0,sizeof si);
     if (ptrace(PTRACE_GET_SYSCALL_INFO, t, (void*)sizeof si, &si) < 0) {
-      ptrace(PTRACE_SYSEMU, t, NULL, NULL); continue;
+      ptrace(PTRACE_SYSCALL, t, NULL, NULL); continue;
     }
-    if (getenv("POC207_DEBUG")) fprintf(stderr,"SC t=%d op=%d nr=%lld\n", t, si.op, (long long)si.entry.nr);
-    if (si.op != PTRACE_SYSCALL_INFO_ENTRY || si.entry.nr != SYS_POLL_X86_64) {
-      /* pass through this one syscall, keep emulating */
-      if (getenv("POC207_DEBUG")) {
-        fprintf(stderr,"PASS-STEP t=%d nr=%lld", t, (long long)si.entry.nr);
-        if (si.entry.nr == 1) {
-          struct user_regs_struct rr; char pbuf[80]={0};
-          if (ptrace(PTRACE_GETREGS, t, NULL, &rr)==0) {
-            for (int k=0;k<60;k++){ long w = ptrace(PTRACE_PEEKDATA,t,(void*)(rr.rsi+k),NULL); if(errno) break; pbuf[k]=(char)w; if(!pbuf[k]) break; }
-            fprintf(stderr," fd=%lld buf=\"%s\"", (long long)rr.rdi, pbuf);
+
+    if (si.op == PTRACE_SYSCALL_INFO_ENTRY) {
+      int is_leader_poll = (t == g_leader && si.entry.nr == SYS_POLL_X86_64);
+      if (getenv("POC207_DEBUG")) fprintf(stderr,"SC t=%d op=%d nr=%lld%s\n", t, si.op, (long long)si.entry.nr, is_leader_poll?" POLL":"");
+      if (is_leader_poll) {
+        struct pend *p = pend_get(t, 1);
+        p->addr = si.entry.args[0];
+        unsigned long count = si.entry.args[1];
+        polls++;
+        int allow = 1;
+        if (count > MAX_BOOTSTRAP_POLL_FDS) allow = 0;
+        unsigned long w1=0; int have1 = 0;
+        double gw0 = now_s();
+        for (unsigned long i=0; allow && i<count; i++) {
+          unsigned long word;
+          if (peek_word(t, p->addr + i*8, &word)) { allow = 0; peek_fail++; break; }
+          int32_t fd = (int32_t)(word & 0xffffffffUL);
+          if (fd > 2) { allow = 0; break; }
+          if (i==1) { w1 = word; have1 = 1; }
+        }
+        double gw1 = now_s();
+        win_push((gw1-gw0)*1e9);
+        p->allow = allow; p->have1 = have1; p->snap1 = have1 ? (int32_t)(w1 & 0xffffffffUL) : 0;
+        if (have1 && p->snap1 > 2) snap_sentinel++;
+        if (!allow) {
+          denied++;
+          struct user_regs_struct r;
+          if (ptrace(PTRACE_GETREGS, t, NULL, &r)==0) {
+            r.orig_rax = -1;               /* classic emulate: kernel skips it */
+            ptrace(PTRACE_SETREGS, t, NULL, &r);
           }
         }
-        fprintf(stderr,"\n");
       }
-      /* SYSEMU passthrough idiom: one PTRACE_SYSCALL round-trip executes the
-         syscall; SYSEMU_SINGLESTEP does NOT execute it (rax stays -ENOSYS). */
-      if (ptrace(PTRACE_SYSCALL, t, NULL, NULL)) die("SYSCALL passthrough");
-      if (waitpid(t,&st,__WALL)<0) die("wait after passthrough");
-      if (WIFEXITED(st) || WIFSIGNALED(st)) { if (t==g_leader) leader_live=0; break; }
-      if (getenv("POC207_DEBUG")) fprintf(stderr,"PASS-RESUME t=%d sig=%d\n", t, WSTOPSIG(st));
-      if (ptrace(PTRACE_SYSEMU, t, NULL, NULL)) die("SYSEMU passthrough resume");
+      ptrace(PTRACE_SYSCALL, t, NULL, NULL);
       continue;
     }
 
-    /* ---- the gate: replica of channel_hooks.rs:13-37 ---- */
-    unsigned long addr = si.entry.args[0];
-    unsigned long count = si.entry.args[1];
-    polls++;
-    int allow = 1;
-    if (count > MAX_BOOTSTRAP_POLL_FDS) allow = 0;
-    unsigned long w0=0, w1=0; int have1 = 0; (void)w0;
-    double gw0 = now_s();
-    for (unsigned long i=0; allow && i<count; i++) {
-      unsigned long word;
-      if (peek_word(t, addr + i*8, &word)) { allow = 0; peek_fail++; break; }
-      int32_t fd = (int32_t)(word & 0xffffffffUL);
-      if (fd > 2) { allow = 0; break; }
-      if (i==0) w0 = word;
-      if (i==1) { w1 = word; have1 = 1; }
-    }
-    double gw1 = now_s();
-    win_push((gw1-gw0)*1e9);
-
-    int32_t snap1 = have1 ? (int32_t)(w1 & 0xffffffffUL) : 0;
-    if (have1 && snap1 > 2) snap_sentinel++;
-
-    if (!allow) {
-      denied++;
-      struct user_regs_struct r;
-      if (ptrace(PTRACE_GETREGS, t, NULL, &r)==0) {
-        r.rax = (long long)-EBUSY;                /* emulated failure, tracee ignores */
-        ptrace(PTRACE_SETREGS, t, NULL, &r);
-      }
-      ptrace(PTRACE_SYSEMU, t, NULL, NULL);       /* skip the syscall */
-      continue;
-    }
-
-    /* allowed -> the kernel executes poll() NOW against live tracee memory */
-    ptrace(PTRACE_SYSCALL, t, NULL, NULL);
-    if (waitpid(t,&st,__WALL)<0) die("wait poll exec");
-    if (WIFEXITED(st) || WIFSIGNALED(st)) { if (t==g_leader) leader_live=0; break; }
-    double gw2 = now_s();
-    win_push((gw2-gw1)*1e9);
-
-    if (have1) {
-      unsigned long wpost;
-      if (peek_word(t, addr + 8, &wpost)==0) {
-        int32_t fd_post = (int32_t)(wpost & 0xffffffffUL);
-        uint16_t revents = (uint16_t)((wpost >> 48) & 0xffffUL);
-        if (snap1 <= 2 && revents != 0 && fd_post > 2) {
-          if (g_mode_t3) t3_hits++;
-          else t1_hits++;
+    if (si.op == PTRACE_SYSCALL_INFO_EXIT) {
+      struct pend *p = pend_get(t, 0);
+      if (p) {
+        if (!p->allow) {
+          struct user_regs_struct r;
+          if (ptrace(PTRACE_GETREGS, t, NULL, &r)==0) {
+            r.rax = (long long)-EBUSY;     /* emulated failure, tracee ignores */
+            ptrace(PTRACE_SETREGS, t, NULL, &r);
+          }
+        } else if (p->have1) {
+          unsigned long wpost;
+          if (peek_word(t, p->addr + 8, &wpost)==0) {
+            int32_t fd_post = (int32_t)(wpost & 0xffffffffUL);
+            uint16_t revents = (uint16_t)((wpost >> 48) & 0xffffUL);
+            if (p->snap1 <= 2 && revents != 0 && fd_post > 2) {
+              if (g_mode_t3) t3_hits++;
+              else t1_hits++;
+            }
+          }
         }
+        p->used = 0;
       }
+      ptrace(PTRACE_SYSCALL, t, NULL, NULL);
+      continue;
     }
-    ptrace(PTRACE_SYSEMU, t, NULL, NULL);         /* resume emulating */
+
+    ptrace(PTRACE_SYSCALL, t, NULL, NULL);  /* PTRACE_SYSCALL_INFO_NONE etc. */
   }
 
-  /* kill anything left */
   kill(g_leader, SIGKILL);
   if (g_sibling_tid) { ptrace(PTRACE_KILL, g_sibling_tid, NULL, NULL); }
 
-  /* T2 stats */
   qsort(g_win.v, g_win.n, sizeof(double), cmpd);
   double med = g_win.n ? g_win.v[g_win.n/2] : 0;
   double mn  = g_win.n ? g_win.v[0] : 0;
@@ -306,8 +320,8 @@ int main(int argc, char **argv){
   printf("RESULT polls=%ld denied_by_gate=%ld gate_snapshot_sentinel=%ld peek_failures=%ld\n",
          polls, denied, snap_sentinel, peek_fail);
   printf("RESULT %s divergences=%ld\n", g_mode_t3?"T3_hits":"T1_hits", g_mode_t3?t3_hits:t1_hits);
-  printf("RESULT T2_window_ns pre_resume_n=%zu med=%.0f min=%.0f max=%.0f | exec_to_read_n=%zu\n",
-         g_win.n/2, med, mn, mx, g_win.n - g_win.n/2);
+  printf("RESULT T2_window_ns gate_peek_n=%zu med=%.0f min=%.0f max=%.0f\n",
+         g_win.n, med, mn, mx);
   printf("VERDICT %s\n",
     (g_mode_t3 ? (t3_hits>0 ? "RACE-WON-ON-REAL-FD: proven (harness)" : "no divergence observed (harness)")
                : (t1_hits>0 ? "RACE-WON: pollfd changed between PEEKDATA gate and kernel copy (proven, harness)"
