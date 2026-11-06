@@ -5,9 +5,9 @@
 "the self-start binaries ... remain open" — i.e., do the self-start/freestanding
 binaries and the test suites still hold up with overflow checks restored?
 
-**Protocol [MEASURED]** — GitHub Actions workflow `probe-overflow-evidence.yml`
-(run: see STATE for run id), our repo, upstream cloned at pinned main head
-`3f2fe7df`, read-only wrt upstream:
+**Protocol [MEASURED]** — GitHub Actions workflow `probe-overflow-evidence.yml`,
+run **42178425135** (all three jobs success), our repo, upstream cloned at
+pinned main head `3f2fe7df`, read-only wrt upstream:
 - baseline = upstream tree untouched (no `overflow-checks` key);
 - flag = same SHA, `CARGO_PROFILE_RELEASE_OVERFLOW_CHECKS=true` env (profile
   override, no file modified) — byte-identical source, only the profile knob;
@@ -17,7 +17,7 @@ binaries and the test suites still hold up with overflow checks restored?
 
 | Check | Baseline | Flag | Tag |
 |---|---|---|---|
-| `make test-unit` (7 crates) | **65/65 pass** | **65/65 pass** | MEASURED (run 1 & 2) |
+| `make test-unit` (7 crates) | **65/65 pass** | **65/65 pass** | MEASURED (runs 1–4) |
 | `make build` + fixtures (self-start bins) | PASS | PASS | MEASURED |
 | `sudo make test-launch` | **PASS** | **PASS** | MEASURED |
 | `sudo make test-native-supervision` | **PASS** | **PASS** | MEASURED |
@@ -27,18 +27,20 @@ binaries and the test suites still hold up with overflow checks restored?
 
 | Check | Baseline | Flag | Tag |
 |---|---|---|---|
-| release builds `ginux` + `ginux-vfs-index` | PASS | PASS | MEASURED |
-| binary sizes | see memo 3 | see memo 3 | MEASURED |
-| `make test-unit` | see below | see below | — |
+| `make test-unit` | **65/65 pass** | **65/65 pass** | MEASURED (runs 2–4) |
+| regression canary C1 (release, no flag) | — | FAILS as expected (exit 101) | MEASURED (runs 2–4) |
+| regression canary C2 (release + flag) | — | PASSES (exit 0) | MEASURED (runs 2–4) |
+| `ginux-init` build on aarch64 | **does not compile** (43 errors, both modes) | same | MEASURED — honest negative: the freestanding init is x86_64-specific; not a flag regression |
+| `ginux-vfs-index` release sizes on macOS | not captured (build step aborts with ginux-init) | same | stated as not captured |
 | launch/native supervision | not applicable | not applicable | linux-specific (namespaces/ptrace fixtures); stated as not run on macOS |
 
 ## Regression canary (release-only)
 
 | Run | Build | Expected | Result |
 |---|---|---|---|
-| C1 release, no flag (pristine main) | canary `overflow_checks_release.rs` | FAIL (silent wrap) | see run log — MEASURED |
-| C2 release, flag | same | PASS | see run log — MEASURED |
-| C3 debug, no flag | same | PASS either way (debug cannot detect) | MEASURED |
+| C1 release, no flag (pristine main) | canary `overflow_checks_release.rs` | FAIL (silent wrap) | **exit 101** on ubuntu-24.04 and macOS arm64 — defect reproduced [MEASURED] |
+| C2 release, flag | same | PASS | **exit 0** on ubuntu-24.04 and macOS arm64 [MEASURED] |
+| C3 debug, no flag | same | PASS either way (debug cannot detect) | exit 0 on ubuntu-24.04 [MEASURED] |
 
 Debug runs cannot detect the regression: overflow-checks are on by default in
 dev profiles, so `make test-unit` (debug) stays green even when the release

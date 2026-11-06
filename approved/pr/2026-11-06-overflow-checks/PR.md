@@ -48,13 +48,14 @@
 > 2. Adds `crates/ginux-vfs-index/tests/overflow_checks_release.rs`: a release-only canary that fails when the setting is absent and passes when present. Because the release profile sets `panic = "abort"`, a `#[should_panic]` cannot observe the panic; the canary instead re-executes the test binary as a child process and asserts the child does not survive an intentional `u64::MAX + 1`. Note that **debug test runs cannot detect this regression** (overflow checks are on by default in dev profiles), which is why `make test-unit` never caught it — only a `--release` test run discriminates.
 > 3. Adds a 2-line `make test-release-overflow` target running the canary under release.
 >
-> **Measured evidence that the cost is small** (full numbers in the thread-ready evidence pack):
-> - Unit suite: `make test-unit` 65/65 passing with the flag on ubuntu-24.04 and macOS arm64 (probe, pinned SHA).
-> - Self-start and tooling binaries: release size delta with the flag is +296 bytes on `ginux` (+0.24%) and +1,608 bytes on `ginux-vfs-index` (+0.46%) locally; runner reference numbers in the evidence pack.
-> - `ginux-vfs-index` scan over a generated 50k-entry tar (220 MiB): median 112.5 ms → 117.4 ms (+4.9 ms) over 12 alternating runs per build on one machine.
+> **Measured evidence that the cost is small** (Actions probe run 42178425135, pinned SHA 3f2fe7df):
+> - Unit suite: `make test-unit` 65/65 passing with the flag on ubuntu-24.04 and macOS arm64.
+> - Launch + native supervision suites: PASS with the flag on ubuntu-24.04.
+> - Self-start binaries (upstream link config): release size delta with the flag is between −56 and +24 bytes across all five (e.g. `ginux` 122,720 → 122,680); the only std tooling binary gains +1,608 bytes on `ginux-vfs-index` (+0.46%).
+> - `ginux-vfs-index` scan over a generated 50k-entry tar (220 MiB), 12 alternating runs per build: runner median 223.2 ms (base) vs 222.5 ms (flag), ranges overlap; a local sandbox reproduction of the same protocol showed the worst case, +4.9 ms median (+4.4%).
 > - `scan_layer` sites flagged in #222: adversarial matrix executed (max-octal / base-256 / truncated-declared-size / EFBIG bound) — no defect found within the matrix; memo with limits available.
 >
-> **Runners.** ubuntu-24.04 (unit, launch, native supervision, canary, sizes, timing) and macOS arm64/macos-15 (unit, canary, sizes) were exercised on the pinned SHA; the Rocky 10.2 VM targets (test-intercept, test-runtime, image tests) were NOT exercised — they require the Rocky host environment which the probe does not provision.
+> **Runners.** ubuntu-24.04 (unit, launch, native supervision, canary, sizes, timing) and macOS arm64/macos-15 (unit, canary; note: the freestanding `ginux-init` does not compile on aarch64 — x86_64-specific) were exercised on the pinned SHA; the Rocky 10.2 VM targets (test-intercept, test-runtime, image tests) were NOT exercised — they require the Rocky host environment which the probe does not provision.
 >
 > Prepared with AI assistance (Claude); reviewed and submitted by a human.
 > Nothing under this account was published automatically; this PR is opened manually by the maintainer-account holder.
