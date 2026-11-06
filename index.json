@@ -1,8 +1,114 @@
 {
- "generated_at_utc": "2026-11-06T00:01:13Z",
+ "generated_at_utc": "2026-11-06T06:08:04Z",
  "source_repo": "gmkurtzer/ginux",
- "item_count": 218,
+ "item_count": 223,
  "items": {
+  "224": {
+   "kind": "pr",
+   "title": "fix(process): skip clone tid stores the caller cannot write like Linux",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    "Makefile",
+    "crates/ginux-init/src/main.rs",
+    "scripts/test-process-native.py",
+    "tests/fixtures/process-review-fixture.c"
+   ],
+   "keywords": [
+    "cell",
+    "tid",
+    "store",
+    "clone",
+    "thread",
+    "child",
+    "virtual",
+    "now",
+    "only",
+    "page"
+   ]
+  },
+  "223": {
+   "kind": "issue",
+   "title": "process: clone tid stores ignore page protections and fail the domain on a bad pointer",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "tid",
+    "cell",
+    "clone",
+    "child",
+    "linux",
+    "parent",
+    "store",
+    "failed",
+    "only",
+    "pointer"
+   ]
+  },
+  "222": {
+   "kind": "issue",
+   "title": "Question: was dropping `overflow-checks` from `[profile.release]` intentional?",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "overflow",
+    "checks",
+    "intentional",
+    "profile",
+    "release",
+    "152",
+    "426",
+    "436",
+    "47fc22c8",
+    "6324692b"
+   ]
+  },
+  "221": {
+   "kind": "pr",
+   "title": "fix(process): fail wait4 stores with EFAULT like Linux",
+   "state": "closed",
+   "merged_at": "2026-11-06T05:28:45Z",
+   "files": [
+    "Makefile",
+    "crates/ginux-init/src/main.rs",
+    "crates/ginux-init/src/supervisor.rs",
+    "scripts/test-process-native.py",
+    "tests/fixtures/process-review-fixture.c"
+   ],
+   "keywords": [
+    "efault",
+    "status",
+    "page",
+    "rusage",
+    "store",
+    "before",
+    "esrch",
+    "first",
+    "process_vm_writev",
+    "tracee"
+   ]
+  },
+  "220": {
+   "kind": "issue",
+   "title": "process: wait4 status and rusage stores ignore page protections (no EFAULT)",
+   "state": "closed",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "status",
+    "rusage",
+    "linux",
+    "wait4",
+    "efault",
+    "child",
+    "domain",
+    "failed",
+    "memory",
+    "store"
+   ]
+  },
   "219": {
    "kind": "issue",
    "title": "launch/native: sysinfo exposes host uptime, load, memory and process count (deny or emulate?)",
@@ -4835,6 +4941,313 @@
   }
  },
  "keywords": {
+  "cell": [
+   224,
+   223
+  ],
+  "tid": [
+   224,
+   223,
+   215,
+   214
+  ],
+  "store": [
+   224,
+   223,
+   221,
+   220
+  ],
+  "clone": [
+   224,
+   223,
+   130,
+   106,
+   99,
+   98
+  ],
+  "thread": [
+   224,
+   184,
+   139,
+   138,
+   114,
+   99,
+   8
+  ],
+  "child": [
+   224,
+   223,
+   220,
+   184,
+   176,
+   150,
+   137,
+   135,
+   130,
+   126,
+   124,
+   113,
+   111,
+   106,
+   102,
+   98,
+   59
+  ],
+  "virtual": [
+   224,
+   214
+  ],
+  "now": [
+   224,
+   215,
+   132,
+   127,
+   54
+  ],
+  "only": [
+   224,
+   223,
+   171,
+   156,
+   149,
+   135,
+   131,
+   107,
+   103,
+   102,
+   90,
+   89,
+   66,
+   32,
+   9
+  ],
+  "page": [
+   224,
+   221,
+   151,
+   66,
+   59,
+   25
+  ],
+  "linux": [
+   223,
+   220,
+   202,
+   191,
+   190,
+   177,
+   143,
+   142,
+   141,
+   139,
+   135,
+   129,
+   128,
+   127,
+   123,
+   122,
+   121,
+   120,
+   118,
+   116,
+   114,
+   111,
+   110,
+   106,
+   105,
+   103,
+   99,
+   98,
+   88,
+   85,
+   84,
+   83,
+   76,
+   72,
+   71,
+   69,
+   59,
+   57,
+   56,
+   55,
+   47,
+   46,
+   37,
+   14,
+   11,
+   9,
+   8
+  ],
+  "parent": [
+   223,
+   218,
+   124,
+   113
+  ],
+  "failed": [
+   223,
+   220,
+   197,
+   196,
+   184,
+   169,
+   135,
+   132,
+   111,
+   91,
+   57,
+   51,
+   37,
+   31,
+   29,
+   28,
+   26
+  ],
+  "pointer": [
+   223
+  ],
+  "overflow": [
+   222,
+   84,
+   54,
+   43
+  ],
+  "checks": [
+   222,
+   217,
+   216,
+   202,
+   54,
+   43
+  ],
+  "intentional": [
+   222,
+   43
+  ],
+  "profile": [
+   222,
+   43
+  ],
+  "release": [
+   222,
+   54,
+   43,
+   37,
+   26
+  ],
+  "152": [
+   222
+  ],
+  "426": [
+   222
+  ],
+  "436": [
+   222
+  ],
+  "47fc22c8": [
+   222
+  ],
+  "6324692b": [
+   222
+  ],
+  "efault": [
+   221,
+   220
+  ],
+  "status": [
+   221,
+   220,
+   184,
+   170,
+   169,
+   168,
+   11
+  ],
+  "rusage": [
+   221,
+   220
+  ],
+  "before": [
+   221,
+   218,
+   216,
+   213,
+   185,
+   181,
+   180,
+   151,
+   144,
+   128,
+   113,
+   101,
+   90,
+   82,
+   56,
+   53,
+   52,
+   49,
+   48,
+   28,
+   27,
+   20
+  ],
+  "esrch": [
+   221
+  ],
+  "first": [
+   221,
+   129
+  ],
+  "process_vm_writev": [
+   221
+  ],
+  "tracee": [
+   221
+  ],
+  "wait4": [
+   220,
+   213,
+   212,
+   130
+  ],
+  "domain": [
+   220,
+   209,
+   208,
+   199,
+   196,
+   185,
+   184,
+   176,
+   173,
+   172,
+   160,
+   158,
+   138,
+   135,
+   132,
+   114,
+   111,
+   94,
+   86,
+   85,
+   83,
+   80,
+   67,
+   59,
+   57,
+   46,
+   39,
+   19
+  ],
+  "memory": [
+   220,
+   124,
+   80,
+   67,
+   46,
+   19
+  ],
   "host": [
    219,
    215,
@@ -4980,11 +5393,6 @@
   "lookup": [
    218
   ],
-  "parent": [
-   218,
-   124,
-   113
-  ],
   "resolve": [
    218
   ],
@@ -5000,29 +5408,6 @@
   ],
   "because": [
    218
-  ],
-  "before": [
-   218,
-   216,
-   213,
-   185,
-   181,
-   180,
-   151,
-   144,
-   128,
-   113,
-   101,
-   90,
-   82,
-   56,
-   53,
-   52,
-   49,
-   48,
-   28,
-   27,
-   20
   ],
   "slots": [
    217
@@ -5084,13 +5469,6 @@
    9,
    4,
    3
-  ],
-  "checks": [
-   217,
-   216,
-   202,
-   54,
-   43
   ],
   "cli": [
    217
@@ -5192,10 +5570,6 @@
    54,
    38
   ],
-  "tid": [
-   215,
-   214
-  ],
   "exit": [
    215,
    214,
@@ -5227,19 +5601,10 @@
    215,
    163
   ],
-  "now": [
-   215,
-   132,
-   127,
-   54
-  ],
   "pid": [
    214,
    126,
    102
-  ],
-  "virtual": [
-   214
   ],
   "crates": [
    214,
@@ -5277,11 +5642,6 @@
    129,
    111,
    105
-  ],
-  "wait4": [
-   213,
-   212,
-   130
   ],
   "parked": [
    213,
@@ -5458,35 +5818,6 @@
    198,
    51,
    17
-  ],
-  "domain": [
-   209,
-   208,
-   199,
-   196,
-   185,
-   184,
-   176,
-   173,
-   172,
-   160,
-   158,
-   138,
-   135,
-   132,
-   114,
-   111,
-   94,
-   86,
-   85,
-   83,
-   80,
-   67,
-   59,
-   57,
-   46,
-   39,
-   19
   ],
   "manifest": [
    209,
@@ -5667,53 +5998,6 @@
    95,
    63
   ],
-  "linux": [
-   202,
-   191,
-   190,
-   177,
-   143,
-   142,
-   141,
-   139,
-   135,
-   129,
-   128,
-   127,
-   123,
-   122,
-   121,
-   120,
-   118,
-   116,
-   114,
-   111,
-   110,
-   106,
-   105,
-   103,
-   99,
-   98,
-   88,
-   85,
-   84,
-   83,
-   76,
-   72,
-   71,
-   69,
-   59,
-   57,
-   56,
-   55,
-   47,
-   46,
-   37,
-   14,
-   11,
-   9,
-   8
-  ],
   "main": [
    202,
    194,
@@ -5779,23 +6063,6 @@
   ],
   "backing": [
    198
-  ],
-  "failed": [
-   197,
-   196,
-   184,
-   169,
-   135,
-   132,
-   111,
-   91,
-   57,
-   51,
-   37,
-   31,
-   29,
-   28,
-   26
   ],
   "index": [
    197,
@@ -6077,37 +6344,6 @@
   "event": [
    185
   ],
-  "thread": [
-   184,
-   139,
-   138,
-   114,
-   99,
-   8
-  ],
-  "child": [
-   184,
-   176,
-   150,
-   137,
-   135,
-   130,
-   126,
-   124,
-   113,
-   111,
-   106,
-   102,
-   98,
-   59
-  ],
-  "status": [
-   184,
-   170,
-   169,
-   168,
-   11
-  ],
   "100": [
    184,
    119
@@ -6345,21 +6581,6 @@
    171,
    170,
    124
-  ],
-  "only": [
-   171,
-   156,
-   149,
-   135,
-   131,
-   107,
-   103,
-   102,
-   90,
-   89,
-   66,
-   32,
-   9
   ],
   "rax": [
    170
@@ -6667,12 +6888,6 @@
    67,
    66,
    34
-  ],
-  "page": [
-   151,
-   66,
-   59,
-   25
   ],
   "socket": [
    151,
@@ -7151,20 +7366,11 @@
   "__wclone": [
    130
   ],
-  "clone": [
-   130,
-   106,
-   99,
-   98
-  ],
   "caller": [
    129,
    105
   ],
   "blocked": [
-   129
-  ],
-  "first": [
    129
   ],
   "mmap": [
@@ -7257,13 +7463,6 @@
   ],
   "sees": [
    124
-  ],
-  "memory": [
-   124,
-   80,
-   67,
-   46,
-   19
   ],
   "shared": [
    124,
@@ -7693,11 +7892,6 @@
   "separate": [
    85
   ],
-  "overflow": [
-   84,
-   54,
-   43
-  ],
   "counter": [
    84,
    82
@@ -8105,12 +8299,6 @@
   "why": [
    55
   ],
-  "release": [
-   54,
-   43,
-   37,
-   26
-  ],
   "regression": [
    54
   ],
@@ -8266,16 +8454,10 @@
   "chains": [
    44
   ],
-  "profile": [
-   43
-  ],
   "builds": [
    43
   ],
   "debug": [
-   43
-  ],
-  "intentional": [
    43
   ],
   "panic": [
