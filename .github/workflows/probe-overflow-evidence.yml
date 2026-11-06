@@ -32,37 +32,30 @@ jobs:
       - name: toolchain
         run: rustup target add x86_64-unknown-linux-gnu
 
-      - name: baseline build — self-start bins, upstream config untouched
+      - name: baseline build via upstream make build (5 self-start bins, config untouched)
         run: |
-          cd src
-          CARGO_TARGET_DIR=../art-base cargo build --release -p ginux-init 2>&1 | tail -1
+          CARGO_TARGET_DIR=../art-base make -C src build 2>&1 | tail -1
           echo "BUILD_SELFSTART_EXIT=${PIPESTATUS[0]}"
-      - name: baseline build — ginux-vfs-index (RUSTFLAGS override, documented deviation)
+      - name: baseline ginux-vfs-index (RUSTFLAGS cc override; only std crate; upstream CI never links it)
         run: |
           cd src
-          RUSTFLAGS="-C linker=cc" CARGO_TARGET_DIR=../art-base-cc \
-            cargo build --release -p ginux-vfs-index -p managed-payload \
-            -p baseline-runner -p runtime-fixture -p process-native-fixture 2>&1 | tail -1
-          echo "BUILD_VFSINDEX_EXIT=${PIPESTATUS[0]} (upstream .cargo/config.toml lld flags cannot link std bins; upstream CI never links this crate either)"
-      - name: flag build — self-start bins (CARGO_PROFILE_RELEASE_OVERFLOW_CHECKS=true)
+          RUSTFLAGS="-C linker=cc" CARGO_TARGET_DIR=../art-base-cc cargo build --release -p ginux-vfs-index 2>&1 | tail -1
+          echo "BUILD_VFSINDEX_EXIT=${PIPESTATUS[0]}"
+      - name: flag build via make build (CARGO_PROFILE_RELEASE_OVERFLOW_CHECKS=true)
         run: |
-          cd src
-          CARGO_TARGET_DIR=../art-flag CARGO_PROFILE_RELEASE_OVERFLOW_CHECKS=true \
-            cargo build --release -p ginux-init 2>&1 | tail -1
+          CARGO_TARGET_DIR=../art-flag CARGO_PROFILE_RELEASE_OVERFLOW_CHECKS=true make -C src build 2>&1 | tail -1
           echo "BUILD_SELFSTART_FLAG_EXIT=${PIPESTATUS[0]}"
-      - name: flag build — ginux-vfs-index (flag + linker override)
+      - name: flag ginux-vfs-index (flag + cc override)
         run: |
           cd src
-          RUSTFLAGS="-C linker=cc" CARGO_TARGET_DIR=../art-flag-cc CARGO_PROFILE_RELEASE_OVERFLOW_CHECKS=true \
-            cargo build --release -p ginux-vfs-index -p managed-payload \
-            -p baseline-runner -p runtime-fixture -p process-native-fixture 2>&1 | tail -1
+          RUSTFLAGS="-C linker=cc" CARGO_TARGET_DIR=../art-flag-cc CARGO_PROFILE_RELEASE_OVERFLOW_CHECKS=true cargo build --release -p ginux-vfs-index 2>&1 | tail -1
           echo "BUILD_VFSINDEX_FLAG_EXIT=${PIPESTATUS[0]}"
       - name: sizes table (bytes)
         run: |
           printf "%-26s %12s %12s %10s\n" binary base flag delta
-          for b in ginux; do
-            s1=$(stat -c%s "art-base/release/$b" 2>/dev/null || echo NA)
-            s2=$(stat -c%s "art-flag/release/$b" 2>/dev/null || echo NA)
+          for b in ginux managed-payload baseline-runner runtime-fixture process-native-fixture; do
+            s1=$(stat -c%s "art-base/x86_64-unknown-linux-gnu/release/$b" 2>/dev/null || echo NA)
+            s2=$(stat -c%s "art-flag/x86_64-unknown-linux-gnu/release/$b" 2>/dev/null || echo NA)
             d=NA; [ "$s1" != NA ] && [ "$s2" != NA ] && d=$((s2-s1))
             printf "%-26s %12s %12s %10s\n" "$b" "$s1" "$s2" "$d"
           done
@@ -70,7 +63,6 @@ jobs:
           s2=$(stat -c%s "art-flag-cc/release/ginux-vfs-index" 2>/dev/null || echo NA)
           d=NA; [ "$s1" != NA ] && [ "$s2" != NA ] && d=$((s2-s1))
           printf "%-26s %12s %12s %10s\n" "ginux-vfs-index(cc)" "$s1" "$s2" "$d"
-
       - name: make test-unit (baseline)
         run: make -C src test-unit 2>&1 | grep -E 'test result|error' | sort | uniq -c
       - name: make test-unit (flag)
