@@ -1,6 +1,6 @@
 {
- "last_seen_sha": "a9246c8dc9febbbeb759f20684478b1a1ac68250",
- "last_checked": "2026-11-06T18:08:39Z",
+ "last_seen_sha": "ff926d0c228b71d55d0f2f0909dd86ec62197c8a",
+ "last_checked": "2026-11-06T23:04:15Z",
  "last_dispatch": {
   "at": "2026-11-05T02:56:29Z",
   "range": "4d4a53bb..d337713b",
@@ -19,5 +19,31 @@
    "crates/volume-format/src/lib.rs"
   ],
   "truncated": true
+ },
+ "threads_watch": {
+  "222": {
+   "state": "open",
+   "comments": 2,
+   "updated_at": "2026-11-06T14:58:29Z",
+   "last_comment_at": "2026-11-06T14:58:29Z",
+   "last_comment_author": "gmkurtzer",
+   "checked": "2026-11-06T23:04:15Z"
+  },
+  "207": {
+   "state": "open",
+   "comments": 3,
+   "updated_at": "2026-11-06T14:58:28Z",
+   "last_comment_at": "2026-11-06T14:58:28Z",
+   "last_comment_author": "gmkurtzer",
+   "checked": "2026-11-06T23:04:15Z"
+  },
+  "227": {
+   "state": "open",
+   "comments": 1,
+   "updated_at": "2026-11-06T14:58:30Z",
+   "last_comment_at": "2026-11-06T14:58:30Z",
+   "last_comment_author": "gmkurtzer",
+   "checked": "2026-11-06T23:04:15Z"
+  }
  }
 }
