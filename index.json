@@ -1,8 +1,97 @@
 {
- "generated_at_utc": "2026-11-06T14:10:48Z",
+ "generated_at_utc": "2026-11-06T20:48:30Z",
  "source_repo": "gmkurtzer/ginux",
- "item_count": 226,
+ "item_count": 229,
  "items": {
+  "230": {
+   "kind": "issue",
+   "title": "Proposal: formally specified contract semantics and verification of security invariants",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "contract",
+    "ginux",
+    "could",
+    "lean",
+    "model",
+    "verification",
+    "would",
+    "catalog",
+    "formal",
+    "operation"
+   ]
+  },
+  "229": {
+   "kind": "pr",
+   "title": "Gate 9.75: domain specification and network controls",
+   "state": "closed",
+   "merged_at": "2026-11-06T20:02:06Z",
+   "files": [
+    "Makefile",
+    "README.md",
+    "config/domain-gate9.75-hook-continue.toml",
+    "config/domain-gate9.75-hook-stop.toml",
+    "config/domain-gate9.75-hook-timeout.toml",
+    "config/domain-gate9.75-hooks.toml",
+    "config/domain-gate9.75-network.toml",
+    "config/domain-gate9.75.toml",
+    "crates/ginux-domain/src/lib.rs",
+    "crates/ginux-init/src/launch.rs",
+    "crates/ginux-init/src/main.rs",
+    "docs/gate-9.75-domain-specification.md",
+    "hdae/ARCHITECTURE.md",
+    "hdae/STATUS.md",
+    "hdae/gates-todo/9.75-domain-specification-network-controls.md",
+    "scripts/demo-gate975.sh",
+    "scripts/gate9-shell-check.sh",
+    "scripts/gate975-network-check.py",
+    "scripts/ginux-host-controller.sh",
+    "scripts/ginux-host-domain-helper.sh",
+    "scripts/probe-systemd.sh",
+    "scripts/stage-systemd-domain.sh",
+    "scripts/test-config.sh",
+    "scripts/test-gate975-hooks.sh",
+    "scripts/test-gate975-network.sh"
+   ],
+   "keywords": [
+    "domain",
+    "hooks",
+    "gate",
+    "network",
+    "context",
+    "host",
+    "boot",
+    "configuration",
+    "hook",
+    "identity"
+   ]
+  },
+  "228": {
+   "kind": "pr",
+   "title": "Close accepted Gates 9 and 9.5",
+   "state": "closed",
+   "merged_at": "2026-11-06T18:08:16Z",
+   "files": [
+    "crates/ginux-init/src/main.rs",
+    "hdae/STATUS.md",
+    "hdae/gates-done/9-systemd-baseline.md",
+    "hdae/gates-done/9.5-systemd-usability.md",
+    "scripts/test-native-supervision.py"
+   ],
+   "keywords": [
+    "gate",
+    "gates",
+    "native",
+    "supervisor",
+    "after",
+    "check",
+    "diagnostics",
+    "harness",
+    "output",
+    "regression"
+   ]
+  },
   "227": {
    "kind": "pr",
    "title": "Restore `overflow-checks = true` in `[profile.release]` (+ release-only regression test)",
@@ -5010,15 +5099,12 @@
   }
  },
  "keywords": {
-  "release": [
-   227,
-   222,
-   54,
-   43,
-   37,
-   26
+  "contract": [
+   230,
+   13
   ],
   "ginux": [
+   230,
    227,
    219,
    215,
@@ -5066,6 +5152,253 @@
    12,
    8,
    5
+  ],
+  "could": [
+   230,
+   87
+  ],
+  "lean": [
+   230
+  ],
+  "model": [
+   230
+  ],
+  "verification": [
+   230,
+   70,
+   36
+  ],
+  "would": [
+   230
+  ],
+  "catalog": [
+   230
+  ],
+  "formal": [
+   230
+  ],
+  "operation": [
+   230,
+   84,
+   7
+  ],
+  "domain": [
+   229,
+   220,
+   209,
+   208,
+   199,
+   196,
+   185,
+   184,
+   176,
+   173,
+   172,
+   160,
+   158,
+   138,
+   135,
+   132,
+   114,
+   111,
+   94,
+   86,
+   85,
+   83,
+   80,
+   67,
+   59,
+   57,
+   46,
+   39,
+   19
+  ],
+  "hooks": [
+   229
+  ],
+  "gate": [
+   229,
+   228,
+   225,
+   210,
+   196,
+   181,
+   172
+  ],
+  "network": [
+   229,
+   100,
+   75,
+   68
+  ],
+  "context": [
+   229,
+   85
+  ],
+  "host": [
+   229,
+   219,
+   215,
+   214,
+   203,
+   202,
+   201,
+   200,
+   199,
+   198,
+   195,
+   194,
+   183,
+   125,
+   92,
+   86,
+   33
+  ],
+  "boot": [
+   229,
+   150,
+   100,
+   93,
+   92,
+   70,
+   63,
+   47,
+   41,
+   40,
+   36,
+   35,
+   31,
+   15,
+   14,
+   13,
+   9
+  ],
+  "configuration": [
+   229,
+   131,
+   34
+  ],
+  "hook": [
+   229
+  ],
+  "identity": [
+   229
+  ],
+  "gates": [
+   228,
+   4
+  ],
+  "native": [
+   228,
+   226,
+   225,
+   219,
+   215,
+   207,
+   205,
+   204,
+   203,
+   184,
+   183,
+   182,
+   176,
+   154,
+   153,
+   84,
+   82,
+   39,
+   14
+  ],
+  "supervisor": [
+   228,
+   210,
+   177
+  ],
+  "after": [
+   228,
+   216,
+   210,
+   169,
+   164,
+   149,
+   139,
+   120,
+   113,
+   102,
+   84,
+   70,
+   51,
+   50,
+   28,
+   25
+  ],
+  "check": [
+   228,
+   217,
+   216,
+   204,
+   195,
+   189,
+   187,
+   181,
+   171,
+   169,
+   168,
+   165,
+   162,
+   160,
+   159,
+   158,
+   156,
+   153,
+   152,
+   142,
+   117,
+   90,
+   88,
+   87,
+   84,
+   61,
+   54,
+   51,
+   50,
+   49,
+   48,
+   47,
+   46,
+   44,
+   40,
+   35,
+   23,
+   11,
+   10,
+   9,
+   4,
+   3
+  ],
+  "diagnostics": [
+   228
+  ],
+  "harness": [
+   228,
+   65
+  ],
+  "output": [
+   228,
+   21,
+   20
+  ],
+  "regression": [
+   228,
+   54
+  ],
+  "release": [
+   227,
+   222,
+   54,
+   43,
+   37,
+   26
   ],
   "overflow": [
    227,
@@ -5122,26 +5455,6 @@
    159,
    129,
    105
-  ],
-  "native": [
-   226,
-   225,
-   219,
-   215,
-   207,
-   205,
-   204,
-   203,
-   184,
-   183,
-   182,
-   176,
-   154,
-   153,
-   84,
-   82,
-   39,
-   14
   ],
   "ptrace_kill": [
    226,
@@ -5222,13 +5535,6 @@
    211,
    210,
    29
-  ],
-  "gate": [
-   225,
-   210,
-   196,
-   181,
-   172
   ],
   "path": [
    225,
@@ -5455,36 +5761,6 @@
    212,
    130
   ],
-  "domain": [
-   220,
-   209,
-   208,
-   199,
-   196,
-   185,
-   184,
-   176,
-   173,
-   172,
-   160,
-   158,
-   138,
-   135,
-   132,
-   114,
-   111,
-   94,
-   86,
-   85,
-   83,
-   80,
-   67,
-   59,
-   57,
-   46,
-   39,
-   19
-  ],
   "memory": [
    220,
    124,
@@ -5492,24 +5768,6 @@
    67,
    46,
    19
-  ],
-  "host": [
-   219,
-   215,
-   214,
-   203,
-   202,
-   201,
-   200,
-   199,
-   198,
-   195,
-   194,
-   183,
-   125,
-   92,
-   86,
-   33
   ],
   "sysinfo": [
    219
@@ -5606,49 +5864,6 @@
    54,
    21
   ],
-  "check": [
-   217,
-   216,
-   204,
-   195,
-   189,
-   187,
-   181,
-   171,
-   169,
-   168,
-   165,
-   162,
-   160,
-   159,
-   158,
-   156,
-   153,
-   152,
-   142,
-   117,
-   90,
-   88,
-   87,
-   84,
-   61,
-   54,
-   51,
-   50,
-   49,
-   48,
-   47,
-   46,
-   44,
-   40,
-   35,
-   23,
-   11,
-   10,
-   9,
-   4,
-   3
-  ],
   "cli": [
    217
   ],
@@ -5723,23 +5938,6 @@
    27,
    18,
    16
-  ],
-  "after": [
-   216,
-   210,
-   169,
-   164,
-   149,
-   139,
-   120,
-   113,
-   102,
-   84,
-   70,
-   51,
-   50,
-   28,
-   25
   ],
   "authority": [
    216
@@ -5916,10 +6114,6 @@
   ],
   "ptrace_o_exitkill": [
    210
-  ],
-  "supervisor": [
-   210,
-   177
   ],
   "already": [
    210,
@@ -7050,24 +7244,6 @@
    151,
    132
   ],
-  "boot": [
-   150,
-   100,
-   93,
-   92,
-   70,
-   63,
-   47,
-   41,
-   40,
-   36,
-   35,
-   31,
-   15,
-   14,
-   13,
-   9
-  ],
   "fixes": [
    150
   ],
@@ -7472,10 +7648,6 @@
    23,
    16
   ],
-  "configuration": [
-   131,
-   34
-  ],
   "sigchld": [
    130,
    106,
@@ -7784,11 +7956,6 @@
    100,
    56
   ],
-  "network": [
-   100,
-   75,
-   68
-  ],
   "accelerate": [
    100
   ],
@@ -7946,9 +8113,6 @@
   "unknown": [
    87
   ],
-  "could": [
-   87
-  ],
   "opensuse": [
    87
   ],
@@ -7990,9 +8154,6 @@
    85,
    41
   ],
-  "context": [
-   85
-  ],
   "controller": [
    85,
    83,
@@ -8016,10 +8177,6 @@
   "counter": [
    84,
    82
-  ],
-  "operation": [
-   84,
-   7
   ],
   "hog": [
    83
@@ -8207,10 +8364,6 @@
   "synchronous": [
    70
   ],
-  "verification": [
-   70,
-   36
-  ],
   "waits": [
    70
   ],
@@ -8261,9 +8414,6 @@
    64
   ],
   "forever": [
-   65
-  ],
-  "harness": [
    65
   ],
   "smoltcp": [
@@ -8411,9 +8561,6 @@
   ],
   "why": [
    55
-  ],
-  "regression": [
-   54
   ],
   "hierarchy": [
    53,
@@ -8786,10 +8933,6 @@
   "257": [
    21
   ],
-  "output": [
-   21,
-   20
-  ],
   "gzip": [
    20
   ],
@@ -8852,9 +8995,6 @@
    13,
    10,
    4
-  ],
-  "contract": [
-   13
   ],
   "side": [
    13
@@ -8942,9 +9082,6 @@
    5
   ],
   "v10": [
-   4
-  ],
-  "gates": [
    4
   ],
   "research": [
