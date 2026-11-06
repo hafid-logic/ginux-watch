@@ -56,9 +56,9 @@ jobs:
           done
 
       - name: make test-unit (baseline)
-        run: make -C src test-unit 2>&1 | rg 'test result|error' | sort | uniq -c
+        run: make -C src test-unit 2>&1 | grep -E 'test result|error' | sort | uniq -c
       - name: make test-unit (flag)
-        run: env CARGO_PROFILE_RELEASE_OVERFLOW_CHECKS=true make -C src test-unit 2>&1 | rg 'test result|error' | sort | uniq -c
+        run: env CARGO_PROFILE_RELEASE_OVERFLOW_CHECKS=true make -C src test-unit 2>&1 | grep -E 'test result|error' | sort | uniq -c
 
       - name: launch + native supervision (baseline)
         run: |
@@ -120,7 +120,7 @@ jobs:
           git clone -q https://github.com/gmkurtzer/ginux.git src
           git -C src checkout -q "$PIN"
           git -C src rev-parse HEAD
-          echo "host target: $(rustc -vV 2>/dev/null | rg host || rustc --version)"
+          echo "host target: $(rustc -vV 2>/dev/null | grep host || rustc --version)"
       - name: baseline + flag builds (host arm64) + sizes
         run: |
           cd src
@@ -136,8 +136,8 @@ jobs:
           done
       - name: make test-unit (baseline + flag)
         run: |
-          make -C src test-unit 2>&1 | rg 'test result|error' | sort | uniq -c
-          env CARGO_PROFILE_RELEASE_OVERFLOW_CHECKS=true make -C src test-unit 2>&1 | rg 'test result|error' | sort | uniq -c
+          make -C src test-unit 2>&1 | grep -E 'test result|error' | sort | uniq -c
+          env CARGO_PROFILE_RELEASE_OVERFLOW_CHECKS=true make -C src test-unit 2>&1 | grep -E 'test result|error' | sort | uniq -c
       - name: canary (release without flag FAIL / with flag PASS / debug PASS)
         run: |
           cd src
@@ -150,7 +150,8 @@ jobs:
             cargo test --release -p ginux-vfs-index --test overflow_checks_release 2>&1 | tail -3
           echo "CANARY_C2_EXIT=${PIPESTATUS[0]} (expect 0 = fix works)"
       - name: launch/native note
-        run: echo "skipped on macOS: ginux launch/native supervision tests are linux-specific (namespaces/ptrace rockey fixtures)"
+        run: |
+          echo "skipped on macOS: ginux launch/native supervision tests are linux-specific"
 
   poc207-t123:
     runs-on: ubuntu-24.04
@@ -164,10 +165,10 @@ jobs:
       - name: T1 — divergence detector (0<->sentinel toggle), up to 1e6 polls
         run: |
           timeout 900 ./poc207_t123 1000000 0 | tee t1.out
-          rg '^RESULT|^VERDICT' t1.out
+          grep -E '^(RESULT|VERDICT)' t1.out
       - name: T3 — real-fd probe (0<->fifo fd3 toggle), up to 1e6 polls
         run: |
           timeout 900 ./poc207_t123 1000000 1 | tee t3.out
-          rg '^RESULT|^VERDICT' t3.out
+          grep -E '^(RESULT|VERDICT)' t3.out
       - name: T2 — window widths are inside the RESULT lines above
         run: echo "T2 = the T2_window_ns RESULT lines of both runs (gate PEEKDATA loop ns + exec-to-read ns)"
