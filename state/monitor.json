@@ -59,6 +59,13 @@
   "61": {
    "state": "closed",
    "updated_at": "2026-11-03T21:52:18Z"
+  },
+  "222": {
+   "state": "open",
+   "updated_at": "2026-11-06T04:12:20Z",
+   "comments": 0,
+   "reactions": 0,
+   "labels": 0
   }
  },
  "mentions": {

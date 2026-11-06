@@ -37,7 +37,7 @@ DRY_RUN = os.environ.get("MONITOR_DRY_RUN") == "1"
 UPSTREAM = "gmkurtzer/ginux"
 UPSTREAM_US = "gmkurtzer/ginux-us"
 OUR_LOGIN = "hafid-logic"
-WATCHED = ["4", "14", "43", "54", "58", "61"]
+WATCHED = ["4", "14", "43", "54", "58", "61", "222"]  # 222: our overflow-checks question (v5.1-13, 2026-11-06)
 BULLET_CAP = 6
 BODY_CAP = 10
 GH_TIMEOUT = 60
@@ -128,7 +128,10 @@ def blank_snapshot():
             "contributing": False,
             "first_commits": [None, None, None],
         },
-        "watched": {n: {"state": None, "updated_at": None} for n in WATCHED},
+        "watched": {
+            n: {"state": None, "updated_at": None, "comments": None, "reactions": None, "labels": None}
+            for n in WATCHED
+        },
         "mentions": {"involves": None, "mentions": None, "repo_name": None},
     }
 
@@ -213,7 +216,13 @@ def sec_pushed_at(snap):
 def sec_watched(snap):
     for n in WATCHED:
         it = gh_json(f"repos/{UPSTREAM}/issues/{n}")
-        snap["watched"][n] = {"state": it.get("state"), "updated_at": it.get("updated_at")}
+        snap["watched"][n] = {
+            "state": it.get("state"),
+            "updated_at": it.get("updated_at"),
+            "comments": it.get("comments"),
+            "reactions": (it.get("reactions") or {}).get("total_count"),
+            "labels": len(it.get("labels") or []),
+        }
 
 
 def sec_mentions(snap):

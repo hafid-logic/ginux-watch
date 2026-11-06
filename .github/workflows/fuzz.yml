@@ -19,10 +19,16 @@ on:
       max_seconds:
         description: "libFuzzer -max_total_time per target (seconds)"
         default: "1200"
-  schedule:
-    # DISABLED 2026-11-05 (v3.6 §2a — archive/light-monitoring phase; cron not deleted):
-    #   - cron: "30 5 * * 1"
-    # Re-enable: uncomment the cron line above (weekly Mondays 05:30 UTC) — docs/RECOVERY.md §8.
+  # v5.1 fix (2026-11-06, minimal): the bare `schedule:` key (YAML null, cron
+  # commented out) made the whole workflow file fail validation — GitHub created
+  # a startup-failure run with NO jobs on EVERY push [MEASURED: 53 failures,
+  # e.g. run 42162797725 for push 64de8dc9; zero check-runs]. Same root cause
+  # upstream hit at 78c864f (422 on dispatch) and fixed by commenting the key
+  # out in e918d29. The key is REMOVED (not commented): a null key is the bug.
+  # Re-enable the weekly cron (Mondays 05:30 UTC — docs/RECOVERY.md §8) by
+  # re-adding BOTH lines under `on:`:
+  #   schedule:
+  #     - cron: "30 5 * * 1"
     # Note: the team-watcher -> repository_dispatch("fuzz-round") source is also disabled
     # (team/scripts/upstream-watch.py DISPATCH_FUZZ_ROUND=False); workflow_dispatch stays
     # available for manual rounds.
