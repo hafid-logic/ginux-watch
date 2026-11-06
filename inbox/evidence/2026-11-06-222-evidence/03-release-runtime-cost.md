@@ -93,6 +93,16 @@ ubuntu-24.04 runner [MEASURED, identical protocol — scripts/vfs-scan-timing.py
 → median delta **−0.7 ms (−0.3%)** — ranges overlap; the flag cost is inside
 measurement noise on the runner and single-digit-ms at worst locally.
 
+## Launch/native supervision — cross-reference (added v5.7)
+
+Completeness item (directive v5.7-2): the launch/native result is measured in
+memo 2/3 and is repeated here so this memo stands alone [MEASURED, run
+42178425135, ubuntu-24.04, SHA `3f2fe7df`]: `sudo make test-launch` **PASS**
+baseline / **PASS** flag; `sudo make test-native-supervision` **PASS** /
+**PASS**; `make test-process-native` **PASS** / **PASS**. macOS arm64: not
+applicable (linux-specific namespaces/ptrace fixtures) — stated as not run
+there. Sections above this one were not altered.
+
 ## Interpretation (bounded)
 
 - Cost measured here: ≤0.5% binary size on every binary (±tens of bytes on
