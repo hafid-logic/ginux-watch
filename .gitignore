@@ -18,3 +18,6 @@ fuzz/corpus-diff/
 fuzz/diff-dumps/
 # v2.7-3: generated volume corpus (seeds stay in fuzz/corpus-seed-volume/)
 fuzz/corpus-volume/
+
+# v5.2-3: local junk-safe work zone (upstream checkouts, build outputs) — never committed
+work/
