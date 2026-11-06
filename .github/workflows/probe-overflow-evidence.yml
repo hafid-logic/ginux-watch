@@ -7,6 +7,12 @@ name: probe-overflow-evidence
 # when this file itself changes on the probe branch (plus manual dispatch).
 # v5.5 (session 40): canary replaced by the 20-line should_panic regression test;
 # C1/C2/C3 use the unified RUSTFLAGS='' command with .cargo/config.toml untouched.
+# v5.6 (session 41): poc207-t123 job recalibrated — the harness tracee now owns
+# its fd 0 (empty pipe, writer held open) because runner-inherited /dev/null or
+# closed fd 0 poisoned the old revents!=0 detector [MEASURED 283k-295k vs ~1.1k
+# hits per 1M, same machine]; criteria are snapshot-0 + POLLNVAL (T1) /
+# POLLHUP (T3); controls ctl_a/ctl_b/ctl_c run before the measurements and the
+# runner's own fd 0 is logged for provenance of the invalidated v5.3/v5.4 numbers.
 
 on:
   push:
@@ -164,22 +170,32 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+      - name: runner fd 0 provenance (state the v5.3/v5.4 runs silently inherited)
+        run: |
+          echo "RUNNER_STEP_FD0=$(readlink /proc/self/fd/0 2>/dev/null || echo CLOSED-OR-NONE)"
+          ls -l /proc/self/fd/0 2>/dev/null || echo "fd 0 not open in step shell"
       - name: build harness
         run: |
           gcc --version | head -1
           cc -O2 -Wall -o poc207_t123 poc/poc207_t123.c
-      - name: debug pre-run (200 iters, full event trace for diagnosis)
+      - name: debug pre-run (200 iters t1, full event trace for diagnosis)
         run: |
-          POC207_DEBUG=1 timeout 120 ./poc207_t123 200 0 > pre.out 2> pre.err || true
+          POC207_DEBUG=1 timeout 120 ./poc207_t123 200 t1 > pre.out 2> pre.err || true
           head -12 pre.err || true
           tail -12 pre.err || true
-      - name: T1 — divergence detector (0<->sentinel toggle), up to 1e6 polls
+      - name: controls — no result without its control (1M each)
         run: |
-          timeout 900 ./poc207_t123 1000000 0 | tee t1.out
+          for m in ctl_a ctl_b ctl_c; do
+            timeout 900 ./poc207_t123 1000000 $m | tee $m.out
+          done
+          grep -hE '^(RESULT|VERDICT)' ctl_a.out ctl_b.out ctl_c.out
+      - name: T1 — divergence detector (0<->sentinel toggle), 1e6 polls, calibrated criterion
+        run: |
+          timeout 900 ./poc207_t123 1000000 t1 | tee t1.out
           grep -E '^(RESULT|VERDICT)' t1.out
-      - name: T3 — real-fd probe (0<->fifo fd3 toggle), up to 1e6 polls
+      - name: T3 — real-fd probe (0<->fifo fd3 toggle), 1e6 polls, calibrated criterion
         run: |
-          timeout 900 ./poc207_t123 1000000 1 | tee t3.out
+          timeout 900 ./poc207_t123 1000000 t3 | tee t3.out
           grep -E '^(RESULT|VERDICT)' t3.out
       - name: T2 — window widths are inside the RESULT lines above
-        run: echo "T2 = the T2_window_ns RESULT lines of both runs (gate PEEKDATA loop ns + exec-to-read ns)"
+        run: echo "T2 = the T2_window_ns RESULT lines of the T1/T3 runs (gate PEEKDATA loop ns)"
