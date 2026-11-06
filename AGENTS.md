@@ -99,7 +99,7 @@ Reports: Arabic with English technical terms. Drafts and upstream text: English.
 6. **سلّم الأدلة**: hypothesis ← confirmed ← branch ← draft-PR ← published ← merged، وفئة
    observed-not-host-testable؛ حقل `status` إلزامي في matrix.md وكل بطاقة team/tasks.
 7. **لا إعلان عمل لم يُبنَ**؛ لا نشر بنص غير معتمد حرفيًا من المستخدم؛ لا «ملاحظة فجوة» (gap note) بلا بناء.
-8. **سقف الطلبات**: طلبان مفتوحان كحد أقصى إلى upstream حتى يُدمج الأول؛ والرد على أي review في الجلسة نفسها (≤ 24 ساعة).
+8. **سقف الطلبات**: طلبان مفتوحان كحد أقصى إلى upstream حتى يُدمج الأول؛ والرد على أي review في الجلسة نفسها (≤ 24 ساعة). **(تحديث v5.1 في 2026-11-06 بقرار Abdelhafid: «طلبان مفتوحان» استُبدل — للمساهمات العلنية سقف POLICY tier-2b = PR مفتوح واحد، ولا سقف يومي/أسبوعي إطلاقًا؛ بقي التزام الرد ≤ 24 ساعة.)**
 9. **بوابة الاستبعاد قبل أي PR**: dump محدّث (مفتوح/مغلق/مدموج) + PRs وكيل المشرف (HDAE) المفتوحة + matrix؛ التكرار = إسقاط موثق.
 10. **هوية PR commits**: توقيع `-s` + Abdelhafid DJIDEL + بريد noreply عبر scripts/session-init.sh + إفصاح AI في وصف الـ PR.
 11. **الأمني**: findings أمنية إلى reports/private/ فقط ثم قرار المستخدم؛ لا SECURITY.md في upstream ولا نشر علني أبدًا.
