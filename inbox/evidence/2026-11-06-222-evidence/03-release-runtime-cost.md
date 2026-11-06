@@ -105,3 +105,32 @@ measurement noise on the runner and single-digit-ms at worst locally.
   etc.) exists upstream but requires the Rocky host as well.
 - The numbers above give the maintainer the "release benchmark" his #222 reply
   asked for, on the tooling path, with the protocol reproducible from the repo.
+
+## Re-run with the FINAL unified command (v5.5 dispatch, completed 2026-11-06T09:2xZ)
+
+The v5.5 session re-dispatched the whole probe on `main` (run
+**42195146548**, SHA `a18604ec`, PIN `3f2fe7df`) with the unified
+`RUSTFLAGS=''` canary command. Results, appended in session 41 — nothing above
+was altered:
+
+- Canary A/B on the runner [MEASURED]: **C1 (release, no flag) = FAILED, exit
+  101** (defect reproduced on the runner); **C2 (release + flag) = ok, exit
+  0**; **C3 (debug) = ok, exit 0**. macOS arm64 canary: C1=101 / C2=0 as well.
+- `make test-unit`: **65/65 passed baseline and 65/65 with the flag** on
+  ubuntu-24.04 and macOS arm64 (sum of per-crate `test result` lines).
+- Builds: baseline + flag `make build` exit 0; vfs-index cc-override builds
+  exit 0 (both modes).
+- Sizes [MEASURED]: identical to the table above, byte for byte (`ginux`
+  122,720→122,680 −40; `managed-payload` 0; `baseline-runner` +24;
+  `runtime-fixture` 0; `process-native-fixture` −8; `ginux-vfs-index` +1,608).
+- Scan timing, same-run A/B, 12 alternating pairs [MEASURED]:
+  baseline **median 203.0 ms** [201.7 .. 205.9], mean 203.6;
+  flag **median 200.1 ms** [198.2 .. 202.7], mean 200.5;
+  **median delta −2.9 ms**; order swap base,flag | flag,base ×12; tar set
+  230,410,240 bytes (~219.7 MiB), sha256 of first-run index pinned in the log.
+- **Comparability note [MEASURED]:** the earlier runner table (223.2/222.5 ms,
+  run 42178425135) and this one (203.0/200.1 ms) ran on different runner
+  allocations; absolute medians across runs are NOT comparable. Each run's
+  internal A/B stands on its own: same machine, alternating order — flag
+  median was equal-or-faster in both runs (−0.7 ms, then −2.9 ms), ranges
+  overlapping in both. The PR body quotes the latest completed run.
