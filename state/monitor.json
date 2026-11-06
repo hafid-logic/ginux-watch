@@ -1,8 +1,8 @@
 {
- "checked_utc": "2026-11-05T20:12:24Z",
+ "checked_utc": "2026-11-06T05:00:05Z",
  "ginux": {
-  "main_sha": "0e06a9860250b655a094761cd424bc022fd8db68",
-  "readme_sha": "ac68552ed385d9254d9bc410fc3b1da19a35b28a",
+  "main_sha": "64a3e3f76817b3c3991468ae0eb80f3be0e344c1",
+  "readme_sha": "1700a0a44aad36bef74fbc1839096be8889de835",
   "release_count": 0,
   "tags": [
    {
@@ -17,10 +17,10 @@
   "archive_branches": [
    "bootable-kernel"
   ],
-  "open_issues": 5,
-  "open_prs": 3,
-  "latest_number": 209,
-  "last_push_utc": "2026-11-05T19:15:58Z"
+  "open_issues": 6,
+  "open_prs": 2,
+  "latest_number": 222,
+  "last_push_utc": "2026-11-05T23:27:09Z"
  },
  "ginux_us": {
   "exists": false,
@@ -38,27 +38,45 @@
  "watched": {
   "4": {
    "state": "closed",
-   "updated_at": "2026-11-02T00:31:21Z"
+   "updated_at": "2026-11-02T00:31:21Z",
+   "comments": 9,
+   "reactions": 0,
+   "labels": 0
   },
   "14": {
    "state": "closed",
-   "updated_at": "2026-11-02T01:53:21Z"
+   "updated_at": "2026-11-02T01:53:21Z",
+   "comments": 5,
+   "reactions": 0,
+   "labels": 0
   },
   "43": {
    "state": "closed",
-   "updated_at": "2026-11-03T22:00:44Z"
+   "updated_at": "2026-11-03T22:00:44Z",
+   "comments": 3,
+   "reactions": 0,
+   "labels": 0
   },
   "54": {
    "state": "closed",
-   "updated_at": "2026-11-04T23:28:35Z"
+   "updated_at": "2026-11-04T23:28:35Z",
+   "comments": 4,
+   "reactions": 0,
+   "labels": 0
   },
   "58": {
    "state": "closed",
-   "updated_at": "2026-11-03T21:52:21Z"
+   "updated_at": "2026-11-03T21:52:21Z",
+   "comments": 4,
+   "reactions": 0,
+   "labels": 0
   },
   "61": {
    "state": "closed",
-   "updated_at": "2026-11-03T21:52:18Z"
+   "updated_at": "2026-11-03T21:52:18Z",
+   "comments": 3,
+   "reactions": 0,
+   "labels": 0
   },
   "222": {
    "state": "open",
@@ -69,7 +87,7 @@
   }
  },
  "mentions": {
-  "involves": 7,
+  "involves": 5,
   "mentions": 0,
   "repo_name": 4
  }
