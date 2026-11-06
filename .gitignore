@@ -1,3 +1,6 @@
+# Python build artifacts (v5.2-5: keep junk out so no tracked-file deletion is ever needed)
+__pycache__/
+*.pyc
 # Rust build output
 target/
 # Upstream checkout (CI job or local symlink) — never committed
