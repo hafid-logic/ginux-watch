@@ -5,7 +5,19 @@
 | 0 | Read upstream issues/PRs; run tests in CI or an isolated sandbox; write reports and drafts in this repo; update STATE.md | none |
 | 1 | Push branches/draft PRs to the fork `hafid-logic/ginux`; trigger `ginux-verify` | none |
 | 2 | ANY public post on the upstream repo (comment, issue, PR, review); any security-related claim; any change to this policy | explicit human approval, immediately before posting |
+| 2b | فئة «PR مختبَر» فقط: PR يضم عيبًا مُعاد إنتاجه على main + اختبارًا يفشل قبل الإصلاح ويمر بعده + إفصاح AI؛ بلا issues/تعليقات/مقالات (القسم أدناه) | دفعة يومية واحدة تُعدّ كـ diff على head SHA محدد في `approved/pr/`؛ يراجعها Abdelhafid وينشرها يدويًا — لا PR بلا ذلك؛ لا نشر آلي |
 | 3 | Forbidden: merge/close/label upstream, bulk posting, exposing secrets, running untrusted code with credentials, contacting people outside GitHub, impersonating the maintainer or his agent | never |
+
+## Tier 2b — فئة «PR مختبَر» (أُضيف بتوجيه v5.0 في 2026-11-06)
+
+- **النطاق:** فئة واحدة فقط: «PR مختبَر» = PR يضم الثلاثة معًا: (1) عيب مُعاد إنتاجه على main؛ (2) اختبار يفشل قبل الإصلاح ويمر بعده؛ (3) إفصاح AI. لا issues، لا تعليقات، لا مقالات — هذا المستوى لا يغطي شيئًا سوى PR بهذه التركيبة.
+- **القيود الثابتة:**
+  - PR واحد مفتوح كحد أقصى في أي لحظة.
+  - لا تداخل ملفات مع أي PR مدموج خلال آخر 72 ساعة.
+  - لا لمس لمناطق HDAE المغلقة (الاتجاه، ما يُستبعد، لغة التنفيذ، المنهج — كما هي في hdae/ على main).
+- **المراجعة والنشر:** دفعة واحدة يوميًا تُعدّ كـ diff على head SHA محدد، توضع في `approved/pr/`؛ يراجعها Abdelhafid وينشرها يدويًا بنفسه. لا PR بلا هذه المراجعة. لا نشر آلي إطلاقًا.
+- **تحقق قبل التسليم:** نجاح كل المُشغِّلات المتاحة + إعادة rebase على main الحالي + critic مستقل خصومي.
+- **لا يُفسَّر هذا المستوى توسيعًا:** عند أي تعارض بينه وبين الحدود العامة أعلاه أو قواعد النشر أدناه، يُصعَّد القرار للمستخدم ولا يُفضَّل تلقائيًا النشر.
 
 ## Limits
 - At most 1 public post upstream per day and 3 per week, even if approved.
