@@ -1,8 +1,153 @@
 {
- "generated_at_utc": "2026-11-07T06:59:31Z",
+ "generated_at_utc": "2026-11-07T13:52:12Z",
  "source_repo": "gmkurtzer/ginux",
  "item_count": 241,
  "items": {
+  "248": {
+   "kind": "pr",
+   "title": "fix(init): create cgroup interface files on mkdir in the virtual tree",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    "crates/ginux-init/src/main.rs",
+    "scripts/test-native-supervision.py",
+    "tests/fixtures/native-fixture.c"
+   ],
+   "keywords": [
+    "cgroup",
+    "mkdir",
+    "directory",
+    "systemd",
+    "tree",
+    "procs",
+    "root",
+    "creates",
+    "host",
+    "native"
+   ]
+  },
+  "247": {
+   "kind": "pr",
+   "title": "fix(init): release a child reaped by waitid in native mode",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    "crates/ginux-init/src/main.rs",
+    "scripts/test-native-supervision.py",
+    "tests/fixtures/native-fixture.c"
+   ],
+   "keywords": [
+    "native",
+    "systemd",
+    "waitid",
+    "child",
+    "reaped",
+    "failed",
+    "rocky",
+    "242",
+    "children",
+    "does"
+   ]
+  },
+  "246": {
+   "kind": "pr",
+   "title": "fix(init): answer PIDFD_GET_INFO with ENOTTY",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    "crates/ginux-init/src/main.rs",
+    "scripts/test-native-supervision.py",
+    "tests/fixtures/native-fixture.c"
+   ],
+   "keywords": [
+    "systemd",
+    "host",
+    "pid",
+    "ioctl",
+    "kernel",
+    "pidfd_get_info",
+    "262",
+    "child",
+    "enotty",
+    "native"
+   ]
+  },
+  "245": {
+   "kind": "pr",
+   "title": "fix(init): start clone3 CLONE_INTO_CGROUP children in the parent's cgroup",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    "crates/ginux-init/src/main.rs",
+    "scripts/test-native-supervision.py",
+    "tests/fixtures/native-fixture.c"
+   ],
+   "keywords": [
+    "cgroup",
+    "clone3",
+    "systemd",
+    "native",
+    "clone_into_cgroup",
+    "ginux",
+    "host",
+    "rocky",
+    "242",
+    "descriptor"
+   ]
+  },
+  "244": {
+   "kind": "pr",
+   "title": "fix(init): support waitid(P_PIDFD) for managed children",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    "crates/ginux-init/src/main.rs",
+    "scripts/test-native-supervision.py",
+    "tests/fixtures/native-fixture.c"
+   ],
+   "keywords": [
+    "systemd",
+    "pidfd",
+    "native",
+    "p_pidfd",
+    "pid",
+    "waitid",
+    "wait",
+    "child",
+    "failed",
+    "rocky"
+   ]
+  },
+  "243": {
+   "kind": "pr",
+   "title": "fix(launch): enforce the resolved instance contract",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    "README.md",
+    "crates/ginux-contract/src/lib.rs",
+    "crates/ginux-init/src/channel_hooks.rs",
+    "crates/ginux-init/src/dispatch.rs",
+    "crates/ginux-init/src/fs_hooks.rs",
+    "crates/ginux-init/src/launch.rs",
+    "crates/ginux-init/src/main.rs",
+    "crates/ginux-init/src/process_hooks.rs",
+    "docs/configurable-contract.md",
+    "scripts/test-launch.py"
+   ],
+   "keywords": [
+    "launch",
+    "contract",
+    "instance",
+    "syscall",
+    "denial",
+    "families",
+    "native",
+    "never",
+    "only",
+    "operations"
+   ]
+  },
   "242": {
    "kind": "pr",
    "title": "fix(init): deliver SIGCHLD to native tracees",
@@ -150,8 +295,8 @@
   "237": {
    "kind": "pr",
    "title": "Gate 10.5: intuitive self-contained contract configuration",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-07T07:22:05Z",
    "files": [
     "Makefile",
     "README.md",
@@ -182,7 +327,7 @@
     "scripts/stage-systemd-instance.sh",
     "scripts/test-config.sh",
     "scripts/test-contract-runtime.sh",
-    "scripts/test-process.sh"
+    "scripts/test-gate1-setup.py"
    ],
    "keywords": [
     "ginux",
@@ -4711,112 +4856,6 @@
     "verification"
    ]
   },
-  "35": {
-   "kind": "pr",
-   "title": "Reject overlapping loaded PE sections",
-   "state": "closed",
-   "merged_at": "2026-11-02T00:00:10Z",
-   "files": [
-    "Makefile",
-    "kernel/src/pe.rs"
-   ],
-   "keywords": [
-    "parser",
-    "passes",
-    "section",
-    "boot",
-    "check",
-    "overlap",
-    "qemu",
-    "sections",
-    "six",
-    "aienux"
-   ]
-  },
-  "34": {
-   "kind": "pr",
-   "title": "Test unchanged local configuration commits avoid storage writes",
-   "state": "closed",
-   "merged_at": "2026-11-01T23:45:55Z",
-   "files": [
-    "crates/volume-service/src/lib.rs"
-   ],
-   "keywords": [
-    "storage",
-    "pass",
-    "payload",
-    "unchanged",
-    "writes",
-    "configuration",
-    "durable",
-    "eight",
-    "existing",
-    "local"
-   ]
-  },
-  "33": {
-   "kind": "pr",
-   "title": "Test host volume geometry validation boundaries",
-   "state": "closed",
-   "merged_at": "2026-11-01T23:45:40Z",
-   "files": [
-    "crates/volume-format/src/lib.rs"
-   ],
-   "keywords": [
-    "validation",
-    "volume",
-    "geometry",
-    "malformed",
-    "passes",
-    "aienux",
-    "data",
-    "five",
-    "headers",
-    "host"
-   ]
-  },
-  "32": {
-   "kind": "pr",
-   "title": "Test volume payload padding with a valid digest",
-   "state": "closed",
-   "merged_at": "2026-11-01T23:44:00Z",
-   "files": [
-    "crates/volume-format/src/lib.rs"
-   ],
-   "keywords": [
-    "padding",
-    "passes",
-    "payload",
-    "record",
-    "aienux",
-    "digest",
-    "five",
-    "nonzero",
-    "only",
-    "pass"
-   ]
-  },
-  "31": {
-   "kind": "pr",
-   "title": "Select the IOMMU address width required by the kernel in QEMU",
-   "state": "closed",
-   "merged_at": "2026-11-01T23:43:50Z",
-   "files": [
-    "tools/qemu/run.sh"
-   ],
-   "keywords": [
-    "iommu",
-    "qemu",
-    "boot",
-    "width",
-    "address",
-    "failed",
-    "kernel",
-    "parser",
-    "suite",
-    "tested"
-   ]
-  },
   "30": {
    "kind": "issue",
    "title": "virtio-net common-capability length check off-by-seven: accepts 0x31, queue geometry reads u64 at 0x30",
@@ -4948,27 +4987,6 @@
     "https",
     "kernel",
     "linuxactiveimagemapping"
-   ]
-  },
-  "23": {
-   "kind": "pr",
-   "title": "Test reserved volume header bytes with a valid digest",
-   "state": "closed",
-   "merged_at": "2026-11-01T23:32:45Z",
-   "files": [
-    "crates/volume-format/src/lib.rs"
-   ],
-   "keywords": [
-    "cargo",
-    "guard",
-    "volume",
-    "format",
-    "check",
-    "digest",
-    "ginux",
-    "offset",
-    "package",
-    "passed"
    ]
   },
   "22": {
@@ -5489,13 +5507,86 @@
   }
  },
  "keywords": {
-  "sigchld": [
+  "cgroup": [
+   248,
+   245
+  ],
+  "mkdir": [
+   248,
+   116
+  ],
+  "directory": [
+   248,
+   236,
+   233,
+   156,
+   155,
+   149,
+   148,
+   143,
+   141,
+   140,
+   123,
+   90,
+   89,
+   18
+  ],
+  "systemd": [
+   248,
+   247,
+   246,
+   245,
+   244,
    242,
-   130,
-   106,
-   105
+   231
+  ],
+  "tree": [
+   248
+  ],
+  "procs": [
+   248
+  ],
+  "root": [
+   248,
+   233,
+   61
+  ],
+  "creates": [
+   248,
+   117
+  ],
+  "host": [
+   248,
+   246,
+   245,
+   242,
+   238,
+   237,
+   236,
+   229,
+   219,
+   215,
+   214,
+   203,
+   202,
+   201,
+   200,
+   199,
+   198,
+   195,
+   194,
+   183,
+   125,
+   92,
+   86
   ],
   "native": [
+   248,
+   247,
+   246,
+   245,
+   244,
+   243,
    242,
    238,
    236,
@@ -5519,15 +5610,15 @@
    39,
    14
   ],
-  "poll": [
-   242,
-   137,
-   113,
-   70,
-   62,
-   56
+  "waitid": [
+   247,
+   244,
+   130
   ],
   "child": [
+   247,
+   246,
+   244,
    242,
    234,
    226,
@@ -5548,6 +5639,284 @@
    102,
    98,
    59
+  ],
+  "reaped": [
+   247,
+   226
+  ],
+  "failed": [
+   247,
+   244,
+   241,
+   223,
+   220,
+   197,
+   196,
+   184,
+   169,
+   135,
+   132,
+   111,
+   91,
+   57,
+   51,
+   37,
+   29,
+   28,
+   26
+  ],
+  "rocky": [
+   247,
+   245,
+   244,
+   209,
+   208,
+   201,
+   200,
+   199,
+   198,
+   8
+  ],
+  "242": [
+   247,
+   245
+  ],
+  "children": [
+   247,
+   234
+  ],
+  "does": [
+   247,
+   225,
+   171,
+   170,
+   124
+  ],
+  "pid": [
+   246,
+   244,
+   214,
+   126,
+   102
+  ],
+  "ioctl": [
+   246,
+   238
+  ],
+  "kernel": [
+   246,
+   183,
+   182,
+   152,
+   139,
+   130,
+   129,
+   127,
+   100,
+   99,
+   98,
+   97,
+   96,
+   80,
+   71,
+   67,
+   50,
+   47,
+   46,
+   24,
+   21,
+   19,
+   17,
+   13,
+   9,
+   7,
+   3
+  ],
+  "pidfd_get_info": [
+   246
+  ],
+  "262": [
+   246
+  ],
+  "enotty": [
+   246
+  ],
+  "clone3": [
+   245
+  ],
+  "clone_into_cgroup": [
+   245
+  ],
+  "ginux": [
+   245,
+   241,
+   237,
+   236,
+   235,
+   230,
+   227,
+   219,
+   215,
+   214,
+   205,
+   202,
+   194,
+   189,
+   187,
+   186,
+   184,
+   179,
+   178,
+   176,
+   165,
+   164,
+   161,
+   158,
+   157,
+   155,
+   136,
+   112,
+   111,
+   110,
+   106,
+   103,
+   99,
+   97,
+   96,
+   95,
+   94,
+   93,
+   92,
+   76,
+   71,
+   64,
+   61,
+   58,
+   57,
+   45,
+   42,
+   39,
+   18,
+   12,
+   8,
+   5
+  ],
+  "descriptor": [
+   245,
+   236,
+   232,
+   207,
+   206,
+   205,
+   194,
+   154,
+   149,
+   147,
+   144,
+   88
+  ],
+  "pidfd": [
+   244
+  ],
+  "p_pidfd": [
+   244
+  ],
+  "wait": [
+   244,
+   213,
+   137,
+   125
+  ],
+  "launch": [
+   243,
+   238,
+   236,
+   233,
+   214,
+   207,
+   204,
+   187,
+   186,
+   165,
+   164,
+   162,
+   161,
+   158,
+   157,
+   156,
+   153
+  ],
+  "contract": [
+   243,
+   237,
+   231,
+   230,
+   13
+  ],
+  "instance": [
+   243,
+   237,
+   235
+  ],
+  "syscall": [
+   243,
+   240,
+   204,
+   203,
+   186,
+   162,
+   161,
+   62,
+   25
+  ],
+  "denial": [
+   243,
+   231
+  ],
+  "families": [
+   243
+  ],
+  "never": [
+   243,
+   177,
+   129,
+   68,
+   64
+  ],
+  "only": [
+   243,
+   226,
+   224,
+   223,
+   171,
+   156,
+   149,
+   135,
+   131,
+   107,
+   103,
+   102,
+   90,
+   89,
+   66,
+   9
+  ],
+  "operations": [
+   243
+  ],
+  "sigchld": [
+   242,
+   130,
+   106,
+   105
+  ],
+  "poll": [
+   242,
+   137,
+   113,
+   70,
+   62,
+   56
   ],
   "handler": [
    242,
@@ -5574,10 +5943,6 @@
    111,
    105
   ],
-  "systemd": [
-   242,
-   231
-  ],
   "already": [
    242,
    210,
@@ -5597,29 +5962,6 @@
    183,
    182,
    43
-  ],
-  "host": [
-   242,
-   238,
-   237,
-   236,
-   229,
-   219,
-   215,
-   214,
-   203,
-   202,
-   201,
-   200,
-   199,
-   198,
-   195,
-   194,
-   183,
-   125,
-   92,
-   86,
-   33
   ],
   "vfs": [
    241,
@@ -5690,8 +6032,6 @@
    46,
    44,
    40,
-   35,
-   23,
    11,
    10,
    9,
@@ -5704,80 +6044,6 @@
    233,
    232,
    3
-  ],
-  "failed": [
-   241,
-   223,
-   220,
-   197,
-   196,
-   184,
-   169,
-   135,
-   132,
-   111,
-   91,
-   57,
-   51,
-   37,
-   31,
-   29,
-   28,
-   26
-  ],
-  "ginux": [
-   241,
-   237,
-   236,
-   235,
-   230,
-   227,
-   219,
-   215,
-   214,
-   205,
-   202,
-   194,
-   189,
-   187,
-   186,
-   184,
-   179,
-   178,
-   176,
-   165,
-   164,
-   161,
-   158,
-   157,
-   155,
-   136,
-   112,
-   111,
-   110,
-   106,
-   103,
-   99,
-   97,
-   96,
-   95,
-   94,
-   93,
-   92,
-   76,
-   71,
-   64,
-   61,
-   58,
-   57,
-   45,
-   42,
-   39,
-   23,
-   18,
-   12,
-   8,
-   5
   ],
   "sudo": [
    241,
@@ -5833,16 +6099,6 @@
    24,
    5
   ],
-  "syscall": [
-   240,
-   204,
-   203,
-   186,
-   162,
-   161,
-   62,
-   25
-  ],
   "arm64": [
    240,
    239,
@@ -5886,27 +6142,6 @@
    121,
    48
   ],
-  "ioctl": [
-   238
-  ],
-  "launch": [
-   238,
-   236,
-   233,
-   214,
-   207,
-   204,
-   187,
-   186,
-   165,
-   164,
-   162,
-   161,
-   158,
-   157,
-   156,
-   153
-  ],
   "requests": [
    238
   ],
@@ -5919,16 +6154,6 @@
   ],
   "f_setfl": [
    238
-  ],
-  "instance": [
-   237,
-   235
-  ],
-  "contract": [
-   237,
-   231,
-   230,
-   13
   ],
   "contained": [
    237
@@ -5958,34 +6183,6 @@
    49,
    48,
    47
-  ],
-  "descriptor": [
-   236,
-   232,
-   207,
-   206,
-   205,
-   194,
-   154,
-   149,
-   147,
-   144,
-   88
-  ],
-  "directory": [
-   236,
-   233,
-   156,
-   155,
-   149,
-   148,
-   143,
-   141,
-   140,
-   123,
-   90,
-   89,
-   18
   ],
   "stdin": [
    236,
@@ -6093,19 +6290,12 @@
    99,
    8
   ],
-  "children": [
-   234
-  ],
   "exits": [
    234,
    168
   ],
   "workdir": [
    233
-  ],
-  "root": [
-   233,
-   61
   ],
   "created": [
    233
@@ -6153,8 +6343,7 @@
   ],
   "offset": [
    232,
-   144,
-   23
+   144
   ],
   "audit": [
    231,
@@ -6168,7 +6357,6 @@
    53,
    42,
    41,
-   23,
    9
   ],
   "strict": [
@@ -6186,9 +6374,6 @@
    36
   ],
   "coverage": [
-   231
-  ],
-  "denial": [
    231
   ],
   "could": [
@@ -6276,8 +6461,6 @@
    41,
    40,
    36,
-   35,
-   31,
    15,
    14,
    13,
@@ -6285,8 +6468,7 @@
   ],
   "configuration": [
    229,
-   131,
-   34
+   131
   ],
   "hook": [
    229
@@ -6381,7 +6563,6 @@
    45,
    44,
    40,
-   23,
    6
   ],
   "evidence": [
@@ -6418,27 +6599,6 @@
   "native_fail": [
    226
   ],
-  "only": [
-   226,
-   224,
-   223,
-   171,
-   156,
-   149,
-   135,
-   131,
-   107,
-   103,
-   102,
-   90,
-   89,
-   66,
-   32,
-   9
-  ],
-  "reaped": [
-   226
-  ],
   "setup": [
    226,
    225,
@@ -6448,12 +6608,6 @@
    225,
    211,
    164
-  ],
-  "does": [
-   225,
-   171,
-   170,
-   124
   ],
   "failure": [
    225,
@@ -6796,11 +6950,6 @@
    215,
    163
   ],
-  "pid": [
-   214,
-   126,
-   102
-  ],
   "crates": [
    214,
    58
@@ -6816,11 +6965,6 @@
   "managed": [
    213,
    196
-  ],
-  "wait": [
-   213,
-   137,
-   125
   ],
   "default": [
    213,
@@ -6870,9 +7014,7 @@
    210,
    164,
    131,
-   59,
-   34,
-   32
+   59
   ],
   "fail": [
    211,
@@ -6905,15 +7047,6 @@
    209,
    208,
    199
-  ],
-  "rocky": [
-   209,
-   208,
-   201,
-   200,
-   199,
-   198,
-   8
   ],
   "tar": [
    209,
@@ -7172,9 +7305,7 @@
    169,
    168,
    156,
-   86,
-   34,
-   32
+   86
   ],
   "close_range": [
    195,
@@ -7210,8 +7341,7 @@
   ],
   "writes": [
    193,
-   145,
-   34
+   145
   ],
   "both": [
    193,
@@ -7252,8 +7382,7 @@
   ],
   "format": [
    192,
-   58,
-   23
+   58
   ],
   "real": [
    192
@@ -7350,8 +7479,7 @@
   "record": [
    187,
    186,
-   107,
-   32
+   107
   ],
   "budget": [
    187,
@@ -7395,35 +7523,6 @@
   "100": [
    184,
    119
-  ],
-  "kernel": [
-   183,
-   182,
-   152,
-   139,
-   130,
-   129,
-   127,
-   100,
-   99,
-   98,
-   97,
-   96,
-   80,
-   71,
-   67,
-   50,
-   47,
-   46,
-   31,
-   24,
-   21,
-   19,
-   17,
-   13,
-   9,
-   7,
-   3
   ],
   "views": [
    183,
@@ -7536,14 +7635,7 @@
    142,
    49,
    47,
-   38,
-   34
-  ],
-  "never": [
-   177,
-   129,
-   68,
-   64
+   38
   ],
   "unexpected": [
    176
@@ -7586,8 +7678,7 @@
    133,
    109,
    108,
-   68,
-   33
+   68
   ],
   "appended": [
    174
@@ -7900,8 +7991,7 @@
    151,
    101,
    67,
-   66,
-   34
+   66
   ],
   "socket": [
    151,
@@ -8042,8 +8132,6 @@
    131,
    125,
    107,
-   33,
-   23,
    14
   ],
   "disk": [
@@ -8285,12 +8373,7 @@
   "digest": [
    131,
    107,
-   32,
-   23,
    16
-  ],
-  "waitid": [
-   130
   ],
   "__wclone": [
    130
@@ -8359,10 +8442,7 @@
    92
   ],
   "passes": [
-   125,
-   35,
-   33,
-   32
+   125
   ],
   "available": [
    125,
@@ -8460,12 +8540,6 @@
    117,
    89
   ],
-  "creates": [
-   117
-  ],
-  "mkdir": [
-   116
-  ],
   "604": [
    115
   ],
@@ -8531,8 +8605,7 @@
   ],
   "address": [
    104,
-   84,
-   31
+   84
   ],
   "anon": [
    104
@@ -8561,8 +8634,7 @@
   ],
   "guard": [
    101,
-   27,
-   23
+   27
   ],
   "reconnect": [
    101
@@ -8678,8 +8750,6 @@
    92,
    87,
    41,
-   35,
-   31,
    13,
    4
   ],
@@ -8837,8 +8907,7 @@
   ],
   "tested": [
    79,
-   78,
-   31
+   78
   ],
   "20135": [
    78
@@ -9195,7 +9264,6 @@
   ],
   "iommu": [
    51,
-   31,
    29
   ],
   "quarantine": [
@@ -9283,8 +9351,7 @@
    45
   ],
   "package": [
-   45,
-   23
+   45
   ],
   "adjacent": [
    45
@@ -9384,70 +9451,6 @@
   "reject": [
    36
   ],
-  "parser": [
-   35,
-   31,
-   6
-  ],
-  "section": [
-   35
-  ],
-  "overlap": [
-   35
-  ],
-  "sections": [
-   35
-  ],
-  "six": [
-   35,
-   26
-  ],
-  "aienux": [
-   35,
-   33,
-   32
-  ],
-  "storage": [
-   34
-  ],
-  "unchanged": [
-   34
-  ],
-  "durable": [
-   34
-  ],
-  "eight": [
-   34
-  ],
-  "validation": [
-   33
-  ],
-  "geometry": [
-   33
-  ],
-  "malformed": [
-   33
-  ],
-  "five": [
-   33,
-   32
-  ],
-  "headers": [
-   33,
-   17
-  ],
-  "padding": [
-   32
-  ],
-  "nonzero": [
-   32
-  ],
-  "width": [
-   31
-  ],
-  "suite": [
-   31
-  ],
   "0x30": [
    30
   ],
@@ -9479,6 +9482,9 @@
    27
   ],
   "valid": [
+   26
+  ],
+  "six": [
    26
   ],
   "sibling": [
@@ -9537,6 +9543,9 @@
    15
   ],
   "depth": [
+   17
+  ],
+  "headers": [
    17
   ],
   "body": [
@@ -9641,6 +9650,9 @@
    6
   ],
   "lib": [
+   6
+  ],
+  "parser": [
    6
   ],
   "workspace": [
