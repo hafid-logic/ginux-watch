@@ -1,8 +1,177 @@
 {
- "generated_at_utc": "2026-11-06T20:48:30Z",
+ "generated_at_utc": "2026-11-07T00:49:52Z",
  "source_repo": "gmkurtzer/ginux",
- "item_count": 229,
+ "item_count": 234,
  "items": {
+  "235": {
+   "kind": "pr",
+   "title": "Gate 10.25: rename domains to instances",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    "Cargo.lock",
+    "Cargo.toml",
+    "Makefile",
+    "README.md",
+    "config/instance-gate10-deny-socket.toml",
+    "config/instance-gate10-strict.toml",
+    "config/instance-gate4.toml",
+    "config/instance-gate5.toml",
+    "config/instance-gate6.toml",
+    "config/instance-gate7.toml",
+    "config/instance-gate8.toml",
+    "config/instance-gate9-failure.toml",
+    "config/instance-gate9.75-hook-continue.toml",
+    "config/instance-gate9.75-hook-stop.toml",
+    "config/instance-gate9.75-hook-timeout.toml",
+    "config/instance-gate9.75-hooks.toml",
+    "config/instance-gate9.75-network.toml",
+    "config/instance-gate9.75.toml",
+    "config/instance-gate9.toml",
+    "config/instance-rocky-systemd.toml",
+    "config/rocky-domain-image.env",
+    "config/rocky-instance-image.env",
+    "config/rocky-instance-oci.env",
+    "crates/ginux-contract/src/bin/contract-doc.rs",
+    "crates/ginux-contract/src/lib.rs",
+    "crates/ginux-core/src/lib.rs",
+    "crates/ginux-devices/src/lib.rs",
+    "crates/ginux-init/Cargo.toml",
+    "crates/ginux-init/src/dispatch.rs",
+    "crates/ginux-init/src/fs_hooks.rs"
+   ],
+   "keywords": [
+    "instance",
+    "gate",
+    "cli",
+    "ginux",
+    "legacy",
+    "renames",
+    "schema",
+    "state",
+    "aggregate",
+    "checkpoint"
+   ]
+  },
+  "234": {
+   "kind": "pr",
+   "title": "fix(process): adopt orphans after the last parent thread exits",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    "Makefile",
+    "crates/ginux-process/src/lib.rs",
+    "scripts/test-process-native.py",
+    "tests/fixtures/process-review-fixture.c"
+   ],
+   "keywords": [
+    "process",
+    "child",
+    "init",
+    "exited",
+    "parent",
+    "thread",
+    "build",
+    "children",
+    "claude",
+    "exits"
+   ]
+  },
+  "233": {
+   "kind": "pr",
+   "title": "fix(launch): use mkdirat when creating the workload directory",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    "crates/ginux-init/src/launch.rs",
+    "crates/ginux-init/src/main.rs",
+    "crates/ginux-init/src/supervisor.rs",
+    "scripts/test-launch.py"
+   ],
+   "keywords": [
+    "launch",
+    "workdir",
+    "build",
+    "root",
+    "claude",
+    "created",
+    "directory",
+    "domain",
+    "sudo",
+    "unavailable"
+   ]
+  },
+  "232": {
+   "kind": "pr",
+   "title": "fix(vfs): share offsets between duplicated descriptors",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    "crates/ginux-vfs/src/lib.rs"
+   ],
+   "keywords": [
+    "duplicate",
+    "through",
+    "descriptor",
+    "build",
+    "one",
+    "slot",
+    "claude",
+    "close",
+    "description",
+    "offset"
+   ]
+  },
+  "231": {
+   "kind": "pr",
+   "title": "Gate 10: configurable contract and audit",
+   "state": "closed",
+   "merged_at": "2026-11-06T22:22:30Z",
+   "files": [
+    "Cargo.lock",
+    "Cargo.toml",
+    "Makefile",
+    "config/domain-gate10-deny-socket.toml",
+    "config/domain-gate10-strict.toml",
+    "config/domain-gate4.toml",
+    "config/domain-gate5.toml",
+    "config/domain-gate6.toml",
+    "config/domain-gate7.toml",
+    "config/domain-gate8.toml",
+    "config/domain-gate9-failure.toml",
+    "config/domain-gate9.75-hook-continue.toml",
+    "config/domain-gate9.75-hook-stop.toml",
+    "config/domain-gate9.75-hook-timeout.toml",
+    "config/domain-gate9.75-hooks.toml",
+    "config/domain-gate9.75-network.toml",
+    "config/domain-gate9.75.toml",
+    "config/domain-gate9.toml",
+    "config/domain-rocky-systemd.toml",
+    "crates/ginux-contract/Cargo.toml",
+    "crates/ginux-contract/src/bin/contract-doc.rs",
+    "crates/ginux-contract/src/lib.rs",
+    "crates/ginux-domain/Cargo.toml",
+    "crates/ginux-domain/src/lib.rs",
+    "crates/ginux-init/Cargo.toml",
+    "crates/ginux-init/src/launch.rs",
+    "crates/ginux-init/src/main.rs",
+    "docs/abi-contract-coverage.md",
+    "docs/configurable-contract.md",
+    "hdae/STATUS.md"
+   ],
+   "keywords": [
+    "contract",
+    "audit",
+    "passed",
+    "gate",
+    "strict",
+    "systemd",
+    "bound",
+    "boundary",
+    "coverage",
+    "denial"
+   ]
+  },
   "230": {
    "kind": "issue",
    "title": "Proposal: formally specified contract semantics and verification of security invariants",
@@ -5099,11 +5268,26 @@
   }
  },
  "keywords": {
-  "contract": [
-   230,
-   13
+  "instance": [
+   235
+  ],
+  "gate": [
+   235,
+   231,
+   229,
+   228,
+   225,
+   210,
+   196,
+   181,
+   172
+  ],
+  "cli": [
+   235,
+   217
   ],
   "ginux": [
+   235,
    230,
    227,
    219,
@@ -5153,36 +5337,162 @@
    8,
    5
   ],
-  "could": [
-   230,
-   87
+  "legacy": [
+   235
   ],
-  "lean": [
-   230
+  "renames": [
+   235
   ],
-  "model": [
-   230
+  "schema": [
+   235
   ],
-  "verification": [
-   230,
-   70,
-   36
-  ],
-  "would": [
-   230
-  ],
-  "catalog": [
-   230
-  ],
-  "formal": [
-   230
-  ],
-  "operation": [
-   230,
-   84,
+  "state": [
+   235,
+   197,
+   82,
+   78,
    7
   ],
+  "aggregate": [
+   235
+  ],
+  "checkpoint": [
+   235
+  ],
+  "process": [
+   234,
+   219,
+   212,
+   206,
+   205,
+   195,
+   194,
+   184,
+   183,
+   182,
+   176,
+   154,
+   137,
+   135,
+   129,
+   126,
+   121,
+   48
+  ],
+  "child": [
+   234,
+   226,
+   224,
+   223,
+   220,
+   184,
+   176,
+   150,
+   137,
+   135,
+   130,
+   126,
+   124,
+   113,
+   111,
+   106,
+   102,
+   98,
+   59
+  ],
+  "init": [
+   234,
+   204,
+   190,
+   112,
+   57,
+   37,
+   26
+  ],
+  "exited": [
+   234
+  ],
+  "parent": [
+   234,
+   223,
+   218,
+   124,
+   113
+  ],
+  "thread": [
+   234,
+   224,
+   184,
+   139,
+   138,
+   114,
+   99,
+   8
+  ],
+  "build": [
+   234,
+   233,
+   232,
+   211,
+   183,
+   182,
+   43
+  ],
+  "children": [
+   234
+  ],
+  "claude": [
+   234,
+   233,
+   232,
+   3
+  ],
+  "exits": [
+   234,
+   168
+  ],
+  "launch": [
+   233,
+   214,
+   207,
+   204,
+   187,
+   186,
+   165,
+   164,
+   162,
+   161,
+   158,
+   157,
+   156,
+   153
+  ],
+  "workdir": [
+   233
+  ],
+  "root": [
+   233,
+   61
+  ],
+  "created": [
+   233
+  ],
+  "directory": [
+   233,
+   156,
+   155,
+   149,
+   148,
+   143,
+   141,
+   140,
+   123,
+   90,
+   89,
+   18
+  ],
   "domain": [
+   233,
    229,
    220,
    209,
@@ -5213,17 +5523,141 @@
    39,
    19
   ],
+  "sudo": [
+   233
+  ],
+  "unavailable": [
+   233
+  ],
+  "duplicate": [
+   232
+  ],
+  "through": [
+   232,
+   205,
+   122
+  ],
+  "descriptor": [
+   232,
+   207,
+   206,
+   205,
+   194,
+   154,
+   149,
+   147,
+   144,
+   88
+  ],
+  "one": [
+   232,
+   148,
+   145,
+   138,
+   133,
+   118,
+   109,
+   19,
+   15,
+   5
+  ],
+  "slot": [
+   232,
+   131,
+   107
+  ],
+  "close": [
+   232,
+   217,
+   195,
+   180,
+   151,
+   72,
+   68,
+   66
+  ],
+  "description": [
+   232
+  ],
+  "offset": [
+   232,
+   144,
+   23
+  ],
+  "contract": [
+   231,
+   230,
+   13
+  ],
+  "audit": [
+   231,
+   187,
+   186,
+   161,
+   155
+  ],
+  "passed": [
+   231,
+   53,
+   42,
+   41,
+   23,
+   9
+  ],
+  "strict": [
+   231
+  ],
+  "systemd": [
+   231
+  ],
+  "bound": [
+   231,
+   163,
+   146,
+   70,
+   47
+  ],
+  "boundary": [
+   231,
+   36
+  ],
+  "coverage": [
+   231
+  ],
+  "denial": [
+   231
+  ],
+  "could": [
+   230,
+   87
+  ],
+  "lean": [
+   230
+  ],
+  "model": [
+   230
+  ],
+  "verification": [
+   230,
+   70,
+   36
+  ],
+  "would": [
+   230
+  ],
+  "catalog": [
+   230
+  ],
+  "formal": [
+   230
+  ],
+  "operation": [
+   230,
+   84,
+   7
+  ],
   "hooks": [
    229
-  ],
-  "gate": [
-   229,
-   228,
-   225,
-   210,
-   196,
-   181,
-   172
   ],
   "network": [
    229,
@@ -5499,26 +5933,6 @@
    225,
    211
   ],
-  "child": [
-   226,
-   224,
-   223,
-   220,
-   184,
-   176,
-   150,
-   137,
-   135,
-   130,
-   126,
-   124,
-   113,
-   111,
-   106,
-   102,
-   98,
-   59
-  ],
   "ptrace": [
    225,
    211,
@@ -5579,15 +5993,6 @@
    106,
    99,
    98
-  ],
-  "thread": [
-   224,
-   184,
-   139,
-   138,
-   114,
-   99,
-   8
   ],
   "virtual": [
    224,
@@ -5656,12 +6061,6 @@
    11,
    9,
    8
-  ],
-  "parent": [
-   223,
-   218,
-   124,
-   113
   ],
   "failed": [
    223,
@@ -5775,25 +6174,6 @@
   "load": [
    219
   ],
-  "process": [
-   219,
-   212,
-   206,
-   205,
-   195,
-   194,
-   184,
-   183,
-   182,
-   176,
-   154,
-   137,
-   135,
-   129,
-   126,
-   121,
-   48
-  ],
   "uptime": [
    219
   ],
@@ -5863,18 +6243,6 @@
    108,
    54,
    21
-  ],
-  "cli": [
-   217
-  ],
-  "close": [
-   217,
-   195,
-   180,
-   151,
-   72,
-   68,
-   66
   ],
   "consume": [
    217
@@ -5987,21 +6355,6 @@
    214,
    58
   ],
-  "launch": [
-   214,
-   207,
-   204,
-   187,
-   186,
-   165,
-   164,
-   162,
-   161,
-   158,
-   157,
-   156,
-   153
-  ],
   "src": [
    214,
    17
@@ -6095,12 +6448,6 @@
    28,
    4
   ],
-  "build": [
-   211,
-   183,
-   182,
-   43
-  ],
   "fixture": [
    211,
    204,
@@ -6187,17 +6534,6 @@
    207,
    11
   ],
-  "descriptor": [
-   207,
-   206,
-   205,
-   194,
-   154,
-   149,
-   147,
-   144,
-   88
-  ],
   "entries": [
    207,
    149,
@@ -6261,10 +6597,6 @@
    103,
    11
   ],
-  "through": [
-   205,
-   122
-  ],
   "4096": [
    205,
    180,
@@ -6297,14 +6629,6 @@
   "abi": [
    204,
    98
-  ],
-  "init": [
-   204,
-   190,
-   112,
-   57,
-   37,
-   26
   ],
   "loop": [
    203,
@@ -6423,12 +6747,6 @@
   ],
   "missing": [
    197
-  ],
-  "state": [
-   197,
-   82,
-   78,
-   7
   ],
   "cleanup": [
    197,
@@ -6631,12 +6949,6 @@
   ],
   "envp": [
    188
-  ],
-  "audit": [
-   187,
-   186,
-   161,
-   155
   ],
   "record": [
    187,
@@ -6959,9 +7271,6 @@
   "doctor": [
    168
   ],
-  "exits": [
-   168
-  ],
   "link": [
    167,
    148,
@@ -7053,12 +7362,6 @@
    105,
    91
   ],
-  "bound": [
-   163,
-   146,
-   70,
-   47
-  ],
   "buflen": [
    163
   ],
@@ -7141,19 +7444,6 @@
    156,
    155,
    90
-  ],
-  "directory": [
-   156,
-   155,
-   149,
-   148,
-   143,
-   141,
-   140,
-   123,
-   90,
-   89,
-   18
   ],
   "list": [
    156
@@ -7280,17 +7570,6 @@
   ],
   "overlayfs": [
    149
-  ],
-  "one": [
-   148,
-   145,
-   138,
-   133,
-   118,
-   109,
-   19,
-   15,
-   5
   ],
   "followed": [
    148
@@ -7427,10 +7706,6 @@
   "o_append": [
    144,
    119
-  ],
-  "offset": [
-   144,
-   23
   ],
   "fallocate": [
    144,
@@ -7628,10 +7903,6 @@
   "mtime": [
    132,
    108
-  ],
-  "slot": [
-   131,
-   107
   ],
   "generation": [
    131,
@@ -8463,9 +8734,6 @@
   "libfuzzer": [
    61
   ],
-  "root": [
-   61
-  ],
   "seeds": [
    61
   ],
@@ -8572,13 +8840,6 @@
   ],
   "forced": [
    53
-  ],
-  "passed": [
-   53,
-   42,
-   41,
-   23,
-   9
   ],
   "unpack": [
    52
@@ -8791,9 +9052,6 @@
    36
   ],
   "virtio": [
-   36
-  ],
-  "boundary": [
    36
   ],
   "capability": [
@@ -9085,9 +9343,6 @@
    4
   ],
   "research": [
-   3
-  ],
-  "claude": [
    3
   ],
   "codex": [
