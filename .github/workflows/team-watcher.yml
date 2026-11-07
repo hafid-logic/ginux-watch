@@ -2,16 +2,22 @@ name: team-watcher
 on:
   schedule:
     - cron: "*/15 * * * *"
-  workflow_dispatch: {}
-permissions:
-  contents: write
-  actions: write
+  workflow_dispatch:
+    inputs:
+      simulate:
+        description: "Open a test TRIPPED issue then close it (v6.5b-3)"
+        type: boolean
+        default: false
 concurrency:
   group: team-watcher
   cancel-in-progress: false
 jobs:
   sweep:
     runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      actions: write
+      issues: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -22,11 +28,16 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: python3 team/scripts/upstream-watch.py
+      - name: TRIPPED notify + simulate test (v6.5b-3)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SIMULATE: ${{ inputs.simulate }}
+        run: python3 team/scripts/trip-notify.py
       - name: Commit and push
         run: |
           git config user.name "team-watcher"
           git config user.email "actions@users.noreply.github.com"
-          git add -A team/tasks/ matrix/upstream-watch.json
+          git add -A team/tasks/ matrix/
           if ! git diff --cached --quiet; then
             msg="lease sweep $(date -u +%Y-%m-%dT%H:%M:%SZ)"
             if git diff --cached --name-only | grep -q upstream-watch; then

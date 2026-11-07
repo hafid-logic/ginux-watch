@@ -1,0 +1,25 @@
+{
+ "version": 1,
+ "fingerprints": {
+  "207": {
+   "state": "open",
+   "comments": 3,
+   "last_comment_at": "2026-11-06T14:58:28Z",
+   "head227": null
+  },
+  "222": {
+   "state": "open",
+   "comments": 2,
+   "last_comment_at": "2026-11-06T14:58:29Z",
+   "head227": null
+  },
+  "227": {
+   "state": "open",
+   "comments": 1,
+   "last_comment_at": "2026-11-06T14:58:30Z",
+   "head227": "9ac0f544f7f1609cd5846e5ff97de96eff17f8cf"
+  }
+ },
+ "simulate_last_issue": null,
+ "updated": "2026-11-07T03:44:43Z"
+}

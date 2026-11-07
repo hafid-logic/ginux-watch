@@ -24,7 +24,7 @@
 
 ## 3) الجدول — لكل syscall: مصيره ووسائطه المؤشرية [MEASURED ما لم يُوسم]
 
-**Emulate (تخطي النواة؛ لا وسائط مؤشرية أصلًا):** الهوية الافتراضية 39/102/104/107/108/110/111 (lib.rs:65–66؛ النتيجة من ProcessTable في process loop@1657–1675 أو ثابتة 4242 في launch/native@launch.rs:1013–1026/main.rs:3147–3160)؛ Lifecycle 60/231 (domain-stop — launch.rs:1028–1034، main.rs:3162–3172). ⇒ لا مجال لـTOCTOU.
+**Emulate (تخطي النواة؛ لا وسائط مؤشرية أصلًا):** الهوية الافتراضية 39/102/104/107/108/110/111 (lib.rs:65–66؛ النتيجة من ProcessTable في process loop@1657–1675 أو ثابتة 4242 في launch/[personal-email-redacted]:1013–1026/main.rs:3147–3160)؛ Lifecycle 60/231 (domain-stop — launch.rs:1028–1034، main.rs:3162–3172). ⇒ لا مجال لـTOCTOU.
 
 **Deny(38) fail-closed (لا تنفيذ إطلاقًا):** كل ما ليس له surface (lib.rs:68/81) + fork في dispatch.rs:51–56 + فشل فحص الوسائط السجلي (launch.rs:1049–1059).
 

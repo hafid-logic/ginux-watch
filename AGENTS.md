@@ -121,6 +121,17 @@ Reports: Arabic with English technical terms. Drafts and upstream text: English.
     جرد المنشورات العلنية كاملًا (جدول الرقم/النوع/التاريخ/الناشر/الرابط لكل ما نشرناه في upstream —
     حاليًا #4 #14 #43 #54 #58 PR#61 #222 #207 PR#227). تقرير ينقصه الجرد أو يختصره = غير معتمد ولا
     يُدفع؛ التحديث يُضاف إلى الجدول نفسه لا إلى ملاحظة جانبية.
+18. **قاعدة CLEAR/BLIND للمراقبة** (توجيه v6.5b-1، 2026-11-07): لا يُسجَّل `circuit_breaker: CLEAR` إلا بقراءة
+    API (Actions أو gh) أو `git ls-remote`؛ قراءة صفحات HTML وحدها = BLIND ولو بدت صافية. مرجع المراقبة
+    الأساسي = `matrix/upstream-watch.json` الذي يكتبه team-watcher في Actions بـ GITHUB_TOKEN الداخلي،
+    واستخراج JSON المضمّن لـ #207 قيد معروف (الأدلة والبديل: METHODOLOGY قاعدة 12).
+19. **بريد شخصي ممنوع في كل ملف** (توجيه v6.5-1، 2026-11-07): لا تُكتب عناوين بريد شخصية في أي ملف؛
+    سجلات الهوية بصيغة noreply فقط (مثل `266947999+hafid-logic@users.noreply.github.com`). أي بريد غير
+    noreply يُستبدل حرفيًا بـ `[personal-email-redacted]` بأمر صريح من المالك، بلا تعديل تاريخ وبلا force push،
+    ويُبلغ بالمسارات وعدد الإصابات قبل/بعد دون طباعة النص المحجوب.
+20. **حقل رأس التقرير = base_head** (توجيه v6.5-2، 2026-11-07): من هذا التوجيه فصاعدًا يستخدم frontmatter
+    التقارير `base_head` (SHA رأس origin/main الذي يُدفع التقرير فوقه مباشرة) بدل `head_pushed`؛ التقارير
+    القديمة تبقى كما هي حرفيًا. القالب الحي: `outbox/_TEMPLATE.md`.
 
 ## Team mode (v2.1, 2026-11-02; hardened v2.2, 2026-11-03)
 Distributable work is carded under `team/` (PROTOCOL.md, roles/, routing.yml). The primary
