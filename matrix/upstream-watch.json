@@ -1,6 +1,6 @@
 {
  "last_seen_sha": "53a54addea67969abaa240ea478def1b94130eee",
- "last_checked": "2026-11-07T19:43:06Z",
+ "last_checked": "2026-11-07T23:01:46Z",
  "last_dispatch": {
   "at": "2026-11-05T02:56:29Z",
   "range": "4d4a53bb..d337713b",
@@ -27,7 +27,7 @@
    "updated_at": "2026-11-06T14:58:29Z",
    "last_comment_at": "2026-11-06T14:58:29Z",
    "last_comment_author": "gmkurtzer",
-   "checked": "2026-11-07T19:43:06Z"
+   "checked": "2026-11-07T23:01:46Z"
   },
   "207": {
    "state": "open",
@@ -35,7 +35,7 @@
    "updated_at": "2026-11-07T16:29:20Z",
    "last_comment_at": "2026-11-07T16:29:20Z",
    "last_comment_author": "gmkurtzer",
-   "checked": "2026-11-07T19:43:06Z"
+   "checked": "2026-11-07T23:01:46Z"
   },
   "227": {
    "state": "open",
@@ -43,7 +43,7 @@
    "updated_at": "2026-11-06T14:58:30Z",
    "last_comment_at": "2026-11-06T14:58:30Z",
    "last_comment_author": "gmkurtzer",
-   "checked": "2026-11-07T19:43:06Z"
+   "checked": "2026-11-07T23:01:46Z"
   }
  },
  "breaker_absorbed": {
@@ -58,7 +58,7 @@
     "pr207_head": "5ae058f211905c6cb0c92a874e5bc97f333a23a3",
     "pr227_head": "9ac0f544f7f1609cd5846e5ff97de96eff17f8cf"
    },
-   "status": "known — breaker back to ok; no reply, no reaction"
+   "status": "known \u2014 breaker back to ok; no reply, no reaction"
   }
  }
 }
