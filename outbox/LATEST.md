@@ -1,102 +1,78 @@
 ---
-id: 20261107-0324Z-s49
-session: 49
-directive: v6.5 + v6.5b
-directive_sha256: 13ae1f68c35ad49cdd4fe69578df011dc9909c0a8e7538062162aa0ddc298f64 + 16fdac622df1d2ae61354f50aa25e3ce3338628297648e3f992668412a415674
-base_head: 49450bbe6639073ff0d052335b183543fa51d505
+id: 20261107-2155Z-s51
+session: 51
+directive: session51-agent-b-takeover
+directive_sha256: 21ca086a0f77bee5cb40f50c49d8186469ad6faeb2443fd765172c6ea088a4ed
+base_head: 7cb5d7e61fcd034c4602459379da85d28a52d6c5
 status: blocked
 needs_decision: yes
-circuit_breaker: TRIPPED
+circuit_breaker: ok
 upstream_new_activity: yes
 ---
 
-# تقرير s49 — تنفيذ توجيه v6.5 + v6.5b معًا (حجب البريد، base_head، مراقبة API، إشعار TRIPPED، إعادة كتابة cron)
+# تقرير s51 — تولّي الوكيل ب (تقاعد أ): مصادقة + امتصاص دفعة #207 + إصلاح الضجة + تدقيق استلام + مراقبة جديدة
 
-التوجيهان: لُصقا من المالك في هذه المحادثة ⇒ مؤهلان للتنفيذ؛ أُرشفا حرفيًا في `directives/v6.5.md` و`directives/v6.5b.md` (sha256 أعلاه وفهرس directives). **status: blocked = التنفيذ مكتمل لكن الدفع محجوب — مفتاح النشر ضاع بتدوير الصندوق (§3.1)؛ الالتزام محلي جاهز يُدفع فور تفعيل المالك للمفتاح الجديد (§4.1).**
+التوجيه المنفَّذ: `session51-agent-b-takeover` — أُرشف حرفيًا في `directives/session51-agent-b-takeover.md` (sha256 أعلاه وفهرس directives)؛ لُصق من المالك في هذه المحادثة ⇒ مؤهل للتنفيذ. **status: blocked = التنفيذ اكتمل والدفع محجوب تفعيل مفتاح النشر الجديد (§4.1).**
 
 ## 1) الملخص
 
-1. **BLIND-risk (أول سطر وفق v6.5-3):** المراقبة المحلية HTML خالفت مرجع API في العدّ والاستخراج — وثّقناها قيدًا دائمًا (METHODOLOGY قاعدة 12) والمرجع الأساسي = API في Actions. [MEASURED]
-2. v6.5-1 حجب البريد: **240 إصابة قبل → 0 بعد** في 46 ملفًا متتبعًا (من أصل 50 متغيّرًا في هذا الالتزام)، كامل الشجرة، بلا طباعة النص، بلا تعديل تاريخ، بلا force؛ جدول المسارات في §2.1؛ قاعدة AGENTS رقم 19. [MEASURED]
-3. v6.5-2: حقل `base_head` في AGENTS (قاعدة 20) وقالب `outbox/_TEMPLATE.md`؛ التقارير القديمة كما هي (s48 احتفظ بـ`head_pushed`). [MEASURED]
-4. v6.5-3: أول تشغيل مجدول لteam-watcher كتب `matrix/upstream-watch.json` بالخيوط الثلاثة (23:04:15Z ثم 02:45:04Z) — **التحقق: OK**؛ مرجع المراقبة = API في Actions؛ استخراج JSON المضمّن لـ#207 قيد معروف (METHODOLOGY 12). [MEASURED]
-5. v6.5b-1: قاعدة CLEAR/BLIND في AGENTS (قاعدة 18) + أدلة ضعف HTML الأربعة (أ–د) في METHODOLOGY قاعدة 12. [MEASURED]
-6. v6.5b-2: cron أعيد كتابته بلا أي توكن؛ المصدر `matrix/upstream-watch.json` + `git ls-remote` فقط؛ أُرشف `directives/cron-509202-v2.md`؛ القديمة job 509202 حُذفت والجديدة **job 510911** (كل 30 دقيقة). [MEASURED]
-7. v6.5b-3: `team/scripts/trip-notify.py` + خطوة workflow + `permissions: issues: write` + مدخل `simulate`؛ الاختبار اليدوي متعذر (لا gh ولا توكن) ⇒ مُسلَّح عبر `matrix/.simulate-flag` ضمن هذا الالتزام ويعمل مع أول تشغيل مجدول بعد الدفع؛ الرقم يُسجَّل في `matrix/notify-state.json`. [MEASURED/UNVERIFIED حتى الدفع]
-8. v6.5b-4: فحص الصندوق — مسار توكن واحد: `/tmp/my-project/upload/GitHub token.txt` (نسخة قديمة في /tmp؛ لم يُقرأ ولا استُعمل ولا حُذف — القرار لك)؛ upload الرسمي والشجرة المتتبعة نظيفة؛ بقية المطابقات fixtures اختبارية لمكتبات (cargo registry + `.venv` + sysroot). [MEASURED]
+1. **تولّي ومصادقة (§1):** الوكيل أ تقاعد — الوكيل ب منفّذًا وحيدًا [MEASURED: HANDOFF §1]. ssh وssh-keygen غائبان في الصندوق ⇒ مفتاح ed25519 بـ python cryptography في `work/.config/ssh/ginux_watch_deploy-20261108` (600، خارج git): بصمة `SHA256:BPfjGlzA/o3Oa0neIKxUbXLQDqnQ7o2VOJ3mlY6h4qA`؛ الهوية عبر `scripts/session-init.sh` (Abdelhafid DJIDEL + noreply) [MEASURED]؛ pushurl `ssh://git@ssh.github.com:443/...` مضبوط؛ نسخة wrapper محلية بمسارات الجلسة (غير متتبعة). **لا push قبل تفعيل المالك.**
+2. **امتصاص الدفعة القاطعة (§2):** رد gmkurtzer الرابع على #207 @2026-11-07T16:29:20Z — مصدر العدّ **API** (matrix @`7cb5d7e` يكتبه team-watcher بـ GITHUB_TOKEN الداخلي) لا HTML ⇒ CLEAR مسموح [MEASURED]. النص الحرفي **مُلتقط بالطلب الثالث (الأخير) غير المصادَق 2026-11-07T21:41:02Z** — id `6709855418`، user gmkurtzer، created_at يطابق المصفوفة حرفيًا [MEASURED: `inbox/2026-11-07-watch-breaker-207-gmkurtzer-status.md` + دليل خام محلي `work/results/W4-comment-try3.json`].
+3. **خط الأساس حُدّث (§2b):** `matrix/upstream-watch.json` حقل `breaker_absorbed` (يصمد أمام team-watcher) + `work/.config/watch-baseline.json` بقيم الدفعة المعروفة + الرؤوس: upstream main `53a54add`، PR#207 head `5ae058f`، PR#227 head `9ac0f544` (git ls-remote) [MEASURED] ⇒ القاطع يعود **ok**.
+4. **إصلاح الضجة (§3a):** `team/scripts/trip-notify.py` أُعيدت كتابته: عناوين `TRIPPED: thread-<N>`، الروابط داخل backticks، لا `#N` ولا @mention ولا اقتباس، + إصلاحات W3 (بصمة عند النجاح فقط، فشل-مغلق على list، فشل ls-remote العابر يحمل head227 السابق فلا TRIPPED كاذبة — إصلاح critic b5)؛ بوابة آلية بلا شبكة `team/scripts/test-trip-notify-xref.py` — **تمرّ بعد الإصلاحات** [MEASURED].
+5. **workflow يدوي (§3b):** `.github/workflows/issue-sanitize.yml` (dispatch، `issues: write` للـ job وحده، dry_run/close_9 inputs) + `team/scripts/issue-sanitize.py` (selftest تمرّ): يحيط كل مرجع/رابط بـ backticks خارج spans/fences القائمة، يعيد تسمية `TRIPPED: #207`→`TRIPPED: thread-207`، يغلق #9. **تشغيله يدوي من واجهة Actions (لا توكن لدي) — بند قرار.**
+6. **قواعد (§3c):** AGENTS قاعدة 21 (لا cross-reference إلى مستودعات غريغوري) + METHODOLOGY قاعدة 13 [MEASURED].
+7. **تدقيق استلام (§4):** W1/W2/W3/W4 متوازون + critic — النتائج §2.2.
+8. **مراقبة (§5):** cron **513171** (كل 30 دقيقة، بلا توكن، matrix pinned + ls-remote) خليفة 510911 الذي مات بجلسة الوكيل أ — رقم الـjob من gateway [MEASURED]؛ أساسه `work/.config/watch-baseline.json`. أول تشغيل متوقع ≤ 30 دقيقة من الإنشاء ويتحقق تلقائيًا في جولة الدفع.
 
 ## 2) المقاس
 
-| البند | النتيجة | الدليل |
+### 2.1 جرد المنشورات العلنية (AGENTS قاعدة 17) — كل النشر في gmkurtzer/ginux: 9 منشورات، **0 جديد في s51** (لا نشر ولا رد ولا reaction)
+
+| الرقم | النوع | التاريخ (UTC) | من نشره | الرابط |
+|---|---|---|---|---|
+| #4 | تعليق + إغلاق issue (completed بتوجيهك الصريح) | 2026-11-02T00:31:20Z | الوكيل (gh مصادق) بإذنك [MEASURED] | https://github.com/gmkurtzer/ginux/issues/4#issuecomment-6566218531 |
+| #14 | تعليق | 2026-11-02T00:31:29Z | الوكيل (gh مصادق) بإذنك [MEASURED] | https://github.com/gmkurtzer/ginux/issues/14#issuecomment-6566220344 |
+| #43 | issue جديد (P10 overflow-checks) | 2026-11-02T02:47:39Z | أنت يدويًا [MEASURED] | https://github.com/gmkurtzer/ginux/issues/43 |
+| #54 | تعليق على PR (تجاوز أسبوعي لمرة واحدة بإذنك) | 2026-11-02T10:05Z | الوكيل (gh مصادق) [MEASURED] | https://github.com/gmkurtzer/ginux/pull/54#issuecomment-6574390843 |
+| #58 | issue جديد (عرض fuzz) | 2026-11-03T06:23:25Z | أنت يدويًا [MEASURED] | https://github.com/gmkurtzer/ginux/issues/58 |
+| PR#61 | PR أهداف fuzz (مدموج 21:52:18Z) | 2026-11-03 (~13:0xZ) | أنت يدويًا [MEASURED] | https://github.com/gmkurtzer/ginux/pull/61 |
+| #222 | issue جديد (سؤال overflow-checks) | 2026-11-06T04:12:20Z | أنت يدويًا [MEASURED] | https://github.com/gmkurtzer/ginux/issues/222 |
+| #207 | تعليق `issuecomment-6683275754` | 2026-11-06 (~11–12Z؛ الطابع الدقيق [UNVERIFIED]) | أنت يدويًا [INFERRED] | https://github.com/gmkurtzer/ginux/issues/207#issuecomment-6683275754 |
+| PR#227 | PR `restore-overflow-checks` (مفتوح) | 2026-11-06T12:44:22Z | أنت يدويًا [INFERRED] | https://github.com/gmkurtzer/ginux/pull/227 |
+
+(الجرد منقول من s48 §2.1 — بلا نشاط نشر جديد في s51؛ الروابط داخل جدول ginux-watch المتتبع فقط ولا تولّد cross-references من ملفاتنا.)
+
+### 2.2 تدقيق الاستلام (4 عمّال متوازين + critic)
+
+| العامل | النتيجة | الدليل |
 |---|---|---|
-| التحقق v6.5-3 | OK — المصفوفة بأرقام #222=2/#207=3/#227=1 وآخر طابع لكل خيط | matrix/upstream-watch.json @b42a6e6 و@49450bbe |
-| HTML ↔ API | اختلاف عدّ (1↔2 و2↔3) + تعليقنا 6683275754 غائب في HTML وهو موجود (11:00:11Z) ⇒ **BLIND-risk** | METHODOLOGY قاعدة 12(أ،ب) |
-| فرع PR#227 | `9ac0f544…` ثابت | `git ls-remote refs/pull/227/head` |
-| upstream/main | `3f2fe7df→a8b46d2→ff926d0c→59e2f7aa` (آخرها دمج PR#235 @2026-11-07T00:54:10Z) | atom + ls-remote |
-| قاطع الدائرة | **TRIPPED (معروف ومبلَّغ)**: دفعة gmkurtzer ‏14:58:28–30Z ‏2026-11-06 على الخيوط الثلاثة؛ **لا ردود أحدث** [MEASURED: المصفوفة 02:45:04Z + ls-remote] | inbox/2026-11-07-watch-breaker-222-207-227-gmkurtzer-replies.md |
-| #207 updated_at | انزلاق إلى 23:46:10Z بلا تعليق جديد — تحت المراقبة (حركت last_comment_at = قاطع) | المصفوفة |
-| فحص أسرار قبل الدفع | 0 إصابات في كل ملفات هذا الالتزام؛ إصابة STATE.md التاريخية (بريد، s48 §3.3) أُحجبت الآن بأمر v6.5-1 | النمط المعتمد + سكربت المسح |
+| W1 سلامة | outbox متسق 2/2؛ sha256 directives 3/3 مطابقة (cron-509202-v2 بلا hash في الفهرس — **أُكمل الآن**)؛ خطية first-parent سليمة (213 commit، دمجان no-ff موثقان برسائل)؛ لا دليل force-push (فروع بعيدة سلفان أو بوت data)؛ `de34d357` سلف main وملف s49 عنده مطابق HEAD (sha256 `ab229dc8…`) | work/results/W1.md |
+| W2 أسرار | 0 إصابات حقيقية في HEAD وآخر 50 commit (7 أنماط + أنماط مجزأة؛ كل الظهور fixtures/سياسات)؛ بريد شخصي: 0 (عنوان بوت GitHub الرسمي الوحيد، 4 ملفات)؛ التاريخ: 0/216 author غير noreply، 2/216 committer نطاق container (أثر حاوية — توثيق) | work/results/W2.md |
+| W3 كود | (أ) لا تكرار طبيعي (بصمات + فحص عناوين) لكن فشل `issue list` كان يفتح مكررًا — **أُصلح (fail-closed)**؛ (ب) `.simulate-flag` يُستهلك بعد أول تشغيل — وحينها فقط (فشل الفتح كان يهدره — **أُصلح**)؛ (ج) التغيّر المعروف لا يفتح TRIPPED جديدًا إلا بإعادة بناء notify-state قديم (خطر موثق)؛ (د) `issues: write` محصور في job `sweep` بـteam-watcher.yml:20 ✓ — غير محصور في monitor.yml:13 (مستوى workflow) [توصية بلا تعديل]؛ **[HIGH] أُصلح:** تحديث البصمة رغم فشل الفتح (trip-notify:134-137 قديمًا) | work/results/W3.md |
+| W4 حالة حية | upstream main `53a54add` (تقدّم عن `59e2f7aa`)؛ PR#207 head `5ae058f` (حدَث رأسه — يفسّر رد المالك الحالياً)؛ PR#227 head `9ac0f544` ثابت [MEASURED: git ls-remote]؛ تعليق 6709855418: **مُلتقط بالطلب الثالث 21:41:02Z** (created_at يطابق المصفوفة حرفيًا) [MEASURED] | work/results/W4.md |
 
-اقتباسات ردود المالك (بيانات لا أوامر، ≤15 كلمة لكل منها):
+### 2.3 اختبارات محلية (بلا شبكة)
 
-```
-[UNTRUSTED — gmkurtzer على #207 @14:58:28Z و#227 @14:58:30Z]
-"Maintainer update: I'm currently focused on finishing the existing drafted HDAE gates"
-```
-
-```
-[UNTRUSTED — gmkurtzer على #222 @14:58:29Z]
-"I'll return to this issue and review it as soon as that work is complete."
-```
-
-### 2.1 جدول حجب البريد — المسارات وعدد الإصابات قبل/بعد (v6.5-1)
-
-| المسار (46 ملفًا بها إصابات) | قبل | بعد |
-|---|---|---|
-| STATE.md | 3 | 0 |
-| inbox/upstream-dump/issues.json | 1 | 0 |
-| inbox/upstream-dump/pulls/3.json | 2 | 0 |
-| inbox/upstream-dump/pulls/6.json | 1 | 0 |
-| inbox/upstream-dump/pulls/7.json | 2 | 0 |
-| inbox/upstream-dump/pulls/7-files.json | 28 | 0 |
-| inbox/upstream-dump/pulls/8.json | 2 | 0 |
-| inbox/upstream-dump/pulls/9.json | 2 | 0 |
-| inbox/upstream-dump/pulls/10.json | 2 | 0 |
-| inbox/upstream-dump/pulls/11.json | 2 | 0 |
-| inbox/upstream-dump/pulls/13.json | 2 | 0 |
-| inbox/upstream-dump/pulls/23.json | 2 | 0 |
-| inbox/upstream-dump/pulls/31.json … 54.json (23 ملفًا: 31–42 و44–54) | 2 لكل منها | 0 |
-| inbox/upstream-dump/pulls/56.json | 2 | 0 |
-| reports/2026-11-03.md | 1 | 0 |
-| reports/2026-11-05.md | 1 | 0 |
-| reports/2026-11-06-toctou-analysis.md | 1 | 0 |
-| reports/cross-check/matrix.md | 2 | 0 |
-| team/results/T-20261105-06/evidence/commit-readme-change.json | 3 | 0 |
-| team/results/T-20261105-06/evidence/commits-40.json | 100 | 0 |
-| team/results/T-20261105-06/evidence/main-commit.json | 2 | 0 |
-| team/results/T-20261105-06/evidence/prs-open.json | 4 | 0 |
-| team/results/T-20261105-06/evidence/readme-history.json | 26 | 0 |
-| team/results/T-20261105-06/evidence/readme-last-commit.json | 3 | 0 |
-| **المجموع** | **240** | **0** |
+- `python3 team/scripts/test-trip-notify-xref.py` → OK (selftest أنماط + 3 عناوين + 3 أجسام + simulate نظيفة + fp_of محروس مع carry-forward لفشل ls-remote العابر) [MEASURED].
+- `python3 team/scripts/issue-sanitize.py --selftest` → OK (روابط/hash/repo#N/mention تُلف خارج spans وfences؛ البريد لا يتحول mention؛ العنوان `#207`→`thread-207` و`simulate-test` يبقى) [MEASURED].
+- critic مستقل: 14 PASS / 1 FAIL (ب5 — أُصلح فعليًا بحمل head227 السابق عند الفشل العابر) / 8 WARN (معالَجة: توثيق إعادة محاولة simulate، حذف EMAIL_GUARD الميت، `contents: read` للـjob، توضيح نطاق قاعدة 21، وسوم [MEASURED]) — التفصيل: `work/results/CRITIC.md` (محلي) [MEASURED].
 
 ## 3) الشذوذ والأخطاء
 
-1. **فقد مفتاح النشر بتدوير الصندوق** [MEASURED]: `work/.config/ssh/` فارغ، لا `~/.ssh`، pushurl كان مفقودًا، ومساعد paramiko (غير المتتبع) ضاع — الشجرة المتتبعة سليمة. أُعيد البناء: مفتاح جديد (بصمة `SHA256:YU0DdYlJlYMYboQh3gy4XZmgrUDqjAo1SVQ9vTzuvOA`)، pushurl، `scripts/git_ssh_paramiko.py` أصبح متتبعًا، paramiko مثبت؛ اختبار حي حتى التفعيل: `Authentication failed` (متوقع). يُستحسن إزالة المفتاح القديم (20261106) من deploy keys.
-2. فحوص القاطع السابقة فاتها مؤلفو ردود 14:58Z رغم تسجيلهم في المصفوفة (`last_comment_author: gmkurtzer`) — مرجعية API + raw HTML حُسمت في قاعدة 18. [MEASURED]
-3. خط الأساس وُجد بعتيقًا (نسخة جلسة-44 من ما قبل التدوير) — حُدّث بالحالة الكاملة والقاطع المعروف. [MEASURED]
-4. مهلتا فحص توكن انتهتا على /home/z كاملًا (شجرة بناء ضخمة) — أُكمل على المسارات المؤثرة (المشروع، upload الرسمي، /tmp، الشجرة المتتبعة)؛ /home/z/my-project/work (أشجار بناء cargo) غُطي جزئيًا بمسح /tmp المطابق له. [MEASURED/UNVERIFIED للتغطية الكاملة]
-5. فحص الأسرار قبل الدفع: 0 إصابات حقيقية (بلا تتمة 20+ محرفًا)؛ ظهور سردي وحيد للنمطين `ghp_`/`github_pat_` في سطر تاريخي بـHANDOFF.md (موجود سلفًا على origin، ليس سرًا). [MEASURED]
+1. **حصة api.github.com غير المصادَقة** استُنفدت ثم تجددت — الطلب الثالث (الأخير من 3) نجح في 2026-11-07T21:41:02Z والتقط التعليق 6709855418 كاملًا (346 محرفًا) [MEASURED].
+2. **ضجيج علني قائم (#7/#9):** إدخالا «mentioned this pull request» على جدول PR#207 يبقيان قائمين **حتى تشغيل issue-sanitize.yml يدويًا**؛ هل يزول الإدخال بعد تعديل النصوص [UNVERIFIED] — تحقق API فقط (HTML = BLIND، قاعدة 18). [INFERRED]
+3. عيوب موثقة **بلا تعديل** (خارج «أقل تعديل»): `monitor.yml` permissions على مستوى workflow؛ `upstream-watch.py:110` api غير محمي قد يُسقط خطوة trip-notify (اقتراح: continue-on-error على الخطوة)؛ سقف `--limit 200` لفحص العناوين. [INFERRED]
+4. wrapper المتتبع `scripts/git_ssh_paramiko.py` يبقى بمسارات جلسة 50؛ النسخة العاملة محلية غير متتبعة `work/scripts/git_ssh_paramiko_local.py` (درس s50: تثبيت الأداة داخل المستودع — مسار المفتاح عبر بيئة الجلسة، لا أسرار في الملف). [MEASURED]
 
 ## 4) قرارات مطلوبة
 
-1. **فعّل مفتاح النشر الجديد** (deploy key، صلاحية كتابة) في hafid-logic/ginux-watch — العام في `download/ginux_watch_deploy-20261107.pub` وملصق في المحادثة؛ فور التفعيل: أدفع الالتزام المحلي (ff) + ls-remote + الرابط المثبّت + رقم issue الاختبار.
-2. أزل المفتاح القديم الضائع من GitHub deploy keys (خاصه ضاع).
-3. `/tmp/my-project/upload/GitHub token.txt` — القرار لك (لم أمسّه)؛ المُوصى به: إزالته مع تأكيد سحب التوكن من طرف GitHub.
-4. الاختبار اليدوي `simulate=true` متاح لك من واجهة Actions؛ وإلا فهو آلي مع أول تشغيل مجدول بعد الدفع.
+1. **فعّل مفتاح النشر الجديد** (deploy key بكتابة) على hafid-logic/ginux-watch — العام: `ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKFuPPkyhx6KshZe44+gG9W5scXBZ+SKugfIGK6anHrm agent-b-takeover-20261108-ginux-watch-deploy` (بصمة `SHA256:BPfjGlzA/o3Oa0neIKxUbXLQDqnQ7o2VOJ3mlY6h4qA`). ثم قل «تم» ⇒ اختبار مصادقة + دفع ff واحد + تحقق ls-remote + رابط raw.
+2. **احذف مفاتيح الوكيل أ** من deploy keys (20261106 الضائع و20261107 بصمة `YU0D…vOA`).
+3. **شغّل workflow `issue-sanitize`** (Actions → issue-sanitize → Run workflow؛ close_9=true) لإصلاح نصي #7/#9 وإغلاق #9 — أنا لا أملك توكن dispatch. هل يزول إدخال «mentioned» بعده: [UNVERIFIED] حتى تحقق API (HTML = BLIND).
 
 ## 5) ما سأفعله لاحقًا ما لم أوجهك
 
-- فور تفعيل المفتاح: دفع ff واحد + تحقق ls-remote + رابط raw مثبّت + إبلاغ برقم issue الاختبار من أول تشغيل team-watcher بعده.
-- مراقبة انزلاق `updated_at` على #207 (23:46:10Z) — تحرك `last_comment_at` ⇒ قاطع فوري.
-- المراقبة الدورية وفق المهمة الجديدة 510911 (بلا توكنات، مرجع المصفوفة + ls-remote).
-- لا ردّ ولا reaction على ردود المالك الثلاثة؛ انتظار مراجعته PR#227 كما وعد حرفيًا.
+- عند «تم»: اختبار مصادقة (ls-remote عبر SSH) ⇒ دفع ff واحد (التزام واحد يحمل كل شيء) ⇒ تحقق ls-remote + رابط raw مثبت بالـ commit.
+- متابعة أول تشغيل cron 513171 وتوثيقه؛ عند أي تغيّر جديد على #222/#207/#227: توقف، حفظ حرفي، إبلاغ، لا رد.
+- لا تفاعل مع upstream إطلاقًا؛ لا push لفرع PR#227؛ فحص أسرار قبل كل دفع.

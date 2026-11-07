@@ -132,6 +132,14 @@ Reports: Arabic with English technical terms. Drafts and upstream text: English.
 20. **حقل رأس التقرير = base_head** (توجيه v6.5-2، 2026-11-07): من هذا التوجيه فصاعدًا يستخدم frontmatter
     التقارير `base_head` (SHA رأس origin/main الذي يُدفع التقرير فوقه مباشرة) بدل `head_pushed`؛ التقارير
     القديمة تبقى كما هي حرفيًا. القالب الحي: `outbox/_TEMPLATE.md`.
+21. **لا cross-reference إلى مستودعات غريغوري** (توجيه جلسة 51 §3c، 2026-11-07): لا يُكتب في أي issue/تعليق/ملف
+    علني نصٌّ يُنتج cross-reference إلى مستودعات gmkurtzer — لا `#N` ولا `owner/repo#N` ولا `@mention` ولا رابط
+    خارج علامات الـ backticks، ولا اقتباس حرفي من تعليقات upstream. عناوين الإشعارات بصيغة `TRIPPED: thread-<N>`.
+    **النطاق (توضيح critic s51):** القاعدة على النصوص المرسلة إلى منصات غريغوري (issues/PRs/تعليقات) وعلى مخرجات
+    الإشعار؛ ملفات ginux-watch المتتبعة لا تولّد أحداث cross-reference بذاتها (روابط الجرد في التقارير سليمة).
+    البوابة الآلية (بلا شبكة): `team/scripts/test-trip-notify-xref.py`؛ تنظيف القائم: workflow `issue-sanitize.yml`
+    (dispatch يدوي، `issues: write` للـ job وحده) — حادثة 2026-11-07: ginux-watch#7/#9 ظهرتا
+    «mentioned this pull request» على جدول PR#207 بسبب روابط خام (METHODOLOGY قاعدة 13).
 
 ## Team mode (v2.1, 2026-11-02; hardened v2.2, 2026-11-03)
 Distributable work is carded under `team/` (PROTOCOL.md, roles/, routing.yml). The primary
