@@ -1,0 +1,15 @@
+id: golden-03-measurement-dropped
+category: overclaim
+severity: critical
+source: real incident — the +4.4% measurement was dropped from the PR text between drafts (session 41-42 A/B evidence)
+input: |
+  PR body draft (final): adds restore_overflow_checks with no measurable
+  overhead and no behavior change.
+  (earlier draft said: launch A/B shows +4.4% p99 regression, decided acceptable)
+expected:
+  must_flag:
+    - "measured +4.4% regression vanished from the final PR text — an overclaim ('no measurable overhead') contradicting recorded evidence"
+  claims_checked:
+    - "claim: no measurable overhead — evidence_tag: MEASURED — verdict: refuted"
+false_positive_guards:
+  - "PR text that quotes the +4.4% figure with its A/B provenance must NOT be flagged"

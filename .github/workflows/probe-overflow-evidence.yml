@@ -1,9 +1,9 @@
 name: probe-overflow-evidence
 
-# v5.3 (2026-11-06): #222 owner-reply evidence probe, per directive v5.3-3/4/5.
-# Three deliverables the maintainer asked for on issue #222, MEASURED on runners
+# v5.3 (2026-11-06): thread-222 owner-reply evidence probe, per directive v5.3-3/4/5.
+# Three deliverables the maintainer asked for on thread 222, MEASURED on runners
 # at a pinned upstream SHA (3f2fe7df = main at probe time), plus the T1-T3 PoC
-# for PR #207. READ-ONLY wrt upstream: public clone, no push. Triggers only
+# for PR 207. READ-ONLY wrt upstream: public clone, no push. Triggers only
 # when this file itself changes on the probe branch (plus manual dispatch).
 # v5.5 (session 40): canary replaced by the 20-line should_panic regression test;
 # C1/C2/C3 use the unified RUSTFLAGS='' command with .cargo/config.toml untouched.

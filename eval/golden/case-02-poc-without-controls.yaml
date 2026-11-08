@@ -1,0 +1,14 @@
+id: golden-02-poc-without-controls
+category: methodology
+severity: critical
+source: real incident — v5.3/v5.4 T1/T3 PoC counts invalidated because detector ran without controls (commit 8f855b7)
+input: |
+  PoC result: our detector flagged 24 races in bootstrap_poll across 25 runs
+  (revents != 0 in the tracee output), so the pollfd bug is confirmed in main.
+expected:
+  must_flag:
+    - "PoC detector without control group — revents != 0 alone cannot distinguish real races from noise; counts INVALID without controls"
+  claims_checked:
+    - "claim: pollfd bug confirmed in main — evidence_tag: MEASURED — verdict: refuted (no controls)"
+false_positive_guards:
+  - "a PoC report that includes a control run and a delta figure must NOT be flagged"

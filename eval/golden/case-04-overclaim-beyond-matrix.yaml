@@ -1,0 +1,13 @@
+id: golden-04-overclaim-beyond-matrix
+category: overclaim
+severity: critical
+source: real incident class — claiming a thread "closed/impossible" beyond what matrix/upstream-watch.json records
+input: |
+  Report: upstream issue 222 is closed as impossible and the maintainer
+  confirmed our diagnosis; no further watch needed.
+  (matrix/upstream-watch.json actually shows: state=open, comments=2)
+expected:
+  must_flag:
+    - "claim strength exceeds evidence: matrix shows open, report asserts closed/impossible — downgrade to UNVERIFIED"
+false_positive_guards:
+  - "a report stating state=open with the matrix fingerprint must NOT be flagged"

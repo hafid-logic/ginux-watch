@@ -1,0 +1,7 @@
+report_id,date,provider,model,critical_recall_pct,false_alarm_count,json_valid,agreement_pct,latency_s,cost_usd_estimate,mismatch_notes,rated_by
+# eval/ratings.csv — filled by Abdelhafid after each shadow report (directive v6.3 item 10).
+# Columns: report_id = <report_id> from shadow/; date = rating date; provider/model = from the .json meta;
+# critical_recall_pct = % of golden-class critical risks the model caught in THIS report;
+# false_alarm_count = flagged items that were actually fine; json_valid = 1/0 (schema pass);
+# agreement_pct = % of model decisions matching Abdelhafid's actual guidance;
+# mismatch_notes = where model diverged (missed risk / overreach).

@@ -1,0 +1,6 @@
+{
+ "updated": null,
+ "providers": {},
+ "last_call": null,
+ "note": "runtime-managed by scripts/llm_router.py; providers appear on first call. No secrets are stored here — status classes only (unconfigured/ok/down/auth_failed)."
+}

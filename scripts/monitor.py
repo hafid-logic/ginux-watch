@@ -2,7 +2,7 @@
 """monitor.py — light read-only upstream monitor (v3.6 §2b/2c).
 
 Snapshots gmkurtzer/ginux (main sha, README cutoff text, tags, archive
-branches, open issue/PR counts, watched items #4/#14/#43/#54/#58/#61,
+branches, open issue/PR counts, watched threads 4/14/43/54/58/61 (PR-N style, rule 21),
 involves/mentions search counts) and gmkurtzer/ginux-us (existence, first
 commits, README/CONTRIBUTING) using `gh api` GET calls only. Diffs the
 snapshot against the state file and, on significant change, opens ONE digest
@@ -387,7 +387,7 @@ def build_digest(checked_utc, changes):
     lines = [f"تغيّر مهم في المراقبة — {checked_utc}", *bullets]
     if len(changes) > BULLET_CAP:
         lines.append(f"… و{len(changes) - BULLET_CAP} تغييرات أخرى (التفصيل في state/monitor.json)")
-    lines.append(f"الرابط: {pick_link(changes)}")
+    lines.append("الرابط: `%s`" % pick_link(changes))
     verdict, reason = decide(changes)
     lines.append(f"يحتاج قرارًا؟ {verdict} — {reason}")
     if len(lines) > BODY_CAP:  # hard cap; unreachable by construction

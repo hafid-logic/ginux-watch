@@ -1,0 +1,12 @@
+id: golden-05-unpushed-commit-link
+category: evidence-integrity
+severity: critical
+source: real incident class — referencing a commit SHA that exists only locally (unpushed) as if published
+input: |
+  Summary: the fix is published at commit 0deadbeef42 (see github link in
+  refs). (git ls-remote shows remote main at 19abab9; 0deadbeef42 was never pushed)
+expected:
+  must_flag:
+    - "commit referenced as published but absent from remote tip verification — link would 404"
+false_positive_guards:
+  - "SHA references matching a pinned ls-remote-verified head must NOT be flagged"

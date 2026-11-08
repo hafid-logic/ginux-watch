@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # session-init.sh — هوية git الصحيحة لكل جلسة عمل
-# (توجيه المستخدم 2026-11-03 بعد اكتشاف commit 701edf5 بهوية افتراضية "Z User <z@container>" في PR #61)
+# (توجيه المستخدم 2026-11-03 بعد اكتشاف commit 701edf5 بهوية افتراضية "Z User <z@container>" في PR 61)
 # تُنفَّذ في بداية كل جلسة، وتُتحقق الهوية بـ git config --get قبل أي commit أو merge.
 set -euo pipefail
 

@@ -38,7 +38,7 @@ PARSER_PREFIXES = (
 DISPATCH_FUZZ_ROUND = False
 
 # v6.3-3: watched upstream threads (read-only, internal GITHUB_TOKEN).
-# #222 overflow-checks issue, #207 pollfd PR, #227 our restore-overflow-checks PR.
+# threads 222 (overflow-checks issue), 207 (pollfd PR), 227 (our restore-overflow-checks PR).
 # PRs are issues in the REST API, so /issues/{n} covers both kinds.
 THREADS = (222, 207, 227)
 

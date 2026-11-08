@@ -34,6 +34,17 @@ def gh(*args):
     return r.stdout
 
 
+def gh_soft(*args):
+    """gh call returning (ok, stdout_or_err) — 404 tolerated (issue absent)."""
+    r = subprocess.run(["gh", *args], capture_output=True, text=True)
+    blob = (r.stderr or r.stdout or "")
+    if r.returncode == 0:
+        return True, r.stdout
+    if "404" in blob or "Not Found" in blob or "not found" in blob:
+        return False, "404"
+    return False, blob[:300]
+
+
 # --- code-span aware sanitizing -------------------------------------------
 
 SPAN = re.compile(r"`[^`\n]*`")
@@ -158,8 +169,17 @@ def main():
     dry = os.environ.get("DRY_RUN", "false").strip().lower() == "true"
     close_9 = os.environ.get("CLOSE_9", "true").strip().lower() == "true"
     owner, name = REPO_PARTS
+    absent = []
     for n in TARGETS:
-        issue = json.loads(gh("api", "repos/%s/%s/issues/%d" % (owner, name, n)))
+        ok, blob = gh_soft("api", "repos/%s/%s/issues/%d" % (owner, name, n))
+        if not ok:
+            # session-52: issues 7 and 9 were deleted via the GitHub UI
+            # (breaker batch absorbed). Absence is a normal end-state: report
+            # and continue — no crash, no PATCH.
+            print("issue %d: ABSENT (already deleted/sanitized) — skip" % n, flush=True)
+            absent.append(n)
+            continue
+        issue = json.loads(blob)
         title = sanitize_title(issue.get("title") or "")
         body = sanitize_body(issue.get("body") or "")
         print("issue %d: title %r -> %r, body %d -> %d chars"
@@ -175,6 +195,7 @@ def main():
             gh("api", "-X", "PATCH", "repos/%s/%s/issues/9" % (owner, name),
                "-f", "state=closed")
             print("issue 9 closed (breaker batch absorbed, s51 §2)", flush=True)
+    print("sanitize summary: %d target(s), %d absent" % (len(TARGETS), len(absent)), flush=True)
 
 
 if __name__ == "__main__":

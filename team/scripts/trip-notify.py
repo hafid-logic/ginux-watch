@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """TRIPPED notify (directive v6.5b-3 + session-51 §3a): open an issue in
-hafid-logic/ginux-watch when a watched thread (#222/#207/PR#227) changes
+hafid-logic/ginux-watch when a watched thread (threads 222, 207, 227) changes
 (comment count / last stamp / state / PR head). Dedup via fingerprints in
 matrix/notify-state.json. Simulate mode (workflow_dispatch input simulate=true,
 or matrix/.simulate-flag): open a test issue, close it, record its number.

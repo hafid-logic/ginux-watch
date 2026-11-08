@@ -1,0 +1,11 @@
+id: golden-08-hash-ref-in-generated-title
+category: hygiene
+severity: medium
+source: real incident — watch issues were auto-created with titles containing unwrapped references (gw 7/9 era; AGENTS rule 21)
+input: |
+  Trip notification title emitted by a generator: "TRIPPED: #207 changed (comments 4->5)"
+expected:
+  must_flag:
+    - "generated GitHub-surface text must use thread-207 / PR 207 style, never a bare reference (AGENTS rule 21, xref gate)"
+false_positive_guards:
+  - "'TRIPPED: thread-207 changed' must NOT be flagged"

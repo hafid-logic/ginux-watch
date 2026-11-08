@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify gmkurtzer/ginux issue #58 (fuzz draft, published manually by user).
+"""Verify gmkurtzer/ginux thread 58 (fuzz draft, published manually by user).
 
 Checks the published text against the mandatory v2.7-1 checklist, saves a
 snapshot of title/body/replies under approved/, and prints a verdict line.

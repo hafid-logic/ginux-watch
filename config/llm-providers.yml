@@ -1,0 +1,55 @@
+# llm-providers.yaml — shadow supervisor provider order (directive v6.3 item 5)
+# NO SECRETS IN THIS FILE — secret NAMES only (env var names). The agent has no
+# Secrets permission; Abdelhafid adds the secrets in the repo settings
+# (environment: supervisor). Providers are tried in listed order; models within
+# a provider in listed order; entries marked unavailable/unverified are skipped
+# until runtime verification succeeds.
+#
+# Live /v1/models verification 2026-11-08 [MEASURED, unauthenticated GETs]:
+#   nvidia      integrate.api.nvidia.com/v1/models -> HTTP 200, 84 models
+#   openrouter  openrouter.ai/api/v1/models        -> HTTP 200, 460 models
+#   google      generativelanguage.googleapis.com/v1beta/models -> HTTP 403
+#               PERMISSION_DENIED without key -> unverified until key exists.
+version: 1
+updated: "2026-11-08"
+request_timeout_s: 120
+attempts_per_model: 2
+backoff_s: 5
+# 3 consecutive provider-level failures => status "down" + outbox/ALERT file
+max_consecutive_failures_for_down: 3
+providers:
+  - name: nvidia
+    env_secret: NVIDIA_API_KEY
+    base_url: https://integrate.api.nvidia.com/v1
+    models:
+      - id: moonshotai/kimi-k3.1-pro
+        status: unavailable
+        note: "requested id absent from live list; actual kimi id is kimi-k2.6"
+      - id: moonshotai/kimi-k2.6
+        status: available
+      - id: deepseek-ai/deepseek-v4.1-flash
+        status: available
+      - id: mistralai/mistral-large-4-1t-a52b
+        status: available
+        note: "'Mistral Large 4' actual live id (family mistral-large)"
+  - name: openrouter
+    env_secret: OPENROUTER_API_KEY
+    base_url: https://openrouter.ai/api/v1
+    models:
+      - id: moonshotai/kimi-k3.1-pro
+        status: available
+        note: "requested id verified live on openrouter (absent on nvidia)"
+      - id: deepseek/deepseek-v4.1-flash
+        status: available
+      - id: mistralai/mistral-large-4-0
+        status: available
+  - name: google-ai-studio
+    env_secret: GOOGLE_AI_API_KEY
+    base_url: https://generativelanguage.googleapis.com/v1beta/openai
+    verify_at_runtime: true
+    models:
+      - id: gemini-2.5-pro
+        status: unverified
+        note: "endpoint needs key (403 unauthenticated); verify on first use"
+      - id: gemini-2.5-flash
+        status: unverified

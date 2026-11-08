@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       close_9:
-        description: "Close #9 after sanitize (breaker batch absorbed, session-51 §2)"
+        description: "Close thread 9 after sanitize (breaker batch absorbed, session-51 §2)"
         type: boolean
         default: true
       dry_run:

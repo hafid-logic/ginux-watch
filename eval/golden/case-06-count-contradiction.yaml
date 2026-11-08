@@ -1,0 +1,12 @@
+id: golden-06-count-contradiction
+category: internal-consistency
+severity: medium
+source: real incident — same report carried 778 vs 871 test counts and 24/25/27 PoC run counts (sessions 48-50 reviews)
+input: |
+  Verdict section: full suite green, 778 tests passed.
+  Appendix: runner log shows 871 tests collected, 24 flagged, rerun 25, final 27 races.
+expected:
+  must_flag:
+    - "inconsistent counts within one report (778 vs 871; 24/25/27 unexplained) — ask which population each number names"
+false_positive_guards:
+  - "distinct populations labeled explicitly (collected vs passed vs flagged) must NOT be flagged"
