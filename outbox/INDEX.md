@@ -3,3 +3,4 @@
 20261106-2226Z-s48 | 48 | v6.4 | done | no
 20261107-0324Z-s49 | 49 | v6.5+v6.5b | blocked (push pending deploy-key activation) | yes
 20261107-2155Z-s51 | 51 | session51-agent-b-takeover | blocked (push pending deploy-key activation) | yes
+20261108-1830Z-s56 | 56 | v6.7-20261108 | blocked (push pending deploy-key activation 20261109a) | yes

@@ -6,7 +6,13 @@ on:
     paths:
       - "outbox/**"
       - "!outbox/ALERT-llm-*"
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      run_eval:
+        description: "Run the golden eval (SEPARATE cap, v6.7-1). Push/schedule runs NEVER run eval."
+        type: boolean
+        required: false
+        default: false
   schedule:
     - cron: "17 */6 * * *"
 
@@ -58,13 +64,24 @@ jobs:
           GOOGLE_AI_API_KEY: ${{ secrets.GOOGLE_AI_API_KEY }}
         run: python3 scripts/llm_supervisor.py
 
-      - name: Golden eval run
-        if: always()
+      # v6.7 item 1: the golden eval runs ONLY via workflow_dispatch with
+      # input run_eval=true and consumes its OWN daily cap (calls_eval);
+      # run_golden_eval.py additionally refuses without GOLDEN_EVAL_GATE —
+      # a push/schedule trigger can never spend eval calls.
+      - name: Golden eval run (dispatch + run_eval=true only)
+        if: github.event_name == 'workflow_dispatch' && inputs.run_eval == true
         env:
           NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           GOOGLE_AI_API_KEY: ${{ secrets.GOOGLE_AI_API_KEY }}
+          GOLDEN_EVAL_GATE: run_eval-${{ inputs.run_eval }}
         run: python3 scripts/run_golden_eval.py
+
+      # v6.7 item 1: show the ACTUAL consumed daily cap in the job summary
+      # (per provider per purpose: supervisor / eval / probe).
+      - name: Daily cap consumption summary (v6.7-1)
+        if: always()
+        run: python3 scripts/llm_cap_summary.py | tee -a "$GITHUB_STEP_SUMMARY"
 
       - name: Upload artifacts
         if: always()

@@ -24,6 +24,11 @@ Covers (against a local HTTP mock, localhost only):
   T20 total-failure ALERT (appendix 8): all configured providers fell
   T21 eval row classification: schema_invalid outcome (appendix 9/12)
   T22 probe runner: /models verification + fixed-input probe rows
+  T23 purpose-separated cap buckets (v6.7-1): eval->calls_eval w/ eval cap,
+      supervisor->calls w/ supervisor cap; one capped purpose never blocks
+      the other; llm_cap_summary prints both buckets with used/cap
+  T24 eval gate (v6.7-1): run_golden_eval.main() refuses without
+      GOLDEN_EVAL_GATE=run_eval-true — ZERO HTTP calls spent
 Run: python3 team/scripts/test-llm-shadow.py  (exit 0 = all pass)"""
 import json
 import sys
@@ -511,6 +516,71 @@ def main():
     assert st22.data["providers"]["p-probe-auth"]["status"] == "auth_failed"
     assert doc22["providers"]["p-probe"]["models_ok"] == 1
     print("T22 ok: probe rows (ok / failed / auth_failed), status bookkeeping")
+
+    # T23 purpose-separated caps/buckets (v6.7 item 1)
+    import io
+    import contextlib
+    import llm_cap_summary as capsum
+    cfg23p = mkconfig(tmp, [
+        prov("p-sep", "MOCK_SEP", [{"id": "m/a", "status": "available"}]),
+    ], cap=99)
+    cfg23 = yaml.safe_load(cfg23p.read_text())
+    cfg23["eval_daily_call_cap_per_provider"] = 1
+    cfg23p.write_text(yaml.safe_dump(cfg23), encoding="utf-8")  # summary re-reads the FILE
+    os.environ["MOCK_SEP"] = "k-sep"
+    st23 = fresh_state(tmp)
+    m23 = {}
+    txt23 = llm_router.call_model(cfg23, st23, "p-sep", "m/a", "SYS", "USER", m23)
+    assert m23["provider"] == "p-sep"
+    d23 = st23.data["daily"]
+    assert int(d23["calls_eval"]["p-sep"]) == 1, d23
+    assert int(d23.get("calls", {}).get("p-sep", 0)) == 0, d23  # untouched bucket
+    try:
+        llm_router.call_model(cfg23, st23, "p-sep", "m/a", "SYS", "USER", {})
+        raise AssertionError("eval cap (1) was not enforced")
+    except llm_router.AllProvidersFailed as e:
+        assert e.detail == "cap_reached:p-sep", e.detail
+    # ...while the supervisor path still runs on its own bucket/cap
+    meta23 = {}
+    llm_router.call_chat(cfg23, st23, "SYS", "USER", meta23,
+                         probe_path=str(tmp / "absent-probe.json"))
+    assert meta23["provider"] == "p-sep"
+    assert int(st23.data["daily"]["calls"]["p-sep"]) == 1
+    buf23 = io.StringIO()
+    with contextlib.redirect_stdout(buf23):
+        capsum.main(["--config", str(cfg23p), "--state", str(st23.path)])
+    out23 = buf23.getvalue()
+    assert "| eval | p-sep | 1 | 1 |" in out23, out23
+    assert "| supervisor | p-sep | 1 | 99 |" in out23, out23
+    print("T23 ok: purpose buckets/caps separated (calls vs calls_eval), summary printed")
+
+    # T24 eval gate (v6.7 item 1): without GOLDEN_EVAL_GATE=run_eval-true the
+    # runner refuses and spends ZERO calls — push/schedule can never eval
+    import sys as _sys
+    import run_golden_eval as gev3
+    cfg24p = mkconfig(tmp, [
+        prov("p-gate", "MOCK_GATE", [{"id": "m/a", "status": "available"}]),
+    ])
+    os.environ["MOCK_GATE"] = "k-gate"
+    hits24 = STATE["hits"]
+    old_argv = _sys.argv
+    closed = 0
+    for gate24 in (None, "run_eval-false"):
+        if gate24 is None:
+            os.environ.pop("GOLDEN_EVAL_GATE", None)
+        else:
+            os.environ["GOLDEN_EVAL_GATE"] = gate24
+        _sys.argv = ["run_golden_eval.py", "--config", str(cfg24p),
+                     "--state", str(tmp / "s24-state.json")]
+        try:
+            rc24 = gev3.main()
+        finally:
+            _sys.argv = old_argv
+        assert rc24 == 0, rc24
+        closed += 1
+    assert STATE["hits"] == hits24, (hits24, STATE["hits"])
+    assert closed == 2
+    print("T24 ok: eval gate closed without run_eval=true — 0 calls spent")
 
     srv.shutdown()
     print("test-llm-shadow: ALL PASS (mock only, no real providers touched)")

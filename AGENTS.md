@@ -185,3 +185,19 @@ evidence: `reports/team-pilot.md`; re-run: `reports/metrics.md` (team v2.2 secti
 - لا يُرسل المدخل الكامل لأي نموذج قبل نجاح بروبه الصغير (state/llm-probe.json)؛ معرّف غائب عن /models الحي يُوسم unavailable ويُبلَّغ ولا يُفترض متاحًا؛ openrouter/free هو ALIAS: النموذج الفعلي من حقل model بالرد ويُسجَّل (model_actual) بكل صف/رد.
 - مزوّد بفشل ≥3 متتالٍ يُتخطى 30 دقيقة (skip_until) ويُكتب ALERT؛ فشل كل المزوّدين يكتب ALERT-llm-all-providers.md — لا يُخفى أبدًا. auth_failed = needs_secret: يُذكر اسم السر في ALERT ويُتخطى بلا إعادة حتى يثبت وجوده بالبروب.
 - أي تعديل .github/workflows يبقى غير مكتمل حتى يبلغ المالك بحالة آخر تشغيل Actions (قاعدة 25) — يشمل إصلاح فلتر branches المكتشف في supervisor-shadow.yml.
+
+## قاعدة 27 — بوابة دفع الworkflow والتحقق بعد الدفع (v6.7 بند 2)
+- قبل أي دفع يلمس .github/workflows: (أ) بوابة المخطط `team/scripts/workflow-schema-check.py`، و(ب) **قراءة بايتية** لأسطر `on:` و`branches:` و`paths:` (أي فلتر trigger) بالأداة المباشرة للملف — للتأكد من خلوها من أي تلف مثل «branches: ain]» المكتشف سابقًا؛ صحة المخطط وحدها لا تغني عن قراءة الفلاتر بالبايت.
+- بعد الدفع: يُبلَّغ sha256 للملف workflow المرفوع (بمحتوى commit المُدفع) ليقارنه المالك بما تراه الواجهة — عدم التطابق = توقف وتشخيص.
+- ملخص الاستهلاك: كل job يلمس مزوّدين LLM يعرض السقف اليومي الفعلي المستهلك (scripts/llm_cap_summary.py في $GITHUB_STEP_SUMMARY) — v6.7 بند 1.
+
+## قاعدة 28 — فصل الاستدعاءات وحماية الحصة (v6.7 بند 1)
+- supervisor-shadow.yml: على push لـoutbox/** يُشغَّل البروب ثم المشرف فقط (ما بين 1 و3 استدعاءات)؛ golden eval لا يُشغَّل إلا بـworkflow_dispatch وبمدخل run_eval=true ويستهلك سقفًا منفصلًا (calls_eval) — حرّا رُباعيًا: شرط `if` في الخطوة + مدخل GOLDEN_EVAL_GATE + سقف مستقل + دلاء عدّ منفصلة في state/llm-status.json (calls / calls_eval / calls_probe).
+- دلاء الاستدعاءات لكل مزوّد تُسجَّل في state/llm-status.json daily.calls*؛ سقف هدف واحد لا يمنع غرضًا آخر (cap_reached في eval لا يمنع المشرف).
+
+## قاعدة 29 — تشخيص ما بعد التشغيل وترتيب النماذج (v6.7 بند 4)
+- بعد أن يلصق المالك نتيجة تشغيل: التشخيص من state/llm-probe.json وstate/llm-status.json وسجل الخطوة وحدها؛ يُصلح ثم يقترح تشغيلًا ثانيًا — بلا استنتاجات من خارج هذه المصادر الثلاثة.
+- **لا جدول نماذج ولا ترتيب نهائي قبل أن يُشغَّل eval فعليًا وتُثبَّت نتائجه في git (eval/results/)** — وأي ترقية/أتمتة من eval/results فقط (ملحق v6.6 بند 12).
+
+## قاعدة 30 — المفاتيح الخاصة (v6.7 بند 5)
+- لا مفتاح خاص خارج work/keys بأي صورة (ولا نسخة/backup/أرشيف/download خارجها)؛ خطاف pre-commit (pre-commit-key-guard) والفحوص كما هي بلا تخفيف؛ فحص بداية الجلسة وفق METHODOLOGY.md (أدوات الفحص المباشر test/stat/ls-files لا أدوات السرد).

@@ -274,13 +274,24 @@ class Status:
             d["calls"] = {}
         return d
 
-    def daily_count(self, provider):
-        return int(self.daily_ensure()["calls"].get(provider, 0))
+    # v6.7 item 1: purpose-separated daily buckets — "supervisor" keeps the
+    # original "calls" key (backward compatible); "eval" and "probe" get
+    # their own counters AND their own caps, so a capped purpose can never
+    # starve another one. Bucket = the per-provider call-count log requested
+    # by v6.7-1 (state/llm-status.json daily.calls*).
+    PURPOSE_KEYS = {"supervisor": "calls", "eval": "calls_eval",
+                    "probe": "calls_probe"}
 
-    def daily_add(self, provider, n=1):
+    def daily_count(self, provider, purpose="supervisor"):
+        key = self.PURPOSE_KEYS.get(purpose, "calls")
+        return int(self.daily_ensure().get(key, {}).get(provider, 0))
+
+    def daily_add(self, provider, n=1, purpose="supervisor"):
         d = self.daily_ensure()
-        d["calls"][provider] = int(d["calls"].get(provider, 0)) + n
-        return d["calls"][provider]
+        key = self.PURPOSE_KEYS.get(purpose, "calls")
+        bucket = d.setdefault(key, {})
+        bucket[provider] = int(bucket.get(provider, 0)) + n
+        return bucket[provider]
 
     def ensure(self, name):
         return self.data["providers"].setdefault(name, {
@@ -613,10 +624,12 @@ def _fail(detail):
 def call_model(cfg, state, provider_name, model_id, system, user, meta_out):
     """Directed call to ONE (provider, model) — eval path (v6.4 items 4/6;
     appendix item 12: independent of failover order — no probe gate, no
-    circuit-breaker skip, no fallback). Same timeout/attempt/backoff and
-    daily-cap accounting; rate-limit headers captured on success AND errors;
-    auth_failed persists in status. Raises AllProvidersFailed with
-    .detail = error class."""
+    circuit-breaker skip, no fallback). Same timeout/attempt/backoff;
+    rate-limit headers captured on success AND errors; auth_failed persists
+    in status. Raises AllProvidersFailed with .detail = error class.
+    v6.7 item 1: eval calls count into the SEPARATE calls_eval bucket and are
+    enforced against eval_daily_call_cap_per_provider (falling back to the
+    supervisor cap only for backward compatibility)."""
     prov = None
     for p in cfg.get("providers", []):
         if p.get("name") == provider_name:
@@ -631,8 +644,9 @@ def call_model(cfg, state, provider_name, model_id, system, user, meta_out):
     st = state.ensure(provider_name)
     st["configured"] = True
     state.save()
-    daily_cap = int(cfg.get("daily_call_cap_per_provider", 60) or 0)
-    if daily_cap and state.daily_count(provider_name) >= daily_cap:
+    daily_cap = int(cfg.get("eval_daily_call_cap_per_provider",
+                            cfg.get("daily_call_cap_per_provider", 60)) or 0)
+    if daily_cap and state.daily_count(provider_name, purpose="eval") >= daily_cap:
         st["last_error_class"] = "cap_reached"
         state.save()
         raise _fail("cap_reached:%s" % provider_name)
@@ -650,10 +664,10 @@ def call_model(cfg, state, provider_name, model_id, system, user, meta_out):
     }
     err_class = None
     for attempt in range(1, attempts + 1):
-        if daily_cap and state.daily_count(provider_name) >= daily_cap:
+        if daily_cap and state.daily_count(provider_name, purpose="eval") >= daily_cap:
             err_class = "cap_reached"
             break
-        state.daily_add(provider_name)
+        state.daily_add(provider_name, purpose="eval")
         t0 = time.monotonic()
         code, headers, resp, raw_body = None, {}, None, ""
         retryable = True

@@ -42,6 +42,7 @@ Exit: 0 = results file written (provider errors are rows, not crashes);
 import argparse
 import hashlib
 import json
+import os
 import re
 import sys
 from datetime import datetime, timezone
@@ -287,7 +288,8 @@ def run_eval(cfg, state):
             s["injection_resisted_pct"] = round(
                 100.0 * s["injection_resisted"] / s["injection_cases"], 1)
 
-    caps = {p.get("name"): int(cfg.get("daily_call_cap_per_provider", 60) or 0)
+    caps = {p.get("name"): int(cfg.get("eval_daily_call_cap_per_provider",
+                                    cfg.get("daily_call_cap_per_provider", 60)) or 0)
             for p in cfg.get("providers", [])}
     doc = {
         "date_utc": today,
@@ -311,7 +313,16 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--config", default=str(llm_router.DEFAULT_CONFIG))
     ap.add_argument("--state", default=str(llm_router.DEFAULT_STATE))
+    ap.add_argument("--allow", action="store_true",
+                    help="offline/test override of the GOLDEN_EVAL_GATE env gate")
     args = ap.parse_args()
+    # v6.7 item 1: the golden eval is dispatch-only with input run_eval=true;
+    # the workflow sets GOLDEN_EVAL_GATE=run_eval-<input>. Any other trigger
+    # (schedule/push/manual run) refuses here and spends ZERO calls.
+    if os.environ.get("GOLDEN_EVAL_GATE") != "run_eval-true" and not args.allow:
+        print("EVAL: gate closed (GOLDEN_EVAL_GATE != run_eval-true) — 0 calls "
+              "made (v6.7-1: eval only via workflow_dispatch + run_eval=true)")
+        return 0
     try:
         cfg = llm_router.load_config(args.config)
         state = llm_router.Status(args.state)
@@ -329,10 +340,11 @@ def main():
         "%s=%s" % (name, st.get("status", "?"))
         for name, st in sorted(state.data["providers"].items()))
     print("PROVIDERS: %s" % (prov_line or "none yet"))
+    eval_cap = int(cfg.get("eval_daily_call_cap_per_provider",
+                           cfg.get("daily_call_cap_per_provider", 60)) or 0)
     print("EVAL: %d new rows written to eval/results (date file) "
-          "(dedupe active; caps %s)" % (
-              added, json.dumps({p.get("name"): int(cfg.get("daily_call_cap_per_provider", 60) or 0)
-                                 for p in cfg.get("providers", [])})))
+          "(dedupe active; eval cap %d/provider — separate bucket calls_eval, "
+          "v6.7-1)" % (added, eval_cap))
     return 0
 
 

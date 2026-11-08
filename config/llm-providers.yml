@@ -26,6 +26,14 @@ circuit_breaker_skip_s: 1800
 # v6.4 item 4: hard daily call budget per provider (counted per HTTP attempt;
 # cap_reached is not a failure and still allows the next provider). 0 = off.
 daily_call_cap_per_provider: 60
+# v6.7 item 1: purpose-separated daily caps — supervisor (calls), eval
+# (calls_eval), probe (calls_probe) each count into their OWN bucket in
+# state/llm-status.json and are enforced against their OWN cap, so a capped
+# purpose can never starve another (the 2026-11-08 runs burned the shared 60
+# on eval and left the supervisor capless). Consumption is printed in the job
+# summary by scripts/llm_cap_summary.py.
+eval_daily_call_cap_per_provider: 40    # only via workflow_dispatch + run_eval=true
+probe_daily_call_cap_per_provider: 40   # small fixed-input probe (llm_probe.py)
 providers:
   # ---- (1) Google AI Studio (appendix item 8 order) ----
   - name: google-ai-studio

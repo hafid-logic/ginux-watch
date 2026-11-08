@@ -28,9 +28,11 @@ Outputs:
     consecutive_failures; at the down threshold the provider gets status
     "down", a 30-minute circuit breaker (skip_until) and an idempotent ALERT.
 
-Daily caps count probe calls (real spend). Exit code is ALWAYS 0 unless the
-probe itself crashes on local infrastructure (results live in the state file;
-the job must continue to the supervisor/eval steps)."""
+Daily caps: probe chat calls count into the SEPARATE probe bucket
+(calls_probe) enforced against probe_daily_call_cap_per_provider (v6.7-1);
+fallback to the supervisor cap keeps old configs working. Exit code is
+ALWAYS 0 unless the probe itself crashes on local infrastructure (results
+live in the state file; the job must continue to the supervisor/eval steps)."""
 import json
 import sys
 import time
@@ -151,7 +153,8 @@ def run_probe(cfg, state):
         prev = {}
     prev_results = prev.get("results", []) if isinstance(prev, dict) else []
     down_threshold = int(cfg.get("max_consecutive_failures_for_down", 3))
-    daily_cap = int(cfg.get("daily_call_cap_per_provider", 60) or 0)
+    daily_cap = int(cfg.get("probe_daily_call_cap_per_provider",
+                            cfg.get("daily_call_cap_per_provider", 60)) or 0)
 
     for prov in cfg.get("providers", []):
         name = prov["name"]
@@ -195,13 +198,13 @@ def run_probe(cfg, state):
                        and r.get("category") == "id_absent" for r in results)
             if skip:
                 continue  # id proven absent: no spend, stays unavailable
-            if daily_cap and state.daily_count(name) >= daily_cap:
+            if daily_cap and state.daily_count(name, purpose="probe") >= daily_cap:
                 results.append({"provider": name, "model": m["id"], "ok": False,
                                 "category": "cap_reached", "status": "failed",
                                 "at": now_iso()})
                 last_err = last_err or "cap_reached"
                 continue
-            state.daily_add(name)
+            state.daily_add(name, purpose="probe")
             row = probe_model(prov, m["id"], key, timeout)
             results.append(row)
             if row["ok"]:
