@@ -247,6 +247,7 @@ def main():
     meta_block = {
         "provider": meta.get("provider"), "model": meta.get("model"),
         "model_actual": meta.get("model_actual"),
+        "low_confidence": bool(meta.get("low_confidence")),
         "latency_s": meta.get("latency_s"), "attempts": meta.get("attempts"),
         "input_truncated": truncated, "input_sha256_16":
             hashlib.sha256(report_text.encode("utf-8")).hexdigest()[:16],

@@ -201,3 +201,16 @@ evidence: `reports/team-pilot.md`; re-run: `reports/metrics.md` (team v2.2 secti
 
 ## قاعدة 30 — المفاتيح الخاصة (v6.7 بند 5)
 - لا مفتاح خاص خارج work/keys بأي صورة (ولا نسخة/backup/أرشيف/download خارجها)؛ خطاف pre-commit (pre-commit-key-guard) والفحوص كما هي بلا تخفيف؛ فحص بداية الجلسة وفق METHODOLOGY.md (أدوات الفحص المباشر test/stat/ls-files لا أدوات السرد).
+
+## قاعدة 31 — بوابة YAML للحالات الذهبية وسلامة الملفات (v6.8 بنود 1/2/3)
+- كل ملف eval/golden/*.yaml يُحمَّل حصرًا عبر team/scripts/golden_case_loader.py (بوابة T25): safe_load صارم يرفض المفاتيح المكررة بأي عمق (PyYAML يقبلها صامتًا [MEASURED])، jsonschema لمفاتيح الحالة المطلوبة (id/category/severity/input/expected)، ورفض المعرّفات المكررة، مع إبلاغ بعدد الحالات المحمَّلة. الحقول النصية الحرة block scalars أو مقتبسة دائمًا — أي «key: نص فيه: نقطتان» غير مقتبس يسقط في البوابة.
+- T25 تُشغَّل offline (test-llm-shadow)، وفي CI (نفس الاختبار داخل supervisor-shadow)، وقبل أي دفع، وعبر `run_golden_eval.py --validate` بلا شبكة ولا استدعاءات. الاختبار الذي لا يحمّل الحالات الحقيقية من eval/golden لا يُحسب.
+- سلامة الملفات (v6.8 بند 3): لكل ملف ينتجه الوكيل (YAML/workflow/config): parse + schema + round-trip قبل الدفع؛ sha256 قبل الدفع يُبلَّغ للمالك؛ وبعد الدفع يُجلب الملف من raw.githubusercontent.com على commit المُدفع (HTTP 200) ويقارن بايت-ببايت — عدم التطابق = توقف وتشخيص.
+- التوليد برمجيًا فقط: تعديل/توليد YAML بإعادة كتابة يدوية من المعروض ممنوع — yaml.safe_dump أو استبدال بايت مع assert أن العدد==1.
+
+## قاعدة 32 — انضباط المزوّدين (v6.8 بنود 4-8)
+- Google: مطابقة /models تُطبَّع بstrip بادئة «models/» على الطرفين، وأول 5 أسماء خام (أسماء فقط) تُسجَّل كدليل في state/llm-probe.json (models_listing.raw_names_sample5)؛ probe حي واحد للنموذج الأول؛ مفاتيح الرد العليا (resp_top_keys) تُسجَّل بكل صف بروب لتشخيص شكل الرد.
+- OpenRouter: max_tokens صريح في كل نداء (probe 200 / supervisor 3000 / eval 3000)؛ النماذج المدفوعة (kimi-k3.1-pro، mistral-large-4-0، deepseek-v4.1-flash) enabled:false افتراضيًا وتُشغَّل بمفتاح صريح فقط؛ 402 = needs_credit نهائي بلا إعادة محاولة.
+- السلسلة الافتراضية بالضبط: google gemini-3.6-flash ← nvidia nvidia/nemotron-3-ultra-550b-a55b ← openrouter/openrouter/free؛ الباقي ثانوي enabled:false؛ probe يستدعي النموذج الأول المفعّل لكل مزوّد فقط (3 استدعاءات لا 11).
+- openrouter/free: model_actual يُسجَّل بكل رد؛ صفوفه low_confidence ولا تدخل مقارنة الجودة؛ ملخص eval يُجمَّع حسب model_actual منفصلًا.
+- الحصص: دلاء v6.7 باقية (المشرف 60 / eval 40 / probe 40)؛ المحاولات الفاشلة على السلك تُعد حسب النوع في daily.failed.<دلو>.<مزوّد>.<نوع> (cap_reached وid_absent صفر-إنفاق ولا تُعد)؛ eval لا يُشغَّل قبل تجدد 00:00 UTC (eval_not_before_utc)؛ ملخص الjob يعرض التجدد والفشل بالنوع.

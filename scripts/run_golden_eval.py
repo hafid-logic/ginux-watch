@@ -50,8 +50,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
+sys.path.insert(0, str(ROOT / "team/scripts"))
 import llm_router  # noqa: E402
 import llm_supervisor as sup  # noqa: E402
+import golden_case_loader as gcl  # noqa: E402 (v6.8-2: T25 strict gate)
 
 CASES_DIR = ROOT / "eval/golden"
 RESULTS_DIR = ROOT / "eval/results"
@@ -87,22 +89,22 @@ def scan_tree_bytes(path):
 
 
 def load_cases():
-    cases = []
-    for f in sorted(CASES_DIR.glob("case-*.yaml")):
-        import yaml
-        c = yaml.safe_load(f.read_text(encoding="utf-8"))
-        if isinstance(c, dict) and c.get("id"):
-            c["_file"] = f.name
-            cases.append(c)
+    """v6.8 item 2: cases load through the T25 strict gate (duplicate keys
+    rejected, jsonschema required-keys check, duplicate ids rejected)."""
+    cases, _report = gcl.load_golden_cases(CASES_DIR)
     return cases
 
 
 def models_under_test(cfg):
+    """(provider, model_id, low_confidence) for every ENABLED model.
+    enabled:false (v6.8 items 5/6) never enters eval."""
     out = []
     for prov in cfg.get("providers", []):
         for m in prov.get("models", []):
-            if m.get("status") in (None, "available", "unverified"):
-                out.append((prov["name"], m["id"]))
+            if m.get("status") in (None, "available", "unverified") \
+                    and m.get("enabled") is not False:
+                out.append((prov["name"], m["id"],
+                            bool(m.get("low_confidence"))))
     return out
 
 
@@ -170,7 +172,6 @@ def run_eval(cfg, state):
 
     cases = load_cases()
     models = models_under_test(cfg)
-
     # synthetic-secrets gate (v6.4 item 5): byte scan BEFORE anything is sent
     blocked = {}
     for c in cases:
@@ -184,14 +185,15 @@ def run_eval(cfg, state):
 
     added = 0
     for case in cases:
-        for prov_name, model_id in models:
+        for prov_name, model_id, lc_flag in models:
             key = (case["id"], prov_name, model_id)
             if key in done_ok:
                 continue  # v6.4 dedupe: output exists -> no call
             if case["id"] in blocked:
                 row = {"case_id": case["id"], "provider": prov_name,
                        "model": model_id, "outcome": "secret_in_case",
-                       "detail": ",".join(blocked[case["id"]])}
+                       "detail": ",".join(blocked[case["id"]]),
+                       "low_confidence": lc_flag}
                 rows.append(row)
                 added += 1
                 continue
@@ -200,7 +202,8 @@ def run_eval(cfg, state):
             if hits:
                 rows.append({"case_id": case["id"], "provider": prov_name,
                              "model": model_id, "outcome": "secret_in_payload",
-                             "detail": ",".join(hits)})
+                             "detail": ",".join(hits),
+                             "low_confidence": lc_flag})
                 added += 1
                 continue
             meta = {}
@@ -211,11 +214,12 @@ def run_eval(cfg, state):
                 outcome = (e.detail or "failed").split(":")[0]
                 rows.append({"case_id": case["id"], "provider": prov_name,
                              "model": model_id, "outcome": outcome,
-                             "detail": e.detail})
+                             "detail": e.detail, "low_confidence": lc_flag})
                 added += 1
                 continue
             row = {"case_id": case["id"], "provider": prov_name,
                    "model": model_id, "outcome": "ok",
+                   "low_confidence": lc_flag,
                    "json_valid": False, "latency_s": meta.get("latency_s"),
                    "attempts": meta.get("attempts"),
                    "input_truncated": truncated,
@@ -237,18 +241,29 @@ def run_eval(cfg, state):
             rows.append(row)
             added += 1
 
+    # v6.8 item 7: results are evaluated by model_actual SEPARATELY — an
+    # openrouter/free row is keyed by the ACTUAL routed model (it differs per
+    # run: [MEASURED] liquid/lfm-2.5-2.6b:free, nvidia/nemotron-3.5-lightning:
+    # free). Rows tagged low_confidence never enter the quality comparison.
     summary = {}
     for r in rows:
-        k = "%s/%s" % (r.get("provider"), r.get("model"))
+        k = "%s/%s" % (r.get("provider"),
+                       r.get("model_actual") or r.get("model"))
         s = summary.setdefault(k, {
             "rows": 0, "ok": 0, "json_valid": 0, "flag_expected": 0,
             "flag_hit": 0, "injection_cases": 0, "injection_resisted": 0,
             "clean_controls": 0, "clean_controls_ok": 0,
             "latency_sum_s": 0.0, "cap_reached": 0, "unconfigured": 0,
-            "auth_failed": 0, "no_json": 0, "schema_invalid": 0,
-            "other_errors": 0,
+            "auth_failed": 0, "needs_credit": 0,
+            "no_json": 0, "schema_invalid": 0,
+            "other_errors": 0, "low_confidence_rows": 0,
+            "configured_model": r.get("model"),
         })
         s["rows"] += 1
+        if r.get("low_confidence"):
+            s["low_confidence_rows"] += 1
+            s["low_confidence"] = True
+            s["excluded_from_quality_comparison"] = True
         oc = r.get("outcome")
         if oc == "ok":
             s["ok"] += 1
@@ -273,6 +288,8 @@ def run_eval(cfg, state):
             s["unconfigured"] += 1
         elif oc == "auth_failed":
             s["auth_failed"] += 1
+        elif oc == "needs_credit":
+            s["needs_credit"] += 1
         elif oc == "no_json":
             s["no_json"] += 1
         elif oc == "schema_invalid":
@@ -282,6 +299,10 @@ def run_eval(cfg, state):
     for k, s in summary.items():
         s["avg_latency_s"] = round(s["latency_sum_s"] / s["ok"], 2) if s["ok"] else None
         del s["latency_sum_s"]
+        # v6.8 item 7: quality metrics (flag recall / injection resistance) are
+        # computed ONLY for rows outside the low_confidence tag
+        if s.get("low_confidence"):
+            continue
         if s["flag_expected"]:
             s["flag_recall_pct"] = round(100.0 * s["flag_hit"] / s["flag_expected"], 1)
         if s["injection_cases"]:
@@ -299,7 +320,7 @@ def run_eval(cfg, state):
                 "appendix item 12: no provider promotion/ordering decision is "
                 "valid unless derived from fixed eval/results files",
         "cases": len(cases),
-        "models_under_test": ["%s/%s" % (p, m) for p, m in models],
+        "models_under_test": ["%s/%s" % (p, m) for p, m, _lc in models],
         "daily_caps": caps,
         "rows": rows,
         "summary": summary,
@@ -315,7 +336,23 @@ def main():
     ap.add_argument("--state", default=str(llm_router.DEFAULT_STATE))
     ap.add_argument("--allow", action="store_true",
                     help="offline/test override of the GOLDEN_EVAL_GATE env gate")
+    ap.add_argument("--validate", action="store_true",
+                    help="v6.8 item 2: load + schema-check the golden cases "
+                         "with the T25 strict gate and exit — ZERO network, "
+                         "ZERO calls, gate env not required")
     args = ap.parse_args()
+    # v6.8 item 2: --validate runs the T25 gate alone (no network, no calls,
+    # no gate env needed) — the offline CI/pre-push form of the eval loader
+    if args.validate:
+        try:
+            cases, report = gcl.load_golden_cases(CASES_DIR)
+        except gcl.GoldenCaseError as e:
+            sys.stderr.write("EVAL --validate: T25 GATE FAIL: %s\n" % str(e)[:400])
+            return 1
+        print("EVAL --validate: T25 gate OK — %d golden cases loaded "
+              "(schema OK, no duplicate keys/ids); no network used" %
+              report["cases"])
+        return 0
     # v6.7 item 1: the golden eval is dispatch-only with input run_eval=true;
     # the workflow sets GOLDEN_EVAL_GATE=run_eval-<input>. Any other trigger
     # (schedule/push/manual run) refuses here and spends ZERO calls.
@@ -329,6 +366,15 @@ def main():
     except Exception as e:
         sys.stderr.write("EVAL: config/state failure: %s\n" % str(e)[:200])
         return 1
+    # v6.8 item 8: eval must not run before the 00:00 UTC renewal boundary —
+    # the first eval belongs to the fresh quota day, never to the tail of the
+    # old one (config eval_not_before_utc, RFC3339; inert once in the past)
+    not_before = str(cfg.get("eval_not_before_utc") or "").strip()
+    if not_before and llm_router.now_iso() < not_before:
+        print("EVAL: refused — eval_not_before_utc=%s not reached yet "
+              "(v6.8-8: eval only after the 00:00 UTC renewal); 0 calls made" %
+              not_before)
+        return 0
     try:
         added = run_eval(cfg, state)
     except Exception as e:

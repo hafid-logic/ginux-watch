@@ -29,6 +29,10 @@ Covers (against a local HTTP mock, localhost only):
       the other; llm_cap_summary prints both buckets with used/cap
   T24 eval gate (v6.7-1): run_golden_eval.main() refuses without
       GOLDEN_EVAL_GATE=run_eval-true — ZERO HTTP calls spent
+  T25 golden-case YAML gate (v6.8-2): loads the REAL eval/golden/*.yaml with
+      the strict loader (duplicate keys rejected, jsonschema required-keys,
+      duplicate ids rejected, count reported) and proves rejection on a
+      duplicate-key fixture; run_golden_eval --validate passes offline
 Run: python3 team/scripts/test-llm-shadow.py  (exit 0 = all pass)"""
 import json
 import sys
@@ -489,33 +493,45 @@ def main():
     res21 = json.loads((gev2.RESULTS_DIR / ("%s.json" % st21.data["daily"]["date_utc"])).read_text())
     r21 = res21["rows"][0]
     assert r21["outcome"] == "schema_invalid" and r21["json_valid"] is False, r21
-    assert res21["summary"]["p-sb/m/a"]["schema_invalid"] == 1
-    print("T21 ok: schema_invalid row + summary counter")
+    # v6.8-7: summary keys follow model_actual when present (mock answers as
+    # mock/actual-1), falling back to the configured id for no-actual rows
+    k21 = "p-sb/%s" % (r21.get("model_actual") or "m/a")
+    assert res21["summary"][k21]["schema_invalid"] == 1, res21["summary"]
+    assert res21["rows"][0]["low_confidence"] is False
+    print("T21 ok: schema_invalid row + summary counter (keyed by model_actual, v6.8-7)")
 
     # T22 probe runner (appendix items 8/11): /models verification + fixed input
+    # v6.8-6 semantics: the functional probe hits the FIRST enabled model of a
+    # provider only; later models stay unprobed (zero spend)
     import llm_probe as prb
     prb.PROBE_STATE = tmp / "probe-out.json"
     prb.LLM_STATE = tmp / "llm-status-probe.json"
     cfg22 = yaml.safe_load(mkconfig(tmp, [
-        prov("p-probe", "MOCK_PROBE", [{"id": "m/a", "status": "unverified"},
-                                       {"id": "m/ghost", "status": "unverified"}]),
+        prov("p-probe", "MOCK_PROBE", [{"id": "m/a", "status": "unverified"}]),
+        prov("p-probe-multi", "MOCK_PROBE", [{"id": "m/ghost", "status": "unverified"},
+                                             {"id": "m/a", "status": "unverified"}]),
         prov("p-probe-auth", "MOCK_PROBE_AUTH", [{"id": "m/a", "status": "unverified"}]),
     ]).read_text())
     os.environ["MOCK_PROBE"] = "k-probe"
     os.environ["MOCK_PROBE_AUTH"] = "k-auth"
     st22 = llm_router.Status(prb.LLM_STATE)
     # /models returns 404 on the mock (no GET handler) -> listing unavailable,
-    # both ids probed functionally; ghost model returns bad-json content
+    # no id_absent rows; first model probed functionally per provider
     doc22 = prb.run_probe(cfg22, st22)
     rows22 = {(r["provider"], r["model"]): r for r in doc22["results"]}
     assert rows22[("p-probe", "m/a")]["ok"] is True, rows22
     assert rows22[("p-probe", "m/a")]["category"] == "ok"
-    assert rows22[("p-probe", "m/ghost")]["ok"] is False
+    # first-model-only: m/ghost probed (first), m/a NOT probed (second)
+    assert rows22[("p-probe-multi", "m/ghost")]["ok"] is False
+    assert ("p-probe-multi", "m/a") not in rows22, "second model must not be probed (v6.8-6)"
     assert rows22[("p-probe-auth", "m/a")]["category"] == "auth_failed"
     assert st22.data["providers"]["p-probe"]["status"] == "ok"
     assert st22.data["providers"]["p-probe-auth"]["status"] == "auth_failed"
     assert doc22["providers"]["p-probe"]["models_ok"] == 1
-    print("T22 ok: probe rows (ok / failed / auth_failed), status bookkeeping")
+    # probe payload carried the explicit max_tokens (v6.8-5, probe=200)
+    last_p = json.loads(STATE["last_payload"])
+    assert last_p.get("max_tokens") == 200, last_p.get("max_tokens")
+    print("T22 ok: probe rows (ok / failed / auth_failed), first-model-only, max_tokens=200")
 
     # T23 purpose-separated caps/buckets (v6.7 item 1)
     import io
@@ -581,6 +597,70 @@ def main():
     assert STATE["hits"] == hits24, (hits24, STATE["hits"])
     assert closed == 2
     print("T24 ok: eval gate closed without run_eval=true — 0 calls spent")
+
+    # T25 golden-case YAML gate (v6.8 item 2): the REAL eval/golden cases must
+    # strict-load (dup keys/ids rejected, jsonschema required keys, count
+    # reported) — a test that does not load the real cases does not count
+    import golden_case_loader as gcl
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import run_golden_eval as gev4
+    cases25, rep25 = gcl.load_golden_cases()  # REAL repo cases
+    assert rep25["cases"] >= 17, rep25
+    assert not rep25["errors"], rep25
+    ids25 = [c["id"] for c in cases25]
+    assert len(ids25) == len(set(ids25)), "duplicate ids slipped through"
+    # negative proof 1: duplicate mapping key (PyYAML accepts silently) -> gate rejects
+    dupdir = tmp / "dup-cases"
+    dupdir.mkdir()
+    (dupdir / "case-dup.yaml").write_text(
+        "id: golden-x-dup\ncategory: c\nseverity: low\ninput: |\n  hi\n"
+        "expected:\n  flag_keywords: []\n  flag_keywords: [b]\n",
+        encoding="utf-8")
+    try:
+        gcl.load_golden_cases(dupdir)
+        raise AssertionError("duplicate key was NOT rejected")
+    except gcl.GoldenCaseError:
+        pass
+    # negative proof 2: schema violation (missing required keys) -> gate rejects
+    (dupdir / "case-dup.yaml").write_text(
+        "id: golden-x-miss\ncategory: c\nseverity: low\n", encoding="utf-8")
+    try:
+        gcl.load_golden_cases(dupdir)
+        raise AssertionError("schema violation was NOT rejected")
+    except gcl.GoldenCaseError:
+        pass
+    # negative proof 3: duplicate case id across two files -> gate rejects
+    dupdir2 = tmp / "dup-ids"
+    dupdir2.mkdir()
+    for nm in ("case-a.yaml", "case-b.yaml"):
+        (dupdir2 / nm).write_text(
+            "id: golden-same\ncategory: c\nseverity: low\ninput: |\n  hi\n"
+            "expected: {}\n", encoding="utf-8")
+    try:
+        gcl.load_golden_cases(dupdir2)
+        raise AssertionError("duplicate id was NOT rejected")
+    except gcl.GoldenCaseError:
+        pass
+    # run_golden_eval --validate: same gate, offline, zero HTTP.
+    # NOTE: T21 redirected gev2.CASES_DIR to a temp dir (same module object) —
+    # restore the REAL cases dir first, else --validate would count 1 fixture
+    import io as _io
+    import contextlib as _cl
+    gev4.CASES_DIR = ROOT / "eval/golden"
+    hits25 = STATE["hits"]
+    old_argv25 = _sys.argv
+    _sys.argv = ["run_golden_eval.py", "--validate"]
+    buf25 = _io.StringIO()
+    try:
+        with _cl.redirect_stdout(buf25):
+            rc25 = gev4.main()
+    finally:
+        _sys.argv = old_argv25
+    assert rc25 == 0, rc25
+    assert str(rep25["cases"]) in buf25.getvalue(), buf25.getvalue()
+    assert STATE["hits"] == hits25, "--validate spent HTTP calls"
+    print("T25 ok: %d real golden cases strict-loaded; dup-key/schema/dup-id "
+          "rejection proven; --validate offline zero-spend" % rep25["cases"])
 
     srv.shutdown()
     print("test-llm-shadow: ALL PASS (mock only, no real providers touched)")

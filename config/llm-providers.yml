@@ -1,85 +1,107 @@
 # llm-providers.yml — shadow supervisor provider order
-# v6.3 item 5 origin; v6.4 item 4 caps; appendix v6.6 items 8/11 (2026-11-08):
-#   * mandated provider ORDER: (1) google-ai-studio, (2) nvidia, (3) openrouter
-#   * mandated primary model per provider (see models[0] below); every mandated
-#     id is status: unverified until a live /models check WITH the key succeeds
-#     (appendix item 8: "تحقق من كل معرّف حيًا (/models بالمفتاح) ولا تفترض") —
-#     the runtime verifier is scripts/llm_probe.py; ids that fail live
-#     verification are marked unavailable by the probe operator and reported,
-#     never silently retried.
-#   * per-provider request_timeout_s: google 120, nvidia 300, openrouter 180
-#   * openrouter/free is an ALIAS: the actual model is taken from the response
-#     "model" field and logged per call (model_actual) — never assumed.
+# Generated programmatically (v6.8 items 5/6/8, 2026-11-08) — edit via script,
+# never by re-typing. Rules encoded here:
+#   * DEFAULT CHAIN (v6.8 item 6) is exactly: google gemini-3.6-flash ->
+#     nvidia nvidia/nemotron-3-ultra-550b-a55b -> openrouter/openrouter/free.
+#     The FIRST enabled model of each provider is the provider primary; the
+#     probe calls ONLY that first model per provider (3 chat calls, not 11).
+#   * every other model is SECONDARY and DISABLED (enabled: false) — never
+#     called by probe/supervisor/eval until re-enabled explicitly.
+#   * paid OpenRouter models (kimi-k3.1-pro, mistral-large-4-0,
+#     deepseek-v4.1-flash) are disabled BY DEFAULT (v6.8 item 5): they run
+#     only with an explicitly provided paying key. HTTP 402 is terminal:
+#     needs_credit, never retried.
+#   * openrouter/free is an ALIAS: the actual routed model is read from the
+#     response "model" field and logged per call (model_actual); its rows are
+#     tagged low_confidence and NEVER enter the quality comparison (v6.8-7);
+#     eval summaries group by model_actual.
+#   * max_tokens on EVERY call (v6.8 item 5): probe 200 / supervisor 3000 /
+#     eval 3000 — without it OpenRouter bills the model default (131072) and
+#     free credits 402 instantly ([MEASURED] 2026-11-08 llm-probe.json).
+#   * Google /models matching is normalized by stripping the "models/" prefix
+#     on both sides (v6.8 item 4; first 5 raw names are logged as evidence).
 # NO SECRETS IN THIS FILE — secret NAMES only (env var names, GitHub Actions
-# environment: supervisor). Prior live ids ([MEASURED] 2026-11-08,
-# unauthenticated /models: nvidia 200/84 models, openrouter 200/460 models,
-# google 403 without key) stay as fallbacks behind each mandated primary.
+# environment: supervisor).
 version: 1
-updated: "2026-11-08"
-request_timeout_s: 120          # global default; per-provider overrides below
+updated: '2026-11-08'
+request_timeout_s: 120
 attempts_per_model: 2
 backoff_s: 5
-# 3 consecutive provider-level failures => status "down", outbox/ALERT file,
-# and (appendix item 11) a 30-minute circuit-breaker skip.
 max_consecutive_failures_for_down: 3
 circuit_breaker_skip_s: 1800
-# v6.4 item 4: hard daily call budget per provider (counted per HTTP attempt;
-# cap_reached is not a failure and still allows the next provider). 0 = off.
 daily_call_cap_per_provider: 60
-# v6.7 item 1: purpose-separated daily caps — supervisor (calls), eval
-# (calls_eval), probe (calls_probe) each count into their OWN bucket in
-# state/llm-status.json and are enforced against their OWN cap, so a capped
-# purpose can never starve another (the 2026-11-08 runs burned the shared 60
-# on eval and left the supervisor capless). Consumption is printed in the job
-# summary by scripts/llm_cap_summary.py.
-eval_daily_call_cap_per_provider: 40    # only via workflow_dispatch + run_eval=true
-probe_daily_call_cap_per_provider: 40   # small fixed-input probe (llm_probe.py)
+eval_daily_call_cap_per_provider: 40
+probe_daily_call_cap_per_provider: 40
+probe_max_tokens: 200
+supervisor_max_tokens: 3000
+eval_max_tokens: 3000
+eval_not_before_utc: '2026-11-09T00:00:00Z'
 providers:
-  # ---- (1) Google AI Studio (appendix item 8 order) ----
-  - name: google-ai-studio
-    env_secret: GOOGLE_AI_API_KEY
-    base_url: https://generativelanguage.googleapis.com/v1beta/openai
-    request_timeout_s: 120
-    verify_at_runtime: true
-    models:
-      - id: gemini-3.6-flash
-        status: unverified
-        note: "appendix item 8 mandated id; verify via /models with key at probe time; absent -> unavailable + report"
-      - id: gemini-2.5-flash
-        status: available
-        note: "prior runtime id; last shadow run (05:58Z) returned bad_response_shape on it — kept as fallback, probe re-checks"
-      - id: gemini-2.5-pro
-        status: available
-  # ---- (2) NVIDIA NIM ----
-  - name: nvidia
-    env_secret: NVIDIA_API_KEY
-    base_url: https://integrate.api.nvidia.com/v1
-    request_timeout_s: 300
-    models:
-      - id: nvidia/nemotron-3-ultra-550b-a55b
-        status: unverified
-        note: "appendix item 8 mandated id; verify via /models with key; absent -> unavailable + report"
-      - id: deepseek-ai/deepseek-v4.1-flash
-        status: available
-        note: "[MEASURED] served the 2026-11-08 05:54Z success"
-      - id: moonshotai/kimi-k2.6
-        status: available
-      - id: mistralai/mistral-large-4-1t-a52b
-        status: available
-  # ---- (3) OpenRouter ----
-  - name: openrouter
-    env_secret: OPENROUTER_API_KEY
-    base_url: https://openrouter.ai/api/v1
-    request_timeout_s: 180
-    models:
-      - id: openrouter/free
-        status: unverified
-        verify_via_models: false
-        note: "appendix item 8 mandated ALIAS; not in the /models catalog — verified only by the functional probe; actual model read from response.model and logged (model_actual); no-route -> unavailable + report"
-      - id: moonshotai/kimi-k3.1-pro
-        status: available
-        note: "[MEASURED] verified live on openrouter 2026-11-08"
-      - id: deepseek/deepseek-v4.1-flash
-        status: available
-      - id: mistralai/mistral-large-4-0
-        status: available
+- name: google-ai-studio
+  env_secret: GOOGLE_AI_API_KEY
+  base_url: https://generativelanguage.googleapis.com/v1beta/openai
+  request_timeout_s: 120
+  verify_at_runtime: true
+  models:
+  - id: gemini-3.6-flash
+    status: unverified
+    note: 'v6.8-4: primary; /models match normalized (strip models/ prefix); one live probe after fix;
+      id_absent -> unavailable + report'
+  - id: gemini-2.5-flash
+    status: available
+    enabled: false
+    note: secondary, disabled (v6.8-6); [MEASURED] 2026-11-08 id_absent against 61 listed ids (models/
+      prefix)
+  - id: gemini-2.5-pro
+    status: available
+    enabled: false
+    note: secondary, disabled (v6.8-6)
+- name: nvidia
+  env_secret: NVIDIA_API_KEY
+  base_url: https://integrate.api.nvidia.com/v1
+  request_timeout_s: 300
+  models:
+  - id: nvidia/nemotron-3-ultra-550b-a55b
+    status: unverified
+    note: 'v6.8-6: mandated primary; verify via /models at probe time; [MEASURED] 2026-11-08 http_404
+      on chat call — probe re-checks and reports'
+  - id: deepseek-ai/deepseek-v4.1-flash
+    status: available
+    enabled: false
+    note: secondary, disabled (v6.8-6); [MEASURED] served the 2026-11-08 05:54Z success
+  - id: moonshotai/kimi-k2.6
+    status: available
+    enabled: false
+    note: secondary, disabled (v6.8-6)
+  - id: mistralai/mistral-large-4-1t-a52b
+    status: available
+    enabled: false
+    note: secondary, disabled (v6.8-6)
+- name: openrouter
+  env_secret: OPENROUTER_API_KEY
+  base_url: https://openrouter.ai/api/v1
+  request_timeout_s: 180
+  models:
+  - id: openrouter/free
+    status: unverified
+    verify_via_models: false
+    low_confidence: true
+    note: 'v6.8-7: ALIAS primary; not in the /models catalog — verified only by the functional probe;
+      model_actual read from response.model and logged per call; rows tagged low_confidence, excluded
+      from the quality comparison; eval summaries group by model_actual; no-route -> unavailable'
+  - id: moonshotai/kimi-k3.1-pro
+    status: available
+    enabled: false
+    paid: true
+    note: 'v6.8-5: PAID, disabled by default; runs only with an explicit paying key; 402 -> needs_credit,
+      no retry ([MEASURED] 2026-11-08)'
+  - id: deepseek/deepseek-v4.1-flash
+    status: available
+    enabled: false
+    paid: true
+    note: 'v6.8-5: PAID, disabled by default; explicit key required to enable'
+  - id: mistralai/mistral-large-4-0
+    status: available
+    enabled: false
+    paid: true
+    note: 'v6.8-5: PAID, disabled by default; 402 -> needs_credit, no retry ([MEASURED] 2026-11-08)'

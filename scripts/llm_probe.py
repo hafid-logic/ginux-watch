@@ -89,12 +89,40 @@ def models_in_listing(parsed):
     return ids
 
 
-def probe_model(prov, model_id, api_key, timeout):
+def listing_names_ordered(parsed):
+    """Raw listing names in server order (names ONLY — v6.8 item 4 asks for
+    the first 5 raw names as diagnostic evidence, nothing else)."""
+    out = []
+    if isinstance(parsed, dict):
+        for item in parsed.get("data") or parsed.get("models") or []:
+            if isinstance(item, dict) and item.get("id"):
+                out.append(str(item["id"]))
+            elif isinstance(item, str):
+                out.append(item)
+    return out
+
+
+def normalize_model_id(mid):
+    """v6.8 item 4: Google's OpenAI-compatible /models lists ids WITH the
+    "models/" prefix (e.g. "models/gemini-2.5-flash") while config ids carry
+    the bare id — [MEASURED] every configured google id showed id_absent
+    against 61 listed ids even for gemini-2.5-flash/2.5-pro. Matching is
+    normalized on BOTH sides (strip leading "models/"); the raw names stay
+    logged for evidence."""
+    s = (mid or "").strip()
+    if s.startswith("models/"):
+        s = s[len("models/"):]
+    return s
+
+
+def probe_model(prov, model_id, api_key, timeout, max_tokens=200):
     """ONE fixed-input chat call. Returns row dict (appendix taxonomy)."""
     t0 = time.monotonic()
     payload = {"model": model_id,
                "messages": [{"role": "user", "content": PROBE_USER}],
-               "temperature": 0.0, "stream": False}
+               "temperature": 0.0, "stream": False,
+               # v6.8 item 5: explicit max_tokens on the probe call (probe=200)
+               "max_tokens": int(max_tokens or 200)}
     code, resp, raw_body = None, None, ""
     try:
         code, resp, _h, raw_body = R.http_json(
@@ -128,12 +156,18 @@ def probe_model(prov, model_id, api_key, timeout):
     elapsed = round(time.monotonic() - t0, 2)
     ok = category is None
     model_actual = None
+    resp_top_keys = None
     if isinstance(resp, dict):
         model_actual = resp.get("model")
+        # v6.8 item 4: response-shape evidence — top-level keys of the reply
+        # (names only) tell Google-compatible vs native shapes apart without
+        # storing any content
+        resp_top_keys = sorted(resp.keys())
     row = {"provider": prov["name"], "model": model_id, "ok": ok,
            "category": category or "ok", "status": "ok" if ok else "failed",
            "latency_s": elapsed, "http_status": code,
-           "model_actual": model_actual, "at": now_iso()}
+           "model_actual": model_actual, "resp_top_keys": resp_top_keys,
+           "at": now_iso()}
     if not ok:
         # no-secret excerpt (appendix item 9): first 200 chars, secret-checked
         excerpt = raw_body[:200] if raw_body else ""
@@ -146,6 +180,7 @@ def probe_model(prov, model_id, api_key, timeout):
 
 def run_probe(cfg, state):
     results = []
+    doc_models_listing = {}
     prev = {}
     try:
         prev = json.loads(PROBE_STATE.read_text(encoding="utf-8"))
@@ -155,6 +190,7 @@ def run_probe(cfg, state):
     down_threshold = int(cfg.get("max_consecutive_failures_for_down", 3))
     daily_cap = int(cfg.get("probe_daily_call_cap_per_provider",
                             cfg.get("daily_call_cap_per_provider", 60)) or 0)
+    probe_max_tokens = int(cfg.get("probe_max_tokens", 200) or 200)
 
     for prov in cfg.get("providers", []):
         name = prov["name"]
@@ -165,7 +201,8 @@ def run_probe(cfg, state):
         timeout = R.provider_timeout(cfg, prov)
         base = prov["base_url"].rstrip("/")
         enabled = [m for m in prov.get("models", [])
-                   if m.get("status") in (None, "available", "unverified")]
+                   if m.get("status") in (None, "available", "unverified")
+                   and m.get("enabled") is not False]
         if not key:
             for m in enabled:
                 results.append({"provider": name, "model": m["id"], "ok": False,
@@ -176,24 +213,41 @@ def run_probe(cfg, state):
                             "secret": secret_name, "at": now_iso()})
             continue
 
-        # phase 1: /models verification (skip routing aliases)
+        # phase 1: /models verification (skip routing aliases).
+        # v6.8 item 4: log the first 5 RAW names (names only) as evidence and
+        # match ids with the "models/" prefix stripped on BOTH sides.
         listing_ids = None
+        listing_norm = None
+        listing_sample5 = None
         code_l, parsed_l, raw_l = get_models(base, key, timeout)
         if code_l == 200 and parsed_l is not None:
             listing_ids = models_in_listing(parsed_l)
+            raw_names = listing_names_ordered(parsed_l)
+            listing_norm = {normalize_model_id(x) for x in listing_ids}
+            listing_sample5 = raw_names[:5]
+            doc_models_listing = doc_models_listing or {}
+            doc_models_listing[name] = {
+                "http_status": code_l, "ids_listed": len(listing_ids),
+                "raw_names_sample5": listing_sample5,
+                "note": "first 5 raw /models names (names only, server order)"}
         for m in enabled:
             if m.get("verify_via_models", True) and listing_ids is not None:
-                if m["id"] not in listing_ids:
+                if normalize_model_id(m["id"]) not in listing_norm:
                     results.append({
                         "provider": name, "model": m["id"], "ok": False,
                         "category": "id_absent", "status": "unavailable",
-                        "note": "absent from live /models (%d ids listed)"
-                                % len(listing_ids), "at": now_iso()})
+                        "note": "absent from live /models (%d ids listed; "
+                                "matched after stripping models/ prefix; "
+                                "raw sample: %s)"
+                                % (len(listing_ids), ", ".join(listing_sample5 or [])),
+                        "at": now_iso()})
 
-        # phase 2: fixed-input functional probe per enabled model
+        # phase 2: fixed-input functional probe — v6.8 item 6: the FIRST
+        # enabled model of each provider only (3 chat calls total, not 11);
+        # ids proven absent are skipped (zero spend).
         any_ok = False
         last_err = None
-        for m in enabled:
+        for m in enabled[:1]:
             skip = any(r["provider"] == name and r["model"] == m["id"]
                        and r.get("category") == "id_absent" for r in results)
             if skip:
@@ -205,8 +259,12 @@ def run_probe(cfg, state):
                 last_err = last_err or "cap_reached"
                 continue
             state.daily_add(name, purpose="probe")
-            row = probe_model(prov, m["id"], key, timeout)
+            row = probe_model(prov, m["id"], key, timeout,
+                              max_tokens=probe_max_tokens)
             results.append(row)
+            if not row["ok"]:
+                # v6.8 item 8: failed attempts counted by type (probe bucket)
+                state.daily_fail(name, row.get("category"), purpose="probe")
             if row["ok"]:
                 any_ok = True
                 st.update({"status": "ok", "model_current": m["id"],
@@ -259,6 +317,7 @@ def run_probe(cfg, state):
         "probe_input_sha256_16": __import__("hashlib").sha256(
             PROBE_USER.encode("utf-8")).hexdigest()[:16],
         "probe_user_field": "PROBE_USER content is a fixed public string",
+        "models_listing": doc_models_listing,
         "providers": providers,
         "llm_status_snapshot": st_prov,
         "results": (prev_results + results)[-400:],

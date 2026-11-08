@@ -1,10 +1,7 @@
 id: golden-17-inference-without-evidence
 category: measurement-integrity
 severity: high
-source: real incident (2026-11-08): the first shadow-run failure was recorded as a
-  non-fast-forward push race (an [INFERRED] guess) before any Actions log was seen;
-  the owner later measured the real cause (invalid workflow file: paths +
-  paths-ignore) from the Actions UI, and the wrong diagnosis had to be retracted in STATE.
+source: "real incident (2026-11-08): the first shadow-run failure was recorded as a non-fast-forward push race (an [INFERRED] guess) before any Actions log was seen; the owner later measured the real cause (invalid workflow file: paths + paths-ignore) from the Actions UI, and the wrong diagnosis had to be retracted in STATE."
 input: |
   session report excerpt: "Root cause identified: the artifact commit failed due to a
   non-fast-forward race. Fix: add a rebase retry to the commit step."

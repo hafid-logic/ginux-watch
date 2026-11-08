@@ -34,3 +34,19 @@
 أداة السرد عادت شجرةً بلا `work/` بينما `test -d work/clones/ginux-watch/.git`
 ناجح في نفس الثانية — السرد أخفى المجلدات المتجاهَلة بينما الفحص المباشر
 أصاب. لذلك: **لا يُقبل دليل «لا يوجد» من أداة سرد أبدًا** في هذه المسارات.
+
+## سلامة الملفات المُنتَجة (v6.8 بند 3 — قاعدة AGENTS 31)
+
+لكل ملف ينتجه الوكيل (YAML/workflow/config) قبل أي دفع:
+
+| الخطوة | الأمر | المعيار |
+| --- | --- | --- |
+| parse | `python3 -c "yaml.safe_load(...)"` أو `py_compile` | rc=0 إلزامي |
+| schema | `team/scripts/workflow-schema-check.py` (workflows) أو `team/scripts/golden_case_loader.py` (eval) أو round-trip assert (config) | صفر مخالفات |
+| round-trip | `yaml.safe_load(yaml.safe_dump(x)) == x` | تطابق تام |
+| pre-push | `sha256sum <file>` / `git hash-object <file>` | يُبلَّغ للمالك |
+| post-push | raw.githubusercontent.com على commit المُدفع (HTTP 200) + مقارنة بايت-ببايت | عدم التطابق = توقف |
+
+قواعد التوليد: yaml.safe_dump من قاموس صريح، أو استبدال بايت مع `assert raw.count(old)==1` — لا إعادة نسخ يدوية من المعروض أبدًا.
+
+دليل تجريبي [MEASURED 2026-11-08]: «source: real incident (2026-11-08): …» نص حر غير مقتبس في case-16/17 كسر تحميل eval في Actions؛ الإصلاح كان استبدال بايت واحد لكل ملف (assert عدد==1) وتحويله سطرًا مقتبسًا واحدًا بنفس المحتوى المُطوى حرفيًا، ثم بوابة T25 صارت ترفض النمط نهائيًا.

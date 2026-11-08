@@ -92,7 +92,7 @@ BYTE_PATTERNS = [
     for name, pat in SECRET_PATTERNS
 ]
 
-RETRYABLE_HTTP = {429, 500, 502, 503, 504, 529}
+RETRYABLE_HTTP = {429, 500, 502, 503, 504, 529}  # 402 (needs_credit) and 401/403 never retry (v6.8-5)
 
 
 class SecretInPayload(Exception):
@@ -130,6 +130,11 @@ def load_config(path):
 def classify_http(code):
     if code in (401, 403):
         return "auth_failed"
+    if code == 402:
+        # v6.8 item 5: payment required (e.g. OpenRouter credits) — terminal,
+        # needs_credit, never retried ([MEASURED] 2026-11-08: kimi-k3.1-pro /
+        # mistral-large-4-0 402 "requires more credits, or fewer max_tokens")
+        return "needs_credit"
     if code == 429:
         return "rate_limited"
     if 500 <= code <= 599:
@@ -292,6 +297,20 @@ class Status:
         bucket = d.setdefault(key, {})
         bucket[provider] = int(bucket.get(provider, 0)) + n
         return bucket[provider]
+
+    # v6.8 item 8: failed attempts counted BY TYPE per provider per purpose
+    # (daily.failed.<purpose_key>.<provider>.<err_class> = attempt count).
+    # cap_reached and id_absent are NOT attempts (zero-spend) and are not
+    # counted; everything that actually hit the wire and failed is.
+    def daily_fail(self, provider, err_class, purpose="supervisor"):
+        if not err_class or err_class in ("cap_reached", "id_absent"):
+            return
+        d = self.daily_ensure()
+        purpose_key = self.PURPOSE_KEYS.get(purpose, "calls")
+        per_provider = (d.setdefault("failed", {})
+                        .setdefault(purpose_key, {})
+                        .setdefault(provider, {}))
+        per_provider[err_class] = int(per_provider.get(err_class, 0)) + 1
 
     def ensure(self, name):
         return self.data["providers"].setdefault(name, {
@@ -488,6 +507,11 @@ def call_chat(cfg, state, system, user, meta_out, probe_path=None):
         for model in prov.get("models", []):
             if model.get("status") not in (None, "available", "unverified"):
                 continue
+            if model.get("enabled") is False:
+                # v6.8 items 5/6: disabled secondary/paid model — never called
+                # (paid models run only when the owner explicitly re-enables
+                # them with a key that can pay for them)
+                continue
             if gate and (name, model["id"]) in gate and not gate[(name, model["id"])]:
                 last_errors.append("%s:%s:probe-failed" % (name, model["id"]))
                 continue
@@ -498,6 +522,10 @@ def call_chat(cfg, state, system, user, meta_out, probe_path=None):
                              {"role": "user", "content": user}],
                 "temperature": 0.2,
                 "stream": False,
+                # v6.8 item 5: explicit max_tokens on EVERY call — without it
+                # OpenRouter bills the model default (131072) and free credits
+                # 402 instantly ([MEASURED] excerpt200 in llm-probe.json)
+                "max_tokens": int(cfg.get("supervisor_max_tokens", 3000) or 3000),
             }
             for attempt in range(1, attempts + 1):
                 if daily_cap and state.daily_count(name) >= daily_cap:
@@ -558,12 +586,18 @@ def call_chat(cfg, state, system, user, meta_out, probe_path=None):
                     state.save()
                     meta_out.update(provider=name, model=model["id"],
                                     model_actual=model_actual,
-                                    latency_s=elapsed, attempts=attempt)
+                                    latency_s=elapsed, attempts=attempt,
+                                    # v6.8 item 7: alias/free models carry
+                                    # low_confidence — excluded from the
+                                    # quality comparison downstream
+                                    low_confidence=bool(model.get("low_confidence")))
                     return content
-                # failed attempt -> diagnostics (appendix item 9)
+                # failed attempt -> diagnostics (appendix item 9) + v6.8-8
+                # failed-attempt counting by type
                 st["last_diag"] = diag_from_failure(
                     resp if isinstance(resp, dict) else None, code, headers,
                     raw_body, elapsed, err_class)
+                state.daily_fail(name, err_class, purpose="supervisor")
                 if err_class == "auth_failed":
                     st["status"] = "auth_failed"
                     st["last_error_class"] = "auth_failed"
@@ -655,12 +689,19 @@ def call_model(cfg, state, provider_name, model_id, system, user, meta_out):
     backoff = float(cfg.get("backoff_s", 5))
     down_threshold = int(cfg.get("max_consecutive_failures_for_down", 3))
     base = prov["base_url"].rstrip("/")
+    model_cfg = None
+    for m in prov.get("models", []):
+        if m.get("id") == model_id:
+            model_cfg = m
+            break
     payload = {
         "model": model_id,
         "messages": [{"role": "system", "content": system},
                      {"role": "user", "content": user}],
         "temperature": 0.2,
         "stream": False,
+        # v6.8 item 5: explicit max_tokens on EVERY call (eval bucket)
+        "max_tokens": int(cfg.get("eval_max_tokens", 3000) or 3000),
     }
     err_class = None
     for attempt in range(1, attempts + 1):
@@ -719,11 +760,13 @@ def call_model(cfg, state, provider_name, model_id, system, user, meta_out):
             state.save()
             meta_out.update(provider=provider_name, model=model_id,
                             model_actual=model_actual,
-                            latency_s=elapsed, attempts=attempt)
+                            latency_s=elapsed, attempts=attempt,
+                            low_confidence=bool((model_cfg or {}).get("low_confidence")))
             return content
         st["last_diag"] = diag_from_failure(
             resp if isinstance(resp, dict) else None, code, headers,
             raw_body, elapsed, err_class)
+        state.daily_fail(provider_name, err_class, purpose="eval")
         if err_class == "auth_failed":
             st["status"] = "auth_failed"
             st["last_error_class"] = "auth_failed"

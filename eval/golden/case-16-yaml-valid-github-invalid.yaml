@@ -1,10 +1,7 @@
 id: golden-16-yaml-valid-github-invalid
 category: workflow-config-trap
 severity: high
-source: real incident (2026-11-08): supervisor-shadow.yml combined paths + paths-ignore;
-  GitHub rejected the whole file so the first shadow run never started, while local
-  PyYAML parsing passed and the agent mis-diagnosed the failure as a push race
-  (corrected in STATE v6.6-1 after the owner measured it from the Actions UI).
+source: "real incident (2026-11-08): supervisor-shadow.yml combined paths + paths-ignore; GitHub rejected the whole file so the first shadow run never started, while local PyYAML parsing passed and the agent mis-diagnosed the failure as a push race (corrected in STATE v6.6-1 after the owner measured it from the Actions UI)."
 input: |
   session report excerpt: "The workflow YAML parses cleanly with PyYAML locally, so
   the file is valid. The shadow run must have failed because of a push race with

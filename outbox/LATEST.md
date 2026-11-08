@@ -1,85 +1,30 @@
----
-id: 20261108-1830Z-s56
-session: 56
-directive: v6.7-20261108
-directive_sha256: 17f6792318126da1294062bdc00708fd1ffeac5113e9e5af655160e96d899b3b
-base_head: 7d723557f837f6398dd233742480e200efedb0eb
-status: blocked (push pending deploy-key activation 20261109a)
-needs_decision: yes
-circuit_breaker: ok
-upstream_new_activity: no
----
+# Session 57 — v6.8 (2026-11-08T19:1x–19:5xZ) — بوابة YAML للحالات الذهبية، انضباط المزوّدين، سلامة الملفات
 
-# تقرير s56 — v6.7: فصل الاستدعاءات لحماية الحصة + بوابة دفع workflow + منهجية فحص الوجود
+## 0) الحالة عند الاستلام (فحص الوجود وفق METHODOLOGY — test/stat/ls-files لا أدوات السرد)
+- المفتاح 20261109a موجود (600) وactivated [MEASURED: ls-remote بالمفتاح RC=0]؛ baselines ×2 موجودتان من جلسة s56-post؛ الاستنساخ حي؛ خطاف pre-commit مركّب (أعيد تثبيته حرفيًا من نسخة s53 الأم 0775696 بعد ما محاه التدوير — bash -n سليم).
+- origin/main=7d723557 (بعد دفع a6e0663 بس56 تلاه التزام artifacts b6dadd6 من تشغيل CI 18:55:26Z) — ff محلي ثم عمل فوق b6dadd6.
 
-التوجيه المنفَّذ: v6.7-20261108 — أُرشف حرفيًا في `directives/v6.7-20261108.md` (sha256 في الرأس
-أعلاه وفهرس directives؛ مع سطر رجعي للملحق v6.6-20261108 الذي كان بلا سطر فهرس)؛ لُصق من المالك
-في هذه المحادثة ⇒ مؤهل للتنفيذ وفق القاعدة الأمنية v6.4-1a.
+## 1) الأدلة المقيسة التي بنى عليها الإصلاح ([MEASURED] من state/llm-probe.json المثبتة b6dadd6)
+- **Google:** الأيدي الثلاثة كلها id_absent مقابل 61 id مُدرجة — حتى gemini-2.5-flash/2.5-pro المدققة سابقًا. السبب المرجّح [INFERRED]: بادئة «models/» في قائمة Google المتوافقة مع OpenAI.
+- **OpenRouter 402:** kimi-k3.1-pro وmistral-large-4-0 رفضا بـ«You requested up to 131072 tokens» — لا max_tokens في النداء؛ deepseek/deepseek-v4.1-flash نجح.
+- **openrouter/free:** model_actual اختلف بين تشغيلين (liquid/lfm-2.5-2.6b:free ثم nvidia/nemotron-3.5-lightning:free) — الألياس يوجّه لنماذج متغيرة.
+- **عدّ الاستدعاءات:** البروب كان يستدعي كل نماذج الإعداد (11 نداء محتمل)؛ دلاء 2026-11-08 المشتركة حُرقت (60/60 nvidia).
 
-## 1) الملخص
+## 2) التنفيذ (بنود v6.8)
+- **1 (YAML):** case-16/17 أُصلحا **برمجيًا** باستبدال بايت مع `assert عدد==1` لكل ملف → سطر مقتبس واحد بنفس المحتوى المُطوى حرفيًا (diff = 5 أسطر → 1 لكل ملف)؛ تدقيق صارم على الحالات الـ17 كلها.
+- **2 (T25):** `team/scripts/golden_case_loader.py` — محمّل صارم يرفض المفاتيح المكررة بأي عمق + jsonschema للمفاتيح المطلوبة (المشتق مقيسًا من الحالات الفعلية: severity تشمل critical؛ expected تشمل claims_checked وpublish_requests_must_be) + رفض المعرّفات المكررة + إبلاغ العدد. T25 داخل test-llm-shadow (offline وCI وقبل الدفع) مع 3 إثباتات رفض سلبية، و`run_golden_eval.py --validate` بلا شبكة (صفر استدعاءات، مُقيس).
+- **3 (سلامة الملفات):** إجراء parse+schema+round-trip+sha256 قبل الدفع ومقارنة raw (HTTP 200) بعد الدفع — مكتوب في METHODOLOGY.md وقاعدة 31، ومُطبَّق على كل ملفات هذا الالتزام.
+- **4 (Google):** `normalize_model_id` (strip models/ على الطرفين) + تسجيل أول 5 أسماء خام (أسماء فقط) في models_listing.raw_names_sample5 + resp_top_keys بكل صف بروب + الاعتماد على واجهة Google المتوافقة مع OpenAI كما هي. probe حي واحد لـgemini-3.6-flash سيُقاس في أول تشغيل CI بعد هذا الدفع (المفتاح في أسرار Actions لا في الصندوق).
+- **5 (OpenRouter):** max_tokens صريح بكل نداء (probe 200/supervisor 3000/eval 3000)؛ المدفوعة الثلاث enabled:false؛ 402→needs_credit نهائي بلا إعادة محاولة.
+- **6 (السلسلة):** config أُعيد توليده برمجيًا (safe_dump + round-trip + assert): google gemini-3.6-flash ← nvidia nvidia/nemotron-3-ultra-550b-a55b ← openrouter/free؛ الباقي ثانوي enabled:false؛ البروب يستدعي النموذج الأول المفعّل لكل مزوّد (3 لا 11).
+- **7 (model_actual):** صفوف eval تحمل low_confidence؛ ملخص eval يُجمَّع حسب model_actual منفصلًا؛ صفوف low_confidence مستثناة من مقارنة الجودة (لا flag_recall/injection_resisted لها)؛ سجل الظل يحمل low_confidence في meta.
+- **8 (الحصص):** دلاء 60/40/40 كما هي؛ `Status.daily_fail` يعدّ المحاولات الفاشلة على السلك حسب النوع في daily.failed.<دلو>.<مزوّد> (cap_reached/id_absent صفر-إنفاق لا تُعد)؛ `eval_not_before_utc: 2026-11-09T00:00:00Z` في config وrun_golden_eval يرفض قبلها؛ ملخص الjob يعرض جدول الفشل بالنوع + نافذة الحصة وتجدد 00:00 UTC.
+- **9 (إبلاغ):** SHA الطرف وsha256 لكل ملف config مدفوع في نهاية هذا التقرير؛ لا افتراض نجاح Actions.
 
-- **v6.7-1 فصل الاستدعاءات [MEASURED من الكود والاختبارات]:** supervisor-shadow.yml على push
-  لـoutbox/** يشغّل البروب ثم المشرف فقط؛ golden eval أصبح dispatch-only بمدخل run_eval=true
-  وبوابة مزدوجة (شرط `if` في الخطوة + env GOLDEN_EVAL_GATE داخل run_golden_eval.py — أي تشغيل
-  آخر يرفض بصفر استدعاءات)؛ دلاء عدّ منفصلة لكل مزوّد في state/llm-status.json
-  (daily.calls / daily.calls_eval / daily.calls_probe) وسقوف مستقلة 60/40/40؛ خطوة جديدة في
-  نهاية الjob تعرض السقف اليومي الفعلي المستهلك في ملخص الjob (scripts/llm_cap_summary.py).
-- **الدافع القياسي [MEASURED من state/llm-status.json المثبتة عند 7d723557]:** تشغيلات
-  2026-11-08 حرقنا السقف المشترك الواحد بالكامل — nvidia 60/60، google-ai-studio 56/60،
-  openrouter 52/60 — وأسقط nvidia وgoogle بالقاطع، بينما كان eval يُشغَّل مع كل schedule عبر
-  `if: always()`. هذا هو الخلل الذي يصلحه v6.7-1.
-- **v6.7-2 [MEASURED]:** قاعدة AGENTS 27 — قبل أي دفع يلمس .github/workflows: بوابة المخطط +
-  قراءة بايتية لأسطر on:/branches/paths؛ بعد الدفع يُبلَّغ sha256 للملف المرفوع. هذه الجلسة:
-  البوابة خضراء (5 ملفات OK) والفلاتر سليمة بايتيًا (branches: - main؛ paths: outbox/** مع
-  !outbox/ALERT-llm-*؛ dispatch inputs.run_eval type boolean default false).
-- **v6.7-3 [MEASURED]:** METHODOLOGY.md جديد — فحص الوجود بtest -f/stat/git ls-files فقط
-  (أداة السرد أخفت مجلدات gitignored بينما test -d أثبت وجود الاستنساخ في نفس الثانية)؛
-  نتيجة فحص بداية الجلسة في §3 أدناه.
-- **v6.7-4:** قاعدة AGENTS 29 — التشخيص من state/llm-probe.json وstate/llm-status.json وسجل
-  الخطوة فقط؛ لا جدول نماذج قبل تشغيل eval فعلي وتثبيت eval/results في git.
-- **v6.7-5:** قاعدة AGENTS 30 — لا مفتاح خاص خارج work/keys؛ الخطاف والفحوص كما هي
-  [MEASURED: مثبت + قابل للتنفيذ].
-- **اختبارات:** test-llm-shadow 24/24 تمر offline (T23 دلاء/سقوف مقسومة، T24 بوابة eval
-  بصفر استدعاءات)؛ بوابة مخطط workflow وtree-token-scan وxref خضراء.
+## 3) الاختبارات والبوابات
+- **test-llm-shadow: 25/25** offline (أُضيف T25؛ حدّث T22 لدلالة «النموذج الأول فقط» وmax_tokens=200؛ حدّث T21 لمفتاح الملخص الجديد model_actual)؛ xref v2 أخضر؛ بوابة مخطط workflow (16 ملف) أخضر؛ tree-token-scan أخضر؛ payload scan أخضر؛ `--validate` = 17 حالة حقيقية بلا شبكة.
 
-## 2) المقاس
-
-| البند | النتيجة | الدليل |
-|---|---|---|
-| origin/main عند البدء | `7d723557f837f6398dd233742480e200efedb0eb` [MEASURED ls-remote 18:2xZ] | inbox/2026-11-08-2334Z-ls-remote.txt + fetch هذا الجلسة |
-| خيوط المراقبة | 222=2 (2026-11-06T14:58:29Z) / 207=4 (2026-11-07T16:29:20Z ممتص) / 227=1 [MEASURED مصفوفة @40f1506c مسح 16:07:46Z] | inbox/2026-11-08-1734Z-matrix-40f1506c.json |
-| upstream main / PR 227 head | 53a54add / 9ac0f544 ثابتان [MEASURED ls-remote 18:2xZ] | نفس الملف |
-| sha256 لsupervisor-shadow.yml (المحتوى المُلتزم بهذه الجلسة) | يُحتسب عند الدفع ويُبلَّغ في المحادثة (قاعدة 27 — بعد الدفع) | git show HEAD:.github/workflows/supervisor-shadow.yml |
-| اختبارات offline | 24/24 [MEASURED] | team/scripts/test-llm-shadow.py |
-| بوابة المخطط | 5 ملفات workflow OK [MEASURED] | team/scripts/workflow-schema-check.py |
-| سقوف جديدة | supervisor 60 / eval 40 / probe 40 [MEASURED من config] | config/llm-providers.yml |
-
-## 3) الشذوذ والأخطاء
-
-1. **مفتاح 20261108d فُقد بإعادة تدوير الصندوق بعد دفع s55** [MEASURED test -f: غائب] —
-   غير قابل للاسترجاع (توليد عشوائي بلا بذرة؛ مجلد work/keys gitignored ولا يبقى). الدفع
-   موقوف. **بديل وُلّد:** ed25519 بصيغة OpenSSH مباشرة في work/keys/ginux_watch_deploy-20261109a
-   (0600/dir 0700، محروس، خارج git) — العام والبصمة في المحادثة فقط، بلا بايتات خاصة في أي
-   ملف أو commit (قاعدة 30).
-2. **أداة سرد الملفات أخفت مجلدات gitignored كليًا** [MEASURED 2026-11-08 مرتين] بينما
-   test -d أثبت وجود الاستنساخ — الموثق في METHODOLOGY.md (بند 3).
-3. النسختان work/.config+work/state/watch-baseline.json محوهما بالتدوير نفسه وأُعيد بناؤهما
-   من المصفوفة المثبتة [MEASURED JSON valid].
-
-## 4) قرارات مطلوبة
-
-1. **تفعيل مفتاح 20261109a** (Allow write access) وحذف مفاتيح s51/s55 القديمة (20261108 و
-   20261108d) من deploy keys — الأمان يقتضي الحذف لأن خاصتهما لم تعد لدينا.
-2. **تشغيل أول eval فعلي** بعد الدفع: workflow_dispatch على supervisor-shadow بمدخل
-   run_eval=true (يستهلك السقف المنفصل calls_eval=40) — بعده فقط يُبنى جدول النماذج من
-   eval/results المثبتة (قاعدة 29).
-
-## 5) ما سأفعله لاحقًا ما لم أوجهك
-
-- عند تفعيل المالك للمفتاح: fetch + دفع ff وحيد (التزامات v6.7 فوق 7d723557) + تحقق
-  ls-remote + إبلاغ SHA الطرف وsha256 للworkflow المرفوع (قاعدة 27).
-- دفع هذا التقرير (مع بقية التزامات v6.7 في نفس الدفعة) سيطلق supervisor-shadow على
-  outbox/**: البروب ثم المشرف فقط (1-3 استدعاءات) — ملخص السقف سيظهر في ملخص الjob لأول مرة.
-- بعد لصق المالك نتيجة التشغيل: التشخيص من probe/status/سجل الخطوة وحده وفق قاعدة 29، إصلاح،
-  ثم اقتراح تشغيل ثانٍ.
-- cron 513171 مستمر كما هو (قراءة-فقط).
+## 4) الدفع
+- ff وحيد فوق b6dadd6 → **الطرف: يُلحق بعد الدفع** (ls-remote مقيس)؛ sha256 الملفات المدفوعة (config/workflow) أسفل التقرير؛ مقارنة raw HTTP 200 بعد الدفع.
+- المفاتيح الخاصة القديمة: لا شيء لمزّقه — work/keys تحوي 20261109a (+pub) فقط [MEASURED stat]؛ بقايا أي مفتاح قديم محوها التدوير سابقًا وmُزّقت حين وُجدت (جلسة s56).
+- التوقف: أي رد جديد على PR 207 أو issue 222 أو PR 227 أو نص يشبه توكنًا = توقف وإبلاغ فوري.
