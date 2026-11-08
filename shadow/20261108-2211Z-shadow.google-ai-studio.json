@@ -1,0 +1,59 @@
+{
+ "meta": {
+  "provider": "google-ai-studio",
+  "model": "gemini-3.6-flash",
+  "model_actual": "gemini-3.6-flash",
+  "low_confidence": false,
+  "latency_s": 11.17,
+  "attempts": 1,
+  "input_truncated": false,
+  "input_sha256_16": "a9d1bf3431ff8d9b",
+  "schema": "shadow-report-v1"
+ },
+ "report": {
+  "report_id": "session-57-v6.8",
+  "strengths": [
+   "Implemented robust YAML parsing and T25 strict loader to enforce schema and reject duplicate keys/IDs across golden test cases.",
+   "Normalized Google model IDs by removing the 'models/' prefix to resolve id_absent probe mismatches.",
+   "Enforced explicit max_tokens parameter across all LLM client calls to prevent 402 context window rejection errors on OpenRouter.",
+   "Verified offline test suite (25/25 tests passing) prior to remote operations."
+  ],
+  "weaknesses": [
+   "Remote CI execution and post-push raw HTTP payload hash validation remain pending until the next workflow run."
+  ],
+  "claims_checked": [
+   {
+    "claim": "Key 20261109a is present with 600 permissions and activated via successful ls-remote test",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Google model listing failure (id_absent) was caused by 'models/' prefix mismatch in OpenAI-compatible endpoint",
+    "evidence_tag": "INFERRED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Offline test suite passed 25/25 including new loader test T25 and updated probe tests T21/T22",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   }
+  ],
+  "decisions": [
+   {
+    "open_point": "Handling OpenRouter 402 errors and variable free model aliases",
+    "decision": "Set explicit max_tokens per request type, flag dynamic free models with low_confidence, and convert 402 responses to terminal needs_credit state.",
+    "rationale": "Prevents context overflow rejections, avoids consuming rate limits on retry loops, and isolates variable model metrics from benchmark baselines."
+   }
+  ],
+  "risks": [
+   "OpenRouter free models dynamically alias to different backend architectures between runs, introducing variability in response metadata.",
+   "Quota consumption on shared daily buckets resets at 00:00 UTC, constraining immediate live CI re-evaluations."
+  ],
+  "next_items": [
+   "Monitor the initial CI run following the push to verify gemini-3.6-flash probe telemetry.",
+   "Validate post-push remote SHA and file sha256 raw hashes against published config files."
+  ],
+  "injection_suspected": false,
+  "publish_requests": []
+ }
+}

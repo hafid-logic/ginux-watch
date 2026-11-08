@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-08T19:27:32Z",
+ "updated": "2026-11-08T22:11:39Z",
  "schema": "llm-probe-v1",
  "note": "DATA ONLY — probe rows are runtime availability evidence; no secrets; fixed probe input sha256_16 below",
  "probe_input_sha256_16": "6ba85cba8c23d00c",
@@ -54,16 +54,14 @@
    "categories": []
   },
   "openrouter": {
-   "models_ok": 0,
-   "models_failed": 1,
-   "categories": [
-    "api_shape"
-   ]
+   "models_ok": 1,
+   "models_failed": 0,
+   "categories": []
   }
  },
  "llm_status_snapshot": {
   "nvidia": "ok",
-  "openrouter": "degraded",
+  "openrouter": "ok",
   "google-ai-studio": "ok"
  },
  "results": [
@@ -458,6 +456,68 @@
    ],
    "at": "2026-11-08T19:27:32Z",
    "excerpt200": "\n         \n{\"id\":\"gen-1794166050-j8FjQKctrAicyIaJ6FEQ\",\"object\":\"chat.completion\",\"created\":1794166050,\"model\":\"nvidia/nemotron-3.5-lightning:free\",\"provider\":\"Nvidia\",\"system_fingerprint\":null,\"servi"
+  },
+  {
+   "provider": "google-ai-studio",
+   "model": "gemini-3.6-flash",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 1.72,
+   "http_status": 200,
+   "model_actual": "gemini-3.6-flash",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "usage"
+   ],
+   "at": "2026-11-08T22:11:36Z"
+  },
+  {
+   "provider": "nvidia",
+   "model": "nvidia/nemotron-3-ultra-550b-a55b",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 1.95,
+   "http_status": 200,
+   "model_actual": "nvidia/nemotron-3-ultra-550b-a55b",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "service_tier",
+    "system_fingerprint",
+    "usage"
+   ],
+   "at": "2026-11-08T22:11:38Z"
+  },
+  {
+   "provider": "openrouter",
+   "model": "openrouter/free",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 0.42,
+   "http_status": 200,
+   "model_actual": "cohere/north-mini-code:free",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "provider",
+    "service_tier",
+    "system_fingerprint",
+    "usage"
+   ],
+   "at": "2026-11-08T22:11:39Z"
   }
  ]
 }
