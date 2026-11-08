@@ -1,58 +1,77 @@
-# llm-providers.yaml — shadow supervisor provider order (directive v6.3 item 5)
-# NO SECRETS IN THIS FILE — secret NAMES only (env var names). The agent has no
-# Secrets permission; Abdelhafid adds the secrets in the repo settings
-# (environment: supervisor). Providers are tried in listed order; models within
-# a provider in listed order; entries marked unavailable/unverified are skipped
-# until runtime verification succeeds.
-#
-# Live /v1/models verification 2026-11-08 [MEASURED, unauthenticated GETs]:
-#   nvidia      integrate.api.nvidia.com/v1/models -> HTTP 200, 84 models
-#   openrouter  openrouter.ai/api/v1/models        -> HTTP 200, 460 models
-#   google      generativelanguage.googleapis.com/v1beta/models -> HTTP 403
-#               PERMISSION_DENIED without key -> unverified until key exists.
+# llm-providers.yml — shadow supervisor provider order
+# v6.3 item 5 origin; v6.4 item 4 caps; appendix v6.6 items 8/11 (2026-11-08):
+#   * mandated provider ORDER: (1) google-ai-studio, (2) nvidia, (3) openrouter
+#   * mandated primary model per provider (see models[0] below); every mandated
+#     id is status: unverified until a live /models check WITH the key succeeds
+#     (appendix item 8: "تحقق من كل معرّف حيًا (/models بالمفتاح) ولا تفترض") —
+#     the runtime verifier is scripts/llm_probe.py; ids that fail live
+#     verification are marked unavailable by the probe operator and reported,
+#     never silently retried.
+#   * per-provider request_timeout_s: google 120, nvidia 300, openrouter 180
+#   * openrouter/free is an ALIAS: the actual model is taken from the response
+#     "model" field and logged per call (model_actual) — never assumed.
+# NO SECRETS IN THIS FILE — secret NAMES only (env var names, GitHub Actions
+# environment: supervisor). Prior live ids ([MEASURED] 2026-11-08,
+# unauthenticated /models: nvidia 200/84 models, openrouter 200/460 models,
+# google 403 without key) stay as fallbacks behind each mandated primary.
 version: 1
 updated: "2026-11-08"
-request_timeout_s: 120
+request_timeout_s: 120          # global default; per-provider overrides below
 attempts_per_model: 2
 backoff_s: 5
-# 3 consecutive provider-level failures => status "down" + outbox/ALERT file
+# 3 consecutive provider-level failures => status "down", outbox/ALERT file,
+# and (appendix item 11) a 30-minute circuit-breaker skip.
 max_consecutive_failures_for_down: 3
+circuit_breaker_skip_s: 1800
 # v6.4 item 4: hard daily call budget per provider (counted per HTTP attempt;
 # cap_reached is not a failure and still allows the next provider). 0 = off.
 daily_call_cap_per_provider: 60
 providers:
+  # ---- (1) Google AI Studio (appendix item 8 order) ----
+  - name: google-ai-studio
+    env_secret: GOOGLE_AI_API_KEY
+    base_url: https://generativelanguage.googleapis.com/v1beta/openai
+    request_timeout_s: 120
+    verify_at_runtime: true
+    models:
+      - id: gemini-3.6-flash
+        status: unverified
+        note: "appendix item 8 mandated id; verify via /models with key at probe time; absent -> unavailable + report"
+      - id: gemini-2.5-flash
+        status: available
+        note: "prior runtime id; last shadow run (05:58Z) returned bad_response_shape on it — kept as fallback, probe re-checks"
+      - id: gemini-2.5-pro
+        status: available
+  # ---- (2) NVIDIA NIM ----
   - name: nvidia
     env_secret: NVIDIA_API_KEY
     base_url: https://integrate.api.nvidia.com/v1
+    request_timeout_s: 300
     models:
-      - id: moonshotai/kimi-k3.1-pro
-        status: unavailable
-        note: "requested id absent from live list; actual kimi id is kimi-k2.6"
-      - id: moonshotai/kimi-k2.6
-        status: available
+      - id: nvidia/nemotron-3-ultra-550b-a55b
+        status: unverified
+        note: "appendix item 8 mandated id; verify via /models with key; absent -> unavailable + report"
       - id: deepseek-ai/deepseek-v4.1-flash
+        status: available
+        note: "[MEASURED] served the 2026-11-08 05:54Z success"
+      - id: moonshotai/kimi-k2.6
         status: available
       - id: mistralai/mistral-large-4-1t-a52b
         status: available
-        note: "'Mistral Large 4' actual live id (family mistral-large)"
+  # ---- (3) OpenRouter ----
   - name: openrouter
     env_secret: OPENROUTER_API_KEY
     base_url: https://openrouter.ai/api/v1
+    request_timeout_s: 180
     models:
+      - id: openrouter/free
+        status: unverified
+        verify_via_models: false
+        note: "appendix item 8 mandated ALIAS; not in the /models catalog — verified only by the functional probe; actual model read from response.model and logged (model_actual); no-route -> unavailable + report"
       - id: moonshotai/kimi-k3.1-pro
         status: available
-        note: "requested id verified live on openrouter (absent on nvidia)"
+        note: "[MEASURED] verified live on openrouter 2026-11-08"
       - id: deepseek/deepseek-v4.1-flash
         status: available
       - id: mistralai/mistral-large-4-0
         status: available
-  - name: google-ai-studio
-    env_secret: GOOGLE_AI_API_KEY
-    base_url: https://generativelanguage.googleapis.com/v1beta/openai
-    verify_at_runtime: true
-    models:
-      - id: gemini-2.5-pro
-        status: unverified
-        note: "endpoint needs key (403 unauthenticated); verify on first use"
-      - id: gemini-2.5-flash
-        status: unverified

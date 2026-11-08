@@ -179,3 +179,9 @@ evidence: `reports/team-pilot.md`; re-run: `reports/metrics.md` (team v2.2 secti
 - آخر خطوة في كل تشغيل: تحديث أقسام ج وو وح من HANDOFF.md (وبقية الأقسام عند تغيّر قرار)، مع فحص الأسرار قبل الدفع:
   `grep -E "gh(p|o)_|github[_-]pat_|[@]gmail|BEGIN[ ].*PRIVATE[ ]KEY" HANDOFF.md` — أي تطابق: توقف وأبلغ ولا تدفع.
 - سقف الحجم 1200 كلمة؛ عند التجاوز لخّص القديم إلى docs/HISTORY.md وأبقِ رابطه في القسم ز.
+
+
+## قاعدة 26 — بروب المزوّدين وقاطع الدائرة (ملحق v6.6)
+- لا يُرسل المدخل الكامل لأي نموذج قبل نجاح بروبه الصغير (state/llm-probe.json)؛ معرّف غائب عن /models الحي يُوسم unavailable ويُبلَّغ ولا يُفترض متاحًا؛ openrouter/free هو ALIAS: النموذج الفعلي من حقل model بالرد ويُسجَّل (model_actual) بكل صف/رد.
+- مزوّد بفشل ≥3 متتالٍ يُتخطى 30 دقيقة (skip_until) ويُكتب ALERT؛ فشل كل المزوّدين يكتب ALERT-llm-all-providers.md — لا يُخفى أبدًا. auth_failed = needs_secret: يُذكر اسم السر في ALERT ويُتخطى بلا إعادة حتى يثبت وجوده بالبروب.
+- أي تعديل .github/workflows يبقى غير مكتمل حتى يبلغ المالك بحالة آخر تشغيل Actions (قاعدة 25) — يشمل إصلاح فلتر branches المكتشف في supervisor-shadow.yml.

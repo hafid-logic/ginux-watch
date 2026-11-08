@@ -1,7 +1,8 @@
 name: supervisor-shadow
 on:
   push:
-    branches: [main]
+    branches:
+      - main
     paths:
       - "outbox/**"
       - "!outbox/ALERT-llm-*"
@@ -22,6 +23,7 @@ jobs:
     environment: supervisor
     permissions:
       contents: write
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
 
@@ -36,6 +38,18 @@ jobs:
         run: |
           python3 team/scripts/test-trip-notify-xref.py
           python3 team/scripts/test-llm-shadow.py
+
+      # appendix v6.6 item 11: per-model probe BEFORE the supervisor — a model
+      # whose probe failed never receives the full input (router gates on
+      # state/llm-probe.json); /models verification marks absent ids
+      # unavailable (appendix item 8). Probe exit is always 0 unless the probe
+      # itself crashes on local infrastructure.
+      - name: Provider probe (fixed input + /models verification)
+        env:
+          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          GOOGLE_AI_API_KEY: ${{ secrets.GOOGLE_AI_API_KEY }}
+        run: python3 scripts/llm_probe.py
 
       - name: Shadow supervisor run
         env:
@@ -60,6 +74,7 @@ jobs:
           path: |
             shadow/
             state/llm-status.json
+            state/llm-probe.json
             eval/results/
           if-no-files-found: ignore
           retention-days: 14

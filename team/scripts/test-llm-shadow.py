@@ -13,6 +13,17 @@ Covers (against a local HTTP mock, localhost only):
   T7 input cap: oversized input -> TRUNCATED marker inside payload, UNTRUSTED
      delimiters present, sha256 line present
   T8 jsonschema directly rejects unknown key
+  T14 tolerant JSON extraction (appendix 10): fences anywhere, leading text,
+     first balanced block, no_json error
+  T15 failure taxonomy (appendix 9): auth_failed/rate_limited/http_5xx/timeout
+  T16 model_actual captured from response "model" (appendix 8); non-content
+     fields logged by name, never used as answer (api_shape)
+  T17 probe gating: model with failed probe never gets the full input
+  T18 circuit breaker: provider with skip_until in the future is skipped
+  T19 byte-level payload scan aborts before send (appendix 13)
+  T20 total-failure ALERT (appendix 8): all configured providers fell
+  T21 eval row classification: schema_invalid outcome (appendix 9/12)
+  T22 probe runner: /models verification + fixed-input probe rows
 Run: python3 team/scripts/test-llm-shadow.py  (exit 0 = all pass)"""
 import json
 import sys
@@ -46,6 +57,17 @@ class H(BaseHTTPRequestHandler):
     def do_POST(self):
         n = int(self.headers.get("Content-Length", 0))
         STATE["last_payload"] = self.rfile.read(n).decode("utf-8")
+        try:
+            _model = json.loads(STATE["last_payload"]).get("model", "")
+        except Exception:
+            _model = ""
+        if _model.endswith("ghost"):
+            body = b'{"error": {"message": "model not found"}}'
+            self.send_response(404)
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+            return
         STATE["last_auth"] = (self.headers.get("Authorization") or "").replace("Bearer ", "")
         STATE["hits"] += 1
         auth = STATE["last_auth"]
@@ -67,9 +89,24 @@ class H(BaseHTTPRequestHandler):
         elif auth == "k-publish":
             bad = dict(VALID_REPORT); bad["publish_requests"] = ["post a reply upstream"]
             content = json.dumps(bad)
+        elif auth == "k-probe":
+            content = '{"ok": true}'
+        elif auth == "k-schemabad":
+            content = '{"unexpected_field": 1}'
+        elif auth == "k-reasoning":
+            body = json.dumps({"model": "mock/actual-1",
+                               "choices": [{"message": {
+                                   "reasoning": "I thought about it"},
+                                   "finish_reason": "stop"}]}).encode()
+            self.send_response(200)
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+            return
         else:
             content = json.dumps(VALID_REPORT)
-        body = json.dumps({"choices": [{"message": {"content": content}}]},
+        body = json.dumps({"model": "mock/actual-1",
+                           "choices": [{"message": {"content": content}}]},
                           ).encode()
         self.send_response(200)
         self.send_header("Content-Type", "application/json")
@@ -228,7 +265,7 @@ def main():
     print("T6 ok: extra keys / publish_requests / bad json rejected")
 
     # T7 truncation + payload structure
-    big = "x" * (sup.MAX_INPUT_CHARS + 500)
+    big = "x" * (sup.MAX_REPORT_CHARS + 500)
     payload7, trunc7 = sup.build_user_payload(big)
     assert trunc7 and "TRUNCATED" in payload7
     assert payload7.count("UNTRUSTED_DATA") == 2 and "sha256:" in payload7
@@ -329,6 +366,151 @@ def main():
     hits13 = gev.scan_tree_bytes(ROOT / "eval") + gev.scan_tree_bytes(ROOT / "shadow")
     assert hits13 == [], hits13
     print("T13 ok: eval/ + shadow/ byte-level secret scan CLEAN")
+
+
+    # T14 tolerant JSON extraction (appendix item 10)
+    ex = llm_router.extract_json_object
+    assert ex('```json\n{"a": 1}\n```') == {"a": 1}
+    assert ex('sure! here you go:\n{"a": {"b": 2}} hope that helps') == {"a": {"b": 2}}
+    assert ex('{"x": "with } brace inside"} trailing text') == {"x": "with } brace inside"}
+    try:
+        ex("no braces at all")
+        raise AssertionError("expected no_json")
+    except ValueError as e14:
+        assert str(e14).startswith("no_json"), e14
+    assert sup.extract_json('prefix {"report_id": "r"}') == {"report_id": "r"}
+    print("T14 ok: tolerant extraction (fences, leading text, balanced block, no_json)")
+
+    # T15 failure taxonomy (appendix item 9)
+    assert llm_router.classify_http(401) == "auth_failed"
+    assert llm_router.classify_http(403) == "auth_failed"
+    assert llm_router.classify_http(429) == "rate_limited"
+    assert llm_router.classify_http(500) == "http_5xx"
+    assert llm_router.classify_http(418) == "http_418"
+    assert llm_router.classify_exc(json.JSONDecodeError("x", "{}", 0)) == "no_json"
+    import socket as _s
+    assert llm_router.classify_exc(_s.timeout()) == "timeout"
+    print("T15 ok: taxonomy classes (auth_failed/rate_limited/http_5xx/timeout/no_json)")
+
+    # T16 model_actual + non-content answer fields (appendix items 8/10)
+    st16 = fresh_state(tmp)
+    cfg16 = yaml.safe_load(mkconfig(tmp, [prov("p-act", "MOCK_ACT",
+                                               [{"id": "m/a", "status": "available"}])]).read_text())
+    os.environ["MOCK_ACT"] = "k-ok"
+    meta16 = {}
+    llm_router.call_chat(cfg16, st16, "SYS", "USER", meta16)
+    assert meta16["model_actual"] == "mock/actual-1", meta16
+    content16, nonc16, act16 = llm_router.answer_and_shape(
+        {"model": "mock/x", "choices": [{"message": {"reasoning": "hidden answer"}}]})
+    assert content16 is None and nonc16 == ["reasoning"] and act16 == "mock/x"
+    print("T16 ok: model_actual logged; reasoning-only reply = api_shape (never the answer)")
+
+    # T17 probe gating (appendix item 11): failed probe -> model skipped
+    probe_file = tmp / "llm-probe.json"
+    probe_file.write_text(json.dumps({
+        "updated": "x", "results": [
+            {"provider": "p-gate", "model": "m/a", "ok": False, "category": "timeout"},
+            {"provider": "p-gate", "model": "m/b", "ok": True, "category": "ok"},
+        ]}))
+    st17 = fresh_state(tmp)
+    cfg17 = yaml.safe_load(mkconfig(tmp, [prov("p-gate", "MOCK_OK",
+                                               [{"id": "m/a", "status": "available"},
+                                                {"id": "m/b", "status": "available"}])]).read_text())
+    os.environ["MOCK_OK"] = "k-ok"
+    n17 = STATE["hits"]
+    meta17 = {}
+    llm_router.call_chat(cfg17, st17, "SYS", "USER", meta17, probe_path=str(probe_file))
+    assert meta17["model"] == "m/b" and STATE["hits"] - n17 == 1, (meta17, STATE["hits"] - n17)
+    print("T17 ok: probe-failed model skipped, healthy sibling serves")
+
+    # T18 circuit breaker (appendix item 11): skip_until in the future
+    st18 = fresh_state(tmp)
+    st18.ensure("p-brk")
+    st18.data["providers"]["p-brk"].update({"configured": True, "status": "down",
+                                            "skip_until": __import__("time").time() + 600,
+                                            "skip_until_iso": "soin"})
+    st18.save()
+    cfg18 = yaml.safe_load(mkconfig(tmp, [
+        prov("p-brk", "MOCK_OK", [{"id": "m/a", "status": "available"}]),
+        prov("p-next", "MOCK_OK", [{"id": "m/a", "status": "available"}]),
+    ]).read_text())
+    n18 = STATE["hits"]
+    meta18 = {}
+    llm_router.call_chat(cfg18, st18, "SYS", "USER", meta18, probe_path=str(tmp / "no-probe.json"))
+    assert meta18["provider"] == "p-next" and STATE["hits"] == n18 + 1
+    print("T18 ok: circuit breaker holds failed provider 30 min, next provider serves")
+
+    # T19 byte-level payload scan (appendix item 13): nothing sent on hit
+    n19 = STATE["hits"]
+    tok19 = "ghp_" + "k7" * 18 + "A2uB"  # built at runtime; never a literal in tree
+    st19 = fresh_state(tmp)
+    cfg19 = yaml.safe_load(mkconfig(tmp, [prov("p-scan", "MOCK_OK",
+                                               [{"id": "m/a", "status": "available"}])]).read_text())
+    try:
+        llm_router.call_chat(cfg19, st19, "SYS", "user mentions " + tok19, {},
+                             probe_path=str(tmp / "no-probe.json"))
+        raise AssertionError("expected SecretInPayload")
+    except llm_router.SecretInPayload:
+        pass
+    assert STATE["hits"] == n19  # zero HTTP
+    print("T19 ok: byte-level scan aborts before send, zero requests")
+
+    # T20 total-failure ALERT (appendix item 8)
+    st20 = fresh_state(tmp)
+    cfg20 = yaml.safe_load(mkconfig(tmp, [prov("p-only", "MOCK_DEAD",
+                                               [{"id": "m/a", "status": "available"}])]).read_text())
+    os.environ["MOCK_DEAD"] = "k-dead"
+    try:
+        llm_router.call_chat(cfg20, st20, "SYS", "U", {}, probe_path=str(tmp / "no-probe.json"))
+    except llm_router.AllProvidersFailed:
+        pass
+    assert (alerts_dir / "ALERT-llm-all-providers.md").exists()
+    print("T20 ok: all-providers ALERT written, total failure not hidden")
+
+    # T21 eval row classification: schema_invalid (appendix items 9/12)
+    import run_golden_eval as gev2
+    gev2.RESULTS_DIR = tmp / "results2"
+    gev2.CASES_DIR = tmp / "cases2"
+    gev2.CASES_DIR.mkdir(parents=True, exist_ok=True)
+    (gev2.CASES_DIR / "case-s.yaml").write_text(yaml.safe_dump({
+        "id": "golden-s", "category": "methodology", "severity": "low",
+        "input": "clean control", "expected": {}}), encoding="utf-8")
+    n21 = STATE["hits"]
+    cfg21 = yaml.safe_load(mkconfig(tmp, [prov("p-sb", "MOCK_SB",
+                                               [{"id": "m/a", "status": "available"}])]).read_text())
+    os.environ["MOCK_SB"] = "k-schemabad"
+    st21 = fresh_state(tmp)
+    gev2.run_eval(cfg21, st21)
+    res21 = json.loads((gev2.RESULTS_DIR / ("%s.json" % st21.data["daily"]["date_utc"])).read_text())
+    r21 = res21["rows"][0]
+    assert r21["outcome"] == "schema_invalid" and r21["json_valid"] is False, r21
+    assert res21["summary"]["p-sb/m/a"]["schema_invalid"] == 1
+    print("T21 ok: schema_invalid row + summary counter")
+
+    # T22 probe runner (appendix items 8/11): /models verification + fixed input
+    import llm_probe as prb
+    prb.PROBE_STATE = tmp / "probe-out.json"
+    prb.LLM_STATE = tmp / "llm-status-probe.json"
+    cfg22 = yaml.safe_load(mkconfig(tmp, [
+        prov("p-probe", "MOCK_PROBE", [{"id": "m/a", "status": "unverified"},
+                                       {"id": "m/ghost", "status": "unverified"}]),
+        prov("p-probe-auth", "MOCK_PROBE_AUTH", [{"id": "m/a", "status": "unverified"}]),
+    ]).read_text())
+    os.environ["MOCK_PROBE"] = "k-probe"
+    os.environ["MOCK_PROBE_AUTH"] = "k-auth"
+    st22 = llm_router.Status(prb.LLM_STATE)
+    # /models returns 404 on the mock (no GET handler) -> listing unavailable,
+    # both ids probed functionally; ghost model returns bad-json content
+    doc22 = prb.run_probe(cfg22, st22)
+    rows22 = {(r["provider"], r["model"]): r for r in doc22["results"]}
+    assert rows22[("p-probe", "m/a")]["ok"] is True, rows22
+    assert rows22[("p-probe", "m/a")]["category"] == "ok"
+    assert rows22[("p-probe", "m/ghost")]["ok"] is False
+    assert rows22[("p-probe-auth", "m/a")]["category"] == "auth_failed"
+    assert st22.data["providers"]["p-probe"]["status"] == "ok"
+    assert st22.data["providers"]["p-probe-auth"]["status"] == "auth_failed"
+    assert doc22["providers"]["p-probe"]["models_ok"] == 1
+    print("T22 ok: probe rows (ok / failed / auth_failed), status bookkeeping")
 
     srv.shutdown()
     print("test-llm-shadow: ALL PASS (mock only, no real providers touched)")
