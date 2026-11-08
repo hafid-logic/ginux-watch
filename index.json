@@ -1,15 +1,38 @@
 {
- "generated_at_utc": "2026-11-08T16:38:31Z",
+ "generated_at_utc": "2026-11-08T21:02:41Z",
  "source_repo": "gmkurtzer/ginux",
- "item_count": 242,
+ "item_count": 243,
  "items": {
+  "250": {
+   "kind": "pr",
+   "title": "ci: skip checks when only documentation changed since a passing run",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    ".github/workflows/check.yml",
+    "Makefile",
+    "scripts/ci-changes.sh",
+    "scripts/test-ci-changes.sh"
+   ],
+   "keywords": [
+    "run",
+    "only",
+    "commit",
+    "docs",
+    "green",
+    "branch",
+    "checks",
+    "documentation",
+    "everything",
+    "hdae"
+   ]
+  },
   "249": {
    "kind": "pr",
    "title": "Gate 11: characterize and optimize syscall dispatch performance",
    "state": "open",
    "merged_at": null,
    "files": [
-    ".github/workflows/check.yml",
     "Makefile",
     "README.md",
     "config/instance-gate10-deny-socket.toml",
@@ -38,7 +61,8 @@
     "scripts/demo-gate-11.sh",
     "scripts/gate11-benchmark-guest.sh",
     "scripts/gate11-budget.awk",
-    "scripts/gate11-guest-setup.sh"
+    "scripts/gate11-guest-setup.sh",
+    "scripts/gate11-regression.awk"
    ],
    "keywords": [
     "pass",
@@ -5557,6 +5581,78 @@
   }
  },
  "keywords": {
+  "run": [
+   250,
+   182,
+   148,
+   137,
+   122,
+   61
+  ],
+  "only": [
+   250,
+   243,
+   226,
+   224,
+   223,
+   171,
+   156,
+   149,
+   135,
+   131,
+   107,
+   103,
+   102,
+   90,
+   89,
+   66,
+   9
+  ],
+  "commit": [
+   250,
+   145,
+   131,
+   107,
+   53,
+   5
+  ],
+  "docs": [
+   250
+  ],
+  "green": [
+   250
+  ],
+  "branch": [
+   250,
+   112,
+   69,
+   66
+  ],
+  "checks": [
+   250,
+   227,
+   222,
+   217,
+   216,
+   202,
+   54,
+   43
+  ],
+  "documentation": [
+   250
+  ],
+  "everything": [
+   250
+  ],
+  "hdae": [
+   250,
+   60,
+   38,
+   37,
+   36,
+   13,
+   3
+  ],
   "pass": [
    249,
    195,
@@ -5979,24 +6075,6 @@
    129,
    68,
    64
-  ],
-  "only": [
-   243,
-   226,
-   224,
-   223,
-   171,
-   156,
-   149,
-   135,
-   131,
-   107,
-   103,
-   102,
-   90,
-   89,
-   66,
-   9
   ],
   "operations": [
    243
@@ -6633,15 +6711,6 @@
   ],
   "222": [
    227
-  ],
-  "checks": [
-   227,
-   222,
-   217,
-   216,
-   202,
-   54,
-   43
   ],
   "profile": [
    227,
@@ -7613,13 +7682,6 @@
   "building": [
    183
   ],
-  "run": [
-   182,
-   148,
-   137,
-   122,
-   61
-  ],
   "targets": [
    182,
    45
@@ -8188,13 +8250,6 @@
   "create": [
    146
   ],
-  "commit": [
-   145,
-   131,
-   107,
-   53,
-   5
-  ],
   "sectors": [
    145
   ],
@@ -8631,11 +8686,6 @@
   ],
   "false": [
    112
-  ],
-  "branch": [
-   112,
-   69,
-   66
   ],
   "signaled": [
    111
@@ -9237,14 +9287,6 @@
   ],
   "growing": [
    60
-  ],
-  "hdae": [
-   60,
-   38,
-   37,
-   36,
-   13,
-   3
   ],
   "owned": [
    59
