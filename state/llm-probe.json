@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-08T18:21:49Z",
+ "updated": "2026-11-08T18:55:18Z",
  "schema": "llm-probe-v1",
  "note": "DATA ONLY — probe rows are runtime availability evidence; no secrets; fixed probe input sha256_16 below",
  "probe_input_sha256_16": "6ba85cba8c23d00c",
@@ -13,10 +13,11 @@
    ]
   },
   "nvidia": {
-   "models_ok": 0,
-   "models_failed": 4,
+   "models_ok": 2,
+   "models_failed": 2,
    "categories": [
-    "cap_reached"
+    "http_404",
+    "timeout"
    ]
   },
   "openrouter": {
@@ -28,7 +29,7 @@
   }
  },
  "llm_status_snapshot": {
-  "nvidia": "down",
+  "nvidia": "ok",
   "openrouter": "ok",
   "google-ai-studio": "down"
  },
@@ -242,6 +243,125 @@
    "model_actual": null,
    "at": "2026-11-08T18:21:49Z",
    "excerpt200": "{\"error\":{\"message\":\"This request requires more credits, or fewer max_tokens. You requested up to 131072 tokens, but can only afford 19039. To increase, visit https://openrouter.ai/settings/credits an"
+  },
+  {
+   "provider": "google-ai-studio",
+   "model": "gemini-3.6-flash",
+   "ok": false,
+   "category": "id_absent",
+   "status": "unavailable",
+   "note": "absent from live /models (61 ids listed)",
+   "at": "2026-11-08T18:48:22Z"
+  },
+  {
+   "provider": "google-ai-studio",
+   "model": "gemini-2.5-flash",
+   "ok": false,
+   "category": "id_absent",
+   "status": "unavailable",
+   "note": "absent from live /models (61 ids listed)",
+   "at": "2026-11-08T18:48:22Z"
+  },
+  {
+   "provider": "google-ai-studio",
+   "model": "gemini-2.5-pro",
+   "ok": false,
+   "category": "id_absent",
+   "status": "unavailable",
+   "note": "absent from live /models (61 ids listed)",
+   "at": "2026-11-08T18:48:22Z"
+  },
+  {
+   "provider": "nvidia",
+   "model": "nvidia/nemotron-3-ultra-550b-a55b",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 2.4,
+   "http_status": 200,
+   "model_actual": "nvidia/nemotron-3-ultra-550b-a55b",
+   "at": "2026-11-08T18:48:25Z"
+  },
+  {
+   "provider": "nvidia",
+   "model": "deepseek-ai/deepseek-v4.1-flash",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 102.52,
+   "http_status": 200,
+   "model_actual": "deepseek-ai/deepseek-v4.1-flash",
+   "at": "2026-11-08T18:50:07Z"
+  },
+  {
+   "provider": "nvidia",
+   "model": "moonshotai/kimi-k2.6",
+   "ok": false,
+   "category": "http_404",
+   "status": "failed",
+   "latency_s": 0.12,
+   "http_status": 404,
+   "model_actual": null,
+   "at": "2026-11-08T18:50:07Z",
+   "excerpt200": "{\"status\":404,\"title\":\"Not Found\",\"detail\":\"Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'LnSjIpdxJh2PwziPHjdtVuWaOvrJFXlOProZdzSobiQ'\"}"
+  },
+  {
+   "provider": "nvidia",
+   "model": "mistralai/mistral-large-4-1t-a52b",
+   "ok": false,
+   "category": "timeout",
+   "status": "failed",
+   "latency_s": 300.09,
+   "http_status": null,
+   "model_actual": null,
+   "at": "2026-11-08T18:55:07Z",
+   "excerpt200": "The read operation timed out"
+  },
+  {
+   "provider": "openrouter",
+   "model": "openrouter/free",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 8.06,
+   "http_status": 200,
+   "model_actual": "xingchen-agi/xing4.0-29b-a4b:free",
+   "at": "2026-11-08T18:55:16Z"
+  },
+  {
+   "provider": "openrouter",
+   "model": "moonshotai/kimi-k3.1-pro",
+   "ok": false,
+   "category": "http_402",
+   "status": "failed",
+   "latency_s": 0.11,
+   "http_status": 402,
+   "model_actual": null,
+   "at": "2026-11-08T18:55:16Z",
+   "excerpt200": "{\"error\":{\"message\":\"This request requires more credits, or fewer max_tokens. You requested up to 131072 tokens, but can only afford 3997. To increase, visit https://openrouter.ai/settings/credits and"
+  },
+  {
+   "provider": "openrouter",
+   "model": "deepseek/deepseek-v4.1-flash",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 1.62,
+   "http_status": 200,
+   "model_actual": "deepseek/deepseek-v4.1-flash",
+   "at": "2026-11-08T18:55:18Z"
+  },
+  {
+   "provider": "openrouter",
+   "model": "mistralai/mistral-large-4-0",
+   "ok": false,
+   "category": "http_402",
+   "status": "failed",
+   "latency_s": 0.08,
+   "http_status": 402,
+   "model_actual": null,
+   "at": "2026-11-08T18:55:18Z",
+   "excerpt200": "{\"error\":{\"message\":\"This request requires more credits, or fewer max_tokens. You requested up to 131072 tokens, but can only afford 19037. To increase, visit https://openrouter.ai/settings/credits an"
   }
  ]
 }
