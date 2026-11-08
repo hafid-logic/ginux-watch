@@ -22,6 +22,8 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Token-pattern scan of tree (v6.6 item 5; fails on any full-form token except ghp_SYNTHETIC-*)
+        run: python3 scripts/tree-token-scan.py
       - name: Lease sweep (expired claim_until -> stale + requeue)
         run: python3 team/scripts/lease-sweep.py
       - name: Upstream parser-crate watch (v3.2 §2)

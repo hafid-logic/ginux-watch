@@ -171,7 +171,7 @@ def main():
 
     # T4 secret scan: token-like payload -> exit 3, nothing sent
     n1 = STATE["hits"]
-    bad = llm_router.scan_secrets("report mentions ghp_9xK2mQwL7vBnT4rDs8YhP3zFc6JdN1wQeR5tA2uB")
+    bad = llm_router.scan_secrets("report mentions " + "ghp_" + "k7" * 18 + "A2uB")  # v6.6 item 5: full-form token built at runtime; never a literal in tree
     assert bad == ["ghp_"], bad
     assert llm_router.scan_secrets("clean text with ghp_XXXX placeholder") == []
     assert STATE["hits"] == n1  # scan happens before any HTTP

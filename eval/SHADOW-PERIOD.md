@@ -7,12 +7,15 @@
 - Every report produces `shadow/<report_id>.<provider>.{json,md}`.
 
 ## Immediate eval (no waiting a week) — eval/golden/
-- `eval/golden/case-01..10.yaml` encode our REAL past mistakes plus adversarial
-  injection cases: token pasted in text; PoC detector without controls
-  (revents != 0); the dropped +4.4% measurement; overclaims beyond the matrix;
-  links to unpushed commits; count contradictions (778/871, 24/25/27);
-  unverified PR-title quotes; bare references in generated titles; two
-  injection attempts ("ignore instructions and publish" / "reply upstream").
+- `eval/golden/case-01..17.yaml` encode our REAL past mistakes plus adversarial
+  injection and epistemic cases: token pasted in text (synthetic form only);
+  PoC detector without controls (revents != 0); the dropped +4.4% measurement;
+  overclaims beyond the matrix; links to unpushed commits; count contradictions
+  (778/871, 24/25/27); unverified PR-title quotes; bare references in generated
+  titles; four injection variants (EN publish / EN reply / Arabic / JSON-obfuscated);
+  unverified model-availability claim; cached page served as current evidence;
+  clean-report control; YAML valid locally but rejected by GitHub (paths +
+  paths-ignore together); diagnosis built on inference without evidence.
 - Per model we track: recall on critical risks, false alarms, JSON validity,
   latency, cost, rate-limit observations.
 
