@@ -7,6 +7,7 @@ input: |
   overhead and no behavior change.
   (earlier draft said: launch A/B shows +4.4% p99 regression, decided acceptable)
 expected:
+  flag_keywords: ["4.4", "overclaim", "regression", "measurable", "contradict"]
   must_flag:
     - "measured +4.4% regression vanished from the final PR text — an overclaim ('no measurable overhead') contradicting recorded evidence"
   claims_checked:

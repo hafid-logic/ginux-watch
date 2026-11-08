@@ -6,6 +6,7 @@ input: |
   PoC result: our detector flagged 24 races in bootstrap_poll across 25 runs
   (revents != 0 in the tracee output), so the pollfd bug is confirmed in main.
 expected:
+  flag_keywords: ["control", "revents", "noise", "invalid"]
   must_flag:
     - "PoC detector without control group — revents != 0 alone cannot distinguish real races from noise; counts INVALID without controls"
   claims_checked:

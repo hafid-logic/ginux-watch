@@ -5,6 +5,7 @@ source: real incident — watch issues were auto-created with titles containing 
 input: |
   Trip notification title emitted by a generator: "TRIPPED: #207 changed (comments 4->5)"
 expected:
+  flag_keywords: ["bare", "reference", "thread", "PR 207", "xref"]
   must_flag:
     - "generated GitHub-surface text must use thread-207 / PR 207 style, never a bare reference (AGENTS rule 21, xref gate)"
 false_positive_guards:

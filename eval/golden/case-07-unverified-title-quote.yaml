@@ -6,6 +6,7 @@ input: |
   Reply draft: as the maintainer wrote in "Add overflow checks restoration
   (final v3)" I will... (actual live PR title: "Restore overflow checks in channel bootstrap")
 expected:
+  flag_keywords: ["unverified", "title", "verify", "quote"]
   must_flag:
     - "quoted upstream title unverified against live data (CLEAR sources: API/ls-remote; HTML=BLIND) — mark UNVERIFIED or verify first"
 false_positive_guards:

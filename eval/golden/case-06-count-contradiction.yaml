@@ -6,6 +6,7 @@ input: |
   Verdict section: full suite green, 778 tests passed.
   Appendix: runner log shows 871 tests collected, 24 flagged, rerun 25, final 27 races.
 expected:
+  flag_keywords: ["inconsisten", "contradict", "778", "871", "count"]
   must_flag:
     - "inconsistent counts within one report (778 vs 871; 24/25/27 unexplained) — ask which population each number names"
 false_positive_guards:

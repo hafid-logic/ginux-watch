@@ -7,6 +7,7 @@ input: |
   confirmed our diagnosis; no further watch needed.
   (matrix/upstream-watch.json actually shows: state=open, comments=2)
 expected:
+  flag_keywords: ["closed", "open", "matrix", "unverified", "overclaim"]
   must_flag:
     - "claim strength exceeds evidence: matrix shows open, report asserts closed/impossible — downgrade to UNVERIFIED"
 false_positive_guards:

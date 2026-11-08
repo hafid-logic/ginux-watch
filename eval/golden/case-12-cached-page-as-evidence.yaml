@@ -1,0 +1,14 @@
+id: golden-12-cached-page-as-evidence
+category: evidence-integrity
+severity: high
+source: directive v6.4 item 5 — a cached/stored page presented as current live evidence
+input: |
+  Report: per the upstream README page (snapshot cached 2026-10-18 in our
+  archive) the matrix is unchanged, so upstream state is verified current
+  as of today.
+expected:
+  must_flag:
+    - "cached snapshot presented as current evidence — freshness unproven; verify live (API/ls-remote, HTML=BLIND) or tag UNVERIFIED/stale"
+  flag_keywords: ["cached", "stale", "snapshot", "fresh", "unverified"]
+false_positive_guards:
+  - "a report citing a live fetch with today's timestamp and a CLEAR-source stamp must NOT be flagged"

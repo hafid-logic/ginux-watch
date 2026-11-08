@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""llm_router.py — ordered multi-provider LLM router (directive v6.3 item 6).
+"""llm_router.py — ordered multi-provider LLM router (directive v6.3 item 6,
+extended by directive v6.4 item 4: daily per-provider call caps, rate-limit
+observation on every response, directed per-model calls for eval, idempotent
+ALERT files).
 
 Policy:
   - per request: timeout 120s (config request_timeout_s), 2 attempts with
@@ -7,11 +10,18 @@ Policy:
   - 401/403 -> error class auth_failed, NO retry, skip to next PROVIDER.
   - 429 / 5xx / timeout / network / bad JSON -> retryable; attempts exhausted
     -> next MODEL, then next PROVIDER.
+  - daily_call_cap_per_provider (v6.4): hard per-provider daily budget counted
+    per HTTP attempt; cap_reached is NOT a failure (no ALERT, no
+    consecutive_failures increment); remaining providers still serve.
   - state/llm-status.json: per provider {configured, status, model_current,
-    last_success, last_error_class, consecutive_failures, rate_limit}.
+    last_success, last_error_class, consecutive_failures, rate_limit,
+    retry_after_s} plus {"daily": {date_utc, calls per provider}}.
+  - rate-limit headers (x-ratelimit-*, Retry-After) recorded on success AND
+    on 429/5xx errors (v6.4 item 4 "record observed rate limits").
   - 3 consecutive provider-level failures -> status "down" and an
     outbox/ALERT-llm-<provider>.md file is written (error classes only, no
-    secrets, idempotent overwrite).
+    secrets, idempotent — unchanged state never rewrites the file so the
+    outbox/ push trigger cannot loop).
   - the workflow fails ONLY if every CONFIGURED provider fell; with zero
     configured providers the router reports "awaiting secrets" and exits 2
     (soft) — absence of keys is a config state, not an outage.
@@ -47,6 +57,8 @@ SECRET_PATTERNS = [
     ("AKIA", re.compile(r"AKIA[0-9A-Z]{16}")),
     ("xox", re.compile(r"xox[baprs]-[A-Za-z0-9-]{10,}")),
     ("glpat-", re.compile(r"glpat-[A-Za-z0-9_-]{15,}")),
+    ("nvapi_", re.compile(r"nvapi-[A-Za-z0-9_-]{20,}")),
+    ("sk_", re.compile(r"\bsk-[A-Za-z0-9][A-Za-z0-9_-]{15,}\b")),
     ("PRIVATE_KEY", re.compile(r"-----BEGIN [A-Z ]*PRIVATE KEY-----")),
 ]
 
@@ -77,7 +89,8 @@ def load_config(path):
 class Status:
     def __init__(self, path):
         self.path = Path(path)
-        self.data = {"updated": None, "providers": {}, "last_call": None}
+        self.data = {"updated": None, "providers": {}, "last_call": None,
+                     "daily": {"date_utc": None, "calls": {}}}
         if self.path.exists():
             try:
                 self.data = json.loads(self.path.read_text(encoding="utf-8"))
@@ -85,6 +98,26 @@ class Status:
                 pass
         if not isinstance(self.data.get("providers"), dict):
             self.data["providers"] = {}
+        self.daily_ensure()
+
+    def daily_ensure(self):
+        """Per-provider daily call accounting (v6.4 item 4); resets at UTC date."""
+        today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        d = self.data.get("daily")
+        if not isinstance(d, dict) or d.get("date_utc") != today:
+            d = {"date_utc": today, "calls": {}}
+            self.data["daily"] = d
+        if not isinstance(d.get("calls"), dict):
+            d["calls"] = {}
+        return d
+
+    def daily_count(self, provider):
+        return int(self.daily_ensure()["calls"].get(provider, 0))
+
+    def daily_add(self, provider, n=1):
+        d = self.daily_ensure()
+        d["calls"][provider] = int(d["calls"].get(provider, 0)) + n
+        return d["calls"][provider]
 
     def ensure(self, name):
         return self.data["providers"].setdefault(name, {
@@ -101,20 +134,28 @@ class Status:
 
 
 def write_alert(provider, st, error_class):
-    """outbox/ALERT-llm-<provider>.md — no secrets, error classes only."""
-    ALERTS_DIR.mkdir(parents=True, exist_ok=True)
+    """outbox/ALERT-llm-<provider>.md — no secrets, error classes only.
+    Idempotent (v6.4 item 4): an unchanged (status, error_class) pair never
+    rewrites the file, so timestamp churn cannot retrigger the outbox path."""
     p = ALERTS_DIR / ("ALERT-llm-%s.md" % provider)
+    alert_key = "%s:%s" % (st.get("status", "down"), error_class)
+    if st.get("last_alert_key") == alert_key and p.exists():
+        return
+    ALERTS_DIR.mkdir(parents=True, exist_ok=True)
     body = (
         "# ALERT: LLM provider %s — %s\n\n"
         "- time: %s\n- status: %s\n- error_class: %s\n"
         "- consecutive_failures: %s\n"
+        "- retry_after_s: %s\n"
         "- action: no automatic retry storm; the next session report opens "
         "with the providers status line and names the missing/failed secret\n"
         % (st.get("status", "down"), provider, now_iso(),
            st.get("status", "down"), error_class,
-           st.get("consecutive_failures", 0))
+           st.get("consecutive_failures", 0),
+           st.get("retry_after_s", "n/a"))
     )
     p.write_text(body, encoding="utf-8")
+    st["last_alert_key"] = alert_key
 
 
 def http_json(url, payload, api_key, timeout):
@@ -141,6 +182,17 @@ def extract_rate_limit(headers):
     return out or None
 
 
+def capture_rate_limit(st, headers):
+    """Record observed rate-limit headers on success AND error paths (v6.4)."""
+    rl = extract_rate_limit(headers)
+    if rl:
+        st["rate_limit"] = rl
+    ra = (headers or {}).get("Retry-After") or (headers or {}).get("retry-after")
+    if ra:
+        st["retry_after_s"] = str(ra)
+    return rl
+
+
 def call_chat(cfg, state, system, user, meta_out):
     """Try providers/models in order. Returns response text; fills meta_out.
     Raises AllProvidersFailed (detail in .detail) when nothing configured or
@@ -150,6 +202,10 @@ def call_chat(cfg, state, system, user, meta_out):
     attempts = int(cfg.get("attempts_per_model", 2))
     backoff = float(cfg.get("backoff_s", 5))
     down_threshold = int(cfg.get("max_consecutive_failures_for_down", 3))
+    # v6.4 item 4: hard daily budget per provider, counted per HTTP attempt.
+    # 0 = unlimited. cap_reached is NOT a provider failure: no ALERT, no
+    # consecutive_failures increment; remaining providers still serve.
+    daily_cap = int(cfg.get("daily_call_cap_per_provider", 60) or 0)
 
     configured = 0
     last_errors = []
@@ -172,6 +228,7 @@ def call_chat(cfg, state, system, user, meta_out):
         for model in prov.get("models", []):
             if model.get("status") not in (None, "available"):
                 continue
+            cap_hit = False
             err_class = None
             payload = {
                 "model": model["id"],
@@ -181,6 +238,11 @@ def call_chat(cfg, state, system, user, meta_out):
                 "stream": False,
             }
             for attempt in range(1, attempts + 1):
+                if daily_cap and state.daily_count(name) >= daily_cap:
+                    cap_hit = True
+                    err_class = "cap_reached"
+                    break
+                state.daily_add(name)
                 t0 = time.monotonic()
                 code, headers, resp, err_body = None, {}, None, ""
                 try:
@@ -193,6 +255,7 @@ def call_chat(cfg, state, system, user, meta_out):
                         err_body = e.read().decode("utf-8")[:200]
                     except Exception:
                         err_body = ""
+                    capture_rate_limit(st, headers)
                     if code in (401, 403):
                         st["status"] = "auth_failed"
                         st["last_error_class"] = "auth_failed"
@@ -241,6 +304,13 @@ def call_chat(cfg, state, system, user, meta_out):
                     time.sleep(backoff)
             if auth_broken:
                 break  # skip remaining models of this provider
+            if cap_hit:
+                st["last_error_class"] = "cap_reached"
+                state.data["last_call"] = {
+                    "provider": name, "outcome": "cap_reached", "at": now_iso()}
+                state.save()
+                last_errors.append("%s:cap_reached" % name)
+                break  # provider is capped for today; stop burning models
             # attempts exhausted for this model -> count a provider-level failure
             st["model_current"] = model["id"]
             st["last_error_class"] = err_class
@@ -260,6 +330,120 @@ def call_chat(cfg, state, system, user, meta_out):
     e = AllProvidersFailed(detail)
     e.detail = detail
     raise e
+
+
+def _fail(detail):
+    e = AllProvidersFailed(detail)
+    e.detail = detail
+    return e
+
+
+def call_model(cfg, state, provider_name, model_id, system, user, meta_out):
+    """Directed call to ONE (provider, model) — eval path (v6.4 items 4/6).
+    Same timeout/attempt/backoff policy and daily-cap accounting as call_chat;
+    rate-limit headers captured on success AND on HTTP errors; auth_failed
+    persists in status. Raises AllProvidersFailed with .detail = error class;
+    never falls back to another provider (eval needs per-model rows)."""
+    prov = None
+    for p in cfg.get("providers", []):
+        if p.get("name") == provider_name:
+            prov = p
+            break
+    if prov is None:
+        raise _fail("unknown-provider:%s" % provider_name)
+    key = os.environ.get(prov.get("env_secret", ""), "").strip()
+    if not key:
+        raise _fail("unconfigured:%s" % provider_name)
+    st = state.ensure(provider_name)
+    st["configured"] = True
+    state.save()
+    daily_cap = int(cfg.get("daily_call_cap_per_provider", 60) or 0)
+    if daily_cap and state.daily_count(provider_name) >= daily_cap:
+        st["last_error_class"] = "cap_reached"
+        state.save()
+        raise _fail("cap_reached:%s" % provider_name)
+    timeout = int(cfg.get("request_timeout_s", 120))
+    attempts = int(cfg.get("attempts_per_model", 2))
+    backoff = float(cfg.get("backoff_s", 5))
+    down_threshold = int(cfg.get("max_consecutive_failures_for_down", 3))
+    base = prov["base_url"].rstrip("/")
+    payload = {
+        "model": model_id,
+        "messages": [{"role": "system", "content": system},
+                     {"role": "user", "content": user}],
+        "temperature": 0.2,
+        "stream": False,
+    }
+    err_class = None
+    for attempt in range(1, attempts + 1):
+        if daily_cap and state.daily_count(provider_name) >= daily_cap:
+            err_class = "cap_reached"
+            break
+        state.daily_add(provider_name)
+        t0 = time.monotonic()
+        code, headers, resp, text = None, {}, None, None
+        retryable = True
+        try:
+            code, resp, headers = http_json(
+                base + "/chat/completions", payload, key, timeout)
+        except urllib.error.HTTPError as e:
+            code = e.code
+            headers = dict(e.headers or {})
+            capture_rate_limit(st, headers)
+            if code in (401, 403):
+                st["status"] = "auth_failed"
+                st["last_error_class"] = "auth_failed"
+                st["model_current"] = model_id
+                state.data["last_call"] = {
+                    "provider": provider_name, "model": model_id,
+                    "outcome": "auth_failed", "at": now_iso()}
+                state.save()
+                write_alert(provider_name, st, "auth_failed")
+                raise _fail("auth_failed:%s" % provider_name)
+            retryable = code in RETRYABLE_HTTP
+            err_class = "http_%d" % code
+        except Exception as e:
+            retryable = True
+            err_class = type(e).__name__.lower()
+        else:
+            retryable = False
+        if not retryable:
+            try:
+                text = resp["choices"][0]["message"]["content"]
+            except Exception:
+                retryable = True
+                err_class = "bad_response_shape"
+        if text is not None:
+            latency = round(time.monotonic() - t0, 2)
+            st.update({
+                "status": "ok", "model_current": model_id,
+                "last_success": now_iso(), "last_error_class": None,
+                "consecutive_failures": 0,
+                "rate_limit": extract_rate_limit(headers),
+            })
+            state.data["last_call"] = {
+                "provider": provider_name, "model": model_id,
+                "latency_s": latency, "outcome": "ok", "at": now_iso()}
+            state.save()
+            meta_out.update(provider=provider_name, model=model_id,
+                            latency_s=latency, attempts=attempt)
+            return text
+        if attempt < attempts:
+            time.sleep(backoff)
+    cf = int(st.get("consecutive_failures", 0)) + 1
+    st["consecutive_failures"] = cf
+    st["model_current"] = model_id
+    st["last_error_class"] = err_class
+    if cf >= down_threshold:
+        st["status"] = "down"
+        write_alert(provider_name, st, err_class)
+    else:
+        st["status"] = "degraded"
+    state.data["last_call"] = {
+        "provider": provider_name, "model": model_id,
+        "outcome": err_class, "at": now_iso()}
+    state.save()
+    raise _fail("%s:%s:%s" % (provider_name, model_id, err_class))
 
 
 def main():

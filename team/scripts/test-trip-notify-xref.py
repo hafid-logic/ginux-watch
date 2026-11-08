@@ -23,7 +23,6 @@ L2 STATIC — every text-generator SOURCE file is scanned for unwrapped
 ALLOWLIST (files whose FUNCTION requires known-bad samples; their samples are
 offline test data, never emitted to GitHub surfaces):
      - this file (positive controls for the patterns)
-     - team/scripts/issue-sanitize.py (selftest samples)
 
 Style rule (directive v6.3): automated texts say 'PR 207' / 'thread 222',
 never '#207'. No network, no gh, no git. Run: python3
@@ -37,7 +36,6 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]  # repo root (this file: team/scripts/)
 ALLOWLIST = {
     "team/scripts/test-trip-notify-xref.py",  # positive controls (this file)
-    "team/scripts/issue-sanitize.py",         # selftest samples
 }
 
 # --- forbidden cross-reference forms (outside backtick spans) ---

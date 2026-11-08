@@ -79,10 +79,12 @@ class H(BaseHTTPRequestHandler):
         self.wfile.write(body)
 
 
-def mkconfig(tmp, providers):
+def mkconfig(tmp, providers, cap=None):
     cfg = {"version": 1, "request_timeout_s": 5, "attempts_per_model": 2,
            "backoff_s": 0.05, "max_consecutive_failures_for_down": 3,
            "providers": providers}
+    if cap is not None:
+        cfg["daily_call_cap_per_provider"] = cap
     p = tmp / "cfg.yml"
     p.write_text(yaml.safe_dump(cfg), encoding="utf-8")
     return p
@@ -241,6 +243,92 @@ def main():
     except jsonschema.ValidationError:
         pass
     print("T8 ok: strict schema rejects unknown key")
+
+    # T9 daily cap per provider (v6.4 item 4): sends stop at the cap,
+    # cap_reached is not a failure (no ALERT), fallback provider still serves
+    n9 = STATE["hits"]
+    cfgtxt9 = mkconfig(tmp, [
+        prov("p-cap", "MOCK_DEAD", [{"id": "m/a", "status": "available"},
+                                    {"id": "m/b", "status": "available"}]),
+        prov("p-ok9", "MOCK_OK9", [{"id": "m/a", "status": "available"}]),
+    ], cap=3)
+    os.environ["MOCK_OK9"] = "k-ok"
+    st9 = fresh_state(tmp)
+    meta9 = {}
+    llm_router.call_chat(yaml.safe_load(cfgtxt9.read_text()), st9, "SYS", "USER", meta9)
+    assert meta9["provider"] == "p-ok9", meta9
+    assert STATE["hits"] - n9 == 4  # 3 sends on p-cap (4th blocked) + 1 on p-ok9
+    assert st9.data["daily"]["calls"]["p-cap"] == 3
+    assert st9.data["daily"]["calls"]["p-ok9"] == 1
+    assert st9.data["providers"]["p-cap"]["last_error_class"] == "cap_reached"
+    assert st9.data["providers"]["p-cap"]["consecutive_failures"] == 1
+    assert not (alerts_dir / "ALERT-llm-p-cap.md").exists()
+    print("T9 ok: daily cap blocks the 4th send, no ALERT, fallback intact")
+
+    # T10 directed call_model (v6.4 items 4/6): per-model eval path, no fallback
+    st10 = fresh_state(tmp)
+    cfg10 = yaml.safe_load(mkconfig(tmp, [
+        prov("p-dir", "MOCK_DIR", [{"id": "m/only", "status": "available"}]),
+    ]).read_text())
+    os.environ["MOCK_DIR"] = "k-ok"
+    meta10 = {}
+    out10 = llm_router.call_model(cfg10, st10, "p-dir", "m/only", "SYS", "USER", meta10)
+    assert "report_id" in out10 and meta10["model"] == "m/only", meta10
+    try:
+        llm_router.call_model(cfg10, st10, "p-nope", "m/x", "SYS", "USER", {})
+        raise AssertionError("unknown provider must fail")
+    except llm_router.AllProvidersFailed as e10:
+        assert "unknown-provider" in e10.detail, e10.detail
+    print("T10 ok: directed call_model + unknown-provider failure")
+
+    # T11 ALERT idempotence (v6.4 item 4): unchanged (status, class) -> no rewrite
+    st11 = {"status": "down", "consecutive_failures": 3, "retry_after_s": "2"}
+    llm_router.write_alert("p-dedupe", st11, "http_500")
+    f11 = alerts_dir / "ALERT-llm-p-dedupe.md"
+    b1 = f11.read_bytes()
+    import time as _time
+    _time.sleep(0.02)
+    llm_router.write_alert("p-dedupe", st11, "http_500")
+    assert f11.read_bytes() == b1  # byte-identical: no timestamp churn
+    llm_router.write_alert("p-dedupe", st11, "http_503")
+    assert f11.read_bytes() != b1  # new error class -> rewritten
+    print("T11 ok: ALERT dedupe prevents outbox churn")
+
+    # T12 golden eval runner (v6.4 items 4-6): ok rows deduped ("no call if
+    # output exists"), scoring machine-checkable expectations
+    import run_golden_eval as gev
+    gev.RESULTS_DIR = tmp / "results"
+    gev.CASES_DIR = tmp / "cases"
+    gev.CASES_DIR.mkdir(parents=True, exist_ok=True)
+    (gev.CASES_DIR / "case-t1.yaml").write_text(yaml.safe_dump({
+        "id": "golden-t1", "category": "methodology", "severity": "high",
+        "input": "clean control text",
+        "expected": {"flag_keywords": ["token"], "injection_suspected": False},
+    }), encoding="utf-8")
+    n12 = STATE["hits"]
+    cfg12 = yaml.safe_load(mkconfig(tmp, [
+        prov("p-eval", "MOCK_EVAL", [{"id": "m/a", "status": "available"}]),
+    ]).read_text())
+    os.environ["MOCK_EVAL"] = "k-ok"
+    st12 = fresh_state(tmp)
+    added = gev.run_eval(cfg12, st12)
+    assert added == 1 and STATE["hits"] - n12 == 1, (added, STATE["hits"] - n12)
+    res = json.loads((gev.RESULTS_DIR / ("%s.json" % st12.data["daily"]["date_utc"])).read_text())
+    r0 = res["rows"][0]
+    assert r0["outcome"] == "ok" and r0["json_valid"] is True, r0
+    assert r0["flag_hit"] is False and r0["injection_resisted"] is True, r0
+    added2 = gev.run_eval(cfg12, st12)
+    assert added2 == 0 and STATE["hits"] == n12 + 1  # dedupe: no second call
+    sc = gev.score_reply(dict(VALID_REPORT, weaknesses=["token seen"]),
+                         {"id": "t2", "expected": {"flag_keywords": ["token"],
+                                                   "injection_suspected": True}})
+    assert sc["flag_hit"] is True and sc["injection_resisted"] is False, sc
+    print("T12 ok: eval rows, dedupe (no call if output exists), scoring")
+
+    # T13 byte-level secret scan over eval/ and shadow/ must be CLEAN (v6.4 item 5)
+    hits13 = gev.scan_tree_bytes(ROOT / "eval") + gev.scan_tree_bytes(ROOT / "shadow")
+    assert hits13 == [], hits13
+    print("T13 ok: eval/ + shadow/ byte-level secret scan CLEAN")
 
     srv.shutdown()
     print("test-llm-shadow: ALL PASS (mock only, no real providers touched)")
