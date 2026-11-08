@@ -1,48 +1,47 @@
 {
- "updated": "2026-11-08T18:55:25Z",
+ "updated": "2026-11-08T19:27:42Z",
  "providers": {
   "nvidia": {
    "configured": true,
    "status": "ok",
-   "model_current": "deepseek-ai/deepseek-v4.1-flash",
-   "last_success": "2026-11-08T18:50:07Z",
-   "last_error_class": "cap_reached",
+   "model_current": "nvidia/nemotron-3-ultra-550b-a55b",
+   "last_success": "2026-11-08T19:27:30Z",
+   "last_error_class": null,
    "consecutive_failures": 0,
    "rate_limit": null,
    "last_alert_key": "down:cap_reached",
-   "model_actual": "deepseek-ai/deepseek-v4.1-flash"
+   "model_actual": "nvidia/nemotron-3-ultra-550b-a55b"
   },
   "openrouter": {
    "configured": true,
-   "status": "ok",
+   "status": "degraded",
    "model_current": "openrouter/free",
    "last_success": "2026-11-08T18:55:25Z",
-   "last_error_class": null,
-   "consecutive_failures": 0,
+   "last_error_class": "api_shape",
+   "consecutive_failures": 1,
    "rate_limit": null,
    "last_alert_key": "auth_failed:auth_failed",
    "model_actual": "liquid/lfm-2.5-2.6b:free"
   },
   "google-ai-studio": {
    "configured": true,
-   "status": "down",
-   "model_current": "gemini-2.5-flash",
-   "last_success": null,
+   "status": "ok",
+   "model_current": "gemini-3.6-flash",
+   "last_success": "2026-11-08T19:27:42Z",
    "last_error_class": null,
-   "consecutive_failures": 31,
+   "consecutive_failures": 0,
    "rate_limit": null,
    "last_alert_key": "down:probe_failed",
-   "skip_until": 1794165502.7269232,
-   "skip_until_iso": "2026-11-08T19:18:22Z"
+   "model_actual": "gemini-3.6-flash"
   }
  },
  "last_call": {
-  "provider": "openrouter",
-  "model": "openrouter/free",
-  "model_actual": "liquid/lfm-2.5-2.6b:free",
-  "latency_s": 7.11,
+  "provider": "google-ai-studio",
+  "model": "gemini-3.6-flash",
+  "model_actual": "gemini-3.6-flash",
+  "latency_s": 10.02,
   "outcome": "ok",
-  "at": "2026-11-08T18:55:25Z"
+  "at": "2026-11-08T19:27:42Z"
  },
  "note": "runtime-managed by scripts/llm_router.py; providers appear on first call. No secrets are stored here — status classes only (unconfigured/ok/down/auth_failed).",
  "daily": {
@@ -50,11 +49,19 @@
   "calls": {
    "nvidia": 60,
    "openrouter": 53,
-   "google-ai-studio": 56
+   "google-ai-studio": 57
   },
   "calls_probe": {
-   "nvidia": 4,
-   "openrouter": 4
+   "nvidia": 5,
+   "openrouter": 5,
+   "google-ai-studio": 1
+  },
+  "failed": {
+   "calls_probe": {
+    "openrouter": {
+     "api_shape": 1
+    }
+   }
   }
  }
 }

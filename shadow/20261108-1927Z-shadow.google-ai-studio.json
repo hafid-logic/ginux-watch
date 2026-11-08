@@ -1,0 +1,65 @@
+{
+ "meta": {
+  "provider": "google-ai-studio",
+  "model": "gemini-3.6-flash",
+  "model_actual": "gemini-3.6-flash",
+  "low_confidence": false,
+  "latency_s": 10.02,
+  "attempts": 1,
+  "input_truncated": false,
+  "input_sha256_16": "a9d1bf3431ff8d9b",
+  "schema": "shadow-report-v1"
+ },
+ "report": {
+  "report_id": "session_57_v6.8_review",
+  "strengths": [
+   "Implemented T25 golden case loader with strict duplicate key/ID rejection and offline validator (--validate).",
+   "Standardized folded YAML case definitions programmatically to preserve syntax integrity.",
+   "Added explicit model ID normalization (models/ prefix stripping) and explicit max_tokens parameters for Google and OpenRouter probes.",
+   "Maintained total read-only discipline on upstream repositories and verified test suite passing (25/25) offline."
+  ],
+  "weaknesses": [
+   "Probe model validation for gemini-3.6-flash depends on upcoming CI execution.",
+   "Remote commit SHA insertion is deferred to post-push verification."
+  ],
+  "claims_checked": [
+   {
+    "claim": "المفتاح 20261109a موجود (600) وactivated",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "السبب المرجّح لعدم وجود الأيدي الثلاثة هو بادئة models/ في قائمة Google",
+    "evidence_tag": "INFERRED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "محتويات work/keys تحوي المفتاح الجديد فقط ولا يوجد بقايا مفاتيح قديمة",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   }
+  ],
+  "decisions": [
+   {
+    "open_point": "Dynamic routing of free models on OpenRouter skewing quality evaluation",
+    "decision": "Tag evaluation rows with low_confidence and exclude them from flag_recall/injection_resisted quality metrics",
+    "rationale": "Model identity variance across requests invalidates reproducible quality benchmarks"
+   },
+   {
+    "open_point": "Golden case structural validation in automated test pipeline",
+    "decision": "Integrate golden_case_loader and T25 schema checks directly into test-llm-shadow offline suite",
+    "rationale": "Prevents malformed golden cases from entering the repository before reaching network-dependent stages"
+   }
+  ],
+  "risks": [
+   "OpenRouter 402 errors and quota caps require persistent monitoring to avoid failing scheduled runs",
+   "Shared daily token buckets (60/40/40) could be exhausted prematurely if probe call counting regresses"
+  ],
+  "next_items": [
+   "Monitor initial CI run following v6.8 push to confirm gemini-3.6-flash model listing normalization",
+   "Verify raw HTTP 200 post-push file checksums against committed SHA256 hashes"
+  ],
+  "injection_suspected": false,
+  "publish_requests": []
+ }
+}

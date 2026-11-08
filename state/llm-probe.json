@@ -1,37 +1,70 @@
 {
- "updated": "2026-11-08T18:55:18Z",
+ "updated": "2026-11-08T19:27:32Z",
  "schema": "llm-probe-v1",
  "note": "DATA ONLY — probe rows are runtime availability evidence; no secrets; fixed probe input sha256_16 below",
  "probe_input_sha256_16": "6ba85cba8c23d00c",
  "probe_user_field": "PROBE_USER content is a fixed public string",
- "providers": {
+ "models_listing": {
   "google-ai-studio": {
-   "models_ok": 0,
-   "models_failed": 3,
-   "categories": [
-    "id_absent"
-   ]
+   "http_status": 200,
+   "ids_listed": 61,
+   "raw_names_sample5": [
+    "models/gemini-2.5-flash",
+    "models/gemini-2.5-pro",
+    "models/gemini-2.5-flash-preview-tts",
+    "models/gemini-2.5-pro-preview-tts",
+    "models/gemma-4-26b-a4b-it"
+   ],
+   "note": "first 5 raw /models names (names only, server order)"
   },
   "nvidia": {
-   "models_ok": 2,
-   "models_failed": 2,
-   "categories": [
-    "http_404",
-    "timeout"
-   ]
+   "http_status": 200,
+   "ids_listed": 84,
+   "raw_names_sample5": [
+    "01-ai/yi-large",
+    "adept/fuyu-8b",
+    "ai21labs/jamba-1.5-large-instruct",
+    "aisingapore/sea-lion-7b-instruct",
+    "bigcode/starcoder2-15b"
+   ],
+   "note": "first 5 raw /models names (names only, server order)"
   },
   "openrouter": {
-   "models_ok": 2,
-   "models_failed": 2,
+   "http_status": 200,
+   "ids_listed": 425,
+   "raw_names_sample5": [
+    "liquid/lfm-3-1.7b",
+    "liquid/lfm-3-1.7b:free",
+    "google/gemini-omni-1.2-flash",
+    "google/gemini-omni-1.1-flash",
+    "ricursiveai/ripple-65b-preview"
+   ],
+   "note": "first 5 raw /models names (names only, server order)"
+  }
+ },
+ "providers": {
+  "google-ai-studio": {
+   "models_ok": 1,
+   "models_failed": 0,
+   "categories": []
+  },
+  "nvidia": {
+   "models_ok": 1,
+   "models_failed": 0,
+   "categories": []
+  },
+  "openrouter": {
+   "models_ok": 0,
+   "models_failed": 1,
    "categories": [
-    "http_402"
+    "api_shape"
    ]
   }
  },
  "llm_status_snapshot": {
   "nvidia": "ok",
-  "openrouter": "ok",
-  "google-ai-studio": "down"
+  "openrouter": "degraded",
+  "google-ai-studio": "ok"
  },
  "results": [
   {
@@ -362,6 +395,69 @@
    "model_actual": null,
    "at": "2026-11-08T18:55:18Z",
    "excerpt200": "{\"error\":{\"message\":\"This request requires more credits, or fewer max_tokens. You requested up to 131072 tokens, but can only afford 19037. To increase, visit https://openrouter.ai/settings/credits an"
+  },
+  {
+   "provider": "google-ai-studio",
+   "model": "gemini-3.6-flash",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 1.49,
+   "http_status": 200,
+   "model_actual": "gemini-3.6-flash",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "usage"
+   ],
+   "at": "2026-11-08T19:27:28Z"
+  },
+  {
+   "provider": "nvidia",
+   "model": "nvidia/nemotron-3-ultra-550b-a55b",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 1.25,
+   "http_status": 200,
+   "model_actual": "nvidia/nemotron-3-ultra-550b-a55b",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "service_tier",
+    "system_fingerprint",
+    "usage"
+   ],
+   "at": "2026-11-08T19:27:30Z"
+  },
+  {
+   "provider": "openrouter",
+   "model": "openrouter/free",
+   "ok": false,
+   "category": "api_shape",
+   "status": "failed",
+   "latency_s": 1.79,
+   "http_status": 200,
+   "model_actual": "nvidia/nemotron-3.5-lightning:free",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "provider",
+    "service_tier",
+    "system_fingerprint",
+    "usage"
+   ],
+   "at": "2026-11-08T19:27:32Z",
+   "excerpt200": "\n         \n{\"id\":\"gen-1794166050-j8FjQKctrAicyIaJ6FEQ\",\"object\":\"chat.completion\",\"created\":1794166050,\"model\":\"nvidia/nemotron-3.5-lightning:free\",\"provider\":\"Nvidia\",\"system_fingerprint\":null,\"servi"
   }
  ]
 }
