@@ -1,0 +1,142 @@
+{
+ "updated": "2026-11-08T13:30:36Z",
+ "schema": "llm-probe-v1",
+ "note": "DATA ONLY — probe rows are runtime availability evidence; no secrets; fixed probe input sha256_16 below",
+ "probe_input_sha256_16": "6ba85cba8c23d00c",
+ "probe_user_field": "PROBE_USER content is a fixed public string",
+ "providers": {
+  "google-ai-studio": {
+   "models_ok": 0,
+   "models_failed": 3,
+   "categories": [
+    "id_absent"
+   ]
+  },
+  "nvidia": {
+   "models_ok": 0,
+   "models_failed": 4,
+   "categories": [
+    "cap_reached"
+   ]
+  },
+  "openrouter": {
+   "models_ok": 2,
+   "models_failed": 2,
+   "categories": [
+    "http_402"
+   ]
+  }
+ },
+ "llm_status_snapshot": {
+  "nvidia": "down",
+  "openrouter": "ok",
+  "google-ai-studio": "down"
+ },
+ "results": [
+  {
+   "provider": "google-ai-studio",
+   "model": "gemini-3.6-flash",
+   "ok": false,
+   "category": "id_absent",
+   "status": "unavailable",
+   "note": "absent from live /models (61 ids listed)",
+   "at": "2026-11-08T13:30:31Z"
+  },
+  {
+   "provider": "google-ai-studio",
+   "model": "gemini-2.5-flash",
+   "ok": false,
+   "category": "id_absent",
+   "status": "unavailable",
+   "note": "absent from live /models (61 ids listed)",
+   "at": "2026-11-08T13:30:31Z"
+  },
+  {
+   "provider": "google-ai-studio",
+   "model": "gemini-2.5-pro",
+   "ok": false,
+   "category": "id_absent",
+   "status": "unavailable",
+   "note": "absent from live /models (61 ids listed)",
+   "at": "2026-11-08T13:30:31Z"
+  },
+  {
+   "provider": "nvidia",
+   "model": "nvidia/nemotron-3-ultra-550b-a55b",
+   "ok": false,
+   "category": "cap_reached",
+   "status": "failed",
+   "at": "2026-11-08T13:30:31Z"
+  },
+  {
+   "provider": "nvidia",
+   "model": "deepseek-ai/deepseek-v4.1-flash",
+   "ok": false,
+   "category": "cap_reached",
+   "status": "failed",
+   "at": "2026-11-08T13:30:31Z"
+  },
+  {
+   "provider": "nvidia",
+   "model": "moonshotai/kimi-k2.6",
+   "ok": false,
+   "category": "cap_reached",
+   "status": "failed",
+   "at": "2026-11-08T13:30:31Z"
+  },
+  {
+   "provider": "nvidia",
+   "model": "mistralai/mistral-large-4-1t-a52b",
+   "ok": false,
+   "category": "cap_reached",
+   "status": "failed",
+   "at": "2026-11-08T13:30:31Z"
+  },
+  {
+   "provider": "openrouter",
+   "model": "openrouter/free",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 0.42,
+   "http_status": 200,
+   "model_actual": "liquid/lfm-2.5-2.6b:free",
+   "at": "2026-11-08T13:30:33Z"
+  },
+  {
+   "provider": "openrouter",
+   "model": "moonshotai/kimi-k3.1-pro",
+   "ok": false,
+   "category": "http_402",
+   "status": "failed",
+   "latency_s": 0.06,
+   "http_status": 402,
+   "model_actual": null,
+   "at": "2026-11-08T13:30:33Z",
+   "excerpt200": "{\"error\":{\"message\":\"This request requires more credits, or fewer max_tokens. You requested up to 131072 tokens, but can only afford 3998. To increase, visit https://openrouter.ai/settings/credits and"
+  },
+  {
+   "provider": "openrouter",
+   "model": "deepseek/deepseek-v4.1-flash",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 2.93,
+   "http_status": 200,
+   "model_actual": "deepseek/deepseek-v4.1-flash",
+   "at": "2026-11-08T13:30:36Z"
+  },
+  {
+   "provider": "openrouter",
+   "model": "mistralai/mistral-large-4-0",
+   "ok": false,
+   "category": "http_402",
+   "status": "failed",
+   "latency_s": 0.03,
+   "http_status": 402,
+   "model_actual": null,
+   "at": "2026-11-08T13:30:36Z",
+   "excerpt200": "{\"error\":{\"message\":\"This request requires more credits, or fewer max_tokens. You requested up to 131072 tokens, but can only afford 17309. To increase, visit https://openrouter.ai/settings/credits an"
+  }
+ ]
+}

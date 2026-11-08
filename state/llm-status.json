@@ -1,49 +1,56 @@
 {
- "updated": "2026-11-08T05:58:14Z",
+ "updated": "2026-11-08T13:33:08Z",
  "providers": {
   "nvidia": {
    "configured": true,
-   "status": "degraded",
+   "status": "down",
    "model_current": "deepseek-ai/deepseek-v4.1-flash",
    "last_success": "2026-11-08T05:54:59Z",
    "last_error_class": "cap_reached",
-   "consecutive_failures": 2,
+   "consecutive_failures": 3,
    "rate_limit": null,
-   "last_alert_key": "down:timeouterror"
+   "last_alert_key": "down:cap_reached",
+   "skip_until": 1794146431.5732055,
+   "skip_until_iso": "2026-11-08T14:00:31Z"
   },
   "openrouter": {
    "configured": true,
-   "status": "auth_failed",
-   "model_current": "mistralai/mistral-large-4-0",
-   "last_success": null,
-   "last_error_class": "auth_failed",
+   "status": "ok",
+   "model_current": "openrouter/free",
+   "last_success": "2026-11-08T13:33:08Z",
+   "last_error_class": null,
    "consecutive_failures": 0,
    "rate_limit": null,
-   "last_alert_key": "auth_failed:auth_failed"
+   "last_alert_key": "auth_failed:auth_failed",
+   "model_actual": "xingchen-agi/xing4.0-29b-a4b:free"
   },
   "google-ai-studio": {
    "configured": true,
    "status": "down",
    "model_current": "gemini-2.5-flash",
    "last_success": null,
-   "last_error_class": "bad_response_shape",
-   "consecutive_failures": 28,
+   "last_error_class": null,
+   "consecutive_failures": 29,
    "rate_limit": null,
-   "last_alert_key": "down:bad_response_shape"
+   "last_alert_key": "down:probe_failed",
+   "skip_until": 1794146431.4859438,
+   "skip_until_iso": "2026-11-08T14:00:31Z"
   }
  },
  "last_call": {
-  "provider": "google-ai-studio",
-  "model": "gemini-2.5-flash",
-  "outcome": "bad_response_shape",
-  "at": "2026-11-08T05:58:14Z"
+  "provider": "openrouter",
+  "model": "openrouter/free",
+  "model_actual": "xingchen-agi/xing4.0-29b-a4b:free",
+  "latency_s": 151.9,
+  "outcome": "ok",
+  "at": "2026-11-08T13:33:08Z"
  },
  "note": "runtime-managed by scripts/llm_router.py; providers appear on first call. No secrets are stored here — status classes only (unconfigured/ok/down/auth_failed).",
  "daily": {
   "date_utc": "2026-11-08",
   "calls": {
    "nvidia": 60,
-   "openrouter": 43,
+   "openrouter": 48,
    "google-ai-studio": 56
   }
  }

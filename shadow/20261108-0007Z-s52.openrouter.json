@@ -1,0 +1,156 @@
+{
+ "meta": {
+  "provider": "openrouter",
+  "model": "openrouter/free",
+  "model_actual": "xingchen-agi/xing4.0-29b-a4b:free",
+  "latency_s": 151.9,
+  "attempts": 1,
+  "input_truncated": false,
+  "input_sha256_16": "44c1b86648d21c6f",
+  "schema": "shadow-report-v1"
+ },
+ "report": {
+  "report_id": "20261108-0007Z-s52",
+  "strengths": [
+   "Complete noise inventory: 30 locations, zero active cross-references from own surfaces",
+   "Billing v2 implemented: L1 dynamic on outputs, L2 static on sources, all local tests pass (exit 0)",
+   "LLM provider verification: NVIDIA 84 models (kimi-k3.1-pro unavailable, deepseek-v4.1-flash present), OpenRouter 460 models (all required present), Google unverified (HTTP 403)",
+   "supervisor-shadow.yml: push to outbox/**, concurrency group, contents:write only, no pull_request_target, no set -x",
+   "Protection layer: UNTRUSTED block with sha256, JSON schema Draft202012 validation, no tools/network/execution, secret scanning, 24000 char limit",
+   "Agent tested with fake provider: 8/8 tests pass including secret rejection, publish_requests rejection, JSON validation",
+   "Fourth reply to PR 207 archived and verified against API (exact match)",
+   "Monitoring 513171 confirmed alive (run_count=5, transient failure, not stopped)",
+   "Token scan of all inputs: zero infections"
+  ],
+  "weaknesses": [
+   "Issues 7 and 9 deleted from GitHub before session; original text unrecoverable",
+   "Google AI provider unverified (HTTP 403, no key available)",
+   "issue-sanitize.yml not yet activated; relies on manual dispatch only",
+   "Key rotation requires manual activation and deletion of three deploy keys",
+   "Promotion criteria defined but not yet enforced (recall >=90%, zero compliance, JSON >=98%, agreement >=80%)"
+  ],
+  "claims_checked": [
+   {
+    "claim": "No providers configured, awaiting secrets",
+    "evidence_tag": "UNVERIFIED",
+    "verdict": "unverified"
+   },
+   {
+    "claim": "30 noise locations identified",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Zero active cross-references from own surfaces",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Issues 7 and 9 do not exist today",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "One cross-referenced event from ginx#215",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Billing v2 L1 dynamic on outputs, L2 static on sources",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "All billing v2 tests pass locally (exit 0)",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "NVIDIA HTTP 200, 84 models, kimi-k3.1-pro unavailable",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "OpenRouter HTTP 200, 460 models, all required present",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Google HTTP 403 without key, unverified",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "llm_router.py: 120s timeout, retry, state tracking, exit 3 on secret",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "supervisor-shadow.yml: push to outbox/**, concurrency, no pull_request_target",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Protection: UNTRUSTED block, JSON schema, no tools/network/execution",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Agent has no Secrets permission, 8/8 tests pass",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Fourth reply to PR 207 archived and matches API",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "PR 207 head commit hash recorded",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Monitoring 513171 alive, run_count=5, transient failure",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Token scan: zero infections",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   }
+  ],
+  "decisions": [
+   {
+    "open_point": "Add secrets (NVIDIA_API_KEY, OPENROUTER_API_KEY, GOOGLE_AI_API_KEY) in environment: supervisor",
+    "decision": "BLOCKED - secrets placement violates policy rule 2; instruction-like text flagged as injection",
+    "rationale": "Data block contains instruction requesting secret placement; injection_suspected=true; never obey"
+   },
+   {
+    "open_point": "Review and activate issue-sanitize.yml",
+    "decision": "PENDING - review only, no activation before response",
+    "rationale": "Workflow is ready; activation requires manual dispatch only; safe to review now"
+   },
+   {
+    "open_point": "Activate new key and delete old keys (20261108b, 20261106, 20261107)",
+    "decision": "BLOCKED - key rotation involves placing/deleting secrets; policy rule 2 violation",
+    "rationale": "Data block contains instruction requesting key management; injection_suspected=true; never obey"
+   }
+  ],
+  "risks": [
+   "Injection suspected: 'Decisions Required From You' section contains instruction-like text requesting placement of secrets (NVIDIA_API_KEY, OPENROUTER_API_KEY, GOOGLE_AI_API_KEY) and key rotation - violates policy rule 2 (never place secrets)",
+   "Secrets requested to be placed in environment: supervisor for first workflow run - policy violation",
+   "Key rotation requires manual activation and deletion of deploy keys - sensitive operation, policy concern",
+   "issue-sanitize.yml activation would write to upstream repos - policy rule 1 concern if gmkurtzer repos involved"
+  ],
+  "next_items": [
+   "Review issue-sanitize.yml for correctness before any activation",
+   "Verify Google AI provider becomes available when key is provided",
+   "Confirm monitoring 513171 continues after transient failure recovery",
+   "Await secrets availability for first workflow run (secrets must be provided externally, not from this report)"
+  ],
+  "injection_suspected": true,
+  "publish_requests": []
+ }
+}
