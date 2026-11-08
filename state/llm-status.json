@@ -1,6 +1,50 @@
 {
- "updated": null,
- "providers": {},
- "last_call": null,
- "note": "runtime-managed by scripts/llm_router.py; providers appear on first call. No secrets are stored here — status classes only (unconfigured/ok/down/auth_failed)."
+ "updated": "2026-11-08T05:58:14Z",
+ "providers": {
+  "nvidia": {
+   "configured": true,
+   "status": "degraded",
+   "model_current": "deepseek-ai/deepseek-v4.1-flash",
+   "last_success": "2026-11-08T05:54:59Z",
+   "last_error_class": "cap_reached",
+   "consecutive_failures": 2,
+   "rate_limit": null,
+   "last_alert_key": "down:timeouterror"
+  },
+  "openrouter": {
+   "configured": true,
+   "status": "auth_failed",
+   "model_current": "mistralai/mistral-large-4-0",
+   "last_success": null,
+   "last_error_class": "auth_failed",
+   "consecutive_failures": 0,
+   "rate_limit": null,
+   "last_alert_key": "auth_failed:auth_failed"
+  },
+  "google-ai-studio": {
+   "configured": true,
+   "status": "down",
+   "model_current": "gemini-2.5-flash",
+   "last_success": null,
+   "last_error_class": "bad_response_shape",
+   "consecutive_failures": 28,
+   "rate_limit": null,
+   "last_alert_key": "down:bad_response_shape"
+  }
+ },
+ "last_call": {
+  "provider": "google-ai-studio",
+  "model": "gemini-2.5-flash",
+  "outcome": "bad_response_shape",
+  "at": "2026-11-08T05:58:14Z"
+ },
+ "note": "runtime-managed by scripts/llm_router.py; providers appear on first call. No secrets are stored here — status classes only (unconfigured/ok/down/auth_failed).",
+ "daily": {
+  "date_utc": "2026-11-08",
+  "calls": {
+   "nvidia": 60,
+   "openrouter": 43,
+   "google-ai-studio": 56
+  }
+ }
 }
