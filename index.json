@@ -1,13 +1,178 @@
 {
- "generated_at_utc": "2026-11-09T07:50:59Z",
+ "generated_at_utc": "2026-11-09T18:39:01Z",
  "source_repo": "gmkurtzer/ginux",
- "item_count": 244,
+ "item_count": 249,
  "items": {
+  "256": {
+   "kind": "pr",
+   "title": "ci: skip checks when only documentation changed since a passing run",
+   "state": "closed",
+   "merged_at": "2026-11-09T15:20:00Z",
+   "files": [
+    ".github/workflows/check.yml",
+    "Makefile",
+    "scripts/ci-changes.sh",
+    "scripts/test-ci-changes.sh"
+   ],
+   "keywords": [
+    "250",
+    "current",
+    "original",
+    "249",
+    "adding",
+    "after",
+    "attribution",
+    "author",
+    "authorship",
+    "base"
+   ]
+  },
+  "255": {
+   "kind": "pr",
+   "title": "Gate 13: harden boundaries and document limitations",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    "Cargo.lock",
+    "Cargo.toml",
+    "Makefile",
+    "README.md",
+    "crates/ginux-init/src/main.rs",
+    "crates/security-fuzzer/Cargo.toml",
+    "crates/security-fuzzer/src/main.rs",
+    "docs/security-boundary.md",
+    "hdae/STATUS.md",
+    "hdae/gates-todo/13-boundary-hardening.md",
+    "scripts/check-security-boundary.sh",
+    "scripts/demo-gate-13.sh",
+    "scripts/fuzz-security.sh",
+    "scripts/test-native-vfs.sh",
+    "tests/fuzz-corpus/config/minimal.toml",
+    "tests/fuzz-corpus/device/basic.txt",
+    "tests/fuzz-corpus/elf/header.bin",
+    "tests/fuzz-corpus/kernel-path/basic.txt",
+    "tests/fuzz-corpus/selector/basic.txt",
+    "tests/fuzz-corpus/vfs-index/header.bin"
+   ],
+   "keywords": [
+    "gate",
+    "security",
+    "recovery",
+    "adds",
+    "after",
+    "boundary",
+    "compatibility",
+    "contract",
+    "criterion",
+    "demonstration"
+   ]
+  },
+  "254": {
+   "kind": "pr",
+   "title": "Gate 12.5: add contract maintenance lock",
+   "state": "closed",
+   "merged_at": "2026-11-09T15:05:14Z",
+   "files": [
+    "Makefile",
+    "README.md",
+    "hdae/ARCHITECTURE.md",
+    "hdae/STATUS.md",
+    "hdae/gates-todo/12.5-contract-maintenance-lock.md",
+    "scripts/demo-gate-12.5.sh",
+    "scripts/gate12-cli-guest.sh",
+    "scripts/gate125-lock-guest.sh",
+    "scripts/ginux-host-controller.sh",
+    "scripts/ginux-host-instance-helper.sh",
+    "scripts/test-gate125-lock.sh",
+    "scripts/test-systemd-interactive.exp"
+   ],
+   "keywords": [
+    "contract",
+    "gate",
+    "lock",
+    "maintenance",
+    "denial",
+    "state",
+    "systemd",
+    "unlocked",
+    "253",
+    "after"
+   ]
+  },
+  "253": {
+   "kind": "pr",
+   "title": "Gate 12.25: simplify instance management CLI",
+   "state": "closed",
+   "merged_at": "2026-11-09T15:04:52Z",
+   "files": [
+    "Makefile",
+    "README.md",
+    "docs/configurable-contract.md",
+    "docs/gate-9.75-instance-specification.md",
+    "hdae/ARCHITECTURE.md",
+    "hdae/STATUS.md",
+    "hdae/gates-todo/12.25-top-level-instance-cli.md",
+    "scripts/demo-gate-12.25.sh",
+    "scripts/demo-gate-12.sh",
+    "scripts/gate11-guest-setup.sh",
+    "scripts/gate12-cli-guest.sh",
+    "scripts/ginux-host-controller.sh",
+    "scripts/ginux-host-instance-helper.sh",
+    "scripts/run-host.sh",
+    "scripts/test-config.sh",
+    "scripts/test-gate12-cli.sh",
+    "scripts/test-instance-terminology.sh",
+    "scripts/test-systemd-interactive.exp"
+   ],
+   "keywords": [
+    "gate",
+    "instance",
+    "systemd",
+    "252",
+    "active",
+    "any",
+    "atomic",
+    "based",
+    "check",
+    "cli"
+   ]
+  },
+  "252": {
+   "kind": "pr",
+   "title": "Gate 12.1: virtualize procfs and sysfs in memory",
+   "state": "closed",
+   "merged_at": "2026-11-09T15:04:29Z",
+   "files": [
+    "Makefile",
+    "crates/ginux-init/src/main.rs",
+    "hdae/ARCHITECTURE.md",
+    "hdae/STATUS.md",
+    "hdae/gates-todo/12.1-on-demand-virtual-kernel-filesystems.md",
+    "scripts/demo-gate-12.1.sh",
+    "scripts/expect-systemd-login.exp",
+    "scripts/gate9-shell-check.sh",
+    "scripts/ginux-host-instance-helper.sh",
+    "scripts/probe-systemd.sh",
+    "scripts/test-systemd.sh"
+   ],
+   "keywords": [
+    "rocky_ssh_port",
+    "gate",
+    "disk",
+    "memory",
+    "metadata",
+    "procfs",
+    "sysfs",
+    "systemd",
+    "virtual",
+    "22510"
+   ]
+  },
   "251": {
    "kind": "pr",
    "title": "Gate 12: simplify contract and network configuration",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-09T15:03:50Z",
    "files": [
     "Makefile",
     "README.md",
@@ -80,8 +245,8 @@
   "249": {
    "kind": "pr",
    "title": "Gate 11: characterize and optimize syscall dispatch performance",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-09T15:03:27Z",
    "files": [
     "Makefile",
     "README.md",
@@ -5631,22 +5796,66 @@
   }
  },
  "keywords": {
-  "contract": [
-   251,
-   243,
-   237,
-   231,
-   230,
-   13
+  "250": [
+   256
   ],
-  "network": [
-   251,
-   229,
-   100,
-   75,
-   68
+  "current": [
+   256
+  ],
+  "original": [
+   256,
+   79
+  ],
+  "249": [
+   256,
+   251
+  ],
+  "adding": [
+   256
+  ],
+  "after": [
+   256,
+   255,
+   254,
+   228,
+   216,
+   210,
+   169,
+   164,
+   149,
+   139,
+   120,
+   113,
+   102,
+   84,
+   70,
+   51,
+   50,
+   28,
+   25
+  ],
+  "attribution": [
+   256
+  ],
+  "author": [
+   256
+  ],
+  "authorship": [
+   256
+  ],
+  "base": [
+   256,
+   166,
+   123,
+   97,
+   93,
+   18
   ],
   "gate": [
+   255,
+   254,
+   253,
+   252,
    251,
    235,
    231,
@@ -5657,6 +5866,201 @@
    196,
    181,
    172
+  ],
+  "security": [
+   255
+  ],
+  "recovery": [
+   255,
+   41,
+   39
+  ],
+  "adds": [
+   255,
+   52
+  ],
+  "boundary": [
+   255,
+   231,
+   36
+  ],
+  "compatibility": [
+   255
+  ],
+  "contract": [
+   255,
+   254,
+   251,
+   243,
+   237,
+   231,
+   230,
+   13
+  ],
+  "criterion": [
+   255
+  ],
+  "demonstration": [
+   255,
+   165,
+   164
+  ],
+  "lock": [
+   254,
+   147,
+   121,
+   22
+  ],
+  "maintenance": [
+   254
+  ],
+  "denial": [
+   254,
+   243,
+   231
+  ],
+  "state": [
+   254,
+   235,
+   197,
+   82,
+   78,
+   7
+  ],
+  "systemd": [
+   254,
+   253,
+   252,
+   248,
+   247,
+   246,
+   245,
+   244,
+   242,
+   231
+  ],
+  "unlocked": [
+   254
+  ],
+  "253": [
+   254
+  ],
+  "instance": [
+   253,
+   243,
+   237,
+   235
+  ],
+  "252": [
+   253
+  ],
+  "active": [
+   253,
+   251,
+   86,
+   49
+  ],
+  "any": [
+   253,
+   50
+  ],
+  "atomic": [
+   253,
+   251
+  ],
+  "based": [
+   253,
+   60
+  ],
+  "check": [
+   253,
+   241,
+   228,
+   217,
+   216,
+   204,
+   195,
+   189,
+   187,
+   181,
+   171,
+   169,
+   168,
+   165,
+   162,
+   160,
+   159,
+   158,
+   156,
+   153,
+   152,
+   142,
+   117,
+   90,
+   88,
+   87,
+   84,
+   61,
+   54,
+   51,
+   50,
+   49,
+   48,
+   47,
+   46,
+   44,
+   40,
+   11,
+   10,
+   9,
+   4,
+   3
+  ],
+  "cli": [
+   253,
+   235,
+   217
+  ],
+  "rocky_ssh_port": [
+   252
+  ],
+  "disk": [
+   252,
+   145
+  ],
+  "memory": [
+   252,
+   220,
+   124,
+   80,
+   67,
+   46,
+   19
+  ],
+  "metadata": [
+   252,
+   209
+  ],
+  "procfs": [
+   252
+  ],
+  "sysfs": [
+   252
+  ],
+  "virtual": [
+   252,
+   224,
+   214
+  ],
+  "22510": [
+   252
+  ],
+  "network": [
+   251,
+   229,
+   100,
+   75,
+   68
   ],
   "host": [
    251,
@@ -5696,20 +6100,9 @@
    62,
    25
   ],
-  "249": [
-   251
-  ],
-  "active": [
-   251,
-   86,
-   49
-  ],
   "against": [
    251,
    202
-  ],
-  "atomic": [
-   251
   ],
   "attached": [
    251
@@ -5910,15 +6303,6 @@
    90,
    89,
    18
-  ],
-  "systemd": [
-   248,
-   247,
-   246,
-   245,
-   244,
-   242,
-   231
   ],
   "tree": [
    248
@@ -6147,15 +6531,6 @@
    156,
    153
   ],
-  "instance": [
-   243,
-   237,
-   235
-  ],
-  "denial": [
-   243,
-   231
-  ],
   "families": [
    243
   ],
@@ -6259,49 +6634,6 @@
    108,
    88,
    81
-  ],
-  "check": [
-   241,
-   228,
-   217,
-   216,
-   204,
-   195,
-   189,
-   187,
-   181,
-   171,
-   169,
-   168,
-   165,
-   162,
-   160,
-   159,
-   158,
-   156,
-   153,
-   152,
-   142,
-   117,
-   90,
-   88,
-   87,
-   84,
-   61,
-   54,
-   51,
-   50,
-   49,
-   48,
-   47,
-   46,
-   44,
-   40,
-   11,
-   10,
-   9,
-   4,
-   3
   ],
   "claude": [
    241,
@@ -6489,10 +6821,6 @@
    207,
    88
   ],
-  "cli": [
-   235,
-   217
-  ],
   "legacy": [
    235
   ],
@@ -6501,13 +6829,6 @@
   ],
   "schema": [
    235
-  ],
-  "state": [
-   235,
-   197,
-   82,
-   78,
-   7
   ],
   "aggregate": [
    235
@@ -6623,10 +6944,6 @@
    70,
    47
   ],
-  "boundary": [
-   231,
-   36
-  ],
   "coverage": [
    231
   ],
@@ -6732,24 +7049,6 @@
    228,
    210,
    177
-  ],
-  "after": [
-   228,
-   216,
-   210,
-   169,
-   164,
-   149,
-   139,
-   120,
-   113,
-   102,
-   84,
-   70,
-   51,
-   50,
-   28,
-   25
   ],
   "diagnostics": [
    228
@@ -6898,10 +7197,6 @@
    99,
    98
   ],
-  "virtual": [
-   224,
-   214
-  ],
   "now": [
    224,
    215,
@@ -7020,14 +7315,6 @@
    213,
    212,
    130
-  ],
-  "memory": [
-   220,
-   124,
-   80,
-   67,
-   46,
-   19
   ],
   "sysinfo": [
    219
@@ -7302,9 +7589,6 @@
    208,
    42,
    16
-  ],
-  "metadata": [
-   209
   ],
   "reuse": [
    209,
@@ -8012,13 +8296,6 @@
   "zoneinfo": [
    166
   ],
-  "base": [
-   166,
-   123,
-   97,
-   93,
-   18
-  ],
   "utc": [
    166
   ],
@@ -8030,10 +8307,6 @@
    165,
    154,
    6
-  ],
-  "demonstration": [
-   165,
-   164
   ],
   "help": [
    165
@@ -8267,11 +8540,6 @@
    147,
    121
   ],
-  "lock": [
-   147,
-   121,
-   22
-  ],
   "ofd": [
    147
   ],
@@ -8332,9 +8600,6 @@
    125,
    107,
    14
-  ],
-  "disk": [
-   145
   ],
   "flush": [
    145
@@ -9089,9 +9354,6 @@
   "proc": [
    79
   ],
-  "original": [
-   79
-  ],
   "reopen": [
    79
   ],
@@ -9341,9 +9603,6 @@
   "agents": [
    60
   ],
-  "based": [
-   60
-  ],
   "couple": [
    60
   ],
@@ -9427,9 +9686,6 @@
   "512": [
    52
   ],
-  "adds": [
-   52
-  ],
   "arithmetic": [
    52,
    38,
@@ -9475,9 +9731,6 @@
    50
   ],
   "ambiguous": [
-   50
-  ],
-  "any": [
    50
   ],
   "shootdown": [
@@ -9572,10 +9825,6 @@
   ],
   "including": [
    41
-  ],
-  "recovery": [
-   41,
-   39
   ],
   "entropy": [
    40
