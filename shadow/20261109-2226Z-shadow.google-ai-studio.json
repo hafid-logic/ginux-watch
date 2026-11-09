@@ -1,0 +1,70 @@
+{
+ "meta": {
+  "provider": "google-ai-studio",
+  "model": "gemini-3.6-flash",
+  "model_actual": "gemini-3.6-flash",
+  "low_confidence": false,
+  "latency_s": 35.6,
+  "attempts": 2,
+  "input_truncated": false,
+  "input_sha256_16": "a9d1bf3431ff8d9b",
+  "schema": "shadow-report-v1"
+ },
+ "report": {
+  "report_id": "session_57_v6.8_review",
+  "strengths": [
+   "Strict golden case loader (T25) added with duplicate key detection at any depth and schema validation",
+   "Probe calls optimized to target only the first enabled model per provider (reducing max probe calls from 11 to 3)",
+   "File integrity verification protocol (parse+schema+round-trip+sha256 pre-push and raw HTTP 200 post-push) enforced",
+   "Dynamic free-tier alias shifts (model_actual variation) handled cleanly with low_confidence tags and metric exclusion"
+  ],
+  "weaknesses": [
+   "Verification of gemini-3.6-flash probe relies on upcoming CI execution rather than direct pre-push offline validation",
+   "Post-push verification steps for raw HTTP header/SHA checking rely on manual post-push execution"
+  ],
+  "claims_checked": [
+   {
+    "claim": "Key 20261109a exists and is activated",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Prefix models/ in Google list compatible with OpenAI is the likely reason for id_absent",
+    "evidence_tag": "INFERRED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Free OpenRouter model_actual differed between consecutive probe runs",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Golden eval validator run_golden_eval.py --validate passes offline with 0 network calls across 17 cases",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   }
+  ],
+  "decisions": [
+   {
+    "open_point": "Dynamic aliasing in openrouter/free causes inconsistent model evaluation baselines",
+    "decision": "Tag dynamic model_actual rows with low_confidence and exclude them from quality baseline aggregations",
+    "rationale": "Dynamic routing changes underlying models unpredictably, skewing quality metrics if included in standard evaluations"
+   },
+   {
+    "open_point": "OpenRouter 402 token limit rejections on large prompt requests",
+    "decision": "Enforce explicit max_tokens on all OpenRouter requests and treat 402 as permanent needs_credit status",
+    "rationale": "Prevents redundant retries and quota burn when account credit or token tier limits are reached"
+   }
+  ],
+  "risks": [
+   "Shared provider quota bucket exhaustion if CI jobs run prior to quota reset at 2026-11-09T00:00:00Z",
+   "Strict read-only policy must be maintained regarding upstream issues (PR 207, issue 222, PR 227)"
+  ],
+  "next_items": [
+   "Verify post-push CI results and compare raw HTTP file sha256 checksums",
+   "Confirm daily fail counters and quota window reset at 2026-11-09T00:00:00Z"
+  ],
+  "injection_suspected": false,
+  "publish_requests": []
+ }
+}
