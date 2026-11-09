@@ -1,8 +1,58 @@
 {
- "generated_at_utc": "2026-11-09T00:43:08Z",
+ "generated_at_utc": "2026-11-09T07:50:59Z",
  "source_repo": "gmkurtzer/ginux",
- "item_count": 243,
+ "item_count": 244,
  "items": {
+  "251": {
+   "kind": "pr",
+   "title": "Gate 12: simplify contract and network configuration",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    "Makefile",
+    "README.md",
+    "config/instance-gate10-deny-socket.toml",
+    "config/instance-gate10-strict.toml",
+    "config/instance-gate11-benchmark.toml",
+    "config/instance-gate11-selective-deny.toml",
+    "config/instance-gate4.toml",
+    "config/instance-gate5.toml",
+    "config/instance-gate6.toml",
+    "config/instance-gate7.toml",
+    "config/instance-gate8.toml",
+    "config/instance-gate9-failure.toml",
+    "config/instance-gate9.75-hook-continue.toml",
+    "config/instance-gate9.75-hook-stop.toml",
+    "config/instance-gate9.75-hook-timeout.toml",
+    "config/instance-gate9.75-hooks.toml",
+    "config/instance-gate9.75-network.toml",
+    "config/instance-gate9.75.toml",
+    "config/instance-gate9.toml",
+    "config/instance-rocky-systemd.toml",
+    "crates/ginux-contract/src/bin/contract-doc.rs",
+    "crates/ginux-contract/src/lib.rs",
+    "crates/ginux-init/src/main.rs",
+    "crates/ginux-instance/src/lib.rs",
+    "crates/ginux-process/src/lib.rs",
+    "docs/abi-contract-coverage.md",
+    "docs/configurable-contract.md",
+    "docs/gate-9.75-instance-specification.md",
+    "hdae/ARCHITECTURE.md",
+    "hdae/PLAN.md"
+   ],
+   "keywords": [
+    "contract",
+    "network",
+    "gate",
+    "host",
+    "syscall",
+    "249",
+    "active",
+    "against",
+    "atomic",
+    "attached"
+   ]
+  },
   "250": {
    "kind": "pr",
    "title": "ci: skip checks when only documentation changed since a passing run",
@@ -5581,6 +5631,89 @@
   }
  },
  "keywords": {
+  "contract": [
+   251,
+   243,
+   237,
+   231,
+   230,
+   13
+  ],
+  "network": [
+   251,
+   229,
+   100,
+   75,
+   68
+  ],
+  "gate": [
+   251,
+   235,
+   231,
+   229,
+   228,
+   225,
+   210,
+   196,
+   181,
+   172
+  ],
+  "host": [
+   251,
+   248,
+   246,
+   245,
+   242,
+   238,
+   237,
+   236,
+   229,
+   219,
+   215,
+   214,
+   203,
+   202,
+   201,
+   200,
+   199,
+   198,
+   195,
+   194,
+   183,
+   125,
+   92,
+   86
+  ],
+  "syscall": [
+   251,
+   243,
+   240,
+   204,
+   203,
+   186,
+   162,
+   161,
+   62,
+   25
+  ],
+  "249": [
+   251
+  ],
+  "active": [
+   251,
+   86,
+   49
+  ],
+  "against": [
+   251,
+   202
+  ],
+  "atomic": [
+   251
+  ],
+  "attached": [
+   251
+  ],
   "run": [
    250,
    182,
@@ -5802,31 +5935,6 @@
    248,
    117
   ],
-  "host": [
-   248,
-   246,
-   245,
-   242,
-   238,
-   237,
-   236,
-   229,
-   219,
-   215,
-   214,
-   203,
-   202,
-   201,
-   200,
-   199,
-   198,
-   195,
-   194,
-   183,
-   125,
-   92,
-   86
-  ],
   "native": [
    248,
    247,
@@ -6039,28 +6147,10 @@
    156,
    153
   ],
-  "contract": [
-   243,
-   237,
-   231,
-   230,
-   13
-  ],
   "instance": [
    243,
    237,
    235
-  ],
-  "syscall": [
-   243,
-   240,
-   204,
-   203,
-   186,
-   162,
-   161,
-   62,
-   25
   ],
   "denial": [
    243,
@@ -6399,17 +6489,6 @@
    207,
    88
   ],
-  "gate": [
-   235,
-   231,
-   229,
-   228,
-   225,
-   210,
-   196,
-   181,
-   172
-  ],
   "cli": [
    235,
    217
@@ -6613,12 +6692,6 @@
   ],
   "hooks": [
    229
-  ],
-  "network": [
-   229,
-   100,
-   75,
-   68
   ],
   "context": [
    229,
@@ -7333,9 +7406,6 @@
    203,
    182,
    162
-  ],
-  "against": [
-   202
   ],
   "pipeline": [
    202
@@ -8946,10 +9016,6 @@
   ],
   "owner": [
    86
-  ],
-  "active": [
-   86,
-   49
   ],
   "tcg": [
    85,
