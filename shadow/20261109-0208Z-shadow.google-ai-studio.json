@@ -1,0 +1,65 @@
+{
+ "meta": {
+  "provider": "google-ai-studio",
+  "model": "gemini-3.6-flash",
+  "model_actual": "gemini-3.6-flash",
+  "low_confidence": false,
+  "latency_s": 13.2,
+  "attempts": 1,
+  "input_truncated": false,
+  "input_sha256_16": "a9d1bf3431ff8d9b",
+  "schema": "shadow-report-v1"
+ },
+ "report": {
+  "report_id": "session-57-v6.8-review",
+  "strengths": [
+   "Added strict YAML schema loader (T25) with duplicate key and ID rejection for golden evaluation cases.",
+   "Enforced file integrity workflow (parse, schema check, round-trip dump, and SHA256 validation) prior to push.",
+   "Restricted active model probing to primary model per provider, drastically reducing quota consumption.",
+   "Isolated low-confidence responses from dynamic OpenRouter free aliases from quality benchmark calculations."
+  ],
+  "weaknesses": [
+   "Google gemini-3.6-flash probe verification deferred entirely to post-push CI execution.",
+   "Pre-commit hook required re-installation after key rotation erased previous hook state."
+  ],
+  "claims_checked": [
+   {
+    "claim": "Key 20261109a exists with 600 permissions and is activated via ls-remote",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Google models missing from listing due to models/ prefix mismatch",
+    "evidence_tag": "INFERRED",
+    "verdict": "unverified"
+   },
+   {
+    "claim": "run_golden_eval.py --validate runs offline with zero network calls",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "work/keys directory contains only key 20261109a",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   }
+  ],
+  "decisions": [
+   {
+    "open_point": "Dynamic model substitution in OpenRouter free tier aliases",
+    "decision": "Tag evaluation rows with low_confidence and exclude them from quality scoring flags",
+    "rationale": "Dynamic routing changes actual models between runs, introducing noise into quality benchmarks"
+   }
+  ],
+  "risks": [
+   "Unvalidated Google API probe behavior in CI environment prior to post-push execution analysis",
+   "Quota lockouts enforced until 2026-11-09T00:00:00Z evaluation window opens"
+  ],
+  "next_items": [
+   "Inspect post-push CI run artifacts for raw Google probe responses and model normalized listing",
+   "Verify quota counter updates after 2026-11-09T00:00:00Z"
+  ],
+  "injection_suspected": false,
+  "publish_requests": []
+ }
+}
