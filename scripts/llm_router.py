@@ -59,6 +59,7 @@ Exit: 0 = answered; 1 = all configured providers failed; 2 = none configured;
 import argparse
 import json
 import os
+import random
 import re
 import sys
 import time
@@ -250,6 +251,94 @@ def answer_and_shape(resp):
     except Exception:
         content = None
     return None, (noncontent or None), model_actual
+
+
+def shape_failure_class(resp, max_tokens):
+    """v6.9-6 / v7.0-4b: classify an HTTP-200 reply whose content is missing or
+    blank. Returns (err_class, finish_reason, usage). reasoning_exhausted when
+    finish_reason=length AND reasoning_tokens >= 0.8*max_tokens — the output
+    budget was consumed by reasoning before any content was emitted; NOT
+    retryable (v6.9-6: classified reasoning_exhausted, not api_shape, no
+    retry). Any other missing/blank shape stays api_shape (retryable)."""
+    finish_reason = None
+    usage = resp.get("usage") if isinstance(resp, dict) else None
+    try:
+        finish_reason = resp["choices"][0].get("finish_reason")
+    except Exception:
+        finish_reason = None
+    rt = 0
+    try:
+        rt = int(((usage or {}).get("completion_tokens_details") or {}).get("reasoning_tokens") or 0)
+    except Exception:
+        rt = 0
+    if finish_reason == "length" and max_tokens and rt >= int(0.8 * max_tokens):
+        return "reasoning_exhausted", finish_reason, usage
+    return "api_shape", finish_reason, usage
+
+
+def success_shape_meta(resp):
+    """v7.0-4b: names/numbers only from a SUCCESS reply — finish_reason plus a
+    small usage summary; never the content itself."""
+    fr = None
+    try:
+        fr = resp["choices"][0].get("finish_reason")
+    except Exception:
+        fr = None
+    usage = None
+    try:
+        u = resp.get("usage") or {}
+        usage = {"completion_tokens": u.get("completion_tokens"),
+                 "reasoning_tokens": (u.get("completion_tokens_details") or {}).get("reasoning_tokens")}
+    except Exception:
+        usage = None
+    return fr, usage
+
+
+def throttle_provider(prov, st):
+    """v6.9-2: per-provider minimum send interval — config min_interval_s wins,
+    else 60/rpm seconds (rpm<=0 or absent means NO throttle). Sleeps in-place
+    when called too soon; persists _last_send_epoch (wall clock) in state.
+    Returns the waited seconds."""
+    iv = prov.get("min_interval_s")
+    if iv is None:
+        rpm = prov.get("rpm") or 0
+        iv = (60.0 / rpm) if rpm and rpm > 0 else 0
+    try:
+        iv = float(iv)
+    except Exception:
+        iv = 0.0
+    if iv <= 0:
+        return 0.0
+    now = time.time()
+    try:
+        last = float(st.get("_last_send_epoch") or 0)
+    except Exception:
+        last = 0.0
+    wait = last + iv - now
+    if wait > 0:
+        time.sleep(wait)
+    st["_last_send_epoch"] = time.time()
+    return max(0.0, wait)
+
+
+def rate_limit_429_plan(st, headers, backoff_s):
+    """v6.9-2: on a 429 — respect Retry-After capped at 120s plus jitter;
+    a SECOND consecutive 429 flips the provider status to rate_limited and
+    stops burning quota (caller breaks out of the provider). Returns
+    (wait_s, stop_provider)."""
+    c429 = int(st.get("consecutive_429") or 0) + 1
+    st["consecutive_429"] = c429
+    ra = (headers or {}).get("Retry-After") or (headers or {}).get("retry-after")
+    try:
+        wait_s = min(120.0, float(ra))
+    except Exception:
+        wait_s = min(120.0, float(backoff_s) * 2.0)
+    wait_s += random.uniform(0.5, 2.0)  # jitter (v6.9-2)
+    stop = c429 >= 2
+    if stop:
+        st["status"] = "rate_limited"
+        wait_s = 0.0
+    return wait_s, stop
 
 
 # ---------------------------------------------------------------------------
@@ -503,6 +592,7 @@ def call_chat(cfg, state, system, user, meta_out, probe_path=None):
         timeout = provider_timeout(cfg, prov)
         auth_broken = False
         cap_hit = False
+        stop_rate_limited = False
         err_class = None
         for model in prov.get("models", []):
             if model.get("status") not in (None, "available", "unverified"):
@@ -533,10 +623,12 @@ def call_chat(cfg, state, system, user, meta_out, probe_path=None):
                     err_class = "cap_reached"
                     break
                 state.daily_add(name)
+                throttle_provider(prov, st)  # v6.9-2: min interval 60/rpm
                 t0 = time.monotonic()
                 code, headers, resp, raw_body = None, {}, None, ""
                 retryable = True
                 ok_call = False
+                rate_wait = None
                 try:
                     code, resp, headers, raw_body = http_json(
                         base + "/chat/completions", payload, key, timeout)
@@ -550,6 +642,14 @@ def call_chat(cfg, state, system, user, meta_out, probe_path=None):
                     capture_rate_limit(st, headers)
                     err_class = classify_http(code)
                     retryable = code in RETRYABLE_HTTP
+                    if code == 429:
+                        # v6.9-2: Retry-After (cap 120s) + jitter; a second
+                        # consecutive 429 flips status to rate_limited and
+                        # stops burning this provider's quota
+                        rate_wait, stop429 = rate_limit_429_plan(st, headers, backoff)
+                        if stop429:
+                            retryable = False
+                            stop_rate_limited = True
                 except SecretInPayload:
                     raise
                 except Exception as e:  # timeout / network
@@ -564,29 +664,38 @@ def call_chat(cfg, state, system, user, meta_out, probe_path=None):
                     else:
                         content, noncontent, model_actual = answer_and_shape(resp)
                         if content is None:
-                            retryable = True
-                            err_class = "api_shape"
+                            # v6.9-6/v7.0-4b: reasoning_exhausted (no retry)
+                            # vs api_shape (retryable)
+                            err_class, _fr_f, _u_f = shape_failure_class(
+                                resp, int(payload.get("max_tokens") or 0))
+                            retryable = err_class != "reasoning_exhausted"
                 elapsed = round(time.monotonic() - t0, 2)
                 if ok_call and not retryable:
+                    _fr, _usg = success_shape_meta(resp)
                     st.update({
                         "status": "ok", "model_current": model["id"],
                         "model_actual": model_actual,
                         "last_success": now_iso(), "last_error_class": None,
                         "consecutive_failures": 0,
+                        "consecutive_429": 0,
                         "rate_limit": extract_rate_limit(headers),
                     })
                     st.pop("skip_until", None)
                     st.pop("skip_until_iso", None)
                     st.pop("last_diag", None)
+                    st.pop("last_alert_key", None)  # v6.9-3: reset on recovery
                     state.data["last_call"] = {
                         "provider": name, "model": model["id"],
                         "model_actual": model_actual,
                         "latency_s": elapsed, "outcome": "ok", "at": now_iso(),
+                        "finish_reason": _fr,
                     }
                     state.save()
                     meta_out.update(provider=name, model=model["id"],
                                     model_actual=model_actual,
                                     latency_s=elapsed, attempts=attempt,
+                                    retries=attempt - 1,  # v6.9-2: retries counted
+                                    finish_reason=_fr, usage_summary=_usg,
                                     # v6.8 item 7: alias/free models carry
                                     # low_confidence — excluded from the
                                     # quality comparison downstream
@@ -612,9 +721,19 @@ def call_chat(cfg, state, system, user, meta_out, probe_path=None):
                     auth_broken = True
                     break  # no retry on auth errors
                 if attempt < attempts:
-                    time.sleep(backoff)
+                    time.sleep(rate_wait if rate_wait is not None else backoff)
             if auth_broken:
                 break  # skip remaining models of this provider
+            if stop_rate_limited:
+                # v6.9-2: second consecutive 429 — provider stops burning quota
+                st["last_error_class"] = "rate_limited"
+                state.data["last_call"] = {
+                    "provider": name, "model": model["id"],
+                    "outcome": "rate_limited", "at": now_iso(),
+                    "diag": st.get("last_diag")}
+                state.save()
+                last_errors.append("%s:rate_limited(2x429)" % name)
+                break
             if cap_hit:
                 st["last_error_class"] = "cap_reached"
                 state.data["last_call"] = {
@@ -704,15 +823,18 @@ def call_model(cfg, state, provider_name, model_id, system, user, meta_out):
         "max_tokens": int(cfg.get("eval_max_tokens", 3000) or 3000),
     }
     err_class = None
+    stop_rate_limited = False
     for attempt in range(1, attempts + 1):
         if daily_cap and state.daily_count(provider_name, purpose="eval") >= daily_cap:
             err_class = "cap_reached"
             break
         state.daily_add(provider_name, purpose="eval")
+        throttle_provider(prov, st)  # v6.9-2: min interval 60/rpm
         t0 = time.monotonic()
         code, headers, resp, raw_body = None, {}, None, ""
         retryable = True
         ok_call = False
+        rate_wait = None
         try:
             code, resp, headers, raw_body = http_json(
                 base + "/chat/completions", payload, key, timeout)
@@ -727,6 +849,13 @@ def call_model(cfg, state, provider_name, model_id, system, user, meta_out):
             capture_rate_limit(st, headers)
             err_class = classify_http(code)
             retryable = code in RETRYABLE_HTTP
+            if code == 429:
+                # v6.9-2: Retry-After (cap 120s) + jitter; second consecutive
+                # 429 -> status rate_limited, stop burning quota
+                rate_wait, stop429 = rate_limit_429_plan(st, headers, backoff)
+                if stop429:
+                    retryable = False
+                    stop_rate_limited = True
         except SecretInPayload:
             raise
         except Exception as e:
@@ -741,26 +870,34 @@ def call_model(cfg, state, provider_name, model_id, system, user, meta_out):
             else:
                 content, noncontent, model_actual = answer_and_shape(resp)
                 if content is None:
-                    retryable = True
-                    err_class = "api_shape"
+                    # v6.9-6/v7.0-4b: reasoning_exhausted (no retry)
+                    err_class, _fr_f, _u_f = shape_failure_class(
+                        resp, int(payload.get("max_tokens") or 0))
+                    retryable = err_class != "reasoning_exhausted"
         elapsed = round(time.monotonic() - t0, 2)
         if ok_call and not retryable:
+            _fr, _usg = success_shape_meta(resp)
             st.update({
                 "status": "ok", "model_current": model_id,
                 "model_actual": model_actual,
                 "last_success": now_iso(), "last_error_class": None,
                 "consecutive_failures": 0,
+                "consecutive_429": 0,
                 "rate_limit": extract_rate_limit(headers),
             })
+            st.pop("last_alert_key", None)  # v6.9-3: reset on recovery
             state.data["last_call"] = {
                 "provider": provider_name, "model": model_id,
                 "model_actual": model_actual,
                 "latency_s": elapsed, "outcome": "ok", "at": now_iso(),
+                "finish_reason": _fr,
             }
             state.save()
             meta_out.update(provider=provider_name, model=model_id,
                             model_actual=model_actual,
                             latency_s=elapsed, attempts=attempt,
+                            retries=attempt - 1,  # v6.9-2: retries counted
+                            finish_reason=_fr, usage_summary=_usg,
                             low_confidence=bool((model_cfg or {}).get("low_confidence")))
             return content
         st["last_diag"] = diag_from_failure(
@@ -779,7 +916,12 @@ def call_model(cfg, state, provider_name, model_id, system, user, meta_out):
             write_alert(provider_name, st, "auth_failed", secret_name=secret_name)
             raise _fail("auth_failed:%s" % provider_name)
         if attempt < attempts:
-            time.sleep(backoff)
+            time.sleep(rate_wait if rate_wait is not None else backoff)
+    if stop_rate_limited:
+        # v6.9-2: second consecutive 429 — provider stops burning quota
+        st["last_error_class"] = "rate_limited"
+        state.save()
+        raise _fail("rate_limited:%s" % provider_name)
     if err_class == "cap_reached":
         st["last_error_class"] = "cap_reached"
         state.save()

@@ -40,6 +40,17 @@ providers:
 - name: google-ai-studio
   env_secret: GOOGLE_AI_API_KEY
   base_url: https://generativelanguage.googleapis.com/v1beta/openai
+  # v7.0-3a official limits (fetched 2026-11-09); measured headers/429
+  # override when present (v6.4 capture_rate_limit wins per directive)
+  limits_official:
+    rpm: null
+    rpd: null
+    tpm: null
+    min_interval_s: 6
+    limits_source: official_doc
+    source_url: https://ai.google.dev/gemini-api/docs/rate-limits
+    fetched_at: '2026-11-09'
+    quote: 'Rate limits are usually measured across three dimensions: RPM, TPM, RPD'
   request_timeout_s: 120
   verify_at_runtime: true
   models:
@@ -59,6 +70,17 @@ providers:
 - name: nvidia
   env_secret: NVIDIA_API_KEY
   base_url: https://integrate.api.nvidia.com/v1
+  # v7.0-3a official limits (fetched 2026-11-09, NVIDIA developer forums);
+  # measured headers/429 override when present (v6.4)
+  limits_official:
+    rpm: 40
+    rpd: null
+    tpm: null
+    min_interval_s: 1.5
+    limits_source: official_doc
+    source_url: https://forums.developer.nvidia.com/t/request-for-nvidia-nim-api-rate-limit-increase-40-to-200-rpm/374542
+    fetched_at: '2026-11-09'
+    quote: 'The default limit of 40 Requests Per Minute (RPM)'
   request_timeout_s: 300
   models:
   - id: nvidia/nemotron-3-ultra-550b-a55b
@@ -80,6 +102,17 @@ providers:
 - name: openrouter
   env_secret: OPENROUTER_API_KEY
   base_url: https://openrouter.ai/api/v1
+  # v7.0-3a official limits (fetched 2026-11-09); note: free RPD 50 is BELOW
+  # our configured caps — owner decision needed (reported 2026-11-10)
+  limits_official:
+    rpm: 20
+    rpd: 50
+    tpm: null
+    min_interval_s: 3.0
+    limits_source: official_doc
+    source_url: https://openrouter.ai/docs/api_reference/limits
+    fetched_at: '2026-11-09'
+    quote: 'capped at 20 requests per minute and 50 per day'
   request_timeout_s: 180
   models:
   - id: openrouter/free

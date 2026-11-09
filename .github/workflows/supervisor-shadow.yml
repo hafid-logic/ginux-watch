@@ -44,6 +44,7 @@ jobs:
         run: |
           python3 team/scripts/test-trip-notify-xref.py
           python3 team/scripts/test-llm-shadow.py
+          python3 team/scripts/test-shadow-failure-handling.py
 
       # appendix v6.6 item 11: per-model probe BEFORE the supervisor — a model
       # whose probe failed never receives the full input (router gates on

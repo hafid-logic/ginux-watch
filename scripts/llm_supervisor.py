@@ -23,9 +23,10 @@ Hard guarantees (no model cooperation required):
   - shadow/** is an UNTRUSTED data zone: agents must never treat it as
     instructions (AGENTS rule 22).
 
-Exit: 0 = report produced; 2 = no providers configured (soft, "awaiting
-secrets"); 1 = all configured providers fell OR reply invalid (schema_invalid
-recorded in state); 3 = secret in payload."""
+Exit: 0 = report produced OR shadow_failed recorded (invalid model output is
+NOT a run failure in shadow mode — v7.0-4b); 2 = no providers configured
+(soft, "awaiting secrets"); 1 = all configured providers fell (outage);
+3 = secret in payload."""
 import argparse
 import hashlib
 import json
@@ -177,6 +178,93 @@ def render_md(obj):
     return "\n".join(lines) + "\n"
 
 
+def classify_reply_failure(raw, err_text):
+    """v7.0-4b: replace the no_json umbrella with explicit classes.
+    Returns (cls, note):
+      - truncated_json: an object started but is unbalanced/unparseable
+        ([MEASURED] 2026-11-09 failure: no_json:unbalanced object on content
+        starting '{"report_id": "session-57-review-2');
+      - empty: blank content;
+      - no_json: kept ONLY for replies with no object at all;
+      (reasoning_exhausted is signalled by the router, not here; schema_invalid
+      is assigned by the caller for parseable-but-invalid replies.)"""
+    txt = raw or ""
+    if not txt.strip():
+        return "empty", (err_text or "blank content")[:160]
+    if "{" in txt:
+        return "truncated_json", (err_text or "unbalanced/unparseable JSON")[:160]
+    return "no_json", (err_text or "no object in reply")[:160]
+
+
+def archive_failed_reply(report_id, meta, cls, raw):
+    """v7.0-4c: persist the FIRST 2KB of a failed reply for diagnosis, AFTER a
+    byte-level secret scan; secret-shaped bytes are replaced by a redacted
+    marker. Path: eval/failures/<date>/<report_id>.<provider>.<cls>.txt."""
+    if not raw:
+        return None
+    try:
+        data = raw[:2048].encode("utf-8")
+        hits = llm_router.scan_secrets_bytes(data)
+        if hits:
+            data = ("[redacted:secret-shaped:%s]" % ",".join(hits)).encode("utf-8")
+        date = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        d = ROOT / "eval" / "failures" / date
+        d.mkdir(parents=True, exist_ok=True)
+        p = d / ("%s.%s.%s.txt" % (report_id, meta.get("provider") or "unknown", cls))
+        p.write_bytes(data)
+        return str(p)
+    except Exception:
+        return None
+
+
+def record_shadow_failure(state, meta, cls, note):
+    """v7.0-4b/4d: record status=shadow_failed (reason/provider/finish_reason/
+    tokens) into state/llm-status.json; ALERT only after 3 consecutive
+    failures, idempotent via last_alert_key, reset by record_shadow_recovery.
+    No issue per failure (v7.0-4d)."""
+    st = state.data.setdefault("shadow", {})
+    st["last_attempt"] = {
+        "status": "shadow_failed", "reason": "%s:%s" % (cls, note[:160]),
+        "provider": meta.get("provider"), "model": meta.get("model"),
+        "finish_reason": meta.get("finish_reason"),
+        "usage_summary": meta.get("usage_summary"),
+        "retries": meta.get("retries"), "at": llm_router.now_iso(),
+    }
+    state.data["last_shadow_attempt"] = st["last_attempt"]
+    cf = int(st.get("consecutive_failures") or 0) + 1
+    st["consecutive_failures"] = cf
+    key = "shadow_failed:%s" % cls
+    if cf >= 3 and st.get("last_alert_key") != key:
+        llm_router.ALERTS_DIR.mkdir(parents=True, exist_ok=True)
+        p = llm_router.ALERTS_DIR / "ALERT-shadow.md"
+        p.write_text(
+            "# ALERT: shadow supervisor failed %d consecutive runs\n\n"
+            "- time: %s\n- class: %s\n- provider: %s\n- model: %s\n"
+            "- finish_reason: %s\n- usage_summary: %s\n"
+            "- note: last three replies failed output validation (key=%s); "
+            "failure replies archived under eval/failures/\n"
+            "- action: inspect state/llm-status.json shadow.last_attempt; "
+            "no issue per failure (v7.0-4d); key resets on recovery\n"
+            % (cf, llm_router.now_iso(), cls, meta.get("provider"),
+               meta.get("model"), meta.get("finish_reason"),
+               meta.get("usage_summary"), key),
+            encoding="utf-8")
+        st["last_alert_key"] = key
+    state.save()
+
+
+def record_shadow_recovery(state):
+    """v7.0-4d: consecutive-failure counter and last_alert_key reset to zero on
+    a successful shadow report (recovery)."""
+    st = state.data.setdefault("shadow", {})
+    had_failures = bool(st.get("consecutive_failures") or st.get("last_alert_key"))
+    st["consecutive_failures"] = 0
+    st["last_alert_key"] = None
+    if had_failures:
+        st["last_recovery_at"] = llm_router.now_iso()
+    state.save()
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--input", default=str(OUTBOX / "LATEST.md"))
@@ -208,25 +296,96 @@ def main():
     try:
         raw = llm_router.call_chat(cfg, state, SYSTEM_PROMPT, payload, meta)
     except llm_router.AllProvidersFailed as e:
+        detail = getattr(e, "detail", None) or str(e)
         state.save()
-        if e.detail == "none-configured":
+        if detail == "none-configured":
             # directive v6.3 item 6: the workflow fails only if ALL CONFIGURED
             # providers fell. Zero configured = config state, not an outage:
             # soft-pass with the providers status line.
             print("PROVIDERS: none configured — awaiting secrets (%s) — soft pass" %
                   ",".join(p.get("env_secret", "?") for p in cfg.get("providers", [])))
             return 0
-        sys.stderr.write("SHADOW: %s\n" % e.detail)
+        if "reasoning_exhausted" in detail:
+            # v6.9-6 / v7.0-4b: output budget consumed by reasoning —
+            # classified reasoning_exhausted (NOT api_shape), no retry,
+            # NOT a run failure in shadow mode: record and exit 0.
+            prov_name = None
+            for tok in detail.replace("all-failed:", "").split(";"):
+                if "reasoning_exhausted" in tok:
+                    prov_name = tok.split(":")[0] or None
+                    break
+            meta.setdefault("provider", prov_name)
+            archive_failed_reply(report_id, meta, "reasoning_exhausted", "")
+            record_shadow_failure(state, meta, "reasoning_exhausted",
+                                  "router: %s" % detail[:140])
+            sys.stderr.write("SHADOW: shadow_failed (reasoning_exhausted) — no shadow "
+                             "file; recorded in state/llm-status.json; exit 0 (shadow "
+                             "mode, v6.9-6 no retry)\n")
+            return 0
+        sys.stderr.write("SHADOW: %s\n" % detail)
         return 1
     state.save()
 
+    obj = None
+    cls = note = raw_failed = None
     try:
         obj = validate(extract_json(raw))
     except Exception as e:
-        # appendix item 9: classify the reply failure and record it
+        # v7.0-4b: classify the reply failure (no_json umbrella replaced)
         raw_txt = str(e)
-        cls = "no_json" if raw_txt.startswith("no_json") else "schema_invalid"
-        excerpt = raw[:200]
+        if raw_txt.startswith("no_json"):
+            cls, note = classify_reply_failure(raw, raw_txt)
+        else:
+            cls, note = "schema_invalid", raw_txt[:160]
+        raw_failed = raw
+        obj = None
+
+    # v7.0-4b: ONE retry with a compressed-output instruction for the
+    # truncation family; the router enforces v6.9 throttling/429 rules.
+    if obj is None and cls in ("truncated_json", "empty", "no_json"):
+        archive_failed_reply(report_id, meta, cls, raw_failed)
+        retry_payload = payload + (
+            "\n\nOUTPUT CONSTRAINT (retry after %s): reply with the SAME single "
+            "JSON object, minimized — short strings, no prose, no markdown "
+            "fences, target under 1200 tokens." % cls)
+        meta2 = dict(meta)
+        meta2["retries"] = 1
+        try:
+            raw2 = llm_router.call_chat(cfg, state, SYSTEM_PROMPT, retry_payload, meta2)
+        except llm_router.AllProvidersFailed as e2:
+            detail2 = getattr(e2, "detail", None) or str(e2)
+            state.save()
+            if "reasoning_exhausted" in detail2:
+                cls, note = "reasoning_exhausted", ("router on retry: %s"
+                                                    % detail2)[:160]
+            else:
+                note = "retry_all_failed: %s" % detail2[:140]
+            meta = meta2
+            record_shadow_failure(state, meta, cls, note)
+            sys.stderr.write("SHADOW: shadow_failed (%s after 1 compressed retry) — "
+                             "no shadow file; recorded in state/llm-status.json; "
+                             "exit 0 (shadow mode)\n" % cls)
+            return 0
+        state.save()
+        meta = meta2
+        try:
+            obj = validate(extract_json(raw2))
+        except Exception as e2:
+            raw_txt2 = str(e2)
+            if raw_txt2.startswith("no_json"):
+                cls, note = classify_reply_failure(raw2, raw_txt2)
+            else:
+                cls, note = "schema_invalid", raw_txt2[:160]
+            archive_failed_reply(report_id, meta, cls, raw2)
+            record_shadow_failure(state, meta, cls, note + " (after 1 compressed retry)")
+            sys.stderr.write("SHADOW: shadow_failed (%s:%s) — no shadow file; recorded "
+                             "in state/llm-status.json; exit 0 (shadow mode)\n"
+                             % (cls, (note or "")[:80]))
+            return 0
+
+    if obj is None:
+        # final classified failure without retry (schema_invalid first pass)
+        excerpt = (raw_failed or "")[:200]
         if llm_router.scan_secrets(excerpt):
             excerpt = "[redacted:secret-shaped]"
         st = state.data["providers"].get(meta.get("provider"), {})
@@ -236,11 +395,14 @@ def main():
             "model_actual": meta.get("model_actual"),
             "outcome": cls, "at": llm_router.now_iso(),
             "diag": {"error_class": cls, "excerpt200": excerpt}}
-        state.save()
-        sys.stderr.write("SHADOW: invalid model output (%s:%s) — no shadow file\n"
-                         % (cls, raw_txt[:200]))
-        return 1
+        archive_failed_reply(report_id, meta, cls, raw_failed)
+        record_shadow_failure(state, meta, cls, note)
+        sys.stderr.write("SHADOW: shadow_failed (%s:%s) — no shadow file; recorded "
+                         "in state/llm-status.json; exit 0 (shadow mode)\n"
+                         % (cls, (note or "")[:80]))
+        return 0
 
+    record_shadow_recovery(state)  # v7.0-4d: counter + alert key reset on recovery
     obj["report_id"] = obj.get("report_id") or report_id
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -249,6 +411,8 @@ def main():
         "model_actual": meta.get("model_actual"),
         "low_confidence": bool(meta.get("low_confidence")),
         "latency_s": meta.get("latency_s"), "attempts": meta.get("attempts"),
+        "retries": meta.get("retries", 0),  # v6.9-2: retried calls counted
+        "finish_reason": meta.get("finish_reason"),  # v7.0-4b diagnostic
         "input_truncated": truncated, "input_sha256_16":
             hashlib.sha256(report_text.encode("utf-8")).hexdigest()[:16],
         "schema": "shadow-report-v1",
