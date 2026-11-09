@@ -13,15 +13,18 @@ git config --get user.name && git config --get user.email
 يثبت `user.name="Abdelhafid DJIDEL"` و `user.email="266947999+hafid-logic@users.noreply.github.com"` ويتحقق بنفسه.
 درس مكرر: بدونها يُرتكب commit بهوية افتراضية "Z User" (وقع في PR #61).
 
-## 3) مصادقة gh
-المسارات: binary في `/home/z/my-project/work/bin/gh` و CONFIG في `GH_CONFIG_DIR=/home/z/my-project/work/.config/gh`.
-بعد دوران الصندوق يفقد الـ config المصادقة → أعد المصادقة بتدفق الجهاز:
+## 3) مصادقة الدفع — PAT توكن دقيق النطاق (v7.1 قرار نهائي، 2026-11-10)
+المصدر الوحيد: `upload/gh-pat.txt` (توكن دقيق لـginux-watch فقط، يرفعه المالك إلى upload/ — خارج المستودع). كل جلسة:
 ```bash
-bash /home/z/my-project/scripts/gh-device-flow.sh   # أو gh-device-flow2.sh
-# افتح work/gh-device-code.txt: CODE + URL، وافق من المتصفح، ثم تحقق:
-GH_CONFIG_DIR=/home/z/my-project/work/.config/gh /home/z/my-project/work/bin/gh auth status
+test -f /home/z/my-project/upload/gh-pat.txt || echo "توكن غائب — الدفع معلّق؛ أبلغ المالك لإعادة الرفع، ولا SSH ولا device-flow ولا بديل (v7.1-1a)"
+mkdir -p /home/z/my-project/work/keys
+cp /home/z/my-project/upload/gh-pat.txt /home/z/my-project/work/keys/gh-pat && chmod 600 /home/z/my-project/work/keys/gh-pat
 ```
-قاعدة توكن صارمة: لا توكن في أي ملف مدفوع ولا في المحادثة؛ مجلد `work/.config/gh` لا يُدفع أبدًا.
+- credential helper محلي: سكربت في `work/keys/` يقرأ `work/keys/gh-pat` ويُخرج السر لـgit فقط — لا توكن في أي ملف متتبع أو URL أو .git/config أو متغير بيئة يُسجَّل.
+- اختبار المصادقة: `git ls-remote https://github.com/hafid-logic/ginux-watch.git` ناجح + طلب API واحد `GET /repos/hafid-logic/ginux-watch` يعيد 200 فقط.
+- `work/keys/` مغطى بـ.gitignore (داخل `work/`) — لا يُتتبّع ولا يُدفع أبدًا؛ تحقق قبل التسليم أن لا ملف فيه متتبّع.
+- **إن غاب `upload/gh-pat.txt`**: نفّذ كل ما لا يحتاج دفعًا وأبلغ «الدفع معلّق» في أول سطر — لا تحاول SSH أو device-flow أو أي بديل.
+- (تاريخي أهمل للدفع) مصادقة gh device-flow القديمة: binary `work/bin/gh` + `GH_CONFIG_DIR=work/.config/gh` عبر `scripts/gh-device-flow.sh` — لم تعد مسار الدفع منذ v7.1.
 
 ## 4) استنساخ
 ```bash
@@ -39,6 +42,7 @@ git clone https://github.com/hafid-logic/ginux-watch
   2. **monitor.yml كل 6 ساعات + dispatch** (بلا وكيل — يفتح digest issue عند تغيّر مهم).
 - **خطة احتياط بلا وكيل (Actions):** بعد v3.6 صار `monitor.yml` هو المراقبة المستمرة (كل 6 ساعات، يفتح digest issue عند تغيّر مهم) — تنبيهك يصل عبر إشعار الـissue. `team-indexer.yml` (ساعي) و`team-watcher.yml` (ربع ساعي) بلا تغيير.
 - **المراجعة العميقة** (تدقيق مصفوفة كامل، بناء فجوات): تُطلق **عند الطلب فقط** بأمر المستخدم.
+- **v7.1-2a (2026-11-10): cron 519381 (مراقبة هادئة كل 6h) حُذف نهائيًا** — لا مراقبة مجدولة بالوكيل بعد الآن؛ المرجع الأساسي للمراقبة: `matrix/upstream-watch.json` (يحدثه team-watcher في Actions) و**TRIPPED issues** في ginux-watch — التغييرات المهمة تصل المالك عبر GitHub notifications مباشرة بلا وسيط.
 
 ## 7) قواعد دائمة (اختصار)
 - لا نشر ولا رد على upstream بلا نص معتمد صريح من المستخدم.

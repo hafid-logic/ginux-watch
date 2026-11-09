@@ -10,3 +10,4 @@ v6.6-appx-20261108 | 2026-11-08T~09:5xZ | b9b1b3a81f085574b243a818a93cc4b5dc1d6d
 v6.7-20261108 | 2026-11-08T~18:2xZ | 17f6792318126da1294062bdc00708fd1ffeac5113e9e5af655160e96d899b3b | executed | (report 20261108-1830Z-s56)
 v6.8-20261108 | 2026-11-08T19:1xZ | c601d07e97c971a4db73580eb78acdb13286eb42912af1643fc016bd6b6d6a74 | executed | (report 20261108-1930Z-s57)
 v7.0-20261110 | 2026-11-10T~05:3x+08 | 61bd21e94f83f5264b83431da4b2a082e3741789a9b839cd4dfd877eee2fff2e | executed (partial: push pending deploy-key، وeval الثاني ينتظر أرقام اللوحات) | (تقرير تسليم 2026-11-10 في المحادثة)
+v7.1-20261110 | 2026-11-10T~07:4x+08 | e8271e1a4c7bfaa0bdbd5e40a6e8567c7b47fb330fa359ca56588cf52ffe491d | partial (بدأ التنفيذ: cron حُذف+rebase+أرشفة؛ الدفع و1e معلّقان غياب upload/gh-pat.txt [MEASURED]) | (تقرير تسليم 2026-11-10 في المحادثة)
