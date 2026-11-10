@@ -13,6 +13,11 @@ on:
         type: boolean
         required: false
         default: false
+      run_defects:
+        description: "Run the defect-detection benchmark (v7.4-4, directed NVIDIA-only, zero-spend gate). Push/schedule runs NEVER run it."
+        type: boolean
+        required: false
+        default: false
       supervisor_input:
         description: "Optional explicit llm_supervisor.py --input path (trap tests / re-runs, v7.3-3/4). '__SKIP__' runs NO supervisor call (eval-only dispatch). Empty = default outbox/LATEST.md."
         type: string
@@ -28,6 +33,11 @@ on:
         type: boolean
         required: false
         default: false
+      supervisor_provider:
+        description: "Optional LLM_PREFER_PROVIDER pin — front-of-order provider for trap reruns on the SECOND provider (v7.4-5; fallback to normal order kept)."
+        type: string
+        required: false
+        default: ""
   schedule:
     - cron: "17 */6 * * *"
 
@@ -41,7 +51,7 @@ jobs:
   shadow:
     # v7.3-3/4: __SKIP__ skips only the SUPERVISOR call (eval-only dispatch) —
     # the job must still run the eval step; hence the run_eval escape below.
-    if: github.ref == 'refs/heads/main' && (inputs.supervisor_input != '__SKIP__' || inputs.run_eval == true)
+    if: github.ref == 'refs/heads/main' && (inputs.supervisor_input != '__SKIP__' || inputs.run_eval == true || inputs.run_defects == true)
     runs-on: ubuntu-24.04
     environment: supervisor
     permissions:
@@ -83,6 +93,7 @@ jobs:
           SUPERVISOR_INPUT: ${{ inputs.supervisor_input }}
           SUPERVISOR_REPORT_ID: ${{ inputs.supervisor_report_id }}
           SUPERVISOR_FORCE: ${{ inputs.supervisor_force }}
+          LLM_PREFER_PROVIDER: ${{ inputs.supervisor_provider }}
         run: |
           if [ "$SUPERVISOR_INPUT" = "__SKIP__" ]; then
             echo "supervisor: skipped (__SKIP__ — eval-only dispatch, v7.3 eval الثاني)"
@@ -112,6 +123,18 @@ jobs:
           GOOGLE_AI_API_KEY: ${{ secrets.GOOGLE_AI_API_KEY }}
           GOLDEN_EVAL_GATE: run_eval-${{ inputs.run_eval }}
         run: python3 scripts/run_golden_eval.py
+
+      # v7.4-4: defect benchmark runs ONLY via workflow_dispatch with
+      # run_defects=true; the runner additionally refuses without
+      # DEFECT_BENCH_GATE=run_defects-true (zero-spend, v6.7-1 discipline).
+      - name: Defect benchmark run (dispatch + run_defects=true only)
+        if: github.event_name == 'workflow_dispatch' && inputs.run_defects == true
+        env:
+          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          GOOGLE_AI_API_KEY: ${{ secrets.GOOGLE_AI_API_KEY }}
+          DEFECT_BENCH_GATE: run_defects-${{ inputs.run_defects }}
+        run: python3 team/scripts/run_defect_benchmark.py
 
       # v6.7 item 1: show the ACTUAL consumed daily cap in the job summary
       # (per provider per purpose: supervisor / eval / probe).

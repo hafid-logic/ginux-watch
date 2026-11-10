@@ -33,6 +33,16 @@ Covers (against a local HTTP mock, localhost only):
       the strict loader (duplicate keys rejected, jsonschema required-keys,
       duplicate ids rejected, count reported) and proves rejection on a
       duplicate-key fixture; run_golden_eval --validate passes offline
+  T26 truncation simulation (v7.4-2): the REAL archived 0011Z nvidia reply
+      classifies truncated_json; both attempts' finish_reason/tokens on record
+  T27 word caps (v7.4-2): enforce_word_caps trims deterministically, schema
+      stays valid, compressed flag flips, under-cap reply untouched
+  T28 max_tokens math (v7.4-2): config 1657 == ceil(p95 x 1.5) as recorded
+  T29 roles/bucket (v7.4-1): probe-only provider gets ZERO supervisor calls
+  T30 UTC quota (v7.4-1): state/quota-google-<date>.json counter, auto-bypass
+      at cap with zero failure marking and zero ALERT (call_model too)
+  T31 prompt_suffix (v7.4-2): nvidia system prompt carries /no_think
+  T32 provider pin (v7.4-5): LLM_PREFER_PROVIDER front-of-order + fallback
 Run: python3 team/scripts/test-llm-shadow.py  (exit 0 = all pass)"""
 import json
 import sys
@@ -661,6 +671,175 @@ def main():
     assert STATE["hits"] == hits25, "--validate spent HTTP calls"
     print("T25 ok: %d real golden cases strict-loaded; dup-key/schema/dup-id "
           "rejection proven; --validate offline zero-spend" % rep25["cases"])
+
+    # ---- v7.4 tests (directive v7.4-1/2/6, 2026-11-10) — all offline/mock ----
+
+    # T26 truncation simulation (v7.4-2): the REAL archived attempt-1 reply of
+    # the 0011Z nvidia truncation must classify truncated_json, and a
+    # synthetic cut mid-object behaves the same -> both feed the compressed
+    # retry path. Plus: attempt-1/2 numbers are on record (finish_reason).
+    trunc_art = ROOT / "eval/failures/2026-11-10/rerun-0011Z.nvidia.truncated_json.txt"
+    raw_t26 = trunc_art.read_text(encoding="utf-8", errors="replace")
+    assert "{" in raw_t26
+    try:
+        sup.extract_json(raw_t26)
+        raise AssertionError("truncated artifact unexpectedly parsed")
+    except ValueError as e:
+        cls_t26, _n = sup.classify_reply_failure(raw_t26, str(e))
+    assert cls_t26 == "truncated_json", cls_t26
+    cut26 = json.dumps(VALID_REPORT)[:-40]  # cut mid-object
+    try:
+        sup.extract_json(cut26)
+        raise AssertionError("mid-object cut unexpectedly parsed")
+    except ValueError as e:
+        cls26b, _ = sup.classify_reply_failure(cut26, str(e))
+    assert cls26b == "truncated_json", cls26b
+    p95doc = json.loads((ROOT / "eval/nvidia-truncation/"
+                         "p95-analysis-2026-11-10.json").read_text(encoding="utf-8"))
+    assert p95doc["attempt1_0011Z"]["finish_reason"] == "length"
+    assert p95doc["attempt2_0011Z_measured"]["finish_reason"] == "length"
+    assert p95doc["attempt2_0011Z_measured"]["completion_tokens"] == 3000
+    assert p95doc["attempt2_0011Z_measured"]["reasoning_tokens"] == 2499
+    print("T26 ok: truncation simulation -> truncated_json (real artifact + "
+          "synthetic cut); both 0011Z attempts on record finish_reason=length")
+
+    # T27 word caps (v7.4-2): over-cap reply is deterministically trimmed and
+    # stays schema-valid; flag flips; under-cap reply untouched.
+    big = json.loads(json.dumps(VALID_REPORT))
+    big["strengths"] = ["word%d " % i + "x" * 1 for i in range(9)]  # 9 items
+    big["strengths"] = [("s%d " % i) * 30 for i in range(9)]        # 30 words each
+    big["claims_checked"] = [
+        {"claim": "c%d " % i + "y" * 1, "evidence_tag": "MEASURED",
+         "verdict": "supported"} for i in range(18)]
+    trimmed, changed = sup.enforce_word_caps(big)
+    assert changed is True
+    assert len(trimmed["strengths"]) == 6
+    assert all(len(s.split()) <= sup.WORD_CAPS["strengths"]["max_words"] + 1
+               for s in trimmed["strengths"])  # +1 for the ellipsis token
+    assert len(trimmed["claims_checked"]) == 12
+    sup.validate(trimmed)  # still schema-valid
+    small = json.loads(json.dumps(VALID_REPORT))
+    small["strengths"] = ["a short strength"]
+    trimmed2, changed2 = sup.enforce_word_caps(small)
+    assert changed2 is False and trimmed2 == small
+    print("T27 ok: word caps enforced deterministically; schema stays valid; "
+          "under-cap unchanged")
+
+    # T28 max_tokens math (v7.4-2): config = ceil(p95 x 1.5) as recorded.
+    cfg28 = yaml.safe_load((ROOT / "config/llm-providers.yml").read_text(
+        encoding="utf-8"))
+    assert cfg28["supervisor_max_tokens"] == p95doc["max_tokens_new"] == 1657
+    assert cfg28["eval_max_tokens"] == 1657
+    assert p95doc["formula"].startswith("max_tokens = ceil(p95")
+    print("T28 ok: supervisor/eval_max_tokens = 1657 = ceil(p95_tokens_proxy x 1.5)")
+
+    # T29 roles/bucket (v7.4-1): a probe-only provider gets ZERO supervisor
+    # requests; fallback reaches the next provider.
+    tmpcfg29 = mkconfig(tmp, [
+        prov("p-probeonly", "MOCK_OK29", [{"id": "m/a", "status": "available"}]),
+        prov("p-super", "MOCK_OK29B", [{"id": "m/a", "status": "available"}])])
+    cfg29 = yaml.safe_load(tmpcfg29.read_text(encoding="utf-8"))
+    cfg29["providers"][0]["roles"] = ["probe"]
+    st29 = fresh_state(tmp / "s29-state.json")
+    os.environ["MOCK_OK29"] = "k-ok"
+    os.environ["MOCK_OK29B"] = "k-ok"
+    hits29 = STATE["hits"]
+    meta29 = {}
+    out29 = llm_router.call_chat(cfg29, st29, "sys", "user", meta29)
+    assert STATE["hits"] == hits29 + 1, (hits29, STATE["hits"])  # only p-super
+    assert meta29["provider"] == "p-super", meta29
+    print("T29 ok: probe-only provider skipped in supervisor bucket (1 HTTP hit)")
+
+    # T29b roles in eval bucket (v7.4-1): models_under_test excludes a
+    # probe-only provider entirely (zero eval calls to openrouter).
+    import run_golden_eval as gev29
+    mt29 = gev29.models_under_test(cfg29)
+    assert [p for p, _, _ in mt29] == ["p-super"], mt29
+
+    # T30 per-provider UTC quota (v7.4-1): counter file state/quota-<p>-<date>.json;
+    # at cap the provider is bypassed automatically — no failure, no ALERT.
+    llm_router.ROOT = tmp  # isolate quota files from the real state/ dir
+    cfg30 = yaml.safe_load(mkconfig(tmp, [
+        prov("p-quota", "MOCK_OK30", [{"id": "m/a", "status": "available"}]),
+        prov("p-next30", "MOCK_OK30B", [{"id": "m/a", "status": "available"}])]).read_text(encoding="utf-8"))
+    cfg30["providers"][0]["quota_prefix"] = "google"
+    cfg30["providers"][0]["quota_daily_cap"] = 2
+    st30 = fresh_state(tmp / "s30-state.json")
+    os.environ["MOCK_OK30"] = "k-ok"
+    os.environ["MOCK_OK30B"] = "k-ok"
+    hits30 = STATE["hits"]
+    alerts30_before = {p.name for p in (tmp / "outbox").glob("*.md")} if (tmp / "outbox").exists() else set()
+    meta30 = {}
+    llm_router.call_chat(cfg30, st30, "sys", "user", meta30)
+    llm_router.call_chat(cfg30, st30, "sys", "user", {})
+    qfiles = list((tmp / "state").glob("quota-google-*.json"))
+    assert len(qfiles) == 1 and qfiles[0].name.startswith("quota-google-2026-")
+    qd = json.loads(qfiles[0].read_text(encoding="utf-8"))
+    assert qd["count"] == 2 and qd["cap"] == 2, qd
+    assert st30.data["providers"]["p-quota"].get("consecutive_failures", 0) == 0
+    alerts30_after = {p.name for p in (tmp / "outbox").glob("*.md")} if (tmp / "outbox").exists() else set()
+    assert alerts30_after == alerts30_before, alerts30_after - alerts30_before
+    meta30b = {}
+    out30 = llm_router.call_chat(cfg30, st30, "sys", "user", meta30b)
+    assert meta30b["provider"] == "p-next30", meta30b  # bypassed automatically
+    assert st30.data["providers"]["p-quota"].get("consecutive_failures", 0) == 0
+    # directed path (call_model) also bypasses with an explicit row outcome
+    try:
+        llm_router.call_model(cfg30, st30, "p-quota", "m/a", "sys", "user", {})
+        raise AssertionError("quota bypass did not raise on call_model")
+    except llm_router.AllProvidersFailed as e30:
+        assert e30.detail.startswith("quota_bypass:"), e30.detail
+    llm_router.ROOT = ROOT  # restore
+    print("T30 ok: UTC quota counter file (quota-google-<date>.json), auto-bypass, "
+          "no failure marking, no ALERT, call_model bypass explicit")
+
+    # T31 prompt_suffix (v7.4-2): nvidia system prompt carries /no_think.
+    cfg31 = yaml.safe_load(mkconfig(tmp, [
+        prov("p-nthink", "MOCK_OK31", [{"id": "m/a", "status": "available"}])]).read_text(encoding="utf-8"))
+    cfg31["providers"][0]["models"][0]["prompt_suffix"] = "/no_think"
+    st31 = fresh_state(tmp / "s31-state.json")
+    os.environ["MOCK_OK31"] = "k-ok"
+    hits31 = STATE["hits"]
+    llm_router.call_chat(cfg31, st31, "sys", "user", {})
+    payload31 = json.loads(STATE["last_payload"])
+    sysmsg31 = payload31["messages"][0]["content"]
+    assert sysmsg31.startswith("sys\n") and sysmsg31.endswith("/no_think"), sysmsg31
+    assert STATE["hits"] == hits31 + 1
+    print("T31 ok: per-model prompt_suffix /no_think appended to the system prompt")
+
+    # T32 provider pin (v7.4-5): LLM_PREFER_PROVIDER moves the named provider
+    # to the FRONT of the try-order (second-provider trap reruns); unknown
+    # name = normal order; missing key on the pinned provider = fallback.
+    cfg32 = yaml.safe_load(mkconfig(tmp, [
+        prov("p-first32", "MOCK_OK32", [{"id": "m/a", "status": "available"}]),
+        prov("p-second32", "MOCK_OK32B", [{"id": "m/a", "status": "available"}])]).read_text(encoding="utf-8"))
+    st32 = fresh_state(tmp / "s32-state.json")
+    os.environ["MOCK_OK32"] = "k-ok"
+    os.environ["MOCK_OK32B"] = "k-ok"
+    hits32 = STATE["hits"]
+    meta32 = {}
+    llm_router.call_chat(cfg32, st32, "sys", "user", meta32)
+    assert meta32["provider"] == "p-first32", meta32  # normal order first
+    os.environ["LLM_PREFER_PROVIDER"] = "p-second32"
+    try:
+        meta32b = {}
+        llm_router.call_chat(cfg32, st32, "sys", "user", meta32b)
+        assert meta32b["provider"] == "p-second32", meta32b  # pin moves it front
+        os.environ["LLM_PREFER_PROVIDER"] = "no-such-provider"
+        meta32c = {}
+        llm_router.call_chat(cfg32, st32, "sys", "user", meta32c)
+        assert meta32c["provider"] == "p-first32", meta32c  # unknown = normal
+        os.environ["LLM_PREFER_PROVIDER"] = "p-second32"
+        del os.environ["MOCK_OK32B"]
+        meta32d = {}
+        llm_router.call_chat(cfg32, st32, "sys", "user", meta32d)
+        assert meta32d["provider"] == "p-first32", meta32d  # unconfigured pin
+    finally:
+        os.environ.pop("LLM_PREFER_PROVIDER", None)
+        os.environ.setdefault("MOCK_OK32B", "k-ok")
+    assert STATE["hits"] == hits32 + 4
+    print("T32 ok: LLM_PREFER_PROVIDER pin (front-of-order, fallback kept, "
+          "unknown/unconfigured safe)")
 
     srv.shutdown()
     print("test-llm-shadow: ALL PASS (mock only, no real providers touched)")

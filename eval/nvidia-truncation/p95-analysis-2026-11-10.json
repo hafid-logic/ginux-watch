@@ -1,0 +1,86 @@
+{
+ "generated": "2026-11-10",
+ "population": "nine shadow proposals (shadow-compare.md list)",
+ "rows": [
+  {
+   "id": "20261108-0007Z-s52.openrouter",
+   "words": 538,
+   "tokens_proxy": 1177
+  },
+  {
+   "id": "20261108-1830Z-s56.openrouter",
+   "words": 477,
+   "tokens_proxy": 979
+  },
+  {
+   "id": "20261108-1927Z-shadow.google-ai-studio",
+   "words": 222,
+   "tokens_proxy": 491
+  },
+  {
+   "id": "20261108-2211Z-shadow.google-ai-studio",
+   "words": 232,
+   "tokens_proxy": 418
+  },
+  {
+   "id": "20261109-0208Z-shadow.google-ai-studio",
+   "words": 193,
+   "tokens_proxy": 399
+  },
+  {
+   "id": "20261109-2226Z-shadow.google-ai-studio",
+   "words": 265,
+   "tokens_proxy": 512
+  },
+  {
+   "id": "20261110-0006Z-shadow.google-ai-studio",
+   "words": 157,
+   "tokens_proxy": 322
+  },
+  {
+   "id": "20261110-0007Z-shadow.google-ai-studio",
+   "words": 174,
+   "tokens_proxy": 350
+  },
+  {
+   "id": "20261110-0011Z-shadow.google-ai-studio",
+   "words": 225,
+   "tokens_proxy": 995
+  }
+ ],
+ "p95_words": 513.6,
+ "p95_tokens_proxy": 1104.2,
+ "max_tokens_new": 1657,
+ "formula": "max_tokens = ceil(p95_tokens_proxy * 1.5) (directive v7.4-2)",
+ "tokenizer": "tiktoken cl100k_base [INFERRED proxy for nemotron tokenizer]",
+ "fields_max_observed": {
+  "strengths": 20,
+  "strengths#len": 9,
+  "weaknesses": 20,
+  "weaknesses#len": 5,
+  "risks": 28,
+  "risks#len": 4,
+  "next_items": 16,
+  "next_items#len": 5,
+  "claims_checked.claim": 15,
+  "decisions.open_point": 13,
+  "decisions.decision": 20,
+  "decisions.rationale": 26,
+  "claims_checked#len": 18,
+  "decisions#len": 3
+ },
+ "attempt1_0011Z": {
+  "artifact": "eval/failures/2026-11-10/rerun-0011Z.nvidia.truncated_json.txt",
+  "finish_reason": "length",
+  "max_tokens_cap": 3000,
+  "visible_content_tokens_proxy": 428,
+  "reasoning_tokens_inferred": 2572,
+  "note": "per-attempt usage was not persisted at call time (state usage_summary holds the RETRY call because meta2 overwrote meta); content tokens = tiktoken proxy over the committed artifact [MEASURED artifact / INFERRED decomposition]"
+ },
+ "attempt2_0011Z_measured": {
+  "finish_reason": "length",
+  "completion_tokens": 3000,
+  "reasoning_tokens": 2499,
+  "source": "state/llm-status.json shadow.last_attempt.usage_summary"
+ }
+}

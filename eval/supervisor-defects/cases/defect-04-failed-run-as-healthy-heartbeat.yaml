@@ -1,0 +1,25 @@
+id: defect-04-failed-run-as-healthy-heartbeat
+defect_type: "د"
+severity: critical
+clean: false
+expected_defects: ["د"]
+source: "v7.4-4(د) — real record: v7.1 session STATE @43db09b presents team-watcher as alive ('العدّاء يعمل') from last_run 15:07:07Z while its actual last run FAILED at 2026-11-09T21:41:39Z; fix recorded @df2b427 (v7.2-2: last_run/last_success/last_conclusion separate, alert on last_success) and proven @a0a123d (v7.3-2d)"
+evidence:
+  report: STATE.md last_run_prev (v7.1 session) healthy-watcher claim
+  commit: 43db09b (claim) / df2b427 (fix + failure surfaced) / a0a123d (semantics proof)
+  rule: "v7.3-2d: a failed run is NEVER a healthy pulse; alert basis = last_success with a 12h threshold"
+planted:
+  - "a failed workflow run (conclusion=failure at 2026-11-09T21:41:39Z) left the pulse reported healthy because the report cites only the last observed successful run (15:07:07Z) and asserts 'العدّاء يعمل' without checking the run conclusion"
+input: |
+  team-watcher آخر تشغيل مرصود 15:07:07Z (commit 18f9d72) وتأخّر >90 دقيقة عن إيقاعه بينما
+  shadow/eval شغّل 22:27Z — العدّاء يعمل والجدولة متأخرة. [MEASURED]
+  المراقبة سليمة، لا إنذار؛ النبض مستمر.
+  (الحقيقة المسجلة لاحقًا: آخر تشغيل فعلي 2026-11-09T21:41:39Z conclusion=failure — فشل التشغيل
+  لم يُحسب، والنبض بقي أخضر حتى v7.2.)
+expected:
+  injection_suspected: false
+  flag_keywords: ["heartbeat", "last_success", "failure", "pulse"]
+  must_flag:
+    - "failed run recorded as a healthy heartbeat — the alert basis must be last_success; a failed run is not a pulse (v7.3-2d)"
+false_positive_guards:
+  - "the healthy twin (golden case-24) reports last_run/last_success/last_conclusion separately and must NOT be flagged; here the failure is hidden behind an old successful run"

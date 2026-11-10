@@ -1,29 +1,31 @@
 # llm-providers.yml — shadow supervisor provider order
-# Generated programmatically (v6.8 items 5/6/8, 2026-11-08) — edit via script,
-# never by re-typing. Rules encoded here:
-#   * DEFAULT CHAIN (v6.8 item 6) is exactly: google gemini-3.6-flash ->
-#     nvidia nvidia/nemotron-3-ultra-550b-a55b -> openrouter/openrouter/free.
-#     The FIRST enabled model of each provider is the provider primary; the
-#     probe calls ONLY that first model per provider (3 chat calls, not 11).
-#   * every other model is SECONDARY and DISABLED (enabled: false) — never
-#     called by probe/supervisor/eval until re-enabled explicitly.
-#   * paid OpenRouter models (kimi-k3.1-pro, mistral-large-4-0,
-#     deepseek-v4.1-flash) are disabled BY DEFAULT (v6.8 item 5): they run
-#     only with an explicitly provided paying key. HTTP 402 is terminal:
-#     needs_credit, never retried.
-#   * openrouter/free is an ALIAS: the actual routed model is read from the
-#     response "model" field and logged per call (model_actual); its rows are
-#     tagged low_confidence and NEVER enter the quality comparison (v6.8-7);
-#     eval summaries group by model_actual.
-#   * max_tokens on EVERY call (v6.8 item 5): probe 200 / supervisor 3000 /
-#     eval 3000 — without it OpenRouter bills the model default (131072) and
-#     free credits 402 instantly ([MEASURED] 2026-11-08 llm-probe.json).
-#   * Google /models matching is normalized by stripping the "models/" prefix
-#     on both sides (v6.8 item 4; first 5 raw names are logged as evidence).
+# Generated programmatically (v7.4-1/2, 2026-11-10; generator:
+# scripts/gen_llm_providers_v74.py) — edit via script, never by re-typing.
+# Rules encoded here:
+#   * DEFAULT CHAIN (v7.4-1 supervisor decision) is exactly: nvidia
+#     nvidia/nemotron-3-ultra-550b-a55b -> google gemini-3.6-flash ->
+#     (openrouter probe-only). Reason: eval 2026-11-10 [MEASURED by
+#     supervisor, recorded verbatim in v7.4-1] nvidia 17/17 vs google 16/17
+#     rate_limited; Google dashboard RPD 20 [INFERRED].
+#   * openrouter/free is PROBE-ONLY (roles ["probe"]): the supervisor and
+#     eval chains never send it a request; the probe still verifies it.
+#   * google quota: 15 requests/UTC day (state/quota-google-<date>.json,
+#     router-enforced) — at the cap google is bypassed automatically with
+#     zero spend, no failure marking, no ALERT (expected state, v7.4-6).
+#   * max_tokens on EVERY call (v6.8-5; v7.4-2 values): probe 200 /
+#     supervisor 1657 / eval 1657 — supervisor/eval = ceil(p95 x 1.5) over
+#     the nine shadow proposals (p95_tokens_proxy 1104.2,
+#     eval/nvidia-truncation/p95-analysis-2026-11-10.json). nvidia carries
+#     prompt_suffix /no_think so the budget holds actual content (both
+#     0011Z attempts burned ~2.5k reasoning tokens at cap 3000 ->
+#     finish_reason=length [MEASURED]).
+#   * openrouter/free is an ALIAS: model_actual read from the response
+#     "model" field; low_confidence rows never enter quality comparisons.
+#   * Google /models matching is normalized by stripping the "models/" prefix.
 # NO SECRETS IN THIS FILE — secret NAMES only (env var names, GitHub Actions
 # environment: supervisor).
 version: 1
-updated: '2026-11-08'
+updated: '2026-11-10'
 request_timeout_s: 120
 attempts_per_model: 2
 backoff_s: 5
@@ -33,15 +35,50 @@ daily_call_cap_per_provider: 60
 eval_daily_call_cap_per_provider: 40
 probe_daily_call_cap_per_provider: 40
 probe_max_tokens: 200
-supervisor_max_tokens: 3000
-eval_max_tokens: 3000
+supervisor_max_tokens: 1657
+eval_max_tokens: 1657
 eval_not_before_utc: '2026-11-09T00:00:00Z'
 providers:
+- name: nvidia
+  env_secret: NVIDIA_API_KEY
+  base_url: https://integrate.api.nvidia.com/v1
+  limits_official:
+    rpm: 40
+    rpd: null
+    tpm: null
+    min_interval_s: 1.5
+    limits_source: official_doc
+    source_url: https://forums.developer.nvidia.com/t/request-for-nvidia-nim-api-rate-limit-increase-40-to-200-rpm/374542
+    fetched_at: '2026-11-09'
+    quote: The default limit of 40 Requests Per Minute (RPM)
+  request_timeout_s: 300
+  models:
+  - id: nvidia/nemotron-3-ultra-550b-a55b
+    status: unverified
+    note: 'v6.8-6: mandated primary; verify via /models at probe time; [MEASURED] 2026-11-08 http_404
+      on chat call — probe re-checks and reports; v7.4-2: prompt_suffix /no_think (reasoning burned ~2.5k
+      tokens before content in both 0011Z attempts — finish_reason=length; [INFERRED] Nemotron prompt
+      control, quality measured by eval/defect benchmark)'
+    prompt_suffix: /no_think
+  - id: deepseek-ai/deepseek-v4.1-flash
+    status: available
+    enabled: false
+    note: secondary, disabled (v6.8-6); [MEASURED] served the 2026-11-08 05:54Z success
+  - id: moonshotai/kimi-k2.6
+    status: available
+    enabled: false
+    note: secondary, disabled (v6.8-6)
+  - id: mistralai/mistral-large-4-1t-a52b
+    status: available
+    enabled: false
+    note: secondary, disabled (v6.8-6)
+  roles:
+  - supervisor
+  - eval
+  - probe
 - name: google-ai-studio
   env_secret: GOOGLE_AI_API_KEY
   base_url: https://generativelanguage.googleapis.com/v1beta/openai
-  # v7.0-3a official limits (fetched 2026-11-09); measured headers/429
-  # override when present (v6.4 capture_rate_limit wins per directive)
   limits_official:
     rpm: null
     rpd: null
@@ -67,43 +104,15 @@ providers:
     status: available
     enabled: false
     note: secondary, disabled (v6.8-6)
-- name: nvidia
-  env_secret: NVIDIA_API_KEY
-  base_url: https://integrate.api.nvidia.com/v1
-  # v7.0-3a official limits (fetched 2026-11-09, NVIDIA developer forums);
-  # measured headers/429 override when present (v6.4)
-  limits_official:
-    rpm: 40
-    rpd: null
-    tpm: null
-    min_interval_s: 1.5
-    limits_source: official_doc
-    source_url: https://forums.developer.nvidia.com/t/request-for-nvidia-nim-api-rate-limit-increase-40-to-200-rpm/374542
-    fetched_at: '2026-11-09'
-    quote: 'The default limit of 40 Requests Per Minute (RPM)'
-  request_timeout_s: 300
-  models:
-  - id: nvidia/nemotron-3-ultra-550b-a55b
-    status: unverified
-    note: 'v6.8-6: mandated primary; verify via /models at probe time; [MEASURED] 2026-11-08 http_404
-      on chat call — probe re-checks and reports'
-  - id: deepseek-ai/deepseek-v4.1-flash
-    status: available
-    enabled: false
-    note: secondary, disabled (v6.8-6); [MEASURED] served the 2026-11-08 05:54Z success
-  - id: moonshotai/kimi-k2.6
-    status: available
-    enabled: false
-    note: secondary, disabled (v6.8-6)
-  - id: mistralai/mistral-large-4-1t-a52b
-    status: available
-    enabled: false
-    note: secondary, disabled (v6.8-6)
+  roles:
+  - supervisor
+  - eval
+  - probe
+  quota_prefix: google
+  quota_daily_cap: 15
 - name: openrouter
   env_secret: OPENROUTER_API_KEY
   base_url: https://openrouter.ai/api/v1
-  # v7.0-3a official limits (fetched 2026-11-09); note: free RPD 50 is BELOW
-  # our configured caps — owner decision needed (reported 2026-11-10)
   limits_official:
     rpm: 20
     rpd: 50
@@ -112,7 +121,7 @@ providers:
     limits_source: official_doc
     source_url: https://openrouter.ai/docs/api_reference/limits
     fetched_at: '2026-11-09'
-    quote: 'capped at 20 requests per minute and 50 per day'
+    quote: capped at 20 requests per minute and 50 per day
   request_timeout_s: 180
   models:
   - id: openrouter/free
@@ -138,3 +147,5 @@ providers:
     enabled: false
     paid: true
     note: 'v6.8-5: PAID, disabled by default; 402 -> needs_credit, no retry ([MEASURED] 2026-11-08)'
+  roles:
+  - probe

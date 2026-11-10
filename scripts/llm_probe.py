@@ -213,6 +213,19 @@ def run_probe(cfg, state):
                             "secret": secret_name, "at": now_iso()})
             continue
 
+        # v7.4-1: per-provider UTC quota (state/quota-<prefix>-<date>.json) —
+        # at the cap the probe is BYPASSED with zero spend (no /models, no
+        # chat call); expected operating state, NOT a failure: no
+        # consecutive_failures increment, no ALERT (directive v7.4-6), and
+        # the (provider, model) gate pair is untouched (row model=None).
+        if R.quota_hit(prov):
+            results.append({"provider": name, "model": None, "ok": False,
+                            "category": "quota_bypass", "status": "bypassed",
+                            "at": now_iso()})
+            st["quota_bypassed_at"] = R.now_iso()
+            state.save()
+            continue
+
         # phase 1: /models verification (skip routing aliases).
         # v6.8 item 4: log the first 5 RAW names (names only) as evidence and
         # match ids with the "models/" prefix stripped on BOTH sides.
@@ -259,6 +272,7 @@ def run_probe(cfg, state):
                 last_err = last_err or "cap_reached"
                 continue
             state.daily_add(name, purpose="probe")
+            R.quota_add(prov)  # v7.4-1: chat probes count toward the provider quota
             row = probe_model(prov, m["id"], key, timeout,
                               max_tokens=probe_max_tokens)
             results.append(row)

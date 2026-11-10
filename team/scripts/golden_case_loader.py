@@ -45,6 +45,9 @@ CASE_SCHEMA = {
         "source": {"type": "string"},
         "input": {"type": "string", "minLength": 1},
         "clean": {"type": "boolean"},
+        # v7.4-3: expected defect types ([] for clean cases; absent = []).
+        # Names follow the v7.4-4 defect alphabet (أ..ح) or free labels.
+        "expected_defects": {"type": "array", "items": {"type": "string"}},
         "expected": {
             "type": "object",
             "additionalProperties": False,

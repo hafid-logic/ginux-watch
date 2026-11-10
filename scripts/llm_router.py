@@ -49,6 +49,15 @@ Policy:
     (soft) — absence of keys is a config state, not an outage.
   - BYTE-LEVEL secret scan on the outgoing payload BEFORE send (appendix item
     13): any hit aborts (exit 3 / SecretInPayload), nothing is transmitted.
+  - v7.4-1: provider `roles` (e.g. openrouter ["probe"]) — call_chat(bucket=…)
+    skips providers not serving the bucket; probe covers every provider.
+  - v7.4-1: provider UTC daily quota (quota_prefix/quota_daily_cap, e.g.
+    google 15) counted in state/quota-<prefix>-<date>.json; at the cap the
+    provider is bypassed automatically in call_chat/call_model/probe — zero
+    spend, no failure marking, no ALERT (expected state, v7.4-6).
+  - v7.4-2: per-model `prompt_suffix` (nvidia /no_think) appended to the
+    system prompt; supervisor_max_tokens now 1657 = ceil(p95 x 1.5) of the
+    nine shadow proposals (eval/nvidia-truncation/).
 
 CLI:
   python3 scripts/llm_router.py --system-file S --user-file U \
@@ -94,6 +103,57 @@ BYTE_PATTERNS = [
 ]
 
 RETRYABLE_HTTP = {429, 500, 502, 503, 504, 529}  # 402 (needs_credit) and 401/403 never retry (v6.8-5)
+
+
+def _quota_slot(prov):
+    """v7.4-1: per-provider UTC daily request quota (config: quota_prefix +
+    quota_daily_cap on the provider entry). Returns (prefix, cap) or (None, 0)."""
+    prefix = prov.get("quota_prefix")
+    cap = int(prov.get("quota_daily_cap") or 0)
+    if not prefix or cap <= 0:
+        return None, 0
+    return prefix, cap
+
+
+def quota_path_for(prefix):
+    date = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    return ROOT / ("state/quota-%s-%s.json" % (prefix, date)), date
+
+
+def quota_read(prefix):
+    """Load (and UTC-day-reset) the quota counter for prefix."""
+    p, date = quota_path_for(prefix)
+    try:
+        d = json.loads(p.read_text(encoding="utf-8"))
+        if d.get("date_utc") != date:
+            d = {"date_utc": date, "count": 0, "updated": now_iso()}
+    except Exception:
+        d = {"date_utc": date, "count": 0, "updated": now_iso()}
+    return p, d
+
+
+def quota_hit(prov):
+    """True when the provider's UTC daily quota file shows count >= cap."""
+    prefix, cap = _quota_slot(prov)
+    if not prefix:
+        return False
+    _p, d = quota_read(prefix)
+    return int(d.get("count") or 0) >= cap
+
+
+def quota_add(prov):
+    """Increment the quota counter (one JSON write per call, file per UTC day).
+    Returns the counter dict or None when the provider has no quota."""
+    prefix, cap = _quota_slot(prov)
+    if not prefix:
+        return None
+    p, d = quota_read(prefix)
+    d["count"] = int(d.get("count") or 0) + 1
+    d["cap"] = cap
+    d["updated"] = now_iso()
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(json.dumps(d, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+    return d
 
 
 class SecretInPayload(Exception):
@@ -553,12 +613,39 @@ def arm_breaker(st, cfg):
         st["skip_until"], tz=timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def call_chat(cfg, state, system, user, meta_out, probe_path=None):
+def _system_for(system, model_cfg):
+    """v7.4-2: per-model system prompt suffix (e.g. nvidia nemotron /no_think
+    prompt control to stop reasoning-token burn inside a capped budget)."""
+    suffix = (model_cfg or {}).get("prompt_suffix")
+    if suffix:
+        return "%s\n%s" % (system, suffix)
+    return system
+
+
+def call_chat(cfg, state, system, user, meta_out, probe_path=None,
+              bucket="supervisor"):
     """Try providers/models in the configured order. Returns response text;
     fills meta_out (provider, model, model_actual, latency_s, attempts).
     Raises AllProvidersFailed when nothing configured or every configured
-    provider failed (a total-failure ALERT is written, item 8)."""
+    provider failed (a total-failure ALERT is written, item 8).
+    v7.4-1 additions: bucket filter (a provider with `roles` that excludes the
+    bucket is skipped — openrouter is probe-only); per-provider UTC daily
+    quota (quota_prefix/quota_daily_cap -> state/quota-<prefix>-<date>.json);
+    at the cap the provider is BYPASSED automatically (no failure marking, no
+    consecutive_failures increment, no ALERT — quota exhaustion is an expected
+    operating state, directive v7.4-6)."""
+    # v7.4-5 preparation: LLM_PREFER_PROVIDER pins a named provider to the
+    # FRONT of the try-order (dispatch-only trap reruns on the SECOND
+    # provider, e.g. google-ai-studio). Fallback to the remaining configured
+    # order is INTENTIONALLY kept (a pinned provider that fails must not
+    # break the shadow run); roles/quota/breaker filters below all still
+    # apply to the pinned provider. Unset/unknown name = normal order.
     providers = cfg.get("providers", [])
+    prefer = os.environ.get("LLM_PREFER_PROVIDER", "").strip()
+    if prefer:
+        pinned = [p for p in providers if p.get("name") == prefer]
+        if pinned:
+            providers = pinned + [p for p in providers if p.get("name") != prefer]
     attempts = int(cfg.get("attempts_per_model", 2))
     backoff = float(cfg.get("backoff_s", 5))
     down_threshold = int(cfg.get("max_consecutive_failures_for_down", 3))
@@ -581,6 +668,20 @@ def call_chat(cfg, state, system, user, meta_out, probe_path=None):
             state.save()
             continue
         configured += 1
+        roles = prov.get("roles")
+        if roles and bucket not in roles:
+            # v7.4-1: role filter — probe-only providers (openrouter) are
+            # invisible to supervisor/eval calls; zero requests
+            last_errors.append("%s:not-in-bucket(%s)" % (name, bucket))
+            continue
+        if quota_hit(prov):
+            # v7.4-1: quota bypass — expected state, NOT a failure: no
+            # consecutive_failures increment, no status change, no ALERT
+            st["quota_bypassed_at"] = now_iso()
+            st["last_error_class"] = None
+            state.save()
+            last_errors.append("%s:quota_bypass" % name)
+            continue
         if st.get("status") == "auth_failed":
             last_errors.append("%s:auth_failed(persist)" % name)
             continue
@@ -608,7 +709,8 @@ def call_chat(cfg, state, system, user, meta_out, probe_path=None):
             err_class = None
             payload = {
                 "model": model["id"],
-                "messages": [{"role": "system", "content": system},
+                "messages": [{"role": "system",
+                              "content": _system_for(system, model)},
                              {"role": "user", "content": user}],
                 "temperature": 0.2,
                 "stream": False,
@@ -623,6 +725,7 @@ def call_chat(cfg, state, system, user, meta_out, probe_path=None):
                     err_class = "cap_reached"
                     break
                 state.daily_add(name)
+                quota_add(prov)  # v7.4-1: per-provider UTC quota counter
                 throttle_provider(prov, st)  # v6.9-2: min interval 60/rpm
                 t0 = time.monotonic()
                 code, headers, resp, raw_body = None, {}, None, ""
@@ -797,6 +900,12 @@ def call_model(cfg, state, provider_name, model_id, system, user, meta_out):
     st = state.ensure(provider_name)
     st["configured"] = True
     state.save()
+    if quota_hit(prov):
+        # v7.4-1: quota bypass on the directed (eval/benchmark) path too —
+        # explicit row outcome, zero spend, not a provider failure
+        st["quota_bypassed_at"] = now_iso()
+        state.save()
+        raise _fail("quota_bypass:%s" % provider_name)
     daily_cap = int(cfg.get("eval_daily_call_cap_per_provider",
                             cfg.get("daily_call_cap_per_provider", 60)) or 0)
     if daily_cap and state.daily_count(provider_name, purpose="eval") >= daily_cap:
@@ -815,7 +924,8 @@ def call_model(cfg, state, provider_name, model_id, system, user, meta_out):
             break
     payload = {
         "model": model_id,
-        "messages": [{"role": "system", "content": system},
+        "messages": [{"role": "system",
+                      "content": _system_for(system, model_cfg)},
                      {"role": "user", "content": user}],
         "temperature": 0.2,
         "stream": False,
@@ -829,6 +939,7 @@ def call_model(cfg, state, provider_name, model_id, system, user, meta_out):
             err_class = "cap_reached"
             break
         state.daily_add(provider_name, purpose="eval")
+        quota_add(prov)  # v7.4-1: per-provider UTC quota counter (eval bucket)
         throttle_provider(prov, st)  # v6.9-2: min interval 60/rpm
         t0 = time.monotonic()
         code, headers, resp, raw_body = None, {}, None, ""

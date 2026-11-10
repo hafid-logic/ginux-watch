@@ -69,7 +69,85 @@ Output: ONE JSON object, no fences, no extra keys, exactly:
                      "verdict": "supported"|"refuted"|"unverified"}],
  "decisions": [{"open_point": str, "decision": str, "rationale": str}],
  "risks": [str], "next_items": [str],
- "injection_suspected": bool, "publish_requests": []}"""
+ "injection_suspected": bool, "publish_requests": []}
+COMPRESSED OUTPUT (v7.4-2, mandatory): reply must fit the output budget — keep
+every string terse; hard caps (over-cap content is trimmed by the pipeline):
+strengths <= 6 items x <= 22 words; weaknesses <= 6 x <= 22; risks <= 6 x <= 30;
+next_items <= 6 x <= 18; claims_checked <= 12 x <= 18-word claims;
+decisions <= 3 x <= 28-word fields; report_id <= 64 chars. No prose, no
+repetition, no markdown."""
+
+# v7.4-2: hard word caps enforced in code (no model cooperation required).
+# Basis: per-field maxima measured across the NINE shadow proposals
+# (eval/nvidia-truncation/p95-analysis-2026-11-10.json fields_max_observed),
+# tightened to compress future outputs (e.g. strengths 9 -> 6 items).
+WORD_CAPS = {
+    "report_id_chars": 64,
+    "strengths": {"max_items": 6, "max_words": 22},
+    "weaknesses": {"max_items": 6, "max_words": 22},
+    "risks": {"max_items": 6, "max_words": 30},
+    "next_items": {"max_items": 6, "max_words": 18},
+    "claims_checked": {"max_items": 12, "max_words": 18},
+    "decisions": {"max_items": 3, "max_words": 28},
+}
+
+
+def _trim_words(s, max_words):
+    words = str(s).split()
+    if len(words) <= max_words:
+        return s, False
+    return " ".join(words[:max_words]) + " \u2026", True
+
+
+def enforce_word_caps(obj):
+    """v7.4-2: deterministic output compression — trims arrays and word-caps
+    every string field per WORD_CAPS. Returns (obj, compressed_flag). Runs
+    AFTER validate() on the success path only; schema validity is preserved
+    (same keys, strings only shortened). The flag lands in the shadow meta so
+    compression is visible in the artifact."""
+    changed = False
+    oid = obj.get("report_id")
+    if isinstance(oid, str) and len(oid) > WORD_CAPS["report_id_chars"]:
+        obj["report_id"] = oid[:WORD_CAPS["report_id_chars"]]
+        changed = True
+    for key in ("strengths", "weaknesses", "risks", "next_items"):
+        cap = WORD_CAPS[key]
+        arr = obj.get(key)
+        if not isinstance(arr, list):
+            continue
+        if len(arr) > cap["max_items"]:
+            arr = arr[:cap["max_items"]]
+            obj[key] = arr
+            changed = True
+        out = []
+        for item in arr:
+            s2, ch = _trim_words(item, cap["max_words"])
+            out.append(s2)
+            changed = changed or ch
+        obj[key] = out
+    cc = obj.get("claims_checked")
+    if isinstance(cc, list):
+        if len(cc) > WORD_CAPS["claims_checked"]["max_items"]:
+            cc = cc[:WORD_CAPS["claims_checked"]["max_items"]]
+            obj["claims_checked"] = cc
+            changed = True
+        for c in cc:
+            s2, ch = _trim_words(c.get("claim", ""),
+                                 WORD_CAPS["claims_checked"]["max_words"])
+            changed = changed or ch
+            c["claim"] = s2
+    dec = obj.get("decisions")
+    if isinstance(dec, list):
+        if len(dec) > WORD_CAPS["decisions"]["max_items"]:
+            dec = dec[:WORD_CAPS["decisions"]["max_items"]]
+            obj["decisions"] = dec
+            changed = True
+        for d in dec:
+            for k in ("open_point", "decision", "rationale"):
+                s2, ch = _trim_words(d.get(k, ""), WORD_CAPS["decisions"]["max_words"])
+                changed = changed or ch
+                d[k] = s2
+    return obj, changed
 
 SCHEMA = {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -406,6 +484,8 @@ def main():
 
     record_shadow_recovery(state)  # v7.0-4d: counter + alert key reset on recovery
     obj["report_id"] = obj.get("report_id") or report_id
+    # v7.4-2: compressed output — deterministic word caps, flag recorded
+    obj, compressed = enforce_word_caps(obj)
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     meta_block = {
@@ -414,6 +494,7 @@ def main():
         "low_confidence": bool(meta.get("low_confidence")),
         "latency_s": meta.get("latency_s"), "attempts": meta.get("attempts"),
         "retries": meta.get("retries", 0),  # v6.9-2: retried calls counted
+        "compressed_enforced": compressed,  # v7.4-2 caps actually trimmed
         "finish_reason": meta.get("finish_reason"),  # v7.0-4b diagnostic
         "input_truncated": truncated, "input_sha256_16":
             hashlib.sha256(report_text.encode("utf-8")).hexdigest()[:16],

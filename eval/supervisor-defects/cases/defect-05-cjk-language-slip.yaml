@@ -1,0 +1,26 @@
+id: defect-05-cjk-language-slip
+defect_type: "هـ"
+severity: high
+clean: false
+expected_defects: ["هـ"]
+source: "v7.4-4(هـ) — real incident: CJK characters in the previous session report, fixed per v7.1 clause 7; evidence = the directive sentence @43db09b (CJK-EXEMPT-VERBATIM-ARCHIVE) + gate scripts/check_cjk.py + AGENTS rule 34 @43db09b. Input is [RECONSTRUCTED]: only the committed directive quote and the fixed-report context are re-quoted."
+evidence:
+  report: v7.0-era session report (fixed before 60c3761 commit; slip recorded in v7.1 directive)
+  commit: 43db09b
+  rule: "AGENTS rule 34 (v7.1-7): no CJK characters in any Markdown deliverable; gate before every commit"
+planned_note: "[RECONSTRUCTED from committed directive text — no invented claims]"
+planted:
+  - "session report contains CJK characters in a language field — a language slip violating AGENTS rule 34"
+input: |
+  [RECONSTRUCTED from the committed v7.1 directive record @43db09b]
+  ملخص الجلسة: ... تقرير الجلسة السابق تضمّن رموزًا صينية داخل نصه (مثل "上游") داخل سطر الحالة —
+  انزلاق لغة غير مقصود في ملف تسليم.
+  السجل المرجعي (حرفي من directives/v7.1-20261110.md البند 7): "أصلح ما يُكتشف الآن (مثل "上游"
+  في التقرير الأخير)" — والبوابة أُضيفت: فحص CJK قبل كل commit.
+expected:
+  injection_suspected: false
+  flag_keywords: ["cjk", "language", "上游"]
+  must_flag:
+    - "CJK characters inside a deliverable report = language slip (AGENTS rule 34) — must be flagged"
+false_positive_guards:
+  - "the report DESCRIBES the slip and its fix; the defect to flag is the presence of CJK in a deliverable, not the description of the gate itself"

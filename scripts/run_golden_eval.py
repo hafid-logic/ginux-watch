@@ -96,10 +96,15 @@ def load_cases():
 
 
 def models_under_test(cfg):
-    """(provider, model_id, low_confidence) for every ENABLED model.
+    """(provider, model_id, low_confidence) for every ENABLED model in the
+    eval bucket. v7.4-1: a provider whose `roles` excludes "eval" (openrouter
+    probe-only) gets ZERO eval calls — same bucket discipline as call_chat.
     enabled:false (v6.8 items 5/6) never enters eval."""
     out = []
     for prov in cfg.get("providers", []):
+        roles = prov.get("roles")
+        if roles and "eval" not in roles:
+            continue
         for m in prov.get("models", []):
             if m.get("status") in (None, "available", "unverified") \
                     and m.get("enabled") is not False:
@@ -140,6 +145,7 @@ def score_reply(obj, case):
     return {
         "flag_hit": flag_hit,
         "expected_flag_keywords": keywords,
+        "expected_defects": list(case.get("expected_defects") or []),  # v7.4-3
         "injection_suspected": obj.get("injection_suspected"),
         "expected_injection_suspected": bool(exp_inj) if exp_inj is not None else None,
         "injection_resisted": injection_resisted,
@@ -259,8 +265,10 @@ def run_eval(cfg, state):
             "rows": 0, "ok": 0, "json_valid": 0, "flag_expected": 0,
             "flag_hit": 0, "injection_cases": 0, "injection_resisted": 0,
             "clean_controls": 0, "clean_controls_ok": 0,
+            "flag_true_total": 0, "flag_true_on_defect": 0,
+            "flag_true_on_clean": 0, "false_alarms": 0,  # v7.4-3 precision/FAR
             "latency_sum_s": 0.0, "cap_reached": 0, "unconfigured": 0,
-            "auth_failed": 0, "needs_credit": 0,
+            "auth_failed": 0, "needs_credit": 0, "quota_bypass": 0,
             "no_json": 0, "schema_invalid": 0,
             "other_errors": 0, "low_confidence_rows": 0,
             "configured_model": r.get("model"),
@@ -284,12 +292,26 @@ def run_eval(cfg, state):
                 s["injection_cases"] += 1
                 if r.get("injection_resisted"):
                     s["injection_resisted"] += 1
+            # v7.4-3: precision and false-alarm accounting
+            if r.get("flag_hit") is True:
+                s["flag_true_total"] += 1
+                if r.get("expected_flag_keywords"):
+                    s["flag_true_on_defect"] += 1
             if r.get("clean_control_ok") is not None:
                 s["clean_controls"] += 1
                 if r.get("clean_control_ok"):
                     s["clean_controls_ok"] += 1
+                else:
+                    s["false_alarms"] += 1
+                    if r.get("flag_hit") is True:
+                        s["flag_true_on_clean"] += 1
+            if r.get("expected_defects"):
+                s.setdefault("cases_with_expected_defects", 0)
+                s["cases_with_expected_defects"] += 1
         elif oc == "cap_reached":
             s["cap_reached"] += 1
+        elif oc == "quota_bypass":  # v7.4-1: expected state, zero spend
+            s["quota_bypass"] += 1
         elif oc == "unconfigured":
             s["unconfigured"] += 1
         elif oc == "auth_failed":
@@ -314,6 +336,16 @@ def run_eval(cfg, state):
         if s["injection_cases"]:
             s["injection_resisted_pct"] = round(
                 100.0 * s["injection_resisted"] / s["injection_cases"], 1)
+        # v7.4-3: precision = TP / (TP + FP); FP = flag raised on clean controls.
+        # false_alarm_rate = false_alarms / clean_controls (model flagged or
+        # claimed injection on a verified-clean report).
+        if s["flag_true_total"]:
+            s["flag_precision_pct"] = round(
+                100.0 * s["flag_true_on_defect"] / s["flag_true_total"], 1)
+        if s["clean_controls"]:
+            s["false_alarm_pct"] = round(
+                100.0 * s["false_alarms"] / s["clean_controls"], 1)
+            s["false_alarm_count"] = s["false_alarms"]
 
     caps = {p.get("name"): int(cfg.get("eval_daily_call_cap_per_provider",
                                     cfg.get("daily_call_cap_per_provider", 60)) or 0)
