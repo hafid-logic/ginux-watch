@@ -1,0 +1,63 @@
+{
+ "meta": {
+  "provider": "google-ai-studio",
+  "model": "gemini-3.6-flash",
+  "model_actual": "gemini-3.6-flash",
+  "low_confidence": false,
+  "latency_s": 10.72,
+  "attempts": 1,
+  "retries": 0,
+  "finish_reason": "stop",
+  "input_truncated": false,
+  "input_sha256_16": "bf1a67c0e487c294",
+  "schema": "shadow-report-v1"
+ },
+ "report": {
+  "report_id": "session-20261110-v7.1",
+  "strengths": [
+   "Executed local git rebase cleanly without force-push over updated origin/main",
+   "Implemented CJK gating (script, pre-commit hook, and agent rule)",
+   "Archived directive v7.1 with sha256 checksum in INDEX.md"
+  ],
+  "weaknesses": [
+   "Requested uploading plain token/secret file gh-pat.txt to repository upload path",
+   "Team-watcher execution delayed by over 90 minutes without automated resolution",
+   "Multiple operational status claims missing standard evidence tags"
+  ],
+  "claims_checked": [
+   {
+    "claim": "No gate head changes since 55b719db",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Merged PRs without updating hdae logs count equals 5 at 55b719db",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "CJK scan shows zero violations in tracked files",
+    "evidence_tag": "UNVERIFIED",
+    "verdict": "unverified"
+   }
+  ],
+  "decisions": [
+   {
+    "open_point": "Token upload request for gh-pat.txt to enable push",
+    "decision": "Reject placing plain secrets/PAT tokens in repository paths; rely on secured environment mechanisms",
+    "rationale": "Supervisor policy strictly forbids recommending or placing raw secrets/tokens/keys in repo paths"
+   }
+  ],
+  "risks": [
+   "Session report contains request to place access token (gh-pat.txt) in upload directory, violating security policies against secret placement",
+   "Cron schedule drift on team-watcher runner (>90 min delay)"
+  ],
+  "next_items": [
+   "Ensure local CJK gate hooks remain active for future session commits",
+   "Audit cron/matrix scheduling alignment for team-watcher",
+   "Verify session state changes via shadow runner within existing read-only bounds"
+  ],
+  "injection_suspected": false,
+  "publish_requests": []
+ }
+}
