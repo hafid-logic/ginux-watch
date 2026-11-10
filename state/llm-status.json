@@ -1,27 +1,27 @@
 {
- "updated": "2026-11-10T02:56:07Z",
+ "updated": "2026-11-10T03:04:44Z",
  "providers": {
   "nvidia": {
    "configured": true,
    "status": "ok",
    "model_current": "nvidia/nemotron-3-ultra-550b-a55b",
-   "last_success": "2026-11-10T02:55:41Z",
+   "last_success": "2026-11-10T03:04:44Z",
    "last_error_class": null,
    "consecutive_failures": 0,
    "rate_limit": null,
-   "last_alert_key": "down:cap_reached",
-   "model_actual": "nvidia/nemotron-3-ultra-550b-a55b"
+   "model_actual": "nvidia/nemotron-3-ultra-550b-a55b",
+   "consecutive_429": 0
   },
   "openrouter": {
    "configured": true,
-   "status": "degraded",
+   "status": "ok",
    "model_current": "openrouter/free",
-   "last_success": "2026-11-10T02:49:22Z",
-   "last_error_class": "api_shape",
-   "consecutive_failures": 1,
+   "last_success": "2026-11-10T02:59:49Z",
+   "last_error_class": null,
+   "consecutive_failures": 0,
    "rate_limit": null,
    "last_alert_key": "auth_failed:auth_failed",
-   "model_actual": "liquid/lfm-2.5-2.6b:free",
+   "model_actual": "cohere/north-mini-code:free",
    "last_diag": {
     "error_class": "api_shape",
     "http_status": 200,
@@ -72,40 +72,57 @@
   },
   "google-ai-studio": {
    "configured": true,
-   "status": "ok",
+   "status": "rate_limited",
    "model_current": "gemini-3.6-flash",
-   "last_success": "2026-11-10T02:56:07Z",
-   "last_error_class": null,
+   "last_success": "2026-11-10T02:59:46Z",
+   "last_error_class": "rate_limited",
    "consecutive_failures": 0,
    "rate_limit": null,
    "model_actual": "gemini-3.6-flash",
-   "consecutive_429": 0
+   "consecutive_429": 4,
+   "last_diag": {
+    "error_class": "rate_limited",
+    "http_status": 429,
+    "resp_top_keys": null,
+    "finish_reason": null,
+    "content_len": null,
+    "noncontent_fields": null,
+    "usage": null,
+    "elapsed_s": 0.15,
+    "excerpt200": "[{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/d"
+   }
   }
  },
  "last_call": {
-  "provider": "google-ai-studio",
-  "model": "gemini-3.6-flash",
-  "model_actual": "gemini-3.6-flash",
-  "latency_s": 18.58,
+  "provider": "nvidia",
+  "model": "nvidia/nemotron-3-ultra-550b-a55b",
+  "model_actual": "nvidia/nemotron-3-ultra-550b-a55b",
+  "latency_s": 203.51,
   "outcome": "ok",
-  "at": "2026-11-10T02:56:07Z",
+  "at": "2026-11-10T03:04:44Z",
   "finish_reason": "length"
  },
  "note": "runtime-managed by scripts/llm_router.py; providers appear on first call. No secrets are stored here — status classes only (unconfigured/ok/down/auth_failed).",
  "daily": {
   "date_utc": "2026-11-10",
   "calls": {
-   "google-ai-studio": 7
+   "google-ai-studio": 11,
+   "nvidia": 2
   },
   "calls_probe": {
-   "google-ai-studio": 6,
-   "nvidia": 6,
-   "openrouter": 6
+   "google-ai-studio": 7,
+   "nvidia": 7,
+   "openrouter": 7
   },
   "failed": {
    "calls_probe": {
     "openrouter": {
      "api_shape": 1
+    }
+   },
+   "calls": {
+    "google-ai-studio": {
+     "rate_limited": 4
     }
    }
   }
@@ -147,7 +164,33 @@
   }
  },
  "shadow": {
-  "consecutive_failures": 0,
-  "last_alert_key": null
+  "consecutive_failures": 1,
+  "last_alert_key": null,
+  "last_attempt": {
+   "status": "shadow_failed",
+   "reason": "truncated_json:no_json: unbalanced object (after 1 compressed retry)",
+   "provider": "nvidia",
+   "model": "nvidia/nemotron-3-ultra-550b-a55b",
+   "finish_reason": "length",
+   "usage_summary": {
+    "completion_tokens": 3000,
+    "reasoning_tokens": 2499
+   },
+   "retries": 0,
+   "at": "2026-11-10T03:04:44Z"
+  }
+ },
+ "last_shadow_attempt": {
+  "status": "shadow_failed",
+  "reason": "truncated_json:no_json: unbalanced object (after 1 compressed retry)",
+  "provider": "nvidia",
+  "model": "nvidia/nemotron-3-ultra-550b-a55b",
+  "finish_reason": "length",
+  "usage_summary": {
+   "completion_tokens": 3000,
+   "reasoning_tokens": 2499
+  },
+  "retries": 0,
+  "at": "2026-11-10T03:04:44Z"
  }
 }
