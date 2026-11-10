@@ -39,7 +39,9 @@ permissions: {}
 
 jobs:
   shadow:
-    if: github.ref == 'refs/heads/main' && inputs.supervisor_input != '__SKIP__'
+    # v7.3-3/4: __SKIP__ skips only the SUPERVISOR call (eval-only dispatch) —
+    # the job must still run the eval step; hence the run_eval escape below.
+    if: github.ref == 'refs/heads/main' && (inputs.supervisor_input != '__SKIP__' || inputs.run_eval == true)
     runs-on: ubuntu-24.04
     environment: supervisor
     permissions:
@@ -82,6 +84,10 @@ jobs:
           SUPERVISOR_REPORT_ID: ${{ inputs.supervisor_report_id }}
           SUPERVISOR_FORCE: ${{ inputs.supervisor_force }}
         run: |
+          if [ "$SUPERVISOR_INPUT" = "__SKIP__" ]; then
+            echo "supervisor: skipped (__SKIP__ — eval-only dispatch, v7.3 eval الثاني)"
+            exit 0
+          fi
           ARGS=""
           if [ -n "$SUPERVISOR_INPUT" ] && [ "$SUPERVISOR_INPUT" != "__SKIP__" ]; then
             ARGS="$ARGS --input $SUPERVISOR_INPUT"
