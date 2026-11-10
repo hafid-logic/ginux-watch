@@ -22,6 +22,8 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Offline heartbeat semantics test (v7.3-2d — alert basis last_success; failed run is not a pulse)
+        run: python3 team/scripts/test-heartbeat-check.py
       - name: Token-pattern scan of tree (v6.6 item 5; fails on any full-form token except ghp_SYNTHETIC-*)
         run: python3 scripts/tree-token-scan.py
       - name: Lease sweep (expired claim_until -> stale + requeue)
@@ -50,3 +52,8 @@ jobs:
           else
             echo "no changes"
           fi
+      - name: Heartbeat finalize (v7.3-2d — a failed run never counts as a healthy pulse)
+        if: failure()
+        env:
+          JOB_STATUS: ${{ job.status }}
+        run: python3 team/scripts/heartbeat-finalize.py

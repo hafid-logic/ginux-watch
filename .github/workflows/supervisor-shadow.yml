@@ -13,6 +13,21 @@ on:
         type: boolean
         required: false
         default: false
+      supervisor_input:
+        description: "Optional explicit llm_supervisor.py --input path (trap tests / re-runs, v7.3-3/4). '__SKIP__' runs NO supervisor call (eval-only dispatch). Empty = default outbox/LATEST.md."
+        type: string
+        required: false
+        default: ""
+      supervisor_report_id:
+        description: "Optional explicit --report-id (synthetic inputs MUST carry a TEST tag, v7.3-3)."
+        type: string
+        required: false
+        default: ""
+      supervisor_force:
+        description: "Pass --force to llm_supervisor.py (re-run an already-produced report id)."
+        type: boolean
+        required: false
+        default: false
   schedule:
     - cron: "17 */6 * * *"
 
@@ -24,7 +39,7 @@ permissions: {}
 
 jobs:
   shadow:
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && inputs.supervisor_input != '__SKIP__'
     runs-on: ubuntu-24.04
     environment: supervisor
     permissions:
@@ -63,7 +78,21 @@ jobs:
           NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           GOOGLE_AI_API_KEY: ${{ secrets.GOOGLE_AI_API_KEY }}
-        run: python3 scripts/llm_supervisor.py
+          SUPERVISOR_INPUT: ${{ inputs.supervisor_input }}
+          SUPERVISOR_REPORT_ID: ${{ inputs.supervisor_report_id }}
+          SUPERVISOR_FORCE: ${{ inputs.supervisor_force }}
+        run: |
+          ARGS=""
+          if [ -n "$SUPERVISOR_INPUT" ] && [ "$SUPERVISOR_INPUT" != "__SKIP__" ]; then
+            ARGS="$ARGS --input $SUPERVISOR_INPUT"
+          fi
+          if [ -n "$SUPERVISOR_REPORT_ID" ]; then
+            ARGS="$ARGS --report-id $SUPERVISOR_REPORT_ID"
+          fi
+          if [ "$SUPERVISOR_FORCE" = "true" ]; then
+            ARGS="$ARGS --force"
+          fi
+          python3 scripts/llm_supervisor.py $ARGS
 
       # v6.7 item 1: the golden eval runs ONLY via workflow_dispatch with
       # input run_eval=true and consumes its OWN daily cap (calls_eval);

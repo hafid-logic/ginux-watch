@@ -63,7 +63,9 @@
  },
  "heartbeat": {
   "last_run": "2026-11-09T21:41:39Z",
-  "conclusion": "failure",
+  "last_conclusion": "failure",
+  "last_success": "2026-11-09T11:53:44Z",
+  "alert_basis": "last_success",
   "source": "team-watcher (GitHub Actions)",
   "checked": "2026-11-10T01:22:17Z"
  },

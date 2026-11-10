@@ -108,8 +108,18 @@ def main() -> int:
 
     now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     # v7.2-2: heartbeat (آخر تشغيل) + عتبة الإنذار 12 ساعة — جدولة Actions best-effort.
-    state["heartbeat"] = {"last_run": now, "source": "team-watcher (GitHub Actions)",
-                          "scheduling": "best-effort"}
+    # v7.3-2d: last_run/last_success/last_conclusion منفصلة؛ الإنذار يستند إلى
+    # last_success (heartbeat_check.py). اكتمال هذه الجولة وحده يقدّم last_success؛
+    # فشل لاحق في نفس الـrun يصحّحه heartbeat-finalize.py (if: failure()) الذي لا
+    # يلمس last_success أبدًا — فشل التشغيل لا يُحسب نبضًا سليمًا.
+    # دمج وليس استبدال: مفاتيح last_success/last_conclusion القائمة تُحفظ.
+    hb = state.setdefault("heartbeat", {})
+    hb["last_run"] = now
+    hb["last_conclusion"] = "success"
+    hb["last_success"] = now
+    hb["alert_basis"] = "last_success"
+    hb["source"] = "team-watcher (GitHub Actions)"
+    hb["scheduling"] = "best-effort"
     state["alert_threshold_hours"] = 12
     head = json.loads(gh("api", f"repos/{UPSTREAM}/commits/main"))["sha"]
     last = state.get("last_seen_sha")
