@@ -1,11 +1,11 @@
 {
- "updated": "2026-11-10T03:04:44Z",
+ "updated": "2026-11-10T03:06:58Z",
  "providers": {
   "nvidia": {
    "configured": true,
    "status": "ok",
    "model_current": "nvidia/nemotron-3-ultra-550b-a55b",
-   "last_success": "2026-11-10T03:04:44Z",
+   "last_success": "2026-11-10T03:06:58Z",
    "last_error_class": null,
    "consecutive_failures": 0,
    "rate_limit": null,
@@ -14,11 +14,11 @@
   },
   "openrouter": {
    "configured": true,
-   "status": "ok",
+   "status": "degraded",
    "model_current": "openrouter/free",
    "last_success": "2026-11-10T02:59:49Z",
-   "last_error_class": null,
-   "consecutive_failures": 0,
+   "last_error_class": "api_shape",
+   "consecutive_failures": 1,
    "rate_limit": null,
    "last_alert_key": "auth_failed:auth_failed",
    "model_actual": "cohere/north-mini-code:free",
@@ -74,12 +74,12 @@
    "configured": true,
    "status": "rate_limited",
    "model_current": "gemini-3.6-flash",
-   "last_success": "2026-11-10T02:59:46Z",
+   "last_success": "2026-11-10T03:06:12Z",
    "last_error_class": "rate_limited",
    "consecutive_failures": 0,
    "rate_limit": null,
    "model_actual": "gemini-3.6-flash",
-   "consecutive_429": 4,
+   "consecutive_429": 6,
    "last_diag": {
     "error_class": "rate_limited",
     "http_status": 429,
@@ -88,7 +88,7 @@
     "content_len": null,
     "noncontent_fields": null,
     "usage": null,
-    "elapsed_s": 0.15,
+    "elapsed_s": 0.16,
     "excerpt200": "[{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/d"
    }
   }
@@ -97,32 +97,32 @@
   "provider": "nvidia",
   "model": "nvidia/nemotron-3-ultra-550b-a55b",
   "model_actual": "nvidia/nemotron-3-ultra-550b-a55b",
-  "latency_s": 203.51,
+  "latency_s": 40.51,
   "outcome": "ok",
-  "at": "2026-11-10T03:04:44Z",
-  "finish_reason": "length"
+  "at": "2026-11-10T03:06:58Z",
+  "finish_reason": "stop"
  },
  "note": "runtime-managed by scripts/llm_router.py; providers appear on first call. No secrets are stored here — status classes only (unconfigured/ok/down/auth_failed).",
  "daily": {
   "date_utc": "2026-11-10",
   "calls": {
-   "google-ai-studio": 11,
-   "nvidia": 2
+   "google-ai-studio": 13,
+   "nvidia": 3
   },
   "calls_probe": {
-   "google-ai-studio": 7,
-   "nvidia": 7,
-   "openrouter": 7
+   "google-ai-studio": 8,
+   "nvidia": 8,
+   "openrouter": 8
   },
   "failed": {
    "calls_probe": {
     "openrouter": {
-     "api_shape": 1
+     "api_shape": 2
     }
    },
    "calls": {
     "google-ai-studio": {
-     "rate_limited": 4
+     "rate_limited": 6
     }
    }
   }
@@ -164,7 +164,7 @@
   }
  },
  "shadow": {
-  "consecutive_failures": 1,
+  "consecutive_failures": 0,
   "last_alert_key": null,
   "last_attempt": {
    "status": "shadow_failed",
@@ -178,7 +178,8 @@
    },
    "retries": 0,
    "at": "2026-11-10T03:04:44Z"
-  }
+  },
+  "last_recovery_at": "2026-11-10T03:06:58Z"
  },
  "last_shadow_attempt": {
   "status": "shadow_failed",
