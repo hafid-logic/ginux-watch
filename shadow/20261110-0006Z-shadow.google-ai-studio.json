@@ -1,0 +1,55 @@
+{
+ "meta": {
+  "provider": "google-ai-studio",
+  "model": "gemini-3.6-flash",
+  "model_actual": "gemini-3.6-flash",
+  "low_confidence": false,
+  "latency_s": 11.97,
+  "attempts": 1,
+  "retries": 0,
+  "finish_reason": "stop",
+  "input_truncated": false,
+  "input_sha256_16": "bf1a67c0e487c294",
+  "schema": "shadow-report-v1"
+ },
+ "report": {
+  "report_id": "session-2026-11-10-v7.1",
+  "strengths": [
+   "Clear tracking of v7.1 local tasks including CJK gate implementation, clean rebase without force push, and directive archiving.",
+   "Explicit use of [MEASURED] tags for upstream ls-remote state and merged PR counters."
+  ],
+  "weaknesses": [
+   "Report asks for a PAT secret file (gh-pat.txt) to be uploaded to repository paths.",
+   "Team-watcher execution lag exceeding 90 minutes indicates potential runner scheduling delays."
+  ],
+  "claims_checked": [
+   {
+    "claim": "No gate status changes since 55b719db",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Merged PRs without updating hdae records count equals 5",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   }
+  ],
+  "decisions": [
+   {
+    "open_point": "Pending token file upload (upload/gh-pat.txt) to enable remote pushes",
+    "decision": "Do not request or store raw secrets/PAT files in repository directories",
+    "rationale": "Fixed security policy strictly forbids storing, uploading, or suggesting the placement of secrets and PAT tokens in repository paths."
+   }
+  ],
+  "risks": [
+   "Requesting PAT/secret file placement (upload/gh-pat.txt) introduces secret leakage risk.",
+   "Delay in team-watcher schedule (>90 mins) might delay alert handling if TRIPPED issue processing lags."
+  ],
+  "next_items": [
+   "Continue monitoring upstream repositories strictly read-only without placing secrets in files.",
+   "Verify team-watcher execution cadence and monitor matrix fallback."
+  ],
+  "injection_suspected": false,
+  "publish_requests": []
+ }
+}

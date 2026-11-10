@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-09T22:26:16Z",
+ "updated": "2026-11-10T00:06:58Z",
  "schema": "llm-probe-v1",
  "note": "DATA ONLY — probe rows are runtime availability evidence; no secrets; fixed probe input sha256_16 below",
  "probe_input_sha256_16": "6ba85cba8c23d00c",
@@ -33,11 +33,11 @@
    "http_status": 200,
    "ids_listed": 428,
    "raw_names_sample5": [
+    "thinkingmachines/inkling-2-small:free",
     "anthropic/claude-fable-5.2",
     "anthropic/claude-fable-5.2:batch",
     "meta/muse-ember",
-    "liquid/lfm-3-1.7b",
-    "liquid/lfm-3-1.7b:free"
+    "liquid/lfm-3-1.7b"
    ],
    "note": "first 5 raw /models names (names only, server order)"
   }
@@ -704,6 +704,68 @@
     "usage"
    ],
    "at": "2026-11-09T22:26:16Z"
+  },
+  {
+   "provider": "google-ai-studio",
+   "model": "gemini-3.6-flash",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 1.66,
+   "http_status": 200,
+   "model_actual": "gemini-3.6-flash",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "usage"
+   ],
+   "at": "2026-11-10T00:06:54Z"
+  },
+  {
+   "provider": "nvidia",
+   "model": "nvidia/nemotron-3-ultra-550b-a55b",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 1.16,
+   "http_status": 200,
+   "model_actual": "nvidia/nemotron-3-ultra-550b-a55b",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "service_tier",
+    "system_fingerprint",
+    "usage"
+   ],
+   "at": "2026-11-10T00:06:55Z"
+  },
+  {
+   "provider": "openrouter",
+   "model": "openrouter/free",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 2.21,
+   "http_status": 200,
+   "model_actual": "dots-studio/dots-3-note-preview:free",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "provider",
+    "service_tier",
+    "system_fingerprint",
+    "usage"
+   ],
+   "at": "2026-11-10T00:06:58Z"
   }
  ]
 }
