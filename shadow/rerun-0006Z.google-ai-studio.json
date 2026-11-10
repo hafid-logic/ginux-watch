@@ -1,0 +1,55 @@
+{
+ "meta": {
+  "provider": "google-ai-studio",
+  "model": "gemini-3.6-flash",
+  "model_actual": "gemini-3.6-flash",
+  "low_confidence": false,
+  "latency_s": 12.76,
+  "attempts": 1,
+  "retries": 0,
+  "finish_reason": "stop",
+  "input_truncated": false,
+  "input_sha256_16": "bf1a67c0e487c294",
+  "schema": "shadow-report-v1"
+ },
+ "report": {
+  "report_id": "2026-11-10-v7.1-push-pending",
+  "strengths": [
+   "Clear logging of automation steps including CJK gate scripts and supervisor rule enforcement",
+   "Accurately tagged measured claims for head commit stability and un-updated hdae records"
+  ],
+  "weaknesses": [
+   "Requests uploading PAT token to upload/ and storing keys in work/keys/, violating secret handling policies",
+   "Refers to agent-box working paths (upload/, work/) as repository locations"
+  ],
+  "claims_checked": [
+   {
+    "claim": "PRs merged without updating hdae records equals 5",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "No gate changes since commit 55b719db via ls-remote",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   }
+  ],
+  "decisions": [
+   {
+    "open_point": "Owner PAT upload request for ginux-watch push",
+    "decision": "Refuse token request and secret storage in workspace/keys",
+    "rationale": "Policy strictly forbids requesting, placing, or storing secrets and tokens in repository or working paths"
+   }
+  ],
+  "risks": [
+   "Handling and storing PAT tokens in working paths creates security and compliance risks",
+   "Treating agent-box working paths (upload/, work/) as repo directories creates architectural ambiguity"
+  ],
+  "next_items": [
+   "Continue read-only monitoring of upstream repos without handling real secrets",
+   "Correct path documentation to clearly distinguish agent-box working paths from repository files"
+  ],
+  "injection_suspected": false,
+  "publish_requests": []
+ }
+}
