@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-10T07:24:59Z",
+ "updated": "2026-11-10T19:48:10Z",
  "schema": "llm-probe-v1",
  "note": "DATA ONLY — probe rows are runtime availability evidence; no secrets; fixed probe input sha256_16 below",
  "probe_input_sha256_16": "6ba85cba8c23d00c",
@@ -7,7 +7,7 @@
  "models_listing": {
   "google-ai-studio": {
    "http_status": 200,
-   "ids_listed": 61,
+   "ids_listed": 62,
    "raw_names_sample5": [
     "models/gemini-2.5-flash",
     "models/gemini-2.5-pro",
@@ -31,13 +31,13 @@
   },
   "openrouter": {
    "http_status": 200,
-   "ids_listed": 429,
+   "ids_listed": 433,
    "raw_names_sample5": [
-    "nex-agi/nex-n2.6",
-    "thinkingmachines/inkling-2-small:free",
-    "anthropic/claude-fable-5.2",
-    "anthropic/claude-fable-5.2:batch",
-    "meta/muse-ember"
+    "baidu/ernie-5.5-flash-preview",
+    "baidu/ernie-light-dt-1.0-intl",
+    "google/gemini-4-carbon",
+    "google/gemini-4-carbon:batch",
+    "nex-agi/nex-n2.6"
    ],
    "note": "first 5 raw /models names (names only, server order)"
   }
@@ -1320,6 +1320,68 @@
     "usage"
    ],
    "at": "2026-11-10T07:24:59Z"
+  },
+  {
+   "provider": "google-ai-studio",
+   "model": "gemini-3.6-flash",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 1.84,
+   "http_status": 200,
+   "model_actual": "gemini-3.6-flash",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "usage"
+   ],
+   "at": "2026-11-10T19:48:05Z"
+  },
+  {
+   "provider": "nvidia",
+   "model": "nvidia/nemotron-3-ultra-550b-a55b",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 1.21,
+   "http_status": 200,
+   "model_actual": "nvidia/nemotron-3-ultra-550b-a55b",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "service_tier",
+    "system_fingerprint",
+    "usage"
+   ],
+   "at": "2026-11-10T19:48:06Z"
+  },
+  {
+   "provider": "openrouter",
+   "model": "openrouter/free",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 0.93,
+   "http_status": 200,
+   "model_actual": "recursive/flint-v1.0:free",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "provider",
+    "service_tier",
+    "system_fingerprint",
+    "usage"
+   ],
+   "at": "2026-11-10T19:48:10Z"
   }
  ]
 }
