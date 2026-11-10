@@ -58,7 +58,15 @@
     "pr207_head": "5ae058f211905c6cb0c92a874e5bc97f333a23a3",
     "pr227_head": "9ac0f544f7f1609cd5846e5ff97de96eff17f8cf"
    },
-   "status": "known \u2014 breaker back to ok; no reply, no reaction"
+   "status": "known — breaker back to ok; no reply, no reaction"
   }
- }
+ },
+ "heartbeat": {
+  "last_run": "2026-11-09T21:41:39Z",
+  "conclusion": "failure",
+  "source": "team-watcher (GitHub Actions)",
+  "checked": "2026-11-10T01:22:17Z"
+ },
+ "alert_threshold_hours": 12,
+ "scheduling": "best-effort (GitHub Actions)"
 }

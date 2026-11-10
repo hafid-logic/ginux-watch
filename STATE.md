@@ -275,3 +275,14 @@ pipeline_safety (POLICY v5.1، 2026-11-06): open_prs_ours=0/1؛ consecutive_clea
 - **v6.8-7 (model_actual):** صفوف eval بـlow_confidence؛ الملخص يُجمَّع حسب model_actual (اختلاف مقيس بين تشغيلين: liquid/lfm-2.5-2.6b:free ثم nvidia/nemotron-3.5-lightning:free)؛ مستثنى من مقارنة الجودة؛ meta الظل يحمل low_confidence.
 - **v6.8-8 (الحصص):** دلاء 60/40/40 باقية؛ daily_fail يعدّ فشل السلك حسب النوع (بلا cap_reached/id_absent)؛ eval_not_before_utc=2026-11-09T00:00:00Z وملخص الjob يعرض التجدد والفشل بالنوع.
 - **v6.8-9 (الدفع):** ff وحيد فوق b6dadd6؛ الطرف وsha256 الملفات المدفوعة يُبلَّغان بعد الدفع؛ لا افتراض نجاح Actions؛ لا مفاتيح قديمة لshred (work/keys = 20261109a فقط).
+
+## v7.2 (2026-11-10T01:0x–01:3xZ) — وضع الأحداث، legacy ginux-verify، heartbeat، ركن C2، مقارنة الظل
+- **v7.2-0:** أرشفة حرفية (sha256 في INDEX)؛ rebase فوق origin/main=50c2c121 (fetch+rebase بلا force — shadow/eval artifacts 38cffef + monitor state 50c2c12)؛ worktree نظيف (ضوضاء filemode مُسكَت بـcore.filemode=false وفق HANDOFF §7).
+- **v7.2-1 [MEASURED]:** ginux-verify legacy «النواة المستقلة» (سطران برأس الملف + RECOVERY §6)؛ schedule معطّل أصلًا منذ 2026-11-05 (78c864f)؛ API: صفر تشغيلات مجدولة منذ التعطيل — لا تشغيل إطلاقًا بين 2026-11-05T20:17:45Z و2026-11-10T00:07:37Z.
+- **v7.2-2 [MEASURED]:** heartbeat في matrix/upstream-watch.json (آخر تشغيل 2026-11-09T21:41:39Z conclusion=failure رغم إيقاع */15) + عتبة إنذار 12 ساعة (لا تنبيه قبلها) + «جدولة Actions best-effort»؛ upstream-watch.py يحدّث heartbeat كل sweep.
+- **v7.2-3:** C2 مركون — الأسباب الثلاثة وشروط الفك الثلاثة في reports/gates/c2-design-2026-11-10.md §الركن؛ سطر المرشح في الخريطة أصبح «مركون»؛ بلا بناء ولا سؤال للمالك.
+- **v7.2-4:** وضع الأحداث — لا جولات كثيفة ولا cron (قائمة cron فارغة [MEASURED])؛ تحديث أسبوعي للخريطة وmaintainer-profile؛ مذكرة ملاءمة ≤1 صفحة عند أي إشارة (قاعدة 35).
+- **v7.2-5 [MEASURED]:** reports/shadow-compare.md أُنتج — 9 مقترحات (العتبة ≥5 متحققة)؛ فحص آلي: publish_requests فارغ 9/9، صفر أنماط توكن، صفر دعوة نشر/رد/دفع PR#227؛ أول خطأ واقعي: 0006/0007Z يصفان upload/ كمسار مستودع (وهو خارج المستودع) [MEASURED].
+- **v7.2-6:** علامات استمرارية ×3 (work/ وupload/ وجذر المشروع) موثقة في RECOVERY §6؛ نُفّذ git credential reject وأُزيل helper المحلي وحُذف work/keys — **التوكن جاهز للإبطال** (سطر التسليم الأول).
+- **v7.2-7:** فحص CJK وقاعدة xref (METHODOLOGY 13) سارية — 0 إصابات في ملفات الجلسة [MEASURED].
+- **الدفع:** معلّق — upload/gh-pat.txt غائب والصندوق بلا work/keys [MEASURED]؛ الالتزام v7.2 جاهز فوق origin/main=50c2c121 (ff خالص) — عند وصول التوكن: fetch+rebase ثم ff واحد ثم تحقق raw/sha256 وإعادة تأكيد صفر schedule runs.

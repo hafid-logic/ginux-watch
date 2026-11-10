@@ -107,6 +107,10 @@ def main() -> int:
         state.update(json.loads(STATE.read_text(encoding="utf-8")))
 
     now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    # v7.2-2: heartbeat (آخر تشغيل) + عتبة الإنذار 12 ساعة — جدولة Actions best-effort.
+    state["heartbeat"] = {"last_run": now, "source": "team-watcher (GitHub Actions)",
+                          "scheduling": "best-effort"}
+    state["alert_threshold_hours"] = 12
     head = json.loads(gh("api", f"repos/{UPSTREAM}/commits/main"))["sha"]
     last = state.get("last_seen_sha")
     out = [f"upstream main: last={str(last)[:8]} new={head[:8]}"]
