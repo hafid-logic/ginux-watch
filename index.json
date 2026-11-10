@@ -1,5 +1,5 @@
 {
- "generated_at_utc": "2026-11-10T17:39:00Z",
+ "generated_at_utc": "2026-11-10T23:07:04Z",
  "source_repo": "gmkurtzer/ginux",
  "item_count": 249,
  "items": {
@@ -43,9 +43,12 @@
     "docs/security-boundary.md",
     "hdae/STATUS.md",
     "hdae/gates-todo/13-boundary-hardening.md",
+    "scripts/bench-compare.sh",
     "scripts/check-security-boundary.sh",
     "scripts/demo-gate-13.sh",
     "scripts/fuzz-security.sh",
+    "scripts/gate11-benchmark-guest.sh",
+    "scripts/test-bench-compare.sh",
     "scripts/test-native-vfs.sh",
     "tests/fuzz-corpus/config/minimal.toml",
     "tests/fuzz-corpus/device/basic.txt",
@@ -55,16 +58,16 @@
     "tests/fuzz-corpus/vfs-index/header.bin"
    ],
    "keywords": [
+    "events",
     "gate",
+    "threads",
+    "ginux",
     "security",
+    "main",
     "recovery",
+    "accepted",
     "adds",
-    "after",
-    "boundary",
-    "compatibility",
-    "contract",
-    "criterion",
-    "demonstration"
+    "boundaries"
    ]
   },
   "254": {
@@ -5833,7 +5836,6 @@
   ],
   "after": [
    256,
-   255,
    254,
    228,
    216,
@@ -5869,6 +5871,9 @@
    93,
    18
   ],
+  "events": [
+   255
+  ],
   "gate": [
    255,
    254,
@@ -5885,28 +5890,99 @@
    181,
    172
   ],
+  "threads": [
+   255,
+   191,
+   114
+  ],
+  "ginux": [
+   255,
+   249,
+   241,
+   237,
+   235,
+   230,
+   227,
+   219,
+   215,
+   214,
+   205,
+   202,
+   194,
+   189,
+   187,
+   186,
+   184,
+   179,
+   178,
+   176,
+   165,
+   164,
+   161,
+   158,
+   157,
+   155,
+   136,
+   112,
+   111,
+   110,
+   106,
+   103,
+   99,
+   97,
+   96,
+   95,
+   94,
+   93,
+   92,
+   76,
+   71,
+   64,
+   61,
+   58,
+   57,
+   45,
+   42,
+   39,
+   18,
+   12,
+   8,
+   5
+  ],
   "security": [
    255
+  ],
+  "main": [
+   255,
+   246,
+   202,
+   194,
+   193,
+   184,
+   175,
+   171,
+   95,
+   93,
+   5
   ],
   "recovery": [
    255,
    41,
    39
   ],
+  "accepted": [
+   255,
+   152,
+   69
+  ],
   "adds": [
    255,
    52
   ],
-  "boundary": [
-   255,
-   231,
-   36
-  ],
-  "compatibility": [
+  "boundaries": [
    255
   ],
   "contract": [
-   255,
    254,
    251,
    243,
@@ -5914,14 +5990,6 @@
    231,
    230,
    13
-  ],
-  "criterion": [
-   255
-  ],
-  "demonstration": [
-   255,
-   165,
-   164
   ],
   "lock": [
    254,
@@ -6237,59 +6305,6 @@
   "998x": [
    249
   ],
-  "ginux": [
-   249,
-   241,
-   237,
-   235,
-   230,
-   227,
-   219,
-   215,
-   214,
-   205,
-   202,
-   194,
-   189,
-   187,
-   186,
-   184,
-   179,
-   178,
-   176,
-   165,
-   164,
-   161,
-   158,
-   157,
-   155,
-   136,
-   112,
-   111,
-   110,
-   106,
-   103,
-   99,
-   97,
-   96,
-   95,
-   94,
-   93,
-   92,
-   76,
-   71,
-   64,
-   61,
-   58,
-   57,
-   45,
-   42,
-   39,
-   18,
-   12,
-   8,
-   5
-  ],
   "cgroup": [
    248,
    245
@@ -6436,18 +6451,6 @@
    244,
    196,
    37
-  ],
-  "main": [
-   246,
-   202,
-   194,
-   193,
-   184,
-   175,
-   171,
-   95,
-   93,
-   5
   ],
   "input": [
    245,
@@ -6952,6 +6955,10 @@
    146,
    70,
    47
+  ],
+  "boundary": [
+   231,
+   36
   ],
   "coverage": [
    231
@@ -7900,10 +7907,6 @@
    177,
    63
   ],
-  "threads": [
-   191,
-   114
-  ],
   "dispositions": [
    191
   ],
@@ -8340,6 +8343,10 @@
    154,
    6
   ],
+  "demonstration": [
+   165,
+   164
+  ],
   "help": [
    165
   ],
@@ -8487,10 +8494,6 @@
   ],
   "2306c2e": [
    152
-  ],
-  "accepted": [
-   152,
-   69
   ],
   "bootable": [
    152
