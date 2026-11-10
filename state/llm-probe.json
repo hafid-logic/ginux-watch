@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-10T00:07:54Z",
+ "updated": "2026-11-10T00:11:38Z",
  "schema": "llm-probe-v1",
  "note": "DATA ONLY — probe rows are runtime availability evidence; no secrets; fixed probe input sha256_16 below",
  "probe_input_sha256_16": "6ba85cba8c23d00c",
@@ -828,6 +828,68 @@
     "usage"
    ],
    "at": "2026-11-10T00:07:54Z"
+  },
+  {
+   "provider": "google-ai-studio",
+   "model": "gemini-3.6-flash",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 2.93,
+   "http_status": 200,
+   "model_actual": "gemini-3.6-flash",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "usage"
+   ],
+   "at": "2026-11-10T00:11:35Z"
+  },
+  {
+   "provider": "nvidia",
+   "model": "nvidia/nemotron-3-ultra-550b-a55b",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 0.91,
+   "http_status": 200,
+   "model_actual": "nvidia/nemotron-3-ultra-550b-a55b",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "service_tier",
+    "system_fingerprint",
+    "usage"
+   ],
+   "at": "2026-11-10T00:11:36Z"
+  },
+  {
+   "provider": "openrouter",
+   "model": "openrouter/free",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 1.0,
+   "http_status": 200,
+   "model_actual": "cohere/north-mini-code:free",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "provider",
+    "service_tier",
+    "system_fingerprint",
+    "usage"
+   ],
+   "at": "2026-11-10T00:11:38Z"
   }
  ]
 }

@@ -1,0 +1,74 @@
+{
+ "meta": {
+  "provider": "google-ai-studio",
+  "model": "gemini-3.6-flash",
+  "model_actual": "gemini-3.6-flash",
+  "low_confidence": false,
+  "latency_s": 25.44,
+  "attempts": 1,
+  "retries": 0,
+  "finish_reason": "stop",
+  "input_truncated": false,
+  "input_sha256_16": "b0ebe465583addd3",
+  "schema": "shadow-report-v1"
+ },
+ "report": {
+  "report_id": "session-2026-11-10-v7.1",
+  "strengths": [
+   "نجاح عملية التحديث (ff push 1630f01..43db09b) إلى main وتطابق نتائج sha256 وفحوص البايتات بنسبة 100%.",
+   "نجاح تشغيل تدفق supervisor-shadow وإصلاح مشكلة عدم إسقاط التشغيل بفضل تحسين المعالجة.",
+   "تطبيق بوابة CJK وإضافة أداة الفحص والخطاف المحلي للتحقق الوقائي من سلامة الملفات."
+  ],
+  "weaknesses": [
+   "استلام الاعتمادات (التوكن) بنص صريح في المحادثة مما يمثل ثغرة أمنية.",
+   "فشل تدفق ginux-verify بسبب غياب بيئة Rocky-VM المطلوبة على QEMU.",
+   "تأخر جدولة team-watcher بأكثر من 90 دقيقة عن الجدول المعتاد."
+  ],
+  "claims_checked": [
+   {
+    "claim": "الدفع والتحقق التراكمي لـ 14 ملف مطابقة تماماً (sha256/raw HTTP 200)",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "نجاح تشغيل supervisor-shadow (dispatch 42725870274)",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "فشل تشغيل ginux-verify عند خطوة doctor/check/test على QEMU",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "عدد PRs المدموجة دون تحديث سجلات hdae يساوي 5",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   }
+  ],
+  "decisions": [
+   {
+    "open_point": "تداول التوكن بنص صريح في المحادثة",
+    "decision": "يوصى بتدوير التوكن فوراً والامتناع عن تداول المفاتيح أو كتابة النص الصريح للأسرار في المحادثات.",
+    "rationale": "الالتزام التام ببيئة الأمان الصارمة والتأكد من عدم تسريب الاعتمادات."
+   },
+   {
+    "open_point": "فشل ginux-verify على QEMU",
+    "decision": "الإبقاء على الوضع الحالي دون تغيير ملف ginux-verify.yml مع توثيق الاحتياج لبيئة Rocky-VM وفق RECOVERY §8.",
+    "rationale": "الفشل موثق ومتوقع ولا يشير إلى خلل جديد في الشيفرة المستحدثة."
+   }
+  ],
+  "risks": [
+   "تداول التوكن كنص صريح يمثل مخاطرة أمنية عالية تتطلب التدوير الفوري.",
+   "تأخر جدولة team-watcher قد يؤدي إلى تفويت التنبيهات في الوقت المناسب.",
+   "توقف اختبارات ginux-verify حتى توفير بيئة Rocky-VM المناسبة."
+  ],
+  "next_items": [
+   "قيام المالك بتدوير التوكن المكشوف بأمان.",
+   "متابعة انتظام جدول تشغيل team-watcher ومعالجة سبب التأخير.",
+   "استكمال متابعة بوابة C2 والتأكد من جاهزيتها."
+  ],
+  "injection_suspected": false,
+  "publish_requests": []
+ }
+}
