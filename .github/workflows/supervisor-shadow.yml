@@ -143,10 +143,17 @@ jobs:
             exit 0
           fi
           git commit -m "shadow/eval artifacts $(date -u +%Y-%m-%dT%H:%M:%SZ) [skip ci]"
+          # v7.3 [MEASURED run 26, 2026-11-10T02:54:48Z]: concurrent artifact
+          # commits (same state/shadow files) make a plain rebase CONFLICT and
+          # the loop then dies on 'unmerged files' — same pattern as
+          # team-watcher (v7.3-2c): -X theirs lets the FRESH run artifacts win
+          # the replay; rebase --abort resets between attempts.
+          # offline sim: team/scripts/test-push-retry-offline.sh (scenario B)
           for i in 1 2 3; do
-            if git pull --rebase origin main && git push origin HEAD:main; then
+            if git pull --rebase -X theirs origin main && git push origin HEAD:main; then
               exit 0
             fi
+            git rebase --abort >/dev/null 2>&1 || true
             sleep $((i * 5))
           done
           echo "push failed after 3 attempts"

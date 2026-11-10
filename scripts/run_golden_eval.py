@@ -210,6 +210,12 @@ def run_eval(cfg, state):
             try:
                 raw = llm_router.call_model(cfg, state, prov_name, model_id,
                                             sup.SYSTEM_PROMPT, payload, meta)
+                # v7.3 [MEASURED run 26, 2026-11-10T02:54:46Z]: a reply can be
+                # None (empty content / reasoning-only) — an unguarded encode
+                # crashed the whole eval AFTER minutes of spend. Treat None as
+                # an empty reply: row outcome becomes no_json, results still
+                # written, spend never lost again.
+                raw = raw or ""
             except llm_router.AllProvidersFailed as e:
                 outcome = (e.detail or "failed").split(":")[0]
                 rows.append({"case_id": case["id"], "provider": prov_name,
