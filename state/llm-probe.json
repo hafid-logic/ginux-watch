@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-10T02:49:22Z",
+ "updated": "2026-11-10T02:55:48Z",
  "schema": "llm-probe-v1",
  "note": "DATA ONLY — probe rows are runtime availability evidence; no secrets; fixed probe input sha256_16 below",
  "probe_input_sha256_16": "6ba85cba8c23d00c",
@@ -54,14 +54,16 @@
    "categories": []
   },
   "openrouter": {
-   "models_ok": 1,
-   "models_failed": 0,
-   "categories": []
+   "models_ok": 0,
+   "models_failed": 1,
+   "categories": [
+    "api_shape"
+   ]
   }
  },
  "llm_status_snapshot": {
   "nvidia": "ok",
-  "openrouter": "ok",
+  "openrouter": "degraded",
   "google-ai-studio": "ok"
  },
  "results": [
@@ -1014,6 +1016,69 @@
     "usage"
    ],
    "at": "2026-11-10T02:49:22Z"
+  },
+  {
+   "provider": "google-ai-studio",
+   "model": "gemini-3.6-flash",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 8.78,
+   "http_status": 200,
+   "model_actual": "gemini-3.6-flash",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "usage"
+   ],
+   "at": "2026-11-10T02:55:38Z"
+  },
+  {
+   "provider": "nvidia",
+   "model": "nvidia/nemotron-3-ultra-550b-a55b",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 2.56,
+   "http_status": 200,
+   "model_actual": "nvidia/nemotron-3-ultra-550b-a55b",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "service_tier",
+    "system_fingerprint",
+    "usage"
+   ],
+   "at": "2026-11-10T02:55:41Z"
+  },
+  {
+   "provider": "openrouter",
+   "model": "openrouter/free",
+   "ok": false,
+   "category": "api_shape",
+   "status": "failed",
+   "latency_s": 5.99,
+   "http_status": 200,
+   "model_actual": "nvidia/nemotron-3.5-lightning:free",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "provider",
+    "service_tier",
+    "system_fingerprint",
+    "usage"
+   ],
+   "at": "2026-11-10T02:55:48Z",
+   "excerpt200": "\n         \n\n         \n{\"id\":\"gen-1794279342-eoyhWLz0QBLXcFVimGGu\",\"object\":\"chat.completion\",\"created\":1794279342,\"model\":\"nvidia/nemotron-3.5-lightning:free\",\"provider\":\"Nvidia\",\"system_fingerprint\":"
   }
  ]
 }
