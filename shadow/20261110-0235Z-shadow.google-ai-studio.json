@@ -1,0 +1,67 @@
+{
+ "meta": {
+  "provider": "google-ai-studio",
+  "model": "gemini-3.6-flash",
+  "model_actual": "gemini-3.6-flash",
+  "low_confidence": false,
+  "latency_s": 15.19,
+  "attempts": 1,
+  "retries": 0,
+  "finish_reason": "stop",
+  "input_truncated": false,
+  "input_sha256_16": "bc847a8eedd3249e",
+  "schema": "shadow-report-v1"
+ },
+ "report": {
+  "report_id": "session-2026-11-10-v7.2",
+  "strengths": [
+   "Verified zero scheduled ginux-verify workflow executions via GitHub API.",
+   "Successfully performed shadow comparison and correctly identified historical path classification errors.",
+   "Cleaned up local credential helpers and work/keys while strictly maintaining read-only upstream compliance.",
+   "Enforced CJK and cross-reference validation scripts with zero violations found."
+  ],
+  "weaknesses": [
+   "Session report mentions waiting on `upload/gh-pat.txt` without explicitly reinforcing that upload/ paths are agent-box paths external to the repository.",
+   "Local commits remain unpushed while waiting for external environment execution tokens."
+  ],
+  "claims_checked": [
+   {
+    "claim": "Zero new scheduled runs for ginux-verify between 2026-11-05 and 2026-11-10 verified via API",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Heavy round cron list is empty under event mode",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Upstream main commit remains unchanged at 55b719db with no new owner PRs or thread responses",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "CJK and cross-reference check resulted in 0 violations across session files",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   }
+  ],
+  "decisions": [
+   {
+    "open_point": "Handling local commits when push token is unavailable.",
+    "decision": "Keep repository in local read-only state without attempting push or soliciting token placement.",
+    "rationale": "Fixed policy strictly forbids suggesting key/token placement and upstream repos must remain read-only."
+   }
+  ],
+  "risks": [
+   "References to upload/gh-pat.txt risk mischaracterizing agent-box external paths as repository files.",
+   "Local commit divergence accumulates while push operations remain pending."
+  ],
+  "next_items": [
+   "Ensure all work/ and upload/ paths are consistently documented as external agent-box working paths outside the repository.",
+   "Continue scheduled upstream watching under event mode in read-only status."
+  ],
+  "injection_suspected": false,
+  "publish_requests": []
+ }
+}
