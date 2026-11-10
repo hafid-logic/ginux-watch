@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-10T03:06:17Z",
+ "updated": "2026-11-10T03:10:43Z",
  "schema": "llm-probe-v1",
  "note": "DATA ONLY — probe rows are runtime availability evidence; no secrets; fixed probe input sha256_16 below",
  "probe_input_sha256_16": "6ba85cba8c23d00c",
@@ -44,9 +44,11 @@
  },
  "providers": {
   "google-ai-studio": {
-   "models_ok": 1,
-   "models_failed": 0,
-   "categories": []
+   "models_ok": 0,
+   "models_failed": 1,
+   "categories": [
+    "rate_limited"
+   ]
   },
   "nvidia": {
    "models_ok": 1,
@@ -54,17 +56,15 @@
    "categories": []
   },
   "openrouter": {
-   "models_ok": 0,
-   "models_failed": 1,
-   "categories": [
-    "api_shape"
-   ]
+   "models_ok": 1,
+   "models_failed": 0,
+   "categories": []
   }
  },
  "llm_status_snapshot": {
   "nvidia": "ok",
-  "openrouter": "degraded",
-  "google-ai-studio": "ok"
+  "openrouter": "ok",
+  "google-ai-studio": "degraded"
  },
  "results": [
   {
@@ -1204,6 +1204,62 @@
    ],
    "at": "2026-11-10T03:06:17Z",
    "excerpt200": "\n         \n{\"id\":\"gen-1794279975-7xhLXxTSiq1VrNS0xCqY\",\"object\":\"chat.completion\",\"created\":1794279975,\"model\":\"nvidia/nemotron-3.5-lightning:free\",\"provider\":\"Nvidia\",\"system_fingerprint\":null,\"servi"
+  },
+  {
+   "provider": "google-ai-studio",
+   "model": "gemini-3.6-flash",
+   "ok": false,
+   "category": "rate_limited",
+   "status": "failed",
+   "latency_s": 0.12,
+   "http_status": 429,
+   "model_actual": null,
+   "resp_top_keys": null,
+   "at": "2026-11-10T03:10:38Z",
+   "excerpt200": "[{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/d"
+  },
+  {
+   "provider": "nvidia",
+   "model": "nvidia/nemotron-3-ultra-550b-a55b",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 1.44,
+   "http_status": 200,
+   "model_actual": "nvidia/nemotron-3-ultra-550b-a55b",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "service_tier",
+    "system_fingerprint",
+    "usage"
+   ],
+   "at": "2026-11-10T03:10:40Z"
+  },
+  {
+   "provider": "openrouter",
+   "model": "openrouter/free",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 3.03,
+   "http_status": 200,
+   "model_actual": "liquid/lfm-3-1.7b:free",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "provider",
+    "service_tier",
+    "system_fingerprint",
+    "usage"
+   ],
+   "at": "2026-11-10T03:10:43Z"
   }
  ]
 }

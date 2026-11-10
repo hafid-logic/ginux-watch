@@ -1,11 +1,11 @@
 {
- "updated": "2026-11-10T03:06:58Z",
+ "updated": "2026-11-10T03:27:18Z",
  "providers": {
   "nvidia": {
    "configured": true,
    "status": "ok",
    "model_current": "nvidia/nemotron-3-ultra-550b-a55b",
-   "last_success": "2026-11-10T03:06:58Z",
+   "last_success": "2026-11-10T03:26:50Z",
    "last_error_class": null,
    "consecutive_failures": 0,
    "rate_limit": null,
@@ -14,14 +14,13 @@
   },
   "openrouter": {
    "configured": true,
-   "status": "degraded",
+   "status": "ok",
    "model_current": "openrouter/free",
-   "last_success": "2026-11-10T02:59:49Z",
-   "last_error_class": "api_shape",
-   "consecutive_failures": 1,
+   "last_success": "2026-11-10T03:27:18Z",
+   "last_error_class": null,
+   "consecutive_failures": 0,
    "rate_limit": null,
-   "last_alert_key": "auth_failed:auth_failed",
-   "model_actual": "cohere/north-mini-code:free",
+   "model_actual": "xingchen-agi/xing4.0-29b-a4b:free",
    "last_diag": {
     "error_class": "api_shape",
     "http_status": 200,
@@ -68,18 +67,19 @@
     },
     "elapsed_s": 43.38,
     "excerpt200": "\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1794191144-2LaEwAAJCMq3i"
-   }
+   },
+   "consecutive_429": 0
   },
   "google-ai-studio": {
    "configured": true,
    "status": "rate_limited",
    "model_current": "gemini-3.6-flash",
-   "last_success": "2026-11-10T03:06:12Z",
+   "last_success": "2026-11-10T03:14:52Z",
    "last_error_class": "rate_limited",
    "consecutive_failures": 0,
    "rate_limit": null,
    "model_actual": "gemini-3.6-flash",
-   "consecutive_429": 6,
+   "consecutive_429": 24,
    "last_diag": {
     "error_class": "rate_limited",
     "http_status": 429,
@@ -88,18 +88,18 @@
     "content_len": null,
     "noncontent_fields": null,
     "usage": null,
-    "elapsed_s": 0.16,
+    "elapsed_s": 0.1,
     "excerpt200": "[{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/d"
    }
   }
  },
  "last_call": {
-  "provider": "nvidia",
-  "model": "nvidia/nemotron-3-ultra-550b-a55b",
-  "model_actual": "nvidia/nemotron-3-ultra-550b-a55b",
-  "latency_s": 40.51,
+  "provider": "openrouter",
+  "model": "openrouter/free",
+  "model_actual": "xingchen-agi/xing4.0-29b-a4b:free",
+  "latency_s": 27.36,
   "outcome": "ok",
-  "at": "2026-11-10T03:06:58Z",
+  "at": "2026-11-10T03:27:18Z",
   "finish_reason": "stop"
  },
  "note": "runtime-managed by scripts/llm_router.py; providers appear on first call. No secrets are stored here — status classes only (unconfigured/ok/down/auth_failed).",
@@ -110,21 +110,34 @@
    "nvidia": 3
   },
   "calls_probe": {
-   "google-ai-studio": 8,
-   "nvidia": 8,
-   "openrouter": 8
+   "google-ai-studio": 9,
+   "nvidia": 9,
+   "openrouter": 9
   },
   "failed": {
    "calls_probe": {
     "openrouter": {
      "api_shape": 2
+    },
+    "google-ai-studio": {
+     "rate_limited": 1
     }
    },
    "calls": {
     "google-ai-studio": {
      "rate_limited": 6
     }
+   },
+   "calls_eval": {
+    "google-ai-studio": {
+     "rate_limited": 33
+    }
    }
+  },
+  "calls_eval": {
+   "google-ai-studio": 34,
+   "nvidia": 17,
+   "openrouter": 17
   }
  },
  "limits_official": {
