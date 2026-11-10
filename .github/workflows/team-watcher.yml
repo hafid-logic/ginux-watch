@@ -48,7 +48,7 @@ jobs:
               msg="upstream watch + lease sweep $(date -u +%Y-%m-%dT%H:%M:%SZ)"
             fi
             git commit -m "$msg [skip ci]"
-            # v7.3-2c: run #29 (2026-11-09T21:41:49Z) failed here with exit 128
+            # v7.3-2c: run 29 (2026-11-09T21:41:49Z) failed here with exit 128
             # (instant git-transport failure, no competing commit on main
             # [MEASURED]) — 3-attempt rebase+push, mirroring supervisor-shadow.
             # -X theirs = on a same-file state race the FRESH sweep hunks win

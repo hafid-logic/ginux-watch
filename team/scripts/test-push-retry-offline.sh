@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # test-push-retry-offline.sh — v7.3-2c offline simulation of the team-watcher
-# "Commit and push" failure class (run #29, 2026-11-09T21:41:49Z, exit 128).
+# "Commit and push" failure class (run 29, 2026-11-09T21:41:49Z, exit 128).
 #
 # Reproduces failure modes WITHOUT any network using local bare "origin" repos:
 #   Scenario A (faithful to production): competing workflow (monitor-style)
@@ -57,7 +57,7 @@ git -C "$A/other" add -A && git -C "$A/other" commit -qm "monitor state [skip ci
 echo '{"hb":"sweep1"}' > "$A/worker/matrix/upstream-watch.json"
 git -C "$A/worker" add -A && git -C "$A/worker" commit -qm "lease sweep [skip ci]"
 git -C "$A/worker" push origin HEAD:main >/dev/null 2>&1
-check "A: plain push against moved remote fails (run #29 class)" 1 $?
+check "A: plain push against moved remote fails (run 29 class)" 1 $?
 cd "$A/worker" && retry_loop
 check "A: retry loop (pull --rebase -X theirs + push x3) recovers" 0 $?
 n=$(git -C "$A/origin.git" log --oneline main | wc -l)
