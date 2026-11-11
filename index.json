@@ -1,8 +1,108 @@
 {
- "generated_at_utc": "2026-11-11T02:44:08Z",
+ "generated_at_utc": "2026-11-11T10:39:26Z",
  "source_repo": "gmkurtzer/ginux",
- "item_count": 249,
+ "item_count": 251,
  "items": {
+  "258": {
+   "kind": "pr",
+   "title": "Gate 16: automatic kernel-assisted syscall control",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    "Makefile",
+    "README.md",
+    "benchmarks/gate16/README.md",
+    "benchmarks/gate16/results/deny-bpf-lsm.tsv",
+    "benchmarks/gate16/results/deny-module.tsv",
+    "benchmarks/gate16/results/deny-seccomp.tsv",
+    "benchmarks/gate16/results/mkdir-bpf-lsm.tsv",
+    "benchmarks/gate16/results/mkdir-module.tsv",
+    "benchmarks/gate16/results/mkdir-native.tsv",
+    "benchmarks/gate16/results/provenance.txt",
+    "benchmarks/gate16/results/yield-bpf-lsm.tsv",
+    "benchmarks/gate16/results/yield-module.tsv",
+    "benchmarks/gate16/results/yield-native.tsv",
+    "config/instance-gate10-deny-socket.toml",
+    "config/instance-gate10-strict.toml",
+    "config/instance-gate11-benchmark.toml",
+    "config/instance-gate11-selective-deny.toml",
+    "config/instance-gate4.toml",
+    "config/instance-gate5.toml",
+    "config/instance-gate6.toml",
+    "config/instance-gate7.toml",
+    "config/instance-gate8.toml",
+    "config/instance-gate9-failure.toml",
+    "config/instance-gate9.75-hook-continue.toml",
+    "config/instance-gate9.75-hook-stop.toml",
+    "config/instance-gate9.75-hook-timeout.toml",
+    "config/instance-gate9.75-hooks.toml",
+    "config/instance-gate9.75-network.toml",
+    "config/instance-gate9.75.toml",
+    "config/instance-gate9.toml"
+   ],
+   "keywords": [
+    "bpf",
+    "adds",
+    "kernel",
+    "lsm",
+    "module",
+    "syscall",
+    "through",
+    "automatic",
+    "contract",
+    "control"
+   ]
+  },
+  "257": {
+   "kind": "pr",
+   "title": "Gate 15: dispatch performance matrix",
+   "state": "closed",
+   "merged_at": "2026-11-11T05:08:03Z",
+   "files": [
+    "Makefile",
+    "README.md",
+    "benchmarks/gate15/README.md",
+    "benchmarks/gate15/cpu.conf",
+    "benchmarks/gate15/memory.conf",
+    "benchmarks/gate15/mutex.conf",
+    "benchmarks/gate15/native.conf",
+    "benchmarks/gate15/paranoid.conf",
+    "benchmarks/gate15/selective.conf",
+    "benchmarks/gate15/suite.conf",
+    "benchmarks/gate15/threads.conf",
+    "docs/configurable-contract.md",
+    "docs/performance.md",
+    "docs/security-boundary.md",
+    "hdae/ARCHITECTURE.md",
+    "hdae/PLAN.md",
+    "hdae/PROJECT.md",
+    "hdae/STATUS.md",
+    "hdae/gates-deferred/14-unicorn-execution-backend.md",
+    "hdae/gates-done/13-boundary-hardening.md",
+    "hdae/gates-todo/15-dispatch-performance-matrix.md",
+    "scripts/collect-gate15-matrix.sh",
+    "scripts/combine-gate15-results.sh",
+    "scripts/demo-gate-15.sh",
+    "scripts/gate15-report.awk",
+    "scripts/gate15-report.sh",
+    "scripts/gate15-svg.awk",
+    "scripts/ginux-host-instance-helper.sh",
+    "scripts/test-gate15-report.sh",
+    "scripts/validate-gate15-config.sh"
+   ],
+   "keywords": [
+    "native",
+    "modes",
+    "performance",
+    "paranoid",
+    "selective",
+    "thread",
+    "yield",
+    "bench",
+    "cpu",
+    "gate"
+   ]
+  },
   "256": {
    "kind": "pr",
    "title": "ci: skip checks when only documentation changed since a passing run",
@@ -30,32 +130,39 @@
   "255": {
    "kind": "pr",
    "title": "Gate 13: harden boundaries and document limitations",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-11T02:52:25Z",
    "files": [
     "Cargo.lock",
     "Cargo.toml",
     "Makefile",
     "README.md",
+    "config/instance-gate10-deny-socket.toml",
+    "config/instance-gate10-strict.toml",
+    "config/instance-gate11-benchmark.toml",
+    "config/instance-gate11-selective-deny.toml",
+    "config/instance-gate4.toml",
+    "config/instance-gate5.toml",
+    "config/instance-gate6.toml",
+    "config/instance-gate7.toml",
+    "config/instance-gate8.toml",
+    "config/instance-gate9-failure.toml",
+    "config/instance-gate9.75-hook-continue.toml",
+    "config/instance-gate9.75-hook-stop.toml",
+    "config/instance-gate9.75-hook-timeout.toml",
+    "config/instance-gate9.75-hooks.toml",
+    "config/instance-gate9.75-network.toml",
+    "config/instance-gate9.75.toml",
+    "config/instance-gate9.toml",
+    "config/instance-rocky-systemd.toml",
     "crates/ginux-init/src/main.rs",
+    "crates/ginux-init/src/supervisor.rs",
+    "crates/ginux-instance/src/lib.rs",
     "crates/security-fuzzer/Cargo.toml",
     "crates/security-fuzzer/src/main.rs",
+    "docs/configurable-contract.md",
     "docs/security-boundary.md",
-    "hdae/STATUS.md",
-    "hdae/gates-todo/13-boundary-hardening.md",
-    "scripts/bench-compare.sh",
-    "scripts/check-security-boundary.sh",
-    "scripts/demo-gate-13.sh",
-    "scripts/fuzz-security.sh",
-    "scripts/gate11-benchmark-guest.sh",
-    "scripts/test-bench-compare.sh",
-    "scripts/test-native-vfs.sh",
-    "tests/fuzz-corpus/config/minimal.toml",
-    "tests/fuzz-corpus/device/basic.txt",
-    "tests/fuzz-corpus/elf/header.bin",
-    "tests/fuzz-corpus/kernel-path/basic.txt",
-    "tests/fuzz-corpus/selector/basic.txt",
-    "tests/fuzz-corpus/vfs-index/header.bin"
+    "hdae/STATUS.md"
    ],
    "keywords": [
     "events",
@@ -5808,6 +5915,183 @@
   }
  },
  "keywords": {
+  "bpf": [
+   258
+  ],
+  "adds": [
+   258,
+   255,
+   52
+  ],
+  "kernel": [
+   258,
+   183,
+   182,
+   152,
+   139,
+   130,
+   129,
+   127,
+   100,
+   99,
+   98,
+   97,
+   96,
+   80,
+   71,
+   67,
+   50,
+   47,
+   46,
+   24,
+   21,
+   19,
+   17,
+   13,
+   9,
+   7,
+   3
+  ],
+  "lsm": [
+   258
+  ],
+  "module": [
+   258
+  ],
+  "syscall": [
+   258,
+   251,
+   243,
+   240,
+   204,
+   203,
+   186,
+   162,
+   161,
+   62,
+   25
+  ],
+  "through": [
+   258,
+   232,
+   205,
+   122
+  ],
+  "automatic": [
+   258
+  ],
+  "contract": [
+   258,
+   254,
+   251,
+   243,
+   237,
+   231,
+   230,
+   13
+  ],
+  "control": [
+   258,
+   246,
+   71
+  ],
+  "native": [
+   257,
+   248,
+   247,
+   246,
+   245,
+   243,
+   242,
+   238,
+   236,
+   228,
+   226,
+   225,
+   219,
+   215,
+   207,
+   205,
+   204,
+   203,
+   184,
+   183,
+   182,
+   176,
+   154,
+   153,
+   84,
+   82,
+   39,
+   14
+  ],
+  "modes": [
+   257
+  ],
+  "performance": [
+   257,
+   8
+  ],
+  "paranoid": [
+   257,
+   249
+  ],
+  "selective": [
+   257,
+   249
+  ],
+  "thread": [
+   257,
+   234,
+   224,
+   184,
+   139,
+   138,
+   114,
+   99,
+   8
+  ],
+  "yield": [
+   257
+  ],
+  "bench": [
+   257,
+   181,
+   180,
+   173,
+   172
+  ],
+  "cpu": [
+   257,
+   139,
+   138,
+   114,
+   103,
+   92,
+   85,
+   83,
+   25,
+   19,
+   8,
+   7
+  ],
+  "gate": [
+   257,
+   255,
+   254,
+   253,
+   252,
+   251,
+   235,
+   231,
+   229,
+   228,
+   225,
+   210,
+   196,
+   181,
+   172
+  ],
   "250": [
    256
   ],
@@ -5873,22 +6157,6 @@
   ],
   "events": [
    255
-  ],
-  "gate": [
-   255,
-   254,
-   253,
-   252,
-   251,
-   235,
-   231,
-   229,
-   228,
-   225,
-   210,
-   196,
-   181,
-   172
   ],
   "threads": [
    255,
@@ -5975,21 +6243,8 @@
    152,
    69
   ],
-  "adds": [
-   255,
-   52
-  ],
   "boundaries": [
    255
-  ],
-  "contract": [
-   254,
-   251,
-   243,
-   237,
-   231,
-   230,
-   13
   ],
   "lock": [
    254,
@@ -6168,18 +6423,6 @@
    92,
    86
   ],
-  "syscall": [
-   251,
-   243,
-   240,
-   204,
-   203,
-   186,
-   162,
-   161,
-   62,
-   25
-  ],
   "against": [
    251,
    202
@@ -6287,13 +6530,7 @@
   "994x": [
    249
   ],
-  "selective": [
-   249
-  ],
   "992x": [
-   249
-  ],
-  "paranoid": [
    249
   ],
   "000x": [
@@ -6313,35 +6550,6 @@
    248,
    100,
    71
-  ],
-  "native": [
-   248,
-   247,
-   246,
-   245,
-   243,
-   242,
-   238,
-   236,
-   228,
-   226,
-   225,
-   219,
-   215,
-   207,
-   205,
-   204,
-   203,
-   184,
-   183,
-   182,
-   176,
-   154,
-   153,
-   84,
-   82,
-   39,
-   14
   ],
   "directory": [
    248,
@@ -6438,10 +6646,6 @@
   "real": [
    246,
    192
-  ],
-  "control": [
-   246,
-   71
   ],
   "enotty": [
    246
@@ -6849,16 +7053,6 @@
    124,
    113
   ],
-  "thread": [
-   234,
-   224,
-   184,
-   139,
-   138,
-   114,
-   99,
-   8
-  ],
   "children": [
    234
   ],
@@ -6887,11 +7081,6 @@
   ],
   "duplicate": [
    232
-  ],
-  "through": [
-   232,
-   205,
-   122
   ],
   "descriptor": [
    232,
@@ -8022,34 +8211,6 @@
    184,
    119
   ],
-  "kernel": [
-   183,
-   182,
-   152,
-   139,
-   130,
-   129,
-   127,
-   100,
-   99,
-   98,
-   97,
-   96,
-   80,
-   71,
-   67,
-   50,
-   47,
-   46,
-   24,
-   21,
-   19,
-   17,
-   13,
-   9,
-   7,
-   3
-  ],
   "views": [
    183,
    182
@@ -8071,12 +8232,6 @@
   ],
   "artifacts": [
    182
-  ],
-  "bench": [
-   181,
-   180,
-   173,
-   172
   ],
   "block": [
    181,
@@ -8736,19 +8891,6 @@
   "erofs": [
    140,
    115
-  ],
-  "cpu": [
-   139,
-   138,
-   114,
-   103,
-   92,
-   85,
-   83,
-   25,
-   19,
-   8,
-   7
   ],
   "application": [
    139,
@@ -10075,9 +10217,6 @@
    8
   ],
   "parity": [
-   8
-  ],
-  "performance": [
    8
   ],
   "global": [
