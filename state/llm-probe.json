@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-11T06:33:41Z",
+ "updated": "2026-11-11T19:40:15Z",
  "schema": "llm-probe-v1",
  "note": "DATA ONLY — probe rows are runtime availability evidence; no secrets; fixed probe input sha256_16 below",
  "probe_input_sha256_16": "6ba85cba8c23d00c",
@@ -19,7 +19,7 @@
   },
   "google-ai-studio": {
    "http_status": 200,
-   "ids_listed": 62,
+   "ids_listed": 63,
    "raw_names_sample5": [
     "models/gemini-2.5-flash",
     "models/gemini-2.5-pro",
@@ -31,9 +31,9 @@
   },
   "openrouter": {
    "http_status": 200,
-   "ids_listed": 433,
+   "ids_listed": 430,
    "raw_names_sample5": [
-    "baidu/ernie-5.5-flash-preview",
+    "baidu/ernie-5.5-flash-preview:free",
     "baidu/ernie-light-dt-1.0-intl",
     "google/gemini-4-carbon",
     "google/gemini-4-carbon:batch",
@@ -44,9 +44,11 @@
  },
  "providers": {
   "nvidia": {
-   "models_ok": 1,
-   "models_failed": 0,
-   "categories": []
+   "models_ok": 0,
+   "models_failed": 1,
+   "categories": [
+    "api_shape"
+   ]
   },
   "google-ai-studio": {
    "models_ok": 1,
@@ -54,9 +56,11 @@
    "categories": []
   },
   "openrouter": {
-   "models_ok": 1,
-   "models_failed": 0,
-   "categories": []
+   "models_ok": 0,
+   "models_failed": 1,
+   "categories": [
+    "api_shape"
+   ]
   },
   "strands-decider-space": {
    "models_ok": 0,
@@ -65,8 +69,8 @@
   }
  },
  "llm_status_snapshot": {
-  "nvidia": "ok",
-  "openrouter": "ok",
+  "nvidia": "degraded",
+  "openrouter": "degraded",
   "google-ai-studio": "ok",
   "strands-decider-space": "unconfigured"
  },
@@ -1571,6 +1575,79 @@
    "status": "unavailable",
    "secret": "DECIDER_API_KEY",
    "at": "2026-11-11T06:33:41Z"
+  },
+  {
+   "provider": "nvidia",
+   "model": "nvidia/nemotron-3-ultra-550b-a55b",
+   "ok": false,
+   "category": "api_shape",
+   "status": "failed",
+   "latency_s": 22.18,
+   "http_status": 200,
+   "model_actual": "nvidia/nemotron-3-ultra-550b-a55b",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "service_tier",
+    "system_fingerprint",
+    "usage"
+   ],
+   "at": "2026-11-11T19:39:53Z",
+   "excerpt200": "{\"id\":\"chatcmpl-a87b05e2-3ce5-4420-bafa-2701b20ee305\",\"choices\":[{\"index\":0,\"message\":{\"content\":null,\"role\":\"assistant\",\"reasoning_content\":\"\\n\\nReRe-Re-Re-Re-Re-Re-Re-Re-Re-Re-Re-Re-Re-Re-Re-Re-Re-R"
+  },
+  {
+   "provider": "google-ai-studio",
+   "model": "gemini-3.6-flash",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 4.85,
+   "http_status": 200,
+   "model_actual": "gemini-3.6-flash",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "usage"
+   ],
+   "at": "2026-11-11T19:39:58Z"
+  },
+  {
+   "provider": "openrouter",
+   "model": "openrouter/free",
+   "ok": false,
+   "category": "api_shape",
+   "status": "failed",
+   "latency_s": 16.96,
+   "http_status": 200,
+   "model_actual": "nvidia/nemotron-3.5-lightning:free",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "provider",
+    "service_tier",
+    "system_fingerprint",
+    "usage"
+   ],
+   "at": "2026-11-11T19:40:15Z",
+   "excerpt200": "\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1794425999-GIekQ8GKgpclzT5zC7uT\",\"object\":\"chat.completion\",\"created\":1794425999,\"model\":\"nvidia/nemotron-3.5-lightning:fre"
+  },
+  {
+   "provider": "strands-decider-space",
+   "model": null,
+   "ok": false,
+   "category": "unconfigured",
+   "status": "unavailable",
+   "secret": "DECIDER_API_KEY",
+   "at": "2026-11-11T19:40:15Z"
   }
  ]
 }

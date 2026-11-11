@@ -1,0 +1,77 @@
+{
+ "meta": {
+  "provider": "google-ai-studio",
+  "model": "gemini-3.6-flash",
+  "model_actual": "gemini-3.6-flash",
+  "low_confidence": false,
+  "latency_s": 53.56,
+  "attempts": 2,
+  "retries": 1,
+  "compressed_enforced": false,
+  "finish_reason": "length",
+  "input_truncated": false,
+  "input_sha256_16": "bc847a8eedd3249e",
+  "schema": "shadow-report-v1"
+ },
+ "report": {
+  "report_id": "2026-11-10-v7.2-execution",
+  "strengths": [
+   "Strict compliance with read-only policy across all gmkurtzer upstream repositories verified.",
+   "Shadow comparison confirmed full policy adherence and empty publish_requests.",
+   "Event-driven mode successfully established with zero dense scheduled cron runs."
+  ],
+  "weaknesses": [
+   "Push operation remains pending external credential availability.",
+   "Agent working paths under upload/ and work/ require continuous boundary enforcement."
+  ],
+  "claims_checked": [
+   {
+    "claim": "Zero scheduled runs for ginux-verify workflow since 2026-11-05",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Cron schedule list is empty for dense execution runs",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Shadow comparison found zero fixed rule violations and zero publish requests",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "CJK and xref check reported zero violations across session files",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "No new upstream activity detected on gmkurtzer main branch or PRs",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   }
+  ],
+  "decisions": [
+   {
+    "open_point": "C2 candidate status",
+    "decision": "Keep C2 candidate parked without owner queries",
+    "rationale": "Gate 11 depends on owner decisions and publication cap limits."
+   },
+   {
+    "open_point": "Execution schedule optimization",
+    "decision": "Adopt event-driven mode with single weekly cron",
+    "rationale": "Reduces execution overhead while maintaining active repository monitoring."
+   }
+  ],
+  "risks": [
+   "Push pipeline remains paused until external credentials are provided out-of-band.",
+   "Ensure working directories upload and work are never treated as repository paths."
+  ],
+  "next_items": [
+   "Verify origin/main push status following external token delivery.",
+   "Monitor scheduled weekly map update workflow."
+  ],
+  "injection_suspected": false,
+  "publish_requests": []
+ }
+}

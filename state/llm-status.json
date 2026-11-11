@@ -1,24 +1,24 @@
 {
- "updated": "2026-11-11T06:34:38Z",
+ "updated": "2026-11-11T19:41:19Z",
  "providers": {
   "nvidia": {
    "configured": true,
-   "status": "ok",
+   "status": "degraded",
    "model_current": "nvidia/nemotron-3-ultra-550b-a55b",
    "last_success": "2026-11-11T06:34:38Z",
-   "last_error_class": null,
-   "consecutive_failures": 0,
+   "last_error_class": "api_shape",
+   "consecutive_failures": 1,
    "rate_limit": null,
    "model_actual": "nvidia/nemotron-3-ultra-550b-a55b",
    "consecutive_429": 0
   },
   "openrouter": {
    "configured": true,
-   "status": "ok",
+   "status": "degraded",
    "model_current": "openrouter/free",
    "last_success": "2026-11-11T06:33:41Z",
-   "last_error_class": null,
-   "consecutive_failures": 0,
+   "last_error_class": "api_shape",
+   "consecutive_failures": 1,
    "rate_limit": null,
    "model_actual": "nvidia/nemotron-3.5-super-vl:free",
    "last_diag": {
@@ -74,50 +74,50 @@
    "configured": true,
    "status": "ok",
    "model_current": "gemini-3.6-flash",
-   "last_success": "2026-11-11T06:33:40Z",
+   "last_success": "2026-11-11T19:41:19Z",
    "last_error_class": null,
    "consecutive_failures": 0,
    "rate_limit": null,
    "model_actual": "gemini-3.6-flash",
-   "consecutive_429": 0,
-   "last_diag": {
-    "error_class": "http_5xx",
-    "http_status": 503,
-    "resp_top_keys": null,
-    "finish_reason": null,
-    "content_len": null,
-    "noncontent_fields": null,
-    "usage": null,
-    "elapsed_s": 4.41,
-    "excerpt200": "[{\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n]"
-   },
-   "last_alert_key": "down:rate_limited"
+   "consecutive_429": 0
   }
  },
  "last_call": {
-  "provider": "nvidia",
-  "model": "nvidia/nemotron-3-ultra-550b-a55b",
-  "model_actual": "nvidia/nemotron-3-ultra-550b-a55b",
-  "latency_s": 28.76,
+  "provider": "google-ai-studio",
+  "model": "gemini-3.6-flash",
+  "model_actual": "gemini-3.6-flash",
+  "latency_s": 53.56,
   "outcome": "ok",
-  "at": "2026-11-11T06:34:38Z",
+  "at": "2026-11-11T19:41:19Z",
   "finish_reason": "length"
  },
  "note": "runtime-managed by scripts/llm_router.py; providers appear on first call. No secrets are stored here — status classes only (unconfigured/ok/down/auth_failed).",
  "daily": {
   "date_utc": "2026-11-11",
   "calls": {
-   "nvidia": 3
+   "nvidia": 3,
+   "google-ai-studio": 2
   },
   "calls_probe": {
-   "nvidia": 3,
-   "google-ai-studio": 3,
-   "openrouter": 3
+   "nvidia": 4,
+   "google-ai-studio": 4,
+   "openrouter": 4
   },
   "failed": {
    "calls_probe": {
     "google-ai-studio": {
      "rate_limited": 2
+    },
+    "nvidia": {
+     "api_shape": 1
+    },
+    "openrouter": {
+     "api_shape": 1
+    }
+   },
+   "calls": {
+    "google-ai-studio": {
+     "http_5xx": 1
     }
    }
   },
@@ -162,7 +162,7 @@
   }
  },
  "shadow": {
-  "consecutive_failures": 1,
+  "consecutive_failures": 0,
   "last_alert_key": null,
   "last_attempt": {
    "status": "shadow_failed",
@@ -177,7 +177,7 @@
    "retries": 0,
    "at": "2026-11-11T06:34:38Z"
   },
-  "last_recovery_at": "2026-11-11T00:17:52Z"
+  "last_recovery_at": "2026-11-11T19:41:19Z"
  },
  "last_shadow_attempt": {
   "status": "shadow_failed",
