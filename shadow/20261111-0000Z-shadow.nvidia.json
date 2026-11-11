@@ -1,0 +1,132 @@
+{
+ "meta": {
+  "provider": "nvidia",
+  "model": "nvidia/nemotron-3-ultra-550b-a55b",
+  "model_actual": "nvidia/nemotron-3-ultra-550b-a55b",
+  "low_confidence": false,
+  "latency_s": 39.8,
+  "attempts": 1,
+  "retries": 0,
+  "compressed_enforced": false,
+  "finish_reason": "stop",
+  "input_truncated": false,
+  "input_sha256_16": "bc847a8eedd3249e",
+  "schema": "shadow-report-v1"
+ },
+ "report": {
+  "report_id": "2026-11-10-v7.2-review",
+  "strengths": [
+   "Zero scheduled runs verified for ginux-verify legacy",
+   "Heartbeat monitoring with 12h threshold documented",
+   "Token revocation readiness confirmed via credential reject",
+   "Shadow compare produced with 9/9 empty publish_requests",
+   "CJK/xref check clean with 0 hits",
+   "C2 parked with clear unpark conditions documented"
+  ],
+  "weaknesses": [
+   "Push blocked by missing upload/gh-pat.txt (Rule 34)",
+   "Provider status stale (last update 2026-11-09)",
+   "Team-watcher last run failed (conclusion=failure)",
+   "Owner token rotation not executed (manual step pending)",
+   "No new owner PRs or gate changes since 55b719db",
+   "Event mode relies on single weekly cron only"
+  ],
+  "claims_checked": [
+   {
+    "claim": "ginux-verify legacy zero scheduled runs",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "team-watcher heartbeat 2026-11-09T21:41:39Z",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Three continuity marks with same timestamp no secrets",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Token ready for revocation via credential reject",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "C2 parked with three unpark conditions",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Event mode: intensive rounds cancelled, weekly cron only",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Shadow compare: 0 fixed rule violations, 9/9 publish_requests empty",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "First factual error: upload/ described as repo path",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "CJK/xref check: 0 hits in session files",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "No C2 unpark signals detected via API",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Push commit ready ff on origin/main=50c2c121",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Gates unchanged since 55b719db",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   }
+  ],
+  "decisions": [
+   {
+    "open_point": "Push blocked without upload/gh-pat.txt",
+    "decision": "Wait for owner to provide token file",
+    "rationale": "Rule 34 mandates upload/gh-pat.txt; no alternative allowed"
+   },
+   {
+    "open_point": "Team-watcher last run failed",
+    "decision": "Monitor next sweep; alert if 12h threshold breached",
+    "rationale": "Heartbeat updated each sweep; failure may be transient"
+   },
+   {
+    "open_point": "Owner token rotation pending",
+    "decision": "Owner must rotate and re-upload token file",
+    "rationale": "Token delivered in prior session; revocation ready but not executed"
+   }
+  ],
+  "risks": [
+   "Missing upload/gh-pat.txt blocks all upstream pushes",
+   "Stale provider status may hide quota issues",
+   "Team-watcher failure could miss upstream changes",
+   "Owner token not rotated despite revocation readiness",
+   "Single weekly cron may miss time-sensitive events",
+   "Injection-like recommendation text in report"
+  ],
+  "next_items": [
+   "Await upload/gh-pat.txt for push",
+   "Verify push via raw/sha256 post-push",
+   "Confirm zero schedule runs after push",
+   "Monitor team-watcher next heartbeat",
+   "Check provider status refresh",
+   "Owner token rotation and re-upload"
+  ],
+  "injection_suspected": true,
+  "publish_requests": []
+ }
+}

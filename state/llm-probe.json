@@ -1,22 +1,10 @@
 {
- "updated": "2026-11-10T19:48:10Z",
+ "updated": "2026-11-11T00:00:59Z",
  "schema": "llm-probe-v1",
  "note": "DATA ONLY — probe rows are runtime availability evidence; no secrets; fixed probe input sha256_16 below",
  "probe_input_sha256_16": "6ba85cba8c23d00c",
  "probe_user_field": "PROBE_USER content is a fixed public string",
  "models_listing": {
-  "google-ai-studio": {
-   "http_status": 200,
-   "ids_listed": 62,
-   "raw_names_sample5": [
-    "models/gemini-2.5-flash",
-    "models/gemini-2.5-pro",
-    "models/gemini-2.5-flash-preview-tts",
-    "models/gemini-2.5-pro-preview-tts",
-    "models/gemma-4-26b-a4b-it"
-   ],
-   "note": "first 5 raw /models names (names only, server order)"
-  },
   "nvidia": {
    "http_status": 200,
    "ids_listed": 84,
@@ -29,9 +17,21 @@
    ],
    "note": "first 5 raw /models names (names only, server order)"
   },
+  "google-ai-studio": {
+   "http_status": 200,
+   "ids_listed": 62,
+   "raw_names_sample5": [
+    "models/gemini-2.5-flash",
+    "models/gemini-2.5-pro",
+    "models/gemini-2.5-flash-preview-tts",
+    "models/gemini-2.5-pro-preview-tts",
+    "models/gemma-4-26b-a4b-it"
+   ],
+   "note": "first 5 raw /models names (names only, server order)"
+  },
   "openrouter": {
    "http_status": 200,
-   "ids_listed": 433,
+   "ids_listed": 431,
    "raw_names_sample5": [
     "baidu/ernie-5.5-flash-preview",
     "baidu/ernie-light-dt-1.0-intl",
@@ -43,12 +43,12 @@
   }
  },
  "providers": {
-  "google-ai-studio": {
+  "nvidia": {
    "models_ok": 1,
    "models_failed": 0,
    "categories": []
   },
-  "nvidia": {
+  "google-ai-studio": {
    "models_ok": 1,
    "models_failed": 0,
    "categories": []
@@ -1382,6 +1382,68 @@
     "usage"
    ],
    "at": "2026-11-10T19:48:10Z"
+  },
+  {
+   "provider": "nvidia",
+   "model": "nvidia/nemotron-3-ultra-550b-a55b",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 1.37,
+   "http_status": 200,
+   "model_actual": "nvidia/nemotron-3-ultra-550b-a55b",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "service_tier",
+    "system_fingerprint",
+    "usage"
+   ],
+   "at": "2026-11-11T00:00:55Z"
+  },
+  {
+   "provider": "google-ai-studio",
+   "model": "gemini-3.6-flash",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 1.5,
+   "http_status": 200,
+   "model_actual": "gemini-3.6-flash",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "usage"
+   ],
+   "at": "2026-11-11T00:00:57Z"
+  },
+  {
+   "provider": "openrouter",
+   "model": "openrouter/free",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 1.13,
+   "http_status": 200,
+   "model_actual": "cohere/north-mini-code:free",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "provider",
+    "service_tier",
+    "system_fingerprint",
+    "usage"
+   ],
+   "at": "2026-11-11T00:00:59Z"
   }
  ]
 }
