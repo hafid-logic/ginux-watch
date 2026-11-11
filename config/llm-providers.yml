@@ -1,6 +1,8 @@
 # llm-providers.yml — shadow supervisor provider order
-# Generated programmatically (v7.4-1/2, 2026-11-10; generator:
-# scripts/gen_llm_providers_v74.py) — edit via script, never by re-typing.
+# Generated programmatically (v7.5, 2026-11-11; generator:
+# scripts/gen_llm_providers_v75.py) — edit via script, never by re-typing.
+# v7.5 supersedes gen_llm_providers_v74.py: running v74 AFTER v75 would drop the
+# strands-decider-space entry (its assertion list is v7.4-shaped). Run v75.
 # Rules encoded here:
 #   * DEFAULT CHAIN (v7.4-1 supervisor decision) is exactly: nvidia
 #     nvidia/nemotron-3-ultra-550b-a55b -> google gemini-3.6-flash ->
@@ -22,10 +24,14 @@
 #   * openrouter/free is an ALIAS: model_actual read from the response
 #     "model" field; low_confidence rows never enter quality comparisons.
 #   * Google /models matching is normalized by stripping the "models/" prefix.
+#   * strands-decider-space (v7.5) is KIND typed-decisions, roles ["probe"],
+#     model enabled:false: noul/choice/score only, free text refused. Its
+#     probe is scripts/decider_probe.py — the chat probe must never run
+#     against it. Promotion to supervisor/eval = eval first, then enable.
 # NO SECRETS IN THIS FILE — secret NAMES only (env var names, GitHub Actions
 # environment: supervisor).
 version: 1
-updated: '2026-11-10'
+updated: '2026-11-11'
 request_timeout_s: 120
 attempts_per_model: 2
 backoff_s: 5
@@ -149,3 +155,31 @@ providers:
     note: 'v6.8-5: PAID, disabled by default; 402 -> needs_credit, no retry ([MEASURED] 2026-11-08)'
   roles:
   - probe
+- name: strands-decider-space
+  env_secret: DECIDER_API_KEY
+  base_url: https://djihafwork-ginux-decider.hf.space/v1
+  kind: typed-decisions
+  roles:
+  - probe
+  probe_script: scripts/decider_probe.py
+  request_timeout_s: 120
+  limits_official:
+    rpm: 40
+    rpd: null
+    tpm: null
+    min_interval_s: 3.0
+    limits_source: space_self_imposed
+    source_url: https://huggingface.co/docs/hub/spaces-overview
+    fetched_at: '2026-11-11'
+    quote: Free CPU Spaces are shared and sleep after 48 h without traffic; DECIDER_RATE_LIMIT_PER_MIN
+      defaults to 40
+  models:
+  - id: strands-decider-2b
+    status: available
+    enabled: false
+    verify_via_models: true
+    note: 'v7.5: typed-decisions only (noul/choice/score) — the Space answers POST /v1/systemone and an
+      OpenAI-shaped /v1/chat/completions that REQUIRES a typed JSON user message; free text is refused
+      (400 typed_question_required). Disabled for supervisor/eval until an eval promotes it; exercised
+      by scripts/decider_probe.py (typed probe), never by the chat probe. Weights: StrandsAgents/strands-decider-2B-qwen3.5-v1-2610
+      on CPU, no GPU spend.'

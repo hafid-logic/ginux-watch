@@ -1,0 +1,81 @@
+# decider-space-probe.yml — typed probe + keep-alive for the strands-decider Space (v7.5).
+#
+# Not the chat probe: scripts/llm_probe.py sends free text and would fail a
+# decision model for the wrong reason. This workflow runs
+# scripts/decider_probe.py (health / native typed call / OpenAI-shaped shim /
+# free-text guard) and commits state/decider-space.json only.
+#
+# Secrets: DECIDER_API_KEY lives in the `supervisor` environment (same place as
+# the LLM provider keys) — names only in this file, never a value.
+# Schedule every 6 h also keeps the free CPU Space from sleeping (48 h idle).
+name: decider-space-probe
+
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+    inputs:
+      repeat_tol:
+        description: "noul/score repeat tolerance for the determinism check (default 0.15)"
+        type: string
+        required: false
+        default: "0.15"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: decider-space-probe
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    environment: supervisor
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: typed probe (health + /v1/systemone + shim + guard)
+        env:
+          DECIDER_API_KEY: ${{ secrets.DECIDER_API_KEY }}
+          DECIDER_BASE_URL: ${{ vars.DECIDER_BASE_URL || 'https://djihafwork-ginux-decider.hf.space' }}
+          DECIDER_REPEAT_TOL: ${{ inputs.repeat_tol || '0.15' }}
+        run: python3 scripts/decider_probe.py
+
+      - name: fail the job when the Space is degraded or unreachable
+        # The state file is written either way (evidence survives); the job
+        # status is what the owner sees in Actions. A sleeping Space that is
+        # still warming up ("starting") is not a failure.
+        run: |
+          python3 - <<'PY'
+          import json, pathlib, sys
+          state = pathlib.Path("state/decider-space.json")
+          if not state.exists():
+              print("no state file — probe crashed"); sys.exit(1)
+          doc = json.loads(state.read_text())
+          status = doc.get("status")
+          print("status:", status, "| failed:", doc.get("failed_checks"))
+          sys.exit(0 if status in ("ok", "starting", "unconfigured") else 1)
+          PY
+
+      - name: commit the state file (3-attempt rebase+push, monitor/team-watcher pattern)
+        if: always()
+        run: |
+          git add state/decider-space.json
+          if git diff --cached --quiet; then
+            echo "no state change"
+            exit 0
+          fi
+          git -c user.name="ginux-watch agent" \
+              -c user.email="hafid-logic@users.noreply.github.com" \
+              commit -m "state: decider-space probe $(date -u +%Y-%m-%dT%H:%M:%SZ) [skip ci]"
+          ok=0
+          for i in 1 2 3; do
+            if git pull --rebase -X theirs origin main && git push; then ok=1; break; fi
+            git rebase --abort >/dev/null 2>&1 || true
+            sleep $((i * 5))
+          done
+          if [ "$ok" != 1 ]; then echo "push failed after 3 attempts"; exit 1; fi
