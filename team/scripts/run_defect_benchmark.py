@@ -48,6 +48,7 @@ sys.path.insert(0, str(ROOT / "team/scripts"))
 
 import llm_router  # noqa: E402
 import llm_supervisor as sup  # noqa: E402
+import run_golden_eval as gev  # noqa: E402 (review_text aggregate, v7.4-4)
 import golden_case_loader as gcl  # noqa: E402 (StrictLoader + dup-id logic)
 import jsonschema  # noqa: E402
 
@@ -179,8 +180,9 @@ def judge_types(review_text):
 
 
 def reply_review_text(obj):
-    """Same aggregate text the golden eval uses (sup.review_text) + safety flags."""
-    return sup.review_text(obj)
+    """Same aggregate text the golden eval uses (gev.review_text — v7.4-3/4)
+    + safety flags."""
+    return gev.review_text(obj)
 
 
 def load_defect_cases():
