@@ -223,7 +223,11 @@ def run_eval(cfg, state):
                 # written, spend never lost again.
                 raw = raw or ""
             except llm_router.AllProvidersFailed as e:
-                outcome = (e.detail or "failed").split(":")[0]
+                # detail = "<provider>:<err_class>:..." — the row outcome must
+                # carry the ERROR CLASS, not the provider name [MEASURED
+                # 2026-11-11: two rows recorded outcome="google-ai-studio"].
+                parts = (e.detail or "failed").split(":")
+                outcome = (parts[1] if len(parts) > 1 else parts[0])[:40]
                 rows.append({"case_id": case["id"], "provider": prov_name,
                              "model": model_id, "outcome": outcome,
                              "detail": e.detail, "low_confidence": lc_flag})
