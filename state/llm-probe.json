@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-11T00:17:32Z",
+ "updated": "2026-11-11T00:21:59Z",
  "schema": "llm-probe-v1",
  "note": "DATA ONLY — probe rows are runtime availability evidence; no secrets; fixed probe input sha256_16 below",
  "probe_input_sha256_16": "6ba85cba8c23d00c",
@@ -31,7 +31,7 @@
   },
   "openrouter": {
    "http_status": 200,
-   "ids_listed": 431,
+   "ids_listed": 433,
    "raw_names_sample5": [
     "baidu/ernie-5.5-flash-preview",
     "baidu/ernie-light-dt-1.0-intl",
@@ -1440,6 +1440,62 @@
     "usage"
    ],
    "at": "2026-11-11T00:17:32Z"
+  },
+  {
+   "provider": "nvidia",
+   "model": "nvidia/nemotron-3-ultra-550b-a55b",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 0.83,
+   "http_status": 200,
+   "model_actual": "nvidia/nemotron-3-ultra-550b-a55b",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "service_tier",
+    "system_fingerprint",
+    "usage"
+   ],
+   "at": "2026-11-11T00:21:49Z"
+  },
+  {
+   "provider": "google-ai-studio",
+   "model": "gemini-3.6-flash",
+   "ok": false,
+   "category": "rate_limited",
+   "status": "failed",
+   "latency_s": 0.18,
+   "http_status": 429,
+   "model_actual": null,
+   "resp_top_keys": null,
+   "at": "2026-11-11T00:21:50Z",
+   "excerpt200": "[{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/d"
+  },
+  {
+   "provider": "openrouter",
+   "model": "openrouter/free",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 8.2,
+   "http_status": 200,
+   "model_actual": "liquid/lfm-3-1.7b:free",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "provider",
+    "service_tier",
+    "system_fingerprint",
+    "usage"
+   ],
+   "at": "2026-11-11T00:21:59Z"
   }
  ]
 }
