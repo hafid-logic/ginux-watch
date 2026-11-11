@@ -1,0 +1,196 @@
+{
+ "base_url": "http://127.0.0.1:7860",
+ "checked_at": "2026-11-11T04:18:59Z",
+ "ready": true,
+ "all_ok": true,
+ "checks": [
+  {
+   "path": "/health",
+   "http_status": 200,
+   "ok": true,
+   "latency_s": 0.01,
+   "body": {
+    "status": "ok",
+    "model": "strands-decider-2b",
+    "checkpoint": "StrandsAgents/strands-decider-2B-qwen3.5-v1-2610",
+    "base_model": "Qwen/Qwen3.5-2B-Base",
+    "max_length": 4096,
+    "temperature": 1.0545210242263665,
+    "device": "cpu",
+    "prefix_cache": true,
+    "vision": false
+   }
+  },
+  {
+   "path": "/v1/models",
+   "http_status": 200,
+   "ok": true,
+   "latency_s": 0.01,
+   "body": {
+    "object": "list",
+    "data": [
+     {
+      "id": "strands-decider-2b",
+      "object": "model",
+      "created": 1794370714,
+      "owned_by": "djihafwork",
+      "permission": [],
+      "root": "StrandsAgents/strands-decider-2B-qwen3.5-v1-2610",
+      "meta": {
+       "pipeline": "typed-decisions",
+       "questions": [
+        "noul",
+        "choice",
+        "score"
+       ],
+       "max_length": 4096,
+       "device": "cpu",
+       "chat_completions": "typed JSON contract; free text refused"
+      }
+     }
+    ]
+   },
+   "model_ids": [
+    "strands-decider-2b"
+   ]
+  },
+  {
+   "path": "/v1/systemone",
+   "http_status": 200,
+   "ok": true,
+   "latency_s": 5.89,
+   "body": {
+    "model": "strands-decider-2b",
+    "answers": {
+     "is_urgent": {
+      "type": "noul",
+      "noul": 0.8616
+     },
+     "team": {
+      "type": "choice",
+      "choice": "billing",
+      "probabilities": {
+       "billing": 0.7866,
+       "sales": 0.1217,
+       "retail": 0.0917
+      },
+      "confidence": 0.6799
+     },
+     "frustration": {
+      "type": "score",
+      "score": 1.0715,
+      "legend": {
+       "0": "calm",
+       "1": "frustrated",
+       "2": "depressed"
+      },
+      "probabilities": {
+       "0": 0.1845,
+       "1": 0.5594,
+       "2": 0.2561
+      },
+      "confidence": 0.4974
+     }
+    },
+    "usage": {
+     "input_tokens": 204,
+     "output_tokens": 3
+    },
+    "latency_ms": 5852.11
+   },
+   "answer_kinds": [
+    "frustration",
+    "is_urgent",
+    "team"
+   ]
+  },
+  {
+   "path": "/v1/chat/completions",
+   "http_status": 200,
+   "ok": true,
+   "latency_s": 3.75,
+   "body": {
+    "id": "chatcmpl-1794370739396",
+    "object": "chat.completion",
+    "created": 1794370739,
+    "model": "strands-decider-2b",
+    "choices": [
+     {
+      "index": 0,
+      "message": {
+       "role": "assistant",
+       "content": "{\"model\": \"strands-decider-2b\", \"answers\": {\"is_urgent\": {\"type\": \"noul\", \"noul\": 0.8616}, \"team\": {\"type\": \"choice\", \"choice\": \"billing\", \"probabilities\": {\"billing\": 0.7866, \"sales\": 0.1217, \"retail\": 0.0917}, \"confidence\": 0.6799}, \"frustration\": {\"type\": \"score\", \"score\": 1.0715, \"legend\": {\"0\": \"calm\", \"1\": \"frustrated\", \"2\": \"depressed\"}, \"probabilities\": {\"0\": 0.1845, \"1\": 0.5594, \"2\": 0.2561}, \"confidence\": 0.4974}}, \"usage\": {\"input_tokens\": 204, \"output_tokens\": 3}, \"state_sha256_16\": \"4a7bd4c9d28b8188\"}"
+      },
+      "finish_reason": "stop",
+      "logprobs": null
+     }
+    ],
+    "usage": {
+     "prompt_tokens": 204,
+     "completion_tokens": 3,
+     "total_tokens": 207
+    },
+    "systemone": {
+     "model": "strands-decider-2b",
+     "answers": {
+      "is_urgent": {
+       "type": "noul",
+       "noul": 0.8616
+      },
+      "team": {
+       "type": "choice",
+       "choice": "billing",
+       "probabilities": {
+        "billing": 0.7866,
+        "sales": 0.1217,
+        "retail": 0.0917
+       },
+       "confidence": 0.6799
+      },
+      "frustration": {
+       "type": "score",
+       "score": 1.0715,
+       "legend": {
+        "0": "calm",
+        "1": "frustrated",
+        "2": "depressed"
+       },
+       "probabilities": {
+        "0": 0.1845,
+        "1": 0.5594,
+        "2": 0.2561
+       },
+       "confidence": 0.4974
+      }
+     },
+     "usage": {
+      "input_tokens": 204,
+      "output_tokens": 3
+     },
+     "latency_ms": 3749.6
+    }
+   },
+   "decision_kinds": [
+    "frustration",
+    "is_urgent",
+    "team"
+   ]
+  },
+  {
+   "path": "/v1/models",
+   "http_status": 401,
+   "ok": true,
+   "latency_s": 0.0,
+   "body": {
+    "error": {
+     "message": "missing or invalid DECIDER_API_KEY",
+     "type": "unauthorized",
+     "param": null,
+     "code": "unauthorized",
+     "hint": null
+    }
+   },
+   "expectation": "401 without the key"
+  }
+ ]
+}

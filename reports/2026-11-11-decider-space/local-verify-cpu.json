@@ -1,0 +1,93 @@
+{
+ "checkpoint": "StrandsAgents/strands-decider-2B-qwen3.5-v1-2610",
+ "device": "cpu",
+ "torch_dtype": "bfloat16",
+ "load_seconds": 4.2,
+ "inference_seconds": 7.99,
+ "max_rss_mb": 6846.1,
+ "native": {
+  "model": "strands-decider-2b",
+  "answers": {
+   "is_urgent": {
+    "type": "noul",
+    "noul": 0.8746
+   },
+   "team": {
+    "type": "choice",
+    "choice": "billing",
+    "probabilities": {
+     "billing": 0.7813,
+     "sales": 0.1134,
+     "retail": 0.1053
+    },
+    "confidence": 0.6719
+   },
+   "frustration": {
+    "type": "score",
+    "score": 1.1077,
+    "legend": {
+     "0": "calm",
+     "1": "frustrated",
+     "2": "depressed"
+    },
+    "probabilities": {
+     "0": 0.1825,
+     "1": 0.5273,
+     "2": 0.2902
+    },
+    "confidence": 0.4694
+   }
+  },
+  "usage": {
+   "input_tokens": 213,
+   "output_tokens": 3
+  }
+ },
+ "chat_completions": {
+  "shape_ok": true,
+  "usage": {
+   "prompt_tokens": 213,
+   "completion_tokens": 3,
+   "total_tokens": 216
+  },
+  "content": {
+   "model": "strands-decider-2b",
+   "answers": {
+    "is_urgent": {
+     "type": "noul",
+     "noul": 0.8746
+    },
+    "team": {
+     "type": "choice",
+     "choice": "billing",
+     "probabilities": {
+      "billing": 0.7813,
+      "sales": 0.1134,
+      "retail": 0.1053
+     },
+     "confidence": 0.6719
+    },
+    "frustration": {
+     "type": "score",
+     "score": 1.1077,
+     "legend": {
+      "0": "calm",
+      "1": "frustrated",
+      "2": "depressed"
+     },
+     "probabilities": {
+      "0": 0.1825,
+      "1": 0.5273,
+      "2": 0.2902
+     },
+     "confidence": 0.4694
+    }
+   },
+   "usage": {
+    "input_tokens": 213,
+    "output_tokens": 3
+   },
+   "state_sha256_16": "a35dc4ff0b3421a7"
+  }
+ }
+}

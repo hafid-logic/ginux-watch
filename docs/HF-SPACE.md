@@ -117,10 +117,12 @@ weights and the same `strands_decider` code the Space image installs:
 
 | measure | value |
 | --- | --- |
-| checkpoint load (CPU, bf16) | see `local_verify.json` |
-| one 3-kind request (213 input tokens) | see `local_verify.json` |
+| checkpoint load (CPU, bf16) | 4.2 s (warm page cache) |
+| one 3-kind request (213 input tokens) | 7.99 s cold, 3.5–5.9 s warm |
+| peak RSS | 6,846 MB (bf16 weights + torch) — fits the 16 GB free-CPU Space |
 | answers | `is_urgent 0.8746`, `team billing 0.7813` (conf 0.6719), `frustration 1.1077` (conf 0.4694) |
-| OpenAI-shaped mapping | `choices[0].message.content` = decision JSON, usage = the native usage |
+| HTTP surface (`scripts/smoke_test.py`, local uvicorn) | `all_ok: true` — `/health` 200, `/v1/models` id `strands-decider-2b`, `/v1/systemone` 3/3 kinds, `/v1/chat/completions` decision JSON, `/v1/models` without key → **401** |
+| typed probe (`scripts/decider_probe.py`, local uvicorn) | `status: ok` — health/models/native/determinism/shim/guard all `ok` |
 
 What is **not** verified here: the deployed Space itself (no token, no account
 access), the HF build of the image, and the GitHub Actions run. Those become
