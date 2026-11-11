@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-11T00:21:59Z",
+ "updated": "2026-11-11T06:33:41Z",
  "schema": "llm-probe-v1",
  "note": "DATA ONLY — probe rows are runtime availability evidence; no secrets; fixed probe input sha256_16 below",
  "probe_input_sha256_16": "6ba85cba8c23d00c",
@@ -49,14 +49,17 @@
    "categories": []
   },
   "google-ai-studio": {
-   "models_ok": 0,
-   "models_failed": 1,
-   "categories": [
-    "rate_limited"
-   ]
+   "models_ok": 1,
+   "models_failed": 0,
+   "categories": []
   },
   "openrouter": {
    "models_ok": 1,
+   "models_failed": 0,
+   "categories": []
+  },
+  "strands-decider-space": {
+   "models_ok": 0,
    "models_failed": 0,
    "categories": []
   }
@@ -64,7 +67,8 @@
  "llm_status_snapshot": {
   "nvidia": "ok",
   "openrouter": "ok",
-  "google-ai-studio": "down"
+  "google-ai-studio": "ok",
+  "strands-decider-space": "unconfigured"
  },
  "results": [
   {
@@ -1496,6 +1500,77 @@
     "usage"
    ],
    "at": "2026-11-11T00:21:59Z"
+  },
+  {
+   "provider": "nvidia",
+   "model": "nvidia/nemotron-3-ultra-550b-a55b",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 0.78,
+   "http_status": 200,
+   "model_actual": "nvidia/nemotron-3-ultra-550b-a55b",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "service_tier",
+    "system_fingerprint",
+    "usage"
+   ],
+   "at": "2026-11-11T06:33:26Z"
+  },
+  {
+   "provider": "google-ai-studio",
+   "model": "gemini-3.6-flash",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 13.73,
+   "http_status": 200,
+   "model_actual": "gemini-3.6-flash",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "usage"
+   ],
+   "at": "2026-11-11T06:33:40Z"
+  },
+  {
+   "provider": "openrouter",
+   "model": "openrouter/free",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 0.84,
+   "http_status": 200,
+   "model_actual": "nvidia/nemotron-3.5-super-vl:free",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "provider",
+    "service_tier",
+    "system_fingerprint",
+    "usage"
+   ],
+   "at": "2026-11-11T06:33:41Z"
+  },
+  {
+   "provider": "strands-decider-space",
+   "model": null,
+   "ok": false,
+   "category": "unconfigured",
+   "status": "unavailable",
+   "secret": "DECIDER_API_KEY",
+   "at": "2026-11-11T06:33:41Z"
   }
  ]
 }
