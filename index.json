@@ -1,12 +1,75 @@
 {
- "generated_at_utc": "2026-11-11T10:39:26Z",
+ "generated_at_utc": "2026-11-11T18:33:29Z",
  "source_repo": "gmkurtzer/ginux",
- "item_count": 251,
+ "item_count": 253,
  "items": {
+  "260": {
+   "kind": "pr",
+   "title": "Gate 18: clarify Ginux architecture and differentiation",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    "Makefile",
+    "README.md",
+    "docs/how-ginux-differs.md",
+    "docs/security-boundary.md",
+    "hdae/ARCHITECTURE.md",
+    "hdae/PLAN.md",
+    "hdae/STATUS.md",
+    "hdae/gates-todo/18-explain-ginux-differences.md",
+    "scripts/check-architecture-doc.sh"
+   ],
+   "keywords": [
+    "ginux",
+    "check",
+    "documentation",
+    "evidence",
+    "gvisor",
+    "architecture",
+    "compatibility",
+    "deterministic",
+    "doc",
+    "explain"
+   ]
+  },
+  "259": {
+   "kind": "pr",
+   "title": "Gate 17: validate concurrent instance isolation",
+   "state": "closed",
+   "merged_at": "2026-11-11T17:49:09Z",
+   "files": [
+    "Makefile",
+    "README.md",
+    "config/instance-gate9.toml",
+    "config/instance-rocky-systemd.toml",
+    "crates/ginux-init/src/main.rs",
+    "docs/multi-instance-isolation.md",
+    "docs/security-boundary.md",
+    "hdae/PLAN.md",
+    "hdae/STATUS.md",
+    "hdae/gates-todo/17-concurrent-instance-isolation.md",
+    "scripts/gate17-instance-check.py",
+    "scripts/gate17-multi-instance-guest.sh",
+    "scripts/ginux-host-instance-helper.sh",
+    "scripts/test-multi-instance.sh"
+   ],
+   "keywords": [
+    "instance",
+    "gate",
+    "isolation",
+    "cleanup",
+    "host",
+    "independent",
+    "network",
+    "networking",
+    "recovery",
+    "rejection"
+   ]
+  },
   "258": {
    "kind": "pr",
    "title": "Gate 16: automatic kernel-assisted syscall control",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [
     "Makefile",
@@ -412,16 +475,16 @@
     "tests/fixtures/native-fixture.c"
    ],
    "keywords": [
-    "cgroup",
     "host",
     "api",
-    "current",
-    "native",
+    "cgroup",
+    "containment",
     "directory",
-    "fixture",
     "mkdir",
-    "outside",
-    "owned"
+    "retain",
+    "upstream",
+    "43005388628",
+    "47582ab9509f6adeaea40911ab05a825a5f41fbf"
    ]
   },
   "247": {
@@ -437,15 +500,15 @@
    ],
    "keywords": [
     "child",
-    "waitid",
+    "errors",
     "final",
+    "waitid",
+    "after",
+    "copy",
+    "host",
     "native",
     "null",
-    "pidfd",
-    "reap",
-    "siginfo",
-    "host",
-    "original"
+    "options"
    ]
   },
   "246": {
@@ -459,16 +522,16 @@
     "tests/fixtures/native-fixture.c"
    ],
    "keywords": [
-    "ioctl",
-    "native",
-    "real",
+    "bit",
     "child",
-    "control",
-    "current",
     "enotty",
-    "host",
-    "invalid",
-    "main"
+    "native",
+    "pidfd_get_info",
+    "real",
+    "size",
+    "43005389780",
+    "919717937692e3ccf97729d2b89d5a4cef0b107b",
+    "abi"
    ]
   },
   "245": {
@@ -487,15 +550,15 @@
    ],
    "keywords": [
     "cgroup",
-    "host",
-    "input",
-    "caller",
     "child",
-    "native",
-    "virtual",
     "clone3",
-    "original",
-    "output"
+    "host",
+    "parent",
+    "private",
+    "upstream",
+    "arguments",
+    "claimed",
+    "cleanup"
    ]
   },
   "244": {
@@ -511,14 +574,14 @@
    "keywords": [
     "audit",
     "child",
-    "current",
-    "managed",
     "pidfd",
-    "checks",
-    "fixture",
-    "invalid",
-    "p_pidfd",
-    "wait"
+    "completion",
+    "correct",
+    "denial",
+    "errors",
+    "native",
+    "non",
+    "selector"
    ]
   },
   "243": {
@@ -544,16 +607,16 @@
     "tests/fixtures/native-fixture.c"
    ],
    "keywords": [
-    "contract",
     "launch",
-    "syscall",
-    "balanced",
-    "calls",
-    "cannot",
-    "denial",
+    "audit",
+    "contract",
+    "native",
+    "upstream",
+    "admission",
+    "denials",
     "enforce",
-    "explicit",
-    "native"
+    "instance",
+    "resolved"
    ]
   },
   "242": {
@@ -567,16 +630,16 @@
     "tests/fixtures/native-fixture.c"
    ],
    "keywords": [
-    "sigchld",
-    "current",
-    "handler",
-    "fixture",
     "native",
-    "revision",
-    "blocked",
-    "boot",
+    "upstream",
     "child",
-    "does"
+    "exit",
+    "host",
+    "sigchld",
+    "syscall",
+    "14a12d5382fcf1d0c3e0fe4e77b27f931dd49a38",
+    "43005390692",
+    "actions"
    ]
   },
   "241": {
@@ -588,16 +651,16 @@
     "crates/ginux-init/src/main.rs"
    ],
    "keywords": [
-    "vfs",
-    "overlay",
-    "write",
-    "build",
     "check",
-    "claude",
-    "failed",
+    "length",
+    "local",
+    "write",
+    "against",
+    "byte",
+    "checks",
     "ginux",
-    "sudo",
-    "bytes"
+    "overlay",
+    "own"
    ]
   },
   "240": {
@@ -689,16 +752,16 @@
     "tests/fixtures/native-fixture.c"
    ],
    "keywords": [
-    "native",
     "signal",
-    "host",
+    "native",
     "balanced",
     "commands",
-    "current",
-    "guard",
-    "including",
-    "ioctl",
-    "launch"
+    "driven",
+    "host",
+    "refuse",
+    "43005386573",
+    "actions",
+    "admission"
    ]
   },
   "237": {
@@ -766,16 +829,16 @@
     "tests/fixtures/native-fixture.c"
    ],
    "keywords": [
+    "descriptors",
     "directory",
-    "stdin",
-    "inherited",
-    "native",
-    "fds",
     "host",
+    "native",
+    "before",
+    "boundary",
+    "directories",
+    "inherited",
     "launch",
-    "root",
-    "241",
-    "current"
+    "passed"
    ]
   },
   "235": {
@@ -841,15 +904,15 @@
    ],
    "keywords": [
     "process",
-    "child",
-    "init",
-    "exited",
+    "native",
     "parent",
     "thread",
-    "build",
     "children",
-    "claude",
-    "exits"
+    "directory",
+    "exited",
+    "exits",
+    "last",
+    "orphan"
    ]
   },
   "233": {
@@ -863,16 +926,16 @@
     "scripts/test-launch.py"
    ],
    "keywords": [
-    "launch",
-    "workdir",
-    "current",
     "directory",
-    "created",
-    "head",
-    "missing",
-    "bootstrap",
-    "build",
-    "declaration"
+    "launch",
+    "mkdirat",
+    "upstream",
+    "258",
+    "259",
+    "2b0b020e106fd736ef96fed599323c15f28e9b2b",
+    "43005389920",
+    "actions",
+    "boot"
    ]
   },
   "232": {
@@ -884,16 +947,16 @@
     "crates/ginux-vfs/src/lib.rs"
    ],
    "keywords": [
-    "duplicate",
-    "through",
-    "descriptor",
-    "build",
-    "one",
-    "slot",
-    "claude",
     "close",
+    "descriptor",
     "description",
-    "offset"
+    "descriptors",
+    "duplicated",
+    "exec",
+    "final",
+    "independent",
+    "offsets",
+    "opens"
    ]
   },
   "231": {
@@ -1484,15 +1547,15 @@
    ],
    "keywords": [
     "descriptors",
-    "native",
     "bounded",
-    "descriptor",
     "entries",
     "launch",
+    "polling",
     "readiness",
-    "standard",
-    "timeout",
-    "0e06a986"
+    "upstream",
+    "waits",
+    "300",
+    "43005389412"
    ]
   },
   "206": {
@@ -5915,6 +5978,220 @@
   }
  },
  "keywords": {
+  "ginux": [
+   260,
+   255,
+   249,
+   241,
+   237,
+   235,
+   230,
+   227,
+   219,
+   215,
+   214,
+   205,
+   202,
+   194,
+   189,
+   187,
+   186,
+   184,
+   179,
+   178,
+   176,
+   165,
+   164,
+   161,
+   158,
+   157,
+   155,
+   136,
+   112,
+   111,
+   110,
+   106,
+   103,
+   99,
+   97,
+   96,
+   95,
+   94,
+   93,
+   92,
+   76,
+   71,
+   64,
+   61,
+   58,
+   57,
+   45,
+   42,
+   39,
+   18,
+   12,
+   8,
+   5
+  ],
+  "check": [
+   260,
+   253,
+   241,
+   228,
+   217,
+   216,
+   204,
+   195,
+   189,
+   187,
+   181,
+   171,
+   169,
+   168,
+   165,
+   162,
+   160,
+   159,
+   158,
+   156,
+   153,
+   152,
+   142,
+   117,
+   90,
+   88,
+   87,
+   84,
+   61,
+   54,
+   51,
+   50,
+   49,
+   48,
+   47,
+   46,
+   44,
+   40,
+   11,
+   10,
+   9,
+   4,
+   3
+  ],
+  "documentation": [
+   260,
+   250
+  ],
+  "evidence": [
+   260,
+   227
+  ],
+  "gvisor": [
+   260
+  ],
+  "architecture": [
+   260,
+   11,
+   10,
+   9
+  ],
+  "compatibility": [
+   260
+  ],
+  "deterministic": [
+   260
+  ],
+  "doc": [
+   260
+  ],
+  "explain": [
+   260
+  ],
+  "instance": [
+   259,
+   253,
+   243,
+   237,
+   235
+  ],
+  "gate": [
+   259,
+   257,
+   255,
+   254,
+   253,
+   252,
+   251,
+   235,
+   231,
+   229,
+   228,
+   225,
+   210,
+   196,
+   181,
+   172
+  ],
+  "isolation": [
+   259
+  ],
+  "cleanup": [
+   259,
+   245,
+   197,
+   151
+  ],
+  "host": [
+   259,
+   251,
+   248,
+   247,
+   245,
+   242,
+   238,
+   237,
+   236,
+   229,
+   219,
+   215,
+   214,
+   203,
+   202,
+   201,
+   200,
+   199,
+   198,
+   195,
+   194,
+   183,
+   125,
+   92,
+   86
+  ],
+  "independent": [
+   259,
+   232
+  ],
+  "network": [
+   259,
+   251,
+   229,
+   100,
+   75,
+   68
+  ],
+  "networking": [
+   259
+  ],
+  "recovery": [
+   259,
+   255,
+   41,
+   39
+  ],
+  "rejection": [
+   259
+  ],
   "bpf": [
    258
   ],
@@ -5961,7 +6238,7 @@
   "syscall": [
    258,
    251,
-   243,
+   242,
    240,
    204,
    203,
@@ -5973,7 +6250,6 @@
   ],
   "through": [
    258,
-   232,
    205,
    122
   ],
@@ -5992,25 +6268,23 @@
   ],
   "control": [
    258,
-   246,
    71
   ],
   "native": [
    257,
-   248,
    247,
    246,
-   245,
+   244,
    243,
    242,
    238,
    236,
+   234,
    228,
    226,
    225,
    219,
    215,
-   207,
    205,
    204,
    203,
@@ -6075,40 +6349,14 @@
    8,
    7
   ],
-  "gate": [
-   257,
-   255,
-   254,
-   253,
-   252,
-   251,
-   235,
-   231,
-   229,
-   228,
-   225,
-   210,
-   196,
-   181,
-   172
-  ],
   "250": [
    256
   ],
   "current": [
-   256,
-   248,
-   246,
-   244,
-   242,
-   238,
-   236,
-   233
+   256
   ],
   "original": [
    256,
-   247,
-   245,
    79
   ],
   "249": [
@@ -6121,6 +6369,7 @@
   "after": [
    256,
    254,
+   247,
    228,
    216,
    210,
@@ -6163,66 +6412,11 @@
    191,
    114
   ],
-  "ginux": [
-   255,
-   249,
-   241,
-   237,
-   235,
-   230,
-   227,
-   219,
-   215,
-   214,
-   205,
-   202,
-   194,
-   189,
-   187,
-   186,
-   184,
-   179,
-   178,
-   176,
-   165,
-   164,
-   161,
-   158,
-   157,
-   155,
-   136,
-   112,
-   111,
-   110,
-   106,
-   103,
-   99,
-   97,
-   96,
-   95,
-   94,
-   93,
-   92,
-   76,
-   71,
-   64,
-   61,
-   58,
-   57,
-   45,
-   42,
-   39,
-   18,
-   12,
-   8,
-   5
-  ],
   "security": [
    255
   ],
   "main": [
    255,
-   246,
    202,
    194,
    193,
@@ -6232,11 +6426,6 @@
    95,
    93,
    5
-  ],
-  "recovery": [
-   255,
-   41,
-   39
   ],
   "accepted": [
    255,
@@ -6257,7 +6446,7 @@
   ],
   "denial": [
    254,
-   243,
+   244,
    231
   ],
   "state": [
@@ -6280,11 +6469,6 @@
   "253": [
    254
   ],
-  "instance": [
-   253,
-   237,
-   235
-  ],
   "252": [
    253
   ],
@@ -6305,50 +6489,6 @@
   "based": [
    253,
    60
-  ],
-  "check": [
-   253,
-   241,
-   228,
-   217,
-   216,
-   204,
-   195,
-   189,
-   187,
-   181,
-   171,
-   169,
-   168,
-   165,
-   162,
-   160,
-   159,
-   158,
-   156,
-   153,
-   152,
-   142,
-   117,
-   90,
-   88,
-   87,
-   84,
-   61,
-   54,
-   51,
-   50,
-   49,
-   48,
-   47,
-   46,
-   44,
-   40,
-   11,
-   10,
-   9,
-   4,
-   3
   ],
   "cli": [
    253,
@@ -6383,48 +6523,15 @@
   ],
   "virtual": [
    252,
-   245,
    224,
    214
   ],
   "22510": [
    252
   ],
-  "network": [
-   251,
-   229,
-   100,
-   75,
-   68
-  ],
-  "host": [
-   251,
-   248,
-   247,
-   246,
-   245,
-   238,
-   237,
-   236,
-   229,
-   219,
-   215,
-   214,
-   203,
-   202,
-   201,
-   200,
-   199,
-   198,
-   195,
-   194,
-   183,
-   125,
-   92,
-   86
-  ],
   "against": [
    251,
+   241,
    202
   ],
   "attached": [
@@ -6478,7 +6585,7 @@
   ],
   "checks": [
    250,
-   244,
+   241,
    227,
    222,
    217,
@@ -6486,9 +6593,6 @@
    202,
    54,
    43
-  ],
-  "documentation": [
-   250
   ],
   "everything": [
    250
@@ -6542,18 +6646,22 @@
   "998x": [
    249
   ],
-  "cgroup": [
-   248,
-   245
-  ],
   "api": [
    248,
    100,
    71
   ],
+  "cgroup": [
+   248,
+   245
+  ],
+  "containment": [
+   248
+  ],
   "directory": [
    248,
    236,
+   234,
    233,
    156,
    155,
@@ -6567,27 +6675,26 @@
    89,
    18
   ],
-  "fixture": [
-   248,
-   244,
-   242,
-   211,
-   204,
-   197,
-   196,
-   194,
-   188
-  ],
   "mkdir": [
    248,
    116
   ],
-  "outside": [
+  "retain": [
    248
   ],
-  "owned": [
+  "upstream": [
    248,
-   59
+   245,
+   243,
+   242,
+   233,
+   207
+  ],
+  "43005388628": [
+   248
+  ],
+  "47582ab9509f6adeaea40911ab05a825a5f41fbf": [
+   248
   ],
   "child": [
    247,
@@ -6595,7 +6702,6 @@
    245,
    244,
    242,
-   234,
    226,
    224,
    223,
@@ -6615,90 +6721,123 @@
    98,
    59
   ],
+  "errors": [
+   247,
+   244
+  ],
+  "final": [
+   247,
+   232,
+   152,
+   151
+  ],
   "waitid": [
    247,
    130
   ],
-  "final": [
+  "copy": [
    247,
-   152,
-   151
+   216,
+   140,
+   138,
+   114,
+   109,
+   97,
+   24
   ],
   "null": [
    247,
    188,
    159
   ],
-  "pidfd": [
-   247,
-   244
-  ],
-  "reap": [
+  "options": [
    247
   ],
-  "siginfo": [
-   247
-  ],
-  "ioctl": [
+  "bit": [
    246,
-   238
+   107,
+   91
+  ],
+  "enotty": [
+   246
+  ],
+  "pidfd_get_info": [
+   246
   ],
   "real": [
    246,
    192
   ],
-  "enotty": [
+  "size": [
+   246,
+   192,
+   132,
+   119,
+   108,
+   43,
+   38,
+   13,
+   4
+  ],
+  "43005389780": [
    246
   ],
-  "invalid": [
+  "919717937692e3ccf97729d2b89d5a4cef0b107b": [
+   246
+  ],
+  "abi": [
    246,
-   244,
-   196,
-   37
-  ],
-  "input": [
-   245,
-   39
-  ],
-  "caller": [
-   245,
-   129,
-   105
+   204,
+   98
   ],
   "clone3": [
    245
   ],
-  "output": [
+  "parent": [
    245,
-   228,
-   21,
-   20
+   234,
+   223,
+   218,
+   124,
+   113
+  ],
+  "private": [
+   245,
+   104
+  ],
+  "arguments": [
+   245,
+   178
+  ],
+  "claimed": [
+   245
   ],
   "audit": [
    244,
+   243,
    231,
    187,
    186,
    161,
    155
   ],
-  "managed": [
-   244,
-   213,
-   196
-  ],
-  "p_pidfd": [
+  "pidfd": [
    244
   ],
-  "wait": [
-   244,
-   213,
-   137,
-   125
+  "completion": [
+   244
+  ],
+  "correct": [
+   244
+  ],
+  "non": [
+   244
+  ],
+  "selector": [
+   244
   ],
   "launch": [
    243,
-   238,
    236,
    233,
    214,
@@ -6715,24 +6854,36 @@
    156,
    153
   ],
-  "balanced": [
+  "admission": [
    243,
    238
   ],
-  "calls": [
+  "denials": [
    243
-  ],
-  "cannot": [
-   243,
-   40
   ],
   "enforce": [
    243,
    46
   ],
-  "explicit": [
-   243,
-   7
+  "resolved": [
+   243
+  ],
+  "exit": [
+   242,
+   215,
+   214,
+   211,
+   203,
+   201,
+   173,
+   171,
+   170,
+   169,
+   168,
+   165,
+   162,
+   130,
+   111
   ],
   "sigchld": [
    242,
@@ -6740,54 +6891,50 @@
    106,
    105
   ],
-  "handler": [
-   242,
-   191,
-   162,
-   161,
-   135,
-   111,
-   105
-  ],
-  "revision": [
+  "14a12d5382fcf1d0c3e0fe4e77b27f931dd49a38": [
    242
   ],
-  "blocked": [
-   242,
-   129
+  "43005390692": [
+   242
   ],
-  "boot": [
+  "actions": [
    242,
-   229,
-   150,
-   100,
-   93,
-   92,
-   70,
-   63,
-   47,
-   41,
-   40,
-   36,
-   15,
-   14,
-   13,
-   9
+   238,
+   233
   ],
-  "does": [
-   242,
-   225,
-   171,
-   170,
-   124
-  ],
-  "vfs": [
+  "length": [
    241,
-   218,
-   217,
-   216,
-   197,
-   196
+   128,
+   36,
+   30,
+   21
+  ],
+  "local": [
+   241,
+   151,
+   101,
+   67,
+   66
+  ],
+  "write": [
+   241,
+   206,
+   205,
+   178,
+   132,
+   108,
+   88,
+   81
+  ],
+  "byte": [
+   241,
+   187,
+   163,
+   158,
+   94,
+   21,
+   20,
+   6
   ],
   "overlay": [
    241,
@@ -6803,67 +6950,8 @@
    86,
    80
   ],
-  "write": [
-   241,
-   206,
-   205,
-   178,
-   132,
-   108,
-   88,
-   81
-  ],
-  "build": [
-   241,
-   240,
-   239,
-   234,
-   233,
-   232,
-   211,
-   183,
-   182,
-   43
-  ],
-  "claude": [
-   241,
-   234,
-   232,
-   3
-  ],
-  "failed": [
-   241,
-   223,
-   220,
-   197,
-   196,
-   184,
-   169,
-   135,
-   132,
-   111,
-   91,
-   57,
-   51,
-   37,
-   29,
-   28,
-   26
-  ],
-  "sudo": [
+  "own": [
    241
-  ],
-  "bytes": [
-   241,
-   217,
-   178,
-   172,
-   158,
-   157,
-   132,
-   108,
-   54,
-   21
   ],
   "x86_64": [
    240,
@@ -6908,6 +6996,14 @@
    239,
    169
   ],
+  "build": [
+   240,
+   239,
+   211,
+   183,
+   182,
+   43
+  ],
   "dark": [
    240,
    239
@@ -6940,17 +7036,21 @@
    111,
    105
   ],
+  "balanced": [
+   238
+  ],
   "commands": [
    238
   ],
-  "guard": [
+  "driven": [
    238,
-   101,
-   27
+   3
   ],
-  "including": [
-   238,
-   41
+  "refuse": [
+   238
+  ],
+  "43005386573": [
+   238
   ],
   "contained": [
    237
@@ -6981,23 +7081,58 @@
    48,
    47
   ],
-  "stdin": [
+  "descriptors": [
    236,
-   206
+   232,
+   207,
+   88
+  ],
+  "before": [
+   236,
+   221,
+   218,
+   216,
+   213,
+   185,
+   181,
+   180,
+   151,
+   144,
+   128,
+   113,
+   101,
+   90,
+   82,
+   56,
+   53,
+   52,
+   49,
+   48,
+   28,
+   27,
+   20
+  ],
+  "boundary": [
+   236,
+   231,
+   36
+  ],
+  "directories": [
+   236,
+   134,
+   110
   ],
   "inherited": [
    236,
    195
   ],
-  "fds": [
-   236
-  ],
-  "root": [
+  "passed": [
    236,
-   61
-  ],
-  "241": [
-   236
+   231,
+   53,
+   42,
+   41,
+   9
   ],
   "legacy": [
    235
@@ -7034,82 +7169,55 @@
    121,
    48
   ],
-  "init": [
-   234,
-   204,
-   190,
-   112,
-   57,
-   37,
-   26
-  ],
-  "exited": [
+  "children": [
    234
   ],
-  "parent": [
-   234,
-   223,
-   218,
-   124,
-   113
-  ],
-  "children": [
+  "exited": [
    234
   ],
   "exits": [
    234,
    168
   ],
-  "workdir": [
+  "last": [
+   234
+  ],
+  "orphan": [
+   234
+  ],
+  "mkdirat": [
    233
   ],
-  "created": [
-   233
-  ],
-  "head": [
-   233
-  ],
-  "missing": [
+  "258": [
    233,
-   197
+   21
   ],
-  "bootstrap": [
+  "259": [
    233
   ],
-  "declaration": [
+  "2b0b020e106fd736ef96fed599323c15f28e9b2b": [
    233
   ],
-  "duplicate": [
-   232
+  "43005389920": [
+   233
   ],
-  "descriptor": [
-   232,
-   207,
-   206,
-   205,
-   194,
-   154,
-   149,
-   147,
-   144,
-   88
-  ],
-  "one": [
-   232,
-   148,
-   145,
-   138,
-   133,
-   118,
-   109,
-   19,
+  "boot": [
+   233,
+   229,
+   150,
+   100,
+   93,
+   92,
+   70,
+   63,
+   47,
+   41,
+   40,
+   36,
    15,
-   5
-  ],
-  "slot": [
-   232,
-   131,
-   107
+   14,
+   13,
+   9
   ],
   "close": [
    232,
@@ -7121,19 +7229,39 @@
    68,
    66
   ],
+  "descriptor": [
+   232,
+   206,
+   205,
+   194,
+   154,
+   149,
+   147,
+   144,
+   88
+  ],
   "description": [
    232
   ],
-  "offset": [
-   232,
-   144
+  "duplicated": [
+   232
   ],
-  "passed": [
-   231,
-   53,
-   42,
-   41,
-   9
+  "exec": [
+   232,
+   191,
+   190,
+   185,
+   154,
+   126,
+   113,
+   102,
+   53
+  ],
+  "offsets": [
+   232
+  ],
+  "opens": [
+   232
   ],
   "strict": [
    231
@@ -7144,10 +7272,6 @@
    146,
    70,
    47
-  ],
-  "boundary": [
-   231,
-   36
   ],
   "coverage": [
    231
@@ -7245,6 +7369,11 @@
    228,
    65
   ],
+  "output": [
+   228,
+   21,
+   20
+  ],
   "regression": [
    228,
    54
@@ -7285,9 +7414,6 @@
    44,
    40,
    6
-  ],
-  "evidence": [
-   227
   ],
   "tracee": [
    226,
@@ -7332,6 +7458,12 @@
    225,
    211,
    164
+  ],
+  "does": [
+   225,
+   171,
+   170,
+   124
   ],
   "failure": [
    225,
@@ -7447,6 +7579,24 @@
    9,
    8
   ],
+  "failed": [
+   223,
+   220,
+   197,
+   196,
+   184,
+   169,
+   135,
+   132,
+   111,
+   91,
+   57,
+   51,
+   37,
+   29,
+   28,
+   26
+  ],
   "pointer": [
    223
   ],
@@ -7485,30 +7635,6 @@
   "rusage": [
    221,
    220
-  ],
-  "before": [
-   221,
-   218,
-   216,
-   213,
-   185,
-   181,
-   180,
-   151,
-   144,
-   128,
-   113,
-   101,
-   90,
-   82,
-   56,
-   53,
-   52,
-   49,
-   48,
-   28,
-   27,
-   20
   ],
   "esrch": [
    221
@@ -7558,6 +7684,13 @@
   "components": [
    218
   ],
+  "vfs": [
+   218,
+   217,
+   216,
+   197,
+   196
+  ],
   "lookup": [
    218
   ],
@@ -7584,20 +7717,22 @@
    217,
    137
   ],
+  "bytes": [
+   217,
+   178,
+   172,
+   158,
+   157,
+   132,
+   108,
+   54,
+   21
+  ],
   "consume": [
    217
   ],
   "contents": [
    217
-  ],
-  "copy": [
-   216,
-   140,
-   138,
-   114,
-   109,
-   97,
-   24
   ],
   "fails": [
    216,
@@ -7655,22 +7790,6 @@
    54,
    38
   ],
-  "exit": [
-   215,
-   214,
-   211,
-   203,
-   201,
-   173,
-   171,
-   170,
-   169,
-   168,
-   165,
-   162,
-   130,
-   111
-  ],
   "set_tid_address": [
    215,
    214
@@ -7702,6 +7821,15 @@
   "parked": [
    213,
    212
+  ],
+  "managed": [
+   213,
+   196
+  ],
+  "wait": [
+   213,
+   137,
+   125
   ],
   "default": [
    213,
@@ -7752,6 +7880,14 @@
    164,
    131,
    59
+  ],
+  "fixture": [
+   211,
+   204,
+   197,
+   196,
+   194,
+   188
   ],
   "ptrace_setoptions": [
    210
@@ -7820,10 +7956,6 @@
   "rootfs_sha256": [
    208
   ],
-  "descriptors": [
-   207,
-   88
-  ],
   "bounded": [
    207,
    11
@@ -7835,16 +7967,20 @@
    110,
    11
   ],
+  "polling": [
+   207
+  ],
   "readiness": [
    207
   ],
-  "standard": [
+  "waits": [
+   207,
+   70
+  ],
+  "300": [
    207
   ],
-  "timeout": [
-   207
-  ],
-  "0e06a986": [
+  "43005389412": [
    207
   ],
   "alias": [
@@ -7855,6 +7991,9 @@
    206
   ],
   "origin": [
+   206
+  ],
+  "stdin": [
    206
   ],
   "205": [
@@ -7899,9 +8038,13 @@
    204,
    203
   ],
-  "abi": [
+  "init": [
    204,
-   98
+   190,
+   112,
+   57,
+   37,
+   26
   ],
   "loop": [
    203,
@@ -8004,9 +8147,12 @@
   "reason": [
    197
   ],
-  "cleanup": [
-   197,
-   151
+  "missing": [
+   197
+  ],
+  "invalid": [
+   196,
+   37
   ],
   "close_range": [
    195,
@@ -8058,16 +8204,6 @@
   "layers": [
    193
   ],
-  "size": [
-   192,
-   132,
-   119,
-   108,
-   43,
-   38,
-   13,
-   4
-  ],
   "name": [
    192,
    169,
@@ -8091,6 +8227,14 @@
    190,
    156
   ],
+  "handler": [
+   191,
+   162,
+   161,
+   135,
+   111,
+   105
+  ],
   "still": [
    191,
    177,
@@ -8098,16 +8242,6 @@
   ],
   "dispositions": [
    191
-  ],
-  "exec": [
-   191,
-   190,
-   185,
-   154,
-   126,
-   113,
-   102,
-   53
   ],
   "kept": [
    191,
@@ -8172,15 +8306,6 @@
    187,
    186,
    62
-  ],
-  "byte": [
-   187,
-   163,
-   158,
-   94,
-   21,
-   20,
-   6
   ],
   "65536": [
    187
@@ -8293,9 +8418,6 @@
    19
   ],
   "arg2": [
-   178
-  ],
-  "arguments": [
    178
   ],
   "core": [
@@ -8656,12 +8778,6 @@
   "handled": [
    151
   ],
-  "local": [
-   151,
-   101,
-   67,
-   66
-  ],
   "socket": [
    151,
    146,
@@ -8706,6 +8822,17 @@
   ],
   "overlayfs": [
    149
+  ],
+  "one": [
+   148,
+   145,
+   138,
+   133,
+   118,
+   109,
+   19,
+   15,
+   5
   ],
   "followed": [
    148
@@ -8825,6 +8952,9 @@
   "o_append": [
    144,
    119
+  ],
+  "offset": [
+   144
   ],
   "fallocate": [
    144,
@@ -8985,10 +9115,6 @@
   "upper": [
    134
   ],
-  "directories": [
-   134,
-   110
-  ],
   "getdents64": [
    134
   ],
@@ -9010,6 +9136,10 @@
    132,
    108
   ],
+  "slot": [
+   131,
+   107
+  ],
   "generation": [
    131,
    107,
@@ -9025,6 +9155,13 @@
   ],
   "__wclone": [
    130
+  ],
+  "caller": [
+   129,
+   105
+  ],
+  "blocked": [
+   129
   ],
   "mmap": [
    128,
@@ -9044,12 +9181,6 @@
   ],
   "range": [
    128
-  ],
-  "length": [
-   128,
-   36,
-   30,
-   21
   ],
   "madvise": [
    128
@@ -9215,10 +9346,6 @@
    108,
    65
   ],
-  "bit": [
-   107,
-   91
-  ],
   "posix_spawn": [
    106
   ],
@@ -9252,9 +9379,6 @@
   "mremap": [
    104
   ],
-  "private": [
-   104
-  ],
   "prot": [
    104
   ],
@@ -9270,6 +9394,10 @@
    68,
    65,
    64
+  ],
+  "guard": [
+   101,
+   27
   ],
   "reconnect": [
    101
@@ -9661,9 +9789,6 @@
   "synchronous": [
    70
   ],
-  "waits": [
-   70
-  ],
   "apply": [
    70,
    45
@@ -9760,6 +9885,9 @@
   "libfuzzer": [
    61
   ],
+  "root": [
+   61
+  ],
   "seeds": [
    61
   ],
@@ -9781,6 +9909,9 @@
   ],
   "growing": [
    60
+  ],
+  "owned": [
+   59
   ],
   "execs": [
    58
@@ -9986,6 +10117,9 @@
   "drain": [
    41
   ],
+  "including": [
+   41
+  ],
   "entropy": [
    40
   ],
@@ -9996,6 +10130,9 @@
    40,
    15
   ],
+  "cannot": [
+   40
+  ],
   "desktop": [
    39,
    12
@@ -10005,6 +10142,9 @@
    1
   ],
   "graphical": [
+   39
+  ],
+  "input": [
    39
   ],
   "focus": [
@@ -10098,9 +10238,6 @@
   ],
   "error": [
    22
-  ],
-  "258": [
-   21
   ],
   "257": [
    21
@@ -10201,11 +10338,6 @@
   "reclassify": [
    11
   ],
-  "architecture": [
-   11,
-   10,
-   9
-  ],
   "1000": [
    10
   ],
@@ -10220,6 +10352,9 @@
    8
   ],
   "global": [
+   7
+  ],
+  "explicit": [
    7
   ],
   "robust": [
@@ -10256,13 +10391,13 @@
   "research": [
    3
   ],
+  "claude": [
+   3
+  ],
   "codex": [
    3
   ],
   "define": [
-   3
-  ],
-  "driven": [
    3
   ],
   "feedback": [
