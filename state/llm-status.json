@@ -1,26 +1,26 @@
 {
- "updated": "2026-11-11T19:41:19Z",
+ "updated": "2026-11-12T04:08:47Z",
  "providers": {
   "nvidia": {
    "configured": true,
-   "status": "degraded",
+   "status": "ok",
    "model_current": "nvidia/nemotron-3-ultra-550b-a55b",
-   "last_success": "2026-11-11T06:34:38Z",
-   "last_error_class": "api_shape",
-   "consecutive_failures": 1,
+   "last_success": "2026-11-12T04:08:47Z",
+   "last_error_class": null,
+   "consecutive_failures": 0,
    "rate_limit": null,
    "model_actual": "nvidia/nemotron-3-ultra-550b-a55b",
    "consecutive_429": 0
   },
   "openrouter": {
    "configured": true,
-   "status": "degraded",
+   "status": "ok",
    "model_current": "openrouter/free",
-   "last_success": "2026-11-11T06:33:41Z",
-   "last_error_class": "api_shape",
-   "consecutive_failures": 1,
+   "last_success": "2026-11-12T04:07:59Z",
+   "last_error_class": null,
+   "consecutive_failures": 0,
    "rate_limit": null,
-   "model_actual": "nvidia/nemotron-3.5-super-vl:free",
+   "model_actual": "cohere/north-mini-code:free",
    "last_diag": {
     "error_class": "api_shape",
     "http_status": 200,
@@ -74,7 +74,7 @@
    "configured": true,
    "status": "ok",
    "model_current": "gemini-3.6-flash",
-   "last_success": "2026-11-11T19:41:19Z",
+   "last_success": "2026-11-12T04:07:57Z",
    "last_error_class": null,
    "consecutive_failures": 0,
    "rate_limit": null,
@@ -83,46 +83,24 @@
   }
  },
  "last_call": {
-  "provider": "google-ai-studio",
-  "model": "gemini-3.6-flash",
-  "model_actual": "gemini-3.6-flash",
-  "latency_s": 53.56,
+  "provider": "nvidia",
+  "model": "nvidia/nemotron-3-ultra-550b-a55b",
+  "model_actual": "nvidia/nemotron-3-ultra-550b-a55b",
+  "latency_s": 21.32,
   "outcome": "ok",
-  "at": "2026-11-11T19:41:19Z",
+  "at": "2026-11-12T04:08:47Z",
   "finish_reason": "length"
  },
  "note": "runtime-managed by scripts/llm_router.py; providers appear on first call. No secrets are stored here — status classes only (unconfigured/ok/down/auth_failed).",
  "daily": {
-  "date_utc": "2026-11-11",
+  "date_utc": "2026-11-12",
   "calls": {
-   "nvidia": 3,
-   "google-ai-studio": 2
+   "nvidia": 2
   },
   "calls_probe": {
-   "nvidia": 4,
-   "google-ai-studio": 4,
-   "openrouter": 4
-  },
-  "failed": {
-   "calls_probe": {
-    "google-ai-studio": {
-     "rate_limited": 2
-    },
-    "nvidia": {
-     "api_shape": 1
-    },
-    "openrouter": {
-     "api_shape": 1
-    }
-   },
-   "calls": {
-    "google-ai-studio": {
-     "http_5xx": 1
-    }
-   }
-  },
-  "calls_eval": {
-   "nvidia": 12
+   "nvidia": 1,
+   "google-ai-studio": 1,
+   "openrouter": 1
   }
  },
  "limits_official": {
@@ -162,34 +140,34 @@
   }
  },
  "shadow": {
-  "consecutive_failures": 0,
+  "consecutive_failures": 1,
   "last_alert_key": null,
   "last_attempt": {
    "status": "shadow_failed",
-   "reason": "truncated_json:no_json: unbalanced object (after 1 compressed retry)",
+   "reason": "empty:no_json: no '{' in reply (after 1 compressed retry)",
    "provider": "nvidia",
    "model": "nvidia/nemotron-3-ultra-550b-a55b",
    "finish_reason": "length",
    "usage_summary": {
     "completion_tokens": 1657,
-    "reasoning_tokens": 1088
+    "reasoning_tokens": 1657
    },
    "retries": 0,
-   "at": "2026-11-11T06:34:38Z"
+   "at": "2026-11-12T04:08:47Z"
   },
   "last_recovery_at": "2026-11-11T19:41:19Z"
  },
  "last_shadow_attempt": {
   "status": "shadow_failed",
-  "reason": "truncated_json:no_json: unbalanced object (after 1 compressed retry)",
+  "reason": "empty:no_json: no '{' in reply (after 1 compressed retry)",
   "provider": "nvidia",
   "model": "nvidia/nemotron-3-ultra-550b-a55b",
   "finish_reason": "length",
   "usage_summary": {
    "completion_tokens": 1657,
-   "reasoning_tokens": 1088
+   "reasoning_tokens": 1657
   },
   "retries": 0,
-  "at": "2026-11-11T06:34:38Z"
+  "at": "2026-11-12T04:08:47Z"
  }
 }
