@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-12T04:07:59Z",
+ "updated": "2026-11-12T07:18:16Z",
  "schema": "llm-probe-v1",
  "note": "DATA ONLY — probe rows are runtime availability evidence; no secrets; fixed probe input sha256_16 below",
  "probe_input_sha256_16": "6ba85cba8c23d00c",
@@ -31,7 +31,7 @@
   },
   "openrouter": {
    "http_status": 200,
-   "ids_listed": 431,
+   "ids_listed": 432,
    "raw_names_sample5": [
     "baidu/ernie-5.5-flash-preview:free",
     "baidu/ernie-light-dt-1.0-intl",
@@ -54,9 +54,11 @@
    "categories": []
   },
   "openrouter": {
-   "models_ok": 1,
-   "models_failed": 0,
-   "categories": []
+   "models_ok": 0,
+   "models_failed": 1,
+   "categories": [
+    "api_shape"
+   ]
   },
   "strands-decider-space": {
    "models_ok": 0,
@@ -66,7 +68,7 @@
  },
  "llm_status_snapshot": {
   "nvidia": "ok",
-  "openrouter": "ok",
+  "openrouter": "degraded",
   "google-ai-studio": "ok",
   "strands-decider-space": "unconfigured"
  },
@@ -1715,6 +1717,78 @@
    "status": "unavailable",
    "secret": "DECIDER_API_KEY",
    "at": "2026-11-12T04:07:59Z"
+  },
+  {
+   "provider": "nvidia",
+   "model": "nvidia/nemotron-3-ultra-550b-a55b",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 0.9,
+   "http_status": 200,
+   "model_actual": "nvidia/nemotron-3-ultra-550b-a55b",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "service_tier",
+    "system_fingerprint",
+    "usage"
+   ],
+   "at": "2026-11-12T07:18:12Z"
+  },
+  {
+   "provider": "google-ai-studio",
+   "model": "gemini-3.6-flash",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 1.43,
+   "http_status": 200,
+   "model_actual": "gemini-3.6-flash",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "usage"
+   ],
+   "at": "2026-11-12T07:18:13Z"
+  },
+  {
+   "provider": "openrouter",
+   "model": "openrouter/free",
+   "ok": false,
+   "category": "api_shape",
+   "status": "failed",
+   "latency_s": 2.2,
+   "http_status": 200,
+   "model_actual": "nvidia/nemotron-3.5-lightning:free",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "provider",
+    "service_tier",
+    "system_fingerprint",
+    "usage"
+   ],
+   "at": "2026-11-12T07:18:16Z",
+   "excerpt200": "\n         \n{\"id\":\"gen-1794467894-fchEV0mRNa5hlAHYTQON\",\"object\":\"chat.completion\",\"created\":1794467894,\"model\":\"nvidia/nemotron-3.5-lightning:free\",\"provider\":\"Nvidia\",\"system_fingerprint\":null,\"servi"
+  },
+  {
+   "provider": "strands-decider-space",
+   "model": null,
+   "ok": false,
+   "category": "unconfigured",
+   "status": "unavailable",
+   "secret": "DECIDER_API_KEY",
+   "at": "2026-11-12T07:18:16Z"
   }
  ]
 }

@@ -1,0 +1,132 @@
+{
+ "meta": {
+  "provider": "nvidia",
+  "model": "nvidia/nemotron-3-ultra-550b-a55b",
+  "model_actual": "nvidia/nemotron-3-ultra-550b-a55b",
+  "low_confidence": false,
+  "latency_s": 26.33,
+  "attempts": 1,
+  "retries": 0,
+  "compressed_enforced": false,
+  "finish_reason": "stop",
+  "input_truncated": false,
+  "input_sha256_16": "db356a736d5633d9",
+  "schema": "shadow-report-v1"
+ },
+ "report": {
+  "report_id": "20261112-0046Z-s58-review",
+  "strengths": [
+   "Report lint 37/37 tests pass",
+   "Decider gate asymmetry rule 9/9 tests",
+   "Secret audit clean: 4 allowlisted refs",
+   "Shadow categories A/D/E/G/H moved to lint",
+   "All gates passing: CJK, token scan, schema",
+   "44 decider cases from real events"
+  ],
+  "weaknesses": [
+   "Decider-space probe unconfigured (AMBER)",
+   "4 cron windows missing logs after success",
+   "Decider eval blocked awaiting API key",
+   "Environment config check failed (needs token)",
+   "Push capability absent (no token/event)",
+   "Shadow provider order not finalized"
+  ],
+  "claims_checked": [
+   {
+    "claim": "PR#207 head moved 5ae058f→b19e3ea3",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "No new review comments on PR#207",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Report-lint 37/37 tests pass",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Baseline lint found 13 defects in 8/8 reports",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Shadow categories A/D/E/G/H moved to lint",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Decider gate asymmetry rule implemented",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Decider-space /health 200 in 0.70s",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Decider-space native 3.47s with key",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "44 decider cases generated from events",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Secret refs all in allowlist",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "No HF token in tree/history",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "All gates passing",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   }
+  ],
+  "decisions": [
+   {
+    "open_point": "DECIDER_API_KEY provisioning",
+    "decision": "Owner must provide key",
+    "rationale": "Decider eval and 14-day shadow blocked without key"
+   },
+   {
+    "open_point": "Decider-space probe cron gaps",
+    "decision": "Owner check Actions",
+    "rationale": "4 consecutive windows missing logs after success"
+   },
+   {
+    "open_point": "Shadow/decider promotion",
+    "decision": "Wait owner approval",
+    "rationale": "Requires 14-day shadow with key then owner sign-off"
+   }
+  ],
+  "risks": [
+   "Decider-space probe silent failures risk",
+   "No push token blocks report publishing",
+   "Environment config unreadable without token",
+   "Shadow promotion blocked without owner approval",
+   "Decider eval cannot start without API key",
+   "IP quota blocks GitHub API for CLEAR verify"
+  ],
+  "next_items": [
+   "Owner provide DECIDER_API_KEY",
+   "Owner check Actions for probe gaps",
+   "Owner approve shadow/decider promotion",
+   "Monitor PR#207 for #179 decision",
+   "Retry environment config with token",
+   "Prepare push when token/event available"
+  ],
+  "injection_suspected": false,
+  "publish_requests": []
+ }
+}
