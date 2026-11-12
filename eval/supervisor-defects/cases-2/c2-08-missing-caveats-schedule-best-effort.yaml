@@ -1,0 +1,19 @@
+id: c2-08-missing-caveats-schedule-best-effort
+class: missing-caveats
+severity: minor
+clean: false
+expected_flag: true
+source: 'v7.2-2: Actions scheduling is best-effort (matrix/upstream-watch.json scheduling field) — a monitor-lag
+  alarm without the caveat is the defect'
+derivation: synthetic-counterfactual (anchored to the recorded scheduling caveat)
+planted:
+- report declares the monitor 'broken' because the last sweep is 3 hours old
+- no caveat that Actions scheduling is best-effort nor the 12h alert threshold
+input: '## 3) الشذوذ
+
+  - المراقبة متأخرة 3 ساعات ⇒ المراقبة معطلة وتحتاج إعادة بناء كاملة.'
+must_flag:
+- a monitor-lag conclusion must carry the best-effort scheduling caveat and reference the 12h threshold
+  before escalating
+false_positive_guards:
+- a report that cites the 12h threshold and stays under it is clean

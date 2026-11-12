@@ -1,0 +1,121 @@
+{
+ "results": [
+  {
+   "file": "outbox/20261106-2226Z-s48.md",
+   "verdict": "FAIL",
+   "failed": [
+    "b",
+    "g",
+    "h"
+   ],
+   "details": [
+    "line 96: TRIPPED claim without fresh baseline diff evidence",
+    "base_head field missing from report head",
+    "path `scripts/breaker_check_v64.py` (line 63) not tracked in repo and not tagged [sandbox]",
+    "path `work/.config/watch-baseline.json` (line 63) not tracked in repo and not tagged [sandbox]",
+    "path `outbox/archive/` (line 98) not tracked in repo and not tagged [sandbox]"
+   ]
+  },
+  {
+   "file": "outbox/20261107-0324Z-s49.md",
+   "verdict": "FAIL",
+   "failed": [
+    "b",
+    "h"
+   ],
+   "details": [
+    "line 9: TRIPPED claim without fresh baseline diff evidence",
+    "line 13: TRIPPED claim without fresh baseline diff evidence",
+    "path `matrix/.simulate-flag` (line 25) not tracked in repo and not tagged [sandbox]",
+    "path `upload/GitHub` (line 26) not tracked in repo and not tagged [sandbox]",
+    "path `work/.config/ssh/` (line 84) not tracked in repo and not tagged [sandbox]",
+    "path `~/.ssh` (line 84) not tracked in repo and not tagged [sandbox]",
+    "path `download/ginux_watch_deploy-20261107.pub` (line 92) not tracked in repo and not tagged [sandbox]"
+   ]
+  },
+  {
+   "file": "outbox/20261107-2155Z-s51.md",
+   "verdict": "FAIL",
+   "failed": [
+    "b",
+    "h"
+   ],
+   "details": [
+    "line 22: TRIPPED claim without fresh baseline diff evidence",
+    "line 23: TRIPPED claim without fresh baseline diff evidence",
+    "line 52: TRIPPED claim without fresh baseline diff evidence",
+    "path `work/.config/ssh/ginux_watch_deploy-20261108` (line 19) not tracked in repo and not tagged [sandbox]",
+    "path `work/results/W4-comment-try3.json` (line 20) not tracked in repo and not tagged [sandbox]",
+    "path `work/.config/watch-baseline.json` (line 21) not tracked in repo and not tagged [sandbox]",
+    "path `github/workflows/issue-sanitize.yml` (line 23) not tracked in repo and not tagged [sandbox]",
+    "path `team/scripts/issue-sanitize.py` (line 23) not tracked in repo and not tagged [sandbox]",
+    "path `work/results/W1.md` (line 50) not tracked in repo and not tagged [sandbox]",
+    "path `work/results/W2.md` (line 51) not tracked in repo and not tagged [sandbox]",
+    "path `work/results/W3.md` (line 52) not tracked in repo and not tagged [sandbox]",
+    "path `work/results/W4.md` (line 53) not tracked in repo and not tagged [sandbox]",
+    "path `work/results/CRITIC.md` (line 59) not tracked in repo and not tagged [sandbox]",
+    "path `work/scripts/git_ssh_paramiko_local.py` (line 66) not tracked in repo and not tagged [sandbox]"
+   ]
+  },
+  {
+   "file": "outbox/20261108-1830Z-s56.md",
+   "verdict": "FAIL",
+   "failed": [
+    "h"
+   ],
+   "details": [
+    "path `outbox/ALERT-llm` (line 34) not tracked in repo and not tagged [sandbox]",
+    "path `work/keys` (line 40) not tracked in repo and not tagged [sandbox]",
+    "path `inbox/2026-11-08-2334Z-ls-remote.txt` (line 49) not tracked in repo and not tagged [sandbox]",
+    "path `inbox/2026-11-08-1734Z-matrix-40f1506c.json` (line 50) not tracked in repo and not tagged [sandbox]",
+    "path `work/keys/ginux_watch_deploy-20261109a` (line 61) not tracked in repo and not tagged [sandbox]",
+    "path `work/.config` (line 66) not tracked in repo and not tagged [sandbox]",
+    "path `work/state/watch-baseline.json` (line 66) not tracked in repo and not tagged [sandbox]"
+   ]
+  },
+  {
+   "file": "outbox/20261108-1930Z-s57.md",
+   "verdict": "FAIL",
+   "failed": [
+    "g",
+    "h"
+   ],
+   "details": [
+    "base_head field missing from report head",
+    "path `config/workflow` (line 28) not tracked in repo and not tagged [sandbox]",
+    "path `work/keys` (line 29) not tracked in repo and not tagged [sandbox]"
+   ]
+  },
+  {
+   "file": "outbox/ALERT-llm-google-ai-studio.md",
+   "verdict": "FAIL",
+   "failed": [
+    "g"
+   ],
+   "details": [
+    "base_head field missing from report head"
+   ]
+  },
+  {
+   "file": "outbox/ALERT-llm-nvidia.md",
+   "verdict": "FAIL",
+   "failed": [
+    "g"
+   ],
+   "details": [
+    "base_head field missing from report head"
+   ]
+  },
+  {
+   "file": "outbox/ALERT-llm-openrouter.md",
+   "verdict": "FAIL",
+   "failed": [
+    "g"
+   ],
+   "details": [
+    "base_head field missing from report head"
+   ]
+  }
+ ],
+ "ok": false
+}

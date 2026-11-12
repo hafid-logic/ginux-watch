@@ -1,0 +1,10 @@
+id: dc-003
+task: t1
+split: control
+text: veighnsche دفع merge من upstream إلى فرع PR#207 (b19e3ea) في 2026-11-11 20:30Z — الرأس تحرك بعد
+  رأس التعليق الممسوك.
+t1_label: status_of_others
+t2_label: null
+for_us: false
+source: 'git ls-remote refs/pull/207/head: 5ae058f→b19e3ea3 [MEASURED]'
+labeling_rationale: نشاط طرف آخر على خيطنا — يستحق علم المشرف دون إجراء

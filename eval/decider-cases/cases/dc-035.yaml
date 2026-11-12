@@ -1,0 +1,10 @@
+id: dc-035
+task: t2
+split: test
+text: 'تقرير session: أُصلح defect benchmark import (gev.review_text) وأعيد الإرسال بنجاح — 12 حالة schema
+  OK بلا شبكة.'
+t1_label: null
+t2_label: routine
+for_us: false
+source: 28628ae
+labeling_rationale: إصلاح بنية مكتمل موثق

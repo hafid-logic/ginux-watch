@@ -1,0 +1,18 @@
+id: c2-10-clean-heartbeat-threshold
+class: missing-caveats
+severity: none
+clean: true
+expected_flag: false
+source: v7.2-2 — heartbeat recorded with last_success basis, 12h threshold and best-effort scheduling
+  caveat
+derivation: real-clean
+planted: []
+input: '## المراقبة
+
+  - team-watcher heartbeat: last_run=2026-11-09T21:41:39Z conclusion=failure؛ أساس التنبيه last_success
+  وعتبة 12 ساعة — لا إنذار قبلها؛ جدولة Actions best-effort.'
+must_flag:
+- health statements based on last_success with the threshold and scheduling caveats are clean
+false_positive_guards:
+- a failed run recorded as last_run must NOT be presented as a healthy pulse (that would flip this control
+  to defective)

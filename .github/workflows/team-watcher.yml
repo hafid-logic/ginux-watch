@@ -24,6 +24,22 @@ jobs:
           fetch-depth: 0
       - name: Offline heartbeat semantics test (v7.3-2d — alert basis last_success; failed run is not a pulse)
         run: python3 team/scripts/test-heartbeat-check.py
+      - name: Report lint offline tests (v7.5-1 — clauses a..h fixtures + measured defect matrix)
+        run: python3 team/scripts/test-report-lint.py
+      - name: Decider gate asymmetry tests (v7.5-3 — alert = det OR decider, mute from det only)
+        run: python3 team/scripts/test-decider-gate.py
+      - name: Decider case loader validation (v7.5-3 — offline harness, zero network)
+        run: python3 scripts/decider_eval.py
+      - name: Report lint on reports changed by this push (v7.5-1 — CI half of the pre-commit gate)
+        run: |
+          before="${{ github.event.before }}"
+          [ -z "$before" ] && before="HEAD~1"
+          changed=$(git diff --name-only "$before" HEAD -- 'outbox/*.md' | grep -v -E 'outbox/(INDEX|LATEST|_TEMPLATE)\.md' || true)
+          if [ -n "$changed" ]; then
+            python3 scripts/report_lint.py --check $changed
+          else
+            echo "no outbox reports changed — nothing to lint-check"
+          fi
       - name: Token-pattern scan of tree (v6.6 item 5; fails on any full-form token except ghp_SYNTHETIC-*)
         run: python3 scripts/tree-token-scan.py
       - name: Lease sweep (expired claim_until -> stale + requeue)

@@ -5,3 +5,4 @@
 20261107-2155Z-s51 | 51 | session51-agent-b-takeover | blocked (push pending deploy-key activation) | yes
 20261108-1830Z-s56 | 56 | v6.7-20261108 | blocked (push pending deploy-key activation 20261109a) | yes
 20261108-1930Z-s57 | 57 | v6.8-20261108 | done (pushed after key 20261109a activation) | yes
+20261112-0046Z-s58 | 58 | v7.5 | partial (بنود 1-5 منفذة محليًا: report-lint أ-ح + fixtures + 37/37، cases-2 ×12، decider-cases ×44 + قاعدة اللاتماثل 9/9، جرد أسرار PASS، رأس الحالة AMBER؛ لا دفع — بند 0) | yes

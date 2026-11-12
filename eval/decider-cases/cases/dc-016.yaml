@@ -1,0 +1,9 @@
+id: dc-016
+task: t1
+split: test
+text: 'commits: monitor state 2026-11-12T00:00:44Z [skip ci] — تحديث روتيني لملف الحالة.'
+t1_label: noise
+t2_label: null
+for_us: false
+source: origin/main f7c33a5
+labeling_rationale: أثر جدولة

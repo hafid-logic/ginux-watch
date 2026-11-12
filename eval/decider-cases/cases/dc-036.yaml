@@ -1,0 +1,9 @@
+id: dc-036
+task: t1
+split: test
+text: دفع محلي جاهز (ff خالص فوق origin/main) ينتظر توكن أو حدثًا أو 3 أيام — لا جديد.
+t1_label: noise
+t2_label: null
+for_us: false
+source: STATE (بنود 0 المتكررة)
+labeling_rationale: وضع انتظار معلوم — لا تنبيه

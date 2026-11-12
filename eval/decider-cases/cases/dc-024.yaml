@@ -1,0 +1,9 @@
+id: dc-024
+task: t1
+split: test
+text: 'خبر علوي: إصدار release جديد لمشروع ginux على upstream (tag جديد غير research-v1-baseline).'
+t1_label: status_of_others
+t2_label: null
+for_us: false
+source: state/monitor.json tags
+labeling_rationale: خلفية

@@ -1,0 +1,10 @@
+id: dc-011
+task: t1
+split: control
+text: فتحنا PR#227 (hdae-concurrent-instance-isolation followups) — بلا مراجعات ولا تعليقات من المالك
+  حتى اليوم.
+t1_label: status_of_others
+t2_label: null
+for_us: false
+source: git ls-remote refs/pull/227/head=9ac0f544 ثابت [MEASURED 2026-11-12]
+labeling_rationale: حالة PR الخاصة بنا بلا تفاعل مالك

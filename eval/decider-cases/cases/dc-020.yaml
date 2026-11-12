@@ -1,0 +1,9 @@
+id: dc-020
+task: t2
+split: test
+text: 'تقرير s48: القاطع غير أعمى — HTML الخام أعطى أحدث طابع 14:58:28Z ⇒ القاطع يرى [MEASURED].'
+t1_label: null
+t2_label: needs_supervisor
+for_us: true
+source: outbox/20261106-2226Z-s48.md @4f766fb (عيب أ مثبت لاحقًا)
+labeling_rationale: تقرير فيه ادعاء يحتاج تدقيق مشرف (كان عيبًا حقيقيًا)

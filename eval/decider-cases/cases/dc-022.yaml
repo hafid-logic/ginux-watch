@@ -1,0 +1,10 @@
+id: dc-022
+task: t2
+split: test
+text: 'تقرير benchmark: recall 4/8 مع إنذارين كاذبين وسم ح على ضابطين نظيفين — قاضي الكلمات معكوس على
+  ح.'
+t1_label: null
+t2_label: needs_supervisor
+for_us: true
+source: reports/v7.4-shadow-bench-2026-11-11.md
+labeling_rationale: خلل قياس يؤثر على شرط الترقية — للمشرف

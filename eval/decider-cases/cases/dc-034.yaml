@@ -1,0 +1,9 @@
+id: dc-034
+task: t1
+split: test
+text: 'المالك يسأل في المحادثة: «ما حالة آخر تشغيل لـCI؟» — سؤال مباشر يحتاج جوابًا.'
+t1_label: request
+t2_label: null
+for_us: true
+source: نمط أسئلة المالك (القاعدة 25)
+labeling_rationale: سؤال المالك = طلب جواب

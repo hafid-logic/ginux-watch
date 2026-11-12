@@ -1,0 +1,9 @@
+id: dc-006
+task: t1
+split: control
+text: دفع upstream main إلى 55b719db — تقدّم مشروع علوي لا علاقة له بخيوطنا.
+t1_label: status_of_others
+t2_label: null
+for_us: false
+source: state/watch-log.jsonl
+labeling_rationale: خلفية علوية روتينية

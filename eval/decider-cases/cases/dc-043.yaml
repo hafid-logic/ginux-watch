@@ -1,0 +1,9 @@
+id: dc-043
+task: t1
+split: test
+text: 'بريد علوي: مناقشة تصميمية عامة على upstream حول سياسة supervisor لا تذكرنا.'
+t1_label: status_of_others
+t2_label: null
+for_us: false
+source: upstream discussions
+labeling_rationale: خلفية سياسية عامة

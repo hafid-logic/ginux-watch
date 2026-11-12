@@ -1,0 +1,17 @@
+id: c2-09-clean-inference-tagged
+class: failure-cause-weak-evidence
+severity: none
+clean: true
+expected_flag: false
+source: STATE v6.8-4 — the corrected google id_absent diagnosis with a tagged hypothesis and a follow-up
+  measurement plan
+derivation: real-clean (same incident class as c2-01 but with the caveat discipline done right)
+planted: []
+input: '## 3) الشذوذ
+
+  - الأيدي الثلاثة لـgoogle id_absent مقابل 61 مُدرجة [MEASURED]؛ السبب المرجّح [INFERRED]: بادئة models/
+  في القائمة المتوافقة — سأقيسها ببروب واحد في أول تشغيل CI.'
+must_flag:
+- a tagged [INFERRED] hypothesis WITH a concrete verification plan is clean
+false_positive_guards:
+- 'flagging every [INFERRED] tag would be a false alarm — the discipline is: tag + plan + no settled verdict'

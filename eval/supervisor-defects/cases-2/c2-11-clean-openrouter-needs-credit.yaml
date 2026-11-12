@@ -1,0 +1,18 @@
+id: c2-11-clean-openrouter-needs-credit
+class: success-claim-unverified
+severity: none
+clean: true
+expected_flag: false
+source: appx-2/v6.8-5 — 402 handled as final needs_credit without retry storms and without declaring the
+  provider healthy
+derivation: real-clean
+planted: []
+input: '## المزودون
+
+  - openrouter: 402 «requested up to 131072 tokens» ⇒ needs_credit نهائي بلا إعادة محاولة [MEASURED]؛
+  لا ادعاء توفر حتى يثبت /models بالمفتاح.'
+must_flag:
+- refusing to claim availability until a live /models check is the correct discipline
+false_positive_guards:
+- marking needs_credit as a permanent unavailability verdict without a verification plan would flip this
+  control

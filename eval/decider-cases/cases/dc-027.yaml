@@ -1,0 +1,10 @@
+id: dc-027
+task: t1
+split: test
+text: PR#254 من مطوّر آخر على upstream يلمس ginux-verify (النواة المستقلة) — منطقة حساسة لسجلنا لكنها
+  ليست لنا.
+t1_label: status_of_others
+t2_label: null
+for_us: false
+source: upstream PRs (مراقبة المناطق الحساسة)
+labeling_rationale: تلامس منطقة حساسة = علم للمشرف دون إجراء

@@ -1,0 +1,24 @@
+id: c2-01-failure-cause-nonff-race-inferred
+class: failure-cause-weak-evidence
+severity: critical
+clean: false
+expected_flag: true
+source: STATE v6.6-1 — real retraction; owner measured the true cause in Actions (b00393a); local re-establishment
+  02065f0
+derivation: real-incident (recorded wrong diagnosis, officially retracted in v6.6-1)
+planted:
+- failure cause classified as a non-ff race with team-watcher with no artifact, log or run id to support
+  it
+- 'verdict written [INFERRED] but consumed as fact until the owner measured the real cause (invalid YAML:
+  paths with paths-ignore)'
+input: '## 3) الشذوذ والأخطاء
+
+  - فشل تشغيل الظل الأول سببه سباق non-ff مع team-watcher [INFERRED] — سيُعاد التشغيل لاحقًا.
+
+  - لا سجل تشغيل ولا معرّف run يُستشهد به؛ التصنيف مبني على ترتيب زمني وحيد.'
+must_flag:
+- a failure-cause classification without a cited run id / artifact / measured evidence must be flagged
+  as weak-evidence diagnosis
+false_positive_guards:
+- tagging an inference [INFERRED] is allowed per repo convention — the defect is classifying the cause
+  as settled without evidence, not the mere presence of INFERRED

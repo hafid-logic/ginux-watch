@@ -1,0 +1,9 @@
+id: dc-012
+task: t1
+split: control
+text: 'ملاحظة صباحية: فحص أساس المراقبة — upstream main ثابت، لا PR جديد للمالك، الخيوط مطابقة للأساس.'
+t1_label: noise
+t2_label: null
+for_us: false
+source: state/watch-log.jsonl (no-change rows)
+labeling_rationale: روتين صباحي بلا إشارة

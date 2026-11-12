@@ -1,0 +1,9 @@
+id: dc-010
+task: t1
+split: control
+text: meleficarumvaldis أشار إلى PR#215 داخل محادثة PR#207 (mention فقط بلا سؤال لنا).
+t1_label: status_of_others
+t2_label: null
+for_us: false
+source: https://github.com/gmkurtzer/ginux/pull/207 (2026-11-05)
+labeling_rationale: ذكر لطرف آخر — خلفية

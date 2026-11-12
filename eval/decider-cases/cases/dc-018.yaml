@@ -1,0 +1,10 @@
+id: dc-018
+task: t1
+split: test
+text: 'المالك على خيط 222 (الرد المذكور): «…يوصي بإعادتها إلا إذا أظهرت المعايير كلفة» — نقرأه موافقة
+  مشروطة على استعادة overflow-checks في متابعة مستقبلية.'
+t1_label: request
+t2_label: null
+for_us: true
+source: خيط 222 (الرد نفسه بقراءة مختلفة)
+labeling_rationale: طلب مالك حتى لو مُحاط بشرط

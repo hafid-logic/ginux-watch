@@ -1,0 +1,10 @@
+id: dc-026
+task: t2
+split: test
+text: 'تقرير s56: أعيد توليد config برمجيًا (safe_dump + round-trip + assert) والبروب يستدعي النموذج الأول
+  المفعل لكل مزود.'
+t1_label: null
+t2_label: routine
+for_us: false
+source: outbox/20261108-1830Z-s56.md
+labeling_rationale: تقرير تنفيذ روتيني مكتمل

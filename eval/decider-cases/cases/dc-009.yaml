@@ -1,0 +1,9 @@
+id: dc-009
+task: t2
+split: control
+text: 'تقرير s51: الدفع محجوب — المفتاح 20261108b ينتظر تفعيل المالك؛ needs_decision=yes.'
+t1_label: null
+t2_label: needs_supervisor
+for_us: true
+source: outbox/20261107-2155Z-s51.md
+labeling_rationale: تقرير بقرار معلق يحتاج عين المالك

@@ -1,0 +1,9 @@
+id: dc-017
+task: t1
+split: test
+text: 'upstream: دمج PR#259 (hdae/concurrent-instance-isolation) في main — سلسلة تقارير Gate 17.'
+t1_label: status_of_others
+t2_label: null
+for_us: false
+source: upstream e16946a (fetch محلي [MEASURED])
+labeling_rationale: نشاط علوي لا يخاطبنا

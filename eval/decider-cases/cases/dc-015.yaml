@@ -1,0 +1,10 @@
+id: dc-015
+task: t1
+split: test
+text: 'ملف decider-space.json: status=unconfigured، auth=unconfigured «DECIDER_API_KEY is not set in this
+  job» بعد تشغيل سليم 04:19:05Z.'
+t1_label: noise
+t2_label: null
+for_us: false
+source: state/decider-space.json @1f1e62a [MEASURED]
+labeling_rationale: انحراف بنيوي في بروب القرار — للمشرف

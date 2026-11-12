@@ -1,0 +1,9 @@
+id: dc-033
+task: t1
+split: test
+text: 'استبيان آلي من GitHub Actions بوت: «scheduled maintenance completed» على مستودع upstream.'
+t1_label: noise
+t2_label: null
+for_us: false
+source: بوت علوي
+labeling_rationale: ضجيج آلي

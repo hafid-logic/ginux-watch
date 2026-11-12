@@ -1,0 +1,9 @@
+id: dc-019
+task: t1
+split: test
+text: تعليق غريب على خيط غير مراقب في upstream يناقش نواة أخرى بلا أي إشارة لمشروعنا.
+t1_label: status_of_others
+t2_label: null
+for_us: false
+source: upstream issues (غير مراقبة)
+labeling_rationale: ضجيج خارج دائرة المراقبة

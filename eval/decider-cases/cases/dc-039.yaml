@@ -1,0 +1,9 @@
+id: dc-039
+task: t2
+split: test
+text: 'تقرير heartbeat: last_success=02:43:58Z alert=false (0.39h) — النبض سليم.'
+t1_label: null
+t2_label: routine
+for_us: false
+source: a0a123d (v7.3)
+labeling_rationale: حالة سليمة موثقة

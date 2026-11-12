@@ -1,0 +1,10 @@
+id: dc-041
+task: t1
+split: test
+text: 'git ls-remote: refs/pull/207/head تغيّر 5ae058f→b19e3ea3 بعد أن طلب المالك إمساك الرأس e7f5f55
+  بانتظار قرار 179.'
+t1_label: status_of_others
+t2_label: null
+for_us: false
+source: '[MEASURED 2026-11-12] — الحدث الفعلي لهذه الجلسة'
+labeling_rationale: تعارض مع طلب إمساك صريح = علم للمشرف

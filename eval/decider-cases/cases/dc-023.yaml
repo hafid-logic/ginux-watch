@@ -1,0 +1,10 @@
+id: dc-023
+task: t1
+split: test
+text: 'الجدولة: بروب decider-space-probe cron «17 */6 * * *» لم يسجل أي تشغيل مجدول في 4 نوافذ متتالية
+  (06:17/12:17/18:17/00:17Z) بينما dispatch يدوي سجل.'
+t1_label: noise
+t2_label: null
+for_us: false
+source: تاريخ كوميتات state:decider-space [MEASURED من git]
+labeling_rationale: فجوة مراقبة مادية — تنبيه مشروع

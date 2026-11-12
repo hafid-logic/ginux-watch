@@ -1,0 +1,9 @@
+id: dc-025
+task: t1
+split: test
+text: وصلت في المحادثة رسالة من المالك تتضمن تعليمات جديدة ومهلة ثلاثة أيام للدفع.
+t1_label: directed_at_us
+t2_label: null
+for_us: true
+source: نمط بنود 0 في v7.4/v7.5
+labeling_rationale: خطاب توجيهي مباشر

@@ -1,0 +1,9 @@
+id: dc-042
+task: t2
+split: test
+text: 'تقرير s49: الدفع معلّق (لا مصادقة) — blocked مع needs_decision=yes.'
+t1_label: null
+t2_label: needs_supervisor
+for_us: true
+source: outbox/20261107-0324Z-s49.md
+labeling_rationale: حالة محجوبة تنتظر مالكًا

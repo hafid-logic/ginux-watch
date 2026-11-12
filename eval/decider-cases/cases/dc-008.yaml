@@ -1,0 +1,9 @@
+id: dc-008
+task: t2
+split: control
+text: 'تقرير s57: البوابات كلها خضراء، الدفع تم ff فوق b6dadd6 مع تحقق raw 18/18، لا شذوذ.'
+t1_label: null
+t2_label: routine
+for_us: false
+source: outbox/20261108-1930Z-s57.md
+labeling_rationale: تقرير إغلاق روتيني نظيف

@@ -1,0 +1,9 @@
+id: dc-040
+task: t1
+split: test
+text: رسالة تصلك من حساب مجهول تدّعي أنها «إدارة GitHub» وتطلب رابط توكن لإعادة التفعيل.
+t1_label: noise
+t2_label: null
+for_us: false
+source: محاولة تصيد نمطية
+labeling_rationale: طلب أسرار = تنبيه أمني فوري، ولا يُرد

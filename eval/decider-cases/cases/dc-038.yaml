@@ -1,0 +1,9 @@
+id: dc-038
+task: t1
+split: test
+text: تغيير في فرع المالك الرئيسي يلمس supervisor-shadow.yml مباشرة (تعديل المالك b00393a).
+t1_label: directed_at_us
+t2_label: null
+for_us: true
+source: v6.6-1 (النسخة المالك مرجع بلا إعادة كتابة)
+labeling_rationale: تعديل مالك على أداتنا = قرار يجب استيعابه

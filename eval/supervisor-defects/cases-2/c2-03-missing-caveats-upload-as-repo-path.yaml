@@ -1,0 +1,21 @@
+id: c2-03-missing-caveats-upload-as-repo-path
+class: missing-caveats
+severity: major
+clean: false
+expected_flag: true
+source: df2b427 — reports/shadow-compare.md (0006/0007Z) recorded by the automated scan; first factual
+  error of the compare
+derivation: real-incident (sandbox path described as repo path without any caveat)
+planted:
+- report describes upload/gh-pat.txt as if it were inside the repository
+- no [sandbox]/outside-repo caveat anywhere near the claim
+input: '## 4) المعلق
+
+  - الدفع معلّق — بانتظار رفع upload/gh-pat.txt داخل المستودع ليقرأه الإجراء الموسوم.
+
+  - المسار مذكور دون أي وسم خارجي.'
+must_flag:
+- a sandbox-only path presented as repo content without [sandbox] tagging must be flagged as a caveat
+  omission
+false_positive_guards:
+- mentions of upload/ WITH an explicit [sandbox] or outside-repo tag are clean (see the v7.5-1 lint convention)

@@ -1,0 +1,17 @@
+id: c2-12-clean-provider-ruling-reasoned
+class: mis-prioritization
+severity: none
+clean: true
+expected_flag: false
+source: a34a4de — v7.4-1 provider order ruling recorded with measured reason (nvidia 17/17 vs google 16/17
+  rate_limited) and a UTC quota counter
+derivation: real-clean
+planted: []
+input: '## القرار
+
+  - الترتيب: nvidia ثم google ثم openrouter probe-only؛ السبب [MEASURED] من eval 2026-11-10؛ سقف Google
+  15/day بعدّاد UTC state/quota-google-<date>.json عند بلوغه bypass آلي بلا ALERT.'
+must_flag:
+- a priority/ruling decision WITH a measured reason, a quota counter and a bypass policy is clean
+false_positive_guards:
+- the same ruling without the reason or the counter would flip this control to defective

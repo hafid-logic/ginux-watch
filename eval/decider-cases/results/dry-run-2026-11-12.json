@@ -1,0 +1,11 @@
+{
+ "cases_total": 44,
+ "t1": 34,
+ "t2": 10,
+ "control": 12,
+ "test": 32,
+ "for_us_positives": 16,
+ "injection_rows": 2,
+ "engine": "unavailable (no DECIDER_API_KEY — probe-only harness validated offline)"
+}
+decider_eval dry-run: OK (44 cases loaded, labels valid, splits clean)

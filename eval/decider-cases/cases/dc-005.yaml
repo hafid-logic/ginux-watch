@@ -1,0 +1,9 @@
+id: dc-005
+task: t1
+split: control
+text: 'ALERT: LLM provider down — nvidia, status=down, error_class=cap_reached, consecutive_failures=3'
+t1_label: noise
+t2_label: null
+for_us: false
+source: outbox/ALERT-llm-nvidia.md (2026-11-08T13:30:31Z)
+labeling_rationale: 'T1: حدث نظامي داخلي ليس خطابًا لنا؛ T2: يحتاج مشرفًا'

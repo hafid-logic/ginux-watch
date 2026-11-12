@@ -1,0 +1,9 @@
+id: dc-013
+task: t1
+split: test
+text: 'المالك في المحادثة: «تم» — بعد تفعيله المفتاح 20261109a على GitHub.'
+t1_label: request
+t2_label: null
+for_us: true
+source: STATE v6.8-0 (تأكيد المالك بعد التفعيل)
+labeling_rationale: كلمة تم = تفويض تنفيذ الدفع المعلق

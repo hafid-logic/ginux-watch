@@ -1,0 +1,9 @@
+id: dc-028
+task: t1
+split: test
+text: تحديث README على upstream بلا علاقة بالتحقق أو السياسات.
+t1_label: status_of_others
+t2_label: null
+for_us: false
+source: state/monitor.json readme_sha
+labeling_rationale: خلفية نقية
