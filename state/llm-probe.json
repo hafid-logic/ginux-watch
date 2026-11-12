@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-12T07:18:16Z",
+ "updated": "2026-11-12T19:59:16Z",
  "schema": "llm-probe-v1",
  "note": "DATA ONLY — probe rows are runtime availability evidence; no secrets; fixed probe input sha256_16 below",
  "probe_input_sha256_16": "6ba85cba8c23d00c",
@@ -7,7 +7,7 @@
  "models_listing": {
   "nvidia": {
    "http_status": 200,
-   "ids_listed": 84,
+   "ids_listed": 83,
    "raw_names_sample5": [
     "01-ai/yi-large",
     "adept/fuyu-8b",
@@ -19,7 +19,7 @@
   },
   "google-ai-studio": {
    "http_status": 200,
-   "ids_listed": 63,
+   "ids_listed": 64,
    "raw_names_sample5": [
     "models/gemini-2.5-flash",
     "models/gemini-2.5-pro",
@@ -31,13 +31,13 @@
   },
   "openrouter": {
    "http_status": 200,
-   "ids_listed": 432,
+   "ids_listed": 437,
    "raw_names_sample5": [
+    "google/gemini-4-hydrogen",
+    "google/gemini-4-hydrogen:batch",
     "baidu/ernie-5.5-flash-preview:free",
     "baidu/ernie-light-dt-1.0-intl",
-    "google/gemini-4-carbon",
-    "google/gemini-4-carbon:batch",
-    "nex-agi/nex-n2.6"
+    "google/gemini-4-carbon"
    ],
    "note": "first 5 raw /models names (names only, server order)"
   }
@@ -49,16 +49,16 @@
    "categories": []
   },
   "google-ai-studio": {
-   "models_ok": 1,
-   "models_failed": 0,
-   "categories": []
-  },
-  "openrouter": {
    "models_ok": 0,
    "models_failed": 1,
    "categories": [
-    "api_shape"
+    "http_5xx"
    ]
+  },
+  "openrouter": {
+   "models_ok": 1,
+   "models_failed": 0,
+   "categories": []
   },
   "strands-decider-space": {
    "models_ok": 0,
@@ -68,8 +68,8 @@
  },
  "llm_status_snapshot": {
   "nvidia": "ok",
-  "openrouter": "degraded",
-  "google-ai-studio": "ok",
+  "openrouter": "ok",
+  "google-ai-studio": "degraded",
   "strands-decider-space": "unconfigured"
  },
  "results": [
@@ -1789,6 +1789,71 @@
    "status": "unavailable",
    "secret": "DECIDER_API_KEY",
    "at": "2026-11-12T07:18:16Z"
+  },
+  {
+   "provider": "nvidia",
+   "model": "nvidia/nemotron-3-ultra-550b-a55b",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 1.45,
+   "http_status": 200,
+   "model_actual": "nvidia/nemotron-3-ultra-550b-a55b",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "service_tier",
+    "system_fingerprint",
+    "usage"
+   ],
+   "at": "2026-11-12T19:59:13Z"
+  },
+  {
+   "provider": "google-ai-studio",
+   "model": "gemini-3.6-flash",
+   "ok": false,
+   "category": "http_5xx",
+   "status": "failed",
+   "latency_s": 0.56,
+   "http_status": 503,
+   "model_actual": null,
+   "resp_top_keys": null,
+   "at": "2026-11-12T19:59:14Z",
+   "excerpt200": "[{\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n]"
+  },
+  {
+   "provider": "openrouter",
+   "model": "openrouter/free",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 1.59,
+   "http_status": 200,
+   "model_actual": "dots-studio/dots-3-note-preview:free",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "provider",
+    "service_tier",
+    "system_fingerprint",
+    "usage"
+   ],
+   "at": "2026-11-12T19:59:16Z"
+  },
+  {
+   "provider": "strands-decider-space",
+   "model": null,
+   "ok": false,
+   "category": "unconfigured",
+   "status": "unavailable",
+   "secret": "DECIDER_API_KEY",
+   "at": "2026-11-12T19:59:16Z"
   }
  ]
 }
