@@ -1,15 +1,20 @@
 #!/usr/bin/env python3
-"""report_status.py — compute the GREEN/AMBER/RED supervisor header (v7.5-5).
+"""report_status.py — compute the GREEN/AMBER/RED supervisor header (v7.5-5, v7.6-2).
 
 RED   : new reply on our threads (222/207/227) OR secrets hit OR a critical
         lint FAIL (clauses a/f) on a report dated today.
 AMBER : monitor older than the 12h threshold OR provider failure (llm-status
-        consecutive failures >= 3, or the decider-space probe not ok).
+        consecutive failures >= 3).
 GREEN : otherwise.
 
-Prints exactly one line: "STATUS: <CODE> — <reasons>" — the report writer
-prepends it verbatim as the first line of the outbox report. Evidence is
-data-only (state files committed by the workflows).
+v7.6-2: the base STATUS line EXCLUDES experiment components — the decider
+probe is reported on a separate dedicated line:
+
+    STATUS: <CODE> — <reasons>
+    decider-pilot: <STATE> — <detail>
+
+The report writer prints both lines verbatim; the STATUS line stays first.
+Evidence is data-only (state files committed by the workflows).
 """
 import datetime
 import json
@@ -21,6 +26,7 @@ THREAD_BASELINE = {"222": {"comments": 2, "updated_at": "2026-11-06T14:58:29Z"},
                    "227": {"comments": 1, "updated_at": "2026-11-06T14:58:30Z"},
                    "pr207_head": "b19e3ea3e720feafce0cea952a8b50503df0b10c"}  # 2026-11-12 ls-remote
 MONITOR_STALE_HOURS = 12.0  # v7.2-2 threshold
+ENV_BINDING = "environment: supervisor @ .github/workflows/decider-space-probe.yml"
 
 
 def load(p):
@@ -28,6 +34,31 @@ def load(p):
     if not f.exists():
         return None
     return json.loads(f.read_text(encoding="utf-8"))
+
+
+def decider_pilot_line():
+    """v7.6-2: the decider-pilot state line (experiment component, excluded
+    from the base STATUS per the directive). Data-only from committed state."""
+    dec = load("state/decider-space.json")
+    if not dec:
+        return "decider-pilot: NO-DATA — state/decider-space.json missing"
+    status = dec.get("status")
+    ts = dec.get("updated", "?")
+    binding = "%s; dispatch verification pending token (v7.6-2)" % ENV_BINDING
+    if status == "ok":
+        last_ok = ""
+        for h in reversed(dec.get("history") or []):
+            if h.get("status") == "ok":
+                last_ok = " last ok %s" % h.get("at", "?")
+                break
+        return "decider-pilot: OK — status ok (%s)%s" % (ts, last_ok)
+    if status == "starting":
+        return "decider-pilot: STARTING — Space warming (%s)" % ts
+    if status == "unconfigured":
+        return ("decider-pilot: UNCONFIGURED — DECIDER_API_KEY absent in last "
+                "run (%s); binding %s" % (ts, binding))
+    failed = ",".join(dec.get("failed_checks") or []) or "unknown"
+    return "decider-pilot: DEGRADED — status=%s failed=%s (%s)" % (status, failed, ts)
 
 
 def main():
@@ -48,11 +79,8 @@ def main():
     else:
         amber.append("monitor state missing")
 
-    dec = load("state/decider-space.json")
-    if dec and dec.get("status") not in ("ok", "starting", "unconfigured"):
-        amber.append("decider-space probe %s" % dec.get("status"))
-    elif dec and dec.get("status") == "unconfigured":
-        amber.append("decider-space probe unconfigured (key absent in job)")
+    # v7.6-2: decider-space probe signals moved OUT of the base STATUS —
+    # they are experiment components and live on the decider-pilot line.
 
     llm = load("state/llm-status.json")
     if llm:
@@ -64,6 +92,7 @@ def main():
     code = "RED" if red else ("AMBER" if amber else "GREEN")
     reasons = red + amber
     print("STATUS: %s — %s" % (code, "; ".join(reasons) if reasons else "no red/amber signals in committed state"))
+    print(decider_pilot_line())
     return 0
 
 

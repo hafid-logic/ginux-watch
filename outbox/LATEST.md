@@ -1,52 +1,43 @@
-STATUS: AMBER — decider-space probe unconfigured (key absent in job)
+STATUS: GREEN — no red/amber signals in committed state
+decider-pilot: UNCONFIGURED — DECIDER_API_KEY absent in last run (2026-11-12T00:45:59Z); binding environment: supervisor @ .github/workflows/decider-space-probe.yml; dispatch verification pending token (v7.6-2)
 ---
-id: 20261112-0046Z-s58
-session: 58
-directive: v7.5
-directive_sha256: 8d8d20382f4fc63491a5a244f5d0df48c2154c062b30d700b4e5f21db3a4334a
-base_head: f7c33a5b881ecb7a9d0f7f1867f0ea446d65742f
-status: partial
+id: 20261112-0454Z-s59
+session: 59
+directive: v7.6
+directive_sha256: b32501bc998b780abd310c1937e8e0501d4aa1ddcfd3f653bcddc995269e252c
+base_head: af30e23122a5c5b08da69992e506c243c57734c8
+status: done-local
 needs_decision: yes
-circuit_breaker: ok
-upstream_new_activity: yes
-lint: PASS (a,b,c,d,e,f,g,h) | at: 2026-11-12T00:50:20Z | tool: scripts/report_lint.py
+lint: PASS (a,b,c,d,e,f) | warn: none | at: 2026-11-12T04:55:05Z | tool: scripts/report_lint.py
 ---
 
-# تقرير s58 — v7.5 (report-lint + المجموعة الثانية + decider cases + أسرار + رأس الحالة)
+# تقرير s59 — v7.6: lint بدرجات ERROR/WARN، عيّنة المعايرة الستّ، تشخيص الـprobe، خط الأساس الحتمي للـdecider
 
-البنود 1–5 منفذة محليًا مع قياسات؛ البند 0: **لا دفع** (لا توكن هذه الجلسة ولا حدث دفع — آخر دفعة 2026-11-11 a34a4de/5045ead)؛ التفاصيل الكاملة في STATE.md وeval/ وreports/.
+## 1) lint بدرجات (v7.6-1) + عيّنة التحقق الستّ
 
-## 1) الأحداث العاجلة على خيوطنا [MEASURED ls-remote + git fetch]
-- **رأس PR#207 تحرك 5ae058f→b19e3ea3** — دليل git: `git fetch upstream refs/pull/207/head` ثم log يُظهر b19e3ea «Merge upstream concurrent instance isolation» بتوقيع vince 2026-11-11T20:30:30+01:00؛ **لا ردود تعليقات جديدة** (آخر مراجعة للمالك 2026-11-05 تطلب إمساك e7f5f55 بانتظار قرار #179) — إبلاغ فوري وفق القاعدة الدائمة، لا إجراء منا ولا رد.
-- #222 تعليقان مطابقان للأساس عبر state/monitor.json (المؤسس على API في تشغيل monitor 2026-11-12T00:00:44Z) و#227 رأسه ثابت 9ac0f544 عبر ls-remote.
+- `scripts/report_lint.py`: ERROR (أ،ب،ج،د،هـ،و) تُفشل التقرير وexit 1؛ WARN (ز،ح) تُسجَّل في قسم `warn:` بالسطر الجديد `lint: PASS (a,b,c,d,e,f) | warn: …` ولا تُفشل وحدها. أسطر v7.5 القديمة تُقبل بتسامح في --check (اختبار L9).
+- عيّنة الستّ (2 لكل من ب/ز/ح من أساس الـ13): **الحكم في كلٍّ منها: اختلاف أعراف/زمني، صفر عيوب فعلية** — التفاصيل الستّة في `eval/supervisor-defects/lint/results/calibration-2026-11-12.md` (ب: ذكر تنسيقي داخل code-span s48-96 + ادعاء front-matter دليله في المتن s49-9؛ ز: `head_pushed` مكافئ وظيفي s48 + ALERT سجل حدث؛ ح: مسار صندوق موصوف نصًا s48 + ملفان وُجدا وقت الكتابة وحُذفا لاحقًا s51 عبر 19abab9→d48ad07).
+- الضبط المُنفَّذ: ح يُشترط من تقارير v7.5 فصاعدًا (كشف العصر من `directive:`/التاريخ ≥20261112)؛ ز يُحذَّر فقط مع ادعاء حالة حالية وبلا مرساة مكافئة (`head_pushed`، `origin/main=<sha>`، شكل سجل حدث)؛ ب: سقوط front-matter يبحث الدليل في المتن + استثناء الذكر التنسيقي/العناوين/المنفي.
+- القياس الرجعي بعد الضبط (بيانات فقط، لا تعديل رجعي): **صفر بنود** على 9 ملفات outbox (كان 13 قبل الضبط). الاختبارات 51/51 مع L1b/L1c للمعايرة.
 
-## 2) report-lint (البند 1 — الأولوية الأولى)
-- `scripts/report_lint.py` حتمي للبنود أ–ح، يُلحق سطر `lint:` برأس التقرير داخل front-matter؛ أوضاع --fix/--check/--json؛ الخطاف المركّب (CJK على الأدلة المبوّبة + key-guard + report-lint) عبر `scripts/hooks/install-pre-commit.sh` — canary الرفض نجح فعليًا؛ خطوتا CI في `.github/workflows/team-watcher.yml` وبوابة workflow-schema خضراء.
-- fixtures لكل بند إيجابي/سلبي (16 ملفًا في `eval/supervisor-defects/lint/fixtures/`، مولّدة بـ `scripts/gen_lint_fixtures.sh`)؛ **الاختبارات offline 37/37** (`team/scripts/test-report-lint.py`).
-- **القياس على التقارير السابقة (8 ملفات، بلا تعديل رجعي): 8/8 فيها عيب — 13 إصابة (ب=3، ز=5، ح=5)** — `eval/supervisor-defects/lint/results/lint-baseline-2026-11-12.json`.
+## 2) تشخيص الـprobe (API عام بلا توكن) والإصلاح
 
-## 3) نقل الأصناف إلى lint وإعادة قياس الظل (البند 1-أخيرًا + 2)
-- جدول النقل: `eval/supervisor-defects/lint/results/lint-transfer-2026-11-12.md` — **أ/د/هـ/ز/ح انتقلت حتميًا إلى lint**؛ ب/و جزئيًا؛ **ج يبقى صنف ظل** (مرجع .diff خارج كتل مسوّرة)؛ lint يلغي إنذاري ح الكاذبين المسجلين للظل على ضابطين نظيفين (فجوة negation-veto).
-- المجموعة الثانية لأصناف الحكم: `eval/supervisor-defects/cases-2/` — 12 حالة (8 معيبة + 4 ضوابط) تغطي الأصناف الخمسة بأدلة commit (02065f0/b00393a، e6a96c3، df2b427، 4f766fb) + حقن موسومة؛ الظل استشاري بلا صلاحية، وشرط الترقية (recall ≥ 0.85 وprecision ≥ 0.9 لثلاثة أسابيع) يُقاس عليها عند الـdispatch؛ **ترتيب المزوّدين لم يُلمس**.
+- تشغيلات `decider-space-probe.yml`: **تشغيلان مجدولان (event=schedule) ناجحان**: 2026-11-11T14:26:29Z و2026-11-12T00:45:53Z — يصحّح ما سُجّل سابقًا عن «صفر تشغيلات مجدولة»؛ كلاهما كتب status=unconfigured.
+- الجدولة مفعّلة على الفرع الافتراضي (cron `17 */6 * * *` على origin/main) والـjob مربوط `environment: supervisor` والـenvironment موجود على المستودع — **الربط سليم كما هو**.
+- الخلاصة: **قيمة DECIDER_API_KEY غائبة داخل environment `supervisor`** (كلا التشغيلين رأيا المفتاح غائبًا) — إضافة القيمة من طرفك (environment هو المسار المفضل وفق قاعدة الأسرار v7.5-4؛ أو سر مستوى مستودع). لا أملك إنشاء الأسرار.
+- التحقق بتشغيل dispatch واحد: معلّق على وصول التوكن (البند 0).
+- فصل الحالة (مُنفَّذ في `scripts/report_status.py`): STATUS الأساسي يستثني مكوّنات التجربة ⇒ **GREEN**، وسطر مستقل `decider-pilot: UNCONFIGURED — …` فوق.
 
-## 4) decider (البند 3 — probe-only)
-- `eval/decider-cases/` — **44 حالة موسومة بيد الوكيل** (T1=34/T2=10؛ ضبط 12/اختبار 32؛ إيجابيات for-us=16؛ حقن إخفاء تنبيه ×4) من أحداث حقيقية (رد #222، مراجعة #207، حركة رأس PR#207، تقاريرنا) — `scripts/gen_decider_cases.py` idempotent.
-- **قاعدة اللاتماثل في الكود**: `scripts/decider_gate.py` — alert = حتمي OR decider؛ الكتم من الحتمي فقط (muted_by_decider مستحيل بنيويًا)؛ سجل الاختلافات `state/decider-shadow.jsonl`؛ اختباراتها **9/9** (`team/scripts/test-decider-gate.py`).
-- **القياس الأولي**: `/health` = 200 خلال 0.70s [MEASURED مجهول] والسطح المحمي يرفض 401 بلا مفتاح؛ تشغيل 2026-11-11T04:19:05Z بالمفتاح: الفحوص الستة ok وnative 3.47s [MEASURED من state/decider-space.json]؛ التقييم الحي على الحالات (5 تكرارات + recall for-us الهدف ≥ 0.98) جاهز بـ`scripts/decider_eval.py` وينتظر DECIDER_API_KEY في البيئة (dispatch)؛ **ظل 14 يومًا يبدأ عند توفر المفتاح** — لا ترقية قبل اعتماد المالك.
+## 3) decider: خط الأساس الحتمي + الفرق عن النموذج + الحالات العشر
 
-## 5) الأسرار (البند 4)
-- `scripts/secret_ref_audit.py`: **4 مراجع secrets كلها داخل القائمة البيضاء** (supervisor-shadow: NVIDIA_API_KEY/OPENROUTER_API_KEY/GOOGLE_AI_API_KEY؛ decider-space-probe: DECIDER_API_KEY) + 1 config var (vars.DECIDER_BASE_URL مجرد إعداد)؛ **توكن HF السابق: صفر إصابات في الشجرة والتاريخ** (مطابقات `git log -S 'hf_'` كلها نثرية: hf_space/hf_lm)؛ المفتاح الجديد خارج git (ls-files بلا أي مسارات مفاتيح).
-- إعدادات environment (الفرع المسموح ومن يقرأ): نداء `GET /repos/hafid-logic/ginux-watch/environments` المجهول رُفض (HTTPError) — يتطلب توكنًا؛ مؤجل وفق البند 0 ولا يُطلب توكن.
+- `scripts/decider_eval.py --baseline`: قواعد حتمية مرتبة (R0 حقن-لا-كتم ⇒ تنبيه دائم؛ R1–R5 مالك/قناة/خيط/ذكر؛ R6–R8) على 34 حالة T1.
+- المقاييس مقابل التسميات اليدوية: **for-us recall = 1.000 (11/11 — الهدف ≥0.98 متحقق حتميًا)**؛ precision = 0.733 خام و**1.000 باستثناء صفوف الحقن الأربعة** (dc-029/030/031/040 — تنبيه بالتصميم، قاعدة اللاتماثل)؛ exact-label accuracy = 0.824 بخلافين صفيين داخل for-us (dc-002/dc-007 بين request/directed_at_us).
+- **الفرق عن النموذج: NOT_MEASURABLE صفر-معروف** — لا مفتاح حي في هذه الجلسة؛ يُقاس عند أول dispatch (سُجّل صراحةً في `eval/decider-cases/results/baseline-2026-11-12.json`). اختبارات الخط الأساس 7/7.
+- الحالات العشر للحكم مع تصنيفي وتعليلي (بلا تغيير تصنيفات): `reports/v7.6-decider-hard10-2026-11-12.md`.
+- الظل المتوازي 14 يومًا: مجهَّز (sجل الفروق `state/decider-shadow.jsonl` + بوابة `scripts/decider_gate.py`) — يبدأ فعلًا بعد إصلاح قيمة المفتاح وأول dispatch حي، تسجيلًا فقط مع ملخص أسبوعي للاختلافات.
 
-## 6) رأس الحالة والأحداث (البندان 5 و6)
-- `scripts/report_status.py` حسب الرأس أعلاه: **AMBER** بسبب بروب الـdecider unconfigured؛ المراقب طازج (00:00:44Z < عتبة 12h)؛ لا أسرار؛ لا lint FAIL حرج جديد.
-- وضع الأحداث وC2 مركونان وcron الأسبوعي كما هما؛ NVIDIA تنبيه بعد 3 إخفاقات متتالية واستنفاد RPD لـGoogle لا ينذر (قائم من v7.4-6 — اختبارات shadow-failure وheartbeat خضراء أدناه).
+## 4) الثوابت والدفع
 
-## 7) شذوذ مسجل
-- **decider-space-probe**: آخر تشغيل مسجل 2026-11-11T14:26:40Z = unconfigured («DECIDER_API_KEY is not set in this job») بعد تشغيل سليم 04:19:05Z — المفتاح غاب عن الjob؛ و**بلا سجلات لأي من نوافذ cron الأربع التالية** (06:17/12:17/18:17/00:17Z) — تتطلب نظرة مالك على Actions (القاعدة 25/27؛ أي وسم CLEAR ينتظر api.github.com مصادقًا — واجهة API محجوبة بحصة IP المشتركة هذه الجلسة).
-
-## 8) البوابات [MEASURED]
-- check_cjk (المشروع) PASS؛ tree-token-scan 0 إصابات؛ workflow-schema-check PASS (بعد تعديل team-watcher)؛ test-report-lint **37/37**؛ test-decider-gate **9/9**؛ test-llm-shadow T-tests ALL؛ test-shadow-failure-handling 35/35؛ test-heartbeat-check 7/7؛ test-push-retry-offline 6/6؛ secret_ref_audit PASS؛ فحص أسرار المُرحَّل 0 إصابات.
-
-## 9) المعلق
-- الدفع (ff واحد فوق f7c33a5 عند توكن/حدث/3 أيام)؛ الفخ الثاني على google عند حصة سليمة؛ أول تشغيل حي لـdecider_eval بالمفتاح ثم ظل 14 يومًا؛ قراءة environment المصادقة؛ نظرة المالك على جدولة decider-space-probe؛ اعتماد المالك لأي ترقية للظل أو الـdecider.
+- وضع الأحداث + C2 مركونان، cron الأسبوعي قائم، NVIDIA تنبّه بعد 3 إخفاقات متتالية، استنفاد RPD لـGoogle لا ينذر (v7.4-6 قائم بلا تغيير).
+- الدفع: لا توكن في هذه الجلسة ولم تكتمل 3 أيام من دفعة 2026-11-12T04:08Z ⇒ الدفعة معلّقة وفق البند 0 (ff جاهز فوق origin/main=af30e23).
+- التوقفات: لا ردود جديدة مرصودة — upstream main وPR#207 head وPR#227 head مطابقة للأساس عبر git ls-remote (04:3xZ)؛ تعليقات الخيوط من state الـCI (00:00:44Z: 222=2) — إعادة التحقق اللحظي بالعدّادات اصطدمت بنفاد حصة API المجهولة (60/ساعة مشتركة) — القيود موثقة.

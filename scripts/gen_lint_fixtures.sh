@@ -166,4 +166,42 @@ base_head: $BASE
 الملف \`scripts/report_lint.py\` متتبَّع؛ وما عدا ذلك يُوسم [sandbox] مثل \`upload/gh-pat.txt\`.
 EOF
 
-echo "fixtures written to $D (16 files)"
+# ---- v7.6-1 calibration fixtures (severity grades + era gating) ----
+
+cat > "$D/g2-pos.md" <<EOF
+---
+id: lint-fix-g2-pos
+---
+## بند (ز) إيجابي v7.6: ادعاء حالة حالية بلا base_head
+الحالة الحالية: المراقب يعمل والوضع الحالي مستقر بلا إنذارات جديدة.
+EOF
+
+cat > "$D/g2-neg.md" <<EOF
+---
+id: lint-fix-g2-neg
+---
+## بند (ز) سلبي v7.6: سجل تاريخي بلا ادعاء حالة حالية
+في 2026-11-08 سُجّلت حادثة قديمة وأُصلحت حينها؛ لا ادعاء عن الوقت الحاضر.
+EOF
+
+cat > "$D/h2-v75-pos.md" <<EOF
+---
+id: lint-fix-h2-v75-pos
+directive: v7.5
+base_head: $BASE
+---
+## بند (ح) إيجابي v7.6: تقرير من عصر v7.5 ومسار صندوق بلا وسم
+الإجراء يقرأ \`upload/notes.txt\` ثم يحدّث الحالة.
+EOF
+
+cat > "$D/h2-pre75-neg.md" <<EOF
+---
+id: lint-fix-h2-pre75-neg
+directive: v6.4
+base_head: $BASE
+---
+## بند (ح) سلبي v7.6: تقرير سابق لـv7.5 — بند ح غير مُشترط
+الإجراء يقرأ \`upload/notes.txt\` (أعراف ما قبل v7.5 — ح يُشترط من v7.5 فصاعدًا).
+EOF
+
+echo "fixtures written to $D (20 files)"
