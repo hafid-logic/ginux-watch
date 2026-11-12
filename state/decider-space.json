@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-12T00:45:59Z",
+ "updated": "2026-11-12T15:18:01Z",
  "schema": "decider-space-v1",
  "note": "DATA ONLY — no key, no request text; fixed probe input sha256_16 only",
  "base_url": "https://djihafwork-ginux-decider.hf.space",
@@ -46,6 +46,15 @@
   },
   {
    "at": "2026-11-12T00:45:59Z",
+   "status": "unconfigured",
+   "checks": {
+    "auth": "unconfigured",
+    "health": "unconfigured"
+   },
+   "latencies_s": {}
+  },
+  {
+   "at": "2026-11-12T15:18:01Z",
    "status": "unconfigured",
    "checks": {
     "auth": "unconfigured",
