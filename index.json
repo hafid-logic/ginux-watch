@@ -1,13 +1,34 @@
 {
- "generated_at_utc": "2026-11-12T18:05:58Z",
+ "generated_at_utc": "2026-11-12T23:31:17Z",
  "source_repo": "gmkurtzer/ginux",
- "item_count": 254,
+ "item_count": 255,
  "items": {
+  "262": {
+   "kind": "pr",
+   "title": "Relax architecture documentation checks",
+   "state": "closed",
+   "merged_at": "2026-11-12T22:36:19Z",
+   "files": [
+    "scripts/check-architecture-doc.sh"
+   ],
+   "keywords": [
+    "architecture",
+    "check",
+    "checks",
+    "doc",
+    "260",
+    "documentation",
+    "prose",
+    "retain",
+    "review",
+    "without"
+   ]
+  },
   "261": {
    "kind": "pr",
    "title": "Gate 19: readable instance recipes and hooks",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-12T22:36:00Z",
    "files": [
     "Makefile",
     "README.md",
@@ -56,8 +77,8 @@
   "260": {
    "kind": "pr",
    "title": "Gate 18: clarify Ginux architecture and differentiation",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-12T22:04:31Z",
    "files": [
     "Makefile",
     "README.md",
@@ -6028,6 +6049,97 @@
   }
  },
  "keywords": {
+  "architecture": [
+   262,
+   260,
+   11,
+   10,
+   9
+  ],
+  "check": [
+   262,
+   260,
+   253,
+   241,
+   228,
+   217,
+   216,
+   204,
+   195,
+   189,
+   187,
+   181,
+   171,
+   169,
+   168,
+   165,
+   162,
+   160,
+   159,
+   158,
+   156,
+   153,
+   152,
+   142,
+   117,
+   90,
+   88,
+   87,
+   84,
+   61,
+   54,
+   51,
+   50,
+   49,
+   48,
+   47,
+   46,
+   44,
+   40,
+   11,
+   10,
+   9,
+   4,
+   3
+  ],
+  "checks": [
+   262,
+   250,
+   245,
+   241,
+   227,
+   222,
+   217,
+   216,
+   202,
+   54,
+   43
+  ],
+  "doc": [
+   262,
+   260
+  ],
+  "260": [
+   262
+  ],
+  "documentation": [
+   262,
+   260,
+   250
+  ],
+  "prose": [
+   262
+  ],
+  "retain": [
+   262,
+   248
+  ],
+  "review": [
+   262
+  ],
+  "without": [
+   262
+  ],
   "rocky": [
    261,
    209,
@@ -6164,55 +6276,6 @@
    8,
    5
   ],
-  "check": [
-   260,
-   253,
-   241,
-   228,
-   217,
-   216,
-   204,
-   195,
-   189,
-   187,
-   181,
-   171,
-   169,
-   168,
-   165,
-   162,
-   160,
-   159,
-   158,
-   156,
-   153,
-   152,
-   142,
-   117,
-   90,
-   88,
-   87,
-   84,
-   61,
-   54,
-   51,
-   50,
-   49,
-   48,
-   47,
-   46,
-   44,
-   40,
-   11,
-   10,
-   9,
-   4,
-   3
-  ],
-  "documentation": [
-   260,
-   250
-  ],
   "evidence": [
    260,
    227
@@ -6220,19 +6283,10 @@
   "gvisor": [
    260
   ],
-  "architecture": [
-   260,
-   11,
-   10,
-   9
-  ],
   "compatibility": [
    260
   ],
   "deterministic": [
-   260
-  ],
-  "doc": [
    260
   ],
   "explain": [
@@ -6701,18 +6755,6 @@
    69,
    66
   ],
-  "checks": [
-   250,
-   245,
-   241,
-   227,
-   222,
-   217,
-   216,
-   202,
-   54,
-   43
-  ],
   "everything": [
    250
   ],
@@ -6812,9 +6854,6 @@
    42,
    41,
    9
-  ],
-  "retain": [
-   248
   ],
   "upstream": [
    248,
