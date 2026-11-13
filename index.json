@@ -1,8 +1,197 @@
 {
- "generated_at_utc": "2026-11-13T15:16:58Z",
+ "generated_at_utc": "2026-11-13T21:54:36Z",
  "source_repo": "gmkurtzer/ginux",
- "item_count": 265,
+ "item_count": 272,
  "items": {
+  "279": {
+   "kind": "pr",
+   "title": "fix(init): track native console descriptors across exec and shared tables",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    "crates/ginux-init/src/main.rs",
+    "scripts/test-native-supervision.py",
+    "tests/fixtures/native-fixture.c"
+   ],
+   "keywords": [
+    "console",
+    "exec",
+    "descriptor",
+    "write",
+    "close",
+    "descriptors",
+    "dev",
+    "now",
+    "they",
+    "thread"
+   ]
+  },
+  "278": {
+   "kind": "pr",
+   "title": "fix(init): classify console writes by every tracked console descriptor",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    "crates/ginux-init/src/main.rs",
+    "scripts/test-native-supervision.py",
+    "tests/fixtures/native-fixture.c"
+   ],
+   "keywords": [
+    "console",
+    "write",
+    "descriptor",
+    "device",
+    "before",
+    "241",
+    "console_fds",
+    "contract",
+    "deny",
+    "dev"
+   ]
+  },
+  "277": {
+   "kind": "pr",
+   "title": "fix(core): give every mediated systemd syscall an audit surface",
+   "state": "closed",
+   "merged_at": "2026-11-13T18:02:18Z",
+   "files": [
+    "crates/ginux-core/src/lib.rs"
+   ],
+   "keywords": [
+    "denied",
+    "surface",
+    "audit",
+    "execve",
+    "image",
+    "immutable",
+    "prctl",
+    "statfs",
+    "calls",
+    "capget"
+   ]
+  },
+  "276": {
+   "kind": "pr",
+   "title": "fix(init): reissue a native clone3 abandoned with ERESTARTNOINTR",
+   "state": "closed",
+   "merged_at": "2026-11-13T17:58:57Z",
+   "files": [
+    "Makefile",
+    "crates/ginux-init/src/main.rs",
+    "crates/ginux-init/src/native_clone.rs",
+    "scripts/test-native-clone-restart.py",
+    "tests/fixtures/native-fixture.c"
+   ],
+   "keywords": [
+    "513",
+    "clone3",
+    "signal",
+    "call",
+    "runs",
+    "back",
+    "before",
+    "caller",
+    "native",
+    "replay"
+   ]
+  },
+  "275": {
+   "kind": "pr",
+   "title": "fix(init): keep the paranoid yield broker alive across signals",
+   "state": "closed",
+   "merged_at": "2026-11-13T17:55:26Z",
+   "files": [
+    "Makefile",
+    "crates/ginux-init/src/main.rs",
+    "scripts/test-native-yield-broker.py",
+    "tests/fixtures/native-fixture.c"
+   ],
+   "keywords": [
+    "broker",
+    "receive",
+    "before",
+    "enoent",
+    "yield",
+    "instance",
+    "after",
+    "audit",
+    "eintr",
+    "record"
+   ]
+  },
+  "274": {
+   "kind": "pr",
+   "title": "fix(init): write back translated pid selectors at native exit",
+   "state": "closed",
+   "merged_at": "2026-11-13T18:06:27Z",
+   "files": [
+    "crates/ginux-init/src/main.rs",
+    "scripts/test-native-supervision.py",
+    "tests/fixtures/native-fixture.c"
+   ],
+   "keywords": [
+    "pid",
+    "rdi",
+    "virtual",
+    "stop",
+    "host",
+    "back",
+    "exit",
+    "kill",
+    "native",
+    "pidfd_open"
+   ]
+  },
+  "273": {
+   "kind": "pr",
+   "title": "Gate 25: add declarative operator CLI",
+   "state": "closed",
+   "merged_at": "2026-11-13T16:37:12Z",
+   "files": [
+    ".cargo/config.toml",
+    ".github/workflows/check.yml",
+    "Cargo.lock",
+    "Cargo.toml",
+    "Makefile",
+    "README.md",
+    "crates/ginux-cli/Cargo.toml",
+    "crates/ginux-cli/src/lib.rs",
+    "crates/ginux-cli/src/main.rs",
+    "docs/cli-command-model.md",
+    "docs/configurable-contract.md",
+    "hdae/PLAN.md",
+    "hdae/STATUS.md",
+    "hdae/gates-todo/25-declarative-cli-command-framework.md",
+    "scripts/check-cli-command-inventory.sh",
+    "scripts/demo-gate-25.sh",
+    "scripts/expect-gate19-systemd-login.exp",
+    "scripts/expect-systemd-login.exp",
+    "scripts/gate11-benchmark-guest.sh",
+    "scripts/gate11-guest-setup.sh",
+    "scripts/gate17-multi-instance-guest.sh",
+    "scripts/ginux-host-controller.sh",
+    "scripts/ginux-host-instance-helper.sh",
+    "scripts/install-ginux-host.sh",
+    "scripts/probe-gate11.sh",
+    "scripts/stage-systemd-instance.sh",
+    "scripts/test-cli.sh",
+    "scripts/test-config.sh",
+    "scripts/test-gate12-cli.sh",
+    "scripts/test-gate125-lock.sh"
+   ],
+   "keywords": [
+    "cli",
+    "gate",
+    "command",
+    "operator",
+    "public",
+    "runtime",
+    "check",
+    "helper",
+    "private",
+    "verification"
+   ]
+  },
   "272": {
    "kind": "pr",
    "title": "fix(init): reject extra arguments to fixed-arity runtime commands",
@@ -6303,7 +6492,332 @@
   }
  },
  "keywords": {
+  "console": [
+   279,
+   278
+  ],
+  "exec": [
+   279,
+   232,
+   191,
+   190,
+   185,
+   154,
+   126,
+   113,
+   102,
+   53
+  ],
+  "descriptor": [
+   279,
+   278,
+   232,
+   206,
+   205,
+   194,
+   154,
+   149,
+   147,
+   144,
+   88
+  ],
+  "write": [
+   279,
+   278,
+   241,
+   206,
+   205,
+   178,
+   132,
+   108,
+   88,
+   81
+  ],
+  "close": [
+   279,
+   232,
+   217,
+   195,
+   180,
+   151,
+   72,
+   68,
+   66
+  ],
+  "descriptors": [
+   279,
+   236,
+   232,
+   207,
+   88
+  ],
+  "dev": [
+   279,
+   278,
+   159
+  ],
+  "now": [
+   279,
+   272,
+   224,
+   215,
+   132,
+   127,
+   54
+  ],
+  "they": [
+   279
+  ],
+  "thread": [
+   279,
+   257,
+   234,
+   224,
+   184,
+   139,
+   138,
+   114,
+   99,
+   8
+  ],
+  "device": [
+   278,
+   237,
+   125,
+   30,
+   29,
+   28,
+   1
+  ],
+  "before": [
+   278,
+   276,
+   275,
+   236,
+   221,
+   218,
+   216,
+   213,
+   185,
+   181,
+   180,
+   151,
+   144,
+   128,
+   113,
+   101,
+   90,
+   82,
+   56,
+   53,
+   52,
+   49,
+   48,
+   28,
+   27,
+   20
+  ],
+  "241": [
+   278
+  ],
+  "console_fds": [
+   278
+  ],
+  "contract": [
+   278,
+   269,
+   258,
+   254,
+   251,
+   243,
+   237,
+   231,
+   230,
+   13
+  ],
+  "deny": [
+   278,
+   268
+  ],
+  "denied": [
+   277
+  ],
+  "surface": [
+   277,
+   161
+  ],
+  "audit": [
+   277,
+   275,
+   268,
+   244,
+   243,
+   231,
+   187,
+   186,
+   161,
+   155
+  ],
+  "execve": [
+   277
+  ],
+  "image": [
+   277,
+   216,
+   208,
+   201,
+   200,
+   199,
+   198,
+   180,
+   155,
+   150,
+   149,
+   148,
+   143,
+   140,
+   136,
+   134,
+   123,
+   122,
+   116,
+   115,
+   112,
+   110,
+   97,
+   96,
+   94,
+   90,
+   89,
+   83,
+   54,
+   27,
+   18,
+   16
+  ],
+  "immutable": [
+   277
+  ],
+  "prctl": [
+   277
+  ],
+  "statfs": [
+   277
+  ],
+  "calls": [
+   277
+  ],
+  "capget": [
+   277
+  ],
+  "513": [
+   276
+  ],
+  "clone3": [
+   276,
+   245
+  ],
+  "signal": [
+   276,
+   238,
+   213,
+   212,
+   191,
+   190,
+   177,
+   176,
+   161,
+   135,
+   130,
+   129,
+   111,
+   105
+  ],
+  "call": [
+   276,
+   71
+  ],
+  "runs": [
+   276,
+   203,
+   182,
+   162
+  ],
+  "back": [
+   276,
+   274,
+   88
+  ],
+  "caller": [
+   276,
+   129,
+   105
+  ],
+  "native": [
+   276,
+   274,
+   272,
+   271,
+   268,
+   266,
+   265,
+   264,
+   263,
+   257,
+   247,
+   246,
+   244,
+   243,
+   242,
+   238,
+   236,
+   234,
+   228,
+   226,
+   225,
+   219,
+   215,
+   207,
+   205,
+   204,
+   203,
+   184,
+   183,
+   182,
+   176,
+   154,
+   153,
+   84,
+   82,
+   39,
+   14
+  ],
+  "replay": [
+   276
+  ],
+  "broker": [
+   275
+  ],
+  "receive": [
+   275
+  ],
+  "enoent": [
+   275,
+   146,
+   143,
+   123,
+   120,
+   118,
+   116,
+   115,
+   112
+  ],
+  "yield": [
+   275,
+   257
+  ],
   "instance": [
+   275,
    272,
    266,
    261,
@@ -6326,12 +6840,239 @@
    232,
    207
   ],
+  "after": [
+   275,
+   267,
+   256,
+   254,
+   247,
+   228,
+   216,
+   210,
+   169,
+   164,
+   149,
+   139,
+   120,
+   113,
+   102,
+   84,
+   70,
+   51,
+   50,
+   28,
+   25
+  ],
+  "eintr": [
+   275
+  ],
+  "record": [
+   275,
+   268,
+   187,
+   186,
+   107
+  ],
+  "pid": [
+   274,
+   267,
+   214,
+   126,
+   102
+  ],
+  "rdi": [
+   274
+  ],
+  "virtual": [
+   274,
+   252,
+   224,
+   214
+  ],
+  "stop": [
+   274,
+   226,
+   225,
+   213,
+   212,
+   204,
+   203,
+   185,
+   177
+  ],
+  "host": [
+   274,
+   270,
+   259,
+   251,
+   248,
+   247,
+   245,
+   242,
+   238,
+   237,
+   236,
+   229,
+   219,
+   215,
+   214,
+   203,
+   202,
+   201,
+   200,
+   199,
+   198,
+   195,
+   194,
+   183,
+   125,
+   92,
+   86
+  ],
+  "exit": [
+   274,
+   242,
+   215,
+   214,
+   211,
+   203,
+   201,
+   173,
+   171,
+   170,
+   169,
+   168,
+   165,
+   162,
+   130,
+   111
+  ],
+  "kill": [
+   274,
+   226,
+   212,
+   176,
+   160,
+   159,
+   129,
+   105
+  ],
+  "pidfd_open": [
+   274
+  ],
+  "cli": [
+   273,
+   253,
+   235,
+   217
+  ],
+  "gate": [
+   273,
+   267,
+   266,
+   265,
+   264,
+   263,
+   259,
+   257,
+   255,
+   254,
+   253,
+   252,
+   251,
+   235,
+   231,
+   229,
+   228,
+   225,
+   210,
+   196,
+   181,
+   172
+  ],
+  "command": [
+   273,
+   165,
+   154,
+   6
+  ],
+  "operator": [
+   273
+  ],
+  "public": [
+   273
+  ],
   "runtime": [
+   273,
    272,
    189,
    188,
    171,
    50
+  ],
+  "check": [
+   273,
+   262,
+   260,
+   253,
+   241,
+   228,
+   217,
+   216,
+   204,
+   195,
+   189,
+   187,
+   181,
+   171,
+   169,
+   168,
+   165,
+   162,
+   160,
+   159,
+   158,
+   156,
+   153,
+   152,
+   142,
+   117,
+   90,
+   88,
+   87,
+   84,
+   61,
+   54,
+   51,
+   50,
+   49,
+   48,
+   47,
+   46,
+   44,
+   40,
+   11,
+   10,
+   9,
+   4,
+   3
+  ],
+  "helper": [
+   273,
+   160,
+   159
+  ],
+  "private": [
+   273,
+   245,
+   104
+  ],
+  "verification": [
+   273,
+   266,
+   230,
+   70,
+   36
   ],
   "toml": [
    272,
@@ -6423,51 +7164,6 @@
    8,
    5
   ],
-  "native": [
-   272,
-   271,
-   268,
-   266,
-   265,
-   264,
-   263,
-   257,
-   247,
-   246,
-   244,
-   243,
-   242,
-   238,
-   236,
-   234,
-   228,
-   226,
-   225,
-   219,
-   215,
-   207,
-   205,
-   204,
-   203,
-   184,
-   183,
-   182,
-   176,
-   154,
-   153,
-   84,
-   82,
-   39,
-   14
-  ],
-  "now": [
-   272,
-   224,
-   215,
-   132,
-   127,
-   54
-  ],
   "already": [
    272,
    210,
@@ -6556,34 +7252,6 @@
    40,
    6
   ],
-  "host": [
-   270,
-   259,
-   251,
-   248,
-   247,
-   245,
-   242,
-   238,
-   237,
-   236,
-   229,
-   219,
-   215,
-   214,
-   203,
-   202,
-   201,
-   200,
-   199,
-   198,
-   195,
-   194,
-   183,
-   125,
-   92,
-   86
-  ],
   "rustc": [
    270
   ],
@@ -6654,17 +7322,6 @@
   "script": [
    270
   ],
-  "contract": [
-   269,
-   258,
-   254,
-   251,
-   243,
-   237,
-   231,
-   230,
-   13
-  ],
   "claude": [
    269,
    3
@@ -6711,28 +7368,9 @@
    269,
    118
   ],
-  "audit": [
-   268,
-   244,
-   243,
-   231,
-   187,
-   186,
-   161,
-   155
-  ],
   "reason": [
    268,
    197
-  ],
-  "record": [
-   268,
-   187,
-   186,
-   107
-  ],
-  "deny": [
-   268
   ],
   "unknown": [
    268,
@@ -6777,28 +7415,6 @@
    121,
    48
   ],
-  "after": [
-   267,
-   256,
-   254,
-   247,
-   228,
-   216,
-   210,
-   169,
-   164,
-   149,
-   139,
-   120,
-   113,
-   102,
-   84,
-   70,
-   51,
-   50,
-   28,
-   25
-  ],
   "service": [
    267,
    56,
@@ -6820,35 +7436,6 @@
   ],
   "credentials": [
    267
-  ],
-  "gate": [
-   267,
-   266,
-   265,
-   264,
-   263,
-   259,
-   257,
-   255,
-   254,
-   253,
-   252,
-   251,
-   235,
-   231,
-   229,
-   228,
-   225,
-   210,
-   196,
-   181,
-   172
-  ],
-  "pid": [
-   267,
-   214,
-   126,
-   102
   ],
   "reclamation": [
    267
@@ -6885,12 +7472,6 @@
    253,
    252,
    231
-  ],
-  "verification": [
-   266,
-   230,
-   70,
-   36
   ],
   "x86": [
    265
@@ -6953,52 +7534,6 @@
    11,
    10,
    9
-  ],
-  "check": [
-   262,
-   260,
-   253,
-   241,
-   228,
-   217,
-   216,
-   204,
-   195,
-   189,
-   187,
-   181,
-   171,
-   169,
-   168,
-   165,
-   162,
-   160,
-   159,
-   158,
-   156,
-   153,
-   152,
-   142,
-   117,
-   90,
-   88,
-   87,
-   84,
-   61,
-   54,
-   51,
-   50,
-   49,
-   48,
-   47,
-   46,
-   44,
-   40,
-   11,
-   10,
-   9,
-   4,
-   3
   ],
   "checks": [
    262,
@@ -7209,20 +7744,6 @@
    257,
    249
   ],
-  "thread": [
-   257,
-   234,
-   224,
-   184,
-   139,
-   138,
-   114,
-   99,
-   8
-  ],
-  "yield": [
-   257
-  ],
   "bench": [
    257,
    181,
@@ -7350,11 +7871,6 @@
    253,
    60
   ],
-  "cli": [
-   253,
-   235,
-   217
-  ],
   "rocky_ssh_port": [
    252
   ],
@@ -7371,11 +7887,6 @@
   ],
   "sysfs": [
    252
-  ],
-  "virtual": [
-   252,
-   224,
-   214
   ],
   "22510": [
    252
@@ -7591,9 +8102,6 @@
   "43090000947": [
    246
   ],
-  "clone3": [
-   245
-  ],
   "parent": [
    245,
    234,
@@ -7601,10 +8109,6 @@
    218,
    124,
    113
-  ],
-  "private": [
-   245,
-   104
   ],
   "arguments": [
    245,
@@ -7632,23 +8136,6 @@
    243,
    46
   ],
-  "exit": [
-   242,
-   215,
-   214,
-   211,
-   203,
-   201,
-   173,
-   171,
-   170,
-   169,
-   168,
-   165,
-   162,
-   130,
-   111
-  ],
   "sigchld": [
    242,
    130,
@@ -7671,16 +8158,6 @@
    101,
    67,
    66
-  ],
-  "write": [
-   241,
-   206,
-   205,
-   178,
-   132,
-   108,
-   88,
-   81
   ],
   "byte": [
    241,
@@ -7766,21 +8243,6 @@
   "images": [
    239
   ],
-  "signal": [
-   238,
-   213,
-   212,
-   191,
-   190,
-   177,
-   176,
-   161,
-   135,
-   130,
-   129,
-   111,
-   105
-  ],
   "commands": [
    238
   ],
@@ -7804,14 +8266,6 @@
   "contained": [
    237
   ],
-  "device": [
-   237,
-   125,
-   30,
-   29,
-   28,
-   1
-  ],
   "recipes": [
    237
   ],
@@ -7829,37 +8283,6 @@
    49,
    48,
    47
-  ],
-  "descriptors": [
-   236,
-   232,
-   207,
-   88
-  ],
-  "before": [
-   236,
-   221,
-   218,
-   216,
-   213,
-   185,
-   181,
-   180,
-   151,
-   144,
-   128,
-   113,
-   101,
-   90,
-   82,
-   56,
-   53,
-   52,
-   49,
-   48,
-   28,
-   27,
-   20
   ],
   "boundary": [
    236,
@@ -7919,43 +8342,11 @@
   "9f9fa416b1023adffe3c3b28aa9db323f099cbe7": [
    233
   ],
-  "close": [
-   232,
-   217,
-   195,
-   180,
-   151,
-   72,
-   68,
-   66
-  ],
-  "descriptor": [
-   232,
-   206,
-   205,
-   194,
-   154,
-   149,
-   147,
-   144,
-   88
-  ],
   "description": [
    232
   ],
   "duplicated": [
    232
-  ],
-  "exec": [
-   232,
-   191,
-   190,
-   185,
-   154,
-   126,
-   113,
-   102,
-   53
   ],
   "offsets": [
    232
@@ -8094,28 +8485,9 @@
   "2026": [
    227
   ],
-  "kill": [
-   226,
-   212,
-   176,
-   160,
-   159,
-   129,
-   105
-  ],
   "ptrace_kill": [
    226,
    225
-  ],
-  "stop": [
-   226,
-   225,
-   213,
-   212,
-   204,
-   203,
-   185,
-   177
   ],
   "native_fail": [
    226
@@ -8357,39 +8729,6 @@
    94,
    14
   ],
-  "image": [
-   216,
-   208,
-   201,
-   200,
-   199,
-   198,
-   180,
-   155,
-   150,
-   149,
-   148,
-   143,
-   140,
-   136,
-   134,
-   123,
-   122,
-   116,
-   115,
-   112,
-   110,
-   97,
-   96,
-   94,
-   90,
-   89,
-   83,
-   54,
-   27,
-   18,
-   16
-  ],
   "authority": [
    216
   ],
@@ -8616,11 +8955,6 @@
    203,
    139,
    102
-  ],
-  "runs": [
-   203,
-   182,
-   162
   ],
   "pipeline": [
    202
@@ -9147,11 +9481,6 @@
    165,
    164
   ],
-  "command": [
-   165,
-   154,
-   6
-  ],
   "demonstration": [
    165,
    164
@@ -9191,13 +9520,6 @@
    161,
    153
   ],
-  "surface": [
-   161
-  ],
-  "helper": [
-   160,
-   159
-  ],
   "lifecycle": [
    160,
    159
@@ -9220,9 +9542,6 @@
    159
   ],
   "continued": [
-   159
-  ],
-  "dev": [
    159
   ],
   "each": [
@@ -9397,16 +9716,6 @@
   ],
   "af_unix": [
    146
-  ],
-  "enoent": [
-   146,
-   143,
-   123,
-   120,
-   118,
-   116,
-   115,
-   112
   ],
   "pathname": [
    146
@@ -9652,10 +9961,6 @@
   ],
   "__wclone": [
    130
-  ],
-  "caller": [
-   129,
-   105
   ],
   "blocked": [
    129
@@ -10031,9 +10336,6 @@
    81,
    78
   ],
-  "back": [
-   88
-  ],
   "ovmf": [
    87
   ],
@@ -10260,9 +10562,6 @@
    72
   ],
   "wall": [
-   71
-  ],
-  "call": [
    71
   ],
   "frozen": [
