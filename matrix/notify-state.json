@@ -14,12 +14,12 @@
    "head227": null
   },
   "227": {
-   "state": "closed",
+   "state": "merged",
    "comments": 1,
    "last_comment_at": "2026-11-06T14:58:30Z",
    "head227": "31f82869febec090d8d9d918caf485068ce70067"
   }
  },
  "simulate_last_issue": 7,
- "updated": "2026-11-13T10:14:20Z"
+ "updated": "2026-11-13T17:44:12Z"
 }
