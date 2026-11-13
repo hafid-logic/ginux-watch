@@ -8,18 +8,18 @@
    "head227": null
   },
   "222": {
-   "state": "open",
-   "comments": 2,
-   "last_comment_at": "2026-11-06T14:58:29Z",
+   "state": "closed",
+   "comments": 4,
+   "last_comment_at": "2026-11-13T02:27:13Z",
    "head227": null
   },
   "227": {
-   "state": "open",
+   "state": "closed",
    "comments": 1,
    "last_comment_at": "2026-11-06T14:58:30Z",
-   "head227": "9ac0f544f7f1609cd5846e5ff97de96eff17f8cf"
+   "head227": "31f82869febec090d8d9d918caf485068ce70067"
   }
  },
  "simulate_last_issue": 7,
- "updated": "2026-11-12T22:28:58Z"
+ "updated": "2026-11-13T02:47:04Z"
 }
