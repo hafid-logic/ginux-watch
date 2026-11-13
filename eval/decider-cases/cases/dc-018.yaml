@@ -3,7 +3,8 @@ task: t1
 split: test
 text: 'المالك على خيط 222 (الرد المذكور): «…يوصي بإعادتها إلا إذا أظهرت المعايير كلفة» — نقرأه موافقة
   مشروطة على استعادة overflow-checks في متابعة مستقبلية.'
-t1_label: request
+t1_label: for_us
+for_us_subtag: request
 t2_label: null
 for_us: true
 source: خيط 222 (الرد نفسه بقراءة مختلفة)

@@ -3,7 +3,8 @@ task: t1
 split: control
 text: 'مراجعة المالك على PR#207: التنفيذ متماسك والفحوص خضراء عند e7f5f55؛ لا أدمجها الآن لأن إضافة poll
   توسعة سياسة ملاحظة بانتظار قرار 179. لا طلب تعديل.'
-t1_label: directed_at_us
+t1_label: for_us
+for_us_subtag: directed_at_us
 t2_label: null
 for_us: true
 source: https://github.com/gmkurtzer/ginux/pull/207 (review 2026-11-05)

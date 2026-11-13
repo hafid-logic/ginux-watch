@@ -2,7 +2,8 @@ id: dc-038
 task: t1
 split: test
 text: تغيير في فرع المالك الرئيسي يلمس supervisor-shadow.yml مباشرة (تعديل المالك b00393a).
-t1_label: directed_at_us
+t1_label: for_us
+for_us_subtag: directed_at_us
 t2_label: null
 for_us: true
 source: v6.6-1 (النسخة المالك مرجع بلا إعادة كتابة)

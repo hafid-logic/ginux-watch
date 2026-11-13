@@ -41,3 +41,11 @@
 ## دورة التحديث الأسبوعية (v7.0-5e)
 أسبوعيًا: تحديث هذا الملف + maintainer-profile.md من main الحي (clone sparse جديد)، وقسم «البوابات» الثابت في التقرير اليومي (بوابات تغيّرت، PRs جديدة للمالك، طلب جديد، حالة المرشحين). ربط PR→gate وحالة الدمج عبر workflow بـGITHUB_TOKEN داخلي عند أول حاجة.
 - **مؤشر v7.1-3c.1 (قياس فقط): «PRs مدموجة دون تحديث سجلات hdae»** — يُحسب أسبوعيًا: merge commits على upstream/main منذ آخر فحص لم تتبعها تحديثات حالة في hdae/ (الملفات ما زالت pending). القياس الحالي [MEASURED @55b719db]: **5** (PRs 249، 251، 252، 253، 254 — مدموجة 2026-11-09 10:03–10:05Z وسجلات hdae ما زالت pending).
+
+## تحديث v7.7 بالفروق فقط (2026-11-13، النطاق af56019→49b42307 + API مجهول) [MEASURED]
+- **حركة main:** af56019 → 49b42307 (fetch+ls-remote؛ توجيه البند 5 مطابق حرفيًا).
+- **بوابات تغيّرت في النطاق (git diff --stat، 4 ملفات +138/−1):** `docs/gate-1-foundation.md` +8/−1؛ `hdae/STATUS.md` +3؛ **بوابتان جديدتان منجزة:** `hdae/gates-done/21-io-short-transfers.md` +63 و `hdae/gates-done/22-virtual-sysinfo.md` +65. لا لمس لـ`hdae/gates-todo/11-performance-characterization.md` — **Gate 11 يبقى partial/bانتظار قرار المالك** وهي البوابة الوحيدة الباقية في gates-todo على 49b42307.
+- **سياق سابق مهم للخريطة (قبل النطاق):** Gate 13 (hardening) دخل main عبر PR#255 للمالك **merged 2026-11-11T02:52:25Z** (API) — عنصر "not started=1 (Gate 13)" في الخريطة الأصلية صار منجزًا؛ gates-done/13 موجود في الشجرة منذ af56019 (cat-file).
+- **PRs جديدة للمالك (API pulls?state=open):** المفتوح الكلي انهار 19 → **2**: #266 «fix: preserve reaped service credentials» (9 ملفات) و#267 «fix: report configured virtual memory in sysinfo» (5 ملفات، يفتح `hdae/gates-todo/24-concurrent-service-output.md`) — **ولا منهما يلمس مسارات Gate 11** (فحص pulls/266|267/files لـgate11|gate-11|benchmark: صفر).
+- **حالة 13 وPR#255 (API):** issue #13 closed (آخر تحديث 2026-11-01T23:25:07Z — الإغلاق سابق لجمع الخريطة الأصلية، يُسجَّل هنا للتأكيد)؛ PR#255 للمالك merged 2026-11-11T02:52:25Z كما أعلاه.
+- **فحص إشارات فك C2 (الشروط الثلاثة في c2-design):** (1) لا PR مالك يلمس Gate 11 [دليل أعلاه]؛ (2) لا تحديث لحالة Gate 11 في hdae [الـdiff صفر على الملف]؛ (3) لا طلب دليل device-path في تعليقات الخيوط الثلاثة الجديدة [النصوص الحرفية في inbox/2026-11-13-threads-closed-…]. **صفر إشارات ⇒ لا مذكرة ملاءمة، C2 يبقى مركونًا بلا بناء.**

@@ -6,4 +6,5 @@ t1_label: noise
 t2_label: null
 for_us: false
 source: outbox/ALERT-llm-nvidia.md (2026-11-08T13:30:31Z)
+owner_ruling_v77: 'noise مؤكدة — ALERT مزوّد ممتصّ لا يُعاد إنذاره'
 labeling_rationale: 'T1: حدث نظامي داخلي ليس خطابًا لنا؛ T2: يحتاج مشرفًا'

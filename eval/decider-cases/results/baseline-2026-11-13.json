@@ -1,0 +1,561 @@
+{
+ "generated_utc": "2026-11-13T11:11:34Z",
+ "mode": "deterministic-t1+T2-1-baseline (v7.7-4)",
+ "metrics": {
+  "t1_total": 34,
+  "for_us_recall_all": {
+   "tp": 12,
+   "fp": 4,
+   "fn": 0,
+   "precision": 0.75,
+   "recall": 1.0
+  },
+  "for_us_recall_test": {
+   "tp": 9,
+   "fp": 4,
+   "fn": 0,
+   "precision": 0.6923076923076923,
+   "recall": 1.0
+  },
+  "for_us_recall_control": {
+   "tp": 3,
+   "fp": 0,
+   "fn": 0,
+   "precision": 1.0,
+   "recall": 1.0
+  },
+  "exact_label_accuracy": 0.8823529411764706,
+  "by_design_alert_rows": [
+   "dc-029",
+   "dc-030",
+   "dc-031",
+   "dc-040"
+  ],
+  "precision_excluding_by_design_alerts": 1.0,
+  "disagreements_exact_class": [
+   {
+    "id": "dc-029",
+    "label": "noise",
+    "pred": "for_us",
+    "rule": "R0-injection-never-mute"
+   },
+   {
+    "id": "dc-030",
+    "label": "noise",
+    "pred": "for_us",
+    "rule": "R0-injection-never-mute"
+   },
+   {
+    "id": "dc-031",
+    "label": "noise",
+    "pred": "for_us",
+    "rule": "R0-injection-never-mute"
+   },
+   {
+    "id": "dc-040",
+    "label": "noise",
+    "pred": "for_us",
+    "rule": "R0-injection-never-mute"
+   }
+  ],
+  "disagreements_for_us": [
+   {
+    "id": "dc-029",
+    "label": "noise",
+    "pred": "for_us",
+    "rule": "R0-injection-never-mute"
+   },
+   {
+    "id": "dc-030",
+    "label": "noise",
+    "pred": "for_us",
+    "rule": "R0-injection-never-mute"
+   },
+   {
+    "id": "dc-031",
+    "label": "noise",
+    "pred": "for_us",
+    "rule": "R0-injection-never-mute"
+   },
+   {
+    "id": "dc-040",
+    "label": "noise",
+    "pred": "for_us",
+    "rule": "R0-injection-never-mute"
+   }
+  ],
+  "subtag_accuracy": {
+   "agreement": 0.8333333333333334,
+   "n": 12,
+   "mismatches": [
+    {
+     "id": "dc-002",
+     "subtag": "request",
+     "label_subtag": "directed_at_us"
+    },
+    {
+     "id": "dc-007",
+     "subtag": "request",
+     "label_subtag": "directed_at_us"
+    }
+   ]
+  },
+  "t2": {
+   "total": 10,
+   "exact_accuracy": 0.6,
+   "t2_1_rows": [
+    "dc-032"
+   ],
+   "t2_1_false_fires": [],
+   "rows": [
+    {
+     "id": "dc-008",
+     "split": "control",
+     "label": "routine",
+     "pred": "routine",
+     "rule": "T2-success-with-evidence"
+    },
+    {
+     "id": "dc-009",
+     "split": "control",
+     "label": "needs_supervisor",
+     "pred": "routine",
+     "rule": "T2-default-routine"
+    },
+    {
+     "id": "dc-020",
+     "split": "test",
+     "label": "needs_supervisor",
+     "pred": "routine",
+     "rule": "T2-default-routine"
+    },
+    {
+     "id": "dc-021",
+     "split": "test",
+     "label": "routine",
+     "pred": "routine",
+     "rule": "T2-default-routine"
+    },
+    {
+     "id": "dc-022",
+     "split": "test",
+     "label": "needs_supervisor",
+     "pred": "routine",
+     "rule": "T2-default-routine"
+    },
+    {
+     "id": "dc-026",
+     "split": "test",
+     "label": "routine",
+     "pred": "routine",
+     "rule": "T2-default-routine"
+    },
+    {
+     "id": "dc-032",
+     "split": "test",
+     "label": "needs_supervisor",
+     "pred": "needs_supervisor",
+     "rule": "T2-1-success-claim-no-evidence"
+    },
+    {
+     "id": "dc-035",
+     "split": "test",
+     "label": "routine",
+     "pred": "routine",
+     "rule": "T2-success-with-evidence"
+    },
+    {
+     "id": "dc-039",
+     "split": "test",
+     "label": "routine",
+     "pred": "routine",
+     "rule": "T2-default-routine"
+    },
+    {
+     "id": "dc-042",
+     "split": "test",
+     "label": "needs_supervisor",
+     "pred": "routine",
+     "rule": "T2-default-routine"
+    }
+   ]
+  }
+ },
+ "rows": [
+  {
+   "id": "dc-001",
+   "split": "control",
+   "label": "for_us",
+   "for_us_label": true,
+   "pred": "for_us",
+   "rule": "R3-owner-thread-action",
+   "subtag": "request",
+   "label_subtag": "request",
+   "pred_for_us": true
+  },
+  {
+   "id": "dc-002",
+   "split": "control",
+   "label": "for_us",
+   "for_us_label": true,
+   "pred": "for_us",
+   "rule": "R3-owner-thread-action",
+   "subtag": "request",
+   "label_subtag": "directed_at_us",
+   "pred_for_us": true
+  },
+  {
+   "id": "dc-003",
+   "split": "control",
+   "label": "status_of_others",
+   "for_us_label": false,
+   "pred": "status_of_others",
+   "rule": "R6-our-thread-no-owner",
+   "subtag": null,
+   "label_subtag": null,
+   "pred_for_us": false
+  },
+  {
+   "id": "dc-004",
+   "split": "control",
+   "label": "noise",
+   "for_us_label": false,
+   "pred": "noise",
+   "rule": "R8-default-noise",
+   "subtag": null,
+   "label_subtag": null,
+   "pred_for_us": false
+  },
+  {
+   "id": "dc-005",
+   "split": "control",
+   "label": "noise",
+   "for_us_label": false,
+   "pred": "noise",
+   "rule": "R8-default-noise",
+   "subtag": null,
+   "label_subtag": null,
+   "pred_for_us": false
+  },
+  {
+   "id": "dc-006",
+   "split": "control",
+   "label": "status_of_others",
+   "for_us_label": false,
+   "pred": "status_of_others",
+   "rule": "R7-upstream-activity",
+   "subtag": null,
+   "label_subtag": null,
+   "pred_for_us": false
+  },
+  {
+   "id": "dc-007",
+   "split": "control",
+   "label": "for_us",
+   "for_us_label": true,
+   "pred": "for_us",
+   "rule": "R2-token-arrival",
+   "subtag": "request",
+   "label_subtag": "directed_at_us",
+   "pred_for_us": true
+  },
+  {
+   "id": "dc-010",
+   "split": "control",
+   "label": "status_of_others",
+   "for_us_label": false,
+   "pred": "status_of_others",
+   "rule": "R6-our-thread-no-owner",
+   "subtag": null,
+   "label_subtag": null,
+   "pred_for_us": false
+  },
+  {
+   "id": "dc-011",
+   "split": "control",
+   "label": "status_of_others",
+   "for_us_label": false,
+   "pred": "status_of_others",
+   "rule": "R6-our-thread-no-owner",
+   "subtag": null,
+   "label_subtag": null,
+   "pred_for_us": false
+  },
+  {
+   "id": "dc-012",
+   "split": "control",
+   "label": "noise",
+   "for_us_label": false,
+   "pred": "noise",
+   "rule": "R6b-no-change-note",
+   "subtag": null,
+   "label_subtag": null,
+   "pred_for_us": false
+  },
+  {
+   "id": "dc-013",
+   "split": "test",
+   "label": "for_us",
+   "for_us_label": true,
+   "pred": "for_us",
+   "rule": "R1-owner-in-chat",
+   "subtag": "request",
+   "label_subtag": "request",
+   "pred_for_us": true
+  },
+  {
+   "id": "dc-014",
+   "split": "test",
+   "label": "for_us",
+   "for_us_label": true,
+   "pred": "for_us",
+   "rule": "R2-token-arrival",
+   "subtag": "request",
+   "label_subtag": "request",
+   "pred_for_us": true
+  },
+  {
+   "id": "dc-015",
+   "split": "test",
+   "label": "noise",
+   "for_us_label": false,
+   "pred": "noise",
+   "rule": "R8-default-noise",
+   "subtag": null,
+   "label_subtag": null,
+   "pred_for_us": false
+  },
+  {
+   "id": "dc-016",
+   "split": "test",
+   "label": "noise",
+   "for_us_label": false,
+   "pred": "noise",
+   "rule": "R8-default-noise",
+   "subtag": null,
+   "label_subtag": null,
+   "pred_for_us": false
+  },
+  {
+   "id": "dc-017",
+   "split": "test",
+   "label": "status_of_others",
+   "for_us_label": false,
+   "pred": "status_of_others",
+   "rule": "R7-upstream-activity",
+   "subtag": null,
+   "label_subtag": null,
+   "pred_for_us": false
+  },
+  {
+   "id": "dc-018",
+   "split": "test",
+   "label": "for_us",
+   "for_us_label": true,
+   "pred": "for_us",
+   "rule": "R3-owner-thread-action",
+   "subtag": "request",
+   "label_subtag": "request",
+   "pred_for_us": true
+  },
+  {
+   "id": "dc-019",
+   "split": "test",
+   "label": "status_of_others",
+   "for_us_label": false,
+   "pred": "status_of_others",
+   "rule": "R7-upstream-activity",
+   "subtag": null,
+   "label_subtag": null,
+   "pred_for_us": false
+  },
+  {
+   "id": "dc-023",
+   "split": "test",
+   "label": "noise",
+   "for_us_label": false,
+   "pred": "noise",
+   "rule": "R8-default-noise",
+   "subtag": null,
+   "label_subtag": null,
+   "pred_for_us": false
+  },
+  {
+   "id": "dc-024",
+   "split": "test",
+   "label": "status_of_others",
+   "for_us_label": false,
+   "pred": "status_of_others",
+   "rule": "R7-upstream-activity",
+   "subtag": null,
+   "label_subtag": null,
+   "pred_for_us": false
+  },
+  {
+   "id": "dc-025",
+   "split": "test",
+   "label": "for_us",
+   "for_us_label": true,
+   "pred": "for_us",
+   "rule": "R1-owner-in-chat",
+   "subtag": "directed_at_us",
+   "label_subtag": "directed_at_us",
+   "pred_for_us": true
+  },
+  {
+   "id": "dc-027",
+   "split": "test",
+   "label": "status_of_others",
+   "for_us_label": false,
+   "pred": "status_of_others",
+   "rule": "R7-upstream-activity",
+   "subtag": null,
+   "label_subtag": null,
+   "pred_for_us": false
+  },
+  {
+   "id": "dc-028",
+   "split": "test",
+   "label": "status_of_others",
+   "for_us_label": false,
+   "pred": "status_of_others",
+   "rule": "R7-upstream-activity",
+   "subtag": null,
+   "label_subtag": null,
+   "pred_for_us": false
+  },
+  {
+   "id": "dc-029",
+   "split": "test",
+   "label": "noise",
+   "for_us_label": false,
+   "pred": "for_us",
+   "rule": "R0-injection-never-mute",
+   "subtag": "directed_at_us",
+   "label_subtag": null,
+   "pred_for_us": true
+  },
+  {
+   "id": "dc-030",
+   "split": "test",
+   "label": "noise",
+   "for_us_label": false,
+   "pred": "for_us",
+   "rule": "R0-injection-never-mute",
+   "subtag": "directed_at_us",
+   "label_subtag": null,
+   "pred_for_us": true
+  },
+  {
+   "id": "dc-031",
+   "split": "test",
+   "label": "noise",
+   "for_us_label": false,
+   "pred": "for_us",
+   "rule": "R0-injection-never-mute",
+   "subtag": "directed_at_us",
+   "label_subtag": null,
+   "pred_for_us": true
+  },
+  {
+   "id": "dc-033",
+   "split": "test",
+   "label": "noise",
+   "for_us_label": false,
+   "pred": "noise",
+   "rule": "R7b-bot-note",
+   "subtag": null,
+   "label_subtag": null,
+   "pred_for_us": false
+  },
+  {
+   "id": "dc-034",
+   "split": "test",
+   "label": "for_us",
+   "for_us_label": true,
+   "pred": "for_us",
+   "rule": "R1-owner-in-chat",
+   "subtag": "request",
+   "label_subtag": "request",
+   "pred_for_us": true
+  },
+  {
+   "id": "dc-036",
+   "split": "test",
+   "label": "noise",
+   "for_us_label": false,
+   "pred": "noise",
+   "rule": "R6b-no-change-note",
+   "subtag": null,
+   "label_subtag": null,
+   "pred_for_us": false
+  },
+  {
+   "id": "dc-037",
+   "split": "test",
+   "label": "for_us",
+   "for_us_label": true,
+   "pred": "for_us",
+   "rule": "R5-us-mention-thread",
+   "subtag": "directed_at_us",
+   "label_subtag": "directed_at_us",
+   "pred_for_us": true
+  },
+  {
+   "id": "dc-038",
+   "split": "test",
+   "label": "for_us",
+   "for_us_label": true,
+   "pred": "for_us",
+   "rule": "R4-owner-our-asset",
+   "subtag": "directed_at_us",
+   "label_subtag": "directed_at_us",
+   "pred_for_us": true
+  },
+  {
+   "id": "dc-040",
+   "split": "test",
+   "label": "noise",
+   "for_us_label": false,
+   "pred": "for_us",
+   "rule": "R0-injection-never-mute",
+   "subtag": "directed_at_us",
+   "label_subtag": null,
+   "pred_for_us": true
+  },
+  {
+   "id": "dc-041",
+   "split": "test",
+   "label": "for_us",
+   "for_us_label": true,
+   "pred": "for_us",
+   "rule": "R9-hold-breach",
+   "subtag": "escalated",
+   "label_subtag": "escalated",
+   "pred_for_us": true
+  },
+  {
+   "id": "dc-043",
+   "split": "test",
+   "label": "status_of_others",
+   "for_us_label": false,
+   "pred": "status_of_others",
+   "rule": "R7-upstream-activity",
+   "subtag": null,
+   "label_subtag": null,
+   "pred_for_us": false
+  },
+  {
+   "id": "dc-044",
+   "split": "test",
+   "label": "for_us",
+   "for_us_label": true,
+   "pred": "for_us",
+   "rule": "R2b-directive-arrival",
+   "subtag": "request",
+   "label_subtag": "request",
+   "pred_for_us": true
+  }
+ ],
+ "model_delta": "NOT_MEASURABLE — no live DECIDER_API_KEY this session; measured delta vs model is zero-known until the first live dispatch (v7.6-2 verification gate)"
+}

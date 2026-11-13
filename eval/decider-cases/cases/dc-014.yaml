@@ -2,7 +2,8 @@ id: dc-014
 task: t1
 split: test
 text: 'توكن GitHub وصل نصًا في المحادثة: github_pat_11B7UU3HY0… (مقتطف) — للاستعمال اللحظي فقط.'
-t1_label: request
+t1_label: for_us
+for_us_subtag: request
 t2_label: null
 for_us: true
 source: المحادثة 2026-11-10 (v7.4-0 token event)

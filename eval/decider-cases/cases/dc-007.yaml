@@ -2,7 +2,8 @@ id: dc-007
 task: t1
 split: control
 text: 'توجيه v7.4 وصل نصًا في المحادثة: نفّذ محليًا وادفع دفعة واحدة عند وصول توكن.'
-t1_label: directed_at_us
+t1_label: for_us
+for_us_subtag: directed_at_us
 t2_label: null
 for_us: true
 source: directives/v7.4-20261110.md (sha256 26e65407)

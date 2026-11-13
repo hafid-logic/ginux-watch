@@ -2,7 +2,8 @@ id: dc-037
 task: t1
 split: test
 text: 'رصد: تعليق جديد فعلاً على خيط 222 من غير المالك يذكر مشروعنا بالاسم ويسأل عن PR#227.'
-t1_label: directed_at_us
+t1_label: for_us
+for_us_subtag: directed_at_us
 t2_label: null
 for_us: true
 source: 'فرضية حدث: إشارة مباشرة لنا في خيط مراقب'

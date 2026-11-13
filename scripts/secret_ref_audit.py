@@ -8,7 +8,7 @@ secret VALUES never live in this repository (environment `supervisor`).
 
 Whitelist (v7.5-4: supervisor-shadow + eval, plus the decider probe):
   supervisor-shadow.yml      NVIDIA_API_KEY, OPENROUTER_API_KEY, GOOGLE_AI_API_KEY
-  decider-space-probe.yml    DECIDER_API_KEY
+  decider-space-probe.yml    DECIDER_API_KEY, GH_DECIDER_API_KEY (v7.7-A fallback)
 
 Also reports (stdout, data-only): per-file reference inventory, and — when the
 GitHub API is reachable — the repository environments' protection settings.
@@ -28,7 +28,7 @@ WF = REPO / ".github" / "workflows"
 
 WHITELIST = {
     "supervisor-shadow.yml": {"NVIDIA_API_KEY", "OPENROUTER_API_KEY", "GOOGLE_AI_API_KEY"},
-    "decider-space-probe.yml": {"DECIDER_API_KEY"},
+    "decider-space-probe.yml": {"DECIDER_API_KEY", "GH_DECIDER_API_KEY"},
 }
 
 SECRET_REF = re.compile(r"\bsecrets\.([A-Za-z0-9_]+)")

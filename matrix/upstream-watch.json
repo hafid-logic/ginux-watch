@@ -23,42 +23,71 @@
  "threads_watch": {
   "222": {
    "state": "closed",
+   "state_changed_at": "2026-11-13T02:27:17Z",
    "comments": 4,
    "updated_at": "2026-11-13T02:27:17Z",
    "last_comment_at": "2026-11-13T02:27:13Z",
    "last_comment_author": "gmkurtzer",
-   "checked": "2026-11-13T10:14:16Z"
+   "checked": "2026-11-13T11:09:42Z"
   },
   "207": {
    "state": "closed",
+   "state_changed_at": "2026-11-13T02:58:34Z",
    "comments": 5,
    "updated_at": "2026-11-13T02:58:34Z",
    "last_comment_at": "2026-11-13T02:58:33Z",
    "last_comment_author": "gmkurtzer",
-   "checked": "2026-11-13T10:14:16Z"
+   "checked": "2026-11-13T11:09:42Z"
   },
   "227": {
-   "state": "closed",
+   "state": "merged",
+   "state_changed_at": "2026-11-13T02:27:02Z",
    "comments": 1,
    "updated_at": "2026-11-13T02:27:02Z",
    "last_comment_at": "2026-11-06T14:58:30Z",
    "last_comment_author": "gmkurtzer",
-   "checked": "2026-11-13T10:14:16Z"
+   "checked": "2026-11-13T11:09:42Z"
   }
  },
  "breaker_absorbed": {
   "207": {
-   "event": "gmkurtzer comment (4th) on PR #207 at 2026-11-07T16:29:20Z",
-   "first_detected": "2026-11-07T20:45Z (agent-b, matrix @7cb5d7e + ls-remote)",
-   "absorbed_at": "2026-11-07T21:30Z (session 51)",
-   "captured_in": "inbox/2026-11-07-watch-breaker-207-gmkurtzer-status.md",
-   "verbatim_body": "captured verbatim 2026-11-07T21:41:02Z via single unauthenticated GET (see inbox file; raw evidence work/results/W4-comment-try3.json)",
+   "event": "gmkurtzer closing comment 02:58:33Z — closed unmerged with structural reason (PTRACE_PEEKDATA snapshot vs live pollfd)",
+   "first_detected": "2026-11-13T10:52Z (session v7.7 — fetch + ls-remote + anonymous API)",
+   "absorbed_at": "2026-11-13T11:09:42Z (session v7.7, clause 0)",
+   "captured_in": "inbox/2026-11-13-threads-closed-222-207-227-gmkurtzer.md",
+   "verbatim_capture": "owner comments saved verbatim in UNTRUSTED blocks; raw API JSON session-local work/results/v77-*.json",
    "heads_at_capture": {
-    "upstream_main": "53a54addea67969abaa240ea478def1b94130eee",
-    "pr207_head": "5ae058f211905c6cb0c92a874e5bc97f333a23a3",
-    "pr227_head": "9ac0f544f7f1609cd5846e5ff97de96eff17f8cf"
+    "upstream_main": "49b42307",
+    "pr207_head": "b19e3ea3 (closed unmerged — not an ancestor of upstream/main)",
+    "pr227_head": "31f82869 (repaired head merged via 0c290040)"
    },
-   "status": "known \u2014 breaker back to ok; no reply, no reaction"
+   "status": "known — breaker back to ok; no reply, no reaction (fixed rules)"
+  },
+  "222": {
+   "event": "gmkurtzer recheck (01:36:28Z) + resolved-and-merged note (02:27:13Z); issue closed 02:27:17Z",
+   "first_detected": "2026-11-13T10:52Z (session v7.7 — fetch + ls-remote + anonymous API)",
+   "absorbed_at": "2026-11-13T11:09:42Z (session v7.7, clause 0)",
+   "captured_in": "inbox/2026-11-13-threads-closed-222-207-227-gmkurtzer.md",
+   "verbatim_capture": "owner comments saved verbatim in UNTRUSTED blocks; raw API JSON session-local work/results/v77-*.json",
+   "heads_at_capture": {
+    "upstream_main": "49b42307",
+    "pr207_head": "b19e3ea3 (closed unmerged — not an ancestor of upstream/main)",
+    "pr227_head": "31f82869 (repaired head merged via 0c290040)"
+   },
+   "status": "known — breaker back to ok; no reply, no reaction (fixed rules)"
+  },
+  "227": {
+   "event": "PR merged by owner 02:27:02Z after repair branch codex/repair-pr-227 (4b8d4d53) + CI wiring commit 31f82869",
+   "first_detected": "2026-11-13T10:52Z (session v7.7 — fetch + ls-remote + anonymous API)",
+   "absorbed_at": "2026-11-13T11:09:42Z (session v7.7, clause 0)",
+   "captured_in": "inbox/2026-11-13-threads-closed-222-207-227-gmkurtzer.md",
+   "verbatim_capture": "owner comments saved verbatim in UNTRUSTED blocks; raw API JSON session-local work/results/v77-*.json",
+   "heads_at_capture": {
+    "upstream_main": "49b42307",
+    "pr207_head": "b19e3ea3 (closed unmerged — not an ancestor of upstream/main)",
+    "pr227_head": "31f82869 (repaired head merged via 0c290040)"
+   },
+   "status": "known — breaker back to ok; no reply, no reaction (fixed rules)"
   }
  },
  "heartbeat": {

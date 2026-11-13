@@ -44,13 +44,19 @@ THREADS = (222, 207, 227)
 
 
 def watch_threads(state, now, out) -> None:
-    """Record comment count + last comment time per watched thread.
+    """Record thread state (open/closed/merged), last state change, comments.
 
     Read-only against the public upstream repo; never posts, never reacts
     (fixed rules). Snapshot lands in matrix/upstream-watch.json under
     "threads_watch"; deltas vs the previous snapshot are reported in `out`
     (and thus in the workflow commit summary). Runs on EVERY sweep,
     including unchanged-head and first-run paths.
+
+    v7.7-1: a thread STATE TRANSITION (open->closed/merged) is a first-class
+    watch-breaker trigger, emitted as its own "STATE-TRANSITION" line — same
+    severity as a new comment. "merged" comes from /pulls/{n} (issues only
+    know open/closed); "state_changed_at" records when the transition happened
+    (merged_at, else closed_at).
     """
     prev = state.get("threads_watch", {})
     snap = {}
@@ -65,8 +71,20 @@ def watch_threads(state, now, out) -> None:
             snap[str(n)] = prev.get(str(n), {"api_error": True, "checked": now})
             continue
         last = comments[-1] if comments else None
+        # v7.7-1: PR threads also report merged + when the state changed.
+        pull = None
+        if issue.get("pull_request"):
+            try:
+                pull = json.loads(gh("api", f"repos/{UPSTREAM}/pulls/{n}"))
+            except (subprocess.CalledProcessError, json.JSONDecodeError):
+                pull = None
+        merged = bool(pull and pull.get("merged"))
+        tstate = "merged" if merged else issue.get("state")
+        state_changed_at = (pull or {}).get("merged_at") if merged \
+            else issue.get("closed_at")
         snap[str(n)] = {
-            "state": issue.get("state"),
+            "state": tstate,
+            "state_changed_at": state_changed_at,
             "comments": issue.get("comments"),
             "updated_at": issue.get("updated_at"),
             "last_comment_at": last.get("created_at") if last else None,
@@ -88,6 +106,12 @@ def watch_threads(state, now, out) -> None:
             or cur.get("last_comment_at") != old.get("last_comment_at")
             or cur.get("state") != old.get("state")
         ):
+            if cur.get("state") != old.get("state"):
+                out.append(
+                    f"threads_watch #{n} STATE-TRANSITION: {old.get('state')}->"
+                    f"{cur.get('state')} at {cur.get('state_changed_at')} — "
+                    "watch-breaker trigger (v7.7-1, same severity as a comment)"
+                )
             out.append(
                 f"threads_watch #{n} CHANGED: comments {old.get('comments')}->"
                 f"{cur.get('comments')} last={cur.get('last_comment_at')} "

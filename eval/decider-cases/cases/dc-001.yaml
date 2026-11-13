@@ -3,7 +3,8 @@ task: t1
 split: control
 text: 'gmkurtzer على خيط 222: إزالة overflow-checks=true حدثت في انتقال البنية دون توثيق؛ يوصي بإعادتها
   كافتراضي أأمن ما لم تظهر كلفة أداء كبيرة.'
-t1_label: request
+t1_label: for_us
+for_us_subtag: request
 t2_label: null
 for_us: true
 source: https://github.com/gmkurtzer/ginux/issues/222 (رد المالك 2026-11-06)

@@ -35,8 +35,20 @@ d337713|2026-11-04|#152 codex/userspace-transition            |886f (استثن�
 - صدق الفشل-ثم-الإصلاح: تسجيل assertion فاشل أولًا ثم الإصلاح (Gate 8)؛ ledger "Planned commits:" مقابل "Actual commits:" بـSHAs (Gate 9.75).
 - مراحل البوابة: define → تنفيذ → evidence → record-PR → merge، كل مرحلة commit منفصل بنمط ثابت.
 
-## ما لا يمكن إثباته بلا API داخل Actions [UNVERIFIED]
-حالة merged/closed وأسباب الإغلاق لأي PR (منها #250)، تواريخ الفتح والمراجعات، من ضغط زر الدمج. المطلوب عند الحاجة: workflow بـGITHUB_TOKEN داخلي يجلب GET /repos/…/pulls/{n} ويكتب snapshot في المستودع.
+## تحديث v7.7 (2026-11-13): تشريح أول قبول — PR#227 [MEASURED git+API]
+- زمن الفتح→الدمج: 2026-11-06T12:44:22Z → 2026-11-13T02:27:02Z = **6 أيام 13 س 42 د** (created_at من API مجهول؛ merge commit 0c290040).
+- ما دخَل main من الـPR: **4 ملفات +25 فقط** (Cargo.toml overflow-checks=true، Makefile target test-release-overflow، check.yml سطر CI، tests/overflow_checks_release.rs) — ملف الاختبار دخل **حرفيًا byte-identical** مع approved/pr/2026-11-06-overflow-checks/ (diff فارغ).
+- ما أصلحه المالك بالضبط: (أ) **إصلاح الفرع القديم**: فرعنا كان أساسه main 3f2fe7df (11-06) فدمج main الحالي (3411d662) داخله عبر فرع `codex/repair-pr-227` (4b8d4d53، بنمط codex/repair-pr-226 أيضًا) وحل التعارضات؛ (ب) **أسلك CI الناقص**: commit واحد من عنده 31f82869 «ci: run release overflow regression» يضيف `make test-release-overflow` إلى check.yml — لا تغيير صياغة ولا محتوى في ملفاتنا؛ (ج) تعليقه 02:27:13Z على #222 يوثّق ذلك حرفيًا ("after maintainer repair, runs that regression in hosted CI instead of leaving it as a manual target").
+- التحقق على main الحالي (49b42307): Cargo.toml:25 overflow-checks=true ✓، check.yml:59 make test-release-overflow ✓، Makefile:125 الهدف ✓، ملف الاختبار موجود ✓ — **overflow-checks مفعّل واختبار الانحدار يعمل في CI**.
+
+### قواعد قبول جديدة مستخلصة (دليلها commit/PR/تعليق)
+6. **الفرع القديم يُصلَح لا يُرفض** — المالك يدمج main الحالي داخل فرع المساهم القديم عبر فرع `codex/repair-pr-N` ثم يدمجه؛ دليل: 4b8d4d53 (repair-pr-227) + نمط 92da42e1/19b7170e (repair-pr-226). ⇒ مساهمتنا القادمة: فرع طازج على رأس main لحظة البدء، والسقف الزمني للفرع المفتوح ~أسبوع قبل توقع الإصلاح.
+7. **إغلاق بلا دمج ≠ رفض الفكرة** — #207 أُغلقت unmerged (رأسها ليس سلفًا لmain) مع شكر صريح وسبب بنيوي دقيق (snapshot مقابل live pollfd) وبدون طلب إعادة فتح؛ دليل: تعليق 6842464248 + ancestry. ⇒ الإغلاق تسويغ اتجاهي، والفكرة تُقاس بمعاييرها لا بمصير الـPR.
+8. **المالك يُكمل سلسلة الدليل بنفسه** — أضاف ربط CI الذي غاب عن PR#227 بنفسه (31f82869) بدل إرجاع الـPR؛ دليل: المقارنة 9ac0f544→31f82869. ⇒ المساهمة المكتملة تتضمن أسلك CI يعمل لا هدف Makefile يدويًا فقط.
+9. **سرد حالة دقيق قبل وبعد** — تعليق recheck (01:36:28Z: "Nothing has been merged or closed") ثم تعليق تحديث فوري عند تغيّر الحالة (02:27:13Z: "Resolved and merged") — دليل: تعليقا #222. ⇒ تناقضات الحالة تُصحَّح منا فورًا بأسلوب مقيس، لا تُترك.
+
+## ما لا يمكن إثباته بلا API داخل Actions [تحديث v7.7]
+حالة merged/closed وأسباب الإغلاق **صارت قابلة للالتقاط على مستوى الجلسة**: API مجهول (حصة 60/h مشتركة، فُقدت مرات) + دليل git ancestry (merge-base --is-ancestor) — تطبّق v7.7: 222/207/227 closed/merged captured + baseline updated. النواقص المتبقية داخل CI بلا توكن: التقاط الدوري الآلي لحالات الخيوط صار مغطى بupstream-watch.py v7.7-1 (state/merged/state_changed_at + STATE-TRANSITION breaker) بعد الدفع القادم؛ تواريخ المراجعات و"من ضغط زر الدمج" لا تزال غير متاحة بلا توكن.
 
 ## استعمال الملف
 عند صياغة أي مساهمة مستقبلية للبوابات: مطلوب ملف تعريف بوابة بنفس الهيكل الـ12 + معايير قابلة للفشل + أوامر إعادة إنتاج بلا افتراض CI + إعلان حدود البيئة + تسجيل الفشل بصدق؛ والدمج/النشر قرار مالك حصريًا (قواعد 15/16 من AGENTS).

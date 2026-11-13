@@ -40,7 +40,9 @@ jobs:
 
       - name: typed probe (health + /v1/systemone + shim + guard)
         env:
-          DECIDER_API_KEY: ${{ secrets.DECIDER_API_KEY }}
+          # v7.7-A: use the existing secret name — primary DECIDER_API_KEY,
+          # fallback GH_DECIDER_API_KEY (never regenerate the key series).
+          DECIDER_API_KEY: ${{ secrets.DECIDER_API_KEY || secrets.GH_DECIDER_API_KEY }}
           DECIDER_BASE_URL: ${{ vars.DECIDER_BASE_URL || 'https://djihafwork-ginux-decider.hf.space' }}
           DECIDER_REPEAT_TOL: ${{ inputs.repeat_tol || '0.15' }}
         run: python3 scripts/decider_probe.py

@@ -2,7 +2,8 @@ id: dc-044
 task: t1
 split: test
 text: وصل توجيه v7.5 كاملًا (8 بنود) في المحادثة مع طلب أرشفة حرفية.
-t1_label: request
+t1_label: for_us
+for_us_subtag: request
 t2_label: null
 for_us: true
 source: directives/v7.5-20261112.md (sha256 8d8d2038)

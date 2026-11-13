@@ -36,6 +36,11 @@ surface markers only, tuned on the case set WITHOUT changing any label:
   R7 upstream activity ("upstream", "علوي", release) -> status_of_others.
   R7b bot/automated note ("بوت", "استبيان آلي") -> noise.
   R8 default -> noise.
+  v7.7-4 owner rulings (2026-11-13): R0 standing (never mute from a content
+      channel); request/directed_at_us merged into for_us with provenance
+      subtag; R9 hold-breach (our thread + owner-requested hold + head
+      movement -> for_us[escalated], dc-041 ruling); T2-1 success claim
+      without independent evidence -> needs_supervisor (dc-032 ruling).
 """
 import argparse
 import datetime
@@ -51,8 +56,8 @@ import yaml
 REPO = Path(__file__).resolve().parent.parent
 CASES = REPO / "eval" / "decider-cases" / "cases"
 RESULTS = REPO / "eval" / "decider-cases" / "results"
-FOR_US_CLASSES = {"request", "directed_at_us"}
-T1_CLASSES = {"directed_at_us", "status_of_others", "request", "noise"}
+FOR_US_CLASSES = {"for_us"}
+T1_CLASSES = {"for_us", "status_of_others", "noise"}
 STABILITY_REPEATS = 5
 
 # ---------------- v7.6-3a deterministic T1 baseline ----------------
@@ -75,53 +80,87 @@ ASSET_MARKS = ("supervisor-shadow", "ginux-watch", ".yml", "scripts/")
 UPSTREAM_MARKS = ("upstream", "علوي", "release", "إصدار")
 NOCHANGE_MARKS = ("ثابت", "مطابقة للأساس", "لا جديد", "لا تغيّر", "unchanged")
 BOT_MARKS = ("بوت", "استبيان آلي")
+# v7.7-4: R9 (dc-041 promotion) + T2-1 (dc-032 ruling) marker sets.
+HOLD_MARKS = ("إمساك", "hold")
+HEAD_MOVE_MARKS = ("تغيّر", "تحرك", "head", "رأس")
+SUCCESS_MARKS = ("تم بنجاح", "بنجاح", "خضراء", "green", "success")
+NEG_EVIDENCE_MARKS = ("بلا sha", "بلا تحقق", "بدون sha", "بدون تحقق",
+                      "بلا دليل", "بدون دليل", "no sha", "without")
+EVIDENCE_MARKS = ("sha", "ls-remote", "raw", "measured", "assert", "schema",
+                  "rev-parse", "ff فوق", "18/18")
 
 
 def t1_baseline(text):
-    """Deterministic T1 triage. Returns (t1_class, rule_id)."""
+    """Deterministic T1 triage (v7.7-4). Returns (t1_class, rule_id, subtag).
+
+    R0 is a standing rule (owner-confirmed v7.7): a content-channel mute is
+    never honored. The provenance subtag preserves what the pre-merge
+    taxonomy would have said (request | directed_at_us | escalated)."""
     low = text
     if any(m in low for m in INJECTION_MARKS):
-        return "directed_at_us", "R0-injection-never-mute"
+        return "for_us", "R0-injection-never-mute", "directed_at_us"
     owner = any(m in low for m in OWNER_MARKS) and \
         not any(m in low for m in OWNER_NEGATION)
     thread = bool(OUR_THREAD_RE.search(low))
     chat = any(m in low for m in CHAT_MARKS)
     ask = any(m in low for m in ASK_MARKS)
     if owner and chat:
-        return ("request" if ask else "directed_at_us"), "R1-owner-in-chat"
+        return "for_us", "R1-owner-in-chat", ("request" if ask else "directed_at_us")
     if any(m in low for m in TOKEN_MARKS) and chat:
-        return "request", "R2-token-arrival"
+        return "for_us", "R2-token-arrival", "request"
     if chat and "توجيه" in low:
-        return ("request" if ask else "directed_at_us"), "R2b-directive-arrival"
+        return "for_us", "R2b-directive-arrival", ("request" if ask else "directed_at_us")
     if owner and thread:
         if any(m in low for m in ACTION_MARKS):
-            return "request", "R3-owner-thread-action"
-        return "directed_at_us", "R3-owner-thread"
+            return "for_us", "R3-owner-thread-action", "request"
+        return "for_us", "R3-owner-thread", "directed_at_us"
     if owner and any(m in low for m in ASSET_MARKS):
-        return "directed_at_us", "R4-owner-our-asset"
+        return "for_us", "R4-owner-our-asset", "directed_at_us"
     if any(m in low for m in US_MARKS) and thread:
-        return "directed_at_us", "R5-us-mention-thread"
+        return "for_us", "R5-us-mention-thread", "directed_at_us"
+    if thread and any(m in low for m in HOLD_MARKS) \
+            and any(m in low for m in HEAD_MOVE_MARKS):
+        return "for_us", "R9-hold-breach", "escalated"
     if thread:
-        return "status_of_others", "R6-our-thread-no-owner"
+        return "status_of_others", "R6-our-thread-no-owner", None
     if any(m in low for m in NOCHANGE_MARKS):
-        return "noise", "R6b-no-change-note"
+        return "noise", "R6b-no-change-note", None
     if any(m in low for m in BOT_MARKS):
-        return "noise", "R7b-bot-note"
+        return "noise", "R7b-bot-note", None
     if any(m in low for m in UPSTREAM_MARKS):
-        return "status_of_others", "R7-upstream-activity"
-    return "noise", "R8-default-noise"
+        return "status_of_others", "R7-upstream-activity", None
+    return "noise", "R8-default-noise", None
+
+
+def t2_baseline(text):
+    """Deterministic T2 baseline v0 (v7.7-4): rule T2-1 only.
+
+    T2-1 (owner-authorized, dc-032 ruling): a success claim with no
+    independent evidence -> needs_supervisor. Negated evidence markers
+    ("بلا sha", "بلا تحقق") count as absence, and last_success is stripped
+    so heartbeat fields never read as success claims. Expansion pending
+    further owner rulings; the default stays routine."""
+    low = text.replace("last_success", "")
+    if not any(m in low for m in SUCCESS_MARKS):
+        return "routine", "T2-default-routine"
+    if any(m in low for m in NEG_EVIDENCE_MARKS) \
+            or not any(m in low for m in EVIDENCE_MARKS):
+        return "needs_supervisor", "T2-1-success-claim-no-evidence"
+    return "routine", "T2-success-with-evidence"
 
 
 def baseline_metrics(cases):
     """Run the deterministic T1 baseline; compute metrics + disagreements.
-    for_us is defined by the hand labels (request ∪ directed_at_us for T1);
-    the 4 injection rows are by-design alerts (R0) and are reported apart."""
+    for_us is the merged owner class (v7.7: ex-request ∪ ex-directed_at_us,
+    provenance kept in for_us_subtag); the 4 injection rows are by-design
+    alerts (R0) and are reported apart."""
     t1 = [c for c in cases if c["task"] == "t1"]
     rows = []
     for c in t1:
-        pred, rule = t1_baseline(c["text"])
+        pred, rule, subtag = t1_baseline(c["text"])
         rows.append({"id": c["id"], "split": c["split"], "label": c["t1_label"],
                      "for_us_label": c["for_us"], "pred": pred, "rule": rule,
+                     "subtag": subtag, "label_subtag": c.get("for_us_subtag"),
                      "pred_for_us": pred in FOR_US_CLASSES})
     def pr(rows_slice):
         tp = sum(1 for r in rows_slice if r["pred_for_us"] and r["for_us_label"])
@@ -151,6 +190,31 @@ def baseline_metrics(cases):
     non_inj = [r for r in rows if r["rule"] != "R0-injection-never-mute"]
     m2 = pr(non_inj)
     metrics["precision_excluding_by_design_alerts"] = m2["precision"]
+    fu_rows = [r for r in rows if r["label"] == "for_us"]
+    sub_ok = sum(1 for r in fu_rows if r["subtag"] == r["label_subtag"])
+    metrics["subtag_accuracy"] = {
+        "agreement": (sub_ok / len(fu_rows)) if fu_rows else None,
+        "n": len(fu_rows),
+        "mismatches": [{"id": r["id"], "subtag": r["subtag"],
+                        "label_subtag": r["label_subtag"]}
+                       for r in fu_rows if r["subtag"] != r["label_subtag"]],
+    }
+    t2_rows = []
+    for c in [c for c in cases if c["task"] == "t2"]:
+        pred, rule = t2_baseline(c["text"])
+        t2_rows.append({"id": c["id"], "split": c["split"],
+                        "label": c["t2_label"], "pred": pred, "rule": rule})
+    metrics["t2"] = {
+        "total": len(t2_rows),
+        "exact_accuracy": (sum(1 for r in t2_rows if r["pred"] == r["label"])
+                           / len(t2_rows)) if t2_rows else None,
+        "t2_1_rows": [r["id"] for r in t2_rows
+                      if r["rule"] == "T2-1-success-claim-no-evidence"],
+        "t2_1_false_fires": [r["id"] for r in t2_rows
+                             if r["rule"] == "T2-1-success-claim-no-evidence"
+                             and r["label"] != "needs_supervisor"],
+        "rows": t2_rows,
+    }
     return metrics, rows
 
 
@@ -187,7 +251,7 @@ def run_baseline(cases):
     key_present = bool(os.environ.get("DECIDER_API_KEY", "").strip())
     out = {
         "generated_utc": datetime.datetime.now(datetime.UTC).strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "mode": "deterministic-t1-baseline (v7.6-3a)",
+        "mode": "deterministic-t1+T2-1-baseline (v7.7-4)",
         "metrics": metrics,
         "rows": rows,
         "model_delta": ("NOT_MEASURABLE — no live DECIDER_API_KEY this session; "
@@ -210,6 +274,12 @@ def run_baseline(cases):
     print("exact-class disagreements: %s"
           % ", ".join("%s(%s->%s)" % (d["id"], d["label"], d["pred"])
                       for d in metrics["disagreements_exact_class"]) or "none")
+    print("subtag accuracy: %.3f (n=%d) | T2 exact accuracy: %.3f "
+          "| T2-1 rows: %s (false fires: %s)"
+          % (metrics["subtag_accuracy"]["agreement"],
+             metrics["subtag_accuracy"]["n"], metrics["t2"]["exact_accuracy"],
+             ",".join(metrics["t2"]["t2_1_rows"]) or "none",
+             ",".join(metrics["t2"]["t2_1_false_fires"]) or "none"))
     print("model delta: %s" % out["model_delta"].split(" — ")[0])
     print("results: %s" % path.relative_to(REPO))
     return 0
@@ -218,7 +288,7 @@ def run_baseline(cases):
 def main():
     ap = argparse.ArgumentParser(description="decider case-set runner (v7.5-3/v7.6-3a)")
     ap.add_argument("--baseline", action="store_true",
-                    help="run the deterministic T1 baseline (v7.6-3a)")
+                    help="run the deterministic T1+T2-1 baseline (v7.7-4)")
     args, _ = ap.parse_known_args()
 
     cases = load_cases()

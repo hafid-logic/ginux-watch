@@ -3,8 +3,10 @@ task: t1
 split: test
 text: 'git ls-remote: refs/pull/207/head تغيّر 5ae058f→b19e3ea3 بعد أن طلب المالك إمساك الرأس e7f5f55
   بانتظار قرار 179.'
-t1_label: status_of_others
+t1_label: for_us
+for_us_subtag: escalated
 t2_label: null
-for_us: false
+for_us: true
 source: '[MEASURED 2026-11-12] — الحدث الفعلي لهذه الجلسة'
+owner_ruling_v77: 'رُقّيت إلى for_us — انتقال حالة خيط لنا زناد قاطع'
 labeling_rationale: تعارض مع طلب إمساك صريح = علم للمشرف
