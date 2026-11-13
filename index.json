@@ -1,8 +1,176 @@
 {
- "generated_at_utc": "2026-11-13T06:11:56Z",
+ "generated_at_utc": "2026-11-13T15:16:58Z",
  "source_repo": "gmkurtzer/ginux",
- "item_count": 258,
+ "item_count": 265,
  "items": {
+  "272": {
+   "kind": "pr",
+   "title": "fix(init): reject extra arguments to fixed-arity runtime commands",
+   "state": "closed",
+   "merged_at": "2026-11-13T14:54:40Z",
+   "files": [
+    "crates/ginux-init/src/launch.rs",
+    "scripts/test-launch.py"
+   ],
+   "keywords": [
+    "instance",
+    "runtime",
+    "toml",
+    "mode",
+    "only",
+    "extra",
+    "ginux",
+    "native",
+    "now",
+    "already"
+   ]
+  },
+  "271": {
+   "kind": "pr",
+   "title": "fix(init): report the identity the workload actually runs as",
+   "state": "closed",
+   "merged_at": "2026-11-13T14:05:51Z",
+   "files": [
+    "README.md",
+    "crates/ginux-init/src/launch.rs",
+    "crates/ginux-init/src/main.rs",
+    "scripts/test-launch.py",
+    "scripts/test-native-supervision.py",
+    "scripts/test-native-vfs.sh",
+    "scripts/test-tracee-kill.py"
+   ],
+   "keywords": [
+    "native",
+    "tracee",
+    "1000",
+    "65534",
+    "run",
+    "launch",
+    "scripts",
+    "uid",
+    "gid",
+    "ginux"
+   ]
+  },
+  "270": {
+   "kind": "pr",
+   "title": "fix(scripts): let the security fuzzer build on a Linux host",
+   "state": "closed",
+   "merged_at": "2026-11-13T14:02:29Z",
+   "files": [
+    "scripts/fuzz-security.sh"
+   ],
+   "keywords": [
+    "build",
+    "fuzzer",
+    "security",
+    "cargo",
+    "host",
+    "rustc",
+    "rustflags",
+    "bound",
+    "linux",
+    "script"
+   ]
+  },
+  "269": {
+   "kind": "pr",
+   "title": "docs: regenerate the contract coverage table for getpgid and getsid",
+   "state": "closed",
+   "merged_at": "2026-11-13T13:50:27Z",
+   "files": [
+    "docs/abi-contract-coverage.md"
+   ],
+   "keywords": [
+    "contract",
+    "claude",
+    "docs",
+    "generated",
+    "output",
+    "coverage",
+    "getpgid",
+    "getsid",
+    "syscall",
+    "two"
+   ]
+  },
+  "268": {
+   "kind": "pr",
+   "title": "fix(init): finish native audit records before early denials",
+   "state": "closed",
+   "merged_at": "2026-11-13T13:47:56Z",
+   "files": [
+    "crates/ginux-init/src/main.rs",
+    "scripts/test-native-supervision.py",
+    "tests/fixtures/native-fixture.c"
+   ],
+   "keywords": [
+    "audit",
+    "native",
+    "reason",
+    "record",
+    "deny",
+    "unknown",
+    "result",
+    "waitid",
+    "denial",
+    "process"
+   ]
+  },
+  "267": {
+   "kind": "pr",
+   "title": "fix: preserve reaped service credentials for journal output",
+   "state": "closed",
+   "merged_at": "2026-11-13T14:45:52Z",
+   "files": [
+    "crates/ginux-init/src/main.rs",
+    "hdae/STATUS.md",
+    "hdae/gates-todo/24-concurrent-service-output.md",
+    "scripts/test-native-supervision.py",
+    "tests/fixtures/native-fixture.c"
+   ],
+   "keywords": [
+    "after",
+    "service",
+    "task",
+    "266",
+    "credential",
+    "credentials",
+    "gate",
+    "output",
+    "pid",
+    "reclamation"
+   ]
+  },
+  "266": {
+   "kind": "pr",
+   "title": "fix: report configured virtual memory in sysinfo",
+   "state": "closed",
+   "merged_at": "2026-11-13T14:45:21Z",
+   "files": [
+    "crates/ginux-init/src/launch.rs",
+    "crates/ginux-init/src/main.rs",
+    "crates/ginux-init/src/supervisor.rs",
+    "hdae/STATUS.md",
+    "hdae/gates-todo/23-virtual-sysinfo-systemd-compat.md",
+    "scripts/test-launch.py",
+    "scripts/test-native-supervision.py",
+    "tests/fixtures/launch-fixture.c",
+    "tests/fixtures/native-fixture.c"
+   ],
+   "keywords": [
+    "gate",
+    "sysinfo",
+    "configured",
+    "instance",
+    "launch",
+    "memory",
+    "native",
+    "regression",
+    "systemd",
+    "verification"
+   ]
+  },
   "265": {
    "kind": "pr",
    "title": "Emulate a deterministic private sysinfo view",
@@ -6135,7 +6303,131 @@
   }
  },
  "keywords": {
+  "instance": [
+   272,
+   266,
+   261,
+   259,
+   253,
+   248,
+   247,
+   246,
+   245,
+   244,
+   243,
+   242,
+   241,
+   238,
+   237,
+   236,
+   235,
+   234,
+   233,
+   232,
+   207
+  ],
+  "runtime": [
+   272,
+   189,
+   188,
+   171,
+   50
+  ],
+  "toml": [
+   272,
+   87
+  ],
+  "mode": [
+   272,
+   174,
+   144,
+   115,
+   79
+  ],
+  "only": [
+   272,
+   250,
+   226,
+   224,
+   223,
+   171,
+   156,
+   149,
+   135,
+   131,
+   107,
+   103,
+   102,
+   90,
+   89,
+   66,
+   9
+  ],
+  "extra": [
+   272
+  ],
+  "ginux": [
+   272,
+   271,
+   260,
+   255,
+   249,
+   241,
+   237,
+   235,
+   230,
+   227,
+   219,
+   215,
+   214,
+   205,
+   202,
+   194,
+   189,
+   187,
+   186,
+   184,
+   179,
+   178,
+   176,
+   165,
+   164,
+   161,
+   158,
+   157,
+   155,
+   136,
+   112,
+   111,
+   110,
+   106,
+   103,
+   99,
+   97,
+   96,
+   95,
+   94,
+   93,
+   92,
+   76,
+   71,
+   64,
+   61,
+   58,
+   57,
+   45,
+   42,
+   39,
+   18,
+   12,
+   8,
+   5
+  ],
   "native": [
+   272,
+   271,
+   268,
+   266,
    265,
    264,
    263,
@@ -6168,7 +6460,46 @@
    39,
    14
   ],
+  "now": [
+   272,
+   224,
+   215,
+   132,
+   127,
+   54
+  ],
+  "already": [
+   272,
+   210,
+   209,
+   140,
+   101
+  ],
+  "tracee": [
+   271,
+   226,
+   225,
+   221
+  ],
+  "1000": [
+   271,
+   10
+  ],
+  "65534": [
+   271
+  ],
+  "run": [
+   271,
+   250,
+   182,
+   148,
+   137,
+   122,
+   61
+  ],
   "launch": [
+   271,
+   266,
    265,
    264,
    263,
@@ -6188,32 +6519,87 @@
    156,
    153
   ],
-  "sysinfo": [
-   265,
-   219
-  ],
-  "gate": [
-   265,
-   264,
-   263,
-   259,
-   257,
-   255,
-   254,
-   253,
-   252,
-   251,
-   235,
-   231,
-   229,
-   228,
-   225,
-   210,
-   196,
-   181,
+  "scripts": [
+   271,
+   198,
+   173,
    172
   ],
+  "uid": [
+   271
+  ],
+  "gid": [
+   271
+  ],
+  "build": [
+   270,
+   240,
+   239,
+   211,
+   183,
+   182,
+   43
+  ],
+  "fuzzer": [
+   270
+  ],
+  "security": [
+   270,
+   255
+  ],
+  "cargo": [
+   270,
+   227,
+   61,
+   45,
+   44,
+   40,
+   6
+  ],
+  "host": [
+   270,
+   259,
+   251,
+   248,
+   247,
+   245,
+   242,
+   238,
+   237,
+   236,
+   229,
+   219,
+   215,
+   214,
+   203,
+   202,
+   201,
+   200,
+   199,
+   198,
+   195,
+   194,
+   183,
+   125,
+   92,
+   86
+  ],
+  "rustc": [
+   270
+  ],
+  "rustflags": [
+   270
+  ],
+  "bound": [
+   270,
+   231,
+   163,
+   146,
+   70,
+   47
+  ],
   "linux": [
+   270,
    265,
    264,
    263,
@@ -6265,17 +6651,112 @@
    9,
    8
   ],
-  "memory": [
-   265,
-   252,
-   220,
-   124,
-   80,
-   67,
-   46,
-   19
+  "script": [
+   270
+  ],
+  "contract": [
+   269,
+   258,
+   254,
+   251,
+   243,
+   237,
+   231,
+   230,
+   13
+  ],
+  "claude": [
+   269,
+   3
+  ],
+  "docs": [
+   269,
+   250
+  ],
+  "generated": [
+   269
+  ],
+  "output": [
+   269,
+   267,
+   228,
+   21,
+   20
+  ],
+  "coverage": [
+   269,
+   231
+  ],
+  "getpgid": [
+   269
+  ],
+  "getsid": [
+   269
+  ],
+  "syscall": [
+   269,
+   258,
+   251,
+   242,
+   240,
+   204,
+   203,
+   186,
+   162,
+   161,
+   62,
+   25
+  ],
+  "two": [
+   269,
+   118
+  ],
+  "audit": [
+   268,
+   244,
+   243,
+   231,
+   187,
+   186,
+   161,
+   155
+  ],
+  "reason": [
+   268,
+   197
+  ],
+  "record": [
+   268,
+   187,
+   186,
+   107
+  ],
+  "deny": [
+   268
+  ],
+  "unknown": [
+   268,
+   87
+  ],
+  "result": [
+   268,
+   155,
+   153,
+   101
+  ],
+  "waitid": [
+   268,
+   247,
+   130
+  ],
+  "denial": [
+   268,
+   254,
+   244,
+   231
   ],
   "process": [
+   268,
    265,
    234,
    219,
@@ -6295,6 +6776,121 @@
    126,
    121,
    48
+  ],
+  "after": [
+   267,
+   256,
+   254,
+   247,
+   228,
+   216,
+   210,
+   169,
+   164,
+   149,
+   139,
+   120,
+   113,
+   102,
+   84,
+   70,
+   51,
+   50,
+   28,
+   25
+  ],
+  "service": [
+   267,
+   56,
+   14
+  ],
+  "task": [
+   267,
+   219,
+   213,
+   212,
+   185,
+   177
+  ],
+  "266": [
+   267
+  ],
+  "credential": [
+   267
+  ],
+  "credentials": [
+   267
+  ],
+  "gate": [
+   267,
+   266,
+   265,
+   264,
+   263,
+   259,
+   257,
+   255,
+   254,
+   253,
+   252,
+   251,
+   235,
+   231,
+   229,
+   228,
+   225,
+   210,
+   196,
+   181,
+   172
+  ],
+  "pid": [
+   267,
+   214,
+   126,
+   102
+  ],
+  "reclamation": [
+   267
+  ],
+  "sysinfo": [
+   266,
+   265,
+   219
+  ],
+  "configured": [
+   266,
+   154
+  ],
+  "memory": [
+   266,
+   265,
+   252,
+   220,
+   124,
+   80,
+   67,
+   46,
+   19
+  ],
+  "regression": [
+   266,
+   228,
+   54
+  ],
+  "systemd": [
+   266,
+   261,
+   254,
+   253,
+   252,
+   231
+  ],
+  "verification": [
+   266,
+   230,
+   70,
+   36
   ],
   "x86": [
    265
@@ -6474,40 +7070,12 @@
    18,
    17
   ],
-  "systemd": [
-   261,
-   254,
-   253,
-   252,
-   231
-  ],
   "ubuntu": [
    261
   ],
   "hooks": [
    261,
    229
-  ],
-  "instance": [
-   261,
-   259,
-   253,
-   248,
-   247,
-   246,
-   245,
-   244,
-   243,
-   242,
-   241,
-   238,
-   237,
-   236,
-   235,
-   234,
-   233,
-   232,
-   207
   ],
   "root": [
    261,
@@ -6522,61 +7090,6 @@
   ],
   "examples": [
    261
-  ],
-  "ginux": [
-   260,
-   255,
-   249,
-   241,
-   237,
-   235,
-   230,
-   227,
-   219,
-   215,
-   214,
-   205,
-   202,
-   194,
-   189,
-   187,
-   186,
-   184,
-   179,
-   178,
-   176,
-   165,
-   164,
-   161,
-   158,
-   157,
-   155,
-   136,
-   112,
-   111,
-   110,
-   106,
-   103,
-   99,
-   97,
-   96,
-   95,
-   94,
-   93,
-   92,
-   76,
-   71,
-   64,
-   61,
-   58,
-   57,
-   45,
-   42,
-   39,
-   18,
-   12,
-   8,
-   5
   ],
   "evidence": [
    260,
@@ -6601,33 +7114,6 @@
    259,
    197,
    151
-  ],
-  "host": [
-   259,
-   251,
-   248,
-   247,
-   245,
-   242,
-   238,
-   237,
-   236,
-   229,
-   219,
-   215,
-   214,
-   203,
-   202,
-   201,
-   200,
-   199,
-   198,
-   195,
-   194,
-   183,
-   125,
-   92,
-   86
   ],
   "independent": [
    259,
@@ -6696,19 +7182,6 @@
   "module": [
    258
   ],
-  "syscall": [
-   258,
-   251,
-   242,
-   240,
-   204,
-   203,
-   186,
-   162,
-   161,
-   62,
-   25
-  ],
   "through": [
    258,
    205,
@@ -6716,16 +7189,6 @@
   ],
   "automatic": [
    258
-  ],
-  "contract": [
-   258,
-   254,
-   251,
-   243,
-   237,
-   231,
-   230,
-   13
   ],
   "control": [
    258,
@@ -6798,27 +7261,6 @@
   "adding": [
    256
   ],
-  "after": [
-   256,
-   254,
-   247,
-   228,
-   216,
-   210,
-   169,
-   164,
-   149,
-   139,
-   120,
-   113,
-   102,
-   84,
-   70,
-   51,
-   50,
-   28,
-   25
-  ],
   "attribution": [
    256
   ],
@@ -6843,9 +7285,6 @@
    255,
    191,
    114
-  ],
-  "security": [
-   255
   ],
   "main": [
    255,
@@ -6875,11 +7314,6 @@
   ],
   "maintenance": [
    254
-  ],
-  "denial": [
-   254,
-   244,
-   231
   ],
   "state": [
    254,
@@ -6954,32 +7388,6 @@
   "attached": [
    251
   ],
-  "run": [
-   250,
-   182,
-   148,
-   137,
-   122,
-   61
-  ],
-  "only": [
-   250,
-   226,
-   224,
-   223,
-   171,
-   156,
-   149,
-   135,
-   131,
-   107,
-   103,
-   102,
-   90,
-   89,
-   66,
-   9
-  ],
   "commit": [
    250,
    145,
@@ -6987,9 +7395,6 @@
    107,
    53,
    5
-  ],
-  "docs": [
-   250
   ],
   "green": [
    250
@@ -7142,10 +7547,6 @@
    152,
    151
   ],
-  "waitid": [
-   247,
-   130
-  ],
   "copy": [
    247,
    216,
@@ -7208,15 +7609,6 @@
   "arguments": [
    245,
    178
-  ],
-  "audit": [
-   244,
-   243,
-   231,
-   187,
-   186,
-   161,
-   155
   ],
   "pidfd": [
    244
@@ -7356,14 +7748,6 @@
    240,
    239,
    169
-  ],
-  "build": [
-   240,
-   239,
-   211,
-   183,
-   182,
-   43
   ],
   "dark": [
    240,
@@ -7579,16 +7963,6 @@
   "strict": [
    231
   ],
-  "bound": [
-   231,
-   163,
-   146,
-   70,
-   47
-  ],
-  "coverage": [
-   231
-  ],
   "could": [
    230,
    87
@@ -7598,11 +7972,6 @@
   ],
   "model": [
    230
-  ],
-  "verification": [
-   230,
-   70,
-   36
   ],
   "would": [
    230
@@ -7696,15 +8065,6 @@
    228,
    65
   ],
-  "output": [
-   228,
-   21,
-   20
-  ],
-  "regression": [
-   228,
-   54
-  ],
   "release": [
    227,
    222,
@@ -7733,19 +8093,6 @@
   ],
   "2026": [
    227
-  ],
-  "cargo": [
-   227,
-   61,
-   45,
-   44,
-   40,
-   6
-  ],
-  "tracee": [
-   226,
-   225,
-   221
   ],
   "kill": [
    226,
@@ -7842,13 +8189,6 @@
    99,
    98
   ],
-  "now": [
-   224,
-   215,
-   132,
-   127,
-   54
-  ],
   "page": [
    224,
    221,
@@ -7935,13 +8275,6 @@
   ],
   "uptime": [
    219
-  ],
-  "task": [
-   219,
-   213,
-   212,
-   185,
-   177
   ],
   "buffer": [
    219,
@@ -8080,11 +8413,6 @@
    215,
    163
   ],
-  "pid": [
-   214,
-   126,
-   102
-  ],
   "crates": [
    214,
    58
@@ -8161,12 +8489,6 @@
   ],
   "ptrace_o_exitkill": [
    210
-  ],
-  "already": [
-   210,
-   209,
-   140,
-   101
   ],
   "cached": [
    209
@@ -8365,11 +8687,6 @@
    199,
    198
   ],
-  "scripts": [
-   198,
-   173,
-   172
-  ],
   "backing": [
    198
   ],
@@ -8387,9 +8704,6 @@
   "gate3": [
    197,
    196
-  ],
-  "reason": [
-   197
   ],
   "missing": [
    197
@@ -8504,12 +8818,6 @@
   "sigkill": [
    190
   ],
-  "runtime": [
-   189,
-   188,
-   171,
-   50
-  ],
   "argc": [
    189,
    188
@@ -8540,11 +8848,6 @@
   ],
   "envp": [
    188
-  ],
-  "record": [
-   187,
-   186,
-   107
   ],
   "budget": [
    187,
@@ -8705,12 +9008,6 @@
   ],
   "duplicates": [
    175
-  ],
-  "mode": [
-   174,
-   144,
-   115,
-   79
   ],
   "plain": [
    174
@@ -8960,20 +9257,12 @@
   "action": [
    155
   ],
-  "result": [
-   155,
-   153,
-   101
-  ],
   "scenarios": [
    154
   ],
   "recipe": [
    154,
    153
-  ],
-  "configured": [
-   154
   ],
   "general": [
    154
@@ -9513,9 +9802,6 @@
   "swap": [
    118
   ],
-  "two": [
-   118
-  ],
   "tmp": [
    117,
    89
@@ -9751,16 +10037,10 @@
   "ovmf": [
    87
   ],
-  "unknown": [
-   87
-  ],
   "opensuse": [
    87
   ],
   "rustup": [
-   87
-  ],
-  "toml": [
    87
   ],
   "container": [
@@ -10141,10 +10421,6 @@
   ],
   "polls": [
    56
-  ],
-  "service": [
-   56,
-   14
   ],
   "honest": [
    55
@@ -10543,9 +10819,6 @@
   "reclassify": [
    11
   ],
-  "1000": [
-   10
-  ],
   "assertion": [
    10,
    4
@@ -10594,9 +10867,6 @@
    4
   ],
   "research": [
-   3
-  ],
-  "claude": [
    3
   ],
   "codex": [
