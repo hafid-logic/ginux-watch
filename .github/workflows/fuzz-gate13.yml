@@ -1,0 +1,207 @@
+name: fuzz-gate13
+
+# v1 (2026-11-13, v7.7-B2 item 2 / owner directive): run Gate 13's own
+# `make fuzz-security` targets (scripts/fuzz-security.sh + crates/security-fuzzer)
+# on CURRENT upstream main with a >=30min budget per target (the gate's default
+# is 5s/target). Dispatch-only, manual.
+#
+# Constraints honored verbatim [MEASURED on 49b42307]:
+#  - scripts/fuzz-security.sh REFUSES GINUX_FUZZ_SECONDS > 5 ("per-target fuzz
+#    duration exceeds Gate 13 bound"). We therefore drive the runner binary
+#    directly (same binary, same targets, same artifact naming, same artifact
+#    hygiene check), NOT via the script, so the owner-ordered >=30min budget is
+#    possible without editing upstream.
+#  - crates/security-fuzzer REFUSES seconds > 30 per invocation ("invalid
+#    bounded fuzz duration"). Budget is spent as ROUNDS x 30s invocations
+#    (default 60 = 1800s = 30min per target). The runner is deterministic
+#    (seed = target_hash, iteration restarts per process), so rounds replay the
+#    same mutation prefix — recorded honestly in the round report; depth is
+#    bounded by the runner's 30s window (~160k cases/target locally).
+#  - Build: RUSTFLAGS='-C overflow-checks=on'. This BOTH satisfies the
+#    overflow-checks requirement explicitly AND neutralizes upstream's
+#    .cargo/config.toml freestanding link flags (-nostdlib/-static for the
+#    x86_64-unknown-linux-gnu triple), which BREAK the security-fuzzer link on
+#    a stock host [MEASURED 2026-11-13: rust-lld unable to find -lm/-ldl/-lc].
+#    Same neutralization pattern as upstream Makefile test-security (RUSTFLAGS='').
+#  - Upstream is untrusted: checkout with persist-credentials: false; fuzz jobs
+#    run with contents: read. The `record` job (needs: fuzz, contents: write)
+#    is the only writer; it appends to reports/fuzz-history.md with [skip ci].
+#  - On crash: the runner exits non-zero and leaves crash-<target>-*.bin in the
+#    round's artifacts dir; artifacts are uploaded; triage is offline. Security
+#    findings go to the user only (never upstream, never a public file detail).
+
+on:
+  workflow_dispatch:
+    inputs:
+      rounds:
+        description: "30s runner invocations per target (60 = 30min target budget)"
+        default: "60"
+
+concurrency:
+  group: fuzz-gate13
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  fuzz:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [config, selector, elf, vfs-index, kernel-path, device, syscall, audit]
+    env:
+      ROUNDS: ${{ github.event.inputs.rounds || '60' }}
+    steps:
+      - name: Checkout watch repo (workflows + recorder)
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Checkout upstream main (untrusted code, no credentials, no pin)
+        uses: actions/checkout@v4
+        with:
+          repository: gmkurtzer/ginux
+          ref: refs/heads/main
+          path: upstream
+          persist-credentials: false
+
+      - name: Record upstream head
+        run: |
+          echo "UPSTREAM_SHA=$(git -C upstream rev-parse HEAD)" >> "$GITHUB_ENV"
+          echo "upstream main @ $(git -C upstream rev-parse --short HEAD)" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Toolchain (llvm-tools for coverage)
+        run: rustup component add llvm-tools-preview
+
+      - name: Build security-fuzzer (RUSTFLAGS=-C overflow-checks=on; see file header)
+        working-directory: upstream
+        run: |
+          RUSTFLAGS='-C overflow-checks=on' cargo build --quiet -p security-fuzzer
+          test -x target/debug/security-fuzzer
+
+      - name: Fuzz rounds (ROUNDS x 30s, artifacts per round)
+        working-directory: upstream
+        run: |
+          set -eu
+          mkdir -p artifacts
+          : > rounds.log
+          for i in $(seq 1 "$ROUNDS"); do
+            d="artifacts/round-$i"; mkdir -p "$d"
+            if ! timeout 40 ./target/debug/security-fuzzer "${{ matrix.target }}" 30 "$d" 2>&1 | tee -a rounds.log; then
+              echo "round $i: FAIL" | tee -a rounds.log
+              exit 1
+            fi
+          done
+          # Same artifact hygiene as scripts/fuzz-security.sh: no current-*/crash-* may survive.
+          if find artifacts -type f \( -name 'current-*' -o -name 'crash-*' \) | grep -q .; then
+            echo "SECURITY_FUZZ: untriaged artifact remains" >&2
+            exit 1
+          fi
+          cases=$(grep -oE 'cases=[0-9]+' rounds.log | cut -d= -f2 | awk '{s+=$1} END {print s+0}')
+          echo "TOTAL_CASES=$cases" >> "$GITHUB_ENV"
+          echo "**${{ matrix.target }}**: rounds=$ROUNDS cases=$cases PASS" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Coverage (instrumented 5s round = the gate's own budget; llvm-cov)
+        if: success()
+        working-directory: upstream
+        run: |
+          set -eu
+          RUSTFLAGS='-C overflow-checks=on -C instrument-coverage' \
+            CARGO_TARGET_DIR=target-cov cargo build --quiet -p security-fuzzer
+          mkdir -p covart coverage
+          LLVM_PROFILE_FILE="$PWD/coverage/vfs-%m.profraw" \
+            ./target-cov/debug/security-fuzzer "${{ matrix.target }}" 5 covart
+          LLVM_BIN="$(rustc --print sysroot)/lib/rustlib/x86_64-unknown-linux-gnu/bin"
+          "$LLVM_BIN/llvm-profdata" merge -sparse coverage/vfs-*.profraw -o coverage/coverage.profdata
+          "$LLVM_BIN/llvm-cov" report target-cov/debug/security-fuzzer \
+            -instr-profile=coverage/coverage.profdata \
+            -summary-only -ignore-filename-regex='(\.cargo|\.rustup|/rustc/|rustc)' \
+            2>&1 | tee coverage-report.txt
+          # Same TOTAL-row recipe as fuzz.yml ($4 regions %, $10 lines %, $13 functions %).
+          tail -1 coverage-report.txt | grep -E '^TOTAL' | awk '{printf "regions %s lines %s functions %s\n", $4, $10, ($13 ? $13 : "n/a")}' | tee coverage-summary.txt
+
+      - name: Collect results (fuzz-history format)
+        if: always()
+        working-directory: upstream
+        run: |
+          seconds=$(( ROUNDS * 30 ))
+          covline=$(cat coverage-summary.txt 2>/dev/null || echo "regions n/a lines n/a functions n/a")
+          crashes=$(find artifacts -type f \( -name 'crash-*' -o -name 'oom-*' -o -name 'timeout-*' -o -name 'leak-*' \) 2>/dev/null | wc -l)
+          execs=$(grep -oE 'cases=[0-9]+' rounds.log 2>/dev/null | cut -d= -f2 | awk '{s+=$1} END {print s+0}')
+          {
+            echo "run_id=${{ github.run_id }}"
+            echo "run_url=${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            echo "trigger=workflow_dispatch (v7.7-B2: Gate 13 targets >=30min/target)"
+            echo "upstream_sha=${UPSTREAM_SHA}"
+            echo "target=${{ matrix.target }}"
+            echo "seconds=${seconds}"
+            echo "execs=${execs}"
+            echo "$covline"
+            echo "crash_artifacts=${crashes}"
+            echo "round_conclusion=${{ job.status }}"
+          } > results-${{ matrix.target }}.txt
+          cat results-${{ matrix.target }}.txt
+
+      - name: Upload results + logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: results-${{ matrix.target }}
+          path: |
+            upstream/results-*.txt
+            upstream/rounds.log
+            upstream/coverage-summary.txt
+            upstream/coverage-report.txt
+          retention-days: 30
+
+      - name: Upload crash artifacts on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: crash-${{ matrix.target }}
+          path: upstream/artifacts/
+          retention-days: 30
+
+  record:
+    needs: [fuzz]
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout watch repo (writable)
+        uses: actions/checkout@v4
+
+      - name: Download round results
+        uses: actions/download-artifact@v4
+        with:
+          pattern: results-*
+          merge-multiple: true
+          path: round-results
+
+      - name: Update reports/fuzz-history.md
+        run: |
+          python3 scripts/record-fuzz-history.py \
+            --results-dir round-results \
+            --history reports/fuzz-history.md \
+            --date "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+
+      - name: Commit and push history
+        run: |
+          git config user.name "fuzz-record"
+          git config user.email "actions@users.noreply.github.com"
+          # Same race-safety as fuzz.yml record: integrate remote main before pushing.
+          git pull --rebase --autostash origin main
+          git add reports/fuzz-history.md
+          if ! git diff --cached --quiet; then
+            git commit -m "fuzz history: gate13 run ${{ github.run_id }} (head $(grep -h upstream_sha round-results/results-* | head -1 | cut -d= -f2 | cut -c1-8)) [skip ci]"
+            git push
+          else
+            echo "history unchanged"
+          fi

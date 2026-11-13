@@ -5,7 +5,7 @@
 - العمال: G1 (خريطة) + G2 (أسلوب) + G3 (فجوات) + G4 (جدوى) + critic — منهجية v7.0 §5.
 
 ## الأعداد [MEASURED]
-- gates-todo: 6 (11، 12، 12.1، 12.25، 12.5، 13) — gates-deferred: 1 (14 Unicorn) — gates-done: 17.
+- gates-todo: 6 (11، 12، 12.1، 12.25، 12.5، 13) — gates-deferred: 1 (14 Unicorn) — gates-done: 17. **[تصحيح 2026-11-13، بند 0 من v7.7-B2]:** هذا العدّ من جمع 2026-11-10 — Gate 13 صارت مقبولة ومغلقة منذ 2026-11-10 (التفصيل في «تحديث v7.7-B2» أدناه)، والقيم الحية على 49b42307: gates-done = 27 ملفًا (حتى 22)، gates-todo = 1 (11 فقط)، gates-deferred = 1 (14).
 - حسب الحالة المكتوبة في الملفات: partial=1 (Gate 11) | technically-passed بانتظار قبول بشري=4 (12، 12.1، 12.25، 12.5) | not started=1 (Gate 13) | deferred=1 (14).
 
 ## ما ينتظر قرارًا بشريًا من المالك [MEASURED من نصوص الملفات]
@@ -25,7 +25,7 @@
 | 12.1 | Virtual kernel filesystems | technically passed | 94448a6b 2026-11-09 | component tests + Rocky QEMU regression | نعم (قبول) | صفر ملفات proc/sys باقية؛ ps بلا ENOSYS |
 | 12.25 | Top-level instance CLI | technically passed | 5ff2b05a 2026-11-09 | CLI fixtures + test-instance/config/systemd | نعم (قبول) | create بلا recipe؛ import ذرّي؛ بلا aliases قديمة تفشل |
 | 12.5 | Contract maintenance lock | technically passed | 219236ab 2026-11-09 | test-gate125-lock + Rocky interactive | نعم (قبول) | default locked fail-closed؛ lock/unlock فقط while stopped؛ relock حرفي |
-| 13 | Boundary hardening | not started | 94f942ce 2026-11-06 | malformed-input suites + bounded fuzz + escape fixtures | للبدء: لا؛ للإغلاق: نعم | fuzz بلا untriaged crash؛ escape لا يُتم host syscall غير مُوسَّط |
+| 13 | Boundary hardening | **accepted+closed 2026-11-10** (صُحّح — كان «not started» من جمع 2026-11-10) | gates-done/13 @49b42307 | malformed-input suites + bounded fuzz + escape fixtures | تم (قبول بشري 2026-11-10) | fuzz بلا untriaged crash؛ escape لا يُتم host syscall غير مُوسَّط |
 | 14 | Unicorn backend | deferred | 94f942ce 2026-11-06 | backend-differential tests + benchmarks | نعم (إعادة تفعيل) | نفس fixture على native/Unicorn بقرارات مكافئة |
 
 ## PRs الظاهرة عبر ls-remote فقط [MEASURED]
@@ -37,6 +37,15 @@
 - **C3: مُسقطة بقرار المستخدم (v7.1-3b)** — harness seccomp التفندي؛ لا تحضير.
 - **#249/#250/#251–254**: عينات لمعايرة أسلوب المالك فقط (maintainer-profile.md) — ليست بنود متابعة.
 قواعد critic (v7.0) باقية مرجعًا منهجيًا؛ تصحيح critic السابق: بلا run IDs في ملفات Gates 11/12.x الحالية (واحد فقط في 8.5:124).
+
+## تحديث v7.7-B2 بند 0 — من main الحي 49b42307 (2026-11-13) [MEASURED git + ملفات الشجرة، لا HANDOFF]
+- **Gate 13 (Boundary hardening): مقبولة ومغلقة 2026-11-10** — دليل الشجرة: `hdae/gates-done/13-boundary-hardening.md` موجود على 49b42307 وينص حرفيًا «Human checkpoint accepted on 2026-11-10… Pull request 255 passed all required CI»؛ الدمج فعليًا PR#255 merged 2026-11-11T02:52:25Z (API — أثبت في تحديث v7.7 أعلاه). **صُحّح قولنا السابق «13 لم تبدأ/not started»** — كان انعكاسًا لجمع 2026-11-10 القديم قبل دخول PR#255.
+- **Gates 18 و19 مغلقتان:** «Accepted and closed by explicit human direction on 2026-11-12» — 18 بعد PR#260 + متابعة PR#262 (docs-check)، 19 بعد PR#261؛ ملفاتهما في gates-done على 49b42307 [MEASURED].
+- **Gate 15 (dispatch performance matrix): مكتملة تقنيًا** — gates-done/15 موجود؛ الملف يميّز صراحة أن Gate 15 «characterizes retained behavior» وأن عجزات thread-yield (5.99–7.84% و96.50–97.25%) تُعرض بلا تحويلها لفشل، وأي تحسين = امتداد Gate 11 فقط.
+- **Gate 11: جزئية** — `hdae/gates-todo/11-performance-characterization.md` هو **الملف الوحيد** في gates-todo على 49b42307؛ قرار KVM/tolerance ما زال بانتظار المالك [MEASURED].
+- **Gate 14: مؤجلة** — `hdae/gates-deferred/14-unicorn-execution-backend.md` موجود [MEASURED].
+- **لا بوابة نشطة:** gates-todo يحوي Gate 11 فقط وهي بانتظار قرار بشري (وليست بعمل جارٍ) — متسق مع نص المالك؛ HANDOFF.md (سطر gates-todo = 8.5/9/10/11/13) لقطة 2026-11-05 متقادمة ولا يُعتمد (تم التحقق من الشجرة مباشرة وفق نص البند 0).
+- **أثرها على إشارات C2:** صفر تغيّر — إغلاق 13/18/19 لا يمس شروط فك C2 الثلاثة (لا مساس Gate 11 ولا طلب device-path)؛ C2 يبقى مركونًا.
 
 ## دورة التحديث الأسبوعية (v7.0-5e)
 أسبوعيًا: تحديث هذا الملف + maintainer-profile.md من main الحي (clone sparse جديد)، وقسم «البوابات» الثابت في التقرير اليومي (بوابات تغيّرت، PRs جديدة للمالك، طلب جديد، حالة المرشحين). ربط PR→gate وحالة الدمج عبر workflow بـGITHUB_TOKEN داخلي عند أول حاجة.
