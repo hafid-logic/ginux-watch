@@ -1,8 +1,93 @@
 {
- "generated_at_utc": "2026-11-12T23:31:17Z",
+ "generated_at_utc": "2026-11-13T06:11:56Z",
  "source_repo": "gmkurtzer/ginux",
- "item_count": 255,
+ "item_count": 258,
  "items": {
+  "265": {
+   "kind": "pr",
+   "title": "Emulate a deterministic private sysinfo view",
+   "state": "closed",
+   "merged_at": "2026-11-13T02:17:53Z",
+   "files": [
+    "crates/ginux-init/src/launch.rs",
+    "crates/ginux-init/src/main.rs",
+    "crates/ginux-init/src/supervisor.rs",
+    "hdae/STATUS.md",
+    "hdae/gates-done/22-virtual-sysinfo.md",
+    "scripts/test-launch.py",
+    "scripts/test-native-supervision.py",
+    "tests/fixtures/launch-fixture.c",
+    "tests/fixtures/native-fixture.c"
+   ],
+   "keywords": [
+    "native",
+    "launch",
+    "sysinfo",
+    "gate",
+    "linux",
+    "memory",
+    "process",
+    "x86",
+    "219",
+    "channels"
+   ]
+  },
+  "264": {
+   "kind": "pr",
+   "title": "Return bounded short transfers for oversized I/O",
+   "state": "closed",
+   "merged_at": "2026-11-13T02:14:06Z",
+   "files": [
+    "crates/ginux-core/src/lib.rs",
+    "crates/ginux-init/src/launch.rs",
+    "crates/ginux-init/src/main.rs",
+    "hdae/gates-done/21-io-short-transfers.md",
+    "scripts/test-launch.py",
+    "scripts/test-native-supervision.py",
+    "tests/fixtures/launch-fixture.c",
+    "tests/fixtures/native-fixture.c"
+   ],
+   "keywords": [
+    "gate",
+    "linux",
+    "balanced",
+    "clamp",
+    "launch",
+    "native",
+    "requests",
+    "short",
+    "transfers",
+    "unit"
+   ]
+  },
+  "263": {
+   "kind": "pr",
+   "title": "Fix bounded getrandom short reads",
+   "state": "closed",
+   "merged_at": "2026-11-13T02:09:57Z",
+   "files": [
+    "crates/ginux-core/src/lib.rs",
+    "crates/ginux-init/src/launch.rs",
+    "crates/ginux-init/src/main.rs",
+    "hdae/gates-done/20-getrandom-short-read.md",
+    "scripts/test-launch.py",
+    "scripts/test-native-supervision.py",
+    "tests/fixtures/launch-fixture.c",
+    "tests/fixtures/native-fixture.c"
+   ],
+   "keywords": [
+    "gate",
+    "getrandom",
+    "launch",
+    "linux",
+    "native",
+    "short",
+    "unit",
+    "163",
+    "256",
+    "above"
+   ]
+  },
   "262": {
    "kind": "pr",
    "title": "Relax architecture documentation checks",
@@ -539,8 +624,8 @@
   "248": {
    "kind": "pr",
    "title": "test(init): retain virtual cgroup API and containment coverage",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-13T04:10:00Z",
    "files": [
     "scripts/test-native-supervision.py",
     "tests/fixtures/native-fixture.c"
@@ -561,8 +646,8 @@
   "247": {
    "kind": "pr",
    "title": "fix(init): release a child reaped by waitid in native mode",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-13T04:03:47Z",
    "files": [
     "README.md",
     "crates/ginux-init/src/main.rs",
@@ -585,8 +670,8 @@
   "246": {
    "kind": "pr",
    "title": "fix(init): answer PIDFD_GET_INFO with ENOTTY",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-13T03:59:13Z",
    "files": [
     "crates/ginux-init/src/main.rs",
     "scripts/test-native-supervision.py",
@@ -608,8 +693,8 @@
   "245": {
    "kind": "pr",
    "title": "fix(init): start clone3 CLONE_INTO_CGROUP children in the parent's cgroup",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-13T03:55:41Z",
    "files": [
     "Makefile",
     "README.md",
@@ -635,8 +720,8 @@
   "244": {
    "kind": "pr",
    "title": "fix(init): correct pidfd wait selectors, errors and audit completion",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-13T03:50:35Z",
    "files": [
     "crates/ginux-init/src/main.rs",
     "scripts/test-native-supervision.py",
@@ -658,8 +743,8 @@
   "243": {
    "kind": "pr",
    "title": "fix(launch): enforce the resolved instance contract",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-13T03:46:59Z",
    "files": [
     "README.md",
     "crates/ginux-contract/src/lib.rs",
@@ -693,8 +778,8 @@
   "242": {
    "kind": "pr",
    "title": "fix(init): deliver SIGCHLD to native tracees",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-13T03:39:16Z",
    "files": [
     "crates/ginux-init/src/main.rs",
     "scripts/test-native-supervision.py",
@@ -716,8 +801,8 @@
   "241": {
    "kind": "pr",
    "title": "fix(init): check the ginux vfs overlay write against the value's own length",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-13T03:06:43Z",
    "files": [
     "crates/ginux-init/src/main.rs"
    ],
@@ -737,7 +822,7 @@
   "240": {
    "kind": "pr",
    "title": "feat(arm64): Cursor/arm64 domain mediation 2b05",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [
     ".cargo/config.toml",
@@ -775,7 +860,7 @@
   "239": {
    "kind": "pr",
    "title": "feat(arm64) - Cursor/arm64 userspace daemon 2b05",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [
     ".cargo/config.toml",
@@ -810,8 +895,8 @@
   "238": {
    "kind": "pr",
    "title": "fix(core): refuse signal-driven I/O in balanced and native paths",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-13T03:35:40Z",
    "files": [
     "crates/ginux-contract/src/lib.rs",
     "crates/ginux-core/src/lib.rs",
@@ -888,8 +973,8 @@
   "236": {
    "kind": "pr",
    "title": "fix(init): keep host directories out of chrooted workloads",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-13T03:30:17Z",
    "files": [
     "README.md",
     "crates/ginux-init/src/launch.rs",
@@ -965,8 +1050,8 @@
   "234": {
    "kind": "pr",
    "title": "fix(process): adopt orphans after the last parent thread exits",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-13T03:24:21Z",
    "files": [
     "Makefile",
     "crates/ginux-process/src/lib.rs",
@@ -989,8 +1074,8 @@
   "233": {
    "kind": "pr",
    "title": "fix(launch): use mkdirat when creating the workload directory",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-13T03:20:28Z",
    "files": [
     "crates/ginux-init/src/launch.rs",
     "crates/ginux-init/src/supervisor.rs",
@@ -1012,8 +1097,8 @@
   "232": {
    "kind": "pr",
    "title": "fix(vfs): share offsets between duplicated descriptors",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-13T03:00:04Z",
    "files": [
     "crates/ginux-vfs/src/lib.rs"
    ],
@@ -1083,7 +1168,7 @@
   "230": {
    "kind": "issue",
    "title": "Proposal: formally specified contract semantics and verification of security invariants",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -1172,9 +1257,10 @@
   "227": {
    "kind": "pr",
    "title": "Restore `overflow-checks = true` in `[profile.release]` (+ release-only regression test)",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-13T02:27:02Z",
    "files": [
+    ".github/workflows/check.yml",
     "Cargo.toml",
     "Makefile",
     "crates/ginux-vfs-index/tests/overflow_checks_release.rs"
@@ -1195,8 +1281,8 @@
   "226": {
    "kind": "pr",
    "title": "fix(init): end tracees with kill(2) instead of PTRACE_KILL",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-13T02:41:35Z",
    "files": [
     ".github/workflows/check.yml",
     "Makefile",
@@ -1222,7 +1308,7 @@
   "225": {
    "kind": "issue",
    "title": "init: native supervisors hang, and can leave the tracee running, when PTRACE_KILL is refused",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -1241,8 +1327,8 @@
   "224": {
    "kind": "pr",
    "title": "fix(process): skip clone tid stores the caller cannot write like Linux",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-13T02:29:31Z",
    "files": [
     "Makefile",
     "crates/ginux-init/src/main.rs",
@@ -1265,7 +1351,7 @@
   "223": {
    "kind": "issue",
    "title": "process: clone tid stores ignore page protections and fail the domain on a bad pointer",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -1284,7 +1370,7 @@
   "222": {
    "kind": "issue",
    "title": "Question: was dropping `overflow-checks` from `[profile.release]` intentional?",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -1347,7 +1433,7 @@
   "219": {
    "kind": "issue",
    "title": "launch/native: sysinfo exposes host uptime, load, memory and process count (deny or emulate?)",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -1604,7 +1690,7 @@
   "207": {
    "kind": "pr",
    "title": "feat(console): support bounded polling of standard descriptors",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [
     "README.md",
@@ -2193,7 +2279,7 @@
   "179": {
    "kind": "issue",
    "title": "balanced profile: read-only syscalls missing from the surface break common programs (getcwd, dup, chdir, uname, sleep, xattr reads)",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -2212,7 +2298,7 @@
   "178": {
    "kind": "issue",
    "title": "balanced profile: read/write/pread above their bounds fail with EPERM instead of a short transfer",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -2523,7 +2609,7 @@
   "163": {
    "kind": "issue",
    "title": "balanced profile: the getrandom bound checks flags instead of buflen",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -6049,6 +6135,222 @@
   }
  },
  "keywords": {
+  "native": [
+   265,
+   264,
+   263,
+   257,
+   247,
+   246,
+   244,
+   243,
+   242,
+   238,
+   236,
+   234,
+   228,
+   226,
+   225,
+   219,
+   215,
+   207,
+   205,
+   204,
+   203,
+   184,
+   183,
+   182,
+   176,
+   154,
+   153,
+   84,
+   82,
+   39,
+   14
+  ],
+  "launch": [
+   265,
+   264,
+   263,
+   243,
+   233,
+   214,
+   207,
+   204,
+   187,
+   186,
+   165,
+   164,
+   162,
+   161,
+   158,
+   157,
+   156,
+   153
+  ],
+  "sysinfo": [
+   265,
+   219
+  ],
+  "gate": [
+   265,
+   264,
+   263,
+   259,
+   257,
+   255,
+   254,
+   253,
+   252,
+   251,
+   235,
+   231,
+   229,
+   228,
+   225,
+   210,
+   196,
+   181,
+   172
+  ],
+  "linux": [
+   265,
+   264,
+   263,
+   223,
+   220,
+   202,
+   191,
+   190,
+   177,
+   143,
+   142,
+   141,
+   139,
+   135,
+   129,
+   128,
+   127,
+   123,
+   122,
+   121,
+   120,
+   118,
+   116,
+   114,
+   111,
+   110,
+   106,
+   105,
+   103,
+   99,
+   98,
+   88,
+   85,
+   84,
+   83,
+   76,
+   72,
+   71,
+   69,
+   59,
+   57,
+   56,
+   55,
+   47,
+   46,
+   37,
+   14,
+   11,
+   9,
+   8
+  ],
+  "memory": [
+   265,
+   252,
+   220,
+   124,
+   80,
+   67,
+   46,
+   19
+  ],
+  "process": [
+   265,
+   234,
+   219,
+   212,
+   206,
+   205,
+   195,
+   194,
+   184,
+   183,
+   182,
+   176,
+   154,
+   137,
+   135,
+   129,
+   126,
+   121,
+   48
+  ],
+  "x86": [
+   265
+  ],
+  "219": [
+   265
+  ],
+  "channels": [
+   265
+  ],
+  "balanced": [
+   264,
+   238
+  ],
+  "clamp": [
+   264
+  ],
+  "requests": [
+   264
+  ],
+  "short": [
+   264,
+   263
+  ],
+  "transfers": [
+   264
+  ],
+  "unit": [
+   264,
+   263,
+   158,
+   156,
+   153,
+   6
+  ],
+  "getrandom": [
+   263,
+   163
+  ],
+  "163": [
+   263
+  ],
+  "256": [
+   263,
+   170,
+   163,
+   157,
+   21,
+   17,
+   10,
+   4
+  ],
+  "above": [
+   263,
+   96
+  ],
   "architecture": [
    262,
    260,
@@ -6292,24 +6594,6 @@
   "explain": [
    260
   ],
-  "gate": [
-   259,
-   257,
-   255,
-   254,
-   253,
-   252,
-   251,
-   235,
-   231,
-   229,
-   228,
-   225,
-   210,
-   196,
-   181,
-   172
-  ],
   "isolation": [
    259
   ],
@@ -6446,36 +6730,6 @@
   "control": [
    258,
    71
-  ],
-  "native": [
-   257,
-   247,
-   246,
-   244,
-   243,
-   242,
-   238,
-   236,
-   234,
-   228,
-   226,
-   225,
-   219,
-   215,
-   207,
-   205,
-   204,
-   203,
-   184,
-   183,
-   182,
-   176,
-   154,
-   153,
-   84,
-   82,
-   39,
-   14
   ],
   "modes": [
    257
@@ -6673,15 +6927,6 @@
   "disk": [
    252,
    145
-  ],
-  "memory": [
-   252,
-   220,
-   124,
-   80,
-   67,
-   46,
-   19
   ],
   "metadata": [
    252,
@@ -6985,23 +7230,6 @@
   "non": [
    244
   ],
-  "launch": [
-   243,
-   233,
-   214,
-   207,
-   204,
-   187,
-   186,
-   165,
-   164,
-   162,
-   161,
-   158,
-   157,
-   156,
-   153
-  ],
   "admission": [
    243
   ],
@@ -7169,9 +7397,6 @@
    111,
    105
   ],
-  "balanced": [
-   238
-  ],
   "commands": [
    238
   ],
@@ -7280,26 +7505,6 @@
   ],
   "checkpoint": [
    235
-  ],
-  "process": [
-   234,
-   219,
-   212,
-   206,
-   205,
-   195,
-   194,
-   184,
-   183,
-   182,
-   176,
-   154,
-   137,
-   135,
-   129,
-   126,
-   121,
-   48
   ],
   "children": [
    234
@@ -7652,55 +7857,6 @@
    59,
    25
   ],
-  "linux": [
-   223,
-   220,
-   202,
-   191,
-   190,
-   177,
-   143,
-   142,
-   141,
-   139,
-   135,
-   129,
-   128,
-   127,
-   123,
-   122,
-   121,
-   120,
-   118,
-   116,
-   114,
-   111,
-   110,
-   106,
-   105,
-   103,
-   99,
-   98,
-   88,
-   85,
-   84,
-   83,
-   76,
-   72,
-   71,
-   69,
-   59,
-   57,
-   56,
-   55,
-   47,
-   46,
-   37,
-   14,
-   11,
-   9,
-   8
-  ],
   "failed": [
    223,
    220,
@@ -7773,9 +7929,6 @@
    213,
    212,
    130
-  ],
-  "sysinfo": [
-   219
   ],
   "load": [
    219
@@ -8624,15 +8777,6 @@
   "0x22": [
    170
   ],
-  "256": [
-   170,
-   163,
-   157,
-   21,
-   17,
-   10,
-   4
-  ],
   "find": [
    169
   ],
@@ -8725,9 +8869,6 @@
   "interception": [
    164
   ],
-  "getrandom": [
-   163
-  ],
   "flags": [
    163,
    105,
@@ -8786,12 +8927,6 @@
   ],
   "dev": [
    159
-  ],
-  "unit": [
-   158,
-   156,
-   153,
-   6
   ],
   "each": [
    157,
@@ -9535,9 +9670,6 @@
   ],
   "below": [
    97
-  ],
-  "above": [
-   96
   ],
   "ram": [
    96
