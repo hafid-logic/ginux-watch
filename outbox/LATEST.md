@@ -1,62 +1,48 @@
 STATUS: GREEN — no red/amber signals in committed state
-decider-pilot: UNCONFIGURED — DECIDER_API_KEY absent in last run (2026-11-13T06:48:24Z); binding environment: supervisor @ .github/workflows/decider-space-probe.yml; dispatch verification pending token (v7.6-2/v7.7-A)
+decider-pilot: UNCONFIGURED — live dispatch verified 2026-11-13T12:39:53Z (run ok, state commit 7ac07edb): DECIDER_API_KEY absent in supervisor job + fallback GH_DECIDER_API_KEY absent too; 14-day shadow armed awaiting first configured run
 ---
-id: 20261113-1115Z-s60
-session: 60
-directive: v7.7 + v7.7-A
-directive_sha256: b3ddce8e9edf3c88f3e980ea825ded68d8f84e31b04ee8366211cc789041baa7 (v7.7) / 6b3ac6ffd3522abbb0e5992959e27d879693759c71325f3f5ef826f7917921b2 (v7.7-A)
+id: 20261113-1250Z-s61
+session: 61
+directive: v7.7-B + v7.7-B2
+directive_sha256: 4c22db4c4c85c6e4291cbeab2ff68ed6f6b7d8ee85d3e2835b386345765a0895 (v7.7-B) / 44ab7903344ccbdc488ffa02e9a2badc90b70f11a301c5794cf215b374866c51 (v7.7-B2)
 base_head: a30e5f0f
-status: done-local
+status: done
 needs_decision: yes
-lint: PLACEHOLDER
+lint: PASS (a,b,c,d,e,f) | warn: h | at: 2026-11-13T12:42:47Z | tool: scripts/report_lint.py
 ---
 
-# تقرير s60 — v7.7: حدث الخيوط (إغلاق 222/207 ودمج 227)، المراقب بحالة الخيوط، دراسة الدمج، قرارات الـdecider، خريطة الفروق، ملحق v7.7-A
+# تقرير s61 — v7.7-B + v7.7-B2: الخريطة من main الحي، تدقيق scan_layer، fuzz أهداف Gate 13 (محلي + Actions حي)، الثنائيات ذاتية البدء، واستكمال v7.7-A
 
-## 1) الحدث بأدلته (بند 0) — لا ردّ ولا تفاعل
+## 0) البند 0 — الخريطة من main الحي (49b42307) [MEASURED git، لا HANDOFF]
 
-- تحقق حي 2026-11-13 (git + API مجهول): **PR#227 merged** 02:27:02Z (merge commit `0c290040`، الرأس المدموج `31f82869`، دمج ancestor مؤكد)؛ **#222 closed** 02:27:17Z (تعليقان جديدان)؛ **#207 closed unmerged** 02:58:34Z — الدليل البنيوي: رأسها `b19e3ea3` **ليس سلفًا** لupstream/main (`git merge-base --is-ancestor`)، وحالة API closed بلا merged.
-- التعليقات الثلاثة الجديدة للمالك محفوظة **حرفيًا** في `inbox/2026-11-13-threads-closed-222-207-227-gmkurtzer.md` داخل كتل UNTRUSTED (ids 6841195632 @01:36:28Z و6841992029 @02:27:13Z على #222؛ 6842464248 @02:58:33Z على #207) — خام API للجلسة في work/results/v77-*.json (غير متتبَّع، منطقة work [sandbox]).
-- خط الأساس حُدّث على المستويين: `matrix/upstream-watch.json` threads_watch (222 closed / 207 closed / **227 merged**) + breaker_absorbed لكل خيط؛ و`state/monitor.json` watched.222 امتُصّ؛ و`THREAD_BASELINE` في `scripts/report_status.py` رُقّي للقيم الجديدة — الحالة عادت GREEN بعد امتصاص القاطع (كان RED «4 > 2» أثناء الجلسة كإشارة صحيحة ثم امتصت بالوثيقة).
+- **Gate 13 مقبولة ومغلقة 2026-11-10**: `hdae/gates-done/13-boundary-hardening.md` ينص «Human checkpoint accepted on 2026-11-10… Pull request 255 passed all required CI»؛ الدمج PR#255 merged 2026-11-11T02:52:25Z (API، أثبت في s60). **صُحّح «13 لم تبدأ/not started»** في جدول الخريطة وسطر الأعداد (كانا انعكاس جمع 2026-11-10 قبل دخول PR#255).
+- **Gates 18/19 مغلقتان 2026-11-12** («Accepted and closed by explicit human direction» بعد PRs 260+262 و261)؛ **Gate 15 مكتملة تقنيًا** (gates-done/15، تمييز صريح: توصيف سلوك محتفَظ به وعجزات thread-yield تُعرض لا تُحوَّل لفشل)؛ **Gate 11 جزئية** (الملف الوحيد في gates-todo)؛ **Gate 14 مؤجلة** (gates-deferred/14)؛ **لا بوابة نشطة**. HANDOFF.md لقطة 2026-11-05 متقادمة ولا يُعتمد. صفر إشارات فك C2 — C2 يبقى مركونًا.
 
-## 2) المراقب بعد الإصلاح (بند 1)
+## 1) البند 1 — تدقيق scan_layer وما يستدعيه (منهج #222) على 49b42307
 
-- `team/scripts/upstream-watch.py`: كل خيط يسجل الآن **state (open/closed/merged)** — merged من endpoint الـpulls في الـAPI — و**state_changed_at** (merged_at وإلا closed_at)، وانتقال الحالة يصدر سطر **STATE-TRANSITION** مستقلًا **كزناد قاطع بشأن التعليق نفسه** (بجانب سطر CHANGED).
-- اختبار offline جديد `team/scripts/test-upstream-watch.py` **5/5** يعمل على **بيانات الحدث الحقيقية** الملتقطة: التشغيل القادم سيسجل الانتقالات الثلاثة (W1) مع دلالة merged الصحيحة (W2) والطوابع الزمنية (W3) وهدوء المسح الساكن (W4) وبقاء قوة التعليق كزناد (W5). **التقاط التشغيل الحي في CI يهبط مع الدفع القادم** (بند 0: لا توكن) — المجدول نفسه رصد الإغلاقات بأسماء closed في 10:14:16Z (a30e5f0f) قبل أن يحمل الإصلاح، وسيصحح الدفع الدلالة إلى merged لـ227.
+- `reports/v7.7B-scan-layer-audit-20261113.md`: **صفر مواضع `<<`/`>>` في الملّف كله** [MEASURED rg]؛ كل مواضع `+`/`*`/التحويلات (27 موضعًا في طبقتين: scan_layer+مستدعياتها، ومستهلكو مخرجاتها في assemble_layers) مصنفة **محكوم بحجم الملف / حارس صريح / ثابت بنيوي / تبعية تحقق موثقة** بدليل سطر — **لا موضع غير محكوم**. الملاحظة الموسومة الوحيدة: `write_hardlink_as_file:210` panic نظيف (copy_from_slice) يتطلب سجل PAX واحد ≥ ~8.59GiB **فعليًا في الملف** = DoS بملف ضخم، ليس overflow ولا unsafety ولا يحقق شرط البند 4-أ.
+- العلاقة بـ#222: عدّها التسعة كان على الشجرة القديمة (64a3e3f7) في scan_tar/parse_pax/whiteout وscan_layer خارج النطاق صراحة (approved/2026-11-06-1.md) — هذا التدقيق يمدّ المنهج نفسه؛ النتائج متسقة.
+- **فجوة تغطية موثقة:** هدف `vfs-index` في Gate 13 يشغّل `Index::new/entry/resolve` (صيغة الفهرس) لا مسح tar/PAX — سطح scan_layer بلا fuzz، ومؤطر حسابيًا بالتدقيق أعلاه.
 
-## 3) دراسة الدمج (بند 2) — قراءة فقط
+## 2) البند 2 (النص البديل) — fuzz أهداف Gate 13 نفسها
 
-- **ما الذي أصلحه المالك بالضبط:** (أ) الفرع كان قديمًا (أساسه main 3f2fe7df من 11-06) فأنشأ فرع `codex/repair-pr-227` ودمج main الحالي (3411d662) داخله بحل التعارضات (`4b8d4d53`؛ نفس نمط repair-pr-226)؛ (ب) أضاف **commit واحدًا منه**: `31f82869 ci: run release overflow regression` يوصل الاختبار بـcheck.yml؛ (ج) **لا تغيير صياغة أو محتوى في ملفاتنا** — ملف الاختبار دخل **byte-identical** (diff فارغ مقابل approved/) وما دخل main من الـPR = 4 ملفات +25 فقط.
-- **overflow-checks مؤكد على main (49b42307):** `Cargo.toml:25 overflow-checks = true` + `check.yml:59 make test-release-overflow` + هدف Makefile:125 + ملف الاختبار موجود — **اختبار الانحدار يعمل في CI**.
-- **زمن الفتح→الدمج:** 2026-11-06T12:44:22Z → 2026-11-13T02:27:02Z = **6 أيام 13 س 42 د**.
-- `reports/gates/maintainer-profile.md` حُدّث: تشريح القبول + **قواعد قبول جديدة 6–9** بأدلة commit/PR/تعليق (الفرع القديم يُصلح لا يُرفض؛ الإغلاق بسبب بنيوي ≠ رفض الفكرة؛ المالك يكمل سلسلة CI بنفسه؛ سرد حالة دقيق قبل/بعد) وقسم UNVERIFIED حُدّث بما التقطته الجلسة.
+- **قراءة Gate 13 [MEASURED]:** `make fuzz-security` ⇒ `scripts/fuzz-security.sh` ⇒ `crates/security-fuzzer` (عدّاء حتمي مخصص). 8 أهداف: config/selector/elf/vfs-index/kernel-path/device/syscall/audit؛ بذور 6 ملفات في tests/fuzz-corpus + [0;32] لاثنين؛ **السكربت يرفض > 5 ثوانٍ والعدّاء يرفض > 30 ثانية للاستدعاء** — الحدود جزء من قبول البوابة. الميزانية (≥30 دقيقة/هدف) نُفّذت بتشغيل الثنائي نفسه مباشرة: **60 جولة × 30 ثانية = 1800 ثانية لكل هدف** (العمق الفعلي محدود بنافذة 30s لكون التسلسل حتميًا يعاد من بذرة ثابتة — موثق بصدق في التقرير).
+- **اكتشاف بناء [MEASURED محليًا، rustc 1.100.0]:** بناء الثنائي كما يفعل السكربت **يفشل ربطًا على host قياسي** (`rust-lld: unable to find -lm/-ldl/-lc`) بسبب أعلام freestanding في `.cargo/config.toml` على هدف host نفسه؛ `fuzz-security.sh` لا يحيّدها بخلاف `test-security` المجاور (`RUSTFLAGS=''`)؛ وCI الوحيد في upstream (check.yml) **لا يشغّل fuzz-security أصلًا** — أي أن السكربت لا يمر في CI upstream. الجولات تستخدم `RUSTFLAGS='-C overflow-checks=on'` (تحييد + شرط overflow-checks صراحة).
+- **الدليل المحلي [MEASURED]:** 8/8 PASS ×30s، 1,293,343 حالة، صفر أعطال، صفر artifacts.
+- **Actions الحي [MEASURED — run 43421884560، dispatch 12:02:49Z، اكتمل ~12:33Z]:** workflow جديد `fuzz-gate13.yml` (8 jobs متوازية، upstream checkout غير موثوق persist-credentials:false وcontents:read، record job وحده write يلحق `reports/fuzz-history.md` [skip ci] مع rebase ضد السباقات). **النتيجة: الثمانية PASS، صفر أعطال، 1800 ثانية لكل هدف، 68,773,935 حالة إجمالًا** — audit 9,984,069 / config 9,934,253 / device 9,717,190 / elf 5,990,435 / kernel-path 7,785,403 / selector 10,236,563 / syscall 5,284,997 / vfs-index 9,841,025؛ التغطية llvm-cov (جولة instrumented بميزانية Gate 13 الأصلية 5 ثوانٍ): regions 1.62%–5.00% لكل هدف على كامل مجموعة الاعتماديات المُعدّة (أساس مقارنة بين الجولات). الصفوف الثمانية الحية: commit `d3fabf79`.
 
-## 4) سجل المساهمات (بند 3)
+## 3) البند 3 — الثنائيات ذاتية البدء
 
-- **#227 أول قبول** (merged 02:27:02Z) — مسجل في STATE والتقرير؛ **الـPRs المفتوحة لدينا على upstream: 0** (كانت 1)؛ **#207: مغلقة بلا دمج** من مصدر مصادق (API: state=closed/merged=false + git ancestry) بسبب بنيوي موثق حرفيًا (snapshot مقابل live pollfd).
-- عدّاد النشر: بلا نشر هذه الجلسة (القواعد الثابتة) — يبقى بيد Abdelhafid.
+- `reports/v7.7B-self-starting-bins-20261113.md`: الستة أهداف bin؛ **ذاتية البدء فعلًا = `ginux-init` (11,920 سطرًا، no_std/no_main، init الضيف الآلي) + `managed-payload` (17 سطرًا، stub بلا حساب)**. حساب المدخل غير الموثوق موجود في ginux-init فقط: read_index/read_file على بايتات index وELF + تحليل رقمي **محكم** `checked_mul/checked_add` (launch.rs:188-189) + وسائط الإقلاع — تكميل مباشر لما تركته #222 موسومًا («the self-start binaries»).
 
-## 5) decider v7.7-4 (بند 4) — قرارات المالك مطبقة وإعادة الحساب منفذة
+## 4) البندان 4-ب و5
 
-- **R0 قاعدة ثابتة**؛ **دمج request+directed_at_us في for_us** مع وسم فرعي للنسب (`for_us_subtag`) على 11 حالة؛ **dc-041 رُقّيت** إلى for_us[`escalated`] ⇒ قاعدة جديدة **R9-hold-breach**؛ **dc-005 noise** و**dc-032 needs_supervisor** مؤكدتان (owner_ruling_v77)؛ **T2-1** معتمدة: ادعاء نجاح بلا دليل مستقل ⇒ needs_supervisor (علامات نفي الدليل تُعد غيابًا؛ `last_success` مستبعدة).
-- **إعادة الحساب** (`eval/decider-cases/results/baseline-2026-11-13.json`): for-us recall = **1.000 (12/12)**، precision خارج صفوف R0 = **1.000**، الدقة الحرفية **0.882** (كانت 0.824 — الدمج أزال تبديلي dc-002/dc-007)، دقة الوسم الفرعي 0.833 (n=12)، **T2 = 6/10** (T2-1 يصيب dc-032 فقط، **صفر إنذارات كاذبة**؛ الحالات الأربع الباقية بصنوف بلا قواعد مرخصة بعد — موثقة صراحة). الاختبارات 7→**9/9** (D8 نطاق R9، D9 نطاق T2-1).
-- الظل 14 يومًا يبدأ **فور وصول مفتاح الـSpace** (أول dispatch حي) — التسليح كما هو، تسجيلًا فقط.
+- **4-ب:** لا عطل ولا overflow قابل للوصول محليًا (1.29M حالة) ولا حيًا (68.77M حالة على 49b42307) — **لا شيء حساس**؛ الدليل في reports/ دون أي نشر upstream. ما يُعرض لو فُتح باب Gate-13-متابعة على scan_layer: جدول التدقيق + فجوة التغطية.
+- **5:** مقدمة التوجيه متقادمة — **PR#255 مدموجة وهي جوهر Gate 13 نفسه**، فلا تعارض. فحص مصادق لأهداف `pulls/266/files` (9 ملفات) و`pulls/267/files` (5 ملفات): **التقاطع مع مسارات fuzz-security صفر** في كلتيهما — جولاتنا لا تتعارض مع شيء مفتوح.
 
-## 6) خريطة البوابات بالفروق + C2 (بند 5)
+## 5) الدفع + استكمال v7.7-A + أمان التوكن
 
-- تحديث الفروق في `reports/gates/landscape-2026-11-10.md` للنطاق af56019→49b42307: بوابتان جديدتان منجزة (**21 io-short-transfers، 22 virtual-sysinfo**) + STATUS +3 + gate-1 +8/−1؛ **Gate 11 لم تُلمس** وهي البوابة الوحيدة الباقية في gates-todo؛ سياق سابق مسجل: **PR#255 (Gate 13) للمالك merged** 2026-11-11T02:52:25Z وissue #13 closed.
-- **PRs جديدة للمالك:** المفتوح الكلي 19→**2** (#266، #267) — ولا واحد يلمس مسارات Gate 11 (فحص pulls/files).
-- **إشارات فك C2 الثلاث: صفر** (لا PR على Gate 11، لا تحديث لحالتها، لا طلب دليل في الخيوط) ⇒ **لا مذكرة ملاءمة، C2 يبقى مركونًا بلا بناء**.
-
-## 7) ملحق v7.7-A — اسم المفتاح بلا إعادة توليد
-
-- `decider-space-probe.yml`: `DECIDER_API_KEY: ${{ secrets.DECIDER_API_KEY || secrets.GH_DECIDER_API_KEY }}` مع بقاء `environment: supervisor`؛ الظل لا يستهلك المفتاح مباشرة (journal) فلا تغيير عليه؛ الاسم المتوقع داخل الـSpace يبقى DECIDER_API_KEY.
-- `secret_ref_audit.py`: whitelist للمرجعين — **PASS (5 مراجع)**؛ workflow-schema **OK**؛ الإخفاء معتمد على masking الـGitHub للقيم المسجلة (خيار الملحق الثاني) والprobe لا يطبع المفتاح ولا رؤوسًا تحويه أصلاً.
-- **التحقق بالأسماء عبر API يحتاج توكنًا** (رفضه fine-grained سابقًا) — اعتمادًا للنتيجة: **اختبار dispatch الواحد معلّق على وصول التوكن** وفق نص الملحق؛ النتيجة المتوقعة ok، وإن بقي unconfigured فالتصنيف: غياب الاسم من الـenvironment (الأرجح) أو خارج الـenvironment أو 401 — يُبلَّغ بسطر واحد ولا طلب إعادة توليد إلا بثبوت 401.
-- `docs/RECOVERY.md` وُثّق بالاسمين المتبنيين (تثبيت نهائي للاسم الناجح بعد أول dispatch حي).
-
-## 8) الثوابت والدفع
-
-- الظل استشاري، cron الأسبوعي، NVIDIA عند 3 إخفاقات متتالية، استنفاد RPD لا ينذر — بلا تغيير (بند 6).
-- **الدفع معلّق وفق البند 0**: لا توكن في الجلسة؛ الدفعة جاهزة ff فوق origin/main=a30e5f0f (`49855995` + تقرير هذه الجلسة).
-- التوقفات: لا ردود جديدة بعد حدث اليوم (آخر ما رُصد: تعليقات 01:36/02:27/02:58Z المحفوظة حرفيًا)؛ upstream main = 49b42307.
+- **توكن المحادثة → سلسلة واحدة** (validate scope push=True → فحص ردود الخيوط 222/207/227 منذ 03:00Z: **صفر جديد** قبل الدفع → دفع): **a30e5f0f..d3482e22 HEAD→main ff** [MEASURED ls-remote MATCH] — شمل الدفعتين الموقوفتين (v7.7+v7.7-A في 49855995/8fb0409b) وv7.7-B (d3482e22). ثم dispatch fuzz-gate13 وpoll حتى record commit، ثم shred للمفتاح.
+- **استكمال v7.7-A (المعلّق على توكن):** dispatch حي لـ`decider-space-probe.yml` (http 204) ⇒ state commit `7ac07edb` @12:39:53Z ⇒ **status=unconfigured** — «DECIDER_API_KEY is not set in this job» والاسم البديل GH_DECIDER_API_KEY غائب أيضًا (configured=false) — الفجوة من طرف المالك ما زالت قائمة، وظل 14 يومًا يبقى مسلحًا بانتظار أول تشغيل مُهيَّأ.
+- **الأسرار:** التوكن استُخدم في 3 سلاسل عابرة فقط (export داخل الاستدعاء الواحد + credential helper مؤقت + shred بعد كل سلسلة)، صفر ظهور في أي ملف متتبَّع (tree-token-scan 0) — **لامس نص المحادثة ⇒ التدوير فورًا موصى به**.
+- **البوابات قبل الدفع وبعده:** workflow-schema الكل PASS (يشمل fuzz-gate13.yml الجديد)، CJK 76 ملفًا PASS، secret_ref_audit 5 مراجع PASS، report-lint 51/51، decider-baseline 9/9، decider-gate 9/9، tree-token-scan 0.
