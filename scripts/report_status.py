@@ -22,9 +22,9 @@ import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
-THREAD_BASELINE = {"222": {"comments": 2, "updated_at": "2026-11-06T14:58:29Z"},
-                   "227": {"comments": 1, "updated_at": "2026-11-06T14:58:30Z"},
-                   "pr207_head": "b19e3ea3e720feafce0cea952a8b50503df0b10c"}  # 2026-11-12 ls-remote
+THREAD_BASELINE = {"222": {"comments": 4, "updated_at": "2026-11-13T02:27:17Z"},
+                   "227": {"comments": 1, "updated_at": "2026-11-13T02:27:02Z"},
+                   "pr207_head": "b19e3ea3e720feafce0cea952a8b50503df0b10c"}  # v7.7-0 absorb 2026-11-13: event captured (inbox/2026-11-13-threads-closed-*) + breaker_absorbed; 207 closed unmerged, 227 merged
 MONITOR_STALE_HOURS = 12.0  # v7.2-2 threshold
 ENV_BINDING = "environment: supervisor @ .github/workflows/decider-space-probe.yml"
 

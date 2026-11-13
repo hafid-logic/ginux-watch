@@ -85,6 +85,20 @@ def main() -> int:
         print("threads_watch #%s: state %s->%s comments %s->%s changed_at=%s" % (
             n, old.get("state"), snap[n]["state"], old.get("comments"),
             snap[n]["comments"], snap[n]["state_changed_at"]))
+    # Absorb the CI-monitor baseline for the same event (state/monitor.json).
+    mon_path = pathlib.Path("state/monitor.json")
+    if mon_path.exists():
+        mon = json.loads(mon_path.read_text(encoding="utf-8"))
+        w = mon.get("watched", {}).get("222")
+        if w is not None and (w.get("comments") != 4 or w.get("state") != "closed"):
+            print('monitor watched #222: comments %s->4 state %s->closed (absorbed)'
+                  % (w.get("comments"), w.get("state")))
+            w.update({"comments": 4, "state": "closed",
+                      "updated_at": "2026-11-13T02:27:17Z"})
+            mon_path.write_text(json.dumps(mon, ensure_ascii=False, indent=1) + "\n",
+                                encoding="utf-8")
+        elif w is not None:
+            print('monitor watched #222 already absorbed')
     return 0
 
 
