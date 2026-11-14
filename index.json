@@ -1,5 +1,5 @@
 {
- "generated_at_utc": "2026-11-14T16:30:59Z",
+ "generated_at_utc": "2026-11-14T21:17:12Z",
  "source_repo": "gmkurtzer/ginux",
  "item_count": 284,
  "items": {
@@ -21,13 +21,15 @@
     "crates/ginux-init/src/fs_hooks.rs",
     "crates/ginux-init/src/launch.rs",
     "crates/ginux-init/src/main.rs",
+    "crates/ginux-init/src/process_hooks.rs",
     "crates/ginux-init/src/supervisor.rs",
     "docs/fs-operation-inventory.md",
     "docs/security-boundary.md",
     "hdae/ARCHITECTURE.md",
     "hdae/PLAN.md",
     "hdae/STATUS.md",
-    "hdae/gates-todo/31-filesystem-mediation-foundation.md"
+    "hdae/gates-todo/31-filesystem-mediation-foundation.md",
+    "scripts/rpm-test-guest.sh"
    ],
    "keywords": [
     "filesystem",
