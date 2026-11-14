@@ -1,0 +1,19 @@
+[package]
+name = "ginux-watch-property-tests"
+version = "0.0.0"
+publish = false
+edition = "2021"
+
+[dependencies]
+# Upstream is consumed READ-ONLY via a path dependency (checked out at
+# <repo>/upstream by CI, symlinked locally). Zero modification, zero rewrite.
+# Same convention as fuzz/Cargo.toml. ginux-process has no dependencies and
+# no features, so there is nothing else to pin.
+ginux-process = { path = "../upstream/crates/ginux-process" }
+
+[dev-dependencies]
+proptest = "1"
+
+# Keep this crate OUT of any parent workspace: upstream crates must resolve
+# against the upstream workspace, not ours (see fuzz/Cargo.toml).
+[workspace]
