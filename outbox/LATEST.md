@@ -1,48 +1,56 @@
-STATUS: GREEN — no red/amber signals in committed state
-decider-pilot: UNCONFIGURED — live dispatch verified 2026-11-13T12:39:53Z (run ok, state commit 7ac07edb): DECIDER_API_KEY absent in supervisor job + fallback GH_DECIDER_API_KEY absent too; 14-day shadow armed awaiting first configured run
 ---
-id: 20261113-1250Z-s61
-session: 61
-directive: v7.7-B + v7.7-B2
-directive_sha256: 4c22db4c4c85c6e4291cbeab2ff68ed6f6b7d8ee85d3e2835b386345765a0895 (v7.7-B) / 44ab7903344ccbdc488ffa02e9a2badc90b70f11a301c5794cf215b374866c51 (v7.7-B2)
-base_head: a30e5f0f
-status: done
+id: 20261114-2035Z-s62
+session: 62
+directive: v8.0
+directive_sha256: 306233b7e6532391386b3da65f4a96cfb7442be4d0e5e111a7cc90f177543777
+base_head: 193b8301586b00f7b91dba9e1b5d70315c3610c1
+status: done-local
 needs_decision: yes
-lint: PASS (a,b,c,d,e,f) | warn: h | at: 2026-11-13T12:42:47Z | tool: scripts/report_lint.py
+circuit_breaker: ok
+upstream_new_activity: yes
+lint: PASS (a,b,c,d,e,f) | warn: h | at: 2026-11-14T20:35Z | tool: scripts/report_lint.py
 ---
 
-# تقرير s61 — v7.7-B + v7.7-B2: الخريطة من main الحي، تدقيق scan_layer، fuzz أهداف Gate 13 (محلي + Actions حي)، الثنائيات ذاتية البدء، واستكمال v7.7-A
+# تقرير s62 — v8.0: استلام بارد وكيل جديد (A1–A4)، خريطة السطح الساخن (C-1)، property tests لginux-process (C-2)، جدوى KVM (C-3)، قواعد C-6/C-8 في الوثائق (C-7)
 
-## 0) البند 0 — الخريطة من main الحي (49b42307) [MEASURED git، لا HANDOFF]
+التوجيه المنفَّذ: v8.0 — أُرشف حرفيًا في `directives/v8.0-20261114.md` (sha256 في الرأس أعلاه وفهرس directives)؛ لُصق من المالك في هذه المحادثة ⇒ مؤهل للتنفيذ.
 
-- **Gate 13 مقبولة ومغلقة 2026-11-10**: `hdae/gates-done/13-boundary-hardening.md` ينص «Human checkpoint accepted on 2026-11-10… Pull request 255 passed all required CI»؛ الدمج PR#255 merged 2026-11-11T02:52:25Z (API، أثبت في s60). **صُحّح «13 لم تبدأ/not started»** في جدول الخريطة وسطر الأعداد (كانا انعكاس جمع 2026-11-10 قبل دخول PR#255).
-- **Gates 18/19 مغلقتان 2026-11-12** («Accepted and closed by explicit human direction» بعد PRs 260+262 و261)؛ **Gate 15 مكتملة تقنيًا** (gates-done/15، تمييز صريح: توصيف سلوك محتفَظ به وعجزات thread-yield تُعرض لا تُحوَّل لفشل)؛ **Gate 11 جزئية** (الملف الوحيد في gates-todo)؛ **Gate 14 مؤجلة** (gates-deferred/14)؛ **لا بوابة نشطة**. HANDOFF.md لقطة 2026-11-05 متقادمة ولا يُعتمد. صفر إشارات فك C2 — C2 يبقى مركونًا.
+## 1) الملخص
 
-## 1) البند 1 — تدقيق scan_layer وما يستدعيه (منهج #222) على 49b42307
+- **A1 [MEASURED]:** استلام بارد 2026-11-14T19:46:41Z؛ استنساخ ginux-watch (origin/main=193b830) وupstream (origin/main=285d025، 2026-11-14T05:30:14Z)؛ قراءة A1 كاملة بالترتيب؛ زمن الجاهزية ≈ 14 دقيقة.
+- **A2 [MEASURED]:** جدول التأقلم 10/10 مع درجة 9/10 (خطأ وحيد: سؤال 6 — الحي أظهر بوابات todo جديدة 23–30 على 285d025) — `team/results/a2-acclimatization.md`.
+- **A3 [MEASURED]:** **v7.9 ضائع**: لا دفعة بعد 10a144a (s61)، لا v7.8/v7.9 في directives/، لا فرع exp/scan-layer-fuzz على ginux-watch ولا الفورك — `team/results/a2-acclimatization.md` §4.
+- **A4 [MEASURED]:** دوران صندوق كامل (علامات 20261110 الثلاث غائبة؛ كُتبت علامات جديدة ×3 باسم CONTINUITY-20261114T1951Z.md)؛ git 2.47.3 / python 3.12.16 / node 24 / **rustc وssh غائبان** / بلا KVM / بلا credential helper؛ الجدولة موجودة لكن one_time فسّر الرقم **ثوانٍ لا ميلي** (خلوة موثقة) — `team/results/a4-platform-capabilities.md`.
+- **C-1 [MEASURED]:** آخر 60 PR مدموجًا (git-only، نافذة 8.51 يوم = 7.1 PR/يوم؛ ذروة 22 في 11-13): المناطق الثلاث: **1) waitid/reaping+signals** (8 إصلاحات/9 أيام، ProcessTable<8> منطق نقي، 19 اختبارًا فقط)، **2) descriptors/fd-table+/proc/self/fd** (4 إصلاحات؛ ginux-init صفر اختبارات في 14.7k سطر)، **3) vfs path resolution+image index** (4 إصلاحات؛ 3 منها نقي) — `team/results/c1-hot-surface-map.md`. لا proptest/quickcheck في المشروع (ثلاث طبقات: #[test] يدوية + security-fuzzer مخصص + سكربتات python).
+- **C-2 [MEASURED]:** فرع `exp/property-tests-process-table` (غير مُدفع): crate `property-tests/` بنمط fuzz/ (path-dep read-only على 285d025)؛ **9/9 proptest PASS، 2304 حالة (9×256، إعداد block-level)، ~12k عملية عشوائية صفر انحراف، 0 unsafe** — تسجيل انحدار لا عيب (4 إخفاقات أولى كلها أخطاء harness تقلصت بproptest) — `team/results/c2-property-tests.md`. **تشغيل Actions معلّق: لا توكن في الجلسة.**
+- **C-3 [MEASURED]:** **ممكنة مشروطًا** — KVM ليس العائق أصلًا (TCG-only by design)؛ `make test-contract` نقي بلا VM؛ عائقان فعليان غير KVM: بوابة doctor Darwin-arm64 + بناء seed ISO بـhdiutil (فشل مقاس run 42102046103)؛ بعد رقعة نقل صغيرة: TCG boot+gate يقدر بـ15–25 دقيقة على runner قياسي [INFERRED] — `team/results/c3-kvm-feasibility.md`.
+- **C-7 [MEASURED]:** قاعدة C-6 (رقم 9) وC-8 (رقم 10) في SUPERVISOR-RULES؛ قسم جديد في SUPERVISOR-ONBOARDING-PROMPT؛ قاعدة 36 في AGENTS.md؛ سقف PRs=2 في POLICY.md (Tier 2b + Limits)؛ سطرا تحديث حي في رأسي HANDOFF.md وSTATE.md؛ قاعدة METHODOLOGY 14 (إعادة قياس العيب على أحدث رأس) أُضيفت [MEASURED git diff 7 ملفات +25 سطرًا].
+- **المراقبة [MEASURED matrix/upstream-watch.json فحص 2026-11-14T16:05Z]:** خيوطنا 222 closed@02:27:17Z، 207 closed@02:58:34Z، 227 merged@02:27:02Z (2026-11-13) — **صفر ردود جديدة** منذ آخر امتصاص؛ circuit_breaker: ok (مصدر CLEAR = matrix + ls-remote، لا HTML).
 
-- `reports/v7.7B-scan-layer-audit-20261113.md`: **صفر مواضع `<<`/`>>` في الملّف كله** [MEASURED rg]؛ كل مواضع `+`/`*`/التحويلات (27 موضعًا في طبقتين: scan_layer+مستدعياتها، ومستهلكو مخرجاتها في assemble_layers) مصنفة **محكوم بحجم الملف / حارس صريح / ثابت بنيوي / تبعية تحقق موثقة** بدليل سطر — **لا موضع غير محكوم**. الملاحظة الموسومة الوحيدة: `write_hardlink_as_file:210` panic نظيف (copy_from_slice) يتطلب سجل PAX واحد ≥ ~8.59GiB **فعليًا في الملف** = DoS بملف ضخم، ليس overflow ولا unsafety ولا يحقق شرط البند 4-أ.
-- العلاقة بـ#222: عدّها التسعة كان على الشجرة القديمة (64a3e3f7) في scan_tar/parse_pax/whiteout وscan_layer خارج النطاق صراحة (approved/2026-11-06-1.md) — هذا التدقيق يمدّ المنهج نفسه؛ النتائج متسقة.
-- **فجوة تغطية موثقة:** هدف `vfs-index` في Gate 13 يشغّل `Index::new/entry/resolve` (صيغة الفهرس) لا مسح tar/PAX — سطح scan_layer بلا fuzz، ومؤطر حسابيًا بالتدقيق أعلاه.
+## 2) المقاس
 
-## 2) البند 2 (النص البديل) — fuzz أهداف Gate 13 نفسها
+| البند | النتيجة | الدليل |
+|---|---|---|
+| التوجيه v8.0 | أُرشف + sha256 | directives/v8.0-20261114.md + directives/INDEX.md |
+| فرع C-2 | exp/property-tests-process-table (محلي) | 9/9 PASS محليًا [MEASURED team/results/c2-property-tests.md] |
+| الدفع | **معلّق — لا توكن** (upload/gh-pat.txt غائب) [MEASURED test -f] | الجزء D؛ RECOVERY §3 |
+| API مجهول | [MEASURED] نُفدت الحصة 60/60 أثناء التحقق (تتجدد) | curl rate_limit |
 
-- **قراءة Gate 13 [MEASURED]:** `make fuzz-security` ⇒ `scripts/fuzz-security.sh` ⇒ `crates/security-fuzzer` (عدّاء حتمي مخصص). 8 أهداف: config/selector/elf/vfs-index/kernel-path/device/syscall/audit؛ بذور 6 ملفات في tests/fuzz-corpus + [0;32] لاثنين؛ **السكربت يرفض > 5 ثوانٍ والعدّاء يرفض > 30 ثانية للاستدعاء** — الحدود جزء من قبول البوابة. الميزانية (≥30 دقيقة/هدف) نُفّذت بتشغيل الثنائي نفسه مباشرة: **60 جولة × 30 ثانية = 1800 ثانية لكل هدف** (العمق الفعلي محدود بنافذة 30s لكون التسلسل حتميًا يعاد من بذرة ثابتة — موثق بصدق في التقرير).
-- **اكتشاف بناء [MEASURED محليًا، rustc 1.100.0]:** بناء الثنائي كما يفعل السكربت **يفشل ربطًا على host قياسي** (`rust-lld: unable to find -lm/-ldl/-lc`) بسبب أعلام freestanding في `.cargo/config.toml` على هدف host نفسه؛ `fuzz-security.sh` لا يحيّدها بخلاف `test-security` المجاور (`RUSTFLAGS=''`)؛ وCI الوحيد في upstream (check.yml) **لا يشغّل fuzz-security أصلًا** — أي أن السكربت لا يمر في CI upstream. الجولات تستخدم `RUSTFLAGS='-C overflow-checks=on'` (تحييد + شرط overflow-checks صراحة).
-- **الدليل المحلي [MEASURED]:** 8/8 PASS ×30s، 1,293,343 حالة، صفر أعطال، صفر artifacts.
-- **Actions الحي [MEASURED — run 43421884560، dispatch 12:02:49Z، اكتمل ~12:33Z]:** workflow جديد `fuzz-gate13.yml` (8 jobs متوازية، upstream checkout غير موثوق persist-credentials:false وcontents:read، record job وحده write يلحق `reports/fuzz-history.md` [skip ci] مع rebase ضد السباقات). **النتيجة: الثمانية PASS، صفر أعطال، 1800 ثانية لكل هدف، 68,773,935 حالة إجمالًا** — audit 9,984,069 / config 9,934,253 / device 9,717,190 / elf 5,990,435 / kernel-path 7,785,403 / selector 10,236,563 / syscall 5,284,997 / vfs-index 9,841,025؛ التغطية llvm-cov (جولة instrumented بميزانية Gate 13 الأصلية 5 ثوانٍ): regions 1.62%–5.00% لكل هدف على كامل مجموعة الاعتماديات المُعدّة (أساس مقارنة بين الجولات). الصفوف الثمانية الحية: commit `d3fabf79`.
+**جرد المنشورات العلنية كاملًا (AGENTS قاعدة 17):** #4، #14، #43، #54، #58، PR#61، #222، #207، PR#227 — لا جديد هذه الجلسة (0 منشورات؛ البوابة C-8 لم تُستعمل).
 
-## 3) البند 3 — الثنائيات ذاتية البدء
+## 3) الشذوذ والأخطاء
 
-- `reports/v7.7B-self-starting-bins-20261113.md`: الستة أهداف bin؛ **ذاتية البدء فعلًا = `ginux-init` (11,920 سطرًا، no_std/no_main، init الضيف الآلي) + `managed-payload` (17 سطرًا، stub بلا حساب)**. حساب المدخل غير الموثوق موجود في ginux-init فقط: read_index/read_file على بايتات index وELF + تحليل رقمي **محكم** `checked_mul/checked_add` (launch.rs:188-189) + وسائط الإقلاع — تكميل مباشر لما تركته #222 موسومًا («the self-start binaries»).
+1. [MEASURED] HANDOFF.md متقادم (آخر سجل جلسة 58؛ «آخر تحقق حي» 11-08) — فُجّر تحذير التوجيه؛ أُضيف سطر التحديث الحي في الرأس.
+2. [MEASURED] انحراف خريطة البوابات: gates-todo على 285d025 يضم 23–30 جديدة (لم تكن في الجزء B)؛ Gate 11 ما زالت todo.
+3. [MEASURED] انحراف «~20 PR يوميًا»: المتوسط 7.1/يوم في نافذة 60-PR؛ الذروة 22/يوم (11-13).
+4. [MEASURED] الجدولة: one_time يقبل ميلي لكنه يفسره ثوانٍ (next_run سنة 58841) — سُجل وسُحب المهمة فورًا (530777).
+5. [MEASURED] claim إصلاح abb89597 لfuzz-security.sh: مؤكد سلفًا لmain (merge-base) — لا نشر (قرار سابق قائم).
 
-## 4) البندان 4-ب و5
+## 4) قرارات مطلوبة
 
-- **4-ب:** لا عطل ولا overflow قابل للوصول محليًا (1.29M حالة) ولا حيًا (68.77M حالة على 49b42307) — **لا شيء حساس**؛ الدليل في reports/ دون أي نشر upstream. ما يُعرض لو فُتح باب Gate-13-متابعة على scan_layer: جدول التدقيق + فجوة التغطية.
-- **5:** مقدمة التوجيه متقادمة — **PR#255 مدموجة وهي جوهر Gate 13 نفسه**، فلا تعارض. فحص مصادق لأهداف `pulls/266/files` (9 ملفات) و`pulls/267/files` (5 ملفات): **التقاطع مع مسارات fuzz-security صفر** في كلتيهما — جولاتنا لا تتعارض مع شيء مفتوح.
+1. **الدفع:** رفع `upload/gh-pat.txt` لدفعة ff واحدة (commits محلية تُنشأ في هذه الجلسة فوق 193b830: main للوثائق والتقارير + فرع C-2 لcrate الاختبارات) [MEASURED git status] — بعدها dispatch CI للـproperty tests (C-2 «Actions بلا تعديل منطق»).
+2. **C-3:** هل نطلب بناء رقعة النقل (doctor/hdiutil) لتفعيل اختبار Rocky-VM على hosted runner؟ (لا بناء قبل اعتمادك وفق C-3).
 
-## 5) الدفع + استكمال v7.7-A + أمان التوكن
+## 5) ما سأفعله لاحقًا ما لم أوجهك
 
-- **توكن المحادثة → سلسلة واحدة** (validate scope push=True → فحص ردود الخيوط 222/207/227 منذ 03:00Z: **صفر جديد** قبل الدفع → دفع): **a30e5f0f..d3482e22 HEAD→main ff** [MEASURED ls-remote MATCH] — شمل الدفعتين الموقوفتين (v7.7+v7.7-A في 49855995/8fb0409b) وv7.7-B (d3482e22). ثم dispatch fuzz-gate13 وpoll حتى record commit، ثم shred للمفتاح.
-- **استكمال v7.7-A (المعلّق على توكن):** dispatch حي لـ`decider-space-probe.yml` (http 204) ⇒ state commit `7ac07edb` @12:39:53Z ⇒ **status=unconfigured** — «DECIDER_API_KEY is not set in this job» والاسم البديل GH_DECIDER_API_KEY غائب أيضًا (configured=false) — الفجوة من طرف المالك ما زالت قائمة، وظل 14 يومًا يبقى مسلحًا بانتظار أول تشغيل مُهيَّأ.
-- **الأسرار:** التوكن استُخدم في 3 سلاسل عابرة فقط (export داخل الاستدعاء الواحد + credential helper مؤقت + shred بعد كل سلسلة)، صفر ظهور في أي ملف متتبَّع (tree-token-scan 0) — **لامس نص المحادثة ⇒ التدوير فورًا موصى به**.
-- **البوابات قبل الدفع وبعده:** workflow-schema الكل PASS (يشمل fuzz-gate13.yml الجديد)، CJK 76 ملفًا PASS، secret_ref_audit 5 مراجع PASS، report-lint 51/51، decider-baseline 9/9، decider-gate 9/9، tree-token-scan 0.
+- لا شيء تلقائي: التوقف وفق التوجيه («ثم توقف»)؛ C-4 مراقبة حدثية فقط؛ C-5 معيار الفشل ساري (القطعة الأولى أُنتجت اليوم فالبند مستوفى [MEASURED فرع C-2]).
