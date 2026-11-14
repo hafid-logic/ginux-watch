@@ -1,20 +1,106 @@
 {
- "updated": "2026-11-14T06:26:47Z",
+ "updated": "2026-11-14T18:05:29Z",
  "schema": "decider-space-v1",
  "note": "DATA ONLY — no key, no request text; fixed probe input sha256_16 only",
  "base_url": "https://djihafwork-ginux-decider.hf.space",
- "configured": false,
+ "configured": true,
  "probe_input_sha256_16": "9d43279d55572e12",
  "checks": {
-  "auth": {
-   "category": "unconfigured",
-   "note": "DECIDER_API_KEY is not set in this job"
-  },
   "health": {
-   "category": "unconfigured"
+   "category": "ok",
+   "http_status": 200,
+   "elapsed_s": 0.22,
+   "model": "strands-decider-2b",
+   "checkpoint": "StrandsAgents/strands-decider-2B-qwen3.5-v1-2610",
+   "base_model": "Qwen/Qwen3.5-2B-Base",
+   "device": "cuda",
+   "max_length": 4096
+  },
+  "models": {
+   "category": "ok",
+   "http_status": 200,
+   "elapsed_s": 0.11,
+   "model_ids": [
+    "strands-decider-2b"
+   ]
+  },
+  "native": {
+   "category": "ok",
+   "http_status": 200,
+   "elapsed_s": 2.61,
+   "answer_kinds": [
+    "frustration",
+    "is_urgent",
+    "team"
+   ],
+   "expected_kinds": [
+    "frustration",
+    "is_urgent",
+    "team"
+   ],
+   "probability_problems": [],
+   "usage": {
+    "input_tokens": 262,
+    "output_tokens": 3
+   },
+   "latency_ms_reported": 2502.06
+  },
+  "determinism": {
+   "category": "ok",
+   "detail": "identical choice labels; noul/score within 0.15",
+   "elapsed_s": 0.43
+  },
+  "shim": {
+   "category": "ok",
+   "http_status": 200,
+   "elapsed_s": 0.49,
+   "content_kinds": [
+    "frustration",
+    "is_urgent",
+    "team"
+   ],
+   "usage": {
+    "prompt_tokens": 262,
+    "completion_tokens": 3,
+    "total_tokens": 265
+   }
+  },
+  "guard": {
+   "category": "ok",
+   "http_status": 400,
+   "error_type": "typed_question_required",
+   "note": "free text must be refused (typed_question_required); it must never be answered with an invented generation"
   }
  },
- "status": "unconfigured",
+ "status": "ok",
+ "model": "strands-decider-2b",
+ "answers": {
+  "is_urgent": {
+   "type": "noul",
+   "noul": 0.8615
+  },
+  "team": {
+   "type": "choice",
+   "choice": "billing",
+   "confidence": 0.6909,
+   "probabilities": {
+    "billing": 0.7939,
+    "sales": 0.1172,
+    "retail": 0.0889
+   }
+  },
+  "frustration": {
+   "type": "score",
+   "score": 1.07,
+   "confidence": 0.4972,
+   "probabilities": {
+    "0": 0.1853,
+    "1": 0.5595,
+    "2": 0.2553
+   }
+  }
+ },
+ "failed_checks": [],
  "history": [
   {
    "at": "2026-11-11T04:19:05Z",
@@ -115,6 +201,25 @@
     "health": "unconfigured"
    },
    "latencies_s": {}
+  },
+  {
+   "at": "2026-11-14T18:05:29Z",
+   "status": "ok",
+   "checks": {
+    "health": "ok",
+    "models": "ok",
+    "native": "ok",
+    "determinism": "ok",
+    "shim": "ok",
+    "guard": "ok"
+   },
+   "latencies_s": {
+    "health": 0.22,
+    "models": 0.11,
+    "native": 2.61,
+    "determinism": 0.43,
+    "shim": 0.49
+   }
   }
  ]
 }
