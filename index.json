@@ -1,8 +1,47 @@
 {
- "generated_at_utc": "2026-11-14T10:03:22Z",
+ "generated_at_utc": "2026-11-14T16:30:59Z",
  "source_repo": "gmkurtzer/ginux",
- "item_count": 283,
+ "item_count": 284,
  "items": {
+  "291": {
+   "kind": "pr",
+   "title": "Gate 31: establish filesystem mediation foundation",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    "Cargo.lock",
+    "Cargo.toml",
+    "Makefile",
+    "crates/ginux-fs-policy/Cargo.toml",
+    "crates/ginux-fs-policy/src/bin/fs-policy-doc.rs",
+    "crates/ginux-fs-policy/src/lib.rs",
+    "crates/ginux-fs-policy/tests/host_effect_oracle.rs",
+    "crates/ginux-init/Cargo.toml",
+    "crates/ginux-init/src/dispatch.rs",
+    "crates/ginux-init/src/fs_hooks.rs",
+    "crates/ginux-init/src/launch.rs",
+    "crates/ginux-init/src/main.rs",
+    "crates/ginux-init/src/supervisor.rs",
+    "docs/fs-operation-inventory.md",
+    "docs/security-boundary.md",
+    "hdae/ARCHITECTURE.md",
+    "hdae/PLAN.md",
+    "hdae/STATUS.md",
+    "hdae/gates-todo/31-filesystem-mediation-foundation.md"
+   ],
+   "keywords": [
+    "filesystem",
+    "host",
+    "check",
+    "configured",
+    "contract",
+    "generation",
+    "hook",
+    "rocky",
+    "syscall",
+    "because"
+   ]
+  },
   "290": {
    "kind": "issue",
    "title": "fs_hooks (G06): negative specification from container-runtime failure history — 19 acceptance requirements to adopt before implementation",
@@ -6762,6 +6801,152 @@
   }
  },
  "keywords": {
+  "filesystem": [
+   291
+  ],
+  "host": [
+   291,
+   289,
+   285,
+   274,
+   270,
+   259,
+   251,
+   248,
+   247,
+   245,
+   242,
+   238,
+   237,
+   236,
+   229,
+   219,
+   215,
+   214,
+   203,
+   202,
+   201,
+   200,
+   199,
+   198,
+   195,
+   194,
+   183,
+   125,
+   92,
+   86
+  ],
+  "check": [
+   291,
+   287,
+   273,
+   262,
+   260,
+   253,
+   241,
+   228,
+   217,
+   216,
+   204,
+   195,
+   189,
+   187,
+   181,
+   171,
+   169,
+   168,
+   165,
+   162,
+   160,
+   159,
+   158,
+   156,
+   153,
+   152,
+   142,
+   117,
+   90,
+   88,
+   87,
+   84,
+   61,
+   54,
+   51,
+   50,
+   49,
+   48,
+   47,
+   46,
+   44,
+   40,
+   11,
+   10,
+   9,
+   4,
+   3
+  ],
+  "configured": [
+   291,
+   287,
+   286,
+   266,
+   154
+  ],
+  "contract": [
+   291,
+   283,
+   278,
+   269,
+   258,
+   254,
+   251,
+   243,
+   237,
+   231,
+   230,
+   13
+  ],
+  "generation": [
+   291,
+   131,
+   107,
+   41
+  ],
+  "hook": [
+   291,
+   229
+  ],
+  "rocky": [
+   291,
+   282,
+   261,
+   209,
+   208,
+   201,
+   200,
+   199,
+   198,
+   8
+  ],
+  "syscall": [
+   291,
+   269,
+   258,
+   251,
+   242,
+   240,
+   204,
+   203,
+   186,
+   162,
+   161,
+   62,
+   25
+  ],
+  "because": [
+   291,
+   218
+  ],
   "cve": [
    290
   ],
@@ -6879,37 +7064,6 @@
    36,
    13,
    3
-  ],
-  "host": [
-   289,
-   285,
-   274,
-   270,
-   259,
-   251,
-   248,
-   247,
-   245,
-   242,
-   238,
-   237,
-   236,
-   229,
-   219,
-   215,
-   214,
-   203,
-   202,
-   201,
-   200,
-   199,
-   198,
-   195,
-   194,
-   183,
-   125,
-   92,
-   86
   ],
   "network": [
    289,
@@ -7098,12 +7252,6 @@
    99,
    98
   ],
-  "configured": [
-   287,
-   286,
-   266,
-   154
-  ],
   "policy": [
    287,
    86,
@@ -7116,54 +7264,6 @@
    287,
    70,
    45
-  ],
-  "check": [
-   287,
-   273,
-   262,
-   260,
-   253,
-   241,
-   228,
-   217,
-   216,
-   204,
-   195,
-   189,
-   187,
-   181,
-   171,
-   169,
-   168,
-   165,
-   162,
-   160,
-   159,
-   158,
-   156,
-   153,
-   152,
-   142,
-   117,
-   90,
-   88,
-   87,
-   84,
-   61,
-   54,
-   51,
-   50,
-   49,
-   48,
-   47,
-   46,
-   44,
-   40,
-   11,
-   10,
-   9,
-   4,
-   3
   ],
   "set_tid_address": [
    286,
@@ -7360,32 +7460,8 @@
    101,
    69
   ],
-  "contract": [
-   283,
-   278,
-   269,
-   258,
-   254,
-   251,
-   243,
-   237,
-   231,
-   230,
-   13
-  ],
   "rpm": [
    282
-  ],
-  "rocky": [
-   282,
-   261,
-   209,
-   208,
-   201,
-   200,
-   199,
-   198,
-   8
   ],
   "state": [
    282,
@@ -8009,20 +8085,6 @@
   ],
   "getsid": [
    269
-  ],
-  "syscall": [
-   269,
-   258,
-   251,
-   242,
-   240,
-   204,
-   203,
-   186,
-   162,
-   161,
-   62,
-   25
   ],
   "two": [
    269,
@@ -8967,9 +9029,6 @@
    229,
    131
   ],
-  "hook": [
-   229
-  ],
   "identity": [
    229
   ],
@@ -9205,9 +9264,6 @@
    218,
    166,
    149
-  ],
-  "because": [
-   218
   ],
   "slots": [
    217
@@ -10414,11 +10470,6 @@
   "slot": [
    131,
    107
-  ],
-  "generation": [
-   131,
-   107,
-   41
   ],
   "version": [
    131
