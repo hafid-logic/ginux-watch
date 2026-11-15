@@ -9,20 +9,21 @@ directive: v8.1-1 | prepared: 2026-11-15 (session s66)
 - فرعنا الرقعي: commit `9f04011b` محلياً فوق 285d025b؛ النقل إلى فرع ginux-watch `c8/linux-host-port` كملف `patches/linux-host-port.patch` (format-patch واحد، sha256 بالأسفل)
 - الفرق: 3 ملفات، +46/−12 — `scripts/prepare-rocky-host.sh` (+34/−10)، `scripts/doctor.sh` (+19/−1)، `scripts/verify-rocky-host.sh` (+5/−1)
 - طبيعة التغيير: تفريع أدوات macOS فقط عند غياب Darwin — `hdiutil makehybrid` → `xorriso -as mkisofs` أو `genisoimage` (وسم حجم `cidata` + Joliet + Rock Ridge) لبناء قرص cloud-init؛ `shasum -a 256` → `sha256sum`؛ doctor: قائمة أدوات لكل OS + قبول Linux x86_64 كـreference host. **مسار Darwin حرفياً كما هو** (نفس الأوامر داخل case Darwin)، و`start-rocky-host.sh` نفسه بلا تعديل (lsof اختياري فيه وqemu/ssh محمولة أصلاً).
-- sha256 لملف الرقعة: (يُبلَّغ بعد الcommit النهائي في هذا الملف نفسه)
+- sha256 لملف الرقعة: `929a836dce8964632a8c95fb50850c6b9159bfeea10cbddb518d0195329b1a0a` (patches/linux-host-port.patch @ branch 329f201+)
 - أوامر إعادة الإنتاج:
   1. `git -C work/upstream-ginux fetch origin main && git -C work/upstream-ginux checkout -B port-recheck FETCH_HEAD && git -C work/upstream-ginux apply --3way work/ginux-watch/patches/linux-host-port.patch`
   2. تشغيل الاختبار: `cd work/upstream-ginux && sudo apt-get install -y xorriso qemu-system-x86 qemu-utils && make host-image-fetch && ./scripts/start-rocky-host.sh && ./scripts/check-rocky-host.sh`
 
-## (ب) روابط تشغيلات Actions (على 285d025b، runner ubuntu-24.04)
+## (ب) روابط تشغيلات Actions (على 285d025b، runner ubuntu-24.04، فرع c8/linux-host-port @ 14d86010)
 
 | # | الغرض | الرابط | النتيجة |
 |---|---|---|---|
-| 1 | إقلاع Rocky VM على Linux (فشل-ثم-نجاح موثق في نفس الrun) | TBA-BOOT | TBA |
-| 2 | بوابة واحدة: `make test-contract` + doctor مرقّع | TBA-GATE-1 | TBA |
-| 3 | تشغيل ثانٍ للبوابة (إثبات التكرار) | TBA-GATE-2 | TBA |
+| 1 | إقلاع Rocky VM على Linux + فشل-ثم-نجاح (doctor unpatched exit=1؛ prepare unpatched exit=127 عند hdiutil؛ مرقّع: seed xorriso + TCG boot → SSH 102s → cloud-init 117s → check-rocky-host PASS) | https://github.com/hafid-logic/ginux-watch/actions/runs/43705947662 | SUCCESS |
+| 2 | بوابة واحدة: doctor مرقّع (sha256sum/xorriso\|genisoimage/Linux x86_64 = ok) + `RUSTFLAGS='' make test-contract` (15+28 tests PASS + contract-doc --check) | https://github.com/hafid-logic/ginux-watch/actions/runs/43706380595 | SUCCESS |
+| 3 | تشغيل ثانٍ للبوابة (إثبات التكرار — نفس النتيجة) | https://github.com/hafid-logic/ginux-watch/actions/runs/43706543833 | SUCCESS |
 
-(تُستبدل TBA بروابط حقيقية بعد التشغيل قبل تسليم الحزمة للمشرف — لا اعتماد بروابط ناقصة.)
+- KVM [MEASURED]: `/dev/kvm` غير قابل للاستخدام على عدّاء ubuntu-24.04 القياسي (فحص test -c/-w داخل run 1)؛ الإقلاع تم بTCG كما في السكربت الأصلي (لا تغيير accel) وكفى ب117 ثانية — قابلية النقل مثبتة، وKVM يبقى تحسيناً اختيارياً لاحقاً.
+- ملاحظة قياسية مستقلة [MEASURED run 43705971176]: `make test-contract` كما هو مكتوب يفشل على host لينكس (rustflags النواة الحرة من upstream `.cargo/config.toml` تُطبق على بناء host)؛ `test-unit` upstream يلفها بـRUSTFLAGS='' — الgate في run 2/3 استخدم الصيغة نفسها بلا أي تغيير في ملفات upstream؛ هذه ملاحظة لفرصة مستقبلية منفصلة وليست جزءاً من هذه الرقعة.
 
 ## (ج) فحص التعارض [MEASURED git على 2026-11-15T10:4xZ]
 
