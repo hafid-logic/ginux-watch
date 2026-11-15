@@ -8,7 +8,7 @@ status: done
 needs_decision: yes
 circuit_breaker: ok
 upstream_new_activity: no
-lint: pending (لُحقة في نهاية الدفعة) | tool: scripts/report_lint.py
+lint: PASS (a,b,c,d,e,f) | warn: sandbox-path notices | at: 2026-11-15T11:12Z | tool: scripts/report_lint.py
 ---
 
 # تقرير s66 — استلام بارد Part A + v8.1-1 (رقعة Linux + 3 runs) + v8.1-2 (طفرات 3/3) — حزمتا C-8 بانتظار المشرف
