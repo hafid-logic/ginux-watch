@@ -1,4 +1,4 @@
-# validation — T-20261103-01-par — PASS — 2026-11-10T00:06:48Z
+# validation — T-20261103-01-par — PASS — 2026-11-15T07:33:13Z
 
 - note: summary MEASURED line (section-level evidence): 'Exact commands run in `/home/z/my-project/work/ginux` (all 0 hits → ex'
 - all gates passed

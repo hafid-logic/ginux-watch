@@ -1,4 +1,4 @@
-# validation — T-20261102-04-par — PASS — 2026-11-10T00:06:48Z
+# validation — T-20261102-04-par — PASS — 2026-11-15T07:33:13Z
 
 - note: summary MEASURED line (section-level evidence): '- Both drafts: English, 89/89 words, no secrets, no local paths, no em'
 - all gates passed
