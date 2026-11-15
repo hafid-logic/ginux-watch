@@ -1,0 +1,13 @@
+diff --git a/crates/ginux-process/src/lib.rs b/crates/ginux-process/src/lib.rs
+index 6cd1bc31..9ac07f27 100644
+--- a/crates/ginux-process/src/lib.rs
++++ b/crates/ginux-process/src/lib.rs
+@@ -479,7 +479,7 @@ impl<const TASKS: usize> ProcessTable<TASKS> {
+     /// Record termination by an unhandled signal. The task must be running;
+     /// zombies keep whatever outcome they already reported.
+     pub fn signaled(&mut self, id: TaskId, signal: u8) -> Result<(), ProcessError> {
+-        if signal == 0 || signal > MAX_SIGNAL {
++        if signal == 0 || signal >= MAX_SIGNAL {
+             return Err(ProcessError::InvalidSignal);
+         }
+         let index = self.index(id)?;

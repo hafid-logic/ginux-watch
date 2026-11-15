@@ -1,0 +1,13 @@
+diff --git a/crates/ginux-process/src/lib.rs b/crates/ginux-process/src/lib.rs
+index 6cd1bc31..b09e976a 100644
+--- a/crates/ginux-process/src/lib.rs
++++ b/crates/ginux-process/src/lib.rs
+@@ -517,7 +517,7 @@ impl<const TASKS: usize> ProcessTable<TASKS> {
+             && task.id.pid == task.tgid
+             && match target {
+                 WaitTarget::Any => true,
+-                WaitTarget::Group(group) => task.process_group == group,
++                WaitTarget::Group(group) => task.process_group != group,
+                 WaitTarget::Specific(pid) => task.id.pid == pid,
+             }
+     }
