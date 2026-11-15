@@ -47,4 +47,4 @@ jobs:
       - name: Contract gate (make test-contract)
         run: |
           cd ginux
-          make test-contract
+          RUSTFLAGS='' make test-contract
