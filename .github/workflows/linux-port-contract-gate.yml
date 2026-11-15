@@ -1,0 +1,46 @@
+name: linux-port-contract-gate
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-contract-linux:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - name: Checkout ginux-watch (patch source)
+        uses: actions/checkout@v4
+        with:
+          path: watch
+
+      - name: Checkout upstream ginux at measured base
+        uses: actions/checkout@v4
+        with:
+          repository: gmkurtzer/ginux
+          ref: 285d025b7f8bcad0784585dcfbd23cada4643408
+          path: ginux
+
+      - name: Apply Linux host port patch
+        run: |
+          cd ginux
+          git apply --check --verbose ../watch/patches/linux-host-port.patch
+          git apply ../watch/patches/linux-host-port.patch
+          git diff --stat
+
+      - name: Install xorriso
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq xorriso
+
+      - name: Doctor on patched Linux host
+        run: |
+          cd ginux
+          ./scripts/doctor.sh
+
+      - name: Contract gate (make test-contract)
+        run: |
+          cd ginux
+          make test-contract

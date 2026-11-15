@@ -1,0 +1,134 @@
+From 9f04011bb3970b5f746c80528406710428f00a9c Mon Sep 17 00:00:00 2001
+From: Abdelhafid DJIDEL <266947999+hafid-logic@users.noreply.github.com>
+Date: Sun, 15 Nov 2026 10:35:57 +0000
+Subject: [PATCH] port: run the Rocky host flow on a Linux host
+
+Branch the macOS-only tools of the Rocky host chain on non-Darwin hosts,
+keeping Darwin behavior byte-identical:
+- prepare-rocky-host.sh: hdiutil makehybrid -> xorriso -as mkisofs or
+  genisoimage for the cloud-init seed ISO (volume label cidata, Joliet,
+  Rock Ridge); hdiutil and the .cdr fallback stay exactly as before on
+  Darwin.
+- verify-rocky-host.sh: shasum -a 256 -> sha256sum off Darwin.
+- doctor.sh: per-OS host tool list (hdiutil/shasum vs sha256sum),
+  xorriso-or-genisoimage check off Darwin, and Linux x86_64 accepted as
+  a reference host alongside macOS arm64.
+
+start-rocky-host.sh itself needs no change: lsof is optional there and
+qemu-img/qemu-system-x86_64/ssh are already portable.
+
+Signed-off-by: Abdelhafid DJIDEL <266947999+hafid-logic@users.noreply.github.com>
+---
+ scripts/doctor.sh             | 19 ++++++++++++++++++-
+ scripts/prepare-rocky-host.sh | 34 ++++++++++++++++++++++++----------
+ scripts/verify-rocky-host.sh  |  5 ++++-
+ 3 files changed, 46 insertions(+), 12 deletions(-)
+
+diff --git a/scripts/doctor.sh b/scripts/doctor.sh
+index b309bed9..2e8ca996 100755
+--- a/scripts/doctor.sh
++++ b/scripts/doctor.sh
+@@ -2,7 +2,11 @@
+ set -eu
+ 
+ missing=0
+-for command in cargo rustc rustup rg qemu-system-x86_64 qemu-img ssh scp ssh-keygen hdiutil shasum docker curl jq gzip; do
++case "$(uname -s)" in
++    Darwin) host_tools='hdiutil shasum' ;;
++    *) host_tools='sha256sum' ;;
++esac
++for command in cargo rustc rustup rg qemu-system-x86_64 qemu-img ssh scp ssh-keygen $host_tools docker curl jq gzip; do
+     if command -v "$command" >/dev/null 2>&1; then
+         printf 'doctor: %-24s ok\n' "$command"
+     else
+@@ -11,6 +15,18 @@ for command in cargo rustc rustup rg qemu-system-x86_64 qemu-img ssh scp ssh-key
+     fi
+ done
+ 
++case "$(uname -s)" in
++    Darwin) ;;
++    *)
++        if command -v xorriso >/dev/null 2>&1 || command -v genisoimage >/dev/null 2>&1; then
++            printf 'doctor: %-24s ok\n' 'xorriso|genisoimage'
++        else
++            printf 'doctor: %-24s MISSING\n' 'xorriso|genisoimage' >&2
++            missing=1
++        fi
++        ;;
++esac
++
+ if rustup target list --installed | grep -qx 'x86_64-unknown-linux-gnu'; then
+     printf '%s\n' 'doctor: Rust x86_64 target       ok'
+ else
+@@ -33,6 +49,7 @@ fi
+ 
+ case "$(uname -s)-$(uname -m)" in
+     Darwin-arm64) printf '%s\n' 'doctor: reference host          macOS arm64' ;;
++    Linux-x86_64) printf '%s\n' 'doctor: reference host          Linux x86_64' ;;
+     *) printf 'doctor: reference host          unsupported (%s-%s)\n' "$(uname -s)" "$(uname -m)" >&2; missing=1 ;;
+ esac
+ 
+diff --git a/scripts/prepare-rocky-host.sh b/scripts/prepare-rocky-host.sh
+index 171eb3f8..c6a131e8 100755
+--- a/scripts/prepare-rocky-host.sh
++++ b/scripts/prepare-rocky-host.sh
+@@ -36,16 +36,30 @@ runcmd:
+ EOF
+ 
+ rm -f build/rocky-seed.iso build/rocky-seed.iso.cdr
+-hdiutil makehybrid \
+-    -quiet \
+-    -iso \
+-    -joliet \
+-    -default-volume-name cidata \
+-    -o build/rocky-seed.iso \
+-    build/rocky-seed
++case "$(uname -s)" in
++    Darwin)
++        hdiutil makehybrid \
++            -quiet \
++            -iso \
++            -joliet \
++            -default-volume-name cidata \
++            -o build/rocky-seed.iso \
++            build/rocky-seed
+ 
+-if [ -f build/rocky-seed.iso.cdr ] && [ ! -f build/rocky-seed.iso ]; then
+-    mv build/rocky-seed.iso.cdr build/rocky-seed.iso
+-fi
++        if [ -f build/rocky-seed.iso.cdr ] && [ ! -f build/rocky-seed.iso ]; then
++            mv build/rocky-seed.iso.cdr build/rocky-seed.iso
++        fi
++        ;;
++    *)
++        if command -v xorriso >/dev/null 2>&1; then
++            xorriso -as mkisofs -quiet -V cidata -J -r -o build/rocky-seed.iso build/rocky-seed
++        elif command -v genisoimage >/dev/null 2>&1; then
++            genisoimage -quiet -V cidata -J -r -o build/rocky-seed.iso build/rocky-seed
++        else
++            printf '%s\n' 'no ISO 9660 tool found; install xorriso or genisoimage' >&2
++            exit 1
++        fi
++        ;;
++esac
+ test -f build/rocky-seed.iso
+ printf '%s\n' 'Rocky host: cloud-init seed ready'
+diff --git a/scripts/verify-rocky-host.sh b/scripts/verify-rocky-host.sh
+index 63b7cdd1..6d6bf6d8 100755
+--- a/scripts/verify-rocky-host.sh
++++ b/scripts/verify-rocky-host.sh
+@@ -15,7 +15,10 @@ if [ ! -f "$image" ]; then
+ fi
+ 
+ size=$(wc -c < "$image" | tr -d ' ')
+-actual=$(shasum -a 256 "$image" | awk '{print $1}')
++case "$(uname -s)" in
++    Darwin) actual=$(shasum -a 256 "$image" | awk '{print $1}') ;;
++    *) actual=$(sha256sum "$image" | awk '{print $1}') ;;
++esac
+ if [ "$size" != "$ROCKY_IMAGE_SIZE" ]; then
+     printf 'Rocky host image size mismatch: expected %s, got %s\n' "$ROCKY_IMAGE_SIZE" "$size" >&2
+     exit 1
+-- 
+2.47.3
+

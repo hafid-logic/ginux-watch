@@ -1,0 +1,85 @@
+name: linux-port-boot
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  rocky-boot-linux:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Checkout ginux-watch (patch source)
+        uses: actions/checkout@v4
+        with:
+          path: watch
+
+      - name: Checkout upstream ginux at measured base
+        uses: actions/checkout@v4
+        with:
+          repository: gmkurtzer/ginux
+          ref: 285d025b7f8bcad0784585dcfbd23cada4643408
+          path: ginux
+
+      - name: Install Linux host dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq xorriso qemu-system-x86 qemu-utils
+
+      - name: KVM evidence (runner virtualization)
+        run: |
+          if test -c /dev/kvm && test -w /dev/kvm; then
+            echo "KVM: /dev/kvm present and writable"
+            ls -l /dev/kvm
+          else
+            echo "KVM: /dev/kvm not usable on this runner"
+          fi
+
+      - name: Fail-then-pass baseline (unpatched tree, expected to fail)
+        run: |
+          cd ginux
+          echo "== hdiutil on Linux =="
+          if command -v hdiutil >/dev/null 2>&1; then echo "hdiutil: found (unexpected)"; else echo "hdiutil: command not found (expected on Linux)"; fi
+          cp scripts/prepare-rocky-host.sh /tmp/prepare-rocky-host.unpatched.sh
+          ./scripts/doctor.sh || echo "doctor (unpatched) exit=$? -- expected: hdiutil MISSING + unsupported reference host"
+          echo "== baseline recorded =="
+
+      - name: Apply Linux host port patch
+        run: |
+          cd ginux
+          git apply --check --verbose ../watch/patches/linux-host-port.patch
+          git apply ../watch/patches/linux-host-port.patch
+          git diff --stat
+
+      - name: Doctor after patch (must pass)
+        run: |
+          cd ginux
+          ./scripts/doctor.sh
+
+      - name: Fetch and verify Rocky host image (exercises sha256sum branch)
+        run: |
+          cd ginux
+          make host-image-fetch
+
+      - name: Seed build with unpatched script (expected hdiutil failure)
+        run: |
+          cd ginux
+          /tmp/prepare-rocky-host.unpatched.sh || echo "prepare (unpatched) exit=$? -- expected: hdiutil command not found"
+
+      - name: Start Rocky host on Linux (TCG; patched xorriso seed branch)
+        run: |
+          cd ginux
+          ./scripts/start-rocky-host.sh
+
+      - name: Verify Rocky host (Rocky 10, systemd as PID 1)
+        run: |
+          cd ginux
+          ./scripts/check-rocky-host.sh
+
+      - name: Stop Rocky host
+        if: always()
+        run: |
+          cd ginux
+          ./scripts/stop-rocky-host.sh || true
