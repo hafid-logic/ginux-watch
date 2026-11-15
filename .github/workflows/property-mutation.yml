@@ -1,0 +1,74 @@
+name: property-mutation
+
+on:
+  workflow_dispatch:
+    inputs:
+      mutant:
+        description: 'mutation to run (baseline = no mutation, both suites must pass)'
+        required: true
+        default: 'baseline'
+        type: choice
+        options:
+          - baseline
+          - m1-boundary
+          - m2-cmpop
+          - m3-terminal
+
+permissions:
+  contents: read
+
+jobs:
+  mutation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      RUSTFLAGS: ''
+    steps:
+      - name: Checkout ginux-watch (property tests + mutant patches)
+        uses: actions/checkout@v4
+
+      - name: Checkout upstream ginux at measured base
+        uses: actions/checkout@v4
+        with:
+          repository: gmkurtzer/ginux
+          ref: 285d025b7f8bcad0784585dcfbd23cada4643408
+          path: upstream
+
+      - name: Apply mutant to upstream checkout
+        if: ${{ inputs.mutant != 'baseline' }}
+        run: |
+          cd upstream
+          git apply --check --verbose ../property-tests-mutants/${{ inputs.mutant }}.patch
+          git apply ../property-tests-mutants/${{ inputs.mutant }}.patch
+          git diff --stat
+
+      - name: Existing project tests (cargo test -p ginux-process)
+        id: theirs
+        continue-on-error: true
+        run: |
+          cd upstream
+          cargo test -p ginux-process
+
+      - name: C-2 property tests (property-tests crate)
+        id: ours
+        continue-on-error: true
+        run: |
+          cargo test --manifest-path property-tests/Cargo.toml
+
+      - name: Record kill matrix
+        run: |
+          theirs="${{ steps.theirs.outcome }}"
+          ours="${{ steps.ours.outcome }}"
+          mutant="${{ inputs.mutant }}"
+          if [ "$theirs" = success ]; then tk="SURVIVES their tests"; else tk="KILLED by their tests"; fi
+          if [ "$ours" = success ]; then ok="SURVIVES our property tests"; else ok="KILLED by our property tests"; fi
+          {
+            echo "### mutation: $mutant"
+            echo "- their suite (cargo test -p ginux-process): $tk"
+            echo "- our suite (property-tests crate): $ok"
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "MUTANT=$mutant THEIR=$theirs OURS=$ours" >> "$GITHUB_ENV"
+          if [ "$mutant" = baseline ] && { [ "$theirs" != success ] || [ "$ours" != success ]; }; then
+            echo "baseline must be green on both suites" >&2
+            exit 1
+          fi
