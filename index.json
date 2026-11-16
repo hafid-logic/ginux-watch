@@ -1,8 +1,31 @@
 {
- "generated_at_utc": "2026-11-15T21:38:21Z",
+ "generated_at_utc": "2026-11-16T01:47:07Z",
  "source_repo": "gmkurtzer/ginux",
- "item_count": 287,
+ "item_count": 288,
  "items": {
+  "295": {
+   "kind": "pr",
+   "title": "port: run the Rocky host flow on a Linux host",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    "scripts/doctor.sh",
+    "scripts/prepare-rocky-host.sh",
+    "scripts/verify-rocky-host.sh"
+   ],
+   "keywords": [
+    "host",
+    "rocky",
+    "doctor",
+    "macos",
+    "cloud",
+    "darwin",
+    "flow",
+    "hdiutil",
+    "init",
+    "linux"
+   ]
+  },
   "294": {
    "kind": "issue",
    "title": "Downstream \"configured launch\" for build domains: gate source material, or keep it downstream?",
@@ -107,12 +130,14 @@
     "crates/ginux-fs-policy/Cargo.toml",
     "crates/ginux-fs-policy/src/bin/fs-policy-doc.rs",
     "crates/ginux-fs-policy/src/lib.rs",
+    "crates/ginux-fs-policy/src/x86_64_filesystem_abi.rs",
     "crates/ginux-fs-policy/tests/host_effect_oracle.rs",
     "crates/ginux-init/Cargo.toml",
     "crates/ginux-init/src/dispatch.rs",
     "crates/ginux-init/src/fs_hooks.rs",
     "crates/ginux-init/src/launch.rs",
     "crates/ginux-init/src/main.rs",
+    "crates/ginux-init/src/native_network.rs",
     "crates/ginux-init/src/process_hooks.rs",
     "crates/ginux-init/src/supervisor.rs",
     "docs/fs-operation-inventory.md",
@@ -121,19 +146,21 @@
     "hdae/PLAN.md",
     "hdae/STATUS.md",
     "hdae/gates-todo/31-filesystem-mediation-foundation.md",
-    "scripts/rpm-test-guest.sh"
+    "scripts/rpm-test-guest.sh",
+    "scripts/test-native-supervision.py",
+    "tests/fixtures/native-fixture.c"
    ],
    "keywords": [
     "filesystem",
     "host",
-    "check",
-    "configured",
     "contract",
-    "generation",
-    "hook",
-    "rocky",
+    "operation",
     "syscall",
-    "because"
+    "inventory",
+    "netlink",
+    "root",
+    "sends",
+    "unix"
    ]
   },
   "290": {
@@ -6895,6 +6922,138 @@
   }
  },
  "keywords": {
+  "host": [
+   295,
+   291,
+   289,
+   285,
+   274,
+   270,
+   259,
+   251,
+   248,
+   247,
+   245,
+   242,
+   238,
+   237,
+   236,
+   229,
+   219,
+   215,
+   214,
+   203,
+   202,
+   201,
+   200,
+   199,
+   198,
+   195,
+   194,
+   183,
+   125,
+   92,
+   86
+  ],
+  "rocky": [
+   295,
+   292,
+   282,
+   261,
+   209,
+   208,
+   201,
+   200,
+   199,
+   198,
+   8
+  ],
+  "doctor": [
+   295,
+   168
+  ],
+  "macos": [
+   295
+  ],
+  "cloud": [
+   295
+  ],
+  "darwin": [
+   295
+  ],
+  "flow": [
+   295
+  ],
+  "hdiutil": [
+   295
+  ],
+  "init": [
+   295,
+   284,
+   261,
+   204,
+   190,
+   112,
+   57,
+   37,
+   26
+  ],
+  "linux": [
+   295,
+   288,
+   282,
+   270,
+   265,
+   264,
+   263,
+   223,
+   220,
+   202,
+   191,
+   190,
+   177,
+   143,
+   142,
+   141,
+   139,
+   135,
+   129,
+   128,
+   127,
+   123,
+   122,
+   121,
+   120,
+   118,
+   116,
+   114,
+   111,
+   110,
+   106,
+   105,
+   103,
+   99,
+   98,
+   88,
+   85,
+   84,
+   83,
+   76,
+   72,
+   71,
+   69,
+   59,
+   57,
+   56,
+   55,
+   47,
+   46,
+   37,
+   14,
+   11,
+   9,
+   8
+  ],
   "ginux": [
    294,
    292,
@@ -7011,7 +7170,6 @@
   ],
   "configured": [
    294,
-   291,
    287,
    286,
    266,
@@ -7215,19 +7373,6 @@
    292,
    262
   ],
-  "rocky": [
-   292,
-   291,
-   282,
-   261,
-   209,
-   208,
-   201,
-   200,
-   199,
-   198,
-   8
-  ],
   "rpm": [
    292,
    282
@@ -7240,87 +7385,6 @@
   ],
   "filesystem": [
    291
-  ],
-  "host": [
-   291,
-   289,
-   285,
-   274,
-   270,
-   259,
-   251,
-   248,
-   247,
-   245,
-   242,
-   238,
-   237,
-   236,
-   229,
-   219,
-   215,
-   214,
-   203,
-   202,
-   201,
-   200,
-   199,
-   198,
-   195,
-   194,
-   183,
-   125,
-   92,
-   86
-  ],
-  "check": [
-   291,
-   287,
-   273,
-   262,
-   260,
-   253,
-   241,
-   228,
-   217,
-   216,
-   204,
-   195,
-   189,
-   187,
-   181,
-   171,
-   169,
-   168,
-   165,
-   162,
-   160,
-   159,
-   158,
-   156,
-   153,
-   152,
-   142,
-   117,
-   90,
-   88,
-   87,
-   84,
-   61,
-   54,
-   51,
-   50,
-   49,
-   48,
-   47,
-   46,
-   44,
-   40,
-   11,
-   10,
-   9,
-   4,
-   3
   ],
   "contract": [
    291,
@@ -7336,15 +7400,11 @@
    230,
    13
   ],
-  "generation": [
+  "operation": [
    291,
-   131,
-   107,
-   41
-  ],
-  "hook": [
-   291,
-   229
+   230,
+   84,
+   7
   ],
   "syscall": [
    291,
@@ -7361,9 +7421,23 @@
    62,
    25
   ],
-  "because": [
+  "inventory": [
+   291
+  ],
+  "netlink": [
+   291
+  ],
+  "root": [
    291,
-   218
+   280,
+   261,
+   61
+  ],
+  "sends": [
+   291
+  ],
+  "unix": [
+   291
   ],
   "cve": [
    290
@@ -7490,61 +7564,6 @@
   "classification": [
    288
   ],
-  "linux": [
-   288,
-   282,
-   270,
-   265,
-   264,
-   263,
-   223,
-   220,
-   202,
-   191,
-   190,
-   177,
-   143,
-   142,
-   141,
-   139,
-   135,
-   129,
-   128,
-   127,
-   123,
-   122,
-   121,
-   120,
-   118,
-   116,
-   114,
-   111,
-   110,
-   106,
-   105,
-   103,
-   99,
-   98,
-   88,
-   85,
-   84,
-   83,
-   76,
-   72,
-   71,
-   69,
-   59,
-   57,
-   56,
-   55,
-   47,
-   46,
-   37,
-   14,
-   11,
-   9,
-   8
-  ],
   "mutation": [
    288
   ],
@@ -7585,6 +7604,54 @@
    287,
    70,
    45
+  ],
+  "check": [
+   287,
+   273,
+   262,
+   260,
+   253,
+   241,
+   228,
+   217,
+   216,
+   204,
+   195,
+   189,
+   187,
+   181,
+   171,
+   169,
+   168,
+   165,
+   162,
+   160,
+   159,
+   158,
+   156,
+   153,
+   152,
+   142,
+   117,
+   90,
+   88,
+   87,
+   84,
+   61,
+   54,
+   51,
+   50,
+   49,
+   48,
+   47,
+   46,
+   44,
+   40,
+   11,
+   10,
+   9,
+   4,
+   3
   ],
   "set_tid_address": [
    286,
@@ -7648,16 +7715,6 @@
   ],
   "2489534": [
    285
-  ],
-  "init": [
-   284,
-   261,
-   204,
-   190,
-   112,
-   57,
-   37,
-   26
   ],
   "clone_untraced": [
    284
@@ -7826,11 +7883,6 @@
    104,
    103,
    91
-  ],
-  "root": [
-   280,
-   261,
-   61
   ],
   "exit": [
    280,
@@ -9137,11 +9189,6 @@
   "formal": [
    230
   ],
-  "operation": [
-   230,
-   84,
-   7
-  ],
   "domain": [
    229,
    220,
@@ -9197,6 +9244,9 @@
   "configuration": [
    229,
    131
+  ],
+  "hook": [
+   229
   ],
   "identity": [
    229
@@ -9428,6 +9478,9 @@
    218,
    166,
    149
+  ],
+  "because": [
+   218
   ],
   "slots": [
    217
@@ -10117,9 +10170,6 @@
    168,
    41
   ],
-  "doctor": [
-   168
-  ],
   "link": [
    167,
    148,
@@ -10615,6 +10665,11 @@
   "slot": [
    131,
    107
+  ],
+  "generation": [
+   131,
+   107,
+   41
   ],
   "version": [
    131
