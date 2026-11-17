@@ -91,14 +91,14 @@ def main() -> int:
         mon = json.loads(mon_path.read_text(encoding="utf-8"))
         w = mon.get("watched", {}).get("222")
         if w is not None and (w.get("comments") != 4 or w.get("state") != "closed"):
-            print('monitor watched #222: comments %s->4 state %s->closed (absorbed)'
+            print('monitor watched thread 222: comments %s->4 state %s->closed (absorbed)'
                   % (w.get("comments"), w.get("state")))
             w.update({"comments": 4, "state": "closed",
                       "updated_at": "2026-11-13T02:27:17Z"})
             mon_path.write_text(json.dumps(mon, ensure_ascii=False, indent=1) + "\n",
                                 encoding="utf-8")
         elif w is not None:
-            print('monitor watched #222 already absorbed')
+            print('monitor watched thread 222 already absorbed')
     return 0
 
 

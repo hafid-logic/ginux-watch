@@ -63,10 +63,10 @@ WARN_CLAUSES = ["g", "h"]                        # v7.6-1: recorded, never FAIL
 # 2026-11-12; first v7.5-era report id date = 20261112).
 H_ERA_MIN_ID_DATE = 20261112
 LINT_LINE_RE = re.compile(
-    r"^lint: (PASS|FAIL) \(([^)]*)\)(?: \| warn: ([^|]*))? \| at: (\S+) \| tool: scripts/report_lint\.py",
+    r"^lint: (PASS|FAIL) \(([^)]*)\)(?: \| warn: ([^|]*))? \| at: (\S+) \| tool: scripts/report_lint\.py$",
     re.M)
 LEGACY_LINE_RE = re.compile(
-    r"^lint: (PASS|FAIL) \(([^)]*)\) \| at: (\S+) \| tool: scripts/report_lint\.py", re.M)
+    r"^lint: (PASS|FAIL) \(([^)]*)\) \| at: (\S+) \| tool: scripts/report_lint\.py$", re.M)
 
 # ---- reusable gates imported from the existing scripts (single source) ----
 def _load(name, path):
@@ -100,7 +100,7 @@ HB_STATE_FILES = ("matrix/upstream-watch.json", "state/heartbeat")
 # ---- clause g (v7.6-1): equivalent anchors / current-state claims ----
 ANCHOR_FIELD_RE = re.compile(r"^head_pushed:\s*[0-9a-f]{7,40}\s*$", re.M)
 ANCHOR_INLINE_RE = re.compile(r"origin/main\s*[=:]\s*\b[0-9a-f]{7,40}\b")
-EVENT_RECORD_RE = re.compile(r"^#\s*ALERT:\|^type:\s*alert\b|^time:\s*\d{4}-", re.M)
+EVENT_RECORD_RE = re.compile(r"^#\s*ALERT:|^type:\s*alert\b|^time:\s*\d{4}-", re.M)
 CURRENT_CLAIM_RE = re.compile(
     r"الحالة الحالية|حالياً|الرأس الحالي|الوضع الحالي|current state|as of now|"
     r"^status:\s|^circuit_breaker:\s|^upstream_new_activity:\s", re.M | re.I)
@@ -170,9 +170,9 @@ def lint_text(text, relpath="<memory>"):
     (g,h) are recorded in warns and never fail the report by themselves."""
     lines = text.splitlines()
     low_lines = [ln.lower() for ln in lines]
-    details = []          # list of (clause, severity, message) — severity: fail|warn
-    failed = []           # ERROR clauses that fired
-    warns = []            # WARN clauses that fired
+    details = []
+    failed = []
+    warns = []
 
     def fail(clause, msg):
         details.append((clause, "fail", msg))
@@ -195,26 +195,17 @@ def lint_text(text, relpath="<memory>"):
                     fail("a", "line %d: CLEAR claim without API/ls-remote evidence in window" % (i + 1))
 
     # ---- (b) TRIPPED claims need a fresh diff vs saved baseline ----
-    # v7.6-1 calibration (6-sample verification of the 2026-11-12 baseline):
-    #   - a TRIPPED inside the front-matter is a headline field; its diff
-    #     proof legitimately lives in the body -> report-level fallback.
-    #   - TRIPPED occurring only inside code spans (`circuit_breaker: TRIPPED`)
-    #     is a format/field reference, not a claim.
-    #   - heading lines name topics ("...إشعار TRIPPED..."), not claims.
-    #   - a negated/hypothetical mention ("لا يفتح TRIPPED جديدًا") is not a
-    #     claim. Each rule is tied to a measured retro sample (calibration
-    #     record eval/supervisor-defects/lint/results/calibration-2026-11-12.md).
     fm_end = front_matter_end(text)
     NEG_CONTEXT = ("لا ", "فلا", "بلا", "لو ", "إن ", "إلا", "حينها", "كاذب")
     for i, ln in enumerate(lines):
         spans_stripped = CODE_SPAN_RE.sub("", ln)
         low_stripped = spans_stripped.lower()
         if "TRIPPED" not in spans_stripped and "tripped" not in low_stripped:
-            continue  # TRIPPED only inside code spans -> format reference
+            continue
         if ln.lstrip().startswith("#"):
-            continue  # heading line names a topic, not a claim
+            continue
         if "TRIPPED كاذب" in spans_stripped:
-            continue  # explicit negation ("false TRIPPED")
+            continue
         negated = False
         for m in re.finditer(r"TRIPPED|tripped", spans_stripped):
             pre = spans_stripped[max(0, m.start() - 24):m.start()]
@@ -222,7 +213,7 @@ def lint_text(text, relpath="<memory>"):
                 negated = True
                 break
         if negated:
-            continue  # negated/hypothetical mention, not a claim
+            continue
         win = _window(lines, i)
         ok = bool(SHA_ARROW_RE.search(win))
         if not ok and any(w in win for w in TRIP_DIFF_WORDS):
@@ -259,9 +250,6 @@ def lint_text(text, relpath="<memory>"):
     # ---- (d) heartbeat: last_success independent of last_run ----
     for i, ln in enumerate(lines):
         if any(w in ln for w in HB_WORDS):
-            # health claim must live at the mention itself (±1 line) — a bare
-            # 'heartbeat' inside a test name must not inherit a health word
-            # from an unrelated paragraph
             win = _window(lines, i, before=1, after=1)
             has_health = any(w in win for w in HB_HEALTH_WORDS)
             if not has_health:
@@ -283,9 +271,6 @@ def lint_text(text, relpath="<memory>"):
     for cls, pat in TOKEN_PATTERNS:
         if pat.search(data):
             fail("f", "full-form token pattern (%s) in report — redact immediately" % cls)
-    # stricter than the tree gate: reports never carry token-shaped strings,
-    # not even the sanctioned ghp_SYNTHETIC-EX-* fixture form (redact to
-    # sha256-12 fingerprint instead).
     if ALLOWED_SYNTHETIC.search(data):
         fail("f", "token-shaped string (ghp_SYNTHETIC-EX-*, synthetic form) — redact to sha256-12 in reports")
 
@@ -297,9 +282,6 @@ def lint_text(text, relpath="<memory>"):
         if m:
             base = m.group(1)
     if base is None:
-        # v7.6-1: a missing base_head is a defect only for current-state
-        # claims. Equivalent anchors satisfy the intent: head_pushed field,
-        # origin/main=<sha> in the body, ALERT/event-record shape.
         anchored = bool(ANCHOR_FIELD_RE.search(text)) \
             or bool(ANCHOR_INLINE_RE.search(text)) \
             or bool(EVENT_RECORD_RE.search(text))
@@ -328,7 +310,6 @@ def _h_paths(lines, warn):
     def _spans(line, in_fence):
         found = list(CODE_SPAN_RE.findall(line))
         if in_fence:
-            # fenced diff/patch content is code, not a prose path mention
             return found
         for m in BARE_PATH_RE.findall(line):
             if m not in found:
@@ -346,8 +327,6 @@ def _h_paths(lines, warn):
                 continue
             if not PATH_SHAPE_RE.match(span):
                 continue
-            # GitHub owner/repo slugs and similar two-segment labels are not
-            # filesystem paths (hafid-logic/ginux-watch)
             parts = span.split("/")
             if len(parts) == 2 and "." not in parts[1] and parts[0] not in (
                     "upload", "work", "state", "scripts", "eval", "docs",
@@ -358,9 +337,7 @@ def _h_paths(lines, warn):
             win = _window(lines, i, before=1, after=1)
             tagged = any(t in win for t in SANDBOX_TAGS)
             resolved = _resolves_in_repo(span)
-            if resolved:
-                continue
-            if tagged:
+            if resolved or tagged:
                 continue
             warn("h", "path `%s` (line %d) not tracked in repo and not tagged [sandbox]" % (span, i + 1))
 
@@ -385,7 +362,6 @@ def _resolves_in_repo(p):
             r = git("ls-files", "--", parent)
             if r.stdout.strip():
                 return True
-        # present in the working tree and not gitignored -> repo content
         if parent:
             pr = git("check-ignore", "-q", c)
             if pr.returncode == 1 and (REPO / c).exists():
@@ -396,7 +372,7 @@ def _resolves_in_repo(p):
 def front_matter(text):
     """Return the YAML front-matter block (without --- fences) or ''. """
     lines = text.splitlines()
-    for start in range(min(3, len(lines))):  # may follow a status line (v7.5-5)
+    for start in range(min(3, len(lines))):
         if lines[start].strip() == "---":
             for end in range(start + 1, min(start + 60, len(lines))):
                 if lines[end].strip() == "---":
@@ -416,14 +392,26 @@ def lint_line(verdict, failed, warns=None):
 
 
 def apply_lint_line(text, verdict, failed, warns=None):
-    """Insert/replace the lint: line inside the front-matter (or at top).
-    Strips both the v7.6 (warn section) and legacy v7.5 line formats."""
+    """Insert/replace the lint line in the report head.
+
+    Preserve an already-current v7.6 line, including its timestamp, so repeated
+    --fix runs are byte-for-byte idempotent. A changed verdict or warning set
+    still replaces the recorded line with a fresh timestamp.
+    """
+    warns = warns or []
+    expected_clauses = ",".join(failed) if failed else ",".join(ERROR_CLAUSES)
+    expected_warns = ",".join(warns) if warns else "none"
+    existing = LINT_LINE_RE.search(text)
+    if existing and existing.group(3) is not None and \
+            existing.group(1) == verdict and \
+            existing.group(2) == expected_clauses and \
+            existing.group(3).strip() == expected_warns:
+        return text
+
     newline = lint_line(verdict, failed, warns)
-    text = re.sub(r"^lint: (PASS|FAIL) \([^)]*\)(?: \| warn: [^|]*)? \| at: \S+ \| tool: scripts/report_lint\.py\n",
+    text = re.sub(r"^lint: (PASS|FAIL) \([^)]*\)(?: \| warn: [^|]*)? \| at: \S+ \| tool: scripts/report_lint\.py\n?",
                   "", text, flags=re.M)
     lines = text.splitlines(keepends=True)
-    # front-matter may be preceded by a supervisor status line (v7.5-5) —
-    # locate the opening '---' within the first 3 lines
     for start in range(min(3, len(lines))):
         if lines[start].rstrip("\n") == "---":
             for end in range(start + 1, min(start + 40, len(lines))):
@@ -434,12 +422,10 @@ def apply_lint_line(text, verdict, failed, warns=None):
 
 
 def stale_check(text, verdict, failed, warns=None):
-    """--check mode: an existing lint: line must match the fresh verdict.
+    """--check mode: an existing lint line must match the fresh verdict.
     v7.6 lines (with a warn section) are compared strictly. Legacy v7.5
-    lines (no warn section) are compared leniently: PASS must still be PASS
-    with no ERROR clauses failing; a legacy FAIL must at least cover the
-    freshly-computed ERROR clauses (legacy parens may also carry g/h which
-    are WARN-level since v7.6-1)."""
+    lines (no warn section) are compared leniently.
+    """
     warns = warns or []
     if re.search(r"^lint: [^\n]*\| warn:", text, re.M):
         m = LINT_LINE_RE.search(text)
