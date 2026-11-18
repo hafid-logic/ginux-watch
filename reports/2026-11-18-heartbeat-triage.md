@@ -20,8 +20,11 @@ lint: PASS warn: none
 `last_success=10:03:04Z`، `last_conclusion=failure`، العتبة 12h ⇒ **لا إنذار نبض بعد**.
 الآلية تعمل كما صُمّمت (v7.3-2d): الفشل لا يُحسب نبضًا.
 
-## السبب الجذري للخطوة 7
-غير محسوم بلا سجل الخطوة [يلزم جلب logs run 44287851640]. فرضية INFERRED: تقرير
-outbox/*.md ولّدته أتمتة shadow/eval بلا سطر lint مطابق فرفضه --check. ليس انحدارًا
-من كود PR #32 (الاختبارات offline نجحت). الإجراء: جلب سجل الخطوة ثم إصلاح مولّد
-التقرير أو استثناء تقارير الأتمتة من --check بقرار المالك.
+## السبب الجذري للخطوة 7 [MEASURED — سجل run 44287851640]
+الملف المُخفِق: `outbox/ALERT-shadow.md` — «check: missing lint line». وهو لافتة إنذار
+آلية («shadow supervisor failed 3 consecutive runs») بلا front-matter، وليس تقرير جلسة.
+وينطبق الأمر نفسه على ALERT-llm-{nvidia,openrouter,google-ai-studio}.md. ليس انحدارًا من PR #32.
+
+**الإصلاح (v8.3.1):** استبعاد `ALERT-*.md` من `--check` في نصفي البوابة (watcher step 7 +
+pre-commit hook)، تمامًا كـ INDEX/LATEST/_TEMPLATE. تقارير الجلسة (sNN) ما زالت تُفحص؛
+منطق lint نفسه لم يتغير. الفرع: fix/watcher-lint-alert-exclusion.
