@@ -89,3 +89,9 @@
 - الرقعة: استبعاد ALERT-*.md من --check في نصفي البوابة (watcher + hook)؛ منطق lint unchanged. PR #34 مدموج (8e73c925)، ci أخضر.
 - تحقق حي: watcher #64 (dispatch) نجاح كامل؛ الخطوة 7 وpr-state-xref خضراوان؛ heartbeat last_success=14:40:35Z success؛ our_open_prs={295,296} وكلاهما mergeable=clean.
 - التوكن لامس نص المحادثة ⇒ يُنصح بالتدوير؛ لا توكن في أي ملف متتبَّع.
+
+## جلسة 2026-11-18 (v8.4 — أتمتة HDAE كاملة)
+- PRات: #36 أساس (يدوي)، #37 أحداث+auto-merge (يدوي)، #38 إقرار+سجل (ذاتي)، #39 نضارة (ذاتي)، #40 إغلاق حلقة dispatch (يدوي، حراس)، #41 تحقق (ذاتي).
+- تحقق حي [MEASURED]: auto-merge #1/#3/#4 دمجها github-actions[bot]؛ watcher #67 push و#68 repository_dispatch أخضر؛ alerts.json يرصد 3 قضايا TRIPPED (19/20/22) بتذكير واحد منزوع التكرار؛ action-ledger ملتزم؛ اختبارات authz 12/12، auto-merge 10/10، alert-ack 10/10، upstream-watch 11/11.
+- القرارات الحرجة تبقى بشرية: أي كتابة upstream، force/حذف، تغيير السياسة/السقف، قبول البوابات، التوكنات. الاستثناء token-in-chat مؤجل بقرار المالك حتى اكتمال التحقق (مسجل في authorization.yml).
+- التالي: قبول المالك للبوابات (نقلها gates-done) ثم تفعيل الاستثناء الأمني.
