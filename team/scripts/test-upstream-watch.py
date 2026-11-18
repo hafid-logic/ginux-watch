@@ -191,5 +191,36 @@ else:
     no("W8 deltas", str(outO3))
 
 
+
+# ===== v8.4-D: staleness + mergeable breakers + rebase tasks =====
+def run_our_sweep_head(open_list, details, prev, head):
+    uw.gh = our_gh_factory(open_list, details)
+    state = {"our_open_prs": prev}; out = []
+    uw.watch_our_prs(state, "2026-11-18T11:00:00Z", out, upstream_head=head)
+    return state["our_open_prs"], out
+snapS, outS = run_our_sweep_head([PR295], {"295": D295}, {}, "ffffffffffffffffffffffffffffffffffffffff")
+if snapS["295"]["stale"] and any("#295 STALE" in l for l in outS):
+    ok("W9 base behind upstream => STALE line + stale flag")
+else:
+    no("W9 stale", str(outS))
+snapD, outD = run_our_sweep_head([PR295], {"295": {"number": 295, "merged": False, "mergeable_state": "dirty"}}, {}, "285d025b7f8bcad0784585dcfbd23cada4643408")
+if any("MERGEABLE-DIRTY" in l for l in outD):
+    ok("W10 mergeable dirty => breaker line")
+else:
+    no("W10 dirty", str(outD))
+import tempfile, os
+_cwd = os.getcwd(); _tmp = tempfile.mkdtemp(); os.chdir(_tmp)
+try:
+    stt = {"our_open_prs": {"295": {"stale": True, "base_sha": "285d025b", "checked": "2026-11-18T11:00:00Z"}}}
+    uw.ensure_rebase_tasks(stt, "2026-11-18T11:00:00Z")
+    p1 = os.path.exists("team/tasks/open/T-rebase-295.md")
+    uw.ensure_rebase_tasks(stt, "2026-11-18T12:00:00Z")
+    import glob
+    p2 = len(glob.glob("team/tasks/open/T-rebase-295*.md")) == 1
+    ok("W11 rebase task created idempotently") if (p1 and p2) else no("W11", str((p1, p2)))
+finally:
+    os.chdir(_cwd)
+
+
 print("upstream-watch tests: %d/%d pass" % (PASS, PASS + FAIL))
 sys.exit(1 if FAIL else 0)
