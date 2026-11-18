@@ -121,7 +121,7 @@ def watch_threads(state, now, out) -> None:
 
 
 
-def watch_our_prs(state, now, out) -> None:
+def watch_our_prs(state, now, out, upstream_head=None) -> None:
     """v8.3-ب: track OUR open upstream PRs (read-only, never posts).
 
     The fixed thread watch (222/207/227) missed #295/#296 from our fork; STATE
@@ -145,12 +145,18 @@ def watch_our_prs(state, now, out) -> None:
             ms = json.loads(gh("api", f"repos/{UPSTREAM}/pulls/{n}")).get("mergeable_state")
         except (subprocess.CalledProcessError, json.JSONDecodeError):
             pass
+        base_sha = (p.get("base") or {}).get("sha")
+        stale = bool(upstream_head and base_sha and base_sha != upstream_head)
         snap[str(n)] = {"title": p.get("title"), "state": p.get("state"),
                         "head_sha": (p.get("head") or {}).get("sha"),
-                        "base_sha": (p.get("base") or {}).get("sha"),
+                        "base_sha": base_sha, "stale": stale,
                         "mergeable_state": ms, "comments": p.get("comments"),
                         "review_comments": p.get("review_comments"),
                         "updated_at": p.get("updated_at"), "checked": now}
+        if stale:
+            out.append(f"our_open_prs #{n} STALE: base {str(base_sha)[:8]} behind upstream {str(upstream_head)[:8]} — rebase-prep needed (push stays human)")
+        if ms in ("dirty", "blocked"):
+            out.append(f"our_open_prs #{n} MERGEABLE-{ms.upper()}: watch-breaker trigger (v8.4-D)")
     state["our_open_prs"] = snap
     for n, cur in snap.items():
         old = prev.get(n)
@@ -174,6 +180,25 @@ def watch_our_prs(state, now, out) -> None:
             out.append(f"our_open_prs #{n} {'MERGED' if merged else 'CLOSED'}: "
                        "left the open set — watch-breaker trigger (v8.3-ب)")
 
+
+
+def ensure_rebase_tasks(state, now) -> None:
+    """v8.4-D: idempotent internal rebase-prep task cards for stale PRs.
+    Preparation only — the actual upstream push remains a human decision."""
+    import pathlib
+    d = pathlib.Path("team/tasks/open")
+    for n, e in (state.get("our_open_prs") or {}).items():
+        if not e.get("stale"):
+            continue
+        f = d / ("T-rebase-%s.md" % n)
+        if f.exists():
+            continue
+        d.mkdir(parents=True, exist_ok=True)
+        f.write_text(
+            "---\nid: T-rebase-%s\ntype: rebase-prep\nstatus: open\npriority: high\n---\n\n"
+            "# Rebase-prep for upstream PR #%s\n\nbase %s behind upstream main %s (checked %s).\n"
+            "Prepare a clean rebase branch + re-verify evidence; **upstream push is human-only** (authz).\n"
+            % (n, n, str(e.get("base_sha"))[:8], str(e.get("checked")), now), encoding="utf-8")
 
 def gh(*args: str) -> str:
     return subprocess.run(
@@ -205,7 +230,8 @@ def main() -> int:
     last = state.get("last_seen_sha")
     out = [f"upstream main: last={str(last)[:8]} new={head[:8]}"]
     watch_threads(state, now, out)
-    watch_our_prs(state, now, out)  # v8.3-ب
+    watch_our_prs(state, now, out, upstream_head=head)  # v8.3-ب / v8.4-D
+    ensure_rebase_tasks(state, now)  # v8.4-D
 
     if not last:
         state.update({"last_seen_sha": head, "last_checked": now})
