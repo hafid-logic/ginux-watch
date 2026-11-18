@@ -12,8 +12,8 @@
   - **#296** «tests(process): pin signal-boundary, wait-group, and zombie behavior» — head f2f3ceb7،
     open، 0 تعليقات/0 مراجعات (أُنشئ 2026-11-16T12:53Z). يقابل c8-property-tests-process-table.
   - لا رد من المالك حتى 2026-11-18؛ لا ملاحقة (بند 14). تُرصد آليًا عبر watch_our_prs (v8.3-ب).
-- **النبض:** last_success 2026-11-18T10:03:04Z، last_conclusion failure (run #63، خطوة lint
-  للتقارير المولّدة) — ضمن عتبة 12h، لا إنذار. التشخيص: reports/2026-11-18-heartbeat-triage.md.
+- **النبض:** last_success 2026-11-18T14:40:35Z، last_conclusion **success** (watcher #64 نجح بعد
+  إصلاح الخطوة 7 في v8.3.1). التشخيص: reports/2026-11-18-heartbeat-triage.md.
 - **v8.3:** تحسينات المستودع الخمسة + إنفاذ pr-state-xref على main؛ فرع chore/repo-health-v83
   دُفع هذه الجلسة باعتماد المالك، PR داخلي #33 (https://github.com/hafid-logic/ginux-watch/pull/33).
 

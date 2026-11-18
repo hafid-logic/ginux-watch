@@ -83,3 +83,9 @@
 - فرع chore/repo-health-v83 → PR داخلي #33. الفحوص: upstream-watch 8/8، pr-state-xref 6/6، بوابة xref OK، رأس STATE 1822 بايت، أرشيف بايتي.
 - ci.yml يشغّل البوابات offline على الـPR (تاريخ كامل). التوكن لامس نص المحادثة ⇒ يُنصح بالتدوير فورًا؛ لا توكن في أي ملف متتبَّع.
 - الدفع إلى main يتم بدمج المالك للـPR #33 (لا force). سقف upstream 2/2 — لا نشر جديد هناك.
+
+## جلسة 2026-11-18 (v8.3.1 — إصلاح الخطوة 7)
+- السبب المقيس (سجل run 44287851640): outbox/ALERT-shadow.md «missing lint line» — لافتة إنذار آلية لا تقرير جلسة.
+- الرقعة: استبعاد ALERT-*.md من --check في نصفي البوابة (watcher + hook)؛ منطق lint unchanged. PR #34 مدموج (8e73c925)، ci أخضر.
+- تحقق حي: watcher #64 (dispatch) نجاح كامل؛ الخطوة 7 وpr-state-xref خضراوان؛ heartbeat last_success=14:40:35Z success؛ our_open_prs={295,296} وكلاهما mergeable=clean.
+- التوكن لامس نص المحادثة ⇒ يُنصح بالتدوير؛ لا توكن في أي ملف متتبَّع.
