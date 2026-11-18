@@ -29,6 +29,8 @@ jobs:
       - name: Upstream watch thread/PR tracking (offline, gh mocked)
         run: python3 team/scripts/test-upstream-watch.py
       - name: Authorization policy tests (offline)
+      - name: Auto-merge decision tests (offline)
+        run: python3 team/scripts/test-auto-merge.py
         run: python3 team/scripts/test-authz.py
       - name: PR-STATE cross-reference (offline)
         run: python3 scripts/pr-state-xref.py

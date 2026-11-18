@@ -1,7 +1,11 @@
 name: team-watcher
 on:
+  push:
+    branches: [main]          # v8.4-B: event-driven; watcher's own [skip ci] commits do not retrigger
+  repository_dispatch:
+    types: [sweep]            # v8.4-B: external/manual event hook
   schedule:
-    - cron: "*/15 * * * *"
+    - cron: "17 */6 * * *"    # v8.4-B: minimal fallback poll — external upstream emits no events
   workflow_dispatch:
     inputs:
       simulate:
