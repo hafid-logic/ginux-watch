@@ -15,7 +15,7 @@
 - **النبض:** last_success 2026-11-18T10:03:04Z، last_conclusion failure (run #63، خطوة lint
   للتقارير المولّدة) — ضمن عتبة 12h، لا إنذار. التشخيص: reports/2026-11-18-heartbeat-triage.md.
 - **v8.3:** تحسينات المستودع الخمسة + إنفاذ pr-state-xref على main؛ فرع chore/repo-health-v83
-  دُفع هذه الجلسة باعتماد المالك، ويُفتح PR داخلي.
+  دُفع هذه الجلسة باعتماد المالك، PR داخلي #33 (https://github.com/hafid-logic/ginux-watch/pull/33).
 
 ## فهرس
 - الأرشيف: state/history/STATE-archive-2026-11-18.md — التسليم: HANDOFF.md
