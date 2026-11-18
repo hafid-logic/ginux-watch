@@ -23,6 +23,7 @@ from urllib.parse import quote
 WATCH_REPO = os.environ.get("GITHUB_REPOSITORY", "hafid-logic/ginux-watch")
 STATE = pathlib.Path("matrix/upstream-watch.json")
 UPSTREAM = "gmkurtzer/ginux"
+OUR_FORK = "hafid-logic/ginux"  # v8.3-ب
 PARSER_PREFIXES = (
     "crates/oci/",
     "crates/protocol-state/",
@@ -119,6 +120,61 @@ def watch_threads(state, now, out) -> None:
             )
 
 
+
+def watch_our_prs(state, now, out) -> None:
+    """v8.3-ب: track OUR open upstream PRs (read-only, never posts).
+
+    The fixed thread watch (222/207/227) missed #295/#296 from our fork; STATE
+    stayed at s66 ~3 days. Records every open upstream PR whose head repo is
+    OUR_FORK incl. mergeable_state (per-PR GET; list returns mergeable=null),
+    emitting OPENED/CHANGED/MERGED/CLOSED breaker lines. Snapshot: our_open_prs.
+    """
+    prev = state.get("our_open_prs", {})
+    try:
+        pulls = json.loads(gh("api", f"repos/{UPSTREAM}/pulls?state=open&per_page=100"))
+    except (subprocess.CalledProcessError, json.JSONDecodeError):
+        out.append("our_open_prs: api error (kept previous snapshot)")
+        state["our_open_prs"] = prev
+        return
+    snap = {}
+    for p in pulls:
+        if ((p.get("head") or {}).get("repo") or {}).get("full_name") != OUR_FORK:
+            continue
+        n = p["number"]; ms = None
+        try:
+            ms = json.loads(gh("api", f"repos/{UPSTREAM}/pulls/{n}")).get("mergeable_state")
+        except (subprocess.CalledProcessError, json.JSONDecodeError):
+            pass
+        snap[str(n)] = {"title": p.get("title"), "state": p.get("state"),
+                        "head_sha": (p.get("head") or {}).get("sha"),
+                        "base_sha": (p.get("base") or {}).get("sha"),
+                        "mergeable_state": ms, "comments": p.get("comments"),
+                        "review_comments": p.get("review_comments"),
+                        "updated_at": p.get("updated_at"), "checked": now}
+    state["our_open_prs"] = snap
+    for n, cur in snap.items():
+        old = prev.get(n)
+        if old is None:
+            out.append(f"our_open_prs #{n} OPENED: {cur.get('title')} "
+                       f"head={str(cur.get('head_sha'))[:8]} mergeable={cur.get('mergeable_state')}")
+        elif (cur.get("head_sha") != old.get("head_sha")
+              or cur.get("mergeable_state") != old.get("mergeable_state")
+              or cur.get("comments") != old.get("comments")
+              or cur.get("review_comments") != old.get("review_comments")):
+            out.append(f"our_open_prs #{n} CHANGED: head {str(old.get('head_sha'))[:8]}->"
+                       f"{str(cur.get('head_sha'))[:8]} mergeable {old.get('mergeable_state')}->"
+                       f"{cur.get('mergeable_state')} comments {old.get('comments')}->{cur.get('comments')}")
+    for n, old in prev.items():
+        if n not in snap:
+            merged = None
+            try:
+                merged = bool(json.loads(gh("api", f"repos/{UPSTREAM}/pulls/{n}")).get("merged"))
+            except (subprocess.CalledProcessError, json.JSONDecodeError):
+                pass
+            out.append(f"our_open_prs #{n} {'MERGED' if merged else 'CLOSED'}: "
+                       "left the open set — watch-breaker trigger (v8.3-ب)")
+
+
 def gh(*args: str) -> str:
     return subprocess.run(
         ["gh", *args], check=True, capture_output=True, text=True
@@ -149,6 +205,7 @@ def main() -> int:
     last = state.get("last_seen_sha")
     out = [f"upstream main: last={str(last)[:8]} new={head[:8]}"]
     watch_threads(state, now, out)
+    watch_our_prs(state, now, out)  # v8.3-ب
 
     if not last:
         state.update({"last_seen_sha": head, "last_checked": now})
