@@ -87,6 +87,9 @@ def main():
                 body = f"{MARKER} auto-merged under standing delegation (v8.4). head `{head[:8]}`, ci success, guards: {reason}. run {run.get('html_url','')}"
                 comment(num, body)
                 ledger({"at": now, "action": "internal_pr_merge", "pr": num, "head": head, "merge_sha": merged.get("sha"), "reason": reason})
+                # GITHUB_TOKEN merges do not fire push events (anti-recursion);
+                # repository_dispatch DOES trigger the watcher sweep (v8.4-E).
+                gh("api", "-X", "POST", f"repos/{REPO}/dispatches", "-f", "event_type=sweep", check=False)
             else:
                 print("merge refused:", str(merged)[:200])
         elif verdict == "needs-owner" and not already_commented(num, head):
