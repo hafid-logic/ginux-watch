@@ -11,7 +11,8 @@
  },
  "19": {
   "first_seen": "2026-11-18T21:29:12Z",
-  "ack": false,
-  "last_reminder": "2026-11-18T21:29:12Z"
+  "ack": true,
+  "last_reminder": "2026-11-18T21:29:12Z",
+  "ack_at": "2026-11-18T22:19:00Z"
  }
 }
