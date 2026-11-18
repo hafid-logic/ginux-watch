@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-13T06:51:29Z",
+ "updated": "2026-11-18T10:03:31Z",
  "schema": "llm-probe-v1",
  "note": "DATA ONLY — probe rows are runtime availability evidence; no secrets; fixed probe input sha256_16 below",
  "probe_input_sha256_16": "6ba85cba8c23d00c",
@@ -7,13 +7,13 @@
  "models_listing": {
   "nvidia": {
    "http_status": 200,
-   "ids_listed": 83,
+   "ids_listed": 32,
    "raw_names_sample5": [
-    "01-ai/yi-large",
-    "adept/fuyu-8b",
-    "ai21labs/jamba-1.5-large-instruct",
-    "aisingapore/sea-lion-7b-instruct",
-    "bigcode/starcoder2-15b"
+    "bigcode/starcoder2-15b",
+    "google/gemma-3-12b-it",
+    "google/gemma-3-4b-it",
+    "google/gemma-4-31b-it",
+    "meta/muse-glimmer-30b"
    ],
    "note": "first 5 raw /models names (names only, server order)"
   },
@@ -31,13 +31,13 @@
   },
   "openrouter": {
    "http_status": 200,
-   "ids_listed": 439,
+   "ids_listed": 443,
    "raw_names_sample5": [
-    "google/gemini-4-hydrogen",
-    "google/gemini-4-hydrogen:batch",
-    "baidu/ernie-5.5-flash-preview:free",
-    "baidu/ernie-light-dt-1.0-intl",
-    "google/gemini-4-carbon"
+    "openai/gpt-6.2-astra-pro",
+    "openai/gpt-6.2-astra-pro:batch",
+    "openai/gpt-6.2-astra",
+    "openai/gpt-6.2-astra:batch",
+    "openai/gpt-6.2-sol-pro"
    ],
    "note": "first 5 raw /models names (names only, server order)"
   }
@@ -1994,6 +1994,75 @@
    "status": "unavailable",
    "secret": "DECIDER_API_KEY",
    "at": "2026-11-13T06:51:29Z"
+  },
+  {
+   "provider": "nvidia",
+   "model": "nvidia/nemotron-3-ultra-550b-a55b",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 1.7,
+   "http_status": 200,
+   "model_actual": "nvidia/nemotron-3-ultra-550b-a55b",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "usage"
+   ],
+   "at": "2026-11-18T10:02:43Z"
+  },
+  {
+   "provider": "google-ai-studio",
+   "model": "gemini-3.6-flash",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 43.56,
+   "http_status": 200,
+   "model_actual": "gemini-3.6-flash",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "usage"
+   ],
+   "at": "2026-11-18T10:03:27Z"
+  },
+  {
+   "provider": "openrouter",
+   "model": "openrouter/free",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 4.26,
+   "http_status": 200,
+   "model_actual": "dots-studio/dots-3-note-preview:free",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "provider",
+    "service_tier",
+    "system_fingerprint",
+    "usage"
+   ],
+   "at": "2026-11-18T10:03:31Z"
+  },
+  {
+   "provider": "strands-decider-space",
+   "model": null,
+   "ok": false,
+   "category": "unconfigured",
+   "status": "unavailable",
+   "secret": "DECIDER_API_KEY",
+   "at": "2026-11-18T10:03:31Z"
   }
  ]
 }
