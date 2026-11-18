@@ -1,5 +1,5 @@
 {
- "generated_at_utc": "2026-11-18T03:34:22Z",
+ "generated_at_utc": "2026-11-18T12:55:03Z",
  "source_repo": "gmkurtzer/ginux",
  "item_count": 289,
  "items": {
@@ -142,8 +142,8 @@
   "291": {
    "kind": "pr",
    "title": "Gate 31: establish filesystem mediation foundation",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-18T05:29:43Z",
    "files": [
     "Cargo.lock",
     "Cargo.toml",
