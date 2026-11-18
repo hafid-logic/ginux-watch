@@ -18,6 +18,20 @@ REPO = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO / "scripts"))
 import report_lint as rl  # noqa: E402
 
+# v8.3-ج: clause (g) resolves base_head ancestry against origin/main; fixtures pin
+# real historical SHAs (e.g. 394985f). On a shallow clone those objects are absent
+# => ~35 environmental FAILs (18/53), not a regression (CI runs fetch-depth: 0;
+# team-watcher #60/#61/#62 passed 53/53). Skip with an explicit reason.
+_shallow = subprocess.run(
+    ["git", "-C", str(REPO), "rev-parse", "--is-shallow-repository"],
+    capture_output=True, text=True).stdout.strip() == "true"
+if _shallow:
+    print("skip report-lint suite: shallow clone — clause (g) base_head ancestry "
+          "and lint rc require full history.")
+    print("     Use a full clone (CI: fetch-depth: 0) or `git fetch --unshallow`. "
+          "0 run / 53 skipped (environmental, not a regression).")
+    sys.exit(0)
+
 PASS, FAIL = 0, 0
 
 def ok(name):

@@ -134,5 +134,62 @@ if any("#%d CHANGED" % 222 in l for l in out3) \
 else:
     no("W5 comment parity", str(out3))
 
+
+# ===== v8.3-ب: watch_our_prs (REAL #295/#296 data) =====
+PR295 = {"number": 295, "title": "port: run the Rocky host flow on a Linux host",
+         "state": "open", "comments": 0, "review_comments": 0,
+         "updated_at": "2026-11-15T22:02:10Z",
+         "head": {"sha": "d8ac94ba5321eb9ada2e048a0247b9f7f61430bf",
+                  "repo": {"full_name": "hafid-logic/ginux"}},
+         "base": {"sha": "285d025b7f8bcad0784585dcfbd23cada4643408"}}
+PR296 = {"number": 296, "title": "tests(process): pin signal-boundary, wait-group, and zombie behavior",
+         "state": "open", "comments": 0, "review_comments": 0,
+         "updated_at": "2026-11-16T12:53:40Z",
+         "head": {"sha": "f2f3ceb7a9c81b12c08c93050c7b352f02e5096e",
+                  "repo": {"full_name": "hafid-logic/ginux"}},
+         "base": {"sha": "285d025b7f8bcad0784585dcfbd23cada4643408"}}
+PR_FOREIGN = {"number": 266, "title": "owner PR", "state": "open", "comments": 0,
+              "review_comments": 0, "updated_at": "2026-11-14T00:00:00Z",
+              "head": {"sha": "aaaaaaaabbbbbbbbccccccccdddddddd",
+                       "repo": {"full_name": "gmkurtzer/ginux"}}, "base": {"sha": "285d025b"}}
+D295 = {"number": 295, "merged": False, "mergeable_state": "unknown"}
+D296 = {"number": 296, "merged": False, "mergeable_state": "unknown"}
+def our_gh_factory(open_list, details):
+    def fake_gh(*args):
+        path = args[1]
+        if path.endswith("/pulls?state=open&per_page=100"):
+            return json.dumps(open_list)
+        for n, d in details.items():
+            if path.endswith("/pulls/%s" % n):
+                return json.dumps(d)
+        raise AssertionError("unexpected gh path: %s" % path)
+    return fake_gh
+def run_our_sweep(open_list, details, prev):
+    uw.gh = our_gh_factory(open_list, details)
+    state = {"our_open_prs": prev}; out = []
+    uw.watch_our_prs(state, "2026-11-18T11:00:00Z", out)
+    return state["our_open_prs"], out
+snapO, outO = run_our_sweep([PR295, PR296, PR_FOREIGN], {"295": D295, "296": D296}, {})
+if (set(snapO) == {"295", "296"} and sum("OPENED" in l for l in outO) == 2
+        and snapO["295"]["mergeable_state"] == "unknown"
+        and snapO["295"]["head_sha"].startswith("d8ac94ba")):
+    ok("W6 our_open_prs baseline: #295/#296 OPENED, foreign filtered, mergeable_state recorded")
+else:
+    no("W6 baseline", str(outO))
+snapO2, outO2 = run_our_sweep([PR295, PR296, PR_FOREIGN], {"295": D295, "296": D296}, snapO)
+if not any(k in l for l in outO2 for k in ("OPENED", "CHANGED", "MERGED", "CLOSED")):
+    ok("W7 our_open_prs quiet sweep emits no delta lines")
+else:
+    no("W7 quiet", str(outO2))
+pr295b = dict(PR295); pr295b["head"] = {"sha": "d8ac94ba99999999999999999999999999999999",
+                                        "repo": {"full_name": "hafid-logic/ginux"}}
+snapO3, outO3 = run_our_sweep([pr295b], {"295": D295, "296": {"number": 296, "merged": True,
+                              "mergeable_state": "clean"}}, snapO)
+if any("#296 MERGED" in l for l in outO3) and any("#295 CHANGED" in l for l in outO3) and "296" not in snapO3:
+    ok("W8 our_open_prs #296 MERGED breaker + #295 head CHANGED")
+else:
+    no("W8 deltas", str(outO3))
+
+
 print("upstream-watch tests: %d/%d pass" % (PASS, PASS + FAIL))
 sys.exit(1 if FAIL else 0)

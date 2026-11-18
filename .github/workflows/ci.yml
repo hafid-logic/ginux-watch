@@ -1,0 +1,36 @@
+name: ci
+# v8.3-أ: PR gate. PR #32 merged with zero CI check-runs on its head; offline
+# tests only ran on main via the 15-min watcher. Run the same offline gates on
+# every pull_request BEFORE merge — read-only, no secrets, no state writes.
+# fetch-depth: 0 is required: report-lint clause (g) resolves base_head ancestry.
+on:
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  offline-gates:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Heartbeat semantics (offline)
+        run: python3 team/scripts/test-heartbeat-check.py
+      - name: Report lint fixtures (offline)
+        run: python3 team/scripts/test-report-lint.py
+      - name: Decider gate asymmetry (offline)
+        run: python3 team/scripts/test-decider-gate.py
+      - name: Decider case loader (offline)
+        run: python3 scripts/decider_eval.py
+      - name: Upstream watch thread/PR tracking (offline, gh mocked)
+        run: python3 team/scripts/test-upstream-watch.py
+      - name: PR-STATE cross-reference (offline)
+        run: python3 scripts/pr-state-xref.py
+      - name: Workflow schema check
+        run: python3 team/scripts/workflow-schema-check.py
+      - name: Token-pattern scan of tree
+        run: python3 scripts/tree-token-scan.py
