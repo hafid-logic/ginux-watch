@@ -34,7 +34,8 @@ jobs:
         run: |
           before="${{ github.event.before }}"
           [ -z "$before" ] && before="HEAD~1"
-          changed=$(git diff --name-only "$before" HEAD -- 'outbox/*.md' | grep -v -E 'outbox/(INDEX|LATEST|_TEMPLATE)\.md' || true)
+          # ALERT-*.md are automation alert banners (non-reports) — excluded like INDEX/LATEST/_TEMPLATE (v8.3.1)
+          changed=$(git diff --name-only "$before" HEAD -- 'outbox/*.md' | grep -v -E 'outbox/(INDEX|LATEST|_TEMPLATE|ALERT-.*)\.md' || true)
           if [ -n "$changed" ]; then
             python3 scripts/report_lint.py --check $changed
           else

@@ -46,7 +46,7 @@ done
 
 # ---------- stage 3: report-lint on staged outbox reports ----------
 staged_reports=$(git diff --cached --name-only --diff-filter=ACM -- 'outbox/*.md' \
-                | grep -v -E 'outbox/(INDEX|LATEST|_TEMPLATE)\.md' || true)
+                | grep -v -E 'outbox/(INDEX|LATEST|_TEMPLATE|ALERT-.*)\.md' || true)
 if [ -n "$staged_reports" ] && [ -x scripts/report_lint.py ]; then
   if ! python3 scripts/report_lint.py --fix $staged_reports; then
     echo "pre-commit: report-lint FAIL — fix the report or tag the defect honestly" >&2
