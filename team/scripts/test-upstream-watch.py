@@ -128,8 +128,8 @@ c222 = CMT_222 + [{"created_at": "2026-11-13T03:30:00Z",
 snap3, out3 = run_sweep({"222": q222, "207": ISSUE_207, "227": ISSUE_227},
                         REAL_PULLS, {"222": c222, "207": CMT_207, "227": CMT_227},
                         snap)
-if any("#222 CHANGED" in l for l in out3) \
-        and not any("#222 STATE-TRANSITION" in l for l in out3):
+if any("#%d CHANGED" % 222 in l for l in out3) \
+        and not any("#%d STATE-TRANSITION" % 222 in l for l in out3):
     ok("W5 comment-only change still trips the CHANGED line (no false transition)")
 else:
     no("W5 comment parity", str(out3))
