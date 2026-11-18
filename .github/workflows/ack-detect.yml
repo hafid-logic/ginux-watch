@@ -1,0 +1,40 @@
+name: ack-detect
+# v8.4-C: event-driven acknowledgment. Owner labels an alert 'acknowledged'
+# or comments ACK / اقرار on a TRIPPED issue => mark ack in state [skip ci].
+on:
+  issues:
+    types: [labeled]
+  issue_comment:
+    types: [created]
+permissions:
+  contents: write
+  issues: write
+concurrency:
+  group: ack-detect
+  cancel-in-progress: false
+jobs:
+  mark:
+    if: >-
+      (github.event_name == 'issues' && github.event.label.name == 'acknowledged') ||
+      (github.event_name == 'issue_comment' &&
+       startsWith(github.event.issue.title, 'TRIPPED:') &&
+       github.event.comment.user.login == github.repository_owner &&
+       (contains(github.event.comment.body, 'ACK') || contains(github.event.comment.body, 'اقرار')))
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Mark acknowledged
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 team/scripts/alert-ack.py --mark-ack ${{ github.event.issue.number }}
+      - name: Commit state [skip ci]
+        run: |
+          git config user.name "ginux-watch agent"
+          git config user.email "hafid-logic@users.noreply.github.com"
+          git add state/alerts.json state/action-ledger.jsonl
+          if ! git diff --cached --quiet; then
+            git commit -m "state: alert acknowledged [skip ci]"
+            for i in 1 2 3; do
+              git push origin HEAD:main && break || git pull --rebase origin main
+            done
+          fi

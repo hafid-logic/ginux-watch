@@ -60,11 +60,15 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           SIMULATE: ${{ inputs.simulate }}
         run: python3 team/scripts/trip-notify.py
+      - name: Alert acknowledgment sweep (v8.4-C — repeat until owner ack)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 team/scripts/alert-ack.py
       - name: Commit and push
         run: |
           git config user.name "team-watcher"
           git config user.email "actions@users.noreply.github.com"
-          git add -A team/tasks/ matrix/
+          git add -A team/tasks/ matrix/ state/alerts.json state/action-ledger.jsonl
           if ! git diff --cached --quiet; then
             msg="lease sweep $(date -u +%Y-%m-%dT%H:%M:%SZ)"
             if git diff --cached --name-only | grep -q upstream-watch; then

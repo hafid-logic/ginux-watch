@@ -32,6 +32,8 @@ jobs:
         run: python3 team/scripts/test-authz.py
       - name: Auto-merge decision tests (offline)
         run: python3 team/scripts/test-auto-merge.py
+      - name: Alert-ack + ledger tests (offline)
+        run: python3 team/scripts/test-alert-ack.py
       - name: PR-STATE cross-reference (offline)
         run: python3 scripts/pr-state-xref.py
       - name: Workflow schema check
