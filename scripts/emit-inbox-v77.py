@@ -18,9 +18,9 @@ import sys
 
 OUT = pathlib.Path("inbox/2026-11-13-threads-closed-222-207-227-gmkurtzer.md")
 SRC = [("222", pathlib.Path("work/results/v77-222-comments.json"),
-        "issue #222 (overflow-checks) — closed 2026-11-13T02:27:17Z"),
+        "issue thread 222 (overflow-checks) — closed 2026-11-13T02:27:17Z"),
        ("207", pathlib.Path("work/results/v77-207-comments.json"),
-        "PR #207 (pollfd PoC) — closed unmerged 2026-11-13T02:58:34Z")]
+        "PR 207 (pollfd PoC) — closed unmerged 2026-11-13T02:58:34Z")]
 CUTOFF = "2026-11-08"  # the 2026-11-07T16:29Z comment already lives in inbox/2026-11-07-watch-breaker-207-*.md
 
 
@@ -31,10 +31,10 @@ def main() -> int:
                   file=sys.stderr)
             return 2
     lines = [
-        "# حدث الخيوط 2026-11-13 — إغلاق #222 و#207 ودمج PR#227 (v7.7-0)",
+        "# حدث الخيوط 2026-11-13 — إغلاق thread 222 وthread 207 ودمج PR#227 (v7.7-0)",
         "",
         "- **المصدر:** GitHub REST API مجهول (قراءة فقط)، الجلسة v7.7 بتاريخ 2026-11-13.",
-        "- **الحالات المقيسة:** #222 closed @02:27:17Z (تعليقان جديدان)، #207 closed @02:58:34Z بلا دمج "
+        "- **الحالات المقيسة:** thread 222 closed @02:27:17Z (تعليقان جديدان)، thread 207 closed @02:58:34Z بلا دمج "
         "(رأس b19e3ea3 ليس سلفًا لupstream/main — دليل git ancestry)، PR#227 merged @02:27:02Z "
         "(merge commit 0c290040، الرأس المدموج 31f82869 = فرعنا 9ac0f544 + دمج main بإصلاح المالك + commit CI واحد).",
         "- **القياس المشتق:** زمن الفتح→الدمج لPR#227 = 2026-11-06T12:44:22Z → 2026-11-13T02:27:02Z = 6 أيام 13 س 42 د 40 ث.",
@@ -66,7 +66,7 @@ def main() -> int:
             ]
     lines += ["", "---", "",
               "إجمالي التعليقات الحرفية المحفوظة: %d (المقصود بالبند 0: تعليقا المالك "
-              "01:36Z و02:27Z على #222، مع تعليق الإغلاق 02:58Z على #207 المكتشف بالتحقق الحي)." % total, ""]
+              "01:36Z و02:27Z على thread 222، مع تعليق الإغلاق 02:58Z على thread 207 المكتشف بالتحقق الحي)." % total, ""]
     OUT.write_text("\n".join(lines), encoding="utf-8")
     print("wrote %s (%d verbatim comment(s))" % (OUT, total))
     return 0
