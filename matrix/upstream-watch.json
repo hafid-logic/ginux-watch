@@ -91,12 +91,12 @@
   }
  },
  "heartbeat": {
-  "last_run": "2026-11-18T10:03:04Z",
-  "last_conclusion": "success",
+  "last_run": "2026-11-18T10:42:06Z",
+  "last_conclusion": "failure",
   "last_success": "2026-11-18T10:03:04Z",
   "alert_basis": "last_success",
   "source": "team-watcher (GitHub Actions)",
-  "checked": "2026-11-17T12:10:16Z",
+  "checked": "2026-11-18T10:42:06Z",
   "scheduling": "best-effort"
  },
  "alert_threshold_hours": 12,
