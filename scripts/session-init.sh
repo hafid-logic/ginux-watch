@@ -19,3 +19,9 @@ if [ "$NAME" != "$GIT_NAME" ] || [ "$EMAIL" != "$GIT_EMAIL" ]; then
 fi
 echo "git identity OK: $NAME <$EMAIL>"
 echo "قاعدة دائمة v7.0 §2 (2026-11-10): التقارير والمحادثة عربية بمصطلحات إنجليزية؛ مراقبة هادئة (لا طباعة إلا تغيّر/BLIND/رد جديد؛ السجل في state/watch-log.jsonl)؛ فحوص المشرف ينفّذها الوكيل وترد في تقريره إلا ما يحتاج تدخل المستخدم."
+
+# v8.4: HDAE checkpoint reload — إلزامي بعد ضغط السياق/التسليم
+if [ -f hdae/CHECKPOINT.md ]; then
+  echo "=== HDAE CHECKPOINT (reload required) ==="
+  cat hdae/CHECKPOINT.md
+fi

@@ -1,0 +1,77 @@
+# v8.4 — HDAE standing delegation (policy-as-code). Owner-confirmed once (directive v8.4).
+# Anything not listed autonomous defaults to human. Consulted by auto-merge + workflows.
+version: 1
+policy: hdae-standing-delegation
+confirmed_by: hafid-logic
+confirmed_at: "2026-11-18"
+directive: directives/v8.4-20261118.md
+default: human
+autonomous:
+  - read_upstream_api
+  - offline_gates
+  - state_commits            # matrix/ state/ hdae/ with [skip ci]
+  - internal_pr_open
+  - internal_pr_merge        # guarded by internal_merge below
+  - internal_issue_comment   # reminders/links on OUR repo only
+  - alert_renotify_until_ack # internal attention, never upstream nagging
+  - upstream_package_prep    # approved/pending only — never publish
+human_required:
+  - upstream_mutation        # ANY write to gmkurtzer/ginux
+  - credential_provision
+  - force_push
+  - deletion
+  - policy_change            # POLICY.md AGENTS.md config/authorization.yml
+  - gate_acceptance          # moving a gate into hdae/gates-done/
+  - cap_change
+  - c2_unlock
+internal_merge:
+  ci_workflow: ci
+  require_conclusion: success
+  require_mergeable_state: clean
+  same_repo_only: true
+  deny_draft: true
+  deny_empty: true
+  path_denylist:             # guardrails protect themselves — changes here need owner
+    - POLICY.md
+    - AGENTS.md
+    - config/authorization.yml
+    - scripts/hooks/
+    - scripts/authz_check.py
+    - team/scripts/auto-merge.py
+    - .github/workflows/auto-merge.yml
+    - .github/workflows/supervisor-shadow.yml
+    - .github/workflows/decider-space-probe.yml
+  path_allowlist_prefixes:
+    - scripts/
+    - team/
+    - reports/
+    - docs/
+    - state/
+    - hdae/
+    - eval/
+    - fuzz/
+    - matrix/
+    - directives/
+    - .github/workflows/ci.yml
+    - .github/workflows/team-watcher.yml
+    - .github/workflows/ack-detect.yml
+    - README.md
+    - STATE.md
+    - HANDOFF.md
+  needs_owner_label: needs-owner
+exceptions:
+  - id: token-in-chat
+    decision: owner-deferred
+    note: >-
+      Credential-free interactive delivery postponed by owner until every
+      automation update is implemented and validated, to avoid blocking work.
+      Unattended workflows already use the built-in GITHUB_TOKEN only.
+    ends_when: owner confirms all automation flows verified
+scheduling:
+  mode: event-driven
+  events:
+    - push(main)
+    - workflow_run(ci completed)
+    - issues/issue_comment (acknowledgment)
+    - repository_dispatch(sweep)
+  upstream_poll_cron: "17 */6 * * *"   # external repo emits no events; minimal fallback
