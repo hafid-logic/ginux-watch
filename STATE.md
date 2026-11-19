@@ -6,8 +6,7 @@
 
 ## الحالة الراهنة
 - **PRsنا المفتوحة في upstream (السقف 2/2):**
-  - **#295** «port: run the Rocky host flow on a Linux host» — head d8ac94ba، open،
-    mergeable=clean، 0 تعليقات/0 مراجعات (أُنشئ 2026-11-15T22:02Z). يقابل c8-linux-host-port.
+  - **#295** #295 (c8-linux-host-port) head d8ac94ba، mergeable=clean، 0 تعليقات.
   - **#296** «tests(process): pin signal-boundary, wait-group, and zombie behavior» — head f2f3ceb7،
     open، 0 تعليقات/0 مراجعات (أُنشئ 2026-11-16T12:53Z). يقابل c8-property-tests-process-table.
   - لا ملاحقة (بند 14)؛ تُرصد آليًا عبر watch_our_prs.
@@ -18,6 +17,8 @@
   نضارة PR، أحداث push/dispatch) + مستويات مصادقة (0 تدفق جهاز) + **عقد أمني ملزم لكل وكيل**
   ببوابة CI. 4 دمجات ذاتية؛ البوابات قُبلت؛ الإسناد لـ gmkurtzer/hdae موثق.
   التقرير: reports/2026-11-19-session-report.md.
+
+- **مقياس upstream:** مدموجة 1 (#227) · مفتوحة 2 (#295/#296) · حزم جاهزة 2 · ginux-oci قيد البناء.
 
 ## فهرس
 - الأرشيف: state/history/STATE-archive-2026-11-18.md — التسليم: HANDOFF.md

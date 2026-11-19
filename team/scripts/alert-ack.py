@@ -27,15 +27,17 @@ def acknowledged(labels, comments, owner=OWNER):
                 return True
     return False
 
-def reminder_due(last_iso, now_iso, min_hours=6):
-    if not last_iso:
-        return True
+def reminder_due(first_seen, last_reminder, ack, now_iso, max_hours=48):
+    """v8.7: ONE reminder per item; stop at first ACK or after 48h."""
+    if ack: return False
+    if last_reminder: return False
+    if not first_seen: return True
     fmt = "%Y-%m-%dT%H:%M:%SZ"
     try:
-        last = datetime.strptime(last_iso, fmt); now = datetime.strptime(now_iso, fmt)
+        fs = datetime.strptime(first_seen, fmt); now = datetime.strptime(now_iso, fmt)
     except ValueError:
         return True
-    return (now - last).total_seconds() >= min_hours * 3600
+    return (now - fs).total_seconds() <= max_hours * 3600
 
 def gh(*args, check=True):
     r = subprocess.run(["gh", *args], capture_output=True, text=True)
@@ -73,7 +75,7 @@ def main():
                 led.record({"at": now, "action": "alert_ack", "target": n})
         else:
             e["ack"] = False
-            if reminder_due(e.get("last_reminder"), now):
+            if reminder_due(e.get("first_seen"), e.get("last_reminder"), e.get("ack"), now):
                 body = f"{MARKER} reminder: outstanding alert awaiting owner acknowledgment (label `acknowledged` or comment ACK / اقرار). Internal attention only."
                 gh("issue", "comment", n, "--repo", REPO, "--body", body)
                 e["last_reminder"] = now

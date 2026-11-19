@@ -1,0 +1,14 @@
+# v8.7 — native review protection for sensitive paths (owner: Abdelhafid DJIDEL).
+# Branch ruleset intentionally NOT enabled — owner's decision.
+/.github/workflows/                  @hafid-logic
+/.github/CODEOWNERS                  @hafid-logic
+/CODEOWNERS                          @hafid-logic
+/config/authorization.yml            @hafid-logic
+/docs/AGENT-SECURITY.md              @hafid-logic
+/scripts/auth_device.py              @hafid-logic
+/scripts/authz_check.py              @hafid-logic
+/scripts/security_contract_check.py  @hafid-logic
+/POLICY.md                           @hafid-logic
+/AGENTS.md                           @hafid-logic
+/LICENSE                             @hafid-logic
+/NOTICE                              @hafid-logic

@@ -19,7 +19,7 @@ ok("A5 denylist overrides allowlist") if az.pr_files_decision(["scripts/authz_ch
 ok("A6 policy file denied") if az.pr_files_decision(["POLICY.md"], pol)[0] == "needs-owner" else no("A6")
 ok("A7 outside allowlist") if az.pr_files_decision(["Cargo.toml"], pol)[0] == "needs-owner" else no("A7")
 ok("A8 foreign workflow denied") if az.pr_files_decision([".github/workflows/fuzz.yml"], pol)[0] == "needs-owner" else no("A8")
-ok("A9 ci workflow allowed") if az.pr_files_decision([".github/workflows/ci.yml"], pol)[0] == "auto" else no("A9")
+ok("A9 ci workflow now denied (v8.7)") if az.pr_files_decision([".github/workflows/ci.yml"], pol)[0] == "needs-owner" else no("A9")
 ok("A10 empty pr needs owner") if az.pr_files_decision([], pol)[0] == "needs-owner" else no("A10")
 ok("A11 hooks denied") if az.pr_files_decision(["scripts/hooks/install-pre-commit.sh"], pol)[0] == "needs-owner" else no("A11")
 ok("A12 automation self-protection") if az.pr_files_decision(["team/scripts/auto-merge.py"], pol)[0] == "needs-owner" else no("A12")
