@@ -27,7 +27,7 @@ t = mktree(); p = t / "config/authorization.yml"
 p.write_text(p.read_text().replace("order: [device_flow,", "order: [short_lived_pat,"))
 ok("S5 tier reorder detected") if sc.check(t) else no("S5")
 t = mktree(); p = t / "config/authorization.yml"
-p.write_text(p.read_text().replace("  - gate_acceptance\n", ""))
+p.write_text("\n".join(l for l in p.read_text().splitlines() if not l.strip().startswith("- gate_acceptance")))
 ok("S6 human_required weakening detected") if sc.check(t) else no("S6")
 t = mktree(); p = t / ".github/workflows/ci.yml"
 p.write_text(p.read_text().replace("security_contract_check.py", "true.py"))
