@@ -1,0 +1,17 @@
+ginux-watch
+Copyright 2026 Abdelhafid DJIDEL (hafid-logic)
+
+This product includes software/methodology developed as part of:
+
+  HDAE — Human-Directed Agentic Engineering
+  https://github.com/gmkurtzer/hdae
+  Copyright Gregory M. Kurtzer
+  Licensed under the Apache License, Version 2.0
+
+The HDAE method, its skill design (`hdae-development`, `pr-issue-review`) and the
+`hdae/` checkpoint/gate lifecycle layout originate from that project and its author.
+Implementations here were written for ginux-watch as adaptations of the method
+(see docs/ATTRIBUTION.md), not verbatim copies.
+
+HDAE itself grew out of the author's work on https://github.com/gmkurtzer/ginux,
+the upstream project this repository independently verifies.
