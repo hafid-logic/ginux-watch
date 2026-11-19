@@ -25,6 +25,21 @@ def pr_files_decision(files, pol=None):
         if not any(f == a or f.startswith(a) for a in im["path_allowlist_prefixes"]):
             return ("needs-owner", "outside-allowlist:" + f)
     return ("auto", "allowlist")
+
+def select_tier(cap, pol=None):
+    """v8.5: pick auth tier per auth_tiers order + fallback conditions (offline-tested).
+    cap keys: exec_env, device_reachable, app_ready, owner_can_activate, upload,
+    token_issuable, high_sensitivity. Returns (tier_name, reason)."""
+    if cap.get("high_sensitivity"):
+        return ("zero_token", "high-sensitivity")
+    if cap.get("exec_env") and cap.get("device_reachable") and cap.get("app_ready") and cap.get("owner_can_activate"):
+        return ("device_flow", "tier-0 available")
+    if cap.get("upload"):
+        return ("upload_file", "tier-0 unavailable")
+    if cap.get("token_issuable"):
+        return ("short_lived_pat", "no-upload platform")
+    return ("zero_token", "no token channel")
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--action"); ap.add_argument("--files", nargs="*"); ap.add_argument("--json", action="store_true")

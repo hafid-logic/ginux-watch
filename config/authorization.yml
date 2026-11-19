@@ -75,3 +75,30 @@ scheduling:
     - issues/issue_comment (acknowledgment)
     - repository_dispatch(sweep)
   upstream_poll_cron: "17 */6 * * *"   # external repo emits no events; minimal fallback
+
+# v8.5 — auth tiers (owner-approved plan 2026-11-18). Tier 0 preferred; fallback only on failure.
+auth_tiers:
+  client_id: Iv23likXwrakJW83j8q7   # GitHub App client id — PUBLIC identifier, not a secret
+  supersedes: "v7.1 §6 device-flow prohibition — owner decision 2026-11-18 (directive v8.5)"
+  order: [device_flow, upload_file, short_lived_pat, zero_token]
+  unattended: GITHUB_TOKEN only (no PATs in workflows)
+  transitions_logged: state/action-ledger.jsonl (action=auth_tier_transition, reason required)
+  tiers:
+    device_flow:
+      tier: 0
+      method: GitHub App device flow; owner activates user_code; token never enters chat
+      token_prefix: ghu_
+      ttl_hours: 8
+      fallback_when: [exec-env unavailable, device endpoints unreachable, app not configured, owner cannot activate]
+    upload_file:
+      tier: A
+      method: upload/gh-pat.txt -> work/keys 600 -> credential helper -> shred
+      fallback_when: [platform has no file upload]
+    short_lived_pat:
+      tier: B
+      method: minimal-scope short-expiry token via context + immediate rotation; never printed/committed
+      compensating_controls: [single-repo scope, shortest expiry, rotate after session, byte-scan, work/keys 600, shred]
+      fallback_when: [token issuance impossible, high-sensitivity task]
+    zero_token:
+      tier: C
+      method: agent outputs patch + exact commands; owner pushes locally (no token on platform)
