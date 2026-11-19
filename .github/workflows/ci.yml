@@ -28,6 +28,10 @@ jobs:
         run: python3 scripts/decider_eval.py
       - name: Upstream watch thread/PR tracking (offline, gh mocked)
         run: python3 team/scripts/test-upstream-watch.py
+      - name: Security contract gate (binding on every agent)
+        run: python3 scripts/security_contract_check.py
+      - name: Security contract tests (offline)
+        run: python3 team/scripts/test-security-contract.py
       - name: Authorization policy tests (offline)
         run: python3 team/scripts/test-authz.py
       - name: Auto-merge decision tests (offline)

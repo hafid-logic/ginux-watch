@@ -45,6 +45,8 @@ jobs:
           else
             echo "no outbox reports changed — nothing to lint-check"
           fi
+      - name: Security contract gate (v8.6 — every sweep)
+        run: python3 scripts/security_contract_check.py
       - name: Token-pattern scan of tree (v6.6 item 5; fails on any full-form token except ghp_SYNTHETIC-*)
         run: python3 scripts/tree-token-scan.py
       - name: PR-STATE cross-reference (v8.3-ب — continuous enforcement on main)
