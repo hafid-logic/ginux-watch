@@ -6,3 +6,4 @@
 {"at": "2026-11-18T22:21:02Z", "action": "alert_ack", "target": 22}
 {"at": "2026-11-19T00:45:00Z", "action": "auth_tier_transition", "from": "device_flow", "to": "short_lived_pat", "reason": "agent exec-env unavailable; owner ran device flow locally and delivered 8h App token via tier-B channel"}
 {"at": "2026-11-19T14:59:56Z", "action": "auth_tier_transition", "from": "short_lived_pat", "to": "device_flow", "reason": "owner activated GitHub App device flow; authentication succeeded for authorized internal repository work"}
+{"at": "2026-11-19T16:36:09Z", "action": "internal_pr_merge", "pr": 49, "head": "0ea71c32f8e81533362ef9a28e105d99f938ef52", "merge_sha": "ddf3f4504aea7cba171f493608bd775a0633db36", "reason": "owner-directed merge after ci success; branch ruleset review bypass used by owner identity (bypass actor added by owner); xref gate not yet active on main (PR 50 pending)"}
