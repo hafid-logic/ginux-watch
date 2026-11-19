@@ -1,8 +1,122 @@
 {
- "generated_at_utc": "2026-11-18T21:18:07Z",
+ "generated_at_utc": "2026-11-19T03:07:06Z",
  "source_repo": "gmkurtzer/ginux",
- "item_count": 289,
+ "item_count": 295,
  "items": {
+  "302": {
+   "kind": "issue",
+   "title": "loopback netlink ACK handling rewrites host-side errors to success in the guest buffer (static, low confidence)",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "guest",
+    "host",
+    "ack",
+    "success",
+    "address",
+    "errno",
+    "failure",
+    "low",
+    "netlink",
+    "only"
+   ]
+  },
+  "301": {
+   "kind": "issue",
+   "title": "send-snapshot page can be re-protected by a CLONE_VM sibling — mprotect(PROT_WRITE) on the snapshot range is admitted (static, low confidence)",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "snapshot",
+    "prot_write",
+    "sibling",
+    "address",
+    "base",
+    "crates",
+    "ginux",
+    "native_network",
+    "src",
+    "init"
+   ]
+  },
+  "300": {
+   "kind": "issue",
+   "title": "connect()/bind() policy check is a peek-based TOCTOU — the kernel re-reads the guest sockaddr after the supervisor's check (static, low confidence)",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "supervisor",
+    "connect",
+    "kernel",
+    "bind",
+    "guest",
+    "main",
+    "path",
+    "peek",
+    "port",
+    "reads"
+   ]
+  },
+  "299": {
+   "kind": "issue",
+   "title": "syncfs(306) is catalogued as a descriptor operation while sync(162) is denied as host-global authority — the operation flushes the whole superblock",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "descriptor",
+    "syncfs",
+    "lib",
+    "operation",
+    "sync",
+    "authority",
+    "contract",
+    "crates",
+    "ginux",
+    "global"
+   ]
+  },
+  "298": {
+   "kind": "issue",
+   "title": "contract.network: an empty inbound/outbound list admits everything — default-deny keys are parsed but never consulted by the network policy",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "contract",
+    "default",
+    "lib",
+    "network",
+    "deny",
+    "allow",
+    "empty",
+    "list",
+    "any",
+    "as_slice"
+   ]
+  },
+  "297": {
+   "kind": "issue",
+   "title": "shared network mode: dup/dup2/fcntl(F_DUPFD) of a tracked socket escapes send mediation and the egress policy",
+   "state": "open",
+   "merged_at": null,
+   "files": [],
+   "keywords": [
+    "main",
+    "number",
+    "descriptor",
+    "dup",
+    "send",
+    "console",
+    "arms",
+    "clears",
+    "exit",
+    "family"
+   ]
+  },
   "296": {
    "kind": "pr",
    "title": "tests(process): pin signal-boundary, wait-group, and zombie behavior",
@@ -104,7 +218,6 @@
     "crates/ginux-allocator/Cargo.toml",
     "crates/ginux-allocator/src/lib.rs",
     "crates/ginux-init/src/main.rs",
-    "crates/ginux-init/src/process_hooks.rs",
     "crates/security-fuzzer/Cargo.toml",
     "crates/security-fuzzer/src/main.rs",
     "docs/allocator-evaluation.md",
@@ -124,7 +237,8 @@
     "hdae/gates-todo/37-security-remediation-closure.md",
     "hdae/gates-todo/38-allocator-feasibility-controls.md",
     "hdae/gates-todo/39-standard-allocator-abi-foundation.md",
-    "hdae/gates-todo/40-allocator-hardening-concurrency.md"
+    "hdae/gates-todo/40-allocator-hardening-concurrency.md",
+    "hdae/gates-todo/41-ginux-aware-memory-contract.md"
    ],
    "keywords": [
     "allocator",
@@ -6943,6 +7057,459 @@
   }
  },
  "keywords": {
+  "guest": [
+   302,
+   300,
+   285,
+   96,
+   22
+  ],
+  "host": [
+   302,
+   295,
+   291,
+   289,
+   285,
+   274,
+   270,
+   259,
+   251,
+   248,
+   247,
+   245,
+   242,
+   238,
+   237,
+   236,
+   229,
+   219,
+   215,
+   214,
+   203,
+   202,
+   201,
+   200,
+   199,
+   198,
+   195,
+   194,
+   183,
+   125,
+   92,
+   86
+  ],
+  "ack": [
+   302,
+   65,
+   64
+  ],
+  "success": [
+   302
+  ],
+  "address": [
+   302,
+   301,
+   104,
+   84
+  ],
+  "errno": [
+   302
+  ],
+  "failure": [
+   302,
+   225,
+   211,
+   210,
+   29
+  ],
+  "low": [
+   302
+  ],
+  "netlink": [
+   302,
+   291
+  ],
+  "only": [
+   302,
+   272,
+   250,
+   226,
+   224,
+   223,
+   171,
+   156,
+   149,
+   135,
+   131,
+   107,
+   103,
+   102,
+   90,
+   89,
+   66,
+   9
+  ],
+  "snapshot": [
+   301
+  ],
+  "prot_write": [
+   301,
+   88,
+   81,
+   78
+  ],
+  "sibling": [
+   301,
+   25
+  ],
+  "base": [
+   301,
+   256,
+   166,
+   123,
+   97,
+   93,
+   18
+  ],
+  "crates": [
+   301,
+   299,
+   284,
+   214,
+   58
+  ],
+  "ginux": [
+   301,
+   299,
+   294,
+   292,
+   284,
+   283,
+   282,
+   280,
+   272,
+   271,
+   260,
+   255,
+   249,
+   241,
+   237,
+   235,
+   230,
+   227,
+   219,
+   215,
+   214,
+   205,
+   202,
+   194,
+   189,
+   187,
+   186,
+   184,
+   179,
+   178,
+   176,
+   165,
+   164,
+   161,
+   158,
+   157,
+   155,
+   136,
+   112,
+   111,
+   110,
+   106,
+   103,
+   99,
+   97,
+   96,
+   95,
+   94,
+   93,
+   92,
+   76,
+   71,
+   64,
+   61,
+   58,
+   57,
+   45,
+   42,
+   39,
+   18,
+   12,
+   8,
+   5
+  ],
+  "native_network": [
+   301
+  ],
+  "src": [
+   301,
+   214,
+   17
+  ],
+  "init": [
+   301,
+   295,
+   284,
+   261,
+   204,
+   190,
+   112,
+   57,
+   37,
+   26
+  ],
+  "supervisor": [
+   300,
+   294,
+   228,
+   210,
+   177
+  ],
+  "connect": [
+   300,
+   283,
+   120,
+   101,
+   69
+  ],
+  "kernel": [
+   300,
+   258,
+   183,
+   182,
+   152,
+   139,
+   130,
+   129,
+   127,
+   100,
+   99,
+   98,
+   97,
+   96,
+   80,
+   71,
+   67,
+   50,
+   47,
+   46,
+   24,
+   21,
+   19,
+   17,
+   13,
+   9,
+   7,
+   3
+  ],
+  "bind": [
+   300,
+   146,
+   120,
+   76,
+   73
+  ],
+  "main": [
+   300,
+   297,
+   294,
+   285,
+   284,
+   255,
+   202,
+   194,
+   193,
+   184,
+   175,
+   171,
+   95,
+   93,
+   5
+  ],
+  "path": [
+   300,
+   225,
+   148,
+   146,
+   141,
+   140,
+   136,
+   120,
+   116,
+   94,
+   81,
+   79,
+   69,
+   67,
+   66,
+   38,
+   26,
+   25,
+   18
+  ],
+  "peek": [
+   300
+  ],
+  "port": [
+   300,
+   75,
+   74,
+   64
+  ],
+  "reads": [
+   300
+  ],
+  "descriptor": [
+   299,
+   297,
+   293,
+   288,
+   279,
+   278,
+   232,
+   206,
+   205,
+   194,
+   154,
+   149,
+   147,
+   144,
+   88
+  ],
+  "syncfs": [
+   299
+  ],
+  "lib": [
+   299,
+   298,
+   6
+  ],
+  "operation": [
+   299,
+   291,
+   230,
+   84,
+   7
+  ],
+  "sync": [
+   299
+  ],
+  "authority": [
+   299,
+   216
+  ],
+  "contract": [
+   299,
+   298,
+   291,
+   283,
+   278,
+   269,
+   258,
+   254,
+   251,
+   243,
+   237,
+   231,
+   230,
+   13
+  ],
+  "global": [
+   299,
+   7
+  ],
+  "default": [
+   298,
+   213,
+   177
+  ],
+  "network": [
+   298,
+   289,
+   283,
+   259,
+   251,
+   229,
+   100,
+   75,
+   68
+  ],
+  "deny": [
+   298,
+   278,
+   268
+  ],
+  "allow": [
+   298
+  ],
+  "empty": [
+   298,
+   128
+  ],
+  "list": [
+   298,
+   156
+  ],
+  "any": [
+   298,
+   253,
+   50
+  ],
+  "as_slice": [
+   298
+  ],
+  "number": [
+   297
+  ],
+  "dup": [
+   297,
+   206,
+   194,
+   179
+  ],
+  "send": [
+   297
+  ],
+  "console": [
+   297,
+   279,
+   278
+  ],
+  "arms": [
+   297
+  ],
+  "clears": [
+   297
+  ],
+  "exit": [
+   297,
+   280,
+   274,
+   242,
+   215,
+   214,
+   211,
+   203,
+   201,
+   173,
+   171,
+   170,
+   169,
+   168,
+   165,
+   162,
+   130,
+   111
+  ],
+  "family": [
+   297,
+   62
+  ],
   "group": [
    296
   ],
@@ -7026,39 +7593,6 @@
    137,
    125
   ],
-  "host": [
-   295,
-   291,
-   289,
-   285,
-   274,
-   270,
-   259,
-   251,
-   248,
-   247,
-   245,
-   242,
-   238,
-   237,
-   236,
-   229,
-   219,
-   215,
-   214,
-   203,
-   202,
-   201,
-   200,
-   199,
-   198,
-   195,
-   194,
-   183,
-   125,
-   92,
-   86
-  ],
   "rocky": [
    295,
    292,
@@ -7090,17 +7624,6 @@
   ],
   "hdiutil": [
    295
-  ],
-  "init": [
-   295,
-   284,
-   261,
-   204,
-   190,
-   112,
-   57,
-   37,
-   26
   ],
   "linux": [
    295,
@@ -7158,69 +7681,6 @@
    9,
    8
   ],
-  "ginux": [
-   294,
-   292,
-   284,
-   283,
-   282,
-   280,
-   272,
-   271,
-   260,
-   255,
-   249,
-   241,
-   237,
-   235,
-   230,
-   227,
-   219,
-   215,
-   214,
-   205,
-   202,
-   194,
-   189,
-   187,
-   186,
-   184,
-   179,
-   178,
-   176,
-   165,
-   164,
-   161,
-   158,
-   157,
-   155,
-   136,
-   112,
-   111,
-   110,
-   106,
-   103,
-   99,
-   97,
-   96,
-   95,
-   94,
-   93,
-   92,
-   76,
-   71,
-   64,
-   61,
-   58,
-   57,
-   45,
-   42,
-   39,
-   18,
-   12,
-   8,
-   5
-  ],
   "launch": [
    294,
    271,
@@ -7260,12 +7720,6 @@
    99,
    95
   ],
-  "supervisor": [
-   294,
-   228,
-   210,
-   177
-  ],
   "archive": [
    294,
    175,
@@ -7282,21 +7736,6 @@
   "levitateos": [
    294
   ],
-  "main": [
-   294,
-   285,
-   284,
-   255,
-   202,
-   194,
-   193,
-   184,
-   175,
-   171,
-   95,
-   93,
-   5
-  ],
   "owned": [
    294,
    59
@@ -7307,21 +7746,6 @@
   "241": [
    293,
    278
-  ],
-  "descriptor": [
-   293,
-   288,
-   279,
-   278,
-   232,
-   206,
-   205,
-   194,
-   154,
-   149,
-   147,
-   144,
-   88
   ],
   "descriptors": [
    293,
@@ -7490,26 +7914,6 @@
   "filesystem": [
    291
   ],
-  "contract": [
-   291,
-   283,
-   278,
-   269,
-   258,
-   254,
-   251,
-   243,
-   237,
-   231,
-   230,
-   13
-  ],
-  "operation": [
-   291,
-   230,
-   84,
-   7
-  ],
   "syscall": [
    291,
    269,
@@ -7526,9 +7930,6 @@
    25
   ],
   "inventory": [
-   291
-  ],
-  "netlink": [
    291
   ],
   "root": [
@@ -7630,16 +8031,6 @@
    36,
    13,
    3
-  ],
-  "network": [
-   289,
-   283,
-   259,
-   251,
-   229,
-   100,
-   75,
-   68
   ],
   "passed": [
    289,
@@ -7799,11 +8190,6 @@
    126,
    102
   ],
-  "guest": [
-   285,
-   96,
-   22
-  ],
   "mode": [
    285,
    284,
@@ -7834,11 +8220,6 @@
    157,
    107
   ],
-  "crates": [
-   284,
-   214,
-   58
-  ],
   "run": [
    284,
    271,
@@ -7860,12 +8241,6 @@
   "backend": [
    283,
    181
-  ],
-  "connect": [
-   283,
-   120,
-   101,
-   69
   ],
   "state": [
    282,
@@ -7988,25 +8363,6 @@
    103,
    91
   ],
-  "exit": [
-   280,
-   274,
-   242,
-   215,
-   214,
-   211,
-   203,
-   201,
-   173,
-   171,
-   170,
-   169,
-   168,
-   165,
-   162,
-   130,
-   111
-  ],
   "kill_tracee": [
    280
   ],
@@ -8050,10 +8406,6 @@
    280,
    234,
    168
-  ],
-  "console": [
-   279,
-   278
   ],
   "exec": [
    279,
@@ -8107,10 +8459,6 @@
   ],
   "console_fds": [
    278
-  ],
-  "deny": [
-   278,
-   268
   ],
   "denied": [
    277
@@ -8286,25 +8634,6 @@
   "toml": [
    272,
    87
-  ],
-  "only": [
-   272,
-   250,
-   226,
-   224,
-   223,
-   171,
-   156,
-   149,
-   135,
-   131,
-   107,
-   103,
-   102,
-   90,
-   89,
-   66,
-   9
   ],
   "extra": [
    272
@@ -8629,35 +8958,6 @@
   "bpf": [
    258
   ],
-  "kernel": [
-   258,
-   183,
-   182,
-   152,
-   139,
-   130,
-   129,
-   127,
-   100,
-   99,
-   98,
-   97,
-   96,
-   80,
-   71,
-   67,
-   50,
-   47,
-   46,
-   24,
-   21,
-   19,
-   17,
-   13,
-   9,
-   7,
-   3
-  ],
   "lsm": [
    258
   ],
@@ -8738,14 +9038,6 @@
   "authorship": [
    256
   ],
-  "base": [
-   256,
-   166,
-   123,
-   97,
-   93,
-   18
-  ],
   "events": [
    255
   ],
@@ -8785,10 +9077,6 @@
    251,
    86,
    49
-  ],
-  "any": [
-   253,
-   50
   ],
   "atomic": [
    253,
@@ -9370,32 +9658,6 @@
    170,
    124
   ],
-  "failure": [
-   225,
-   211,
-   210,
-   29
-  ],
-  "path": [
-   225,
-   148,
-   146,
-   141,
-   140,
-   136,
-   120,
-   116,
-   94,
-   81,
-   79,
-   69,
-   67,
-   66,
-   38,
-   26,
-   25,
-   18
-  ],
   "cell": [
    224,
    223
@@ -9574,9 +9836,6 @@
    94,
    14
   ],
-  "authority": [
-   216
-  ],
   "capacity": [
    216,
    54,
@@ -9593,10 +9852,6 @@
    215,
    163
   ],
-  "src": [
-   214,
-   17
-  ],
   "parked": [
    213,
    212
@@ -9604,10 +9859,6 @@
   "managed": [
    213,
    196
-  ],
-  "default": [
-   213,
-   177
   ],
   "entry": [
    213,
@@ -9738,11 +9989,6 @@
   ],
   "chained": [
    206
-  ],
-  "dup": [
-   206,
-   194,
-   179
   ],
   "stdio": [
    205
@@ -10352,9 +10598,6 @@
    155,
    90
   ],
-  "list": [
-   156
-  ],
   "__o_tmpfile": [
    156
   ],
@@ -10493,12 +10736,6 @@
   ],
   "pathname": [
    146
-  ],
-  "bind": [
-   146,
-   120,
-   76,
-   73
   ],
   "create": [
    146
@@ -10732,9 +10969,6 @@
    46,
    19
   ],
-  "empty": [
-   128
-  ],
   "mprotect": [
    128,
    49,
@@ -10915,10 +11149,6 @@
   "fixed": [
    104
   ],
-  "address": [
-   104,
-   84
-  ],
   "anon": [
    104
   ],
@@ -11074,11 +11304,6 @@
   "eacces": [
    88
   ],
-  "prot_write": [
-   88,
-   81,
-   78
-  ],
   "ovmf": [
    87
   ],
@@ -11219,11 +11444,6 @@
   "clients": [
    75
   ],
-  "port": [
-   75,
-   74,
-   64
-  ],
   "second": [
    75,
    69,
@@ -11344,10 +11564,6 @@
   "window": [
    65
   ],
-  "ack": [
-   65,
-   64
-  ],
   "forever": [
    65
   ],
@@ -11374,9 +11590,6 @@
    63
   ],
   "duration": [
-   62
-  ],
-  "family": [
    62
   ],
   "kernel_entry_lock": [
@@ -11712,9 +11925,6 @@
   "six": [
    26
   ],
-  "sibling": [
-   25
-  ],
   "writable": [
    25
   ],
@@ -11845,16 +12055,10 @@
   "parity": [
    8
   ],
-  "global": [
-   7
-  ],
   "robust": [
    6
   ],
   "slice": [
-   6
-  ],
-  "lib": [
    6
   ],
   "parser": [
