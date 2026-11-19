@@ -44,6 +44,12 @@ internal_merge:
     - .github/workflows/auto-merge.yml
     - .github/workflows/supervisor-shadow.yml
     - .github/workflows/decider-space-probe.yml
+    - .github/workflows/
+    - .github/CODEOWNERS
+    - CODEOWNERS
+    - scripts/auth_device.py
+    - LICENSE
+    - NOTICE
   path_allowlist_prefixes:
     - scripts/
     - team/
@@ -55,9 +61,6 @@ internal_merge:
     - fuzz/
     - matrix/
     - directives/
-    - .github/workflows/ci.yml
-    - .github/workflows/team-watcher.yml
-    - .github/workflows/ack-detect.yml
     - README.md
     - STATE.md
     - HANDOFF.md

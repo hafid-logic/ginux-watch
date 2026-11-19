@@ -13,17 +13,30 @@ def load(path=None):
 def classify(action, pol=None):
     pol = pol or load()
     return "autonomous" if action in (pol.get("autonomous") or []) else "human"
+def _norm(f):
+    if isinstance(f, str): return (f, None)
+    if isinstance(f, dict): return (f.get("path") or f.get("filename") or "", f.get("patch"))
+    return (f[0], f[1] if len(f) > 1 else None)
+
+def patch_adds_secret(patch):
+    """v8.7: True if any ADDED line references a GitHub secret."""
+    if not patch: return False
+    return any(l.startswith("+") and not l.startswith("+++") and "secrets." in l for l in patch.splitlines())
+
 def pr_files_decision(files, pol=None):
     pol = pol or load(); im = pol["internal_merge"]
-    if not files and im.get("deny_empty", True):
+    norm = [_norm(f) for f in files]
+    if not norm and im.get("deny_empty", True):
         return ("needs-owner", "empty-pr")
-    for f in files:
+    for path, patch in norm:
         for d in im["path_denylist"]:
-            if f == d or f.startswith(d):
+            if path == d or path.startswith(d):
                 return ("needs-owner", "denylist:" + d)
-    for f in files:
-        if not any(f == a or f.startswith(a) for a in im["path_allowlist_prefixes"]):
-            return ("needs-owner", "outside-allowlist:" + f)
+        if patch_adds_secret(patch):
+            return ("needs-owner", "patch-adds-secret:" + path)
+    for path, patch in norm:
+        if not any(path == a or path.startswith(a) for a in im["path_allowlist_prefixes"]):
+            return ("needs-owner", "outside-allowlist:" + path)
     return ("auto", "allowlist")
 
 def select_tier(cap, pol=None):
