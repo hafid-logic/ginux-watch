@@ -239,3 +239,14 @@ evidence: `reports/team-pilot.md`; re-run: `reports/metrics.md` (team v2.2 secti
   - (هـ) أمر واحد يُنتج الفرق على أحدث main.
   - المشرف عندئذ: يجلب أحدث main، يطبّق الفرق، يقرأ الشيفرة المعنية والاختبارات، يتحقق من التعارض ومن نتائج الـruns، ثم يعتمد أو يرفض — ولا يُنشر شيء قبل تسجيل اعتماده في `approved/pending/<id>/DECISION.md` بتاريخه وSHA ما تحقق منه.
 - **سقف النشر الجديد: ≤ 2 PR مفتوحين في upstream (رُفع من 1 بتوجيه v8.0 C-00)؛ لا نشر ولا ردّ إلا بنص يعتمده المستخدم وبعد بوابة المشرف (C-8).**
+
+<!-- BEGIN HDAE SECURITY CONTRACT (managed) -->
+## Binding security contract — every agent, every environment
+Before ANY write: read `docs/AGENT-SECURITY.md` and `config/authorization.yml`.
+These rules are repository law, independent of your platform or runtime.
+Auth tiers: 0 device-flow -> A upload file -> B short-lived token -> C zero-token;
+fallback only on failure and logged. Never print/commit tokens, device_code or
+refresh_token. Unattended runs use GITHUB_TOKEN only. Upstream writes, force
+push, deletions, policy changes and gate acceptance are OWNER-ONLY.
+Reload this block after context compaction or handoff.
+<!-- END HDAE SECURITY CONTRACT -->
