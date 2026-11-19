@@ -1,6 +1,6 @@
 {
- "tier": "short_lived_pat",
- "flavor": "device-flow App token (8h, granular)",
- "reason": "exec-env unavailable for native tier-0",
- "expires": "2026-11-19T08:40:01Z"
+ "tier": "device_flow",
+ "flavor": "GitHub App device-flow token (8h, granular)",
+ "reason": "owner activated GitHub App device flow for authorized internal repository work",
+ "expires": "2026-11-19T22:59:56Z"
 }
