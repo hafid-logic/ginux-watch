@@ -25,3 +25,8 @@ if [ -f hdae/CHECKPOINT.md ]; then
   echo "=== HDAE CHECKPOINT (reload required) ==="
   cat hdae/CHECKPOINT.md
 fi
+
+# v8.5: auth tier display
+if [ -f state/auth-tier.json ]; then
+  echo "=== AUTH TIER (current) ==="; cat state/auth-tier.json
+fi

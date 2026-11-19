@@ -4,3 +4,4 @@
 {"at": "2026-11-18T22:19:00Z", "action": "alert_ack", "target": 19}
 {"at": "2026-11-18T22:20:01Z", "action": "alert_ack", "target": 20}
 {"at": "2026-11-18T22:21:02Z", "action": "alert_ack", "target": 22}
+{"at": "2026-11-19T00:45:00Z", "action": "auth_tier_transition", "from": "device_flow", "to": "short_lived_pat", "reason": "agent exec-env unavailable; owner ran device flow locally and delivered 8h App token via tier-B channel"}
