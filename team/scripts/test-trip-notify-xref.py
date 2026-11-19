@@ -20,9 +20,12 @@ L2 STATIC — every text-generator SOURCE file is scanned for unwrapped
    Forbidden in L2: '#N' and 'owner/repo#N' (bare-URL/mention checks stay in
    L1 because workflow sources legitimately contain curl URLs and uses:@v4).
 
-ALLOWLIST (files whose FUNCTION requires known-bad samples; their samples are
-offline test data, never emitted to GitHub surfaces):
-     - this file (positive controls for the patterns)
+L2 EXEMPTIONS (known-bad samples are offline test data, never emitted to
+GitHub surfaces): this file is excluded because it contains positive controls
+for the patterns. In other test files, only exact strings in
+STRING_FIXTURE_ALLOWLIST are exempted: the mocked watch-output assertions in
+team/scripts/test-upstream-watch.py and STATE-text inputs to missing_prs() in
+team/scripts/test-pr-state-xref.py. The rest of those files is scanned.
 
 Style rule (directive v6.3): automated texts say 'PR 207' / 'thread 222',
 never '#207'. No network, no gh, no git. Run: python3
@@ -34,8 +37,23 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]  # repo root (this file: team/scripts/)
-ALLOWLIST = {
-    "team/scripts/test-trip-notify-xref.py",  # positive controls (this file)
+# Whole-file exemption is only for this gate's positive-control patterns.
+# Other tests are scanned normally; only exact fixture/assertion strings that
+# intentionally contain a ref-form are exempted (not the rest of those files).
+SELFTEST_ALLOWLIST = {"team/scripts/test-trip-notify-xref.py"}
+STRING_FIXTURE_ALLOWLIST = {
+    "team/scripts/test-upstream-watch.py": {
+        "W6 our_open_prs baseline: #295/#296 OPENED, foreign filtered, mergeable_state recorded",
+        "W8 our_open_prs #296 MERGED breaker + #295 head CHANGED",
+        "#296 MERGED",
+        "#295 CHANGED",
+        "#295 STALE",
+    },
+    "team/scripts/test-pr-state-xref.py": {
+        "#295 #296",
+        "#295 only",
+        "#2950 #296",
+    },
 }
 
 # --- forbidden cross-reference forms (outside backtick spans) ---
@@ -147,9 +165,14 @@ def l2_scan_python(rel):
     """AST scan: every string constant (docstrings included) must be ref-free."""
     src = (ROOT / rel).read_text(encoding="utf-8")
     tree = ast.parse(src, filename=str(rel))
+    fixtures = STRING_FIXTURE_ALLOWLIST.get(rel, set())
+    fixture_counts = {fixture: 0 for fixture in fixtures}
     for node in ast.walk(tree):
         if isinstance(node, ast.Constant) and isinstance(node.value, str):
             val = node.value
+            if val in fixtures:
+                fixture_counts[val] += 1
+                continue
             if len(val) < 4:
                 continue
             for pat, name in ((L2_HASH, "#N"), (L2_REPO_HASH, "owner/repo#N")):
@@ -159,6 +182,12 @@ def l2_scan_python(rel):
                         "%s:%d string literal has unwrapped %s (<%s>)"
                         % (rel, getattr(node, "lineno", 0), name, m.group(0)[:30])
                     )
+    unused_fixtures = sorted(fixture for fixture, count in fixture_counts.items() if count != 1)
+    if unused_fixtures:
+        raise AssertionError(
+            "%s: fixture allowlist entries must match exactly once: %r"
+            % (rel, unused_fixtures)
+        )
 
 
 def l2_mask_yaml_sh(text):
@@ -192,13 +221,13 @@ def l2_static():
     for d in ("scripts", "team/scripts"):
         for rel in sorted((ROOT / d).glob("*.py")):
             rp = d + "/" + rel.name
-            if rp in ALLOWLIST:
+            if rp in SELFTEST_ALLOWLIST:
                 continue
             l2_scan_python(rp)
             scanned["py"].append(rp)
         for rel in sorted((ROOT / d).glob("*.sh")):
             rp = d + "/" + rel.name
-            if rp in ALLOWLIST:
+            if rp in SELFTEST_ALLOWLIST:
                 continue
             l2_scan_lines(rp, include_comments=True)
             scanned["sh"].append(rp)
