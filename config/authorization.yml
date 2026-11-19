@@ -24,6 +24,7 @@ human_required:
   - gate_acceptance          # moving a gate into hdae/gates-done/
   - cap_change
   - c2_unlock
+  - security_contract_change
 internal_merge:
   ci_workflow: ci
   require_conclusion: success
@@ -37,6 +38,8 @@ internal_merge:
     - config/authorization.yml
     - scripts/hooks/
     - scripts/authz_check.py
+    - docs/AGENT-SECURITY.md
+    - scripts/security_contract_check.py
     - team/scripts/auto-merge.py
     - .github/workflows/auto-merge.yml
     - .github/workflows/supervisor-shadow.yml

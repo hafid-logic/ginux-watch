@@ -95,3 +95,9 @@
 - تحقق حي [MEASURED]: auto-merge #1/#3/#4 دمجها github-actions[bot]؛ watcher #67 push و#68 repository_dispatch أخضر؛ alerts.json يرصد 3 قضايا TRIPPED (19/20/22) بتذكير واحد منزوع التكرار؛ action-ledger ملتزم؛ اختبارات authz 12/12، auto-merge 10/10، alert-ack 10/10، upstream-watch 11/11.
 - القرارات الحرجة تبقى بشرية: أي كتابة upstream، force/حذف، تغيير السياسة/السقف، قبول البوابات، التوكنات. الاستثناء token-in-chat مؤجل بقرار المالك حتى اكتمال التحقق (مسجل في authorization.yml).
 - التالي: قبول المالك للبوابات (نقلها gates-done) ثم تفعيل الاستثناء الأمني.
+
+## جلسة 2026-11-19 (v8.6)
+- عقد أمني ملزم لكل وكيل (docs/AGENT-SECURITY.md + كتلة AGENTS.md + بوابة CI 7/7)؛ السياسة تحمي نفسها.
+- قبول البوابات بقرار المالك: v84 (نقل بلا تعديل) + v85 في hdae/gates-done/ + ACCEPTANCE.md.
+- إسناد HDAE لـ Gregory M. Kurtzer (gmkurtzer/hdae, Apache-2.0) في NOTICE + docs/ATTRIBUTION.md + README.
+- تقرير الجلسة: reports/2026-11-19-session-report.md. تجربة المستوى 0 مؤجلة بطلب المالك. توكن الـApp ينتهي 2026-11-19 08:40Z.

@@ -30,3 +30,13 @@ python3 scripts/run_golden_eval.py --validate
 ## Safety and contribution boundaries
 
 Read `AGENTS.md` and `POLICY.md` before contributing. Do not execute untrusted upstream code outside the isolated CI environment, do not publish to upstream, and do not place credentials or secrets in tracked files, logs, reports, or commits. The repository is a verification/operations project rather than a standalone Ginux implementation.
+
+## Method & attribution
+Engineering method: **HDAE — Human-Directed Agentic Engineering** by Gregory M. Kurtzer,
+https://github.com/gmkurtzer/hdae (Apache-2.0). The skills and `hdae/` layout originate
+from that project; our scripts are adaptations written for ginux-watch.
+See `NOTICE` and `docs/ATTRIBUTION.md`.
+
+## Binding security contract
+Every agent (any platform/runtime) is bound by `docs/AGENT-SECURITY.md` and
+`config/authorization.yml`; CI enforces it via `scripts/security_contract_check.py`.
