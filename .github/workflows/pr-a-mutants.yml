@@ -41,12 +41,12 @@ jobs:
       contents: read
     steps:
       - name: Checkout watch repo (parser scripts)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           persist-credentials: false
 
       - name: Checkout fork branch (untrusted code, no credentials)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: ${{ inputs.fork_repo }}
           ref: refs/heads/${{ inputs.fork_branch }}

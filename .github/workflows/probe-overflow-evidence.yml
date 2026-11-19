@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: clone upstream at pinned SHA
         run: |
           git clone -q https://github.com/gmkurtzer/ginux.git src
@@ -124,7 +124,7 @@ jobs:
     runs-on: macos-15
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: clone upstream at pinned SHA
         run: |
           git clone -q https://github.com/gmkurtzer/ginux.git src
@@ -169,7 +169,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: runner fd 0 provenance (state the v5.3/v5.4 runs silently inherited)
         run: |
           echo "RUNNER_STEP_FD0=$(readlink /proc/self/fd/0 2>/dev/null || echo CLOSED-OR-NONE)"

@@ -18,7 +18,7 @@ jobs:
     permissions:
       contents: write # scoped to THIS job alone (it commits validation.md)
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Selftest (checker must never match its own code)
         run: python3 team/scripts/validate-result.py --selftest
       - name: Validate results (format, tags, evidence, secrets)

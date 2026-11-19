@@ -60,12 +60,12 @@ jobs:
       TRIGGER: ${{ github.event.client_payload.reason || github.event_name }}
     steps:
       - name: Checkout watch repo (dictionaries + seeds)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           persist-credentials: false
 
       - name: Checkout upstream main (untrusted code, no credentials, no pin)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: gmkurtzer/ginux
           ref: refs/heads/main
@@ -174,7 +174,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout watch repo (writable)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Download round results
         uses: actions/download-artifact@v4

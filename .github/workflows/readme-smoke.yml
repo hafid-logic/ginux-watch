@@ -30,7 +30,7 @@ jobs:
         os: [ubuntu-24.04, macos-latest]
     steps:
       - name: Check out fork at requested SHA (untrusted code, no credentials)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: hafid-logic/ginux
           ref: ${{ inputs.sha }}

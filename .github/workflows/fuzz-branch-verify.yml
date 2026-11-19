@@ -39,12 +39,12 @@ jobs:
       QEMU_VERSION: "10.1.2"
     steps:
       - name: Checkout watch repo (QEMU pin list)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           persist-credentials: false
 
       - name: Checkout fork branch (untrusted code, no credentials)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: ${{ inputs.fork_repo || 'hafid-logic/ginux' }}
           ref: refs/heads/${{ env.FORK_BRANCH }}
@@ -139,7 +139,7 @@ jobs:
           - { target: volume_surfaces,    dict: volume.dict,    seeds: corpus-seed-volume }
     steps:
       - name: Checkout fork branch (untrusted code, no credentials)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: ${{ inputs.fork_repo || 'hafid-logic/ginux' }}
           ref: refs/heads/${{ env.FORK_BRANCH }}
@@ -184,7 +184,7 @@ jobs:
           - { target: volume_surfaces,    dict: volume.dict,    seeds: corpus-seed-volume }
     steps:
       - name: Checkout fork branch (untrusted code, no credentials)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: ${{ inputs.fork_repo || 'hafid-logic/ginux' }}
           ref: refs/heads/${{ env.FORK_BRANCH }}

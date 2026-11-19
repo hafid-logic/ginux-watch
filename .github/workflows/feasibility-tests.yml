@@ -56,12 +56,12 @@ jobs:
       contents: read
     steps:
       - name: Checkout watch repo (parser scripts)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           persist-credentials: false
 
       - name: Checkout upstream main (untrusted code, no credentials, no pin)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: gmkurtzer/ginux
           ref: refs/heads/main
@@ -182,12 +182,12 @@ jobs:
           - ginux-kernel-policy
     steps:
       - name: Checkout watch repo (parser scripts)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           persist-credentials: false
 
       - name: Checkout upstream main (untrusted code, no credentials, no pin)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: gmkurtzer/ginux
           ref: refs/heads/main
@@ -283,12 +283,12 @@ jobs:
       contents: read
     steps:
       - name: Checkout watch repo (parser scripts)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           persist-credentials: false
 
       - name: Checkout upstream main (untrusted code, no credentials, no pin)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: gmkurtzer/ginux
           ref: refs/heads/main
