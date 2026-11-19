@@ -62,7 +62,7 @@ jobs:
       TARGET: ${{ matrix.target }}
     steps:
       - name: Checkout watch repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           path: watch
           persist-credentials: false
@@ -75,7 +75,7 @@ jobs:
           else echo "ref=refs/tags/${TARGET}" >> "$GITHUB_OUTPUT"; fi
 
       - name: Checkout upstream (untrusted code, no credentials)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: gmkurtzer/ginux
           ref: ${{ steps.ref.outputs.ref }}

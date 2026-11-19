@@ -23,7 +23,7 @@ jobs:
       actions: write
       issues: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
       - name: Offline heartbeat semantics test (v7.3-2d — alert basis last_success; failed run is not a pulse)

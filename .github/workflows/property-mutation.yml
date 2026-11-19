@@ -25,10 +25,10 @@ jobs:
       RUSTFLAGS: ''
     steps:
       - name: Checkout ginux-watch (property tests + mutant patches)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Checkout upstream ginux at measured base
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: gmkurtzer/ginux
           ref: 285d025b7f8bcad0784585dcfbd23cada4643408

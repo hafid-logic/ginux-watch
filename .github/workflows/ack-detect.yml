@@ -22,7 +22,7 @@ jobs:
        (contains(github.event.comment.body, 'ACK') || contains(github.event.comment.body, 'اقرار')))
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Mark acknowledged
         env:
           GH_TOKEN: ${{ github.token }}
