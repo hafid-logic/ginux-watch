@@ -250,3 +250,7 @@ refresh_token. Unattended runs use GITHUB_TOKEN only. Upstream writes, force
 push, deletions, policy changes and gate acceptance are OWNER-ONLY.
 Reload this block after context compaction or handoff.
 <!-- END HDAE SECURITY CONTRACT -->
+
+## قاعدة «جاهز» (v8.7 — ملزمة لكل وكيل)
+لا يُسمّى أي ناتج «جاهزًا» إلا إذا كان **مدفوعًا** (فرع/مسار + `sha256` لكل ملف) **ومذكورًا في `STATE.md`**.
+أي إعلان جاهزية بلا (دفع + sha256 + ذكر في STATE) يُعد **باطلًا**.

@@ -19,6 +19,8 @@
   ببوابة CI. 4 دمجات ذاتية؛ البوابات قُبلت؛ الإسناد لـ gmkurtzer/hdae موثق.
   التقرير: reports/2026-11-19-session-report.md.
 
+- **مقياس upstream:** مدموجة 1 (#227، ~6.6 يوم) · مفتوحة 2 (#295/#296) · حزم جاهزة 2 (c8-linux-host-port, c8-property-tests-process-table) · ginux-oci قيد إعادة البناء.
+
 ## فهرس
 - الأرشيف: state/history/STATE-archive-2026-11-18.md — التسليم: HANDOFF.md
 - التقارير: reports/ — المصفوفة: matrix/upstream-watch.json

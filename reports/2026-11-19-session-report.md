@@ -1,6 +1,6 @@
 # تقرير تحسينات مستودع ginux-watch — جلسة 2026-11-18/19
 
-> إعداد: وكيل بمساعدة ذكاء اصطناعي، مراجعة المالك. كل رقم هنا **[MEASURED]** من API أو سجلات CI.
+> إعداد: وكيل بمساعدة ذكاء اصطناعي، المشغّل (Abdelhafid DJIDEL). كل رقم هنا **[MEASURED]** من API أو سجلات CI.
 > المنهجية: **HDAE — Human-Directed Agentic Engineering** لـ Gregory M. Kurtzer (gmkurtzer/hdae, Apache-2.0).
 
 ## 0. الخلاصة التنفيذية

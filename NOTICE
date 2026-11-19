@@ -15,3 +15,7 @@ Implementations here were written for ginux-watch as adaptations of the method
 
 HDAE itself grew out of the author's work on https://github.com/gmkurtzer/ginux,
 the upstream project this repository independently verifies.
+
+Verbatim-copy audit (2026-11-19): the Python implementations here were compared
+against the HDAE skill documents (Markdown prose). No verbatim code or prose copies
+were found; borrowed elements are the method, skill design and hdae/ layout, credited above.
