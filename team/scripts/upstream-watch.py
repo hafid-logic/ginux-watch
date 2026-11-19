@@ -124,7 +124,7 @@ def watch_threads(state, now, out) -> None:
 def watch_our_prs(state, now, out, upstream_head=None) -> None:
     """v8.3-ب: track OUR open upstream PRs (read-only, never posts).
 
-    The fixed thread watch (222/207/227) missed #295/#296 from our fork; STATE
+    The fixed thread watch (222/207/227) missed PRs 295 and 296 from our fork; STATE
     stayed at s66 ~3 days. Records every open upstream PR whose head repo is
     OUR_FORK incl. mergeable_state (per-PR GET; list returns mergeable=null),
     emitting OPENED/CHANGED/MERGED/CLOSED breaker lines. Snapshot: our_open_prs.
