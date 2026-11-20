@@ -1,12 +1,12 @@
 {
- "updated": "2026-11-20T13:13:39Z",
+ "updated": "2026-11-20T20:28:27Z",
  "providers": {
   "nvidia": {
    "configured": true,
    "status": "ok",
    "model_current": "nvidia/nemotron-3-ultra-550b-a55b",
-   "last_success": "2026-11-20T13:13:39Z",
-   "last_error_class": "schema_invalid",
+   "last_success": "2026-11-20T20:28:27Z",
+   "last_error_class": null,
    "consecutive_failures": 0,
    "rate_limit": null,
    "model_actual": "nvidia/nemotron-3-ultra-550b-a55b",
@@ -16,11 +16,11 @@
    "configured": true,
    "status": "ok",
    "model_current": "openrouter/free",
-   "last_success": "2026-11-20T13:13:09Z",
+   "last_success": "2026-11-20T20:27:34Z",
    "last_error_class": null,
    "consecutive_failures": 0,
    "rate_limit": null,
-   "model_actual": "particle-ai/particle-1:free",
+   "model_actual": "baidu/ernie-5.5-flash-preview:free",
    "last_diag": {
     "error_class": "api_shape",
     "http_status": 200,
@@ -74,7 +74,7 @@
    "configured": true,
    "status": "ok",
    "model_current": "gemini-3.6-flash",
-   "last_success": "2026-11-20T13:13:08Z",
+   "last_success": "2026-11-20T20:27:21Z",
    "last_error_class": null,
    "consecutive_failures": 0,
    "rate_limit": null,
@@ -86,23 +86,21 @@
   "provider": "nvidia",
   "model": "nvidia/nemotron-3-ultra-550b-a55b",
   "model_actual": "nvidia/nemotron-3-ultra-550b-a55b",
-  "outcome": "schema_invalid",
-  "at": "2026-11-20T13:13:39Z",
-  "diag": {
-   "error_class": "schema_invalid",
-   "excerpt200": "{\"report_id\":\"20261115-1108Z-s66-review\",\"strengths\":[\"Cold receipt verified via ls-remote/API [MEASURED]\",\"Linux portability patch tested 3× on ubuntu-24.04 [MEASURED]\",\"Mutation testing 3/3 mutants "
-  }
+  "latency_s": 26.95,
+  "outcome": "ok",
+  "at": "2026-11-20T20:28:27Z",
+  "finish_reason": "length"
  },
  "note": "runtime-managed by scripts/llm_router.py; providers appear on first call. No secrets are stored here — status classes only (unconfigured/ok/down/auth_failed).",
  "daily": {
   "date_utc": "2026-11-20",
   "calls": {
-   "nvidia": 1
+   "nvidia": 3
   },
   "calls_probe": {
-   "nvidia": 1,
-   "google-ai-studio": 1,
-   "openrouter": 1
+   "nvidia": 2,
+   "google-ai-studio": 2,
+   "openrouter": 2
   }
  },
  "limits_official": {
@@ -142,34 +140,34 @@
   }
  },
  "shadow": {
-  "consecutive_failures": 4,
-  "last_alert_key": "shadow_failed:schema_invalid",
+  "consecutive_failures": 5,
+  "last_alert_key": "shadow_failed:truncated_json",
   "last_attempt": {
    "status": "shadow_failed",
-   "reason": "schema_invalid:'Supervisor review C-8 packages; revoke token; monitor Actions weekly; update maintainer-profile' is not of type 'array'\n\nFailed validating 'type' in schema['pr",
+   "reason": "truncated_json:no_json: unbalanced object (after 1 compressed retry)",
    "provider": "nvidia",
    "model": "nvidia/nemotron-3-ultra-550b-a55b",
-   "finish_reason": "stop",
+   "finish_reason": "length",
    "usage_summary": {
-    "completion_tokens": 1590,
-    "reasoning_tokens": 764
+    "completion_tokens": 1657,
+    "reasoning_tokens": 1182
    },
    "retries": 0,
-   "at": "2026-11-20T13:13:39Z"
+   "at": "2026-11-20T20:28:27Z"
   },
   "last_recovery_at": "2026-11-12T07:19:15Z"
  },
  "last_shadow_attempt": {
   "status": "shadow_failed",
-  "reason": "schema_invalid:'Supervisor review C-8 packages; revoke token; monitor Actions weekly; update maintainer-profile' is not of type 'array'\n\nFailed validating 'type' in schema['pr",
+  "reason": "truncated_json:no_json: unbalanced object (after 1 compressed retry)",
   "provider": "nvidia",
   "model": "nvidia/nemotron-3-ultra-550b-a55b",
-  "finish_reason": "stop",
+  "finish_reason": "length",
   "usage_summary": {
-   "completion_tokens": 1590,
-   "reasoning_tokens": 764
+   "completion_tokens": 1657,
+   "reasoning_tokens": 1182
   },
   "retries": 0,
-  "at": "2026-11-20T13:13:39Z"
+  "at": "2026-11-20T20:28:27Z"
  }
 }

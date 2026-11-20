@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-20T13:13:09Z",
+ "updated": "2026-11-20T20:27:34Z",
  "schema": "llm-probe-v1",
  "note": "DATA ONLY — probe rows are runtime availability evidence; no secrets; fixed probe input sha256_16 below",
  "probe_input_sha256_16": "6ba85cba8c23d00c",
@@ -19,7 +19,7 @@
   },
   "google-ai-studio": {
    "http_status": 200,
-   "ids_listed": 66,
+   "ids_listed": 65,
    "raw_names_sample5": [
     "models/gemini-2.5-flash",
     "models/gemini-2.5-pro",
@@ -31,7 +31,7 @@
   },
   "openrouter": {
    "http_status": 200,
-   "ids_listed": 442,
+   "ids_listed": 441,
    "raw_names_sample5": [
     "mistralai/pixtral-large-2502",
     "google/gemini-4-neon",
@@ -2132,6 +2132,75 @@
    "status": "unavailable",
    "secret": "DECIDER_API_KEY",
    "at": "2026-11-20T13:13:09Z"
+  },
+  {
+   "provider": "nvidia",
+   "model": "nvidia/nemotron-3-ultra-550b-a55b",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 0.63,
+   "http_status": 200,
+   "model_actual": "nvidia/nemotron-3-ultra-550b-a55b",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "usage"
+   ],
+   "at": "2026-11-20T20:27:07Z"
+  },
+  {
+   "provider": "google-ai-studio",
+   "model": "gemini-3.6-flash",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 14.53,
+   "http_status": 200,
+   "model_actual": "gemini-3.6-flash",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "usage"
+   ],
+   "at": "2026-11-20T20:27:21Z"
+  },
+  {
+   "provider": "openrouter",
+   "model": "openrouter/free",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 11.99,
+   "http_status": 200,
+   "model_actual": "baidu/ernie-5.5-flash-preview:free",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "provider",
+    "service_tier",
+    "system_fingerprint",
+    "usage"
+   ],
+   "at": "2026-11-20T20:27:34Z"
+  },
+  {
+   "provider": "strands-decider-space",
+   "model": null,
+   "ok": false,
+   "category": "unconfigured",
+   "status": "unavailable",
+   "secret": "DECIDER_API_KEY",
+   "at": "2026-11-20T20:27:34Z"
   }
  ]
 }
