@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-18T10:03:31Z",
+ "updated": "2026-11-20T13:13:09Z",
  "schema": "llm-probe-v1",
  "note": "DATA ONLY — probe rows are runtime availability evidence; no secrets; fixed probe input sha256_16 below",
  "probe_input_sha256_16": "6ba85cba8c23d00c",
@@ -7,19 +7,19 @@
  "models_listing": {
   "nvidia": {
    "http_status": 200,
-   "ids_listed": 32,
+   "ids_listed": 33,
    "raw_names_sample5": [
     "bigcode/starcoder2-15b",
+    "fastino/gliner2-pii",
     "google/gemma-3-12b-it",
     "google/gemma-3-4b-it",
-    "google/gemma-4-31b-it",
-    "meta/muse-glimmer-30b"
+    "google/gemma-4-31b-it"
    ],
    "note": "first 5 raw /models names (names only, server order)"
   },
   "google-ai-studio": {
    "http_status": 200,
-   "ids_listed": 64,
+   "ids_listed": 66,
    "raw_names_sample5": [
     "models/gemini-2.5-flash",
     "models/gemini-2.5-pro",
@@ -31,13 +31,13 @@
   },
   "openrouter": {
    "http_status": 200,
-   "ids_listed": 443,
+   "ids_listed": 442,
    "raw_names_sample5": [
+    "mistralai/pixtral-large-2502",
+    "google/gemini-4-neon",
+    "google/gemini-4-neon:batch",
     "openai/gpt-6.2-astra-pro",
-    "openai/gpt-6.2-astra-pro:batch",
-    "openai/gpt-6.2-astra",
-    "openai/gpt-6.2-astra:batch",
-    "openai/gpt-6.2-sol-pro"
+    "openai/gpt-6.2-astra-pro:batch"
    ],
    "note": "first 5 raw /models names (names only, server order)"
   }
@@ -2063,6 +2063,75 @@
    "status": "unavailable",
    "secret": "DECIDER_API_KEY",
    "at": "2026-11-18T10:03:31Z"
+  },
+  {
+   "provider": "nvidia",
+   "model": "nvidia/nemotron-3-ultra-550b-a55b",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 0.83,
+   "http_status": 200,
+   "model_actual": "nvidia/nemotron-3-ultra-550b-a55b",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "usage"
+   ],
+   "at": "2026-11-20T13:13:06Z"
+  },
+  {
+   "provider": "google-ai-studio",
+   "model": "gemini-3.6-flash",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 2.12,
+   "http_status": 200,
+   "model_actual": "gemini-3.6-flash",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "usage"
+   ],
+   "at": "2026-11-20T13:13:08Z"
+  },
+  {
+   "provider": "openrouter",
+   "model": "openrouter/free",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 0.71,
+   "http_status": 200,
+   "model_actual": "particle-ai/particle-1:free",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "provider",
+    "service_tier",
+    "system_fingerprint",
+    "usage"
+   ],
+   "at": "2026-11-20T13:13:09Z"
+  },
+  {
+   "provider": "strands-decider-space",
+   "model": null,
+   "ok": false,
+   "category": "unconfigured",
+   "status": "unavailable",
+   "secret": "DECIDER_API_KEY",
+   "at": "2026-11-20T13:13:09Z"
   }
  ]
 }
