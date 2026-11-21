@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-20T20:24:04Z",
+ "updated": "2026-11-21T07:11:57Z",
  "schema": "decider-space-v1",
  "note": "DATA ONLY — no key, no request text; fixed probe input sha256_16 only",
  "base_url": "https://djihafwork-ginux-decider.hf.space",
@@ -9,7 +9,7 @@
   "health": {
    "category": "ok",
    "http_status": 200,
-   "elapsed_s": 0.24,
+   "elapsed_s": 0.05,
    "model": "strands-decider-2b",
    "checkpoint": "StrandsAgents/strands-decider-2B-qwen3.5-v1-2610",
    "base_model": "Qwen/Qwen3.5-2B-Base",
@@ -19,7 +19,7 @@
   "models": {
    "category": "ok",
    "http_status": 200,
-   "elapsed_s": 0.21,
+   "elapsed_s": 0.04,
    "model_ids": [
     "strands-decider-2b"
    ]
@@ -27,7 +27,7 @@
   "native": {
    "category": "ok",
    "http_status": 200,
-   "elapsed_s": 2.13,
+   "elapsed_s": 2.39,
    "answer_kinds": [
     "frustration",
     "is_urgent",
@@ -43,17 +43,17 @@
     "input_tokens": 262,
     "output_tokens": 3
    },
-   "latency_ms_reported": 1927.15
+   "latency_ms_reported": 2348.57
   },
   "determinism": {
    "category": "ok",
    "detail": "identical choice labels; noul/score within 0.15",
-   "elapsed_s": 0.45
+   "elapsed_s": 0.28
   },
   "shim": {
    "category": "ok",
    "http_status": 200,
-   "elapsed_s": 0.4,
+   "elapsed_s": 0.27,
    "content_kinds": [
     "frustration",
     "is_urgent",
@@ -466,6 +466,25 @@
     "native": 2.13,
     "determinism": 0.45,
     "shim": 0.4
+   }
+  },
+  {
+   "at": "2026-11-21T07:11:57Z",
+   "status": "ok",
+   "checks": {
+    "health": "ok",
+    "models": "ok",
+    "native": "ok",
+    "determinism": "ok",
+    "shim": "ok",
+    "guard": "ok"
+   },
+   "latencies_s": {
+    "health": 0.05,
+    "models": 0.04,
+    "native": 2.39,
+    "determinism": 0.28,
+    "shim": 0.27
    }
   }
  ]
