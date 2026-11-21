@@ -1,5 +1,5 @@
 {
- "checked_utc": "2026-11-19T05:50:39Z",
+ "checked_utc": "2026-11-21T22:45:06Z",
  "ginux": {
   "main_sha": "8c7e6ba5a5e0922be35ad2757b4c7fa743d7a6cc",
   "readme_sha": "956d19ff17aa478a887c44b18c0b7dee2cef55e1",
@@ -18,8 +18,8 @@
    "bootable-kernel"
   ],
   "open_issues": 8,
-  "open_prs": 4,
-  "latest_number": 302,
+  "open_prs": 5,
+  "latest_number": 303,
   "last_push_utc": "2026-11-19T00:57:51Z"
  },
  "ginux_us": {
