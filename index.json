@@ -1,8 +1,29 @@
 {
- "generated_at_utc": "2026-11-22T11:00:07Z",
+ "generated_at_utc": "2026-11-22T18:25:06Z",
  "source_repo": "gmkurtzer/ginux",
- "item_count": 299,
+ "item_count": 300,
  "items": {
+  "307": {
+   "kind": "pr",
+   "title": "Verify cached OCI blobs once during instance creation",
+   "state": "closed",
+   "merged_at": "2026-11-22T16:07:23Z",
+   "files": [
+    "crates/ginux-oci/src/lib.rs"
+   ],
+   "keywords": [
+    "image",
+    "seconds",
+    "cached",
+    "median",
+    "time",
+    "blob",
+    "cache",
+    "fell",
+    "offline",
+    "095"
+   ]
+  },
   "306": {
    "kind": "pr",
    "title": "Enforce empty network allow lists as default deny",
@@ -7152,6 +7173,81 @@
   }
  },
  "keywords": {
+  "image": [
+   307,
+   277,
+   216,
+   208,
+   201,
+   200,
+   199,
+   198,
+   180,
+   155,
+   150,
+   149,
+   148,
+   143,
+   140,
+   136,
+   134,
+   123,
+   122,
+   116,
+   115,
+   112,
+   110,
+   97,
+   96,
+   94,
+   90,
+   89,
+   83,
+   54,
+   27,
+   18,
+   16
+  ],
+  "seconds": [
+   307
+  ],
+  "cached": [
+   307,
+   209
+  ],
+  "median": [
+   307
+  ],
+  "time": [
+   307,
+   137,
+   100,
+   71,
+   56
+  ],
+  "blob": [
+   307
+  ],
+  "cache": [
+   307,
+   209,
+   208,
+   201,
+   200,
+   199,
+   198,
+   51,
+   17
+  ],
+  "fell": [
+   307
+  ],
+  "offline": [
+   307
+  ],
+  "095": [
+   307
+  ],
   "empty": [
    306,
    298,
@@ -8674,40 +8770,6 @@
   "execve": [
    277
   ],
-  "image": [
-   277,
-   216,
-   208,
-   201,
-   200,
-   199,
-   198,
-   180,
-   155,
-   150,
-   149,
-   148,
-   143,
-   140,
-   136,
-   134,
-   123,
-   122,
-   116,
-   115,
-   112,
-   110,
-   97,
-   96,
-   94,
-   90,
-   89,
-   83,
-   54,
-   27,
-   18,
-   16
-  ],
   "immutable": [
    277
   ],
@@ -10087,9 +10149,6 @@
   "ptrace_o_exitkill": [
    210
   ],
-  "cached": [
-   209
-  ],
   "prepare": [
    209,
    208,
@@ -10104,16 +10163,6 @@
    174,
    167,
    166
-  ],
-  "cache": [
-   209,
-   208,
-   201,
-   200,
-   199,
-   198,
-   51,
-   17
   ],
   "manifest": [
    209,
@@ -11038,12 +11087,6 @@
   "returned": [
    137,
    128
-  ],
-  "time": [
-   137,
-   100,
-   71,
-   56
   ],
   "initramfs": [
    136,
