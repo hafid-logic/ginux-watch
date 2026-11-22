@@ -1,13 +1,84 @@
 {
- "generated_at_utc": "2026-11-21T23:00:21Z",
+ "generated_at_utc": "2026-11-22T02:57:51Z",
  "source_repo": "gmkurtzer/ginux",
- "item_count": 296,
+ "item_count": 299,
  "items": {
+  "306": {
+   "kind": "pr",
+   "title": "Enforce empty network allow lists as default deny",
+   "state": "closed",
+   "merged_at": "2026-11-22T02:05:05Z",
+   "files": [
+    "crates/ginux-instance/src/lib.rs",
+    "hdae/gates-todo/46-enforce-network-default-deny.md"
+   ],
+   "keywords": [
+    "empty",
+    "lists",
+    "allow",
+    "behavior",
+    "deny",
+    "network",
+    "298",
+    "adds",
+    "check",
+    "corresponding"
+   ]
+  },
+  "305": {
+   "kind": "pr",
+   "title": "Preserve loopback netlink ACK errors",
+   "state": "closed",
+   "merged_at": "2026-11-22T02:01:50Z",
+   "files": [
+    "crates/ginux-core/src/lib.rs",
+    "crates/ginux-init/src/native_network.rs",
+    "hdae/gates-todo/45-preserve-netlink-ack-errors.md"
+   ],
+   "keywords": [
+    "netlink",
+    "302",
+    "ack",
+    "acknowledgement",
+    "adds",
+    "buffer",
+    "check",
+    "clippy",
+    "converted",
+    "core"
+   ]
+  },
+  "304": {
+   "kind": "pr",
+   "title": "Deny host-global sync operations",
+   "state": "closed",
+   "merged_at": "2026-11-22T02:10:31Z",
+   "files": [
+    "crates/ginux-contract/src/lib.rs",
+    "crates/ginux-core/src/lib.rs",
+    "crates/ginux-fs-policy/src/lib.rs",
+    "docs/abi-contract-coverage.md",
+    "docs/fs-operation-inventory.md",
+    "hdae/gates-todo/44-deny-host-global-sync.md"
+   ],
+   "keywords": [
+    "contract",
+    "filesystem",
+    "global",
+    "host",
+    "sync",
+    "syncfs",
+    "299",
+    "adds",
+    "authority",
+    "both"
+   ]
+  },
   "303": {
    "kind": "pr",
    "title": "Reject duplicate instance creation",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-22T01:49:11Z",
    "files": [
     "scripts/gate12-cli-guest.sh",
     "scripts/ginux-host-instance-helper.sh"
@@ -28,7 +99,7 @@
   "302": {
    "kind": "issue",
    "title": "loopback netlink ACK handling rewrites host-side errors to success in the guest buffer (static, low confidence)",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -47,7 +118,7 @@
   "301": {
    "kind": "issue",
    "title": "send-snapshot page can be re-protected by a CLONE_VM sibling — mprotect(PROT_WRITE) on the snapshot range is admitted (static, low confidence)",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -85,7 +156,7 @@
   "299": {
    "kind": "issue",
    "title": "syncfs(306) is catalogued as a descriptor operation while sync(162) is denied as host-global authority — the operation flushes the whole superblock",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -104,7 +175,7 @@
   "298": {
    "kind": "issue",
    "title": "contract.network: an empty inbound/outbound list admits everything — default-deny keys are parsed but never consulted by the network policy",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -142,8 +213,8 @@
   "296": {
    "kind": "pr",
    "title": "tests(process): pin signal-boundary, wait-group, and zombie behavior",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-22T01:40:28Z",
    "files": [
     "crates/ginux-process/src/lib.rs"
    ],
@@ -163,8 +234,8 @@
   "295": {
    "kind": "pr",
    "title": "port: run the Rocky host flow on a Linux host",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-22T01:40:24Z",
    "files": [
     "scripts/doctor.sh",
     "scripts/prepare-rocky-host.sh",
@@ -186,7 +257,7 @@
   "294": {
    "kind": "issue",
    "title": "Downstream \"configured launch\" for build domains: gate source material, or keep it downstream?",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -228,8 +299,8 @@
   "292": {
    "kind": "pr",
    "title": "security: complete defensive review and add guarded allocator",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-22T01:38:31Z",
    "files": [
     "Cargo.lock",
     "Cargo.toml",
@@ -7079,6 +7150,230 @@
   }
  },
  "keywords": {
+  "empty": [
+   306,
+   298,
+   128
+  ],
+  "lists": [
+   306
+  ],
+  "allow": [
+   306,
+   298
+  ],
+  "behavior": [
+   306,
+   237,
+   52,
+   49,
+   48,
+   47
+  ],
+  "deny": [
+   306,
+   298,
+   278,
+   268
+  ],
+  "network": [
+   306,
+   298,
+   289,
+   283,
+   259,
+   251,
+   229,
+   100,
+   75,
+   68
+  ],
+  "298": [
+   306
+  ],
+  "adds": [
+   306,
+   305,
+   304,
+   292,
+   258,
+   255,
+   52
+  ],
+  "check": [
+   306,
+   305,
+   287,
+   273,
+   262,
+   260,
+   253,
+   241,
+   228,
+   217,
+   216,
+   204,
+   195,
+   189,
+   187,
+   181,
+   171,
+   169,
+   168,
+   165,
+   162,
+   160,
+   159,
+   158,
+   156,
+   153,
+   152,
+   142,
+   117,
+   90,
+   88,
+   87,
+   84,
+   61,
+   54,
+   51,
+   50,
+   49,
+   48,
+   47,
+   46,
+   44,
+   40,
+   11,
+   10,
+   9,
+   4,
+   3
+  ],
+  "corresponding": [
+   306
+  ],
+  "netlink": [
+   305,
+   302,
+   291
+  ],
+  "302": [
+   305
+  ],
+  "ack": [
+   305,
+   302,
+   65,
+   64
+  ],
+  "acknowledgement": [
+   305
+  ],
+  "buffer": [
+   305,
+   219,
+   187,
+   158,
+   21
+  ],
+  "clippy": [
+   305
+  ],
+  "converted": [
+   305
+  ],
+  "core": [
+   305,
+   177,
+   162
+  ],
+  "contract": [
+   304,
+   299,
+   298,
+   291,
+   283,
+   278,
+   269,
+   258,
+   254,
+   251,
+   243,
+   237,
+   231,
+   230,
+   13
+  ],
+  "filesystem": [
+   304,
+   291
+  ],
+  "global": [
+   304,
+   299,
+   7
+  ],
+  "host": [
+   304,
+   302,
+   295,
+   291,
+   289,
+   285,
+   274,
+   270,
+   259,
+   251,
+   248,
+   247,
+   245,
+   242,
+   238,
+   237,
+   236,
+   229,
+   219,
+   215,
+   214,
+   203,
+   202,
+   201,
+   200,
+   199,
+   198,
+   195,
+   194,
+   183,
+   125,
+   92,
+   86
+  ],
+  "sync": [
+   304,
+   299
+  ],
+  "syncfs": [
+   304,
+   299
+  ],
+  "299": [
+   304
+  ],
+  "authority": [
+   304,
+   299,
+   216
+  ],
+  "both": [
+   304,
+   193,
+   175,
+   152,
+   143,
+   102,
+   76
+  ],
   "ginux": [
    303,
    301,
@@ -7213,45 +7508,6 @@
    96,
    22
   ],
-  "host": [
-   302,
-   295,
-   291,
-   289,
-   285,
-   274,
-   270,
-   259,
-   251,
-   248,
-   247,
-   245,
-   242,
-   238,
-   237,
-   236,
-   229,
-   219,
-   215,
-   214,
-   203,
-   202,
-   201,
-   200,
-   199,
-   198,
-   195,
-   194,
-   183,
-   125,
-   92,
-   86
-  ],
-  "ack": [
-   302,
-   65,
-   64
-  ],
   "success": [
    302
   ],
@@ -7273,10 +7529,6 @@
   ],
   "low": [
    302
-  ],
-  "netlink": [
-   302,
-   291
   ],
   "only": [
    302,
@@ -7465,9 +7717,6 @@
    144,
    88
   ],
-  "syncfs": [
-   299
-  ],
   "lib": [
    299,
    298,
@@ -7480,60 +7729,10 @@
    84,
    7
   ],
-  "sync": [
-   299
-  ],
-  "authority": [
-   299,
-   216
-  ],
-  "contract": [
-   299,
-   298,
-   291,
-   283,
-   278,
-   269,
-   258,
-   254,
-   251,
-   243,
-   237,
-   231,
-   230,
-   13
-  ],
-  "global": [
-   299,
-   7
-  ],
   "default": [
    298,
    213,
    177
-  ],
-  "network": [
-   298,
-   289,
-   283,
-   259,
-   251,
-   229,
-   100,
-   75,
-   68
-  ],
-  "deny": [
-   298,
-   278,
-   268
-  ],
-  "allow": [
-   298
-  ],
-  "empty": [
-   298,
-   128
   ],
   "list": [
    298,
@@ -7962,15 +8161,6 @@
    292,
    282
   ],
-  "adds": [
-   292,
-   258,
-   255,
-   52
-  ],
-  "filesystem": [
-   291
-  ],
   "syscall": [
    291,
    269,
@@ -8152,54 +8342,6 @@
    287,
    70,
    45
-  ],
-  "check": [
-   287,
-   273,
-   262,
-   260,
-   253,
-   241,
-   228,
-   217,
-   216,
-   204,
-   195,
-   189,
-   187,
-   181,
-   171,
-   169,
-   168,
-   165,
-   162,
-   160,
-   159,
-   158,
-   156,
-   153,
-   152,
-   142,
-   117,
-   90,
-   88,
-   87,
-   84,
-   61,
-   54,
-   51,
-   50,
-   49,
-   48,
-   47,
-   46,
-   44,
-   40,
-   11,
-   10,
-   9,
-   4,
-   3
   ],
   "set_tid_address": [
    286,
@@ -9488,13 +9630,6 @@
    125,
    79
   ],
-  "behavior": [
-   237,
-   52,
-   49,
-   48,
-   47
-  ],
   "directories": [
    236,
    134,
@@ -9799,12 +9934,6 @@
   ],
   "uptime": [
    219
-  ],
-  "buffer": [
-   219,
-   187,
-   158,
-   21
   ],
   "count": [
    219
@@ -10188,14 +10317,6 @@
    193,
    145
   ],
-  "both": [
-   193,
-   175,
-   152,
-   143,
-   102,
-   76
-  ],
   "header": [
    193,
    131,
@@ -10402,10 +10523,6 @@
   ],
   "arg2": [
    178
-  ],
-  "core": [
-   177,
-   162
   ],
   "never": [
    177,
