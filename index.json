@@ -1,5 +1,5 @@
 {
- "generated_at_utc": "2026-11-22T02:57:51Z",
+ "generated_at_utc": "2026-11-22T11:00:07Z",
  "source_repo": "gmkurtzer/ginux",
  "item_count": 299,
  "items": {
@@ -279,21 +279,23 @@
    "state": "open",
    "merged_at": null,
    "files": [
+    "Makefile",
     "crates/ginux-init/src/main.rs",
+    "scripts/test-native-close-range-signal.py",
     "scripts/test-native-supervision.py",
     "tests/fixtures/native-fixture.c"
    ],
    "keywords": [
     "240",
     "241",
+    "close_range",
+    "239",
+    "before",
+    "call",
+    "close",
     "descriptor",
     "descriptors",
-    "close",
-    "protected",
-    "range",
-    "239",
-    "242",
-    "before"
+    "242"
    ]
   },
   "292": {
@@ -8030,38 +8032,12 @@
    293,
    278
   ],
-  "descriptors": [
+  "close_range": [
    293,
-   288,
-   279,
-   236,
-   232,
-   207,
-   88
-  ],
-  "close": [
-   293,
-   279,
-   232,
-   217,
    195,
-   180,
-   151,
-   72,
-   68,
-   66
-  ],
-  "protected": [
-   293
-  ],
-  "range": [
-   293,
-   128
+   194
   ],
   "239": [
-   293
-  ],
-  "242": [
    293
   ],
   "before": [
@@ -8094,6 +8070,35 @@
    28,
    27,
    20
+  ],
+  "call": [
+   293,
+   276,
+   71
+  ],
+  "close": [
+   293,
+   279,
+   232,
+   217,
+   195,
+   180,
+   151,
+   72,
+   68,
+   66
+  ],
+  "descriptors": [
+   293,
+   288,
+   279,
+   236,
+   232,
+   207,
+   88
+  ],
+  "242": [
+   293
   ],
   "allocator": [
    292
@@ -8724,10 +8729,6 @@
   "clone3": [
    276,
    245
-  ],
-  "call": [
-   276,
-   71
   ],
   "runs": [
    276,
@@ -10284,10 +10285,6 @@
    196,
    37
   ],
-  "close_range": [
-   195,
-   194
-  ],
   "194": [
    195
   ],
@@ -11132,6 +11129,9 @@
    128,
    49,
    25
+  ],
+  "range": [
+   128
   ],
   "madvise": [
    128
