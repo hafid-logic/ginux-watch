@@ -1,0 +1,31 @@
+{
+  "report_id": "20261115-1108Z-s66-review",
+  "strengths": [
+    "Thorough cold receipt with measured verification table",
+    "Three successful Linux portability test runs documented",
+    "Mutation testing shows 3/3 mutants killed by custom tests",
+    "Clear anomaly documentation with root causes identified",
+    "Two C-8 packages ready for supervisor review",
+    "No upstream writes; read-only compliance maintained"
+  ],
+  "weaknesses": [
+    "Score 9/10 is inferred not measured",
+    "Token revocation readiness inferred not verified",
+    "Test-contract opportunity speculative without owner approval",
+    "Upload/gh-pat.txt gap persists across sessions",
+    "KVM absence limits local heavy testing validation",
+    "API steps misread kill matrix; raw logs needed"
+  ],
+  "claims_checked": [
+    {"claim": "Cold receipt completed ~14 min wall time", "evidence_tag": "MEASURED", "verdict": "supported"},
+    {"claim": "Upstream main=285d025b matches API+git", "evidence_tag": "MEASURED", "verdict": "supported"},
+    {"claim": "Zero undriven work on local reset", "evidence_tag": "MEASURED", "verdict": "supported"},
+    {"claim": "exp/scan-layer-fuzz missing on origin", "evidence_tag": "MEASURED", "verdict": "supported"},
+    {"claim": "Three ubuntu-24.04 test runs passed", "evidence_tag": "MEASURED", "verdict": "supported"},
+    {"claim": "Patch sha256 929a836d 3 files +46/-12", "evidence_tag": "MEASURED", "verdict": "supported"},
+    {"claim": "KVM unavailable; TCG used 117s boot", "evidence_tag": "MEASURED", "verdict": "supported"},
+    {"claim": "3 mutants killed by custom tests only", "evidence_tag": "MEASURED", "verdict": "supported"},
+    {"claim": "Kill matrix from raw logs not API", "evidence_tag": "MEASURED", "verdict": "supported"},
+    {"claim": "Score 9/10 estimated receipt health", "evidence_tag": "INFERRED", "verdict": "unverified"},
+    {"claim": "Token ready for revocation now", "evidence_tag": "INFERRED", "verdict": "unverified"},
+    {"claim": "Test-contract Linux host opportunity", "evidence_tag"
