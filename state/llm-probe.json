@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-22T06:56:42Z",
+ "updated": "2026-11-22T19:46:10Z",
  "schema": "llm-probe-v1",
  "note": "DATA ONLY — probe rows are runtime availability evidence; no secrets; fixed probe input sha256_16 below",
  "probe_input_sha256_16": "6ba85cba8c23d00c",
@@ -2408,6 +2408,75 @@
    "status": "unavailable",
    "secret": "DECIDER_API_KEY",
    "at": "2026-11-22T06:56:42Z"
+  },
+  {
+   "provider": "nvidia",
+   "model": "nvidia/nemotron-3-ultra-550b-a55b",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 1.07,
+   "http_status": 200,
+   "model_actual": "nvidia/nemotron-3-ultra-550b-a55b",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "usage"
+   ],
+   "at": "2026-11-22T19:45:51Z"
+  },
+  {
+   "provider": "google-ai-studio",
+   "model": "gemini-3.6-flash",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 17.1,
+   "http_status": 200,
+   "model_actual": "gemini-3.6-flash",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "usage"
+   ],
+   "at": "2026-11-22T19:46:08Z"
+  },
+  {
+   "provider": "openrouter",
+   "model": "openrouter/free",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 1.57,
+   "http_status": 200,
+   "model_actual": "baidu/ernie-5.5-flash-preview:free",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "provider",
+    "service_tier",
+    "system_fingerprint",
+    "usage"
+   ],
+   "at": "2026-11-22T19:46:10Z"
+  },
+  {
+   "provider": "strands-decider-space",
+   "model": null,
+   "ok": false,
+   "category": "unconfigured",
+   "status": "unavailable",
+   "secret": "DECIDER_API_KEY",
+   "at": "2026-11-22T19:46:10Z"
   }
  ]
 }
