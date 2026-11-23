@@ -1,8 +1,35 @@
 {
- "generated_at_utc": "2026-11-22T18:25:06Z",
+ "generated_at_utc": "2026-11-23T00:09:46Z",
  "source_repo": "gmkurtzer/ginux",
- "item_count": 300,
+ "item_count": 301,
  "items": {
+  "308": {
+   "kind": "pr",
+   "title": "Preserve shared-network policy across socket aliases",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    "crates/ginux-init/src/main.rs",
+    "crates/ginux-init/src/native_network.rs",
+    "hdae/PLAN.md",
+    "hdae/STATUS.md",
+    "hdae/gates-todo/47-shared-network-socket-alias-authority.md",
+    "scripts/test-native-supervision.py",
+    "tests/fixtures/native-fixture.c"
+   ],
+   "keywords": [
+    "close",
+    "socket",
+    "descriptor",
+    "snapshot",
+    "network",
+    "preserve",
+    "across",
+    "aliases",
+    "behavior",
+    "clone"
+   ]
+  },
   "307": {
    "kind": "pr",
    "title": "Verify cached OCI blobs once during instance creation",
@@ -7173,6 +7200,97 @@
   }
  },
  "keywords": {
+  "close": [
+   308,
+   293,
+   279,
+   232,
+   217,
+   195,
+   180,
+   151,
+   72,
+   68,
+   66
+  ],
+  "socket": [
+   308,
+   151,
+   146,
+   101,
+   70,
+   69,
+   68,
+   67,
+   65,
+   64,
+   62,
+   47
+  ],
+  "descriptor": [
+   308,
+   299,
+   297,
+   293,
+   288,
+   279,
+   278,
+   232,
+   206,
+   205,
+   194,
+   154,
+   149,
+   147,
+   144,
+   88
+  ],
+  "snapshot": [
+   308,
+   301
+  ],
+  "network": [
+   308,
+   306,
+   298,
+   289,
+   283,
+   259,
+   251,
+   229,
+   100,
+   75,
+   68
+  ],
+  "preserve": [
+   308
+  ],
+  "across": [
+   308
+  ],
+  "aliases": [
+   308
+  ],
+  "behavior": [
+   308,
+   306,
+   237,
+   52,
+   49,
+   48,
+   47
+  ],
+  "clone": [
+   308,
+   287,
+   284,
+   224,
+   223,
+   130,
+   106,
+   99,
+   98
+  ],
   "image": [
    307,
    277,
@@ -7260,31 +7378,11 @@
    306,
    298
   ],
-  "behavior": [
-   306,
-   237,
-   52,
-   49,
-   48,
-   47
-  ],
   "deny": [
    306,
    298,
    278,
    268
-  ],
-  "network": [
-   306,
-   298,
-   289,
-   283,
-   259,
-   251,
-   229,
-   100,
-   75,
-   68
   ],
   "298": [
    306
@@ -7648,9 +7746,6 @@
    66,
    9
   ],
-  "snapshot": [
-   301
-  ],
   "prot_write": [
    301,
    88,
@@ -7797,23 +7892,6 @@
   ],
   "reads": [
    300
-  ],
-  "descriptor": [
-   299,
-   297,
-   293,
-   288,
-   279,
-   278,
-   232,
-   206,
-   205,
-   194,
-   154,
-   149,
-   147,
-   144,
-   88
   ],
   "lib": [
    299,
@@ -8172,18 +8250,6 @@
    276,
    71
   ],
-  "close": [
-   293,
-   279,
-   232,
-   217,
-   195,
-   180,
-   151,
-   72,
-   68,
-   66
-  ],
   "descriptors": [
    293,
    288,
@@ -8420,16 +8486,6 @@
   ],
   "sudo": [
    288
-  ],
-  "clone": [
-   287,
-   284,
-   224,
-   223,
-   130,
-   106,
-   99,
-   98
   ],
   "policy": [
    287,
@@ -10847,19 +10903,6 @@
   ],
   "handled": [
    151
-  ],
-  "socket": [
-   151,
-   146,
-   101,
-   70,
-   69,
-   68,
-   67,
-   65,
-   64,
-   62,
-   47
   ],
   "ownership": [
    151,
