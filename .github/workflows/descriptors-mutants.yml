@@ -1,0 +1,93 @@
+name: descriptors-mutants
+on:
+  push:
+    branches: [repro/descriptors-mutants]
+permissions:
+  contents: read
+jobs:
+  mutants:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v5
+        with: {repository: gmkurtzer/ginux, ref: 7fb6e093719780289e38fdae7b0d2e9e1c12efe4, path: upstream}
+      - name: Toolchain identity
+        run: rustc --version && uname -m
+      - name: Write property tests
+        run: |
+          mkdir -p upstream/tests
+          cat > upstream/tests/descriptor_props.rs <<'EOF'
+          use ginux_devices::{DeviceError, DeviceKind, DeviceName, DeviceRegistry};
+          #[test]
+          fn raw_index_is_invalid_descriptor() {
+              let mut r: DeviceRegistry<4,4> = DeviceRegistry::new();
+              r.assign(1,10,DeviceName::new(b"null").unwrap(),DeviceKind::Null).unwrap();
+              let _fd = r.open(1,b"null").unwrap();
+              assert_eq!(r.write(1,0,b"x"), Err(DeviceError::InvalidDescriptor));
+              let mut b=[0u8;4];
+              assert_eq!(r.read(1,0,&mut b), Err(DeviceError::InvalidDescriptor));
+          }
+          #[test]
+          fn close_invalidates_and_frees_slot() {
+              let mut r: DeviceRegistry<4,4> = DeviceRegistry::new();
+              r.assign(1,10,DeviceName::new(b"null").unwrap(),DeviceKind::Null).unwrap();
+              let fd=r.open(1,b"null").unwrap();
+              assert_eq!(r.close(1,fd), Ok(()));
+              assert_eq!(r.write(1,fd,b"x"), Err(DeviceError::InvalidDescriptor));
+              let fd2=r.open(1,b"null").unwrap();
+              assert_eq!(fd2, fd);
+          }
+          EOF
+      - name: Baseline existing unit tests
+        working-directory: upstream
+        run: RUSTFLAGS='' CARGO_TARGET_DIR=.artifacts/unit cargo test -p ginux-devices --lib 2>&1 | tee ../baseline.log
+      - name: Our tests on clean code
+        working-directory: upstream
+        run: RUSTFLAGS='' CARGO_TARGET_DIR=.artifacts/unit cargo test -p ginux-devices --test descriptor_props 2>&1 | tee ../our-clean.log
+      - name: Mutant m2 - fd flag check disabled
+        working-directory: upstream
+        run: |
+          python3 -c 'from pathlib import Path;p=Path("crates/ginux-devices/src/lib.rs");t=p.read_text();a="if fd & 0x4000_0000 == 0 {";assert a in t;p.write_text(t.replace(a,"if false {",1))'
+          set +e
+          RUSTFLAGS='' CARGO_TARGET_DIR=.artifacts/m2 cargo test -p ginux-devices --lib 2>&1 | tee ../m2-existing.log; echo "existing_exit=${PIPESTATUS[0]}" | tee -a ../m2-existing.log
+          RUSTFLAGS='' CARGO_TARGET_DIR=.artifacts/m2 cargo test -p ginux-devices --test descriptor_props 2>&1 | tee ../m2-ours.log; echo "ours_exit=${PIPESTATUS[0]}" | tee -a ../m2-ours.log
+          git checkout -- crates/ginux-devices/src/lib.rs
+      - name: Mutant m5 - close no-op
+        working-directory: upstream
+        run: |
+          python3 -c 'from pathlib import Path;p=Path("crates/ginux-devices/src/lib.rs");t=p.read_text();a="self.descriptors[index] = Descriptor::empty();";assert a in t;p.write_text(t.replace(a,"let _ = index;",1))'
+          set +e
+          RUSTFLAGS='' CARGO_TARGET_DIR=.artifacts/m5 cargo test -p ginux-devices --lib 2>&1 | tee ../m5-existing.log; echo "existing_exit=${PIPESTATUS[0]}" | tee -a ../m5-existing.log
+          RUSTFLAGS='' CARGO_TARGET_DIR=.artifacts/m5 cargo test -p ginux-devices --test descriptor_props 2>&1 | tee ../m5-ours.log; echo "ours_exit=${PIPESTATUS[0]}" | tee -a ../m5-ours.log
+          git checkout -- crates/ginux-devices/src/lib.rs
+      - name: Mutant m11 - close unmasked index
+        working-directory: upstream
+        run: |
+          python3 -c 'from pathlib import Path;p=Path("crates/ginux-devices/src/lib.rs");t=p.read_text();a="self.descriptor(instance, fd)?;\n        let index = (fd & 0x3fff_ffff) as usize;";assert a in t;p.write_text(t.replace(a,"self.descriptor(instance, fd)?;\n        let index = fd as usize;",1))'
+          set +e
+          RUSTFLAGS='' CARGO_TARGET_DIR=.artifacts/m11 cargo test -p ginux-devices --lib 2>&1 | tee ../m11-existing.log; echo "existing_exit=${PIPESTATUS[0]}" | tee -a ../m11-existing.log
+          RUSTFLAGS='' CARGO_TARGET_DIR=.artifacts/m11 cargo test -p ginux-devices --test descriptor_props 2>&1 | tee ../m11-ours.log; echo "ours_exit=${PIPESTATUS[0]}" | tee -a ../m11-ours.log
+          git checkout -- crates/ginux-devices/src/lib.rs
+      - name: Verdict summary
+        if: always()
+        run: |
+          {
+            echo "## descriptors mutation experiment (ubuntu-24.04)"
+            for m in m2 m5 m11; do
+              echo "- $m existing: $(grep -h existing_exit ../$m-existing.log | tail -1) | ours: $(grep -h ours_exit ../$m-ours.log | tail -1)"
+            done
+          } >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: descriptors-mutants-evidence
+          path: |
+            baseline.log
+            our-clean.log
+            m2-existing.log
+            m2-ours.log
+            m5-existing.log
+            m5-ours.log
+            m11-existing.log
+            m11-ours.log
+            upstream/tests/descriptor_props.rs
