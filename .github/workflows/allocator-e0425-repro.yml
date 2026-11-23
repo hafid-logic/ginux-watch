@@ -1,0 +1,62 @@
+name: allocator-e0425-repro
+on:
+  push:
+    branches: [repro/allocator-e0425]
+permissions:
+  contents: read
+jobs:
+  repro:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          repository: gmkurtzer/ginux
+          ref: 7fb6e093719780289e38fdae7b0d2e9e1c12efe4
+          path: upstream
+      - name: Toolchain identity
+        run: rustc --version && cargo --version && uname -m
+      - name: FAIL capture - literal owner CI command
+        working-directory: upstream
+        run: |
+          set +e
+          RUSTFLAGS='' CARGO_TARGET_DIR=.artifacts/unit cargo test -p ginux-allocator 2>&1 | tee ../fail-rustflags-empty.log
+          rc=${PIPESTATUS[0]}
+          echo "exit=$rc" | tee -a ../fail-rustflags-empty.log
+          echo "rc=$rc" >> "$GITHUB_ENV"
+          grep -n "E0425" ../fail-rustflags-empty.log || true
+          if [ "$rc" = "0" ]; then echo "UNEXPECTED SUCCESS with CI command" | tee -a ../fail-rustflags-empty.log; fi
+      - name: Variant - default RUSTFLAGS (no neutralization)
+        working-directory: upstream
+        run: |
+          set +e
+          CARGO_TARGET_DIR=.artifacts/unit-default cargo test -p ginux-allocator 2>&1 | tee ../fail-rustflags-default.log
+          echo "exit=${PIPESTATUS[0]}" | tee -a ../fail-rustflags-default.log
+      - name: Apply minimal fix (cfg gate on c_char import)
+        working-directory: upstream
+        run: |
+          python3 -c 'from pathlib import Path; p=Path("crates/ginux-allocator/src/lib.rs"); t=p.read_text(); old="#[cfg(not(test))]\nuse core::ffi::c_char;"; new="#[cfg(any(not(test), target_os = \"linux\"))]\nuse core::ffi::c_char;"; assert old in t, "anchor missing"; p.write_text(t.replace(old,new,1)); print("fix applied")'
+          git diff > ../fix.patch
+          cat ../fix.patch
+      - name: SUCCESS capture - same literal CI command after fix
+        working-directory: upstream
+        run: |
+          RUSTFLAGS='' CARGO_TARGET_DIR=.artifacts/unit cargo test -p ginux-allocator 2>&1 | tee ../success-rustflags-empty.log
+      - name: Verdict summary
+        if: always()
+        run: |
+          {
+            echo "## E0425 c_char repro (ubuntu-24.04 clean runner)"
+            echo "- pinned upstream: 7fb6e093719780289e38fdae7b0d2e9e1c12efe4"
+            echo "- CI-command exit: ${rc:-?}"
+            grep -m2 "E0425" fail-rustflags-empty.log || echo "- no E0425 lines (see logs)"
+          } >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e0425-evidence
+          path: |
+            fail-rustflags-empty.log
+            fail-rustflags-default.log
+            success-rustflags-empty.log
+            fix.patch
