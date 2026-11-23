@@ -1,0 +1,12 @@
+diff --git a/crates/ginux-allocator/src/lib.rs b/crates/ginux-allocator/src/lib.rs
+index cb45ba0..52f18aa 100644
+--- a/crates/ginux-allocator/src/lib.rs
++++ b/crates/ginux-allocator/src/lib.rs
+@@ -1,6 +1,6 @@
+ use core::cell::UnsafeCell;
+ use core::cmp;
+-#[cfg(not(test))]
++#[cfg(any(not(test), target_os = "linux"))]
+ use core::ffi::c_char;
+ use core::ffi::{c_int, c_void};
+ use core::ptr;
