@@ -47,27 +47,27 @@ jobs:
       - name: Mutant m2 - fd flag check disabled
         working-directory: upstream
         run: |
-          python3 -c 'from pathlib import Path;p=Path("src/lib.rs");t=p.read_text();a="if fd & 0x4000_0000 == 0 {";assert a in t;p.write_text(t.replace(a,"if false {",1))'
+          python3 -c 'from pathlib import Path;p=Path("crates/ginux-devices/src/lib.rs");t=p.read_text();a="if fd & 0x4000_0000 == 0 {";assert a in t;p.write_text(t.replace(a,"if false {",1))'
           set +e
           RUSTFLAGS='' CARGO_TARGET_DIR=.artifacts/m2 cargo test -p ginux-devices --lib 2>&1 | tee ../m2-existing.log; echo "existing_exit=${PIPESTATUS[0]}" | tee -a ../m2-existing.log
           RUSTFLAGS='' CARGO_TARGET_DIR=.artifacts/m2 cargo test -p ginux-devices --test descriptor_props 2>&1 | tee ../m2-ours.log; echo "ours_exit=${PIPESTATUS[0]}" | tee -a ../m2-ours.log
-          git checkout -- src/lib.rs
+          git checkout -- crates/ginux-devices/src/lib.rs
       - name: Mutant m5 - close no-op
         working-directory: upstream
         run: |
-          python3 -c 'from pathlib import Path;p=Path("src/lib.rs");t=p.read_text();a="self.descriptors[index] = Descriptor::empty();";assert a in t;p.write_text(t.replace(a,"let _ = index;",1))'
+          python3 -c 'from pathlib import Path;p=Path("crates/ginux-devices/src/lib.rs");t=p.read_text();a="self.descriptors[index] = Descriptor::empty();";assert a in t;p.write_text(t.replace(a,"let _ = index;",1))'
           set +e
           RUSTFLAGS='' CARGO_TARGET_DIR=.artifacts/m5 cargo test -p ginux-devices --lib 2>&1 | tee ../m5-existing.log; echo "existing_exit=${PIPESTATUS[0]}" | tee -a ../m5-existing.log
           RUSTFLAGS='' CARGO_TARGET_DIR=.artifacts/m5 cargo test -p ginux-devices --test descriptor_props 2>&1 | tee ../m5-ours.log; echo "ours_exit=${PIPESTATUS[0]}" | tee -a ../m5-ours.log
-          git checkout -- src/lib.rs
+          git checkout -- crates/ginux-devices/src/lib.rs
       - name: Mutant m11 - close unmasked index
         working-directory: upstream
         run: |
-          python3 -c 'from pathlib import Path;p=Path("src/lib.rs");t=p.read_text();a="self.descriptor(fd, instance)?;\n        let index = (fd & 0x3fff_ffff) as usize;";assert a in t;p.write_text(t.replace(a,"self.descriptor(fd, instance)?;\n        let index = fd as usize;",1))'
+          python3 -c 'from pathlib import Path;p=Path("crates/ginux-devices/src/lib.rs");t=p.read_text();a="self.descriptor(fd, instance)?;\n        let index = (fd & 0x3fff_ffff) as usize;";assert a in t;p.write_text(t.replace(a,"self.descriptor(fd, instance)?;\n        let index = fd as usize;",1))'
           set +e
           RUSTFLAGS='' CARGO_TARGET_DIR=.artifacts/m11 cargo test -p ginux-devices --lib 2>&1 | tee ../m11-existing.log; echo "existing_exit=${PIPESTATUS[0]}" | tee -a ../m11-existing.log
           RUSTFLAGS='' CARGO_TARGET_DIR=.artifacts/m11 cargo test -p ginux-devices --test descriptor_props 2>&1 | tee ../m11-ours.log; echo "ours_exit=${PIPESTATUS[0]}" | tee -a ../m11-ours.log
-          git checkout -- src/lib.rs
+          git checkout -- crates/ginux-devices/src/lib.rs
       - name: Verdict summary
         if: always()
         run: |
