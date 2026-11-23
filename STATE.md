@@ -1,22 +1,22 @@
 # STATE (updated by the agent at the end of every run)
 
-> v8.3-هـ (2026-11-18): دُوّر السجل التاريخي كاملًا وبلا تعديل بايتي إلى
-> `state/history/STATE-archive-2026-11-18.md` (append-only). هذا الرأس = الحالة الراهنة فقط (≤2KB).
-> القواعد الدائمة في AGENTS.md / POLICY.md / METHODOLOGY.md؛ التفاصيل التاريخية في الأرشيف.
+> v8.9 (2026-11-23): مصنع الطفرات v8.3 (ginux-oci) أعيد بناؤه وتحقق حي كامل على أحدث upstream main.
+> القواعد الدائمة في AGENTS.md / POLICY.md / METHODOLOGY.md؛ التاريخ في الأرشيف append-only.
 
 ## الحالة الراهنة
-- **PRsنا المفتوحة في upstream (2/2):** #295 (c8-linux-host-port) head d8ac94ba، clean، 0 تعليقات؛
-  #296 (c8-property-tests-process-table) head f2f3ceb7، open، 0 تعليقات (2026-11-16T12:53Z).
-  لا ملاحقة (بند 14)؛ تُرصد آليًا عبر watch_our_prs.
-- **النبض:** last_success 2026-11-18T14:40:35Z، last_conclusion **success** (watcher #64 نجح بعد
-  إصلاح الخطوة 7 في v8.3.1). التشخيص: reports/2026-11-18-heartbeat-triage.md.
-- **v8.3/.1:** التحسينات الخمسة + إنفاذ pr-state-xref (#33) وإصلاح الخطوة 7 (#34).
-- **v8.4–v8.6:** أتمتة HDAE (تفويض دائم، auto-merge حارس، ACK، سجل أفعال، نضارة PR، أحداث)
-  + مستويات مصادقة (0 تدفق جهاز) + عقد أمني ملزم ببوابة CI؛ 4 دمجات ذاتية؛ التقرير:
-  reports/2026-11-19-session-report.md.
-- **v8.8 (2026-11-19):** #49 مدموج `ddf3f45`؛ #50 (workflows فقط) أخضر على `5a946fa` — دمج المالك اليدوي.
-
-- **مقياس upstream:** مدموجة 1 (#227) · مفتوحة 2 (#295/#296) · حزم جاهزة 2 · ginux-oci قيد البناء.
+- **upstream [MEASURED]:** دمجاتنا 3 (#227، #295 دمج 2026-11-22T01:40:24Z، #296 دمج
+  2026-11-22T01:40:28Z) · مفتوحة **0/2 — slot النشر متحرر بالكامل** · main عند 01a5fd9f
+  (+72 commit؛ #307 أعاد هيكلة ginux-oci والمراسي سليمة: 537/36/566/635).
+- **مصنع ginux-oci (أُعيد بناؤه):** مصفوفة كاملة على 01a5fd9f: baseline 5/5، اختباراتنا
+  8/8 على كود سليم، m1/m2/m3 تنجو من طقمهم (5/5) وتُقتل باختباراتنا (فشل 1 لكل). الحزمة:
+  patches/oci-property-tests.patch (+23 سطرًا، apply نظيف). الأدلة: reports/2026-11-23-factory-rebuild.md.
+- **البيئة:** أُصلح كاش cargo بعد إعادة تدوير الصندوق (registry/src فارغ → إزالة + fetch؛
+  rust 1.100.0 شغّال؛ core.fileMode=false لإزالة ضوضاء bits التنفيذ).
+- **النبض:** last_success 2026-11-23T07:51:08Z، last_conclusion success (team-watcher حي؛
+  our_open_prs فارغ في المصفوفة — متسق مع الدمج).
+- **الخطوة التالية (بشرية حصرًا — عقد v8.6):** نشر حزمة ginux-oci كـPR من فرع في
+  hafid-logic/ginux فوق 01a5fd9f عبر مستوى مصادقة معتمد؛ عنوان مقترح: tests(oci): pin
+  digest, reference, and human-size boundaries. بعدها يعود السقف 1/2.
 
 ## فهرس
 - الأرشيف: state/history/STATE-archive-2026-11-18.md — التسليم: HANDOFF.md
