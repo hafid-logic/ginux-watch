@@ -11,67 +11,30 @@ jobs:
     steps:
       - uses: actions/checkout@v5
         with: {repository: gmkurtzer/ginux, ref: 7fb6e093719780289e38fdae7b0d2e9e1c12efe4, path: upstream}
-      - name: Write tests payload
+      - name: Decode payloads
         run: |
-          cat > /tmp/tests.rs <<'EOF'
-    #[test]
-    fn raw_index_is_invalid_descriptor() {
-        let mut registry: DeviceRegistry<4, 4> = DeviceRegistry::new();
-        registry
-            .assign(1, 10, DeviceName::new(b"null").unwrap(), DeviceKind::Null)
-            .unwrap();
-        let _fd = registry.open(1, b"null").unwrap();
-        assert_eq!(registry.write(1, 0, b"x"), Err(DeviceError::InvalidDescriptor));
-        let mut bytes = [0u8; 4];
-        assert_eq!(registry.read(1, 0, &mut bytes), Err(DeviceError::InvalidDescriptor));
-    }
-
-    #[test]
-    fn close_invalidates_and_frees_slot() {
-        let mut registry: DeviceRegistry<4, 4> = DeviceRegistry::new();
-        registry
-            .assign(1, 10, DeviceName::new(b"null").unwrap(), DeviceKind::Null)
-            .unwrap();
-        let fd = registry.open(1, b"null").unwrap();
-        assert_eq!(registry.close(1, fd), Ok(()));
-        assert_eq!(registry.write(1, fd, b"x"), Err(DeviceError::InvalidDescriptor));
-        assert_eq!(registry.open(1, b"null").unwrap(), fd);
-    }
-EOF
-      - name: Insert tests into mod tests + fmt + clippy
+          echo ICAgICNbdGVzdF0KICAgIGZuIHJhd19pbmRleF9pc19pbnZhbGlkX2Rlc2NyaXB0b3IoKSB7CiAgICAgICAgbGV0IG11dCByZWdpc3RyeTogRGV2aWNlUmVnaXN0cnk8NCwgND4gPSBEZXZpY2VSZWdpc3RyeTo6bmV3KCk7CiAgICAgICAgcmVnaXN0cnkKICAgICAgICAgICAgLmFzc2lnbigxLCAxMCwgRGV2aWNlTmFtZTo6bmV3KGIibnVsbCIpLnVud3JhcCgpLCBEZXZpY2VLaW5kOjpOdWxsKQogICAgICAgICAgICAudW53cmFwKCk7CiAgICAgICAgbGV0IF9mZCA9IHJlZ2lzdHJ5Lm9wZW4oMSwgYiJudWxsIikudW53cmFwKCk7CiAgICAgICAgYXNzZXJ0X2VxIShyZWdpc3RyeS53cml0ZSgxLCAwLCBiIngiKSwgRXJyKERldmljZUVycm9yOjpJbnZhbGlkRGVzY3JpcHRvcikpOwogICAgICAgIGxldCBtdXQgYnl0ZXMgPSBbMHU4OyA0XTsKICAgICAgICBhc3NlcnRfZXEhKHJlZ2lzdHJ5LnJlYWQoMSwgMCwgJm11dCBieXRlcyksIEVycihEZXZpY2VFcnJvcjo6SW52YWxpZERlc2NyaXB0b3IpKTsKICAgIH0KCiAgICAjW3Rlc3RdCiAgICBmbiBjbG9zZV9pbnZhbGlkYXRlc19hbmRfZnJlZXNfc2xvdCgpIHsKICAgICAgICBsZXQgbXV0IHJlZ2lzdHJ5OiBEZXZpY2VSZWdpc3RyeTw0LCA0PiA9IERldmljZVJlZ2lzdHJ5OjpuZXcoKTsKICAgICAgICByZWdpc3RyeQogICAgICAgICAgICAuYXNzaWduKDEsIDEwLCBEZXZpY2VOYW1lOjpuZXcoYiJudWxsIikudW53cmFwKCksIERldmljZUtpbmQ6Ok51bGwpCiAgICAgICAgICAgIC51bndyYXAoKTsKICAgICAgICBsZXQgZmQgPSByZWdpc3RyeS5vcGVuKDEsIGIibnVsbCIpLnVud3JhcCgpOwogICAgICAgIGFzc2VydF9lcSEocmVnaXN0cnkuY2xvc2UoMSwgZmQpLCBPaygoKSkpOwogICAgICAgIGFzc2VydF9lcSEocmVnaXN0cnkud3JpdGUoMSwgZmQsIGIieCIpLCBFcnIoRGV2aWNlRXJyb3I6OkludmFsaWREZXNjcmlwdG9yKSk7CiAgICAgICAgYXNzZXJ0X2VxIShyZWdpc3RyeS5vcGVuKDEsIGIibnVsbCIpLnVud3JhcCgpLCBmZCk7CiAgICB9Cg== | base64 -d > /tmp/tests.rs
+          echo ZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCnA9UGF0aCgiY3JhdGVzL2dpbnV4LWRldmljZXMvc3JjL2xpYi5ycyIpOyB0PXAucmVhZF90ZXh0KCkKdGVzdHM9UGF0aCgiL3RtcC90ZXN0cy5ycyIpLnJlYWRfdGV4dCgpCmk9dC5yZmluZCgifSIpCnAud3JpdGVfdGV4dCh0WzppXSt0ZXN0cyt0W2k6XSkK | base64 -d > /tmp/insert.py
+          echo aW1wb3J0IHN5cwpmcm9tIHBhdGhsaWIgaW1wb3J0IFBhdGgKbT1zeXMuYXJndlsxXTsgcD1QYXRoKCJjcmF0ZXMvZ2ludXgtZGV2aWNlcy9zcmMvbGliLnJzIik7IHQ9cC5yZWFkX3RleHQoKQppZiBtPT0ibTIiOiBhPSJpZiBmZCAmIDB4NDAwMF8wMDAwID09IDAgeyI7IGI9ImlmIGZhbHNlIHsiCmVsaWYgbT09Im01IjogYT0ic2VsZi5kZXNjcmlwdG9yc1tpbmRleF0gPSBEZXNjcmlwdG9yOjplbXB0eSgpOyI7IGI9ImxldCBfID0gaW5kZXg7IgplbHNlOiBhPSJzZWxmLmRlc2NyaXB0b3IoaW5zdGFuY2UsIGZkKT87XG4gICAgICAgIGxldCBpbmRleCA9IChmZCAmIDB4M2ZmZl9mZmZmKSBhcyB1c2l6ZTsiOyBiPSJzZWxmLmRlc2NyaXB0b3IoaW5zdGFuY2UsIGZkKT87XG4gICAgICAgIGxldCBpbmRleCA9IGZkIGFzIHVzaXplOyIKYXNzZXJ0IGEgaW4gdCwgbQpwLndyaXRlX3RleHQodC5yZXBsYWNlKGEsYiwxKSkK | base64 -d > /tmp/mut.py
+      - name: Insert into mod tests + fmt + clippy
         working-directory: upstream
         run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          p=Path("crates/ginux-devices/src/lib.rs"); t=p.read_text()
-          tests=open("/tmp/tests.rs").read()
-          i=t.rfind("}")
-          p.write_text(t[:i]+tests+t[i:])
-          PY
+          python3 /tmp/insert.py
           cargo fmt -p ginux-devices
           cargo fmt -p ginux-devices -- --check
           RUSTFLAGS='' cargo clippy -p ginux-devices --all-targets -- -D warnings 2>&1 | tee ../clippy.log
           git diff > ../descriptors-modtests.patch
-      - name: Baseline full suite (clean) PASS
+      - name: Baseline full suite clean PASS
         working-directory: upstream
         run: RUSTFLAGS='' CARGO_TARGET_DIR=.artifacts/unit cargo test -p ginux-devices --lib 2>&1 | tee ../baseline.log
-      - name: Mutants survive-existing / killed-with-ours
+      - name: Mutants survive-existing killed-with-ours
         working-directory: upstream
         run: |
           set +e
           SKIP="--skip raw_index_is_invalid_descriptor --skip close_invalidates_and_frees_slot"
           for m in m2 m5 m11; do
             git checkout -- crates/ginux-devices/src/lib.rs
-            python3 - "$m" <<'PY'
-          import sys
-          from pathlib import Path
-          m=sys.argv[1]; p=Path("crates/ginux-devices/src/lib.rs"); t=p.read_text()
-          if m=="m2": a="if fd & 0x4000_0000 == 0 {"; b="if false {"
-          elif m=="m5": a="self.descriptors[index] = Descriptor::empty();"; b="let _ = index;"
-          else: a="self.descriptor(instance, fd)?;\n        let index = (fd & 0x3fff_ffff) as usize;"; b="self.descriptor(instance, fd)?;\n        let index = fd as usize;"
-          assert a in t, m
-          p.write_text(t.replace(a,b,1))
-          PY
+            python3 /tmp/mut.py $m
             RUSTFLAGS='' CARGO_TARGET_DIR=.artifacts/$m cargo test -p ginux-devices --lib -- $SKIP 2>&1 | tee ../$m-existing.log; echo "existing_exit=${PIPESTATUS[0]}" | tee -a ../$m-existing.log
             RUSTFLAGS='' CARGO_TARGET_DIR=.artifacts/$m cargo test -p ginux-devices --lib 2>&1 | tee ../$m-ours.log; echo "ours_exit=${PIPESTATUS[0]}" | tee -a ../$m-ours.log
           done
