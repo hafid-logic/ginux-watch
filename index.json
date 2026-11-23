@@ -1,8 +1,50 @@
 {
- "generated_at_utc": "2026-11-23T08:51:56Z",
+ "generated_at_utc": "2026-11-23T21:09:05Z",
  "source_repo": "gmkurtzer/ginux",
- "item_count": 301,
+ "item_count": 303,
  "items": {
+  "310": {
+   "kind": "pr",
+   "title": "tests(oci): pin digest length, registry charset and docker.io nesting",
+   "state": "closed",
+   "merged_at": "2026-11-23T16:59:57Z",
+   "files": [
+    "crates/ginux-oci/src/lib.rs"
+   ],
+   "keywords": [
+    "registry",
+    "digest",
+    "docker",
+    "alpine",
+    "charset",
+    "existing",
+    "length",
+    "library",
+    "nesting",
+    "oci"
+   ]
+  },
+  "309": {
+   "kind": "pr",
+   "title": "Read all gzip members when importing OCI layers",
+   "state": "closed",
+   "merged_at": "2026-11-23T16:52:21Z",
+   "files": [
+    "crates/ginux-oci/src/lib.rs"
+   ],
+   "keywords": [
+    "gzip",
+    "member",
+    "also",
+    "both",
+    "boundary",
+    "could",
+    "importer",
+    "oci",
+    "release",
+    "whiteout"
+   ]
+  },
   "308": {
    "kind": "pr",
    "title": "Preserve shared-network policy across socket aliases",
@@ -7201,6 +7243,121 @@
   }
  },
  "keywords": {
+  "registry": [
+   310,
+   73,
+   56,
+   40,
+   15
+  ],
+  "digest": [
+   310,
+   131,
+   107,
+   16
+  ],
+  "docker": [
+   310
+  ],
+  "alpine": [
+   310,
+   261,
+   136,
+   94,
+   59,
+   57
+  ],
+  "charset": [
+   310
+  ],
+  "existing": [
+   310,
+   296,
+   177,
+   154,
+   153,
+   142,
+   49,
+   47,
+   38
+  ],
+  "length": [
+   310,
+   241,
+   128,
+   36,
+   30,
+   21
+  ],
+  "library": [
+   310
+  ],
+  "nesting": [
+   310
+  ],
+  "oci": [
+   310,
+   309,
+   282,
+   261,
+   136,
+   112,
+   95,
+   94,
+   57,
+   52,
+   45,
+   42,
+   18,
+   17
+  ],
+  "gzip": [
+   309,
+   20
+  ],
+  "member": [
+   309
+  ],
+  "also": [
+   309
+  ],
+  "both": [
+   309,
+   304,
+   193,
+   175,
+   152,
+   143,
+   102,
+   76
+  ],
+  "boundary": [
+   309,
+   296,
+   236,
+   231,
+   36
+  ],
+  "could": [
+   309,
+   230,
+   87
+  ],
+  "importer": [
+   309
+  ],
+  "release": [
+   309,
+   227,
+   222,
+   54,
+   43,
+   37,
+   26
+  ],
+  "whiteout": [
+   309
+  ],
   "descriptor": [
    308,
    299,
@@ -7603,15 +7760,6 @@
    304,
    299,
    216
-  ],
-  "both": [
-   304,
-   193,
-   175,
-   152,
-   143,
-   102,
-   76
   ],
   "ginux": [
    303,
@@ -8041,24 +8189,8 @@
    121,
    48
   ],
-  "boundary": [
-   296,
-   236,
-   231,
-   36
-  ],
   "exactly": [
    296
-  ],
-  "existing": [
-   296,
-   177,
-   154,
-   153,
-   142,
-   49,
-   47,
-   38
   ],
   "signal": [
    296,
@@ -8627,20 +8759,6 @@
   ],
   "instances": [
    282
-  ],
-  "oci": [
-   282,
-   261,
-   136,
-   112,
-   95,
-   94,
-   57,
-   52,
-   45,
-   42,
-   18,
-   17
   ],
   "thread": [
    281,
@@ -9221,13 +9339,6 @@
    261,
    229
   ],
-  "alpine": [
-   261,
-   136,
-   94,
-   59,
-   57
-  ],
   "examples": [
    261
   ],
@@ -9627,13 +9738,6 @@
   "43090003505": [
    242
   ],
-  "length": [
-   241,
-   128,
-   36,
-   30,
-   21
-  ],
   "local": [
    241,
    151,
@@ -9820,10 +9924,6 @@
   "strict": [
    231
   ],
-  "could": [
-   230,
-   87
-  ],
   "lean": [
    230
   ],
@@ -9911,14 +10011,6 @@
   "harness": [
    228,
    65
-  ],
-  "release": [
-   227,
-   222,
-   54,
-   43,
-   37,
-   26
   ],
   "overflow": [
    227,
@@ -11193,11 +11285,6 @@
   "version": [
    131
   ],
-  "digest": [
-   131,
-   107,
-   16
-  ],
   "__wclone": [
    130
   ],
@@ -11705,12 +11792,6 @@
   "fallback": [
    73
   ],
-  "registry": [
-   73,
-   56,
-   40,
-   15
-  ],
   "responses": [
    73
   ],
@@ -12191,9 +12272,6 @@
   ],
   "257": [
    21
-  ],
-  "gzip": [
-   20
   ],
   "isize": [
    20
