@@ -36,6 +36,7 @@ jobs:
             git checkout -- crates/ginux-devices/src/lib.rs
             python3 /tmp/mut.py $m
             RUSTFLAGS='' CARGO_TARGET_DIR=.artifacts/$m cargo test -p ginux-devices --lib -- $SKIP 2>&1 | tee ../$m-existing.log; echo "existing_exit=${PIPESTATUS[0]}" | tee -a ../$m-existing.log
+            python3 /tmp/insert.py
             RUSTFLAGS='' CARGO_TARGET_DIR=.artifacts/$m cargo test -p ginux-devices --lib 2>&1 | tee ../$m-ours.log; echo "ours_exit=${PIPESTATUS[0]}" | tee -a ../$m-ours.log
           done
           git checkout -- crates/ginux-devices/src/lib.rs
