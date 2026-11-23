@@ -63,7 +63,7 @@ jobs:
       - name: Mutant m11 - close unmasked index
         working-directory: upstream
         run: |
-          python3 -c 'from pathlib import Path;p=Path("crates/ginux-devices/src/lib.rs");t=p.read_text();a="self.descriptor(fd, instance)?;\n        let index = (fd & 0x3fff_ffff) as usize;";assert a in t;p.write_text(t.replace(a,"self.descriptor(fd, instance)?;\n        let index = fd as usize;",1))'
+          python3 -c 'from pathlib import Path;p=Path("crates/ginux-devices/src/lib.rs");t=p.read_text();a="self.descriptor(instance, fd)?;\n        let index = (fd & 0x3fff_ffff) as usize;";assert a in t;p.write_text(t.replace(a,"self.descriptor(instance, fd)?;\n        let index = fd as usize;",1))'
           set +e
           RUSTFLAGS='' CARGO_TARGET_DIR=.artifacts/m11 cargo test -p ginux-devices --lib 2>&1 | tee ../m11-existing.log; echo "existing_exit=${PIPESTATUS[0]}" | tee -a ../m11-existing.log
           RUSTFLAGS='' CARGO_TARGET_DIR=.artifacts/m11 cargo test -p ginux-devices --test descriptor_props 2>&1 | tee ../m11-ours.log; echo "ours_exit=${PIPESTATUS[0]}" | tee -a ../m11-ours.log
