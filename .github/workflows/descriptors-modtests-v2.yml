@@ -1,0 +1,92 @@
+name: descriptors-modtests-v2
+on:
+  push:
+    branches: [repro/descriptors-modtests]
+permissions:
+  contents: read
+jobs:
+  rework:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v5
+        with: {repository: gmkurtzer/ginux, ref: 7fb6e093719780289e38fdae7b0d2e9e1c12efe4, path: upstream}
+      - name: Write tests payload
+        run: |
+          cat > /tmp/tests.rs <<'EOF'
+    #[test]
+    fn raw_index_is_invalid_descriptor() {
+        let mut registry: DeviceRegistry<4, 4> = DeviceRegistry::new();
+        registry
+            .assign(1, 10, DeviceName::new(b"null").unwrap(), DeviceKind::Null)
+            .unwrap();
+        let _fd = registry.open(1, b"null").unwrap();
+        assert_eq!(registry.write(1, 0, b"x"), Err(DeviceError::InvalidDescriptor));
+        let mut bytes = [0u8; 4];
+        assert_eq!(registry.read(1, 0, &mut bytes), Err(DeviceError::InvalidDescriptor));
+    }
+
+    #[test]
+    fn close_invalidates_and_frees_slot() {
+        let mut registry: DeviceRegistry<4, 4> = DeviceRegistry::new();
+        registry
+            .assign(1, 10, DeviceName::new(b"null").unwrap(), DeviceKind::Null)
+            .unwrap();
+        let fd = registry.open(1, b"null").unwrap();
+        assert_eq!(registry.close(1, fd), Ok(()));
+        assert_eq!(registry.write(1, fd, b"x"), Err(DeviceError::InvalidDescriptor));
+        assert_eq!(registry.open(1, b"null").unwrap(), fd);
+    }
+EOF
+      - name: Insert tests into mod tests + fmt + clippy
+        working-directory: upstream
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path("crates/ginux-devices/src/lib.rs"); t=p.read_text()
+          tests=open("/tmp/tests.rs").read()
+          i=t.rfind("}")
+          p.write_text(t[:i]+tests+t[i:])
+          PY
+          cargo fmt -p ginux-devices
+          cargo fmt -p ginux-devices -- --check
+          RUSTFLAGS='' cargo clippy -p ginux-devices --all-targets -- -D warnings 2>&1 | tee ../clippy.log
+          git diff > ../descriptors-modtests.patch
+      - name: Baseline full suite (clean) PASS
+        working-directory: upstream
+        run: RUSTFLAGS='' CARGO_TARGET_DIR=.artifacts/unit cargo test -p ginux-devices --lib 2>&1 | tee ../baseline.log
+      - name: Mutants survive-existing / killed-with-ours
+        working-directory: upstream
+        run: |
+          set +e
+          SKIP="--skip raw_index_is_invalid_descriptor --skip close_invalidates_and_frees_slot"
+          for m in m2 m5 m11; do
+            git checkout -- crates/ginux-devices/src/lib.rs
+            python3 - "$m" <<'PY'
+          import sys
+          from pathlib import Path
+          m=sys.argv[1]; p=Path("crates/ginux-devices/src/lib.rs"); t=p.read_text()
+          if m=="m2": a="if fd & 0x4000_0000 == 0 {"; b="if false {"
+          elif m=="m5": a="self.descriptors[index] = Descriptor::empty();"; b="let _ = index;"
+          else: a="self.descriptor(instance, fd)?;\n        let index = (fd & 0x3fff_ffff) as usize;"; b="self.descriptor(instance, fd)?;\n        let index = fd as usize;"
+          assert a in t, m
+          p.write_text(t.replace(a,b,1))
+          PY
+            RUSTFLAGS='' CARGO_TARGET_DIR=.artifacts/$m cargo test -p ginux-devices --lib -- $SKIP 2>&1 | tee ../$m-existing.log; echo "existing_exit=${PIPESTATUS[0]}" | tee -a ../$m-existing.log
+            RUSTFLAGS='' CARGO_TARGET_DIR=.artifacts/$m cargo test -p ginux-devices --lib 2>&1 | tee ../$m-ours.log; echo "ours_exit=${PIPESTATUS[0]}" | tee -a ../$m-ours.log
+          done
+          git checkout -- crates/ginux-devices/src/lib.rs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: descriptors-modtests-evidence
+          path: |
+            clippy.log
+            baseline.log
+            descriptors-modtests.patch
+            m2-existing.log
+            m2-ours.log
+            m5-existing.log
+            m5-ours.log
+            m11-existing.log
+            m11-ours.log
