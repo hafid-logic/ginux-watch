@@ -38,7 +38,9 @@
 - **قاعدة الحذف (بتوجيه v5.2-5 في 2026-11-06):** أي حذف لملف متتبَّع خارج `work/` يُبلَّغ قبله في المحادثة ولا يُنفَّذ بلا إذن صريح من Abdelhafid — ولو كان الملف نفايات (مثل `.pyc`). النفايات تُمنع من الدخول أولًا عبر `.gitignore`.
 - Prefer verification comments on existing PRs over new issues.
 - Before drafting anything public, search upstream for an existing item and link to it.
-- **سقف PRs المفتوحة = 2 (v8.0 C-00، 2026-11-14).**
+- **سقف PRs المفتوحة = 3 (v9.1، 2026-11-24 بقرار Abdelhafid الصريح).**
+  - النص التاريخي: 1 (v5.1) ← 2 (v8.0 C-00، 2026-11-14) ← **3 (v9.1)**. لا يُرفع فوق 3 إلا بقرار جديد.
+  - **التحضير والدفع إلى الفروع بلا سقف**؛ السقف يقيّد *الطلبات المفتوحة في upstream* فقط.
 
 ## Security findings
 Never write them to this (public) repository, to logs, or to drafts. Record only
