@@ -27,6 +27,13 @@ Any write to upstream `gmkurtzer/ginux`; force push; deletions; policy changes
 (`POLICY.md`, `AGENTS.md`, `config/authorization.yml`, this contract);
 gate acceptance (`hdae/gates-done/`); PR-cap changes; credential provisioning.
 
+**Upstream publication workflow (R1, binding 2026-11-24).** Never open a PR or issue
+directly on upstream `gmkurtzer/ginux`. Prepare the contribution, push it to a fork branch
+(`hafid-logic/ginux`) ready for analysis, present it, and obtain explicit per-item owner
+approval before opening the PR. A general "prepare/open N PRs" instruction is NOT approval
+to publish. Keep strong contributions ready as pushed branches; fill slots after merges
+only via this workflow. See `reports/deviations/2026-11-24-direct-upstream-pr.md`.
+
 ## 5. Internal auto-merge guardrails
 ci success + `mergeable_state: clean` + same-repo + non-draft + path allowlist,
 with a **self-protecting denylist** (the guardrails themselves need owner merge).
@@ -43,3 +50,7 @@ TRIPPED/acknowledgment loop. Never silently proceed.
 ## 8. Attribution
 Method and skill design originate from HDAE by Gregory M. Kurtzer
 (https://github.com/gmkurtzer/hdae, Apache-2.0). See `NOTICE`.
+
+**PR/issue closing line (R2, binding 2026-11-24).** The final line of every PR or issue
+body MUST be exactly: `Prepared with AI assistance; reviewed by me.` The HDAE method line
+must NOT be the closing line of PR/issue bodies; HDAE attribution stays in NOTICE/README/docs.

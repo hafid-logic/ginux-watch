@@ -248,6 +248,9 @@ Auth tiers: 0 device-flow -> A upload file -> B short-lived token -> C zero-toke
 fallback only on failure and logged. Never print/commit tokens, device_code or
 refresh_token. Unattended runs use GITHUB_TOKEN only. Upstream writes, force
 push, deletions, policy changes and gate acceptance are OWNER-ONLY.
+Upstream PRs/issues: never open directly — prepare, push a fork branch, get explicit
+per-item owner approval, then open (R1). Every PR/issue body ends with exactly
+`Prepared with AI assistance; reviewed by me.` (R2).
 Reload this block after context compaction or handoff.
 <!-- END HDAE SECURITY CONTRACT -->
 

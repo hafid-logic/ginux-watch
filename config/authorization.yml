@@ -5,6 +5,7 @@ policy: hdae-standing-delegation
 confirmed_by: hafid-logic
 confirmed_at: "2026-11-18"
 directive: directives/v8.4-20261118.md
+# R2 (binding 2026-11-24): every PR/issue body's final line = 'Prepared with AI assistance; reviewed by me.'
 default: human
 autonomous:
   - read_upstream_api
@@ -16,7 +17,7 @@ autonomous:
   - alert_renotify_until_ack # internal attention, never upstream nagging
   - upstream_package_prep    # approved/pending only — never publish
 human_required:
-  - upstream_mutation        # ANY write to gmkurtzer/ginux
+  - upstream_mutation        # ANY write to gmkurtzer/ginux; R1: prepare->fork branch->analysis->explicit per-item owner approval->open PR; never open directly
   - credential_provision
   - force_push
   - deletion
