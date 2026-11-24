@@ -39,6 +39,14 @@
   process-setgroups@ce0f7c1 · oci-whiteout-symlink-escape@a69db03.
 - الطلبات الثلاثة #323/#324/#325 اعتمدها المالك؛ نصوصها مسلّمة. لا فتح upstream جديد دون موافقة لكل بند (R1).
 
+## خط أنابيب إضافي (مثبت، فروع fork — ليست PRs)
+- `tests/fs-policy-rights-subset@814c36f`: دلالات Rights (احتواء كل بت مطلوب + رفض التداخل الجزئي).
+  طفرة ناجية: `contains ==required` → `!=0` (تقبل تداخلًا جزئيًا) تُقتل بالاختبار.
+- `tests/devices-partition-exact-fit@bfcf1c1`: حد مدى الـPartition (المطابقة التامة end==len مقبولة، ما بعدها مرفوض).
+  طفرة ناجية: `end > len` → `>= len` (ترفض المطابقة التامة) تُقتل بالاختبار.
+- غربلة: OCI‑unpack_in وVFS‑overlay/descriptor فُحصا ووجدناهما محكمَي الدفاع (لا عيب قابل للتكرار ولا طفرة ناجية) ⇒ لا حزمة (لا طلبات غير ضرورية).
+- المفتوحة upstream الآن: #326 devices، #328 supply-chain، #329 oci-whiteout (السقف 3/3). process يفتحه المالك بنفسه.
+
 ## فهرس
 - الأرشيف: state/history/STATE-archive-2026-11-18.md — التسليم: HANDOFF.md
 - التقارير: reports/ — المصفوفة: matrix/upstream-watch.json
