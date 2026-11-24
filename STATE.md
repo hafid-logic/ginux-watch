@@ -22,6 +22,8 @@
   hafid-logic/ginux فوق 01a5fd9f عبر مستوى مصادقة معتمد؛ عنوان مقترح: tests(oci): pin
   digest, reference, and human-size boundaries. بعدها يعود السقف 1/2.
 
+- **PR مفتوح في upstream:** **#317** (tests/oci-boundary-exact) — بانتظار مراجعة المالك؛ يُرصد آليًا عبر watch_our_prs.
+
 ## فهرس
 - الأرشيف: state/history/STATE-archive-2026-11-18.md — التسليم: HANDOFF.md
 - التقارير: reports/ — المصفوفة: matrix/upstream-watch.json
