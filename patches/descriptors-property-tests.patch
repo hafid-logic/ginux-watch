@@ -1,0 +1,25 @@
+diff --git a/tests/descriptor_props.rs b/tests/descriptor_props.rs
+new file mode 100644
+--- /dev/null
++++ b/tests/descriptor_props.rs
+@@ -0,0 +1,20 @@
++use ginux_devices::{DeviceError, DeviceKind, DeviceName, DeviceRegistry};
++#[test]
++fn raw_index_is_invalid_descriptor() {
++    let mut r: DeviceRegistry<4,4> = DeviceRegistry::new();
++    r.assign(1,10,DeviceName::new(b"null").unwrap(),DeviceKind::Null).unwrap();
++    let _fd = r.open(1,b"null").unwrap();
++    assert_eq!(r.write(1,0,b"x"), Err(DeviceError::InvalidDescriptor));
++    let mut b=[0u8;4];
++    assert_eq!(r.read(1,0,&mut b), Err(DeviceError::InvalidDescriptor));
++}
++#[test]
++fn close_invalidates_and_frees_slot() {
++    let mut r: DeviceRegistry<4,4> = DeviceRegistry::new();
++    r.assign(1,10,DeviceName::new(b"null").unwrap(),DeviceKind::Null).unwrap();
++    let fd=r.open(1,b"null").unwrap();
++    assert_eq!(r.close(1,fd), Ok(()));
++    assert_eq!(r.write(1,fd,b"x"), Err(DeviceError::InvalidDescriptor));
++    let fd2=r.open(1,b"null").unwrap();
++    assert_eq!(fd2, fd);
++}

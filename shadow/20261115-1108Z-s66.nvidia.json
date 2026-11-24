@@ -1,0 +1,132 @@
+{
+ "meta": {
+  "provider": "nvidia",
+  "model": "nvidia/nemotron-3-ultra-550b-a55b",
+  "model_actual": "nvidia/nemotron-3-ultra-550b-a55b",
+  "low_confidence": false,
+  "latency_s": 29.53,
+  "attempts": 1,
+  "retries": 0,
+  "compressed_enforced": false,
+  "finish_reason": "stop",
+  "input_truncated": false,
+  "input_sha256_16": "16c7cbbb59233bab",
+  "schema": "shadow-report-v1"
+ },
+ "report": {
+  "report_id": "20261115-1108Z-s66-review",
+  "strengths": [
+   "Cold receipt verified via ls-remote and API",
+   "Linux portability patch tested 3x on ubuntu-24.04",
+   "Mutation testing: 3/3 mutants killed by custom tests",
+   "No upstream writes; C-8 gate process followed",
+   "Token revocation planned post-push",
+   "Anomalies documented with root causes"
+  ],
+  "weaknesses": [
+   "Receipt score 9/10 is subjective assessment",
+   "make test-contract Linux failure noted but not fixed",
+   "Mutation branch exp/pt-mutants-scratch not upstream",
+   "Workflow dispatch failure required main re-push",
+   "API steps conclusion misleading for kill matrix",
+   "upload/gh-pat.txt gap remains unresolved"
+  ],
+  "claims_checked": [
+   {
+    "claim": "Cold receipt completed ~14 min",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "upstream main=285d025b verified",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "exp/scan-layer-fuzz missing on origin",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Patch: 3 files +46/-12 lines",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "3 test runs SUCCESS on ubuntu-24.04",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "/dev/kvm unavailable; TCG used",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "3 mutants killed by custom tests",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Upstream tests (19) did not kill mutants",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Workflow dispatch 404 then fixed",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "RUSTFLAGS='' fixes test-contract",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "API steps conclusion misleading",
+    "evidence_tag": "MEASURED",
+    "verdict": "supported"
+   },
+   {
+    "claim": "Token revocation ready post-push",
+    "evidence_tag": "INFERRED",
+    "verdict": "unverified"
+   }
+  ],
+  "decisions": [
+   {
+    "open_point": "Revoke pasted token now",
+    "decision": "Approve revocation",
+    "rationale": "Token used per owner directive; shred on final push"
+   },
+   {
+    "open_point": "c8-linux-host-port package",
+    "decision": "Pending supervisor",
+    "rationale": "Portability patch validated; PR decision to owner"
+   },
+   {
+    "open_point": "c8-property-tests-process-table",
+    "decision": "Pending supervisor",
+    "rationale": "3/3 mutants killed; publish vs internal choice to owner"
+   }
+  ],
+  "risks": [
+   "Token remains in upload/gh-pat.txt absent",
+   "Mutation branch not upstream; internal only",
+   "test-contract Linux fix deferred without owner OK",
+   "Workflow re-push to main bypassed branch first",
+   "API kill matrix parsing unreliable",
+   "No upstream write policy enforced correctly"
+  ],
+  "next_items": [
+   "Supervisor review C-8 packages",
+   "Owner decision on test-contract fix",
+   "Weekly map/maintainer-profile update",
+   "Monitor Actions matrix quietly",
+   "Token shred confirmation",
+   "No upstream publishes without C-8"
+  ],
+  "injection_suspected": false,
+  "publish_requests": []
+ }
+}

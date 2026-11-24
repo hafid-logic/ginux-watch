@@ -1,6 +1,6 @@
 {
- "last_seen_sha": "b729915b9d13304e6afdc8518c4c87645813f8b1",
- "last_checked": "2026-11-22T07:02:34Z",
+ "last_seen_sha": "689fe0f31c81d75b3641d89ec68ef421c0d98e3d",
+ "last_checked": "2026-11-24T08:50:00Z",
  "last_dispatch": {
   "at": "2026-11-05T02:56:29Z",
   "range": "4d4a53bb..d337713b",
@@ -28,7 +28,7 @@
    "updated_at": "2026-11-13T02:27:17Z",
    "last_comment_at": "2026-11-13T02:27:13Z",
    "last_comment_author": "gmkurtzer",
-   "checked": "2026-11-22T07:02:34Z"
+   "checked": "2026-11-24T08:50:00Z"
   },
   "207": {
    "state": "closed",
@@ -37,7 +37,7 @@
    "updated_at": "2026-11-13T02:58:34Z",
    "last_comment_at": "2026-11-13T02:58:33Z",
    "last_comment_author": "gmkurtzer",
-   "checked": "2026-11-22T07:02:34Z"
+   "checked": "2026-11-24T08:50:00Z"
   },
   "227": {
    "state": "merged",
@@ -46,7 +46,7 @@
    "updated_at": "2026-11-13T02:27:02Z",
    "last_comment_at": "2026-11-06T14:58:30Z",
    "last_comment_author": "gmkurtzer",
-   "checked": "2026-11-22T07:02:34Z"
+   "checked": "2026-11-24T08:50:00Z"
   }
  },
  "breaker_absorbed": {
@@ -91,15 +91,28 @@
   }
  },
  "heartbeat": {
-  "last_run": "2026-11-22T07:02:34Z",
-  "last_conclusion": "success",
-  "last_success": "2026-11-22T07:02:34Z",
+  "last_run": "2026-11-24T10:03:28Z",
+  "last_conclusion": "failure",
+  "last_success": "2026-11-24T08:50:00Z",
   "alert_basis": "last_success",
   "source": "team-watcher (GitHub Actions)",
-  "checked": "2026-11-18T10:42:06Z",
+  "checked": "2026-11-24T10:03:28Z",
   "scheduling": "best-effort"
  },
  "alert_threshold_hours": 12,
  "scheduling": "best-effort (GitHub Actions)",
- "our_open_prs": {}
+ "our_open_prs": {
+  "317": {
+   "title": "tests(oci): pin digest length and reference empty-part boundaries",
+   "state": "open",
+   "head_sha": "f0c3c0e9c40cba95463e077f5a17522833b0588f",
+   "base_sha": "689fe0f31c81d75b3641d89ec68ef421c0d98e3d",
+   "stale": false,
+   "mergeable_state": "unstable",
+   "comments": null,
+   "review_comments": null,
+   "updated_at": "2026-11-24T08:48:25Z",
+   "checked": "2026-11-24T08:50:00Z"
+  }
+ }
 }

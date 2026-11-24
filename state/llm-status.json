@@ -1,11 +1,11 @@
 {
- "updated": "2026-11-22T06:57:23Z",
+ "updated": "2026-11-24T09:59:22Z",
  "providers": {
   "nvidia": {
    "configured": true,
    "status": "ok",
    "model_current": "nvidia/nemotron-3-ultra-550b-a55b",
-   "last_success": "2026-11-22T06:57:23Z",
+   "last_success": "2026-11-24T09:59:20Z",
    "last_error_class": null,
    "consecutive_failures": 0,
    "rate_limit": null,
@@ -16,11 +16,11 @@
    "configured": true,
    "status": "ok",
    "model_current": "openrouter/free",
-   "last_success": "2026-11-22T06:56:42Z",
+   "last_success": "2026-11-24T09:59:22Z",
    "last_error_class": null,
    "consecutive_failures": 0,
    "rate_limit": null,
-   "model_actual": "particle-ai/particle-1:free",
+   "model_actual": "baidu/ernie-5.5-flash-preview:free",
    "last_diag": {
     "error_class": "api_shape",
     "http_status": 200,
@@ -72,35 +72,41 @@
   },
   "google-ai-studio": {
    "configured": true,
-   "status": "ok",
+   "status": "auth_failed",
    "model_current": "gemini-3.6-flash",
-   "last_success": "2026-11-22T06:56:41Z",
-   "last_error_class": null,
-   "consecutive_failures": 0,
+   "last_success": "2026-11-22T19:46:08Z",
+   "last_error_class": "auth_failed",
+   "consecutive_failures": 3,
    "rate_limit": null,
    "model_actual": "gemini-3.6-flash",
-   "consecutive_429": 0
+   "consecutive_429": 0,
+   "last_alert_key": "auth_failed:auth_failed"
   }
  },
  "last_call": {
   "provider": "nvidia",
   "model": "nvidia/nemotron-3-ultra-550b-a55b",
   "model_actual": "nvidia/nemotron-3-ultra-550b-a55b",
-  "latency_s": 21.19,
+  "latency_s": 29.53,
   "outcome": "ok",
-  "at": "2026-11-22T06:57:23Z",
-  "finish_reason": "length"
+  "at": "2026-11-22T19:47:10Z",
+  "finish_reason": "stop"
  },
  "note": "runtime-managed by scripts/llm_router.py; providers appear on first call. No secrets are stored here — status classes only (unconfigured/ok/down/auth_failed).",
  "daily": {
-  "date_utc": "2026-11-22",
-  "calls": {
-   "nvidia": 2
-  },
+  "date_utc": "2026-11-24",
+  "calls": {},
   "calls_probe": {
    "nvidia": 1,
    "google-ai-studio": 1,
    "openrouter": 1
+  },
+  "failed": {
+   "calls_probe": {
+    "google-ai-studio": {
+     "auth_failed": 1
+    }
+   }
   }
  },
  "limits_official": {
@@ -140,8 +146,8 @@
   }
  },
  "shadow": {
-  "consecutive_failures": 8,
-  "last_alert_key": "shadow_failed:empty",
+  "consecutive_failures": 0,
+  "last_alert_key": null,
   "last_attempt": {
    "status": "shadow_failed",
    "reason": "empty:no_json: no '{' in reply (after 1 compressed retry)",
@@ -155,7 +161,7 @@
    "retries": 0,
    "at": "2026-11-22T06:57:23Z"
   },
-  "last_recovery_at": "2026-11-12T07:19:15Z"
+  "last_recovery_at": "2026-11-22T19:47:10Z"
  },
  "last_shadow_attempt": {
   "status": "shadow_failed",

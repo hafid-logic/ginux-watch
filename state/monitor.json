@@ -1,7 +1,7 @@
 {
- "checked_utc": "2026-11-22T04:58:48Z",
+ "checked_utc": "2026-11-24T03:46:54Z",
  "ginux": {
-  "main_sha": "b729915b9d13304e6afdc8518c4c87645813f8b1",
+  "main_sha": "e644fc9fb8ec90d98219f463567bea0afa7cb458",
   "readme_sha": "e6daf8d21b521e88593985b32eea569686d3a8d4",
   "release_count": 0,
   "tags": [
@@ -17,10 +17,10 @@
   "archive_branches": [
    "bootable-kernel"
   ],
-  "open_issues": 3,
-  "open_prs": 1,
-  "latest_number": 300,
-  "last_push_utc": "2026-11-22T02:10:33Z"
+  "open_issues": 4,
+  "open_prs": 4,
+  "latest_number": 316,
+  "last_push_utc": "2026-11-23T23:55:46Z"
  },
  "ginux_us": {
   "exists": false,
