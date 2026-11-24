@@ -27,6 +27,18 @@
 
 - **cargo deny (تراخيص، إن أمكن):** لا ترخيص خطير مرفوض. webpki-roots 1.0.12 يحمل CDLA-Permissive-2.0 (رخصة بيانات CA متساهلة، عبر reqwest→ginux-oci) — قرار سياسة لا عيب؛ ginux-kernel-views بلا حقل license (فجوة وصفية upstream). لا حزمة إصلاح؛ النتيجة مؤرشفة هنا.
 
+## تحديث v9.2 (لاحق) — إصلاح حقيقي + خط أنابيب
+- **إصلاح أمني حقيقي (OCI):** فرع fork `fix/oci-whiteout-symlink-escape@a69db03` (+48/-2).
+  الثغرة: whiteout الشفاف/العادي يتبع symlinkًا خارج الـrootfs ⇒ حذف ملفات مضيف اعتباطية.
+  الإصلاح: safe_whiteout_dir يرفض أي مكوّن symlink. دليل فشل-ثم-نجاح على الـcrate:
+  الاختبار الانحداري يفشل على الكود الأصلي وينجح بعد الإصلاح؛ اختبار whiteout المشروع الأصلي يبقى ناجحًا.
+  **جاهز للتحليل/الموافقة — ليس PR.**
+- **#67:** تحديث sensitive pins جاهز محليًا (dcc04c0) لكن الدفع يتطلب نطاق `workflow`
+  (رمز جهاز D3E4-DD60 بانتظار موافقة المالك). بعد الموافقة يُدفع فيخضرّ CI.
+- **خط الأنابيب (فروع fork، ليست PRs):** supply-chain/url-2.5.9@1850a5e · devices-name-frame@61b60c9 ·
+  process-setgroups@ce0f7c1 · oci-whiteout-symlink-escape@a69db03.
+- الطلبات الثلاثة #323/#324/#325 اعتمدها المالك؛ نصوصها مسلّمة. لا فتح upstream جديد دون موافقة لكل بند (R1).
+
 ## فهرس
 - الأرشيف: state/history/STATE-archive-2026-11-18.md — التسليم: HANDOFF.md
 - التقارير: reports/ — المصفوفة: matrix/upstream-watch.json
