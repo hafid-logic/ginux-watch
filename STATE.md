@@ -22,7 +22,7 @@
   balanced_contract_is_classified_and_fail_closed. **لا فجوة فعلية ⇒ الفكرة مُسقطة** (لا جدول enumerable يُضيف رقمًا بلا توصيف).
 - **v9.1 مهمة 4 (سلسلة التوريد):** cargo audit على قفل upstream ⇒ RUSTSEC-2026-0592 (url 2.5.8، DoS)
   تمس ginux-oci فعلًا. ترقية أدنى url->2.5.9 (+form_urlencoded->1.2.3) بدليل فشل-ثم-نجاح (exit 1→0).
-  حزمة جاهزة (أعلاه). fuzz/Cargo.lock שלנו: RUSTSEC-2026-0579 (ترقية >=0.9.4) — قيد الغربلة.
+  حزمة جاهزة (أعلاه). fuzz/Cargo.lock שלנו: 9 تحذيرات unsound على heapless 0.9.2 (عابر عبر serde-json-core؛ patched >=0.9.4)؛ القفل يشير لتخطيط upstream قديم ويحتاج تجديدًا (صيانة منفصلة، لا ترقية أدنى نظيفة).
 - **النبض:** team-watcher حي؛ last_success 2026-11-23T07:51:08Z.
 
 ## فهرس
