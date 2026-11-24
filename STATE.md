@@ -25,6 +25,8 @@
   حزمة جاهزة (أعلاه). fuzz/Cargo.lock שלנו: 9 تحذيرات unsound على heapless 0.9.2 (عابر عبر serde-json-core؛ patched >=0.9.4)؛ القفل يشير لتخطيط upstream قديم ويحتاج تجديدًا (صيانة منفصلة، لا ترقية أدنى نظيفة).
 - **النبض:** team-watcher حي؛ last_success 2026-11-23T07:51:08Z.
 
+- **cargo deny (تراخيص، إن أمكن):** لا ترخيص خطير مرفوض. webpki-roots 1.0.12 يحمل CDLA-Permissive-2.0 (رخصة بيانات CA متساهلة، عبر reqwest→ginux-oci) — قرار سياسة لا عيب؛ ginux-kernel-views بلا حقل license (فجوة وصفية upstream). لا حزمة إصلاح؛ النتيجة مؤرشفة هنا.
+
 ## فهرس
 - الأرشيف: state/history/STATE-archive-2026-11-18.md — التسليم: HANDOFF.md
 - التقارير: reports/ — المصفوفة: matrix/upstream-watch.json
