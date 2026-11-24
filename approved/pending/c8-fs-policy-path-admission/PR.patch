@@ -1,0 +1,74 @@
+From 831afbf65669f6641376b3e7e64c8e4996fbc136 Mon Sep 17 00:00:00 2001
+From: ginux-watch agent <hafid-logic@users.noreply.github.com>
+Date: Tue, 24 Nov 2026 07:58:04 +0000
+Subject: [PATCH] tests(fs-policy): pin path-admission identity and
+ capability-kind guards
+
+---
+ crates/ginux-fs-policy/src/lib.rs | 50 +++++++++++++++++++++++++++++++
+ 1 file changed, 50 insertions(+)
+
+diff --git a/crates/ginux-fs-policy/src/lib.rs b/crates/ginux-fs-policy/src/lib.rs
+index d8699ef3..bbd70145 100644
+--- a/crates/ginux-fs-policy/src/lib.rs
++++ b/crates/ginux-fs-policy/src/lib.rs
+@@ -1830,6 +1830,56 @@ mod tests {
+         assert_ne!(identity_token(b""), 0);
+     }
+ 
++    fn path_admission_context() -> CallContext {
++        let capability = Capability::new(
++            CapabilityKind::Root,
++            2,
++            3,
++            5,
++            ObjectId { device: 7, inode: 11 },
++            Rights::LOOKUP,
++        );
++        CallContext::x86_64(
++            2,
++            [0; 6],
++            TaskContext { host: 13, virtual_id: 17, generation: 19 },
++            InstanceContext { identity: 2, lifetime: 3, root_generation: 5 },
++            AuthorityContext {
++                root: capability,
++                cwd: Capability { kind: CapabilityKind::WorkingDirectory, ..capability },
++                descriptor_table: Capability { kind: CapabilityKind::DescriptorTable, ..capability },
++                cwd_generation: 5,
++                descriptor_generation: 5,
++            },
++            ContractAuthorization::Mediate,
++        )
++    }
++
++    #[test]
++    fn path_admission_requires_every_identity_dimension() {
++        let base = path_admission_context();
++        assert!(filesystem_hook_authorized(&base, true));
++        let mut c = base; c.task.host = 0;
++        assert!(!filesystem_hook_authorized(&c, true));
++        let mut c = base; c.task.virtual_id = 0;
++        assert!(!filesystem_hook_authorized(&c, true));
++        let mut c = base; c.task.generation = 0;
++        assert!(!filesystem_hook_authorized(&c, true));
++        let mut c = base; c.instance.identity = 0;
++        assert!(!filesystem_hook_authorized(&c, true));
++        let mut c = base; c.instance.lifetime = 0;
++        assert!(!filesystem_hook_authorized(&c, true));
++    }
++
++    #[test]
++    fn path_admission_requires_root_and_cwd_capability_kinds() {
++        let base = path_admission_context();
++        let mut c = base; c.authority.root.kind = CapabilityKind::WorkingDirectory;
++        assert!(!filesystem_hook_authorized(&c, true));
++        let mut c = base; c.authority.cwd.kind = CapabilityKind::Root;
++        assert!(!filesystem_hook_authorized(&c, true));
++    }
++
+     #[test]
+     fn filesystem_lookup_fails_closed_for_denial_unknown_abi_and_wrong_owner() {
+         let capability = Capability::new(
+-- 
+2.47.3
+
