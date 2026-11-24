@@ -1,28 +1,29 @@
 # STATE (updated by the agent at the end of every run)
 
-> v8.9 (2026-11-23): مصنع الطفرات v8.3 (ginux-oci) أعيد بناؤه وتحقق حي كامل على أحدث upstream main.
+> v9.1 (2026-11-24): كل حزمنا المعتمدة السبعة دُمجت في upstream؛ لا حزمة معلّقة للنشر.
 > القواعد الدائمة في AGENTS.md / POLICY.md / METHODOLOGY.md؛ التاريخ في الأرشيف append-only.
 
 ## حزم معتمدة غير منشورة
-- **ginux-oci** → الفرع `pkg/ginux-oci-reference-guards`، الرأس `26f6fa01`، ‏PR.patch sha256 `109acd94…`. الحالة: **معتمدة من المشرف، تنتظر نشر المشغّل** (مرجع مثبّت).
-- **بديل: غير معتمد** → `patches/oci-property-tests.patch` (اختبار human_size يثبّت تنسيق تقدّم؛ قيمته ضعيفة). ليس حزمة النشر.
+- **لا شيء.** كل حزم approved/pending السابقة نُشرت ودُمجت (انظر أدناه). حزمة جديدة جاهزة:
+  supply-chain url 2.5.8->2.5.9 (RUSTSEC-2026-0592) — الفرع `pkg/supply-chain-url-2.5.9`،
+  الرأس `4f036ce`. الحالة: جاهزة، تنتظر نشر المشغّل (تصنيف: حسّاس؛ لا تفاصيل استغلال علنية).
 
 ## الحالة الراهنة
-- **upstream [MEASURED]:** دمجاتنا 3 (#227، #295 دمج 2026-11-22T01:40:24Z، #296 دمج
-  2026-11-22T01:40:28Z) · مفتوحة **0/2 — slot النشر متحرر بالكامل** · main عند 01a5fd9f
-  (+72 commit؛ #307 أعاد هيكلة ginux-oci والمراسي سليمة: 537/36/566/635).
-- **مصنع ginux-oci (أُعيد بناؤه):** مصفوفة كاملة على 01a5fd9f: baseline 5/5، اختباراتنا
-  8/8 على كود سليم، m1/m2/m3 تنجو من طقمهم (5/5) وتُقتل باختباراتنا (فشل 1 لكل). الحزمة:
-  patches/oci-property-tests.patch (+23 سطرًا، apply نظيف). الأدلة: reports/2026-11-23-factory-rebuild.md.
-- **البيئة:** أُصلح كاش cargo بعد إعادة تدوير الصندوق (registry/src فارغ → إزالة + fetch؛
-  rust 1.100.0 شغّال؛ core.fileMode=false لإزالة ضوضاء bits التنفيذ).
-- **النبض:** last_success 2026-11-23T07:51:08Z، last_conclusion success (team-watcher حي؛
-  our_open_prs فارغ في المصفوفة — متسق مع الدمج).
-- **الخطوة التالية (بشرية حصرًا — عقد v8.6):** نشر حزمة ginux-oci كـPR من فرع في
-  hafid-logic/ginux فوق 01a5fd9f عبر مستوى مصادقة معتمد؛ عنوان مقترح: tests(oci): pin
-  digest, reference, and human-size boundaries. بعدها يعود السقف 1/2.
-
-- **PR مفتوح في upstream:** **#317** (tests/oci-boundary-exact) — بانتظار مراجعة المالك؛ يُرصد آليًا عبر watch_our_prs.
+- **upstream [MEASURED 2026-11-24T14:4xZ]:** main عند `fe4d904d`. دمجاتنا 9:
+  #227، #295، #296، #310 (oci-reference-guards)، #311 (allocator c_char)، #312 (devices descriptors)،
+  #317 (oci-boundary-exact، دمج 13:42Z + شكر المالك)، #319 (fs-policy path-admission، 13:48Z)،
+  #320 (devices revoke-instance-scope، 13:54Z). **مفتوحة لنا 0/3** (السقف 3 بموجب v9.1).
+- **CI upstream على الرأس fe4d904d:** 3 فحوص خضراء (static-and-unit / launch-integration / changes،
+  اكتملت 13:55–13:58Z) ⇒ **لا عمى CI اليوم**.
+- **v9.1 مهمة 3 (جدول قرار syscalls):** لا crate باسم ginux-syscall؛ الموازي ginux-core
+  (decide/decide_balanced/decide_systemd) + ginux-init/dispatch.rs. التوصيف match مع `_ =>` fail-closed
+  (Deny(38)=ENOSYS)، وطبقة seccomp افتراضها SECCOMP_RET_TRACE (الاستثناء الوحيد sched_yield=24).
+  اختبار اكتمال موجود سلفًا: systemd_mediated_syscalls_have_a_surface (0..512) +
+  balanced_contract_is_classified_and_fail_closed. **لا فجوة فعلية ⇒ الفكرة مُسقطة** (لا جدول enumerable يُضيف رقمًا بلا توصيف).
+- **v9.1 مهمة 4 (سلسلة التوريد):** cargo audit على قفل upstream ⇒ RUSTSEC-2026-0592 (url 2.5.8، DoS)
+  تمس ginux-oci فعلًا. ترقية أدنى url->2.5.9 (+form_urlencoded->1.2.3) بدليل فشل-ثم-نجاح (exit 1→0).
+  حزمة جاهزة (أعلاه). fuzz/Cargo.lock שלנו: RUSTSEC-2026-0579 (ترقية >=0.9.4) — قيد الغربلة.
+- **النبض:** team-watcher حي؛ last_success 2026-11-23T07:51:08Z.
 
 ## فهرس
 - الأرشيف: state/history/STATE-archive-2026-11-18.md — التسليم: HANDOFF.md
