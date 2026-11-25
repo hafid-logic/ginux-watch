@@ -7,8 +7,8 @@ The index encoder validates path/link bounds before writing a record. The existi
 ### Mutation evidence (fail-then-pass)
 | Mutant | Existing suite | New test |
 |---|---|---|
-| `|| link.len > MAX_LINK` -> `&&` | PASS (survives) | FAIL (killed) |
-| `|| path.len > MAX_PATH` -> `&&` | PASS (survives) | FAIL (killed) |
+| `\|\| link.len > MAX_LINK` -> `&&` | PASS (survives) | FAIL (killed) |
+| `\|\| path.len > MAX_PATH` -> `&&` | PASS (survives) | FAIL (killed) |
 
 Baseline (clean tree + new test): PASS. Reproduce: `cargo test -p ginux-vfs --lib encode_record`.
 

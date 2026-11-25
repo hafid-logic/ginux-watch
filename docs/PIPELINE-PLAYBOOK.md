@@ -75,3 +75,9 @@ Never production changes. Never publish without owner-approved text.
 - One-time owner setup (done): repo secret PIPELINE_PAT (fine-grained PAT, contents:write
   on the fork). After a validated full cycle, raise open_cap to 5 in config/pipeline-autopilot.yml.
 **Primary pre-fill mechanism (v9.2, robust):** the reserve branch's single commit message MUST be the PR title (subject) + blank line + the full PR body (GFM + AI footer). GitHub then pre-fills BOTH title and body in the NATIVE open-PR flow — including the bare `?expand=1` compare link and the fork's "Compare & pull request" button — with no special URL and no manual copying. The `quick_pull=1&title=&body=` link in `outbox/RESERVES.md` is a secondary convenience. Build steps: `git commit -m "<PR.title>" -m "<PR.md>"`; `PR.patch` carries the same message so the autopilot's `git am` preserves it.
+
+## Root-cause note (v9.2 — empty table cells) & exact-copy rule
+Two independent defects caused empty/misaligned table cells in an opened PR:
+1. **SOURCE:** literal `|` (the Rust `||` operator) inside a GFM table cell is parsed as a delimiter. Escape it `\|` (renders `|` even in code spans). Verified via GitHub `POST /markdown`.
+2. **COPY:** GitHub's *native* commit-message pre-fill (bare `?expand=1`) collapses the newline between table data rows. The **exact-copy** path is the `quick_pull=1&body=<urlencoded PR.md>` link (byte-exact) or `gh pr edit --body-file PR.md`.
+**Rule:** `PR.md` is the single source of truth. `verify-proposals.py` (verifier-agent gate, run by the autopilot) lints every source via the markdown API (no empty/misaligned cells) AND asserts each open PR body == its `PR.md` byte-for-byte, auto-correcting drift. Never hand-copy text; never trust the native pre-fill for tables.

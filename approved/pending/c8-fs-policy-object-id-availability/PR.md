@@ -8,7 +8,7 @@ Availability gates object identity. The existing tests do not exercise `is_avail
 | Mutant | Existing suite | New test |
 |---|---|---|
 | `device != 0` -> `== 0` | PASS (survives) | FAIL (killed) |
-| `||` -> `&&` | PASS (survives) | FAIL (killed) |
+| `\|\|` -> `&&` | PASS (survives) | FAIL (killed) |
 
 Baseline (clean tree + new test): PASS. Reproduce: `cargo test -p ginux-fs-policy --lib object_id`.
 
