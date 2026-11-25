@@ -1,20 +1,4 @@
 {
- "generated_utc": "2026-11-25T20:08:33Z",
- "reserves": [
-  {
-   "branch": "tests/core-balanced-surface",
-   "title": "tests(core): pin balanced surface mapping for random and lifecycle",
-   "url": "https://github.com/gmkurtzer/ginux/compare/main...hafid-logic:tests/core-balanced-surface?quick_pull=1&title=tests%28core%29%3A+pin+balanced+surface+mapping+for+random+and+lifecycle&body=%23%23%23+What%0APins+%60balanced_surface%60%3A+syscall+318+%28getrandom%29+maps+to+%60Random%60%2C+%60exit%60%2F%60exit_group%60+map+to+%60Lifecycle%60%2C+and+the+console%2Fmemory%2Fdenied+mappings+hold.%0A%0A%23%23%23+Why+it+matters%0AThe+surface+table+drives+the+balanced+contract%27s+decision.+The+existing+tests+check+image-read%2Fmemory%2Ftask+arms+but+not+the+random+or+lifecycle+arms%2C+so+deleting+either+survives+the+suite.%0A%0A%23%23%23+Mutation+evidence+%28fail-then-pass%29%0A%7C+Mutant+%7C+Existing+suite+%7C+New+test+%7C%0A%7C---%7C---%7C---%7C%0A%7C+delete+%60318+%3D%3E+Random%60+arm+%7C+PASS+%28survives%29+%7C+FAIL+%28killed%29+%7C%0A%7C+delete+%60SYS_EXIT+%5C%7C+SYS_EXIT_GROUP+%3D%3E+Lifecycle%60+arm+%7C+PASS+%28survives%29+%7C+FAIL+%28killed%29+%7C%0A%0ABaseline+%28clean+tree+%2B+new+test%29%3A+PASS.+Reproduce%3A+%60cargo+test+-p+ginux-core+--lib+balanced_surface%60.%0A%0APrepared+with+AI+assistance%3B+reviewed+by+me.%0A"
-  },
-  {
-   "branch": "tests/process-child-status-word",
-   "title": "tests(process): pin ChildStatus word encoding for exit and signal",
-   "url": "https://github.com/gmkurtzer/ginux/compare/main...hafid-logic:tests/process-child-status-word?quick_pull=1&title=tests%28process%29%3A+pin+ChildStatus+word+encoding+for+exit+and+signal&body=%23%23%23+What%0APins+%60ChildStatus%3A%3Aword%60%3A+an+exited+child+encodes+%60%28code+%26+0xff%29+%3C%3C+8%60%3B+a+signaled+child+encodes+%60signal+%26+0x7f%60.%0A%0A%23%23%23+Why+it+matters%0AThe+wait+status+word+must+match+the+kernel%27s+encoding.+The+existing+tests+do+not+exercise+%60word%60+directly%2C+so+a+shift-direction+or+mask+fault+survives+the+suite.%0A%0A%23%23%23+Mutation+evidence+%28fail-then-pass%29%0A%7C+Mutant+%7C+Existing+suite+%7C+New+test+%7C%0A%7C---%7C---%7C---%7C%0A%7C+exit+%60%3C%3C+8%60+-%3E+%60%3E%3E+8%60+%7C+PASS+%28survives%29+%7C+FAIL+%28killed%29+%7C%0A%7C+signal+%60%26+0x7f%60+-%3E+%60%5C%7C+0x7f%60+%7C+PASS+%28survives%29+%7C+FAIL+%28killed%29+%7C%0A%0ABaseline+%28clean+tree+%2B+new+test%29%3A+PASS.+Reproduce%3A+%60cargo+test+-p+ginux-process+--lib+child_status%60.%0A%0APrepared+with+AI+assistance%3B+reviewed+by+me.%0A"
-  },
-  {
-   "branch": "tests/vfs-encode-record-validation",
-   "title": "tests(vfs): pin encode_record path and link validation",
-   "url": "https://github.com/gmkurtzer/ginux/compare/main...hafid-logic:tests/vfs-encode-record-validation?quick_pull=1&title=tests%28vfs%29%3A+pin+encode_record+path+and+link+validation&body=%23%23%23+What%0APins+%60encode_record%60+rejection+of+invalid+entries%3A+an+over-length+path+%28%60%3E+MAX_PATH%60%29%2C+an+over-length+link+%28%60%3E+MAX_LINK%60%29%2C+and+a+relative+path+%28no+leading+%60%2F%60%29+each+return+%60InvalidPath%60.%0A%0A%23%23%23+Why+it+matters%0AThe+index+encoder+validates+path%2Flink+bounds+before+writing+a+record.+The+existing+tests+only+encode+valid+entries%2C+so+a+weakened+validation+that+admits+an+oversized+or+relative+path+survives+them.%0A%0A%23%23%23+Mutation+evidence+%28fail-then-pass%29%0A%7C+Mutant+%7C+Existing+suite+%7C+New+test+%7C%0A%7C---%7C---%7C---%7C%0A%7C+%60%5C%7C%5C%7C+link.len+%3E+MAX_LINK%60+-%3E+%60%26%26%60+%7C+PASS+%28survives%29+%7C+FAIL+%28killed%29+%7C%0A%7C+%60%5C%7C%5C%7C+path.len+%3E+MAX_PATH%60+-%3E+%60%26%26%60+%7C+PASS+%28survives%29+%7C+FAIL+%28killed%29+%7C%0A%0ABaseline+%28clean+tree+%2B+new+test%29%3A+PASS.+Reproduce%3A+%60cargo+test+-p+ginux-vfs+--lib+encode_record%60.%0A%0APrepared+with+AI+assistance%3B+reviewed+by+me.%0A"
-  }
- ]
+ "generated_utc": "2026-11-25T22:14:17Z",
+ "reserves": []
 }
