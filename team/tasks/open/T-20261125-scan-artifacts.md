@@ -1,6 +1,6 @@
 # T: harvest mutation-scan artifacts from GitHub runners (IN FLIGHT)
 
-Status: **runs green, harvest pending**
+Status: **HARVESTED 2026-11-25** — 176 survivors across 4 crates in state/discoveries.json; 3 new cards promoted (devices-views-read, process-pipespace, vfs-overlay-open).
 Runs #1-#5 of `mutation-scan` on hafid-logic/ginux-watch: all `success`.
 Crates dispatched: ginux-devices, ginux-fs-policy, ginux-vfs, ginux-process (+1).
 
