@@ -1,13 +1,238 @@
 {
- "generated_at_utc": "2026-11-25T12:31:31Z",
+ "generated_at_utc": "2026-11-25T22:21:27Z",
  "source_repo": "gmkurtzer/ginux",
- "item_count": 329,
+ "item_count": 338,
  "items": {
+  "345": {
+   "kind": "pr",
+   "title": "tests(process): pin ChildStatus word encoding for exit and signal",
+   "state": "closed",
+   "merged_at": "2026-11-25T21:57:13Z",
+   "files": [
+    "crates/ginux-process/src/lib.rs"
+   ],
+   "keywords": [
+    "pass",
+    "fail",
+    "0x7f",
+    "exited",
+    "killed",
+    "signaled",
+    "survives",
+    "signal",
+    "word",
+    "0xff"
+   ]
+  },
+  "344": {
+   "kind": "pr",
+   "title": "tests(vfs): pin encode_record path and link validation",
+   "state": "closed",
+   "merged_at": "2026-11-25T21:57:13Z",
+   "files": [
+    "crates/ginux-vfs/src/lib.rs"
+   ],
+   "keywords": [
+    "path",
+    "link",
+    "pass",
+    "encode_record",
+    "fail",
+    "survives",
+    "entries",
+    "existing",
+    "killed",
+    "len"
+   ]
+  },
+  "343": {
+   "kind": "pr",
+   "title": "tests(process): pin ChildStatus word encoding for exit and signal",
+   "state": "closed",
+   "merged_at": null,
+   "files": [
+    ".agents/skills/hdae-development",
+    ".agents/skills/pr-issue-review",
+    ".cargo/config.toml",
+    ".claude/skills/hdae-development",
+    ".claude/skills/pr-issue-review",
+    ".github/workflows/check.yml",
+    ".gitignore",
+    ".hdae/VERSION",
+    ".hdae/manifest",
+    ".hdae/skills/hdae-development/SKILL.md",
+    ".hdae/skills/hdae-development/agents/openai.yaml",
+    ".hdae/skills/hdae-development/references/hdae-method.md",
+    ".hdae/skills/pr-issue-review/SKILL.md",
+    ".hdae/skills/pr-issue-review/agents/openai.yaml",
+    ".hdae/skills/pr-issue-review/references/review-workflow.md",
+    "AGENTS.md",
+    "Cargo.lock",
+    "Cargo.toml",
+    "LICENSE",
+    "Makefile",
+    "NOTICE",
+    "README.md",
+    "benchmarks/allocator/rocky-qemu-provenance.txt",
+    "benchmarks/allocator/rocky-qemu.tsv",
+    "benchmarks/gate15/README.md",
+    "benchmarks/gate15/cpu.conf",
+    "benchmarks/gate15/memory.conf",
+    "benchmarks/gate15/mutex.conf",
+    "benchmarks/gate15/native.conf",
+    "benchmarks/gate15/paranoid.conf"
+   ],
+   "keywords": [
+    "pass",
+    "fail",
+    "0x7f",
+    "exited",
+    "killed",
+    "signaled",
+    "survives",
+    "signal",
+    "word",
+    "0xff"
+   ]
+  },
+  "342": {
+   "kind": "pr",
+   "title": "tests(core): pin balanced surface mapping for random and lifecycle",
+   "state": "closed",
+   "merged_at": "2026-11-25T21:57:13Z",
+   "files": [
+    "crates/ginux-core/src/lib.rs"
+   ],
+   "keywords": [
+    "lifecycle",
+    "pass",
+    "random",
+    "fail",
+    "survives",
+    "318",
+    "arm",
+    "arms",
+    "balanced",
+    "balanced_surface"
+   ]
+  },
+  "341": {
+   "kind": "pr",
+   "title": "tests(fs-policy): pin ObjectId availability to either nonzero component",
+   "state": "closed",
+   "merged_at": "2026-11-25T21:57:13Z",
+   "files": [
+    "crates/ginux-fs-policy/src/lib.rs"
+   ],
+   "keywords": [
+    "pass",
+    "device",
+    "fail",
+    "survives",
+    "availability",
+    "available",
+    "existing",
+    "is_available",
+    "killed",
+    "nonzero"
+   ]
+  },
+  "340": {
+   "kind": "pr",
+   "title": "tests(core): pin balanced virtual parent and group identity",
+   "state": "closed",
+   "merged_at": "2026-11-25T21:57:13Z",
+   "files": [
+    "crates/ginux-core/src/lib.rs"
+   ],
+   "keywords": [
+    "pass",
+    "arm",
+    "fail",
+    "reports",
+    "survives",
+    "balanced",
+    "core",
+    "delete",
+    "existing",
+    "group"
+   ]
+  },
+  "339": {
+   "kind": "pr",
+   "title": "tests(process): pin pipe release reference counting to last end",
+   "state": "closed",
+   "merged_at": "2026-11-25T19:37:51Z",
+   "files": [
+    "crates/ginux-process/src/lib.rs"
+   ],
+   "keywords": [
+    "release",
+    "end",
+    "pass",
+    "pipe",
+    "fail",
+    "survives",
+    "closes",
+    "counting",
+    "ends",
+    "existing"
+   ]
+  },
+  "338": {
+   "kind": "pr",
+   "title": "Fix native replay signal semantics",
+   "state": "closed",
+   "merged_at": "2026-11-25T21:57:13Z",
+   "files": [
+    "Makefile",
+    "crates/ginux-init/src/main.rs",
+    "crates/ginux-init/src/native_clone.rs",
+    "crates/ginux-init/src/native_network.rs",
+    "hdae/STATUS.md",
+    "hdae/gates-done/52-native-replay-signal-semantics.md",
+    "scripts/test-native-replay-signal.py",
+    "tests/fixtures/native-fixture.c"
+   ],
+   "keywords": [
+    "check",
+    "native",
+    "passed",
+    "replay",
+    "signal",
+    "caller",
+    "cleanup",
+    "restore",
+    "run",
+    "semantics"
+   ]
+  },
+  "337": {
+   "kind": "pr",
+   "title": "tests(devices): scope views projection to the requesting instance",
+   "state": "closed",
+   "merged_at": "2026-11-25T19:37:52Z",
+   "files": [
+    "crates/ginux-devices/src/lib.rs"
+   ],
+   "keywords": [
+    "instance",
+    "devices",
+    "views",
+    "device",
+    "entry",
+    "existing",
+    "guard",
+    "projects",
+    "requesting",
+    "suite"
+   ]
+  },
   "336": {
    "kind": "pr",
    "title": "tests(kernel-views): bind sysfs leaves to device kind",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-25T19:37:52Z",
    "files": [
     "crates/ginux-kernel-views/src/lib.rs"
    ],
@@ -27,8 +252,8 @@
   "335": {
    "kind": "pr",
    "title": "tests(kernel-views): pin procfs task-path identity parsing",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-25T16:04:22Z",
    "files": [
     "crates/ginux-kernel-views/src/lib.rs"
    ],
@@ -493,7 +718,7 @@
   "316": {
    "kind": "issue",
    "title": "native mode 3: a signal with a handler between staged replay calls fails the instance (clone3, network send)",
-   "state": "open",
+   "state": "closed",
    "merged_at": null,
    "files": [],
    "keywords": [
@@ -7865,7 +8090,227 @@
   }
  },
  "keywords": {
+  "pass": [
+   345,
+   344,
+   343,
+   342,
+   341,
+   340,
+   339,
+   332,
+   331,
+   330,
+   326,
+   325,
+   324,
+   323,
+   249,
+   195,
+   189,
+   181,
+   180,
+   173,
+   172,
+   171,
+   169,
+   168,
+   156,
+   86
+  ],
+  "fail": [
+   345,
+   344,
+   343,
+   342,
+   341,
+   340,
+   339,
+   331,
+   330,
+   326,
+   325,
+   324,
+   323,
+   249,
+   211,
+   210,
+   197,
+   196,
+   181,
+   179,
+   28,
+   4
+  ],
+  "0x7f": [
+   345,
+   343
+  ],
+  "exited": [
+   345,
+   343,
+   234
+  ],
+  "killed": [
+   345,
+   344,
+   343,
+   341,
+   325,
+   324,
+   323,
+   185
+  ],
+  "signaled": [
+   345,
+   343,
+   111
+  ],
+  "survives": [
+   345,
+   344,
+   343,
+   342,
+   341,
+   340,
+   339,
+   326,
+   325,
+   324,
+   323
+  ],
+  "signal": [
+   345,
+   343,
+   338,
+   316,
+   296,
+   276,
+   238,
+   213,
+   212,
+   191,
+   190,
+   177,
+   176,
+   161,
+   135,
+   130,
+   129,
+   111,
+   105
+  ],
+  "word": [
+   345,
+   343
+  ],
+  "0xff": [
+   345,
+   343
+  ],
+  "path": [
+   344,
+   325,
+   300,
+   225,
+   148,
+   146,
+   141,
+   140,
+   136,
+   120,
+   116,
+   94,
+   81,
+   79,
+   69,
+   67,
+   66,
+   38,
+   26,
+   25,
+   18
+  ],
+  "link": [
+   344,
+   318,
+   167,
+   148,
+   142,
+   133,
+   122,
+   117
+  ],
+  "encode_record": [
+   344
+  ],
+  "entries": [
+   344,
+   207,
+   149,
+   134,
+   110,
+   11
+  ],
+  "existing": [
+   344,
+   341,
+   340,
+   339,
+   337,
+   336,
+   335,
+   331,
+   330,
+   320,
+   319,
+   310,
+   296,
+   177,
+   154,
+   153,
+   142,
+   49,
+   47,
+   38
+  ],
+  "len": [
+   344
+  ],
+  "lifecycle": [
+   342,
+   160,
+   159
+  ],
+  "random": [
+   342
+  ],
+  "318": [
+   342,
+   322,
+   163
+  ],
+  "arm": [
+   342,
+   340,
+   324
+  ],
+  "arms": [
+   342,
+   297
+  ],
+  "balanced": [
+   342,
+   340,
+   264,
+   238
+  ],
+  "balanced_surface": [
+   342
+  ],
   "device": [
+   341,
+   337,
    336,
    326,
    320,
@@ -7877,11 +8322,308 @@
    28,
    1
   ],
+  "availability": [
+   341
+  ],
+  "available": [
+   341,
+   125,
+   22
+  ],
+  "is_available": [
+   341
+  ],
+  "nonzero": [
+   341
+  ],
+  "reports": [
+   340
+  ],
+  "core": [
+   340,
+   305,
+   177,
+   162
+  ],
+  "delete": [
+   340
+  ],
+  "group": [
+   340,
+   330,
+   296
+  ],
+  "release": [
+   339,
+   309,
+   227,
+   222,
+   54,
+   43,
+   37,
+   26
+  ],
+  "end": [
+   339,
+   332,
+   327,
+   175
+  ],
+  "pipe": [
+   339,
+   327,
+   113
+  ],
+  "closes": [
+   339
+  ],
+  "counting": [
+   339
+  ],
+  "ends": [
+   339
+  ],
+  "check": [
+   338,
+   322,
+   306,
+   305,
+   287,
+   273,
+   262,
+   260,
+   253,
+   241,
+   228,
+   217,
+   216,
+   204,
+   195,
+   189,
+   187,
+   181,
+   171,
+   169,
+   168,
+   165,
+   162,
+   160,
+   159,
+   158,
+   156,
+   153,
+   152,
+   142,
+   117,
+   90,
+   88,
+   87,
+   84,
+   61,
+   54,
+   51,
+   50,
+   49,
+   48,
+   47,
+   46,
+   44,
+   40,
+   11,
+   10,
+   9,
+   4,
+   3
+  ],
+  "native": [
+   338,
+   334,
+   327,
+   316,
+   308,
+   292,
+   288,
+   287,
+   286,
+   284,
+   283,
+   281,
+   276,
+   274,
+   272,
+   271,
+   268,
+   266,
+   265,
+   264,
+   263,
+   257,
+   247,
+   246,
+   244,
+   243,
+   242,
+   238,
+   236,
+   234,
+   228,
+   226,
+   225,
+   219,
+   215,
+   207,
+   205,
+   204,
+   203,
+   184,
+   183,
+   182,
+   176,
+   154,
+   153,
+   84,
+   82,
+   39,
+   14
+  ],
+  "passed": [
+   338,
+   322,
+   321,
+   315,
+   314,
+   289,
+   248,
+   246,
+   243,
+   242,
+   238,
+   236,
+   233,
+   231,
+   207,
+   53,
+   42,
+   41,
+   9
+  ],
+  "replay": [
+   338,
+   276
+  ],
+  "caller": [
+   338,
+   316,
+   293,
+   276,
+   129,
+   105
+  ],
+  "cleanup": [
+   338,
+   259,
+   197,
+   151
+  ],
+  "restore": [
+   338
+  ],
+  "run": [
+   338,
+   284,
+   271,
+   250,
+   182,
+   148,
+   137,
+   122,
+   61
+  ],
+  "semantics": [
+   338
+  ],
+  "instance": [
+   337,
+   320,
+   303,
+   292,
+   282,
+   280,
+   275,
+   272,
+   266,
+   261,
+   259,
+   253,
+   248,
+   247,
+   246,
+   245,
+   244,
+   243,
+   242,
+   241,
+   238,
+   237,
+   236,
+   235,
+   234,
+   233,
+   232,
+   207
+  ],
+  "devices": [
+   337,
+   336,
+   332,
+   320,
+   312,
+   181,
+   173,
+   172
+  ],
+  "views": [
+   337,
+   183,
+   182
+  ],
+  "entry": [
+   337,
+   213,
+   203,
+   201,
+   193,
+   192,
+   186,
+   175,
+   162,
+   155,
+   138,
+   134,
+   114,
+   17,
+   10,
+   7
+  ],
   "guard": [
+   337,
    336,
    317,
    101,
    27
+  ],
+  "projects": [
+   337
+  ],
+  "requesting": [
+   337
+  ],
+  "suite": [
+   337,
+   324,
+   320,
+   319,
+   317
   ],
   "network": [
    336,
@@ -7931,32 +8673,6 @@
    279,
    278,
    159
-  ],
-  "devices": [
-   336,
-   332,
-   320,
-   312,
-   181,
-   173,
-   172
-  ],
-  "existing": [
-   336,
-   335,
-   331,
-   330,
-   320,
-   319,
-   310,
-   296,
-   177,
-   154,
-   153,
-   142,
-   49,
-   47,
-   38
   ],
   "proc": [
    335,
@@ -8047,56 +8763,6 @@
    173,
    172
   ],
-  "native": [
-   334,
-   327,
-   316,
-   308,
-   292,
-   288,
-   287,
-   286,
-   284,
-   283,
-   281,
-   276,
-   274,
-   272,
-   271,
-   268,
-   266,
-   265,
-   264,
-   263,
-   257,
-   247,
-   246,
-   244,
-   243,
-   242,
-   238,
-   236,
-   234,
-   228,
-   226,
-   225,
-   219,
-   215,
-   207,
-   205,
-   204,
-   203,
-   184,
-   183,
-   182,
-   176,
-   154,
-   153,
-   84,
-   82,
-   39,
-   14
-  ],
   "systemd": [
    334,
    266,
@@ -8179,11 +8845,6 @@
   "deferred": [
    333
   ],
-  "end": [
-   332,
-   327,
-   175
-  ],
   "exact": [
    332,
    314,
@@ -8201,27 +8862,6 @@
    81,
    79,
    48
-  ],
-  "pass": [
-   332,
-   331,
-   330,
-   326,
-   325,
-   324,
-   323,
-   249,
-   195,
-   189,
-   181,
-   180,
-   173,
-   172,
-   171,
-   169,
-   168,
-   156,
-   86
   ],
   "past": [
    332
@@ -8254,23 +8894,6 @@
    253,
    50
   ],
-  "fail": [
-   331,
-   330,
-   326,
-   325,
-   324,
-   323,
-   249,
-   211,
-   210,
-   197,
-   196,
-   181,
-   179,
-   28,
-   4
-  ],
   "partial": [
    331
   ],
@@ -8300,10 +8923,6 @@
   "error": [
    330,
    22
-  ],
-  "group": [
-   330,
-   296
   ],
   "symlink": [
    329,
@@ -8455,10 +9074,6 @@
    121,
    22
   ],
-  "pipe": [
-   327,
-   113
-  ],
   "close": [
    327,
    312,
@@ -8522,46 +9137,12 @@
   "max_frame_size": [
    326
   ],
-  "survives": [
-   326,
-   325,
-   324,
-   323
-  ],
   "boundaries": [
    326,
    255
   ],
-  "path": [
-   325,
-   300,
-   225,
-   148,
-   146,
-   141,
-   140,
-   136,
-   120,
-   116,
-   94,
-   81,
-   79,
-   69,
-   67,
-   66,
-   38,
-   26,
-   25,
-   18
-  ],
   "max_path": [
    325
-  ],
-  "killed": [
-   325,
-   324,
-   323,
-   185
   ],
   "length": [
    325,
@@ -8609,15 +9190,6 @@
   "count": [
    324,
    219
-  ],
-  "suite": [
-   324,
-   320,
-   319,
-   317
-  ],
-  "arm": [
-   324
   ],
   "limit": [
    323,
@@ -8689,83 +9261,8 @@
    92,
    86
   ],
-  "passed": [
-   322,
-   321,
-   315,
-   314,
-   289,
-   248,
-   246,
-   243,
-   242,
-   238,
-   236,
-   233,
-   231,
-   207,
-   53,
-   42,
-   41,
-   9
-  ],
-  "318": [
-   322,
-   163
-  ],
   "canonical": [
    322
-  ],
-  "check": [
-   322,
-   306,
-   305,
-   287,
-   273,
-   262,
-   260,
-   253,
-   241,
-   228,
-   217,
-   216,
-   204,
-   195,
-   189,
-   187,
-   181,
-   171,
-   169,
-   168,
-   165,
-   162,
-   160,
-   159,
-   158,
-   156,
-   153,
-   152,
-   142,
-   117,
-   90,
-   88,
-   87,
-   84,
-   61,
-   54,
-   51,
-   50,
-   49,
-   48,
-   47,
-   46,
-   44,
-   40,
-   11,
-   10,
-   9,
-   4,
-   3
   ],
   "explicit": [
    322,
@@ -8897,35 +9394,6 @@
   "captured": [
    321
   ],
-  "instance": [
-   320,
-   303,
-   292,
-   282,
-   280,
-   275,
-   272,
-   266,
-   261,
-   259,
-   253,
-   248,
-   247,
-   246,
-   245,
-   244,
-   243,
-   242,
-   241,
-   238,
-   237,
-   236,
-   235,
-   234,
-   233,
-   232,
-   207
-  ],
   "revoke": [
    320
   ],
@@ -8972,15 +9440,6 @@
   ],
   "linker": [
    318
-  ],
-  "link": [
-   318,
-   167,
-   148,
-   142,
-   133,
-   122,
-   117
   ],
   "unknown": [
    318,
@@ -9126,37 +9585,12 @@
    8,
    5
   ],
-  "caller": [
-   316,
-   293,
-   276,
-   129,
-   105
-  ],
   "native_clone": [
    316
   ],
   "native_network": [
    316,
    301
-  ],
-  "signal": [
-   316,
-   296,
-   276,
-   238,
-   213,
-   212,
-   191,
-   190,
-   177,
-   176,
-   161,
-   135,
-   130,
-   129,
-   111,
-   105
   ],
   "pathname": [
    315,
@@ -9349,15 +9783,6 @@
   "importer": [
    309
   ],
-  "release": [
-   309,
-   227,
-   222,
-   54,
-   43,
-   37,
-   26
-  ],
   "socket": [
    308,
    151,
@@ -9531,11 +9956,6 @@
   ],
   "converted": [
    305
-  ],
-  "core": [
-   305,
-   177,
-   162
   ],
   "contract": [
    304,
@@ -9754,9 +10174,6 @@
    297,
    279,
    278
-  ],
-  "arms": [
-   297
   ],
   "clears": [
    297
@@ -10132,16 +10549,6 @@
    157,
    107
   ],
-  "run": [
-   284,
-   271,
-   250,
-   182,
-   148,
-   137,
-   122,
-   61
-  ],
   "sendto": [
    283
   ],
@@ -10347,9 +10754,6 @@
    274,
    88
   ],
-  "replay": [
-   276
-  ],
   "broker": [
    275
   ],
@@ -10518,10 +10922,6 @@
   "channels": [
    265
   ],
-  "balanced": [
-   264,
-   238
-  ],
   "clamp": [
    264
   ],
@@ -10626,11 +11026,6 @@
   ],
   "isolation": [
    259
-  ],
-  "cleanup": [
-   259,
-   197,
-   151
   ],
   "independent": [
    259,
@@ -11061,9 +11456,6 @@
   "children": [
    234
   ],
-  "exited": [
-   234
-  ],
   "mkdirat": [
    233
   ],
@@ -11409,23 +11801,6 @@
    213,
    196
   ],
-  "entry": [
-   213,
-   203,
-   201,
-   193,
-   192,
-   186,
-   175,
-   162,
-   155,
-   138,
-   134,
-   114,
-   17,
-   10,
-   7
-  ],
   "sigterm": [
    212
   ],
@@ -11478,13 +11853,6 @@
   ],
   "rootfs_sha256": [
    208
-  ],
-  "entries": [
-   207,
-   149,
-   134,
-   110,
-   11
   ],
   "polling": [
    207
@@ -11758,10 +12126,6 @@
    184,
    119
   ],
-  "views": [
-   183,
-   182
-  ],
   "fixtures": [
    183,
    182
@@ -11993,10 +12357,6 @@
   "workload": [
    161,
    153
-  ],
-  "lifecycle": [
-   160,
-   159
   ],
   "helper_pid": [
    160,
@@ -12409,10 +12769,6 @@
   "passes": [
    125
   ],
-  "available": [
-   125,
-   22
-  ],
   "map_shared": [
    124,
    81,
@@ -12507,9 +12863,6 @@
   ],
   "false": [
    112
-  ],
-  "signaled": [
-   111
   ],
   "nlink": [
    109
