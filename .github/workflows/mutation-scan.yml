@@ -1,0 +1,68 @@
+name: mutation-scan
+
+# Heavy repeatable mutation prospecting on GitHub runners (owner directive 2026-11-25).
+# Read-only wrt upstream: public clone, no token, no push. Artifacts-only house rule.
+on:
+  workflow_dispatch:
+    inputs:
+      crate:
+        description: upstream crate to mutation-scan
+        required: true
+        default: ginux-kernel-views
+        type: choice
+        options:
+          - ginux-kernel-views
+          - ginux-devices
+          - ginux-fs-policy
+          - ginux-oci
+          - ginux-process
+          - ginux-vfs
+          - ginux-core
+          - ginux-instance
+permissions:
+  contents: read
+concurrency:
+  group: mutation-scan-${{ inputs.crate }}
+  cancel-in-progress: false
+jobs:
+  scan:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      CARGO_TERM_COLOR: never
+      RUSTFLAGS: ''
+    steps:
+      - name: Checkout upstream main (public, no credentials)
+        uses: actions/checkout@v5
+        with:
+          repository: gmkurtzer/ginux
+          ref: main
+          persist-credentials: false
+      - name: Record head
+        run: echo "mutation-scan ${{ inputs.crate }} @ $(git rev-parse --short HEAD)" >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            target
+          key: mutscan-${{ inputs.crate }}-${{ hashFiles('Cargo.lock') }}
+          restore-keys: mutscan-${{ inputs.crate }}-
+      - name: Install cargo-mutants
+        uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-mutants
+      - name: Run mutation scan
+        run: |
+          timeout 1500 cargo mutants --package ${{ inputs.crate }} --jobs 4 --timeout 60 --output mutants.out 2>&1 | tee scan.log || true
+          echo '## Missed mutants (survivors = test gaps)' >> "$GITHUB_STEP_SUMMARY"
+          if [ -f mutants.out/missed.txt ]; then cat mutants.out/missed.txt >> "$GITHUB_STEP_SUMMARY"; else echo none >> "$GITHUB_STEP_SUMMARY"; fi
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mutation-scan-${{ inputs.crate }}
+          path: |
+            mutants.out/missed.txt
+            mutants.out/caught.txt
+            scan.log
+          if-no-files-found: warn
