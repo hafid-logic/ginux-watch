@@ -6,3 +6,4 @@
 - Last evidence: authz tests 12/12؛.ci يحرُس كل PR؛ v8.3.1 ثابت (watcher #64 أخضر)
 - Open decisions: قبول البوابات (gates-done) بيد المالك؛ استثناء token-in-chat مؤجل بقرار المالك حتى اكتمال التحقق
 - Exact next action: تجربة المستوى 0 الأصيل (مؤجلة بطلب المالك)؛ إبطال توكن الـApp بعد الجلسة
+- Continuity: read `docs/PIPELINE-PLAYBOOK.md` + `team/tasks/INDEX.md` before any contribution work (method, quality gate, 12 discoveries, task states).
