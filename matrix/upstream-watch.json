@@ -1,6 +1,6 @@
 {
- "last_seen_sha": "689fe0f31c81d75b3641d89ec68ef421c0d98e3d",
- "last_checked": "2026-11-24T11:14:50Z",
+ "last_seen_sha": "85d53265692ee1847c49863b2c416848d2274796",
+ "last_checked": "2026-11-25T14:03:30Z",
  "last_dispatch": {
   "at": "2026-11-05T02:56:29Z",
   "range": "4d4a53bb..d337713b",
@@ -28,7 +28,7 @@
    "updated_at": "2026-11-13T02:27:17Z",
    "last_comment_at": "2026-11-13T02:27:13Z",
    "last_comment_author": "gmkurtzer",
-   "checked": "2026-11-24T11:14:50Z"
+   "checked": "2026-11-25T14:03:30Z"
   },
   "207": {
    "state": "closed",
@@ -37,7 +37,7 @@
    "updated_at": "2026-11-13T02:58:34Z",
    "last_comment_at": "2026-11-13T02:58:33Z",
    "last_comment_author": "gmkurtzer",
-   "checked": "2026-11-24T11:14:50Z"
+   "checked": "2026-11-25T14:03:30Z"
   },
   "227": {
    "state": "merged",
@@ -46,7 +46,7 @@
    "updated_at": "2026-11-13T02:27:02Z",
    "last_comment_at": "2026-11-06T14:58:30Z",
    "last_comment_author": "gmkurtzer",
-   "checked": "2026-11-24T11:14:50Z"
+   "checked": "2026-11-25T14:03:30Z"
   }
  },
  "breaker_absorbed": {
@@ -91,9 +91,9 @@
   }
  },
  "heartbeat": {
-  "last_run": "2026-11-25T13:54:40Z",
-  "last_conclusion": "failure",
-  "last_success": "2026-11-24T11:14:50Z",
+  "last_run": "2026-11-25T14:03:30Z",
+  "last_conclusion": "success",
+  "last_success": "2026-11-25T14:03:30Z",
   "alert_basis": "last_success",
   "source": "team-watcher (GitHub Actions)",
   "checked": "2026-11-25T13:54:40Z",
@@ -102,41 +102,29 @@
  "alert_threshold_hours": 12,
  "scheduling": "best-effort (GitHub Actions)",
  "our_open_prs": {
-  "320": {
-   "title": "tests(devices): scope revoke teardown to its own instance",
+  "336": {
+   "title": "tests(kernel-views): bind sysfs leaves to device kind",
    "state": "open",
-   "head_sha": "e1f6c5e8241dcce6dbaaca02c7a7d7abc694b817",
-   "base_sha": "689fe0f31c81d75b3641d89ec68ef421c0d98e3d",
+   "head_sha": "0451fcaeae6d93bda9160b442b7255fb93f43dd0",
+   "base_sha": "85d53265692ee1847c49863b2c416848d2274796",
    "stale": false,
    "mergeable_state": "clean",
    "comments": null,
    "review_comments": null,
-   "updated_at": "2026-11-24T11:06:38Z",
-   "checked": "2026-11-24T11:14:50Z"
+   "updated_at": "2026-11-25T11:09:29Z",
+   "checked": "2026-11-25T14:03:30Z"
   },
-  "319": {
-   "title": "tests(fs-policy): pin path-admission identity and capability-kind guards",
+  "335": {
+   "title": "tests(kernel-views): pin procfs task-path identity parsing",
    "state": "open",
-   "head_sha": "41e88724e7fd95b63e80bc0d7fdcf74eb4c5bce9",
-   "base_sha": "689fe0f31c81d75b3641d89ec68ef421c0d98e3d",
+   "head_sha": "73320a50d50400d19e1984abaa41ad872b73f0bb",
+   "base_sha": "85d53265692ee1847c49863b2c416848d2274796",
    "stale": false,
    "mergeable_state": "clean",
    "comments": null,
    "review_comments": null,
-   "updated_at": "2026-11-24T10:50:38Z",
-   "checked": "2026-11-24T11:14:50Z"
-  },
-  "317": {
-   "title": "tests(oci): pin digest length and reference empty-part boundaries",
-   "state": "open",
-   "head_sha": "f0c3c0e9c40cba95463e077f5a17522833b0588f",
-   "base_sha": "689fe0f31c81d75b3641d89ec68ef421c0d98e3d",
-   "stale": false,
-   "mergeable_state": "clean",
-   "comments": null,
-   "review_comments": null,
-   "updated_at": "2026-11-24T08:48:25Z",
-   "checked": "2026-11-24T11:14:50Z"
+   "updated_at": "2026-11-25T08:31:16Z",
+   "checked": "2026-11-25T14:03:30Z"
   }
  }
 }
