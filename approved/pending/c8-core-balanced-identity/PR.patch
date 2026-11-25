@@ -1,0 +1,36 @@
+From 0aec9ad97447503e21bab0ceafa2461aad9e6b2f Mon Sep 17 00:00:00 2001
+From: Abdelhafid DJIDEL <266947999+hafid-logic@users.noreply.github.com>
+Date: Wed, 25 Nov 2026 19:31:56 +0000
+Subject: [PATCH] tests(core): pin balanced virtual parent and group identity
+
+---
+ crates/ginux-core/src/lib.rs | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git a/crates/ginux-core/src/lib.rs b/crates/ginux-core/src/lib.rs
+index 5f87a3a..220f650 100644
+--- a/crates/ginux-core/src/lib.rs
++++ b/crates/ginux-core/src/lib.rs
+@@ -934,4 +934,19 @@ mod tests {
+             }
+         }
+     }
++
++    #[test]
++    fn balanced_identity_reports_virtual_parent_and_group() {
++        assert_eq!(
++            balanced_identity_result(SYS_GETPID),
++            Some(BALANCED_VIRTUAL_PID)
++        );
++        assert_eq!(balanced_identity_result(SYS_GETPPID), Some(1));
++        assert_eq!(
++            balanced_identity_result(SYS_GETPGRP),
++            Some(BALANCED_VIRTUAL_PID)
++        );
++        assert_eq!(balanced_identity_result(SYS_GETUID), Some(0));
++        assert_eq!(balanced_identity_result(999), None);
++    }
+ }
+-- 
+2.47.3
+
