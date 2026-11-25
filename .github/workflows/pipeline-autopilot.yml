@@ -1,0 +1,23 @@
+name: pipeline-autopilot
+# Keeps the PUSHED reserve at pushed_target by pushing built stock to the fork.
+# NEVER opens upstream PRs — opening on the owner's upstream is ALWAYS human.
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch: {}
+  repository_dispatch:
+    types: [pipeline-tick]
+permissions:
+  contents: read
+concurrency:
+  group: pipeline-autopilot
+  cancel-in-progress: false
+jobs:
+  autopilot:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - name: Refill pushed reserve from stock (no upstream opening)
+        env:
+          PIPELINE_PAT: ${{ secrets.PIPELINE_PAT }}
+        run: python3 team/scripts/pipeline-autopilot.py
