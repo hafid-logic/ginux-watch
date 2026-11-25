@@ -1,8 +1,100 @@
 {
- "generated_at_utc": "2026-11-25T02:11:58Z",
+ "generated_at_utc": "2026-11-25T12:31:31Z",
  "source_repo": "gmkurtzer/ginux",
- "item_count": 326,
+ "item_count": 329,
  "items": {
+  "336": {
+   "kind": "pr",
+   "title": "tests(kernel-views): bind sysfs leaves to device kind",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    "crates/ginux-kernel-views/src/lib.rs"
+   ],
+   "keywords": [
+    "device",
+    "guard",
+    "network",
+    "111",
+    "block",
+    "both",
+    "class",
+    "dev",
+    "devices",
+    "existing"
+   ]
+  },
+  "335": {
+   "kind": "pr",
+   "title": "tests(kernel-views): pin procfs task-path identity parsing",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    "crates/ginux-kernel-views/src/lib.rs"
+   ],
+   "keywords": [
+    "proc",
+    "pid",
+    "task",
+    "111",
+    "accepted",
+    "coverage",
+    "empty",
+    "existing",
+    "forms",
+    "identity"
+   ]
+  },
+  "334": {
+   "kind": "pr",
+   "title": "Fix post-acceptance verification regressions",
+   "state": "closed",
+   "merged_at": "2026-11-25T04:32:01Z",
+   "files": [
+    "config/instance-gate9.75-network.toml",
+    "hdae/STATUS.md",
+    "hdae/gates-done/23-virtual-sysinfo-systemd-compat.md",
+    "hdae/gates-done/24-concurrent-service-output.md",
+    "hdae/gates-done/25-declarative-cli-command-framework.md",
+    "hdae/gates-done/26-rpm-packaging.md",
+    "hdae/gates-done/27-native-set-tid-virtual.md",
+    "hdae/gates-done/28-native-clone-policy.md",
+    "hdae/gates-done/29-shared-network-destination-policy.md",
+    "hdae/gates-done/30-native-shared-descriptor-authority.md",
+    "hdae/gates-done/31-filesystem-mediation-foundation.md",
+    "hdae/gates-done/32-security-architecture-inventory.md",
+    "hdae/gates-done/33-contract-enforcement-review.md",
+    "hdae/gates-done/34-instance-authority-isolation-review.md",
+    "hdae/gates-done/35-host-privilege-supply-chain-review.md",
+    "hdae/gates-done/36-defensive-robustness-assurance.md",
+    "hdae/gates-done/37-security-remediation-closure.md",
+    "hdae/gates-done/38-allocator-feasibility-controls.md",
+    "hdae/gates-done/39-standard-allocator-abi-foundation.md",
+    "hdae/gates-done/40-allocator-hardening-concurrency.md",
+    "hdae/gates-done/41-ginux-aware-memory-contract.md",
+    "hdae/gates-done/42-allocator-compatibility-proof-performance.md",
+    "hdae/gates-done/44-deny-host-global-sync.md",
+    "hdae/gates-done/45-preserve-netlink-ack-errors.md",
+    "hdae/gates-done/46-enforce-network-default-deny.md",
+    "hdae/gates-done/47-shared-network-socket-alias-authority.md",
+    "hdae/gates-done/48-immutable-unix-send-snapshot.md",
+    "hdae/gates-done/49-immutable-connect-bind-sockaddr.md",
+    "hdae/gates-done/50-scope-freestanding-rustflags.md",
+    "hdae/gates-done/51-gate-ledger-reconciliation.md"
+   ],
+   "keywords": [
+    "gate",
+    "bench",
+    "native",
+    "systemd",
+    "verification",
+    "acceptance",
+    "accepted",
+    "allocator",
+    "baseline",
+    "clean"
+   ]
+  },
   "333": {
    "kind": "pr",
    "title": "HDAE: reconcile delivered gate records",
@@ -7773,7 +7865,152 @@
   }
  },
  "keywords": {
+  "device": [
+   336,
+   326,
+   320,
+   278,
+   237,
+   125,
+   30,
+   29,
+   28,
+   1
+  ],
+  "guard": [
+   336,
+   317,
+   101,
+   27
+  ],
+  "network": [
+   336,
+   316,
+   308,
+   306,
+   298,
+   289,
+   283,
+   259,
+   251,
+   229,
+   100,
+   75,
+   68
+  ],
+  "111": [
+   336,
+   335
+  ],
+  "block": [
+   336,
+   181,
+   180,
+   173,
+   139,
+   41,
+   30
+  ],
+  "both": [
+   336,
+   329,
+   309,
+   304,
+   193,
+   175,
+   152,
+   143,
+   102,
+   76
+  ],
+  "class": [
+   336
+  ],
+  "dev": [
+   336,
+   279,
+   278,
+   159
+  ],
+  "devices": [
+   336,
+   332,
+   320,
+   312,
+   181,
+   173,
+   172
+  ],
+  "existing": [
+   336,
+   335,
+   331,
+   330,
+   320,
+   319,
+   310,
+   296,
+   177,
+   154,
+   153,
+   142,
+   49,
+   47,
+   38
+  ],
+  "proc": [
+   335,
+   79
+  ],
+  "pid": [
+   335,
+   285,
+   274,
+   267,
+   214,
+   126,
+   102
+  ],
+  "task": [
+   335,
+   327,
+   267,
+   219,
+   213,
+   212,
+   185,
+   177
+  ],
+  "accepted": [
+   335,
+   334,
+   326,
+   255,
+   152,
+   69
+  ],
+  "coverage": [
+   335,
+   269,
+   231
+  ],
+  "empty": [
+   335,
+   317,
+   306,
+   298,
+   128
+  ],
+  "forms": [
+   335
+  ],
+  "identity": [
+   335,
+   319,
+   229
+  ],
   "gate": [
+   334,
    333,
    289,
    287,
@@ -7802,6 +8039,101 @@
    181,
    172
   ],
+  "bench": [
+   334,
+   257,
+   181,
+   180,
+   173,
+   172
+  ],
+  "native": [
+   334,
+   327,
+   316,
+   308,
+   292,
+   288,
+   287,
+   286,
+   284,
+   283,
+   281,
+   276,
+   274,
+   272,
+   271,
+   268,
+   266,
+   265,
+   264,
+   263,
+   257,
+   247,
+   246,
+   244,
+   243,
+   242,
+   238,
+   236,
+   234,
+   228,
+   226,
+   225,
+   219,
+   215,
+   207,
+   205,
+   204,
+   203,
+   184,
+   183,
+   182,
+   176,
+   154,
+   153,
+   84,
+   82,
+   39,
+   14
+  ],
+  "systemd": [
+   334,
+   266,
+   261,
+   254,
+   253,
+   252,
+   231
+  ],
+  "verification": [
+   334,
+   273,
+   266,
+   230,
+   70,
+   36
+  ],
+  "acceptance": [
+   334,
+   333,
+   290
+  ],
+  "allocator": [
+   334,
+   333,
+   313,
+   311,
+   292
+  ],
+  "baseline": [
+   334
+  ],
+  "clean": [
+   334,
+   312,
+   72
+  ],
   "records": [
    333
   ],
@@ -7814,16 +8146,6 @@
    156,
    153,
    6
-  ],
-  "acceptance": [
-   333,
-   290
-  ],
-  "allocator": [
-   333,
-   313,
-   311,
-   292
   ],
   "boundary": [
    333,
@@ -7908,14 +8230,6 @@
    332,
    128
   ],
-  "devices": [
-   332,
-   320,
-   312,
-   181,
-   173,
-   172
-  ],
   "required": [
    331
   ],
@@ -7939,21 +8253,6 @@
    298,
    253,
    50
-  ],
-  "existing": [
-   331,
-   330,
-   320,
-   319,
-   310,
-   296,
-   177,
-   154,
-   153,
-   142,
-   49,
-   47,
-   38
   ],
   "fail": [
    331,
@@ -8045,17 +8344,6 @@
   "whiteout": [
    329,
    309
-  ],
-  "both": [
-   329,
-   309,
-   304,
-   193,
-   175,
-   152,
-   143,
-   102,
-   76
   ],
   "directory": [
    329,
@@ -8216,64 +8504,6 @@
    190,
    65
   ],
-  "task": [
-   327,
-   267,
-   219,
-   213,
-   212,
-   185,
-   177
-  ],
-  "native": [
-   327,
-   316,
-   308,
-   292,
-   288,
-   287,
-   286,
-   284,
-   283,
-   281,
-   276,
-   274,
-   272,
-   271,
-   268,
-   266,
-   265,
-   264,
-   263,
-   257,
-   247,
-   246,
-   244,
-   243,
-   242,
-   238,
-   236,
-   234,
-   228,
-   226,
-   225,
-   219,
-   215,
-   207,
-   205,
-   204,
-   203,
-   184,
-   183,
-   182,
-   176,
-   154,
-   153,
-   84,
-   82,
-   39,
-   14
-  ],
   "surface": [
    327,
    277,
@@ -8298,26 +8528,9 @@
    324,
    323
   ],
-  "accepted": [
-   326,
-   255,
-   152,
-   69
-  ],
   "boundaries": [
    326,
    255
-  ],
-  "device": [
-   326,
-   320,
-   278,
-   237,
-   125,
-   30,
-   29,
-   28,
-   1
   ],
   "path": [
    325,
@@ -8734,10 +8947,6 @@
   "five": [
    319
   ],
-  "identity": [
-   319,
-   229
-  ],
   "policy": [
    319,
    287,
@@ -8788,17 +8997,6 @@
    131,
    107,
    16
-  ],
-  "empty": [
-   317,
-   306,
-   298,
-   128
-  ],
-  "guard": [
-   317,
-   101,
-   27
   ],
   "oci": [
    317,
@@ -8942,20 +9140,6 @@
    316,
    301
   ],
-  "network": [
-   316,
-   308,
-   306,
-   298,
-   289,
-   283,
-   259,
-   251,
-   229,
-   100,
-   75,
-   68
-  ],
   "signal": [
    316,
    296,
@@ -9073,10 +9257,6 @@
   ],
   "symbol": [
    313
-  ],
-  "clean": [
-   312,
-   72
   ],
   "flag": [
    312,
@@ -9922,14 +10102,6 @@
    215,
    214
   ],
-  "pid": [
-   285,
-   274,
-   267,
-   214,
-   126,
-   102
-  ],
   "mode": [
    285,
    284,
@@ -10125,11 +10297,6 @@
    88,
    81
   ],
-  "dev": [
-   279,
-   278,
-   159
-  ],
   "now": [
    279,
    272,
@@ -10231,13 +10398,6 @@
    245,
    104
   ],
-  "verification": [
-   273,
-   266,
-   230,
-   70,
-   36
-  ],
   "toml": [
    272,
    87
@@ -10295,10 +10455,6 @@
    21,
    20
   ],
-  "coverage": [
-   269,
-   231
-  ],
   "getpgid": [
    269
   ],
@@ -10352,14 +10508,6 @@
    67,
    46,
    19
-  ],
-  "systemd": [
-   266,
-   261,
-   254,
-   253,
-   252,
-   231
   ],
   "x86": [
    265
@@ -10530,13 +10678,6 @@
   "selective": [
    257,
    249
-  ],
-  "bench": [
-   257,
-   181,
-   180,
-   173,
-   172
   ],
   "cpu": [
    257,
@@ -11639,14 +11780,6 @@
   "artifacts": [
    182
   ],
-  "block": [
-   181,
-   180,
-   173,
-   139,
-   41,
-   30
-  ],
   "1024": [
    181,
    178,
@@ -12644,9 +12777,6 @@
    80
   ],
   "let": [
-   79
-  ],
-  "proc": [
    79
   ],
   "reopen": [
