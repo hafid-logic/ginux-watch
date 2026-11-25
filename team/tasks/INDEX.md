@@ -9,6 +9,7 @@ Harvest 2026-11-25: mutation-scan #1-#5 -> 176 survivors (state/discoveries.json
 - open-PR cap raised 2 -> 3 (POLICY/AGENTS/authorization, commit 21322ab)
 - `mutation-scan.yml` dispatchable cargo-mutants workflow merged (PR #72)
 - `docs/PIPELINE-PLAYBOOK.md` — method, quality gate, 12 operational discoveries
+- T-20261125-dispatch-permission DONE: App actions:write + installation approval + fresh token; API dispatch runs #6-#9
 
 ## IN FLIGHT
 - `tests/kernel-views-procfs-identity @ 73320a50` — pushed, opened upstream (21 lines, 3 mutants)
@@ -22,9 +23,6 @@ Harvest 2026-11-25: mutation-scan #1-#5 -> 176 survivors (state/discoveries.json
 - T-20261125-devices-views-read-isolation (isolation: cross-instance device data)
 - T-20261125-process-pipespace-lifecycle  (confinement: pipe end lifecycle)
 - T-20261125-vfs-overlay-open-isolation   (access: overlay layer serving)
-
-## BLOCKED
-- T-20261125-dispatch-permission — needs App `actions: write` (UI dispatch works today)
 
 ## REJECTED (do not retry)
 - allocator c_char — fixed upstream; also overlaps contributor PR #313
