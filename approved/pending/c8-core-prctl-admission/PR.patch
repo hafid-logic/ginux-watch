@@ -1,0 +1,46 @@
+From a4b12f24ae007bcbcc3c8a1dc7e199c2af29b9c4 Mon Sep 17 00:00:00 2001
+From: Abdelhafid DJIDEL <266947999+hafid-logic@users.noreply.github.com>
+Date: Wed, 25 Nov 2026 22:35:47 +0000
+Subject: [PATCH] tests(core): pin prctl admission option and argument bounds
+
+### What
+Pins `balanced_arguments_allowed` for syscall 302 (prctl): admission requires `arg0 == 0` and `arg1 <= 15`; the test covers the exact boundary (15 admitted, 16 rejected) and a nonzero option.
+
+### Why it matters
+The prctl arm had no direct test. Widening the argument bound or dropping the option check would silently over-admit while passing the existing suite.
+
+### Mutation evidence (fail-then-pass)
+| Mutant | Existing suite | New test |
+|---|---|---|
+| drop `arg0 == 0` check | PASS (survives) | FAIL (killed) |
+| `arg1 <= 15` -> `arg1 <= 16` | PASS (survives) | FAIL (killed) |
+
+Baseline (clean tree + new test): PASS. Reproduce: `cargo test -p ginux-core --lib prctl_admission`.
+
+Prepared with AI assistance; reviewed by me.
+---
+ crates/ginux-core/src/lib.rs | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/crates/ginux-core/src/lib.rs b/crates/ginux-core/src/lib.rs
+index 579e56e2..50048b6a 100644
+--- a/crates/ginux-core/src/lib.rs
++++ b/crates/ginux-core/src/lib.rs
+@@ -959,4 +959,14 @@ mod tests {
+         assert_eq!(balanced_surface(9), BalancedSurface::Memory);
+         assert_eq!(balanced_surface(999), BalancedSurface::Denied);
+     }
++
++    #[test]
++    fn prctl_admission_pins_option_and_arg_bounds() {
++        // option must be 0, arg1 <= 15
++        assert!(balanced_arguments_allowed(302, 0, 0, 0));
++        assert!(balanced_arguments_allowed(302, 0, 15, 0));
++        assert!(!balanced_arguments_allowed(302, 0, 16, 0));
++        assert!(!balanced_arguments_allowed(302, 1, 0, 0));
++        assert!(!balanced_arguments_allowed(302, 0, 100, 0));
++    }
+ }
+-- 
+2.47.3
+

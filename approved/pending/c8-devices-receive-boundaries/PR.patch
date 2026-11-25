@@ -1,0 +1,65 @@
+From 01275d197ebab91e210d4a5a37843fb964604d89 Mon Sep 17 00:00:00 2001
+From: Abdelhafid DJIDEL <266947999+hafid-logic@users.noreply.github.com>
+Date: Wed, 25 Nov 2026 22:35:44 +0000
+Subject: [PATCH] tests(devices): pin IsolatedNetwork receive buffer, empty,
+ and closed boundaries
+
+### What
+Pins `IsolatedNetwork::receive`: an empty queue returns `QueueEmpty`, a buffer smaller than the queued frame returns `InvalidPayload` without consuming it, an exact-fit buffer receives the frame, and a closed network returns `Closed`.
+
+### Why it matters
+The receive path guards buffer sizing and queue state. The existing suite sends and receives exact-fit frames but never exercises the small-buffer, empty-queue, or closed paths, so removing those guards survives it.
+
+### Mutation evidence (fail-then-pass)
+| Mutant | Existing suite | New test |
+|---|---|---|
+| remove `output.len() < frame.len` guard | PASS (survives) | FAIL (killed) |
+| remove `self.len == 0` guard | PASS (survives) | FAIL (killed) |
+
+Baseline (clean tree + new test): PASS. Reproduce: `cargo test -p ginux-devices --lib receive_rejects`.
+
+Prepared with AI assistance; reviewed by me.
+---
+ crates/ginux-devices/src/lib.rs | 19 +++++++++++++++++++
+ pipe==1===                      |  1 +
+ 2 files changed, 20 insertions(+)
+ create mode 100644 pipe==1===
+
+diff --git a/crates/ginux-devices/src/lib.rs b/crates/ginux-devices/src/lib.rs
+index 592c0f15..63189346 100644
+--- a/crates/ginux-devices/src/lib.rs
++++ b/crates/ginux-devices/src/lib.rs
+@@ -793,4 +793,23 @@ mod tests {
+         assert_eq!(out[0].kind, DeviceKind::Zero);
+         assert_eq!(registry.views(99, &mut out), 0);
+     }
++
++    #[test]
++    fn receive_rejects_small_buffer_and_reports_closed_and_empty() {
++        let mut net: IsolatedNetwork<2> = IsolatedNetwork::new();
++        // empty queue
++        assert_eq!(net.receive(&mut [0; 8]), Err(DeviceError::QueueEmpty));
++        net.send(b"hello").unwrap();
++        // buffer too small for the queued frame
++        assert_eq!(net.receive(&mut [0; 4]), Err(DeviceError::InvalidPayload));
++        // exact-fit buffer succeeds
++        let mut buf = [0; 5];
++        assert_eq!(net.receive(&mut buf), Ok(5));
++        assert_eq!(&buf, b"hello");
++        // now empty again
++        assert_eq!(net.receive(&mut [0; 8]), Err(DeviceError::QueueEmpty));
++        // closed network rejects receive
++        net.close();
++        assert_eq!(net.receive(&mut [0; 8]), Err(DeviceError::Closed));
++    }
+ }
+diff --git a/pipe==1=== b/pipe==1===
+new file mode 100644
+index 00000000..ad71bfcb
+--- /dev/null
++++ b/pipe==1===
+@@ -0,0 +1 @@
++===MUTANT1c: pipe==0 -
+-- 
+2.47.3
+

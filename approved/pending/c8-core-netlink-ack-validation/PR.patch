@@ -1,0 +1,71 @@
+From c90b88a88c06d7d5f307a7c3174b71cb7a23ed7d Mon Sep 17 00:00:00 2001
+From: Abdelhafid DJIDEL <266947999+hafid-logic@users.noreply.github.com>
+Date: Wed, 25 Nov 2026 22:35:46 +0000
+Subject: [PATCH] tests(core): pin netlink ACK validation and message alignment
+
+### What
+Pins `loopback_netlink_ack_index`: a valid ACK matches its sequence, unknown sequences and positive acknowledgements return `None`, a message length below 16 or beyond the payload returns `Err(-22)`, a short payload returns `None`, and a non-ACK message is skipped with 4-byte alignment to reach the following ACK.
+
+### Why it matters
+The parser walks untrusted netlink payloads. The existing tests cover single well-formed messages but not the minimum-length guard or alignment across messages, so removing either survives the suite.
+
+### Mutation evidence (fail-then-pass)
+| Mutant | Existing suite | New test |
+|---|---|---|
+| remove `message_length < 16` guard | PASS (survives) | FAIL (killed) |
+| drop `(len + 3) & !3` alignment | PASS (survives) | FAIL (killed) |
+
+Baseline (clean tree + new test): PASS. Reproduce: `cargo test -p ginux-core --lib netlink_ack_rejects`.
+
+Prepared with AI assistance; reviewed by me.
+---
+ crates/ginux-core/src/lib.rs | 35 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
+
+diff --git a/crates/ginux-core/src/lib.rs b/crates/ginux-core/src/lib.rs
+index 579e56e2..15104103 100644
+--- a/crates/ginux-core/src/lib.rs
++++ b/crates/ginux-core/src/lib.rs
+@@ -959,4 +959,39 @@ mod tests {
+         assert_eq!(balanced_surface(9), BalancedSurface::Memory);
+         assert_eq!(balanced_surface(999), BalancedSurface::Denied);
+     }
++
++    #[test]
++    fn netlink_ack_rejects_malformed_and_matches_sequence() {
++        // Valid ACK: len=20, kind=2, seq=42, ack=0
++        let mut msg = [0u8; 20];
++        msg[0..4].copy_from_slice(&20u32.to_ne_bytes());
++        msg[4..6].copy_from_slice(&2u16.to_ne_bytes());
++        msg[8..12].copy_from_slice(&42u32.to_ne_bytes());
++        msg[16..20].copy_from_slice(&0i32.to_ne_bytes());
++        assert_eq!(loopback_netlink_ack_index(&msg, &[40, 42]), Ok(Some(1)));
++        assert_eq!(loopback_netlink_ack_index(&msg, &[99]), Ok(None));
++        // Positive ack -> not matched
++        msg[16..20].copy_from_slice(&1i32.to_ne_bytes());
++        assert_eq!(loopback_netlink_ack_index(&msg, &[42]), Ok(None));
++        // Malformed: message_length < 16
++        let mut bad = [0u8; 20];
++        bad[0..4].copy_from_slice(&12u32.to_ne_bytes());
++        assert_eq!(loopback_netlink_ack_index(&bad, &[42]), Err(-22));
++        // Malformed: exceeds payload
++        bad[0..4].copy_from_slice(&100u32.to_ne_bytes());
++        assert_eq!(loopback_netlink_ack_index(&bad, &[42]), Err(-22));
++        // Too-short payload
++        assert_eq!(loopback_netlink_ack_index(&[0; 12], &[42]), Ok(None));
++        // Multi-message: non-ACK (kind=3) then ACK at aligned offset
++        let mut multi = [0u8; 44];
++        // First msg: len=21 (needs padding to 24), kind=3 (not ACK)
++        multi[0..4].copy_from_slice(&21u32.to_ne_bytes());
++        multi[4..6].copy_from_slice(&3u16.to_ne_bytes());
++        // Second msg at offset 24: len=20, kind=2, seq=7, ack=-1
++        multi[24..28].copy_from_slice(&20u32.to_ne_bytes());
++        multi[28..30].copy_from_slice(&2u16.to_ne_bytes());
++        multi[32..36].copy_from_slice(&7u32.to_ne_bytes());
++        multi[40..44].copy_from_slice(&(-1i32).to_ne_bytes());
++        assert_eq!(loopback_netlink_ack_index(&multi, &[7]), Ok(Some(0)));
++    }
+ }
+-- 
+2.47.3
+
