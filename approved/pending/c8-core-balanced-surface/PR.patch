@@ -1,0 +1,47 @@
+From a1466eec6071f4c49f3faaadbf879093b1574e01 Mon Sep 17 00:00:00 2001
+From: Abdelhafid DJIDEL <266947999+hafid-logic@users.noreply.github.com>
+Date: Wed, 25 Nov 2026 20:08:08 +0000
+Subject: [PATCH] tests(core): pin balanced surface mapping for random and
+ lifecycle
+
+### What
+Pins `balanced_surface`: syscall 318 (getrandom) maps to `Random`, `exit`/`exit_group` map to `Lifecycle`, and the console/memory/denied mappings hold.
+
+### Why it matters
+The surface table drives the balanced contract's decision. The existing tests check image-read/memory/task arms but not the random or lifecycle arms, so deleting either survives the suite.
+
+### Mutation evidence (fail-then-pass)
+| Mutant | Existing suite | New test |
+|---|---|---|
+| delete `318 => Random` arm | PASS (survives) | FAIL (killed) |
+| delete `SYS_EXIT \| SYS_EXIT_GROUP => Lifecycle` arm | PASS (survives) | FAIL (killed) |
+
+Baseline (clean tree + new test): PASS. Reproduce: `cargo test -p ginux-core --lib balanced_surface`.
+
+Prepared with AI assistance; reviewed by me.
+---
+ crates/ginux-core/src/lib.rs | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/crates/ginux-core/src/lib.rs b/crates/ginux-core/src/lib.rs
+index 5f87a3a..f69f0ef 100644
+--- a/crates/ginux-core/src/lib.rs
++++ b/crates/ginux-core/src/lib.rs
+@@ -934,4 +934,14 @@ mod tests {
+             }
+         }
+     }
++
++    #[test]
++    fn balanced_surface_maps_random_and_lifecycle() {
++        assert_eq!(balanced_surface(318), BalancedSurface::Random);
++        assert_eq!(balanced_surface(SYS_EXIT), BalancedSurface::Lifecycle);
++        assert_eq!(balanced_surface(SYS_EXIT_GROUP), BalancedSurface::Lifecycle);
++        assert_eq!(balanced_surface(1), BalancedSurface::Console);
++        assert_eq!(balanced_surface(9), BalancedSurface::Memory);
++        assert_eq!(balanced_surface(999), BalancedSurface::Denied);
++    }
+ }
+-- 
+2.47.3
+
