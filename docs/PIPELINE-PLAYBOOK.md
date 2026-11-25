@@ -81,3 +81,6 @@ Two independent defects caused empty/misaligned table cells in an opened PR:
 1. **SOURCE:** literal `|` (the Rust `||` operator) inside a GFM table cell is parsed as a delimiter. Escape it `\|` (renders `|` even in code spans). Verified via GitHub `POST /markdown`.
 2. **COPY:** GitHub's *native* commit-message pre-fill (bare `?expand=1`) collapses the newline between table data rows. The **exact-copy** path is the `quick_pull=1&body=<urlencoded PR.md>` link (byte-exact) or `gh pr edit --body-file PR.md`.
 **Rule:** `PR.md` is the single source of truth. `verify-proposals.py` (verifier-agent gate, run by the autopilot) lints every source via the markdown API (no empty/misaligned cells) AND asserts each open PR body == its `PR.md` byte-for-byte, auto-correcting drift. Never hand-copy text; never trust the native pre-fill for tables.
+
+## Conflict auto-resolution (v9.2)
+Reserves that add a test at a crate's `mod tests` tail go stale when main advances (another PR merges there) ⇒ merge conflict. `rebase-reserves.py` (run by the autopilot) detects OPEN author PRs with `mergeable_state=dirty`, resets the fork branch to current upstream main, re-applies the test addition from the stock `PR.patch`, fmt, recommits (title+body) and force-pushes — resolving the conflict automatically. Stock `PR.patch` is refreshed to the rebased commit.
