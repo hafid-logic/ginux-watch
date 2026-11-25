@@ -95,6 +95,7 @@ def main():
         rec={"ts":datetime.datetime.now(datetime.UTC).strftime("%Y-%m-%dT%H:%M:%SZ"),"pushed":b,"pkg":d.name,"ok":ok}
         with open("state/pipeline-log.jsonl","a") as f: f.write(json.dumps(rec)+"\n")
         print("PUSHED" if ok else "SKIP_STALE", b)
+    subprocess.run([sys.executable, str(Path(__file__).parent/"reserve-proposals.py")], check=False)
     return 0
 
 if __name__=="__main__":
