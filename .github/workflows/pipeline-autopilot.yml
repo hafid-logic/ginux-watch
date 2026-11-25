@@ -8,7 +8,7 @@ on:
   repository_dispatch:
     types: [pipeline-tick]
 permissions:
-  contents: read
+  contents: write
 concurrency:
   group: pipeline-autopilot
   cancel-in-progress: false
@@ -20,6 +20,7 @@ jobs:
       - name: Refill pushed reserve from stock (no upstream opening)
         env:
           PIPELINE_PAT: ${{ secrets.PIPELINE_PAT }}
+        run: python3 team/scripts/pipeline-autopilot.py
       - name: Commit reserve proposals (v9.2)
         run: |
           git config user.name "pipeline-autopilot"
@@ -32,4 +33,3 @@ jobs:
               git rebase --abort >/dev/null 2>&1 || true; sleep $((i * 5))
             done
           fi
-        run: python3 team/scripts/pipeline-autopilot.py
