@@ -61,3 +61,16 @@ Never production changes. Never publish without owner-approved text.
 - `ginux-kernel-views`: **269 mutants, 75 missed, 164 caught, 30 unviable** (cargo-mutants, local).
 - `mutation-scan` runs #1-#5 on GitHub runners: **all success**.
 - Hand scanner found only 5 survivors in the same crate -> the real tool is ~15x deeper.
+
+## Autopilot (3+3 reserve invariant) — permanent, every agent
+- pipeline-autopilot.yml (every 30min) keeps the PUSHED reserve at pushed_target (3)
+  by pushing built packages from approved/pending/ stock to the fork hafid-logic/ginux.
+- OPENING UPSTREAM PRs ON gmkurtzer/ginux IS ALWAYS HUMAN (owner). The autopilot NEVER
+  opens; it only pushes reserves and reports which are ready for the owner to open.
+- Invariant: open(3, human) + pushed(3, autopilot) = 6. When the owner opens a reserve or a
+  PR merges, the autopilot refills the pushed reserve from stock on its next tick.
+- AGENT JOB: keep stock fed (>=3 built packages in approved/pending/). Build from
+  state/discoveries.json using parallel worker teams; heavy mutation scans run on GitHub
+  runners (mutation-scan.yml), never locally. Work incrementally on branches for speed.
+- One-time owner setup (done): repo secret PIPELINE_PAT (fine-grained PAT, contents:write
+  on the fork). After a validated full cycle, raise open_cap to 5 in config/pipeline-autopilot.yml.

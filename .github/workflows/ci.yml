@@ -99,6 +99,8 @@ jobs:
         run: python3 team/scripts/workflow-schema-check.py
       - name: Token-pattern scan of tree
         run: python3 scripts/tree-token-scan.py
+      - name: Pipeline autopilot tests (offline)
+        run: python3 team/scripts/pipeline-autopilot.py --selftest
       - name: Sensitive-path drift audit tests (offline)
         run: python3 team/scripts/sensitive-drift-audit.py --selftest
       - name: Sensitive-path drift audit (v8.8)

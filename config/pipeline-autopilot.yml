@@ -1,0 +1,8 @@
+upstream: gmkurtzer/ginux
+fork: hafid-logic/ginux
+author: hafid-logic
+branch_prefix: tests/
+stock_dir: approved/pending
+open_cap: 3        # raise to 5 after validated success (owner)
+pushed_target: 3   # reserve branches pushed to fork, awaiting human open
+total_target: 6    # invariant: open + pushed
