@@ -20,4 +20,16 @@ jobs:
       - name: Refill pushed reserve from stock (no upstream opening)
         env:
           PIPELINE_PAT: ${{ secrets.PIPELINE_PAT }}
+      - name: Commit reserve proposals (v9.2)
+        run: |
+          git config user.name "pipeline-autopilot"
+          git config user.email "actions@users.noreply.github.com"
+          git add outbox/RESERVES.md state/reserves.json
+          if ! git diff --cached --quiet; then
+            git commit -m "reserves: refresh pre-filled PR proposals [skip ci]"
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin main && git push; then break; fi
+              git rebase --abort >/dev/null 2>&1 || true; sleep $((i * 5))
+            done
+          fi
         run: python3 team/scripts/pipeline-autopilot.py
