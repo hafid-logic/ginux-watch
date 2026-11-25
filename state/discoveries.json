@@ -1,0 +1,513 @@
+{
+ "generated_utc": "2026-11-25T13:57:00Z",
+ "source": "mutation-scan runs #1-#5 (cargo-mutants), harvested via D10 302 trick",
+ "total_survivors": 176,
+ "crates": {
+  "ginux-fs-policy": {
+   "total_missed": 9,
+   "functions": {
+    "main": 5,
+    "ObjectId::is_available": 2,
+    "identity_token": 2
+   },
+   "top_clusters": [
+    {
+     "fn": "main",
+     "count": 5,
+     "sample": [
+      {
+       "line": 18,
+       "mut": "replace == with !="
+      },
+      {
+       "line": 12,
+       "mut": "replace || with &&"
+      },
+      {
+       "line": 12,
+       "mut": "delete !"
+      }
+     ]
+    },
+    {
+     "fn": "ObjectId::is_available",
+     "count": 2,
+     "sample": [
+      {
+       "line": 49,
+       "mut": "replace != with =="
+      },
+      {
+       "line": 49,
+       "mut": "replace || with &&"
+      }
+     ]
+    },
+    {
+     "fn": "identity_token",
+     "count": 2,
+     "sample": [
+      {
+       "line": 234,
+       "mut": "replace ^= with |="
+      },
+      {
+       "line": 234,
+       "mut": "replace ^= with &="
+      }
+     ]
+    }
+   ]
+  },
+  "ginux-process": {
+   "total_missed": 106,
+   "functions": {
+    "PipeSpace<TASKS, FDS, PIPES>::release": 14,
+    "PipeSpace<TASKS, FDS, PIPES>::retain": 8,
+    "PipeSpace<TASKS, FDS, PIPES>::pipe_ends": 7,
+    "ChildStatus::word": 5,
+    "PipeSpace<TASKS, FDS, PIPES>::create_pipe": 5,
+    "ProcessTable<TASKS>::exec_group": 4,
+    "ProcessTable<TASKS>::begin_signal": 4,
+    "EventPoll<ENTRIES>::add": 4,
+    "PipeSpace<TASKS, FDS, PIPES>::duplicate": 4,
+    "PipeSpace<TASKS, FDS, PIPES>::unshare": 4,
+    "ProcessTable<TASKS>::set_process_group_for": 3,
+    "ProcessTable<TASKS>::set_signal_action": 3,
+    "ProcessTable<TASKS>::signal_action": 3,
+    "ProcessTable<TASKS>::views": 3,
+    "TimerTable<TIMERS>::update": 3,
+    "ChildStatus::shell_code": 2,
+    "ProcessTable<TASKS>::lookup": 2,
+    "ProcessTable<TASKS>::wait": 2,
+    "EventFd::read": 2,
+    "FutexTable<WAITERS>::remove_task": 2,
+    "PipeSpace<TASKS, FDS, PIPES>::exec_scrub": 2,
+    "PipeSpace<TASKS, FDS, PIPES>::release_task": 2,
+    "Credentials::set_groups": 1,
+    "Credentials::set_gid": 1,
+    "Credentials::drop_capabilities": 1,
+    "ProcessTable<TASKS>::allocate": 1,
+    "ProcessTable<TASKS>::index": 1,
+    "ProcessTable<TASKS>::reap_thread": 1,
+    "ProcessTable<TASKS>::has_waitable_child": 1,
+    "ProcessTable<TASKS>::shutdown": 1,
+    "ProcessTable<TASKS>::reap_all": 1,
+    "VirtualClock::set_realtime_ns": 1,
+    "TimerTable<TIMERS>::timer_mut": 1,
+    "EventPoll<ENTRIES>::remove": 1,
+    "FutexTable<WAITERS>::wake": 1,
+    "PipeSpace<TASKS, FDS, PIPES>::task_index": 1,
+    "PipeSpace<TASKS, FDS, PIPES>::close": 1,
+    "PipeSpace<TASKS, FDS, PIPES>::set_cloexec": 1,
+    "PipeSpace<TASKS, FDS, PIPES>::share": 1,
+    "PipeSpace<TASKS, FDS, PIPES>::rename_task": 1
+   },
+   "top_clusters": [
+    {
+     "fn": "PipeSpace<TASKS, FDS, PIPES>::release",
+     "count": 14,
+     "sample": [
+      {
+       "line": 1321,
+       "mut": "replace || with &&"
+      },
+      {
+       "line": 1321,
+       "mut": "replace == with !="
+      },
+      {
+       "line": 1324,
+       "mut": "replace - with +"
+      }
+     ]
+    },
+    {
+     "fn": "PipeSpace<TASKS, FDS, PIPES>::retain",
+     "count": 8,
+     "sample": [
+      {
+       "line": 1314,
+       "mut": "replace - with +"
+      },
+      {
+       "line": 1314,
+       "mut": "replace - with /"
+      },
+      {
+       "line": 1315,
+       "mut": "replace && with ||"
+      }
+     ]
+    },
+    {
+     "fn": "PipeSpace<TASKS, FDS, PIPES>::pipe_ends",
+     "count": 7,
+     "sample": [
+      {
+       "line": 1603,
+       "mut": "replace == with !="
+      },
+      {
+       "line": 1606,
+       "mut": "replace - with +"
+      },
+      {
+       "line": 1606,
+       "mut": "replace - with /"
+      }
+     ]
+    },
+    {
+     "fn": "ChildStatus::word",
+     "count": 5,
+     "sample": [
+      {
+       "line": 231,
+       "mut": "replace << with >>"
+      },
+      {
+       "line": 231,
+       "mut": "replace & with |"
+      },
+      {
+       "line": 231,
+       "mut": "replace & with ^"
+      }
+     ]
+    },
+    {
+     "fn": "PipeSpace<TASKS, FDS, PIPES>::create_pipe",
+     "count": 5,
+     "sample": [
+      {
+       "line": 1367,
+       "mut": "replace || with &&"
+      },
+      {
+       "line": 1376,
+       "mut": "replace < with =="
+      },
+      {
+       "line": 1376,
+       "mut": "replace < with <="
+      }
+     ]
+    },
+    {
+     "fn": "ProcessTable<TASKS>::exec_group",
+     "count": 4,
+     "sample": [
+      {
+       "line": 462,
+       "mut": "replace && with ||"
+      },
+      {
+       "line": 470,
+       "mut": "replace && with ||"
+      },
+      {
+       "line": 462,
+       "mut": "replace == with !="
+      }
+     ]
+    },
+    {
+     "fn": "ProcessTable<TASKS>::begin_signal",
+     "count": 4,
+     "sample": [
+      {
+       "line": 730,
+       "mut": "replace |= with &="
+      },
+      {
+       "line": 730,
+       "mut": "replace << with >>"
+      },
+      {
+       "line": 730,
+       "mut": "replace - with +"
+      }
+     ]
+    },
+    {
+     "fn": "EventPoll<ENTRIES>::add",
+     "count": 4,
+     "sample": [
+      {
+       "line": 1020,
+       "mut": "replace || with &&"
+      },
+      {
+       "line": 1020,
+       "mut": "replace | with ^"
+      },
+      {
+       "line": 1026,
+       "mut": "replace && with ||"
+      }
+     ]
+    }
+   ]
+  },
+  "ginux-vfs": {
+   "total_missed": 36,
+   "functions": {
+    "VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::open": 9,
+    "encode_record": 7,
+    "resolve_components": 4,
+    "VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::write": 3,
+    "Index<'a>::resolve": 2,
+    "decode_record": 2,
+    "VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::create_overlay": 2,
+    "VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::copy_to_overlay": 2,
+    "VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::find_base_record": 2,
+    "Index<'a>::is_empty": 1,
+    "VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::referenced": 1,
+    "VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::require_parent": 1
+   },
+   "top_clusters": [
+    {
+     "fn": "VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::open",
+     "count": 9,
+     "sample": [
+      {
+       "line": 373,
+       "mut": "replace & with ^"
+      },
+      {
+       "line": 373,
+       "mut": "replace & with |"
+      },
+      {
+       "line": 404,
+       "mut": "replace & with |"
+      }
+     ]
+    },
+    {
+     "fn": "encode_record",
+     "count": 7,
+     "sample": [
+      {
+       "line": 171,
+       "mut": "replace || with &&"
+      },
+      {
+       "line": 170,
+       "mut": "replace || with &&"
+      },
+      {
+       "line": 169,
+       "mut": "replace || with &&"
+      }
+     ]
+    },
+    {
+     "fn": "resolve_components",
+     "count": 4,
+     "sample": [
+      {
+       "line": 238,
+       "mut": "replace < with <="
+      },
+      {
+       "line": 258,
+       "mut": "replace + with -"
+      },
+      {
+       "line": 258,
+       "mut": "replace + with *"
+      }
+     ]
+    },
+    {
+     "fn": "VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::write",
+     "count": 3,
+     "sample": [
+      {
+       "line": 489,
+       "mut": "replace || with &&"
+      },
+      {
+       "line": 495,
+       "mut": "replace > with =="
+      },
+      {
+       "line": 495,
+       "mut": "replace > with >="
+      }
+     ]
+    },
+    {
+     "fn": "Index<'a>::resolve",
+     "count": 2,
+     "sample": [
+      {
+       "line": 122,
+       "mut": "replace > with =="
+      },
+      {
+       "line": 122,
+       "mut": "replace > with >="
+      }
+     ]
+    },
+    {
+     "fn": "decode_record",
+     "count": 2,
+     "sample": [
+      {
+       "line": 144,
+       "mut": "replace > with >="
+      },
+      {
+       "line": 144,
+       "mut": "replace > with =="
+      }
+     ]
+    },
+    {
+     "fn": "VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::create_overlay",
+     "count": 2,
+     "sample": [
+      {
+       "line": 622,
+       "mut": "replace match guard self.overlay[slot].state == 2 && !self.referenced(slot) with false"
+      },
+      {
+       "line": 622,
+       "mut": "replace == with !="
+      }
+     ]
+    },
+    {
+     "fn": "VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::copy_to_overlay",
+     "count": 2,
+     "sample": [
+      {
+       "line": 635,
+       "mut": "replace > with =="
+      },
+      {
+       "line": 635,
+       "mut": "replace > with >="
+      }
+     ]
+    }
+   ]
+  },
+  "ginux-devices": {
+   "total_missed": 25,
+   "functions": {
+    "DeviceRegistry<DEVICES, FDS>::views": 7,
+    "IsolatedNetwork<FRAMES>::receive": 7,
+    "DeviceRegistry<DEVICES, FDS>::read": 6,
+    "DeviceRegistry<DEVICES, FDS>::descriptor": 2,
+    "DeviceRegistry<DEVICES, FDS>::assign": 1,
+    "DeviceRegistry<DEVICES, FDS>::open": 1,
+    "BlockBackend::is_empty": 1
+   },
+   "top_clusters": [
+    {
+     "fn": "DeviceRegistry<DEVICES, FDS>::views",
+     "count": 7,
+     "sample": [
+      {
+       "line": 190,
+       "mut": "replace && with ||"
+      },
+      {
+       "line": 192,
+       "mut": "replace == with !="
+      },
+      {
+       "line": 190,
+       "mut": "replace == with !="
+      }
+     ]
+    },
+    {
+     "fn": "IsolatedNetwork<FRAMES>::receive",
+     "count": 7,
+     "sample": [
+      {
+       "line": 477,
+       "mut": "replace < with =="
+      },
+      {
+       "line": 477,
+       "mut": "replace < with <="
+      },
+      {
+       "line": 483,
+       "mut": "replace % with /"
+      }
+     ]
+    },
+    {
+     "fn": "DeviceRegistry<DEVICES, FDS>::read",
+     "count": 6,
+     "sample": [
+      {
+       "line": 266,
+       "mut": "replace ^= with |="
+      },
+      {
+       "line": 266,
+       "mut": "replace << with >>"
+      },
+      {
+       "line": 267,
+       "mut": "replace ^= with |="
+      }
+     ]
+    },
+    {
+     "fn": "DeviceRegistry<DEVICES, FDS>::descriptor",
+     "count": 2,
+     "sample": [
+      {
+       "line": 243,
+       "mut": "replace && with ||"
+      },
+      {
+       "line": 247,
+       "mut": "replace && with ||"
+      }
+     ]
+    },
+    {
+     "fn": "DeviceRegistry<DEVICES, FDS>::assign",
+     "count": 1,
+     "sample": [
+      {
+       "line": 149,
+       "mut": "replace == with !="
+      }
+     ]
+    },
+    {
+     "fn": "DeviceRegistry<DEVICES, FDS>::open",
+     "count": 1,
+     "sample": [
+      {
+       "line": 232,
+       "mut": "replace | with ^"
+      }
+     ]
+    },
+    {
+     "fn": "BlockBackend::is_empty",
+     "count": 1,
+     "sample": [
+      {
+       "line": 333,
+       "mut": "replace == with !="
+      }
+     ]
+    }
+   ]
+  }
+ }
+}
