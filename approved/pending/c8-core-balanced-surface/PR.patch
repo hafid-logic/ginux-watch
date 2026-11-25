@@ -1,6 +1,6 @@
-From a1466eec6071f4c49f3faaadbf879093b1574e01 Mon Sep 17 00:00:00 2001
+From 4c58a1a2e536d235b1441ce182f9691d2e257648 Mon Sep 17 00:00:00 2001
 From: Abdelhafid DJIDEL <266947999+hafid-logic@users.noreply.github.com>
-Date: Wed, 25 Nov 2026 20:08:08 +0000
+Date: Wed, 25 Nov 2026 21:35:42 +0000
 Subject: [PATCH] tests(core): pin balanced surface mapping for random and
  lifecycle
 

@@ -1,6 +1,6 @@
-From f98094224dc9658b1125fddd7897eec1e5b09965 Mon Sep 17 00:00:00 2001
+From d44e94de2a01c4cd84f31103acee236c1aff20ae Mon Sep 17 00:00:00 2001
 From: Abdelhafid DJIDEL <266947999+hafid-logic@users.noreply.github.com>
-Date: Wed, 25 Nov 2026 20:08:10 +0000
+Date: Wed, 25 Nov 2026 21:35:03 +0000
 Subject: [PATCH] tests(process): pin ChildStatus word encoding for exit and
  signal
 
@@ -24,12 +24,12 @@ Prepared with AI assistance; reviewed by me.
  1 file changed, 9 insertions(+)
 
 diff --git a/crates/ginux-process/src/lib.rs b/crates/ginux-process/src/lib.rs
-index 73fccdd..9264853 100644
+index b1a7312..15be62c 100644
 --- a/crates/ginux-process/src/lib.rs
 +++ b/crates/ginux-process/src/lib.rs
-@@ -2100,4 +2100,13 @@ mod tests {
-         let over = [7u32; MAX_GROUPS + 1];
-         assert_eq!(cred.set_groups(&over), Err(ProcessError::GroupLimit));
+@@ -2119,4 +2119,13 @@ mod tests {
+         assert_eq!(pipes.pipe_ends(id), 0);
+         assert_eq!(pipes.active_pipes(), 0);
      }
 +
 +    #[test]
