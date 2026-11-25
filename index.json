@@ -1,13 +1,126 @@
 {
- "generated_at_utc": "2026-11-24T17:27:09Z",
+ "generated_at_utc": "2026-11-25T02:11:58Z",
  "source_repo": "gmkurtzer/ginux",
- "item_count": 322,
+ "item_count": 326,
  "items": {
+  "333": {
+   "kind": "pr",
+   "title": "HDAE: reconcile delivered gate records",
+   "state": "closed",
+   "merged_at": "2026-11-24T21:38:09Z",
+   "files": [
+    "hdae/PLAN.md",
+    "hdae/STATUS.md",
+    "hdae/gates-deferred/11-performance-characterization.md",
+    "hdae/gates-todo/23-virtual-sysinfo-systemd-compat.md",
+    "hdae/gates-todo/24-concurrent-service-output.md",
+    "hdae/gates-todo/25-declarative-cli-command-framework.md",
+    "hdae/gates-todo/26-rpm-packaging.md",
+    "hdae/gates-todo/27-native-set-tid-virtual.md",
+    "hdae/gates-todo/28-native-clone-policy.md",
+    "hdae/gates-todo/29-shared-network-destination-policy.md",
+    "hdae/gates-todo/30-native-shared-descriptor-authority.md",
+    "hdae/gates-todo/31-filesystem-mediation-foundation.md",
+    "hdae/gates-todo/32-security-architecture-inventory.md",
+    "hdae/gates-todo/33-contract-enforcement-review.md",
+    "hdae/gates-todo/34-instance-authority-isolation-review.md",
+    "hdae/gates-todo/35-host-privilege-supply-chain-review.md",
+    "hdae/gates-todo/36-defensive-robustness-assurance.md",
+    "hdae/gates-todo/37-security-remediation-closure.md",
+    "hdae/gates-todo/38-allocator-feasibility-controls.md",
+    "hdae/gates-todo/39-standard-allocator-abi-foundation.md",
+    "hdae/gates-todo/40-allocator-hardening-concurrency.md",
+    "hdae/gates-todo/41-ginux-aware-memory-contract.md",
+    "hdae/gates-todo/42-allocator-compatibility-proof-performance.md",
+    "hdae/gates-todo/44-deny-host-global-sync.md",
+    "hdae/gates-todo/45-preserve-netlink-ack-errors.md",
+    "hdae/gates-todo/46-enforce-network-default-deny.md",
+    "hdae/gates-todo/47-shared-network-socket-alias-authority.md",
+    "hdae/gates-todo/48-immutable-unix-send-snapshot.md",
+    "hdae/gates-todo/49-immutable-connect-bind-sockaddr.md",
+    "hdae/gates-todo/50-scope-freestanding-rustflags.md"
+   ],
+   "keywords": [
+    "gate",
+    "records",
+    "unit",
+    "acceptance",
+    "allocator",
+    "boundary",
+    "byte",
+    "complete",
+    "consolidated",
+    "deferred"
+   ]
+  },
+  "332": {
+   "kind": "pr",
+   "title": "tests(devices): pin partition range exact-fit versus past-end boundary",
+   "state": "closed",
+   "merged_at": "2026-11-24T20:55:52Z",
+   "files": [
+    "crates/ginux-devices/src/lib.rs"
+   ],
+   "keywords": [
+    "end",
+    "exact",
+    "fit",
+    "partition",
+    "access",
+    "pass",
+    "past",
+    "range",
+    "boundary",
+    "devices"
+   ]
+  },
+  "331": {
+   "kind": "pr",
+   "title": "tests(fs-policy): pin Rights subset semantics and partial-overlap rejection",
+   "state": "closed",
+   "merged_at": "2026-11-24T19:01:26Z",
+   "files": [
+    "crates/ginux-fs-policy/src/lib.rs"
+   ],
+   "keywords": [
+    "required",
+    "contains",
+    "overlap",
+    "rights",
+    "bit",
+    "pass",
+    "any",
+    "existing",
+    "fail",
+    "partial"
+   ]
+  },
+  "330": {
+   "kind": "pr",
+   "title": "tests(process): pin set_groups capacity limit and error classification",
+   "state": "closed",
+   "merged_at": "2026-11-24T18:54:12Z",
+   "files": [
+    "crates/ginux-process/src/lib.rs"
+   ],
+   "keywords": [
+    "capacity",
+    "max_groups",
+    "pass",
+    "fail",
+    "set_groups",
+    "branch",
+    "classification",
+    "error",
+    "existing",
+    "group"
+   ]
+  },
   "329": {
    "kind": "pr",
    "title": "fix(oci): stop whiteouts following symlinks out of the rootfs",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-24T18:48:39Z",
    "files": [
     "crates/ginux-oci/src/lib.rs"
    ],
@@ -27,8 +140,8 @@
   "328": {
    "kind": "pr",
    "title": "fix(deps): bump url to 2.5.9 (RUSTSEC-2026-0592)",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-24T18:42:21Z",
    "files": [
     "Cargo.lock"
    ],
@@ -48,8 +161,8 @@
   "327": {
    "kind": "pr",
    "title": "fix(init): track native pipe2 descriptors in the descriptor table",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-24T18:37:31Z",
    "files": [
     "crates/ginux-init/src/main.rs",
     "scripts/test-native-supervision.py",
@@ -71,8 +184,8 @@
   "326": {
    "kind": "pr",
    "title": "tests(devices): pin exact device-name and frame-size boundaries",
-   "state": "open",
-   "merged_at": null,
+   "state": "closed",
+   "merged_at": "2026-11-24T18:32:59Z",
    "files": [
     "crates/ginux-devices/src/lib.rs"
    ],
@@ -7660,6 +7773,239 @@
   }
  },
  "keywords": {
+  "gate": [
+   333,
+   289,
+   287,
+   286,
+   282,
+   273,
+   267,
+   266,
+   265,
+   264,
+   263,
+   259,
+   257,
+   255,
+   254,
+   253,
+   252,
+   251,
+   235,
+   231,
+   229,
+   228,
+   225,
+   210,
+   196,
+   181,
+   172
+  ],
+  "records": [
+   333
+  ],
+  "unit": [
+   333,
+   296,
+   264,
+   263,
+   158,
+   156,
+   153,
+   6
+  ],
+  "acceptance": [
+   333,
+   290
+  ],
+  "allocator": [
+   333,
+   313,
+   311,
+   292
+  ],
+  "boundary": [
+   333,
+   332,
+   309,
+   296,
+   236,
+   231,
+   36
+  ],
+  "byte": [
+   333,
+   326,
+   325,
+   241,
+   187,
+   163,
+   158,
+   94,
+   21,
+   20,
+   6
+  ],
+  "complete": [
+   333,
+   11
+  ],
+  "consolidated": [
+   333
+  ],
+  "deferred": [
+   333
+  ],
+  "end": [
+   332,
+   327,
+   175
+  ],
+  "exact": [
+   332,
+   314,
+   45,
+   42
+  ],
+  "fit": [
+   332
+  ],
+  "partition": [
+   332
+  ],
+  "access": [
+   332,
+   81,
+   79,
+   48
+  ],
+  "pass": [
+   332,
+   331,
+   330,
+   326,
+   325,
+   324,
+   323,
+   249,
+   195,
+   189,
+   181,
+   180,
+   173,
+   172,
+   171,
+   169,
+   168,
+   156,
+   86
+  ],
+  "past": [
+   332
+  ],
+  "range": [
+   332,
+   128
+  ],
+  "devices": [
+   332,
+   320,
+   312,
+   181,
+   173,
+   172
+  ],
+  "required": [
+   331
+  ],
+  "contains": [
+   331
+  ],
+  "overlap": [
+   331
+  ],
+  "rights": [
+   331
+  ],
+  "bit": [
+   331,
+   246,
+   107,
+   91
+  ],
+  "any": [
+   331,
+   298,
+   253,
+   50
+  ],
+  "existing": [
+   331,
+   330,
+   320,
+   319,
+   310,
+   296,
+   177,
+   154,
+   153,
+   142,
+   49,
+   47,
+   38
+  ],
+  "fail": [
+   331,
+   330,
+   326,
+   325,
+   324,
+   323,
+   249,
+   211,
+   210,
+   197,
+   196,
+   181,
+   179,
+   28,
+   4
+  ],
+  "partial": [
+   331
+  ],
+  "capacity": [
+   330,
+   216,
+   54,
+   38
+  ],
+  "max_groups": [
+   330
+  ],
+  "set_groups": [
+   330
+  ],
+  "branch": [
+   330,
+   250,
+   112,
+   69,
+   66
+  ],
+  "classification": [
+   330,
+   288
+  ],
+  "error": [
+   330,
+   22
+  ],
+  "group": [
+   330,
+   296
+  ],
   "symlink": [
    329,
    148,
@@ -7862,10 +8208,6 @@
    144,
    88
   ],
-  "end": [
-   327,
-   175
-  ],
   "pipe2": [
    327
   ],
@@ -7949,51 +8291,6 @@
   ],
   "max_frame_size": [
    326
-  ],
-  "pass": [
-   326,
-   325,
-   324,
-   323,
-   249,
-   195,
-   189,
-   181,
-   180,
-   173,
-   172,
-   171,
-   169,
-   168,
-   156,
-   86
-  ],
-  "byte": [
-   326,
-   325,
-   241,
-   187,
-   163,
-   158,
-   94,
-   21,
-   20,
-   6
-  ],
-  "fail": [
-   326,
-   325,
-   324,
-   323,
-   249,
-   211,
-   210,
-   197,
-   196,
-   181,
-   179,
-   28,
-   4
   ],
   "survives": [
    326,
@@ -8419,26 +8716,6 @@
   "revoke": [
    320
   ],
-  "devices": [
-   320,
-   312,
-   181,
-   173,
-   172
-  ],
-  "existing": [
-   320,
-   319,
-   310,
-   296,
-   177,
-   154,
-   153,
-   142,
-   49,
-   47,
-   38
-  ],
   "still": [
    320,
    191,
@@ -8754,11 +9031,6 @@
    314,
    256
   ],
-  "exact": [
-   314,
-   45,
-   42
-  ],
   "head": [
    314
   ],
@@ -8771,11 +9043,6 @@
   ],
   "unsafe": [
    313
-  ],
-  "allocator": [
-   313,
-   311,
-   292
   ],
   "free": [
    313
@@ -8893,13 +9160,6 @@
   ],
   "also": [
    309
-  ],
-  "boundary": [
-   309,
-   296,
-   236,
-   231,
-   36
   ],
   "could": [
    309,
@@ -9295,11 +9555,6 @@
    298,
    156
   ],
-  "any": [
-   298,
-   253,
-   50
-  ],
   "as_slice": [
    298
   ],
@@ -9329,9 +9584,6 @@
   "family": [
    297,
    62
-  ],
-  "group": [
-   296
   ],
   "process": [
    296,
@@ -9364,15 +9616,6 @@
   ],
   "three": [
    296
-  ],
-  "unit": [
-   296,
-   264,
-   263,
-   158,
-   156,
-   153,
-   6
   ],
   "wait": [
    296,
@@ -9571,9 +9814,6 @@
   "g06": [
    290
   ],
-  "acceptance": [
-   290
-  ],
   "adopt": [
    290
   ],
@@ -9596,34 +9836,6 @@
   "destinations": [
    289
   ],
-  "gate": [
-   289,
-   287,
-   286,
-   282,
-   273,
-   267,
-   266,
-   265,
-   264,
-   263,
-   259,
-   257,
-   255,
-   254,
-   253,
-   252,
-   251,
-   235,
-   231,
-   229,
-   228,
-   225,
-   210,
-   196,
-   181,
-   172
-  ],
   "hdae": [
    289,
    287,
@@ -9643,9 +9855,6 @@
   "authoritative": [
    288,
    48
-  ],
-  "classification": [
-   288
   ],
   "descriptors": [
    288,
@@ -10439,12 +10648,6 @@
   "green": [
    250
   ],
-  "branch": [
-   250,
-   112,
-   69,
-   66
-  ],
   "everything": [
    250
   ],
@@ -10510,11 +10713,6 @@
    247,
    188,
    159
-  ],
-  "bit": [
-   246,
-   107,
-   91
   ],
   "enotty": [
    246
@@ -11050,11 +11248,6 @@
    125,
    94,
    14
-  ],
-  "capacity": [
-   216,
-   54,
-   38
   ],
   "4242": [
    215
@@ -12052,9 +12245,6 @@
    49,
    25
   ],
-  "range": [
-   128
-  ],
   "madvise": [
    128
   ],
@@ -12443,11 +12633,6 @@
    81,
    79,
    78
-  ],
-  "access": [
-   81,
-   79,
-   48
   ],
   "frameowner": [
    80
@@ -12972,9 +13157,6 @@
   "dynamic": [
    22
   ],
-  "error": [
-   22
-  ],
   "257": [
    21
   ],
@@ -13064,9 +13246,6 @@
   ],
   "alt": [
    12
-  ],
-  "complete": [
-   11
   ],
   "reclassify": [
    11
