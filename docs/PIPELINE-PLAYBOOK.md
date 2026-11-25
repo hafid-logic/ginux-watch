@@ -74,3 +74,4 @@ Never production changes. Never publish without owner-approved text.
   runners (mutation-scan.yml), never locally. Work incrementally on branches for speed.
 - One-time owner setup (done): repo secret PIPELINE_PAT (fine-grained PAT, contents:write
   on the fork). After a validated full cycle, raise open_cap to 5 in config/pipeline-autopilot.yml.
+**Primary pre-fill mechanism (v9.2, robust):** the reserve branch's single commit message MUST be the PR title (subject) + blank line + the full PR body (GFM + AI footer). GitHub then pre-fills BOTH title and body in the NATIVE open-PR flow — including the bare `?expand=1` compare link and the fork's "Compare & pull request" button — with no special URL and no manual copying. The `quick_pull=1&title=&body=` link in `outbox/RESERVES.md` is a secondary convenience. Build steps: `git commit -m "<PR.title>" -m "<PR.md>"`; `PR.patch` carries the same message so the autopilot's `git am` preserves it.
