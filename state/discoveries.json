@@ -1,7 +1,7 @@
 {
- "generated_utc": "2026-11-25T13:57:00Z",
- "source": "mutation-scan runs #1-#5 (cargo-mutants), harvested via D10 302 trick",
- "total_survivors": 176,
+ "generated_utc": "2026-11-25T17:52:54Z",
+ "source": "mutation-scan runs #1-#9 (cargo-mutants), harvested via D10 302 trick",
+ "total_survivors": 660,
  "crates": {
   "ginux-fs-policy": {
    "total_missed": 9,
@@ -504,6 +504,439 @@
       {
        "line": 333,
        "mut": "replace == with !="
+      }
+     ]
+    }
+   ]
+  },
+  "ginux-kernel-views": {
+   "total_missed": 64,
+   "scan_run": 6,
+   "functions": {
+    "CgroupFs<GROUPS>::attach": 13,
+    "CgroupFs<GROUPS>::read": 12,
+    "validate_group_path": 8,
+    "?": 6,
+    "ProcFs<'a>::read": 5,
+    "SysFs<'a>::read": 4,
+    "CgroupFs<GROUPS>::remove": 4,
+    "IdentityFs<'a>::readlink": 2,
+    "CgroupFs<GROUPS>::write": 2,
+    "parse_controllers": 2,
+    "IdentityFs<'a>::read": 1,
+    "write_status": 1,
+    "write_stat": 1,
+    "split_file": 1,
+    "parse_limit_u32": 1,
+    "ByteWriter<'a>::limit": 1
+   },
+   "top_clusters": [
+    {
+     "fn": "CgroupFs<GROUPS>::attach",
+     "count": 13,
+     "sample": [
+      {
+       "line": 106,
+       "mut": "replace || with &&"
+      },
+      {
+       "line": 113,
+       "mut": "replace == with !="
+      },
+      {
+       "line": 117,
+       "mut": "replace < with =="
+      }
+     ]
+    },
+    {
+     "fn": "CgroupFs<GROUPS>::read",
+     "count": 12,
+     "sample": [
+      {
+       "line": 160,
+       "mut": "delete match arm b\"cgroup.controllers\""
+      },
+      {
+       "line": 161,
+       "mut": "delete match arm b\"cgroup.subtree_control\""
+      },
+      {
+       "line": 180,
+       "mut": "delete match arm b\"pids.max\""
+      }
+     ]
+    },
+    {
+     "fn": "validate_group_path",
+     "count": 8,
+     "sample": [
+      {
+       "line": 211,
+       "mut": "replace || with &&"
+      },
+      {
+       "line": 210,
+       "mut": "replace || with &&"
+      },
+      {
+       "line": 209,
+       "mut": "replace || with &&"
+      }
+     ]
+    },
+    {
+     "fn": "?",
+     "count": 6,
+     "sample": [
+      {
+       "line": 126,
+       "mut": "replace SysFs<'a>::list_devices -> usize with 0"
+      },
+      {
+       "line": 126,
+       "mut": "replace SysFs<'a>::list_devices -> usize with 1"
+      },
+      {
+       "line": 361,
+       "mut": "replace write_stat -> Result<(), ViewError> with Ok(())"
+      }
+     ]
+    },
+    {
+     "fn": "ProcFs<'a>::read",
+     "count": 5,
+     "sample": [
+      {
+       "line": 267,
+       "mut": "delete match arm b\"/proc/sys/kernel/hostname\""
+      },
+      {
+       "line": 245,
+       "mut": "replace % with +"
+      },
+      {
+       "line": 252,
+       "mut": "replace / with %"
+      }
+     ]
+    }
+   ]
+  },
+  "ginux-oci": {
+   "total_missed": 60,
+   "scan_run": 7,
+   "functions": {
+    "?": 19,
+    "fetch_blob": 12,
+    "human_size": 12,
+    "registry_token": 4,
+    "safe_whiteout_dir": 3,
+    "remove_path": 3,
+    "select_manifest": 2,
+    "parse_reference": 1,
+    "safe_tar_path": 1,
+    "api_registry": 1,
+    "digest_file": 1,
+    "main": 1
+   },
+   "top_clusters": [
+    {
+     "fn": "?",
+     "count": 19,
+     "sample": [
+      {
+       "line": 177,
+       "mut": "replace registry_token -> Result<Option<String>, String> with Ok(Some(String::new()))"
+      },
+      {
+       "line": 177,
+       "mut": "replace registry_token -> Result<Option<String>, String> with Ok(None)"
+      },
+      {
+       "line": 177,
+       "mut": "replace registry_token -> Result<Option<String>, String> with Ok(Some(\"xyzzy\".into()))"
+      }
+     ]
+    },
+    {
+     "fn": "fetch_blob",
+     "count": 12,
+     "sample": [
+      {
+       "line": 277,
+       "mut": "replace * with +"
+      },
+      {
+       "line": 285,
+       "mut": "replace += with *="
+      },
+      {
+       "line": 286,
+       "mut": "replace >= with <"
+      }
+     ]
+    },
+    {
+     "fn": "human_size",
+     "count": 12,
+     "sample": [
+      {
+       "line": 595,
+       "mut": "replace && with ||"
+      },
+      {
+       "line": 595,
+       "mut": "replace >= with <"
+      },
+      {
+       "line": 595,
+       "mut": "replace < with =="
+      }
+     ]
+    },
+    {
+     "fn": "registry_token",
+     "count": 4,
+     "sample": [
+      {
+       "line": 186,
+       "mut": "replace != with =="
+      },
+      {
+       "line": 200,
+       "mut": "replace == with !="
+      },
+      {
+       "line": 207,
+       "mut": "replace == with !="
+      }
+     ]
+    },
+    {
+     "fn": "safe_whiteout_dir",
+     "count": 3,
+     "sample": [
+      {
+       "line": 469,
+       "mut": "replace match guard error.kind() == io::ErrorKind::NotFound with true"
+      },
+      {
+       "line": 469,
+       "mut": "replace match guard error.kind() == io::ErrorKind::NotFound with false"
+      },
+      {
+       "line": 469,
+       "mut": "replace == with !="
+      }
+     ]
+    }
+   ]
+  },
+  "ginux-core": {
+   "total_missed": 35,
+   "scan_run": 8,
+   "functions": {
+    "balanced_arguments_allowed": 19,
+    "loopback_netlink_ack_index": 12,
+    "balanced_surface": 2,
+    "balanced_identity_result": 2
+   },
+   "top_clusters": [
+    {
+     "fn": "balanced_arguments_allowed",
+     "count": 19,
+     "sample": [
+      {
+       "line": 442,
+       "mut": "replace | with ^"
+      },
+      {
+       "line": 442,
+       "mut": "replace | with ^"
+      },
+      {
+       "line": 442,
+       "mut": "replace | with ^"
+      }
+     ]
+    },
+    {
+     "fn": "loopback_netlink_ack_index",
+     "count": 12,
+     "sample": [
+      {
+       "line": 85,
+       "mut": "replace + with *"
+      },
+      {
+       "line": 88,
+       "mut": "replace < with =="
+      },
+      {
+       "line": 88,
+       "mut": "replace || with &&"
+      }
+     ]
+    },
+    {
+     "fn": "balanced_surface",
+     "count": 2,
+     "sample": [
+      {
+       "line": 338,
+       "mut": "delete match arm 318"
+      },
+      {
+       "line": 341,
+       "mut": "delete match arm SYS_EXIT | SYS_EXIT_GROUP"
+      }
+     ]
+    },
+    {
+     "fn": "balanced_identity_result",
+     "count": 2,
+     "sample": [
+      {
+       "line": 368,
+       "mut": "delete match arm SYS_GETPPID"
+      },
+      {
+       "line": 369,
+       "mut": "delete match arm SYS_GETPGRP"
+      }
+     ]
+    }
+   ]
+  },
+  "ginux-instance": {
+   "total_missed": 325,
+   "scan_run": 9,
+   "functions": {
+    "InstanceConfig::apply_override_inner": 76,
+    "?": 74,
+    "parse_field": 58,
+    "InstanceConfig::validate": 24,
+    "InstanceConfig::derive_contract_grants": 12,
+    "ConfigBuilder::finish": 9,
+    "InstanceConfig::network_source_ipv4": 8,
+    "parse_string": 8,
+    "InstanceConfig::privilege_setid_denied": 5,
+    "parse_section": 5,
+    "validate_port": 4,
+    "parse_port": 4,
+    "InstanceConfig::parse": 3,
+    "NormalizedConfig::quoted": 3,
+    "parse_list": 3,
+    "parse_syscall_list": 3,
+    "InstanceConfig::normalized": 2,
+    "parse_multiline_hook_list": 2,
+    "strip_comment": 2,
+    "validate_instance_path": 2,
+    "validate_policy_path": 2,
+    "port_forward_conflicts": 2,
+    "validate_volume": 2,
+    "push_unique": 1,
+    "InstanceConfig::device_create_denied": 1,
+    "InstanceConfig::translated_port": 1,
+    "parse_u64": 1,
+    "parse_allow_deny": 1,
+    "parse_legacy_audit_mode": 1,
+    "validate_identifier": 1,
+    "validate_network_rule": 1,
+    "validate_port_forward": 1,
+    "port_forward_parts": 1,
+    "protected_virtual_path": 1,
+    "validate_instance_command": 1
+   },
+   "top_clusters": [
+    {
+     "fn": "InstanceConfig::apply_override_inner",
+     "count": 76,
+     "sample": [
+      {
+       "line": 679,
+       "mut": "delete match arm b\"instance.id\""
+      },
+      {
+       "line": 682,
+       "mut": "delete match arm b\"instance.args\""
+      },
+      {
+       "line": 680,
+       "mut": "delete match arm b\"instance.root\""
+      }
+     ]
+    },
+    {
+     "fn": "?",
+     "count": 74,
+     "sample": [
+      {
+       "line": 262,
+       "mut": "replace ConfigError::as_str -> &'static str with \"\""
+      },
+      {
+       "line": 262,
+       "mut": "replace ConfigError::as_str -> &'static str with \"xyzzy\""
+      },
+      {
+       "line": 285,
+       "mut": "replace <impl fmt::Display for ConfigError>::fmt -> fmt::Result with Ok(Default::default())"
+      }
+     ]
+    },
+    {
+     "fn": "parse_field",
+     "count": 58,
+     "sample": [
+      {
+       "line": 1742,
+       "mut": "delete match arm (Section::Network, b\"ingress_allow\")"
+      },
+      {
+       "line": 1750,
+       "mut": "delete match arm (Section::Network, b\"egress_allow\")"
+      },
+      {
+       "line": 1746,
+       "mut": "delete match arm (Section::Network, b\"ingress_deny\")"
+      }
+     ]
+    },
+    {
+     "fn": "InstanceConfig::validate",
+     "count": 24,
+     "sample": [
+      {
+       "line": 825,
+       "mut": "replace != with =="
+      },
+      {
+       "line": 831,
+       "mut": "replace || with &&"
+      },
+      {
+       "line": 839,
+       "mut": "replace || with &&"
+      }
+     ]
+    },
+    {
+     "fn": "InstanceConfig::derive_contract_grants",
+     "count": 12,
+     "sample": [
+      {
+       "line": 591,
+       "mut": "replace || with &&"
+      },
+      {
+       "line": 590,
+       "mut": "delete !"
+      },
+      {
+       "line": 591,
+       "mut": "delete !"
       }
      ]
     }
