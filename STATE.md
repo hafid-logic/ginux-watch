@@ -48,6 +48,8 @@
 - غربلة: OCI‑unpack_in وVFS‑overlay/descriptor فُحصا ووجدناهما محكمَي الدفاع (لا عيب قابل للتكرار ولا طفرة ناجية) ⇒ لا حزمة (لا طلبات غير ضرورية).
 - المفتوحة upstream الآن: #326 devices، #328 supply-chain، #329 oci-whiteout (السقف 3/3). process يفتحه المالك بنفسه.
 
+- **أتمتة v9.2 (PR داخلي #81، جاهز للدمج):** watcher يزامن STATE تلقائيًا + autopilot يلتزم تقرير الاحتياط المُعبّأ. الاحتياط 3 بروابط PR معبّأة (outbox/RESERVES.md). open_cap=3 (يُرفع 5 بعد دورة مُتحقّقة).
+
 ## فهرس
 - الأرشيف: state/history/STATE-archive-2026-11-18.md — التسليم: HANDOFF.md
 - التقارير: reports/ — المصفوفة: matrix/upstream-watch.json
