@@ -7,6 +7,9 @@ on:
   workflow_dispatch: {}
   repository_dispatch:
     types: [pipeline-tick]
+  workflow_run:
+    workflows: [harvest-scans]
+    types: [completed]
 permissions:
   contents: write
 concurrency:
