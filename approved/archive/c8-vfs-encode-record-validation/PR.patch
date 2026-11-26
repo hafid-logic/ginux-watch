@@ -1,0 +1,77 @@
+From 1912da9846c305ba0d7891c2444205ad8d3e1a2e Mon Sep 17 00:00:00 2001
+From: Abdelhafid DJIDEL <266947999+hafid-logic@users.noreply.github.com>
+Date: Wed, 25 Nov 2026 17:51:15 +0000
+Subject: [PATCH] tests(vfs): pin encode_record path and link validation
+
+### What
+Pins `encode_record` rejection of invalid entries: an over-length path (`> MAX_PATH`), an over-length link (`> MAX_LINK`), and a relative path (no leading `/`) each return `InvalidPath`.
+
+### Why it matters
+The index encoder validates path/link bounds before writing a record. The existing tests only encode valid entries, so a weakened validation that admits an oversized or relative path survives them.
+
+### Mutation evidence (fail-then-pass)
+| Mutant | Existing suite | New test |
+|---|---|---|
+| `\|\| link.len > MAX_LINK` -> `&&` | PASS (survives) | FAIL (killed) |
+| `\|\| path.len > MAX_PATH` -> `&&` | PASS (survives) | FAIL (killed) |
+
+Baseline (clean tree + new test): PASS. Reproduce: `cargo test -p ginux-vfs --lib encode_record`.
+
+Prepared with AI assistance; reviewed by me.
+---
+ crates/ginux-vfs/src/lib.rs | 41 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
+
+diff --git a/crates/ginux-vfs/src/lib.rs b/crates/ginux-vfs/src/lib.rs
+index e2dab8a..1e3642e 100644
+--- a/crates/ginux-vfs/src/lib.rs
++++ b/crates/ginux-vfs/src/lib.rs
+@@ -1217,4 +1217,45 @@ mod tests {
+         rec[40] = b'/';
+         assert_eq!(Index::new(&buf).err(), Some(VfsError::InvalidIndex));
+     }
++
++    #[test]
++    fn encode_record_rejects_invalid_paths_and_links() {
++        let mut out = [0u8; RECORD_SIZE];
++        let mut long = [b'a'; MAX_PATH + 1];
++        long[0] = b'/';
++        let e = Entry {
++            path: &long,
++            kind: NodeKind::File,
++            mode: 0o644,
++            uid: 0,
++            gid: 0,
++            size: 0,
++            data_offset: 0,
++            link: b"",
++        };
++        assert_eq!(encode_record(e, &mut out), Err(VfsError::InvalidPath));
++        let link = [b'a'; MAX_LINK + 1];
++        let e = Entry {
++            path: b"/x",
++            kind: NodeKind::Symlink,
++            mode: 0o777,
++            uid: 0,
++            gid: 0,
++            size: 0,
++            data_offset: 0,
++            link: &link,
++        };
++        assert_eq!(encode_record(e, &mut out), Err(VfsError::InvalidPath));
++        let e = Entry {
++            path: b"relative",
++            kind: NodeKind::File,
++            mode: 0o644,
++            uid: 0,
++            gid: 0,
++            size: 0,
++            data_offset: 0,
++            link: b"",
++        };
++        assert_eq!(encode_record(e, &mut out), Err(VfsError::InvalidPath));
++    }
+ }
+-- 
+2.47.3
+

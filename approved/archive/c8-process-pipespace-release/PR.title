@@ -1,0 +1,1 @@
+tests(process): pin pipe release reference counting to last end

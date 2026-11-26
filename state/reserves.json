@@ -1,4 +1,20 @@
 {
- "generated_utc": "2026-11-26T19:15:04Z",
- "reserves": []
+ "generated_utc": "2026-11-26T20:53:20Z",
+ "reserves": [
+  {
+   "branch": "tests/devices-views-capacity",
+   "title": "tests(devices): pin views projection truncation at output capacity",
+   "url": "https://github.com/gmkurtzer/ginux/compare/main...hafid-logic:tests/devices-views-capacity?quick_pull=1&title=tests%28devices%29%3A+pin+views+projection+truncation+at+output+capacity&body=%23%23%23+What%0APins+%60DeviceRegistry%3A%3Aviews%60+truncation%3A+with+more+assigned+devices+than+output+slots%2C+exactly+the+first+%60output.len%28%29%60+views+are+projected+in+assignment+order+and+the+returned+count+is+capped%3B+a+zero-length+output+projects+nothing.%0A%0A%23%23%23+Why+it+matters%0AThe+projection+writes+into+a+caller-fixed+buffer.+The+existing+test+uses+an+output+larger+than+the+assignment+set%2C+so+removing+or+weakening+the+capacity+break+survives+the+suite+%E2%80%94+and+would+index+past+the+buffer.%0A%0A%23%23%23+Mutation+evidence+%28fail-then-pass%29%0A%7C+Mutant+%7C+Existing+suite+%7C+New+test+%7C%0A%7C---%7C---%7C---%7C%0A%7C+remove+%60count+%3D%3D+output.len%28%29%60+break+%7C+PASS+%28survives%29+%7C+FAIL+%28killed%29+%7C%0A%7C+%60count+%3D%3D+output.len%28%29%60+-%3E+%60count+%3E+output.len%28%29%60+%7C+PASS+%28survives%29+%7C+FAIL+%28killed%29+%7C%0A%0ABaseline+%28clean+tree+%2B+new+test%29%3A+PASS.+Reproduce%3A+%60cargo+test+-p+ginux-devices+--lib+views_truncate%60.%0A%0APrepared+with+AI+assistance%3B+reviewed+by+me.%0A"
+  },
+  {
+   "branch": "tests/kernel-views-cgroup-attach",
+   "title": "tests(kernel-views): pin cgroup attach membership move and pids.max cap",
+   "url": "https://github.com/gmkurtzer/ginux/compare/main...hafid-logic:tests/kernel-views-cgroup-attach?quick_pull=1&title=tests%28kernel-views%29%3A+pin+cgroup+attach+membership+move+and+pids.max+cap&body=%23%23%23+What%0APins+%60CgroupFs%3A%3Aattach%60%3A+pid+0+and+non-root+actors+are+rejected%3B+attaching+a+pid+already+in+another+group+moves+it+%28single+membership%29%3B+a+group+at+its+%60pids.max%60+rejects+a+new+distinct+pid+with+%60LimitExceeded%60.%0A%0A%23%23%23+Why+it+matters%0AAttach+enforces+single+membership+across+groups+and+the+per-group+pid+cap.+The+existing+tests+attach+one+pid+to+one+group%2C+so+dropping+the+cross-group+removal+loop+or+the+%60pids.max%60+guard+survives+the+suite+while+breaking+isolation+accounting.%0A%0A%23%23%23+Mutation+evidence+%28fail-then-pass%29%0A%7C+Mutant+%7C+Existing+suite+%7C+New+test+%7C%0A%7C---%7C---%7C---%7C%0A%7C+skip+cross-group+removal+loop+%7C+PASS+%28survives%29+%7C+FAIL+%28killed%29+%7C%0A%7C+drop+%60member_count+%3E%3D+pids_max%60+guard+%7C+PASS+%28survives%29+%7C+FAIL+%28killed%29+%7C%0A%0ABaseline+%28clean+tree+%2B+new+test%29%3A+PASS.+Reproduce%3A+%60cargo+test+-p+ginux-kernel-views+--lib+attach_moves%60.%0A%0APrepared+with+AI+assistance%3B+reviewed+by+me.%0A"
+  },
+  {
+   "branch": "tests/kernel-views-group-path",
+   "title": "tests(kernel-views): pin cgroup group-path validation shapes",
+   "url": "https://github.com/gmkurtzer/ginux/compare/main...hafid-logic:tests/kernel-views-group-path?quick_pull=1&title=tests%28kernel-views%29%3A+pin+cgroup+group-path+validation+shapes&body=%23%23%23+What%0APins+%60validate_group_path%60+via+%60create%60%3A+trailing+slash%2C+double+slash%2C+%60..%60+segment%2C+space%2Fsemicolon+charset%2C+empty%2C+relative%2C+and+over-length+paths+are+each+%60InvalidPath%60%3B+a+valid+name+with+dot%2Fdash%2Funderscore+is+accepted.%0A%0A%23%23%23+Why+it+matters%0AGroup+paths+name+virtual+cgroup+directories%3B+the+validator+is+the+traversal%2Fcharset+gate.+The+existing+tests+only+exercise+one+%60..%60+case%2C+so+dropping+the+trailing-slash+or+charset+clause+survives+the+suite.%0A%0A%23%23%23+Mutation+evidence+%28fail-then-pass%29%0A%7C+Mutant+%7C+Existing+suite+%7C+New+test+%7C%0A%7C---%7C---%7C---%7C%0A%7C+drop+%60ends_with%28b%22%2F%22%29%60+clause+%7C+PASS+%28survives%29+%7C+FAIL+%28killed%29+%7C%0A%7C+drop+ASCII+charset+clause+%7C+PASS+%28survives%29+%7C+FAIL+%28killed%29+%7C%0A%0ABaseline+%28clean+tree+%2B+new+test%29%3A+PASS.+Reproduce%3A+%60cargo+test+-p+ginux-kernel-views+--lib+group_path_validation%60.%0A%0APrepared+with+AI+assistance%3B+reviewed+by+me.%0A"
+  }
+ ]
 }
