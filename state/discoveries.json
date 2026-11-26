@@ -1,8 +1,267 @@
 {
- "generated_utc": "2026-11-25T17:52:54Z",
- "source": "mutation-scan runs #1-#9 (cargo-mutants), harvested via D10 302 trick",
- "total_survivors": 660,
+ "generated_utc": "2026-11-26T09:28:22Z",
+ "source": "mutation-scan artifacts (scan.log MISSED lines + missed.txt when present)",
+ "total_survivors": 746,
  "crates": {
+  "ginux-core": {
+   "total_missed": 35,
+   "scan_run": 8,
+   "functions": {
+    "balanced_arguments_allowed": 19,
+    "loopback_netlink_ack_index": 12,
+    "balanced_surface": 2,
+    "balanced_identity_result": 2
+   },
+   "top_clusters": [
+    {
+     "fn": "balanced_arguments_allowed",
+     "count": 19,
+     "sample": [
+      {
+       "line": 442,
+       "mut": "replace | with ^"
+      },
+      {
+       "line": 442,
+       "mut": "replace | with ^"
+      },
+      {
+       "line": 442,
+       "mut": "replace | with ^"
+      }
+     ]
+    },
+    {
+     "fn": "loopback_netlink_ack_index",
+     "count": 12,
+     "sample": [
+      {
+       "line": 85,
+       "mut": "replace + with *"
+      },
+      {
+       "line": 88,
+       "mut": "replace < with =="
+      },
+      {
+       "line": 88,
+       "mut": "replace || with &&"
+      }
+     ]
+    },
+    {
+     "fn": "balanced_surface",
+     "count": 2,
+     "sample": [
+      {
+       "line": 338,
+       "mut": "delete match arm 318"
+      },
+      {
+       "line": 341,
+       "mut": "delete match arm SYS_EXIT | SYS_EXIT_GROUP"
+      }
+     ]
+    },
+    {
+     "fn": "balanced_identity_result",
+     "count": 2,
+     "sample": [
+      {
+       "line": 368,
+       "mut": "delete match arm SYS_GETPPID"
+      },
+      {
+       "line": 369,
+       "mut": "delete match arm SYS_GETPGRP"
+      }
+     ]
+    }
+   ],
+   "survivors": [
+    "crates/ginux-core/src/lib.rs:105:53: replace + with * in loopback_netlink_ack_index",
+    "crates/ginux-core/src/lib.rs:105:53: replace + with - in loopback_netlink_ack_index",
+    "crates/ginux-core/src/lib.rs:105:58: replace & with ^ in loopback_netlink_ack_index",
+    "crates/ginux-core/src/lib.rs:105:70: delete - in loopback_netlink_ack_index",
+    "crates/ginux-core/src/lib.rs:338:9: delete match arm 318 in balanced_surface",
+    "crates/ginux-core/src/lib.rs:341:9: delete match arm SYS_EXIT | SYS_EXIT_GROUP in balanced_surface",
+    "crates/ginux-core/src/lib.rs:368:9: delete match arm SYS_GETPPID in balanced_identity_result",
+    "crates/ginux-core/src/lib.rs:369:9: delete match arm SYS_GETPGRP in balanced_identity_result",
+    "crates/ginux-core/src/lib.rs:442:46: replace | with ^ in balanced_arguments_allowed",
+    "crates/ginux-core/src/lib.rs:442:55: replace | with ^ in balanced_arguments_allowed",
+    "crates/ginux-core/src/lib.rs:442:65: replace | with ^ in balanced_arguments_allowed",
+    "crates/ginux-core/src/lib.rs:442:76: replace | with ^ in balanced_arguments_allowed",
+    "crates/ginux-core/src/lib.rs:449:32: replace | with ^ in balanced_arguments_allowed",
+    "crates/ginux-core/src/lib.rs:450:24: replace & with | in balanced_arguments_allowed",
+    "crates/ginux-core/src/lib.rs:450:38: replace | with ^ in balanced_arguments_allowed",
+    "crates/ginux-core/src/lib.rs:450:66: replace | with ^ in balanced_arguments_allowed",
+    "crates/ginux-core/src/lib.rs:455:34: replace | with ^ in balanced_arguments_allowed",
+    "crates/ginux-core/src/lib.rs:456:21: replace == with != in balanced_arguments_allowed",
+    "crates/ginux-core/src/lib.rs:456:26: replace && with || in balanced_arguments_allowed",
+    "crates/ginux-core/src/lib.rs:456:34: replace <= with > in balanced_arguments_allowed",
+    "crates/ginux-core/src/lib.rs:456:9: delete match arm 302 in balanced_arguments_allowed",
+    "crates/ginux-core/src/lib.rs:458:27: replace == with != in balanced_arguments_allowed",
+    "crates/ginux-core/src/lib.rs:458:39: replace || with && in balanced_arguments_allowed",
+    "crates/ginux-core/src/lib.rs:458:47: replace > with < in balanced_arguments_allowed",
+    "crates/ginux-core/src/lib.rs:458:47: replace > with == in balanced_arguments_allowed",
+    "crates/ginux-core/src/lib.rs:458:47: replace > with >= in balanced_arguments_allowed",
+    "crates/ginux-core/src/lib.rs:458:9: delete match arm SYS_WAIT4 in balanced_arguments_allowed",
+    "crates/ginux-core/src/lib.rs:85:18: replace + with * in loopback_netlink_ack_index",
+    "crates/ginux-core/src/lib.rs:88:27: replace < with <= in loopback_netlink_ack_index",
+    "crates/ginux-core/src/lib.rs:88:27: replace < with == in loopback_netlink_ack_index",
+    "crates/ginux-core/src/lib.rs:88:32: replace || with && in loopback_netlink_ack_index",
+    "crates/ginux-core/src/lib.rs:88:42: replace + with * in loopback_netlink_ack_index",
+    "crates/ginux-core/src/lib.rs:88:59: replace > with < in loopback_netlink_ack_index",
+    "crates/ginux-core/src/lib.rs:89:24: delete - in loopback_netlink_ack_index",
+    "crates/ginux-core/src/lib.rs:92:22: replace && with || in loopback_netlink_ack_index"
+   ]
+  },
+  "ginux-devices": {
+   "total_missed": 25,
+   "functions": {
+    "DeviceRegistry<DEVICES, FDS>::views": 7,
+    "IsolatedNetwork<FRAMES>::receive": 7,
+    "DeviceRegistry<DEVICES, FDS>::read": 6,
+    "DeviceRegistry<DEVICES, FDS>::descriptor": 2,
+    "DeviceRegistry<DEVICES, FDS>::assign": 1,
+    "DeviceRegistry<DEVICES, FDS>::open": 1,
+    "BlockBackend::is_empty": 1
+   },
+   "top_clusters": [
+    {
+     "fn": "DeviceRegistry<DEVICES, FDS>::views",
+     "count": 7,
+     "sample": [
+      {
+       "line": 190,
+       "mut": "replace && with ||"
+      },
+      {
+       "line": 192,
+       "mut": "replace == with !="
+      },
+      {
+       "line": 190,
+       "mut": "replace == with !="
+      }
+     ]
+    },
+    {
+     "fn": "IsolatedNetwork<FRAMES>::receive",
+     "count": 7,
+     "sample": [
+      {
+       "line": 477,
+       "mut": "replace < with =="
+      },
+      {
+       "line": 477,
+       "mut": "replace < with <="
+      },
+      {
+       "line": 483,
+       "mut": "replace % with /"
+      }
+     ]
+    },
+    {
+     "fn": "DeviceRegistry<DEVICES, FDS>::read",
+     "count": 6,
+     "sample": [
+      {
+       "line": 266,
+       "mut": "replace ^= with |="
+      },
+      {
+       "line": 266,
+       "mut": "replace << with >>"
+      },
+      {
+       "line": 267,
+       "mut": "replace ^= with |="
+      }
+     ]
+    },
+    {
+     "fn": "DeviceRegistry<DEVICES, FDS>::descriptor",
+     "count": 2,
+     "sample": [
+      {
+       "line": 243,
+       "mut": "replace && with ||"
+      },
+      {
+       "line": 247,
+       "mut": "replace && with ||"
+      }
+     ]
+    },
+    {
+     "fn": "DeviceRegistry<DEVICES, FDS>::assign",
+     "count": 1,
+     "sample": [
+      {
+       "line": 149,
+       "mut": "replace == with !="
+      }
+     ]
+    },
+    {
+     "fn": "DeviceRegistry<DEVICES, FDS>::open",
+     "count": 1,
+     "sample": [
+      {
+       "line": 232,
+       "mut": "replace | with ^"
+      }
+     ]
+    },
+    {
+     "fn": "BlockBackend::is_empty",
+     "count": 1,
+     "sample": [
+      {
+       "line": 333,
+       "mut": "replace == with !="
+      }
+     ]
+    }
+   ],
+   "survivors": [
+    "crates/ginux-devices/src/lib.rs:149:40: replace == with != in DeviceRegistry<DEVICES, FDS>::assign",
+    "crates/ginux-devices/src/lib.rs:185:9: replace DeviceRegistry<DEVICES, FDS>::views -> usize with 0",
+    "crates/ginux-devices/src/lib.rs:185:9: replace DeviceRegistry<DEVICES, FDS>::views -> usize with 1",
+    "crates/ginux-devices/src/lib.rs:190:47: replace && with || in DeviceRegistry<DEVICES, FDS>::views",
+    "crates/ginux-devices/src/lib.rs:190:65: replace == with != in DeviceRegistry<DEVICES, FDS>::views",
+    "crates/ginux-devices/src/lib.rs:192:22: replace == with != in DeviceRegistry<DEVICES, FDS>::views",
+    "crates/ginux-devices/src/lib.rs:201:57: replace + with * in DeviceRegistry<DEVICES, FDS>::views",
+    "crates/ginux-devices/src/lib.rs:201:57: replace + with - in DeviceRegistry<DEVICES, FDS>::views",
+    "crates/ginux-devices/src/lib.rs:209:19: replace += with *= in DeviceRegistry<DEVICES, FDS>::views",
+    "crates/ginux-devices/src/lib.rs:209:19: replace += with -= in DeviceRegistry<DEVICES, FDS>::views",
+    "crates/ginux-devices/src/lib.rs:232:24: replace | with ^ in DeviceRegistry<DEVICES, FDS>::open",
+    "crates/ginux-devices/src/lib.rs:243:40: replace && with || in DeviceRegistry<DEVICES, FDS>::descriptor",
+    "crates/ginux-devices/src/lib.rs:247:42: replace && with || in DeviceRegistry<DEVICES, FDS>::descriptor",
+    "crates/ginux-devices/src/lib.rs:266:39: replace ^= with |= in DeviceRegistry<DEVICES, FDS>::read",
+    "crates/ginux-devices/src/lib.rs:266:60: replace << with >> in DeviceRegistry<DEVICES, FDS>::read",
+    "crates/ginux-devices/src/lib.rs:267:39: replace ^= with |= in DeviceRegistry<DEVICES, FDS>::read",
+    "crates/ginux-devices/src/lib.rs:267:60: replace >> with << in DeviceRegistry<DEVICES, FDS>::read",
+    "crates/ginux-devices/src/lib.rs:268:39: replace ^= with |= in DeviceRegistry<DEVICES, FDS>::read",
+    "crates/ginux-devices/src/lib.rs:268:60: replace << with >> in DeviceRegistry<DEVICES, FDS>::read",
+    "crates/ginux-devices/src/lib.rs:333:20: replace == with != in BlockBackend::is_empty",
+    "crates/ginux-devices/src/lib.rs:333:9: replace BlockBackend::is_empty -> bool with false",
+    "crates/ginux-devices/src/lib.rs:333:9: replace BlockBackend::is_empty -> bool with true",
+    "crates/ginux-devices/src/lib.rs:393:9: replace Partition<B>::size -> u64 with 0",
+    "crates/ginux-devices/src/lib.rs:393:9: replace Partition<B>::size -> u64 with 1",
+    "crates/ginux-devices/src/lib.rs:397:9: replace Partition<B>::flush -> Result<(), DeviceError> with Ok(())",
+    "crates/ginux-devices/src/lib.rs:477:25: replace < with <= in IsolatedNetwork<FRAMES>::receive",
+    "crates/ginux-devices/src/lib.rs:477:25: replace < with == in IsolatedNetwork<FRAMES>::receive",
+    "crates/ginux-devices/src/lib.rs:483:32: replace + with * in IsolatedNetwork<FRAMES>::receive",
+    "crates/ginux-devices/src/lib.rs:483:37: replace % with + in IsolatedNetwork<FRAMES>::receive",
+    "crates/ginux-devices/src/lib.rs:483:37: replace % with / in IsolatedNetwork<FRAMES>::receive",
+    "crates/ginux-devices/src/lib.rs:484:18: replace -= with += in IsolatedNetwork<FRAMES>::receive",
+    "crates/ginux-devices/src/lib.rs:484:18: replace -= with /= in IsolatedNetwork<FRAMES>::receive"
+   ]
+  },
   "ginux-fs-policy": {
    "total_missed": 9,
    "functions": {
@@ -57,6 +316,842 @@
       }
      ]
     }
+   ],
+   "survivors": [
+    "crates/ginux-fs-policy/src/bin/fs-policy-doc.rs:11:9: replace || with && in main",
+    "crates/ginux-fs-policy/src/bin/fs-policy-doc.rs:12:12: delete ! in main",
+    "crates/ginux-fs-policy/src/bin/fs-policy-doc.rs:12:9: replace || with && in main",
+    "crates/ginux-fs-policy/src/bin/fs-policy-doc.rs:18:13: replace == with != in main",
+    "crates/ginux-fs-policy/src/bin/fs-policy-doc.rs:23:16: replace != with == in main",
+    "crates/ginux-fs-policy/src/bin/fs-policy-doc.rs:38:5: replace render -> String with \"xyzzy\".into()",
+    "crates/ginux-fs-policy/src/bin/fs-policy-doc.rs:38:5: replace render -> String with String::new()",
+    "crates/ginux-fs-policy/src/bin/fs-policy-doc.rs:7:5: replace main with ()",
+    "crates/ginux-fs-policy/src/lib.rs:126:9: replace Capability::is_available -> bool with false",
+    "crates/ginux-fs-policy/src/lib.rs:126:9: replace Capability::is_available -> bool with true",
+    "crates/ginux-fs-policy/src/lib.rs:234:14: replace ^= with &= in identity_token",
+    "crates/ginux-fs-policy/src/lib.rs:234:14: replace ^= with |= in identity_token",
+    "crates/ginux-fs-policy/src/lib.rs:256:9: replace Owner::name -> &'static str with \"\"",
+    "crates/ginux-fs-policy/src/lib.rs:256:9: replace Owner::name -> &'static str with \"xyzzy\"",
+    "crates/ginux-fs-policy/src/lib.rs:49:21: replace != with == in ObjectId::is_available",
+    "crates/ginux-fs-policy/src/lib.rs:49:26: replace || with && in ObjectId::is_available",
+    "crates/ginux-fs-policy/src/lib.rs:49:40: replace != with == in ObjectId::is_available",
+    "crates/ginux-fs-policy/src/lib.rs:49:9: replace ObjectId::is_available -> bool with true",
+    "crates/ginux-fs-policy/src/lib.rs:66:37: replace << with >>",
+    "crates/ginux-fs-policy/src/lib.rs:67:35: replace << with >>",
+    "crates/ginux-fs-policy/src/lib.rs:69:37: replace << with >>",
+    "crates/ginux-fs-policy/src/lib.rs:70:39: replace << with >>"
+   ]
+  },
+  "ginux-instance": {
+   "total_missed": 325,
+   "scan_run": 9,
+   "functions": {
+    "InstanceConfig::apply_override_inner": 76,
+    "?": 74,
+    "parse_field": 58,
+    "InstanceConfig::validate": 24,
+    "InstanceConfig::derive_contract_grants": 12,
+    "ConfigBuilder::finish": 9,
+    "InstanceConfig::network_source_ipv4": 8,
+    "parse_string": 8,
+    "InstanceConfig::privilege_setid_denied": 5,
+    "parse_section": 5,
+    "validate_port": 4,
+    "parse_port": 4,
+    "InstanceConfig::parse": 3,
+    "NormalizedConfig::quoted": 3,
+    "parse_list": 3,
+    "parse_syscall_list": 3,
+    "InstanceConfig::normalized": 2,
+    "parse_multiline_hook_list": 2,
+    "strip_comment": 2,
+    "validate_instance_path": 2,
+    "validate_policy_path": 2,
+    "port_forward_conflicts": 2,
+    "validate_volume": 2,
+    "push_unique": 1,
+    "InstanceConfig::device_create_denied": 1,
+    "InstanceConfig::translated_port": 1,
+    "parse_u64": 1,
+    "parse_allow_deny": 1,
+    "parse_legacy_audit_mode": 1,
+    "validate_identifier": 1,
+    "validate_network_rule": 1,
+    "validate_port_forward": 1,
+    "port_forward_parts": 1,
+    "protected_virtual_path": 1,
+    "validate_instance_command": 1
+   },
+   "top_clusters": [
+    {
+     "fn": "InstanceConfig::apply_override_inner",
+     "count": 76,
+     "sample": [
+      {
+       "line": 679,
+       "mut": "delete match arm b\"instance.id\""
+      },
+      {
+       "line": 682,
+       "mut": "delete match arm b\"instance.args\""
+      },
+      {
+       "line": 680,
+       "mut": "delete match arm b\"instance.root\""
+      }
+     ]
+    },
+    {
+     "fn": "?",
+     "count": 74,
+     "sample": [
+      {
+       "line": 262,
+       "mut": "replace ConfigError::as_str -> &'static str with \"\""
+      },
+      {
+       "line": 262,
+       "mut": "replace ConfigError::as_str -> &'static str with \"xyzzy\""
+      },
+      {
+       "line": 285,
+       "mut": "replace <impl fmt::Display for ConfigError>::fmt -> fmt::Result with Ok(Default::default())"
+      }
+     ]
+    },
+    {
+     "fn": "parse_field",
+     "count": 58,
+     "sample": [
+      {
+       "line": 1742,
+       "mut": "delete match arm (Section::Network, b\"ingress_allow\")"
+      },
+      {
+       "line": 1750,
+       "mut": "delete match arm (Section::Network, b\"egress_allow\")"
+      },
+      {
+       "line": 1746,
+       "mut": "delete match arm (Section::Network, b\"ingress_deny\")"
+      }
+     ]
+    },
+    {
+     "fn": "InstanceConfig::validate",
+     "count": 24,
+     "sample": [
+      {
+       "line": 825,
+       "mut": "replace != with =="
+      },
+      {
+       "line": 831,
+       "mut": "replace || with &&"
+      },
+      {
+       "line": 839,
+       "mut": "replace || with &&"
+      }
+     ]
+    },
+    {
+     "fn": "InstanceConfig::derive_contract_grants",
+     "count": 12,
+     "sample": [
+      {
+       "line": 591,
+       "mut": "replace || with &&"
+      },
+      {
+       "line": 590,
+       "mut": "delete !"
+      },
+      {
+       "line": 591,
+       "mut": "delete !"
+      }
+     ]
+    }
+   ],
+   "survivors": [
+    "crates/ginux-instance/src/lib.rs:1000:13: replace || with && in InstanceConfig::validate",
+    "crates/ginux-instance/src/lib.rs:1001:13: replace || with && in InstanceConfig::validate",
+    "crates/ginux-instance/src/lib.rs:1173:13: replace || with && in InstanceConfig::normalized",
+    "crates/ginux-instance/src/lib.rs:1174:13: replace || with && in InstanceConfig::normalized",
+    "crates/ginux-instance/src/lib.rs:1245:17: replace && with || in InstanceConfig::privilege_setid_denied",
+    "crates/ginux-instance/src/lib.rs:1245:20: delete ! in InstanceConfig::privilege_setid_denied",
+    "crates/ginux-instance/src/lib.rs:1245:9: replace InstanceConfig::privilege_setid_denied -> bool with false",
+    "crates/ginux-instance/src/lib.rs:1245:9: replace InstanceConfig::privilege_setid_denied -> bool with true",
+    "crates/ginux-instance/src/lib.rs:1246:13: replace || with && in InstanceConfig::privilege_setid_denied",
+    "crates/ginux-instance/src/lib.rs:1246:24: replace && with || in InstanceConfig::privilege_setid_denied",
+    "crates/ginux-instance/src/lib.rs:1246:27: delete ! in InstanceConfig::privilege_setid_denied",
+    "crates/ginux-instance/src/lib.rs:1250:9: delete ! in InstanceConfig::device_create_denied",
+    "crates/ginux-instance/src/lib.rs:1250:9: replace InstanceConfig::device_create_denied -> bool with false",
+    "crates/ginux-instance/src/lib.rs:1250:9: replace InstanceConfig::device_create_denied -> bool with true",
+    "crates/ginux-instance/src/lib.rs:1265:58: replace == with != in InstanceConfig::translated_port",
+    "crates/ginux-instance/src/lib.rs:1275:9: replace InstanceConfig::network_source_ipv4 -> Option<[u8; 4]> with Some([0; 4])",
+    "crates/ginux-instance/src/lib.rs:1275:9: replace InstanceConfig::network_source_ipv4 -> Option<[u8; 4]> with Some([1; 4])",
+    "crates/ginux-instance/src/lib.rs:1283:32: replace || with && in InstanceConfig::network_source_ipv4",
+    "crates/ginux-instance/src/lib.rs:1283:50: replace || with && in InstanceConfig::network_source_ipv4",
+    "crates/ginux-instance/src/lib.rs:1288:31: replace * with + in InstanceConfig::network_source_ipv4",
+    "crates/ginux-instance/src/lib.rs:1288:31: replace * with / in InstanceConfig::network_source_ipv4",
+    "crates/ginux-instance/src/lib.rs:1288:36: replace + with * in InstanceConfig::network_source_ipv4",
+    "crates/ginux-instance/src/lib.rs:1288:54: replace - with / in InstanceConfig::network_source_ipv4",
+    "crates/ginux-instance/src/lib.rs:1290:22: replace > with == in InstanceConfig::network_source_ipv4",
+    "crates/ginux-instance/src/lib.rs:1290:22: replace > with >= in InstanceConfig::network_source_ipv4",
+    "crates/ginux-instance/src/lib.rs:1327:5: replace + with *",
+    "crates/ginux-instance/src/lib.rs:1327:5: replace + with -",
+    "crates/ginux-instance/src/lib.rs:1328:5: replace + with *",
+    "crates/ginux-instance/src/lib.rs:1328:5: replace + with -",
+    "crates/ginux-instance/src/lib.rs:1329:5: replace + with *",
+    "crates/ginux-instance/src/lib.rs:1329:5: replace + with -",
+    "crates/ginux-instance/src/lib.rs:1330:17: replace * with +",
+    "crates/ginux-instance/src/lib.rs:1330:17: replace * with /",
+    "crates/ginux-instance/src/lib.rs:1331:25: replace * with +",
+    "crates/ginux-instance/src/lib.rs:1331:25: replace * with /",
+    "crates/ginux-instance/src/lib.rs:1332:5: replace + with -",
+    "crates/ginux-instance/src/lib.rs:1333:5: replace + with *",
+    "crates/ginux-instance/src/lib.rs:1333:5: replace + with -",
+    "crates/ginux-instance/src/lib.rs:1334:24: replace * with +",
+    "crates/ginux-instance/src/lib.rs:1334:24: replace * with /",
+    "crates/ginux-instance/src/lib.rs:1334:5: replace + with *",
+    "crates/ginux-instance/src/lib.rs:1334:5: replace + with -",
+    "crates/ginux-instance/src/lib.rs:1335:24: replace * with +",
+    "crates/ginux-instance/src/lib.rs:1335:24: replace * with /",
+    "crates/ginux-instance/src/lib.rs:1335:9: replace * with +",
+    "crates/ginux-instance/src/lib.rs:1335:9: replace * with /",
+    "crates/ginux-instance/src/lib.rs:1336:10: replace * with +",
+    "crates/ginux-instance/src/lib.rs:1336:10: replace * with /",
+    "crates/ginux-instance/src/lib.rs:1336:32: replace * with +",
+    "crates/ginux-instance/src/lib.rs:1336:32: replace * with /",
+    "crates/ginux-instance/src/lib.rs:1337:5: replace + with -",
+    "crates/ginux-instance/src/lib.rs:1338:29: replace * with +",
+    "crates/ginux-instance/src/lib.rs:1338:29: replace * with /",
+    "crates/ginux-instance/src/lib.rs:1338:5: replace + with -",
+    "crates/ginux-instance/src/lib.rs:1339:28: replace * with +",
+    "crates/ginux-instance/src/lib.rs:1339:28: replace * with /",
+    "crates/ginux-instance/src/lib.rs:1339:5: replace + with -",
+    "crates/ginux-instance/src/lib.rs:1339:9: replace * with +",
+    "crates/ginux-instance/src/lib.rs:1339:9: replace * with /",
+    "crates/ginux-instance/src/lib.rs:1340:24: replace * with +",
+    "crates/ginux-instance/src/lib.rs:1340:24: replace * with /",
+    "crates/ginux-instance/src/lib.rs:1340:5: replace + with -",
+    "crates/ginux-instance/src/lib.rs:1341:5: replace + with -",
+    "crates/ginux-instance/src/lib.rs:1341:9: replace * with +",
+    "crates/ginux-instance/src/lib.rs:1341:9: replace * with /",
+    "crates/ginux-instance/src/lib.rs:1342:24: replace * with +",
+    "crates/ginux-instance/src/lib.rs:1342:24: replace * with /",
+    "crates/ginux-instance/src/lib.rs:1342:5: replace + with -",
+    "crates/ginux-instance/src/lib.rs:1342:9: replace * with +",
+    "crates/ginux-instance/src/lib.rs:1342:9: replace * with /",
+    "crates/ginux-instance/src/lib.rs:1343:24: replace * with +",
+    "crates/ginux-instance/src/lib.rs:1343:24: replace * with /",
+    "crates/ginux-instance/src/lib.rs:1343:5: replace + with -",
+    "crates/ginux-instance/src/lib.rs:1344:18: replace * with +",
+    "crates/ginux-instance/src/lib.rs:1344:18: replace * with /",
+    "crates/ginux-instance/src/lib.rs:1344:5: replace + with -",
+    "crates/ginux-instance/src/lib.rs:1348:38: replace * with +",
+    "crates/ginux-instance/src/lib.rs:1348:58: replace + with -",
+    "crates/ginux-instance/src/lib.rs:1405:17: delete match arm b'\\n' in NormalizedConfig::quoted",
+    "crates/ginux-instance/src/lib.rs:1406:17: delete match arm b'\\t' in NormalizedConfig::quoted",
+    "crates/ginux-instance/src/lib.rs:1407:17: delete match arm 0..= 31 | 127 in NormalizedConfig::quoted",
+    "crates/ginux-instance/src/lib.rs:1465:19: replace < with <= in parse_section",
+    "crates/ginux-instance/src/lib.rs:1465:19: replace < with == in parse_section",
+    "crates/ginux-instance/src/lib.rs:1465:23: replace || with && in parse_section",
+    "crates/ginux-instance/src/lib.rs:1465:55: replace || with && in parse_section",
+    "crates/ginux-instance/src/lib.rs:1465:77: replace - with / in parse_section",
+    "crates/ginux-instance/src/lib.rs:1502:28: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1526:28: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1554:17: delete match arm b\"ptrace-sysemu\" in parse_field",
+    "crates/ginux-instance/src/lib.rs:1561:32: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1573:28: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1577:28: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1585:32: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1593:32: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1597:32: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1601:32: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1605:32: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1609:32: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1613:32: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1617:32: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1621:32: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1625:32: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1629:32: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1633:32: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1637:32: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1641:32: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1645:32: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1649:32: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1654:32: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1658:32: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1662:32: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1666:32: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1670:32: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1674:32: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1678:32: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1682:32: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1686:32: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1690:32: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1694:32: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1698:32: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1702:32: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1706:32: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1710:32: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1718:28: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1726:28: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1735:28: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1739:28: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1742:9: delete match arm (Section::Network, b\"ingress_allow\") in parse_field",
+    "crates/ginux-instance/src/lib.rs:1743:28: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1746:9: delete match arm (Section::Network, b\"ingress_deny\") in parse_field",
+    "crates/ginux-instance/src/lib.rs:1747:28: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1750:9: delete match arm (Section::Network, b\"egress_allow\") in parse_field",
+    "crates/ginux-instance/src/lib.rs:1751:28: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1754:9: delete match arm (Section::Network, b\"egress_deny\") in parse_field",
+    "crates/ginux-instance/src/lib.rs:1755:28: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1759:28: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1763:28: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1767:28: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1771:32: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1775:32: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1779:32: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1782:17: delete match arm b\"continue\" in parse_field",
+    "crates/ginux-instance/src/lib.rs:1787:32: replace << with >> in parse_field",
+    "crates/ginux-instance/src/lib.rs:1806:17: delete match arm b\"fail\" in parse_field",
+    "crates/ginux-instance/src/lib.rs:1816:25: replace || with && in parse_u64",
+    "crates/ginux-instance/src/lib.rs:1837:5: replace parse_allow_deny -> Result<bool, ConfigError> with Ok(false)",
+    "crates/ginux-instance/src/lib.rs:1838:9: delete match arm b\"allow\" in parse_allow_deny",
+    "crates/ginux-instance/src/lib.rs:1845:5: replace parse_bool -> Result<bool, ConfigError> with Ok(false)",
+    "crates/ginux-instance/src/lib.rs:1855:9: delete match arm b\"disabled\" in parse_legacy_audit_mode",
+    "crates/ginux-instance/src/lib.rs:1861:24: replace || with && in parse_string",
+    "crates/ginux-instance/src/lib.rs:1861:44: replace || with && in parse_string",
+    "crates/ginux-instance/src/lib.rs:1870:37: replace - with + in parse_string",
+    "crates/ginux-instance/src/lib.rs:1870:37: replace - with / in parse_string",
+    "crates/ginux-instance/src/lib.rs:1876:17: delete match arm b'n' in parse_string",
+    "crates/ginux-instance/src/lib.rs:1877:17: delete match arm b't' in parse_string",
+    "crates/ginux-instance/src/lib.rs:1880:32: replace || with && in parse_string",
+    "crates/ginux-instance/src/lib.rs:1880:45: replace || with && in parse_string",
+    "crates/ginux-instance/src/lib.rs:1892:24: replace || with && in parse_list",
+    "crates/ginux-instance/src/lib.rs:1892:44: replace || with && in parse_list",
+    "crates/ginux-instance/src/lib.rs:1903:21: replace < with <= in parse_list",
+    "crates/ginux-instance/src/lib.rs:1939:33: replace || with && in parse_multiline_hook_list",
+    "crates/ginux-instance/src/lib.rs:1944:28: replace == with != in parse_multiline_hook_list",
+    "crates/ginux-instance/src/lib.rs:1997:13: replace || with && in parse_syscall_list",
+    "crates/ginux-instance/src/lib.rs:1998:13: replace || with && in parse_syscall_list",
+    "crates/ginux-instance/src/lib.rs:2000:24: delete ! in parse_syscall_list",
+    "crates/ginux-instance/src/lib.rs:2022:22: delete ! in strip_comment",
+    "crates/ginux-instance/src/lib.rs:2027:34: replace && with || in strip_comment",
+    "crates/ginux-instance/src/lib.rs:2049:5: replace is_key -> bool with true",
+    "crates/ginux-instance/src/lib.rs:2055:5: replace validate_identifier -> Result<(), ConfigError> with Ok(())",
+    "crates/ginux-instance/src/lib.rs:2056:9: replace || with && in validate_identifier",
+    "crates/ginux-instance/src/lib.rs:2079:20: replace < with <= in validate_instance_path",
+    "crates/ginux-instance/src/lib.rs:2079:20: replace < with == in validate_instance_path",
+    "crates/ginux-instance/src/lib.rs:2094:20: replace > with >= in validate_policy_path",
+    "crates/ginux-instance/src/lib.rs:2097:41: replace == with != in validate_policy_path",
+    "crates/ginux-instance/src/lib.rs:2116:17: replace && with || in validate_port",
+    "crates/ginux-instance/src/lib.rs:2116:5: replace validate_port -> Result<(), ConfigError> with Ok(())",
+    "crates/ginux-instance/src/lib.rs:2120:18: replace || with && in validate_port",
+    "crates/ginux-instance/src/lib.rs:2120:26: replace > with == in validate_port",
+    "crates/ginux-instance/src/lib.rs:2120:26: replace > with >= in validate_port",
+    "crates/ginux-instance/src/lib.rs:2127:25: replace || with && in parse_port",
+    "crates/ginux-instance/src/lib.rs:2136:19: replace || with && in parse_port",
+    "crates/ginux-instance/src/lib.rs:2136:28: replace > with == in parse_port",
+    "crates/ginux-instance/src/lib.rs:2136:28: replace > with >= in parse_port",
+    "crates/ginux-instance/src/lib.rs:2157:5: replace validate_network_rule -> Result<(), ConfigError> with Ok(())",
+    "crates/ginux-instance/src/lib.rs:2160:31: replace || with && in validate_network_rule",
+    "crates/ginux-instance/src/lib.rs:2167:5: replace validate_port_forward -> Result<(), ConfigError> with Ok(())",
+    "crates/ginux-instance/src/lib.rs:2172:31: replace || with && in validate_port_forward",
+    "crates/ginux-instance/src/lib.rs:2183:46: replace == with != in port_forward_parts",
+    "crates/ginux-instance/src/lib.rs:2183:5: replace port_forward_parts -> Option<PortForwardParts<'_>> with None",
+    "crates/ginux-instance/src/lib.rs:2183:5: replace port_forward_parts -> Option<PortForwardParts<'_>> with Some(Default::default())",
+    "crates/ginux-instance/src/lib.rs:2193:5: replace port_forward_conflicts -> bool with true",
+    "crates/ginux-instance/src/lib.rs:2204:50: replace && with || in port_forward_conflicts",
+    "crates/ginux-instance/src/lib.rs:2204:9: replace && with || in port_forward_conflicts",
+    "crates/ginux-instance/src/lib.rs:2213:31: replace || with && in validate_volume",
+    "crates/ginux-instance/src/lib.rs:2219:9: replace || with && in validate_volume",
+    "crates/ginux-instance/src/lib.rs:2245:87: replace == with != in protected_virtual_path",
+    "crates/ginux-instance/src/lib.rs:2260:33: replace == with != in validate_instance_command",
+    "crates/ginux-instance/src/lib.rs:2280:9: replace InstanceState::as_str -> &'static str with \"\"",
+    "crates/ginux-instance/src/lib.rs:2280:9: replace InstanceState::as_str -> &'static str with \"xyzzy\"",
+    "crates/ginux-instance/src/lib.rs:262:9: replace ConfigError::as_str -> &'static str with \"\"",
+    "crates/ginux-instance/src/lib.rs:262:9: replace ConfigError::as_str -> &'static str with \"xyzzy\"",
+    "crates/ginux-instance/src/lib.rs:285:9: replace <impl fmt::Display for ConfigError>::fmt -> fmt::Result with Ok(Default::default())",
+    "crates/ginux-instance/src/lib.rs:476:37: replace << with >> in ConfigBuilder::finish",
+    "crates/ginux-instance/src/lib.rs:479:44: replace << with >> in ConfigBuilder::finish",
+    "crates/ginux-instance/src/lib.rs:480:44: replace << with >> in ConfigBuilder::finish",
+    "crates/ginux-instance/src/lib.rs:481:44: replace << with >> in ConfigBuilder::finish",
+    "crates/ginux-instance/src/lib.rs:485:22: replace & with ^ in ConfigBuilder::finish",
+    "crates/ginux-instance/src/lib.rs:485:22: replace & with | in ConfigBuilder::finish",
+    "crates/ginux-instance/src/lib.rs:485:43: replace != with == in ConfigBuilder::finish",
+    "crates/ginux-instance/src/lib.rs:486:48: replace | with ^ in ConfigBuilder::finish",
+    "crates/ginux-instance/src/lib.rs:487:39: replace | with ^ in ConfigBuilder::finish",
+    "crates/ginux-instance/src/lib.rs:590:12: delete ! in InstanceConfig::derive_contract_grants",
+    "crates/ginux-instance/src/lib.rs:591:13: replace || with && in InstanceConfig::derive_contract_grants",
+    "crates/ginux-instance/src/lib.rs:591:16: delete ! in InstanceConfig::derive_contract_grants",
+    "crates/ginux-instance/src/lib.rs:595:12: delete ! in InstanceConfig::derive_contract_grants",
+    "crates/ginux-instance/src/lib.rs:598:12: delete ! in InstanceConfig::derive_contract_grants",
+    "crates/ginux-instance/src/lib.rs:598:53: replace || with && in InstanceConfig::derive_contract_grants",
+    "crates/ginux-instance/src/lib.rs:598:56: delete ! in InstanceConfig::derive_contract_grants",
+    "crates/ginux-instance/src/lib.rs:601:12: delete ! in InstanceConfig::derive_contract_grants",
+    "crates/ginux-instance/src/lib.rs:604:12: delete ! in InstanceConfig::derive_contract_grants",
+    "crates/ginux-instance/src/lib.rs:607:12: delete ! in InstanceConfig::derive_contract_grants",
+    "crates/ginux-instance/src/lib.rs:610:12: delete ! in InstanceConfig::derive_contract_grants",
+    "crates/ginux-instance/src/lib.rs:616:12: delete ! in InstanceConfig::derive_contract_grants",
+    "crates/ginux-instance/src/lib.rs:646:31: replace || with && in InstanceConfig::parse",
+    "crates/ginux-instance/src/lib.rs:646:51: replace || with && in InstanceConfig::parse",
+    "crates/ginux-instance/src/lib.rs:650:36: replace << with >> in InstanceConfig::parse",
+    "crates/ginux-instance/src/lib.rs:679:13: delete match arm b\"instance.id\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:680:13: delete match arm b\"instance.root\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:681:13: delete match arm b\"instance.init\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:682:13: delete match arm b\"instance.args\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:683:13: delete match arm b\"instance.environment\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:684:13: delete match arm b\"instance.workdir\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:687:13: delete match arm b\"resources.memory_mib\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:688:13: delete match arm b\"execution.profile\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:690:21: delete match arm b\"security\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:691:21: delete match arm b\"balanced\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:692:21: delete match arm b\"performance\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:696:13: delete match arm b\"execution.backend\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:698:21: delete match arm b\"interpreter\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:699:21: delete match arm b\"ptrace-sysemu\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:700:21: delete match arm b\"ptrace-native\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:704:13: delete match arm b\"contract.syscalls.control\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:706:21: delete match arm b\"paranoid\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:707:21: delete match arm b\"selective\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:711:13: delete match arm b\"contract.version\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:712:13: delete match arm b\"contract.catalog\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:713:13: delete match arm b\"contract.default\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:715:13: delete match arm b\"contract.deny\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:717:13: delete match arm b\"contract.syscalls.default\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:720:13: delete match arm b\"contract.syscalls.allow\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:721:13: delete match arm b\"contract.syscalls.deny\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:722:13: delete match arm b\"contract.filesystem.default\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:725:13: delete match arm b\"contract.filesystem.read\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:726:13: delete match arm b\"contract.filesystem.write\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:727:13: delete match arm b\"contract.filesystem.create\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:728:13: delete match arm b\"contract.filesystem.deny\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:729:13: delete match arm b\"contract.network.default\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:732:13: delete match arm b\"contract.network.inbound\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:733:13: delete match arm b\"contract.network.outbound\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:734:13: delete match arm b\"contract.devices.default\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:737:13: delete match arm b\"contract.devices.read\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:738:13: delete match arm b\"contract.devices.write\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:739:13: delete match arm b\"contract.devices.create\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:741:48: delete ! in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:743:13: delete match arm b\"contract.privileges.default\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:746:13: delete match arm b\"contract.privileges.setuid\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:747:13: delete match arm b\"contract.privileges.setgid\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:748:13: delete match arm b\"contract.process.default\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:751:13: delete match arm b\"contract.process.max_processes\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:752:13: delete match arm b\"contract.process.max_threads\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:753:13: delete match arm b\"contract.process.signals\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:754:13: delete match arm b\"contract.process.ptrace\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:755:13: delete match arm b\"contract.process.namespace_create\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:758:13: delete match arm b\"contract.process.namespace_join\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:759:13: delete match arm b\"contract.kernel.default\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:762:13: delete match arm b\"contract.kernel.proc_read\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:763:13: delete match arm b\"contract.kernel.proc_write\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:764:13: delete match arm b\"contract.kernel.sys_read\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:765:13: delete match arm b\"contract.kernel.sys_write\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:766:13: delete match arm b\"storage.assignments\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:767:13: delete match arm b\"volumes.assignments\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:768:13: delete match arm b\"devices.assignments\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:771:21: delete match arm b\"none\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:772:21: delete match arm b\"mediated\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:778:13: delete match arm b\"network.source\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:779:13: delete match arm b\"network.ingress_allow\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:780:13: delete match arm b\"network.ingress_deny\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:781:13: delete match arm b\"network.egress_allow\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:782:13: delete match arm b\"network.egress_deny\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:784:13: delete match arm b\"access.uid\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:785:13: delete match arm b\"access.gid\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:786:13: delete match arm b\"hooks.pre_boot\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:787:13: delete match arm b\"hooks.timeout_seconds\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:788:13: delete match arm b\"hooks.failure\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:790:21: delete match arm b\"stop\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:791:21: delete match arm b\"continue\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:795:13: delete match arm b\"lifecycle.stop_timeout_seconds\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:796:13: delete match arm b\"audit.enabled\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:803:13: delete match arm b\"audit.mode\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:806:13: delete match arm b\"failure.policy\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:808:21: delete match arm b\"stop\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:809:21: delete match arm b\"fail\" in InstanceConfig::apply_override_inner",
+    "crates/ginux-instance/src/lib.rs:825:36: replace != with == in InstanceConfig::validate",
+    "crates/ginux-instance/src/lib.rs:82:45: replace == with != in push_unique",
+    "crates/ginux-instance/src/lib.rs:831:13: replace || with && in InstanceConfig::validate",
+    "crates/ginux-instance/src/lib.rs:839:44: replace || with && in InstanceConfig::validate",
+    "crates/ginux-instance/src/lib.rs:842:28: replace > with == in InstanceConfig::validate",
+    "crates/ginux-instance/src/lib.rs:842:28: replace > with >= in InstanceConfig::validate",
+    "crates/ginux-instance/src/lib.rs:843:13: replace || with && in InstanceConfig::validate",
+    "crates/ginux-instance/src/lib.rs:843:32: replace > with == in InstanceConfig::validate",
+    "crates/ginux-instance/src/lib.rs:843:32: replace > with >= in InstanceConfig::validate",
+    "crates/ginux-instance/src/lib.rs:844:13: replace || with && in InstanceConfig::validate",
+    "crates/ginux-instance/src/lib.rs:845:13: replace || with && in InstanceConfig::validate",
+    "crates/ginux-instance/src/lib.rs:845:42: replace > with == in InstanceConfig::validate",
+    "crates/ginux-instance/src/lib.rs:845:42: replace > with >= in InstanceConfig::validate",
+    "crates/ginux-instance/src/lib.rs:846:13: replace || with && in InstanceConfig::validate",
+    "crates/ginux-instance/src/lib.rs:847:13: replace || with && in InstanceConfig::validate",
+    "crates/ginux-instance/src/lib.rs:847:42: replace > with == in InstanceConfig::validate",
+    "crates/ginux-instance/src/lib.rs:847:42: replace > with >= in InstanceConfig::validate",
+    "crates/ginux-instance/src/lib.rs:952:17: replace || with && in InstanceConfig::validate",
+    "crates/ginux-instance/src/lib.rs:953:17: replace || with && in InstanceConfig::validate",
+    "crates/ginux-instance/src/lib.rs:954:17: replace || with && in InstanceConfig::validate",
+    "crates/ginux-instance/src/lib.rs:955:17: replace || with && in InstanceConfig::validate",
+    "crates/ginux-instance/src/lib.rs:956:17: replace || with && in InstanceConfig::validate",
+    "crates/ginux-instance/src/lib.rs:963:34: replace || with && in InstanceConfig::validate"
+   ]
+  },
+  "ginux-kernel-views": {
+   "total_missed": 64,
+   "scan_run": 6,
+   "functions": {
+    "CgroupFs<GROUPS>::attach": 13,
+    "CgroupFs<GROUPS>::read": 12,
+    "validate_group_path": 8,
+    "?": 6,
+    "ProcFs<'a>::read": 5,
+    "SysFs<'a>::read": 4,
+    "CgroupFs<GROUPS>::remove": 4,
+    "IdentityFs<'a>::readlink": 2,
+    "CgroupFs<GROUPS>::write": 2,
+    "parse_controllers": 2,
+    "IdentityFs<'a>::read": 1,
+    "write_status": 1,
+    "write_stat": 1,
+    "split_file": 1,
+    "parse_limit_u32": 1,
+    "ByteWriter<'a>::limit": 1
+   },
+   "top_clusters": [
+    {
+     "fn": "CgroupFs<GROUPS>::attach",
+     "count": 13,
+     "sample": [
+      {
+       "line": 106,
+       "mut": "replace || with &&"
+      },
+      {
+       "line": 113,
+       "mut": "replace == with !="
+      },
+      {
+       "line": 117,
+       "mut": "replace < with =="
+      }
+     ]
+    },
+    {
+     "fn": "CgroupFs<GROUPS>::read",
+     "count": 12,
+     "sample": [
+      {
+       "line": 160,
+       "mut": "delete match arm b\"cgroup.controllers\""
+      },
+      {
+       "line": 161,
+       "mut": "delete match arm b\"cgroup.subtree_control\""
+      },
+      {
+       "line": 180,
+       "mut": "delete match arm b\"pids.max\""
+      }
+     ]
+    },
+    {
+     "fn": "validate_group_path",
+     "count": 8,
+     "sample": [
+      {
+       "line": 211,
+       "mut": "replace || with &&"
+      },
+      {
+       "line": 210,
+       "mut": "replace || with &&"
+      },
+      {
+       "line": 209,
+       "mut": "replace || with &&"
+      }
+     ]
+    },
+    {
+     "fn": "?",
+     "count": 6,
+     "sample": [
+      {
+       "line": 126,
+       "mut": "replace SysFs<'a>::list_devices -> usize with 0"
+      },
+      {
+       "line": 126,
+       "mut": "replace SysFs<'a>::list_devices -> usize with 1"
+      },
+      {
+       "line": 361,
+       "mut": "replace write_stat -> Result<(), ViewError> with Ok(())"
+      }
+     ]
+    },
+    {
+     "fn": "ProcFs<'a>::read",
+     "count": 5,
+     "sample": [
+      {
+       "line": 267,
+       "mut": "delete match arm b\"/proc/sys/kernel/hostname\""
+      },
+      {
+       "line": 245,
+       "mut": "replace % with +"
+      },
+      {
+       "line": 252,
+       "mut": "replace / with %"
+      }
+     ]
+    }
+   ],
+   "survivors": [
+    "crates/ginux-kernel-views/src/cgroup.rs:106:13: replace || with && in CgroupFs<GROUPS>::attach",
+    "crates/ginux-kernel-views/src/cgroup.rs:113:44: replace == with != in CgroupFs<GROUPS>::attach",
+    "crates/ginux-kernel-views/src/cgroup.rs:117:29: replace + with * in CgroupFs<GROUPS>::attach",
+    "crates/ginux-kernel-views/src/cgroup.rs:117:29: replace + with - in CgroupFs<GROUPS>::attach",
+    "crates/ginux-kernel-views/src/cgroup.rs:117:33: replace < with <= in CgroupFs<GROUPS>::attach",
+    "crates/ginux-kernel-views/src/cgroup.rs:117:33: replace < with == in CgroupFs<GROUPS>::attach",
+    "crates/ginux-kernel-views/src/cgroup.rs:117:33: replace < with > in CgroupFs<GROUPS>::attach",
+    "crates/ginux-kernel-views/src/cgroup.rs:118:64: replace + with * in CgroupFs<GROUPS>::attach",
+    "crates/ginux-kernel-views/src/cgroup.rs:118:64: replace + with - in CgroupFs<GROUPS>::attach",
+    "crates/ginux-kernel-views/src/cgroup.rs:119:27: replace += with *= in CgroupFs<GROUPS>::attach",
+    "crates/ginux-kernel-views/src/cgroup.rs:119:27: replace += with -= in CgroupFs<GROUPS>::attach",
+    "crates/ginux-kernel-views/src/cgroup.rs:121:36: replace -= with += in CgroupFs<GROUPS>::attach",
+    "crates/ginux-kernel-views/src/cgroup.rs:121:36: replace -= with /= in CgroupFs<GROUPS>::attach",
+    "crates/ginux-kernel-views/src/cgroup.rs:142:26: replace < with <= in CgroupFs<GROUPS>::write",
+    "crates/ginux-kernel-views/src/cgroup.rs:142:26: replace < with == in CgroupFs<GROUPS>::write",
+    "crates/ginux-kernel-views/src/cgroup.rs:160:13: delete match arm b\"cgroup.controllers\" in CgroupFs<GROUPS>::read",
+    "crates/ginux-kernel-views/src/cgroup.rs:161:13: delete match arm b\"cgroup.subtree_control\" in CgroupFs<GROUPS>::read",
+    "crates/ginux-kernel-views/src/cgroup.rs:162:38: replace & with ^ in CgroupFs<GROUPS>::read",
+    "crates/ginux-kernel-views/src/cgroup.rs:162:38: replace & with | in CgroupFs<GROUPS>::read",
+    "crates/ginux-kernel-views/src/cgroup.rs:162:44: replace != with == in CgroupFs<GROUPS>::read",
+    "crates/ginux-kernel-views/src/cgroup.rs:165:38: replace & with ^ in CgroupFs<GROUPS>::read",
+    "crates/ginux-kernel-views/src/cgroup.rs:165:38: replace & with | in CgroupFs<GROUPS>::read",
+    "crates/ginux-kernel-views/src/cgroup.rs:165:47: replace != with == in CgroupFs<GROUPS>::read",
+    "crates/ginux-kernel-views/src/cgroup.rs:168:38: replace & with ^ in CgroupFs<GROUPS>::read",
+    "crates/ginux-kernel-views/src/cgroup.rs:168:38: replace & with | in CgroupFs<GROUPS>::read",
+    "crates/ginux-kernel-views/src/cgroup.rs:168:45: replace != with == in CgroupFs<GROUPS>::read",
+    "crates/ginux-kernel-views/src/cgroup.rs:180:13: delete match arm b\"pids.max\" in CgroupFs<GROUPS>::read",
+    "crates/ginux-kernel-views/src/cgroup.rs:207:19: replace < with <= in validate_group_path",
+    "crates/ginux-kernel-views/src/cgroup.rs:207:19: replace < with == in validate_group_path",
+    "crates/ginux-kernel-views/src/cgroup.rs:208:23: replace > with == in validate_group_path",
+    "crates/ginux-kernel-views/src/cgroup.rs:208:23: replace > with >= in validate_group_path",
+    "crates/ginux-kernel-views/src/cgroup.rs:208:9: replace || with && in validate_group_path",
+    "crates/ginux-kernel-views/src/cgroup.rs:209:9: replace || with && in validate_group_path",
+    "crates/ginux-kernel-views/src/cgroup.rs:210:9: replace || with && in validate_group_path",
+    "crates/ginux-kernel-views/src/cgroup.rs:211:9: replace || with && in validate_group_path",
+    "crates/ginux-kernel-views/src/cgroup.rs:236:14: replace + with * in split_file",
+    "crates/ginux-kernel-views/src/cgroup.rs:278:14: replace == with != in parse_limit_u32",
+    "crates/ginux-kernel-views/src/cgroup.rs:278:5: replace parse_limit_u32 -> Result<u32, ViewError> with Ok(1)",
+    "crates/ginux-kernel-views/src/cgroup.rs:286:5: replace parse_controllers -> Result<u8, ViewError> with Ok(0)",
+    "crates/ginux-kernel-views/src/cgroup.rs:286:5: replace parse_controllers -> Result<u8, ViewError> with Ok(1)",
+    "crates/ginux-kernel-views/src/cgroup.rs:288:21: replace |= with &= in parse_controllers",
+    "crates/ginux-kernel-views/src/cgroup.rs:292:13: delete match arm b\"\" in parse_controllers",
+    "crates/ginux-kernel-views/src/cgroup.rs:340:30: replace || with && in ByteWriter<'a>::limit",
+    "crates/ginux-kernel-views/src/cgroup.rs:90:30: replace && with || in CgroupFs<GROUPS>::remove",
+    "crates/ginux-kernel-views/src/cgroup.rs:90:46: replace != with == in CgroupFs<GROUPS>::remove",
+    "crates/ginux-kernel-views/src/cgroup.rs:90:54: replace && with || in CgroupFs<GROUPS>::remove",
+    "crates/ginux-kernel-views/src/cgroup.rs:90:83: replace == with != in CgroupFs<GROUPS>::remove",
+    "crates/ginux-kernel-views/src/lib.rs:126:9: replace SysFs<'a>::list_devices -> usize with 0",
+    "crates/ginux-kernel-views/src/lib.rs:126:9: replace SysFs<'a>::list_devices -> usize with 1",
+    "crates/ginux-kernel-views/src/lib.rs:138:31: replace > with >= in SysFs<'a>::read",
+    "crates/ginux-kernel-views/src/lib.rs:166:23: replace match guard device.kind != DeviceKind::Network with true in SysFs<'a>::read",
+    "crates/ginux-kernel-views/src/lib.rs:172:24: replace match guard device.kind == DeviceKind::Network with true in SysFs<'a>::read",
+    "crates/ginux-kernel-views/src/lib.rs:175:13: delete match arm b\"uevent\" in SysFs<'a>::read",
+    "crates/ginux-kernel-views/src/lib.rs:245:65: replace % with + in ProcFs<'a>::read",
+    "crates/ginux-kernel-views/src/lib.rs:252:60: replace / with % in ProcFs<'a>::read",
+    "crates/ginux-kernel-views/src/lib.rs:252:60: replace / with * in ProcFs<'a>::read",
+    "crates/ginux-kernel-views/src/lib.rs:267:13: delete match arm b\"/proc/sys/kernel/hostname\" in ProcFs<'a>::read",
+    "crates/ginux-kernel-views/src/lib.rs:284:21: delete match arm b\"stat\" in ProcFs<'a>::read",
+    "crates/ginux-kernel-views/src/lib.rs:330:33: replace == with != in write_status",
+    "crates/ginux-kernel-views/src/lib.rs:361:5: replace write_stat -> Result<(), ViewError> with Ok(())",
+    "crates/ginux-kernel-views/src/lib.rs:362:33: replace == with != in write_stat",
+    "crates/ginux-kernel-views/src/lib.rs:66:13: delete match arm b\"/etc/hostname\" in IdentityFs<'a>::read",
+    "crates/ginux-kernel-views/src/lib.rs:80:13: delete match arm b\"ns/pid\" in IdentityFs<'a>::readlink",
+    "crates/ginux-kernel-views/src/lib.rs:81:13: delete match arm b\"ns/uts\" in IdentityFs<'a>::readlink"
+   ]
+  },
+  "ginux-oci": {
+   "total_missed": 60,
+   "scan_run": 7,
+   "functions": {
+    "?": 19,
+    "fetch_blob": 12,
+    "human_size": 12,
+    "registry_token": 4,
+    "safe_whiteout_dir": 3,
+    "remove_path": 3,
+    "select_manifest": 2,
+    "parse_reference": 1,
+    "safe_tar_path": 1,
+    "api_registry": 1,
+    "digest_file": 1,
+    "main": 1
+   },
+   "top_clusters": [
+    {
+     "fn": "?",
+     "count": 19,
+     "sample": [
+      {
+       "line": 177,
+       "mut": "replace registry_token -> Result<Option<String>, String> with Ok(Some(String::new()))"
+      },
+      {
+       "line": 177,
+       "mut": "replace registry_token -> Result<Option<String>, String> with Ok(None)"
+      },
+      {
+       "line": 177,
+       "mut": "replace registry_token -> Result<Option<String>, String> with Ok(Some(\"xyzzy\".into()))"
+      }
+     ]
+    },
+    {
+     "fn": "fetch_blob",
+     "count": 12,
+     "sample": [
+      {
+       "line": 277,
+       "mut": "replace * with +"
+      },
+      {
+       "line": 285,
+       "mut": "replace += with *="
+      },
+      {
+       "line": 286,
+       "mut": "replace >= with <"
+      }
+     ]
+    },
+    {
+     "fn": "human_size",
+     "count": 12,
+     "sample": [
+      {
+       "line": 595,
+       "mut": "replace && with ||"
+      },
+      {
+       "line": 595,
+       "mut": "replace >= with <"
+      },
+      {
+       "line": 595,
+       "mut": "replace < with =="
+      }
+     ]
+    },
+    {
+     "fn": "registry_token",
+     "count": 4,
+     "sample": [
+      {
+       "line": 186,
+       "mut": "replace != with =="
+      },
+      {
+       "line": 200,
+       "mut": "replace == with !="
+      },
+      {
+       "line": 207,
+       "mut": "replace == with !="
+      }
+     ]
+    },
+    {
+     "fn": "safe_whiteout_dir",
+     "count": 3,
+     "sample": [
+      {
+       "line": 469,
+       "mut": "replace match guard error.kind() == io::ErrorKind::NotFound with true"
+      },
+      {
+       "line": 469,
+       "mut": "replace match guard error.kind() == io::ErrorKind::NotFound with false"
+      },
+      {
+       "line": 469,
+       "mut": "replace == with !="
+      }
+     ]
+    }
+   ],
+   "survivors": [
+    "crates/ginux-oci/src/lib.rs:177:5: replace registry_token -> Result<Option<String>, String> with Ok(None)",
+    "crates/ginux-oci/src/lib.rs:177:5: replace registry_token -> Result<Option<String>, String> with Ok(Some(\"xyzzy\".into()))",
+    "crates/ginux-oci/src/lib.rs:177:5: replace registry_token -> Result<Option<String>, String> with Ok(Some(String::new()))",
+    "crates/ginux-oci/src/lib.rs:186:26: replace != with == in registry_token",
+    "crates/ginux-oci/src/lib.rs:200:30: replace == with != in registry_token",
+    "crates/ginux-oci/src/lib.rs:207:71: replace == with != in registry_token",
+    "crates/ginux-oci/src/lib.rs:212:34: replace == with != in registry_token",
+    "crates/ginux-oci/src/lib.rs:233:5: replace bearer_fields -> Result<Vec<(String, String)>, String> with Ok(vec![(\"xyzzy\".into(), \"xyzzy\".into())])",
+    "crates/ginux-oci/src/lib.rs:233:5: replace bearer_fields -> Result<Vec<(String, String)>, String> with Ok(vec![(\"xyzzy\".into(), String::new())])",
+    "crates/ginux-oci/src/lib.rs:233:5: replace bearer_fields -> Result<Vec<(String, String)>, String> with Ok(vec![(String::new(), \"xyzzy\".into())])",
+    "crates/ginux-oci/src/lib.rs:233:5: replace bearer_fields -> Result<Vec<(String, String)>, String> with Ok(vec![(String::new(), String::new())])",
+    "crates/ginux-oci/src/lib.rs:233:5: replace bearer_fields -> Result<Vec<(String, String)>, String> with Ok(vec![])",
+    "crates/ginux-oci/src/lib.rs:277:35: replace * with + in fetch_blob",
+    "crates/ginux-oci/src/lib.rs:285:24: replace += with *= in fetch_blob",
+    "crates/ginux-oci/src/lib.rs:286:27: replace >= with < in fetch_blob",
+    "crates/ginux-oci/src/lib.rs:287:66: replace > with < in fetch_blob",
+    "crates/ginux-oci/src/lib.rs:287:66: replace > with == in fetch_blob",
+    "crates/ginux-oci/src/lib.rs:287:66: replace > with >= in fetch_blob",
+    "crates/ginux-oci/src/lib.rs:297:46: replace + with * in fetch_blob",
+    "crates/ginux-oci/src/lib.rs:297:46: replace + with - in fetch_blob",
+    "crates/ginux-oci/src/lib.rs:297:55: replace / with % in fetch_blob",
+    "crates/ginux-oci/src/lib.rs:297:55: replace / with * in fetch_blob",
+    "crates/ginux-oci/src/lib.rs:297:70: replace * with + in fetch_blob",
+    "crates/ginux-oci/src/lib.rs:297:70: replace * with / in fetch_blob",
+    "crates/ginux-oci/src/lib.rs:339:32: replace && with || in select_manifest",
+    "crates/ginux-oci/src/lib.rs:339:65: replace && with || in select_manifest",
+    "crates/ginux-oci/src/lib.rs:42:9: replace || with && in parse_reference",
+    "crates/ginux-oci/src/lib.rs:469:35: replace match guard error.kind() == io::ErrorKind::NotFound with false in safe_whiteout_dir",
+    "crates/ginux-oci/src/lib.rs:469:35: replace match guard error.kind() == io::ErrorKind::NotFound with true in safe_whiteout_dir",
+    "crates/ginux-oci/src/lib.rs:469:48: replace == with != in safe_whiteout_dir",
+    "crates/ginux-oci/src/lib.rs:506:23: replace match guard error.kind() == io::ErrorKind::NotFound with false in remove_path",
+    "crates/ginux-oci/src/lib.rs:506:23: replace match guard error.kind() == io::ErrorKind::NotFound with true in remove_path",
+    "crates/ginux-oci/src/lib.rs:506:36: replace == with != in remove_path",
+    "crates/ginux-oci/src/lib.rs:521:13: delete match arm Component::CurDir in safe_tar_path",
+    "crates/ginux-oci/src/lib.rs:535:5: replace manifest_url -> String with \"xyzzy\".into()",
+    "crates/ginux-oci/src/lib.rs:535:5: replace manifest_url -> String with String::new()",
+    "crates/ginux-oci/src/lib.rs:543:5: replace blob_url -> String with \"xyzzy\".into()",
+    "crates/ginux-oci/src/lib.rs:543:5: replace blob_url -> String with String::new()",
+    "crates/ginux-oci/src/lib.rs:555:17: replace == with != in api_registry",
+    "crates/ginux-oci/src/lib.rs:555:5: replace api_registry -> &str with \"\"",
+    "crates/ginux-oci/src/lib.rs:555:5: replace api_registry -> &str with \"xyzzy\"",
+    "crates/ginux-oci/src/lib.rs:575:31: replace * with + in digest_file",
+    "crates/ginux-oci/src/lib.rs:592:5: replace human_size -> String with \"xyzzy\".into()",
+    "crates/ginux-oci/src/lib.rs:592:5: replace human_size -> String with String::new()",
+    "crates/ginux-oci/src/lib.rs:595:17: replace >= with < in human_size",
+    "crates/ginux-oci/src/lib.rs:595:27: replace && with || in human_size",
+    "crates/ginux-oci/src/lib.rs:595:35: replace + with * in human_size",
+    "crates/ginux-oci/src/lib.rs:595:35: replace + with - in human_size",
+    "crates/ginux-oci/src/lib.rs:595:39: replace < with <= in human_size",
+    "crates/ginux-oci/src/lib.rs:595:39: replace < with == in human_size",
+    "crates/ginux-oci/src/lib.rs:595:39: replace < with > in human_size",
+    "crates/ginux-oci/src/lib.rs:596:15: replace /= with %= in human_size",
+    "crates/ginux-oci/src/lib.rs:596:15: replace /= with *= in human_size",
+    "crates/ginux-oci/src/lib.rs:597:14: replace += with *= in human_size",
+    "crates/ginux-oci/src/lib.rs:597:14: replace += with -= in human_size",
+    "crates/ginux-oci/src/lib.rs:599:13: replace == with != in human_size",
+    "crates/ginux-oci/src/lib.rs:607:5: replace io_error -> String with \"xyzzy\".into()",
+    "crates/ginux-oci/src/lib.rs:607:5: replace io_error -> String with String::new()",
+    "crates/ginux-oci/src/main.rs:11:16: replace != with == in main",
+    "crates/ginux-oci/src/main.rs:6:5: replace main -> ExitCode with Default::default()"
    ]
   },
   "ginux-process": {
@@ -248,6 +1343,172 @@
       }
      ]
     }
+   ],
+   "survivors": [
+    "crates/ginux-process/src/lib.rs:1020:28: replace || with && in EventPoll<ENTRIES>::add",
+    "crates/ginux-process/src/lib.rs:1020:43: replace || with && in EventPoll<ENTRIES>::add",
+    "crates/ginux-process/src/lib.rs:1020:68: replace | with ^ in EventPoll<ENTRIES>::add",
+    "crates/ginux-process/src/lib.rs:1026:39: replace && with || in EventPoll<ENTRIES>::add",
+    "crates/ginux-process/src/lib.rs:1026:59: replace == with != in EventPoll<ENTRIES>::add",
+    "crates/ginux-process/src/lib.rs:1053:9: replace EventPoll<ENTRIES>::remove -> Result<(), ProcessError> with Ok(())",
+    "crates/ginux-process/src/lib.rs:1056:40: replace && with || in EventPoll<ENTRIES>::remove",
+    "crates/ginux-process/src/lib.rs:105:40: replace > with >= in Credentials::set_groups",
+    "crates/ginux-process/src/lib.rs:1093:26: replace -= with += in EventFd::read",
+    "crates/ginux-process/src/lib.rs:1093:26: replace -= with /= in EventFd::read",
+    "crates/ginux-process/src/lib.rs:1181:30: replace && with || in FutexTable<WAITERS>::wake",
+    "crates/ginux-process/src/lib.rs:1191:9: replace FutexTable<WAITERS>::remove_task with ()",
+    "crates/ginux-process/src/lib.rs:1192:30: replace && with || in FutexTable<WAITERS>::remove_task",
+    "crates/ginux-process/src/lib.rs:1192:45: replace == with != in FutexTable<WAITERS>::remove_task",
+    "crates/ginux-process/src/lib.rs:1284:9: replace PipeSpace<TASKS, FDS, PIPES>::task_index -> Option<usize> with Some(0)",
+    "crates/ginux-process/src/lib.rs:1284:9: replace PipeSpace<TASKS, FDS, PIPES>::task_index -> Option<usize> with Some(1)",
+    "crates/ginux-process/src/lib.rs:1286:40: replace && with || in PipeSpace<TASKS, FDS, PIPES>::task_index",
+    "crates/ginux-process/src/lib.rs:129:33: replace != with == in Credentials::set_gid",
+    "crates/ginux-process/src/lib.rs:129:9: replace Credentials::set_gid -> Result<(), ProcessError> with Ok(())",
+    "crates/ginux-process/src/lib.rs:1304:9: replace PipeSpace<TASKS, FDS, PIPES>::pipe_alloc -> Result<usize, ProcessError> with Ok(0)",
+    "crates/ginux-process/src/lib.rs:1304:9: replace PipeSpace<TASKS, FDS, PIPES>::pipe_alloc -> Result<usize, ProcessError> with Ok(1)",
+    "crates/ginux-process/src/lib.rs:1311:9: replace PipeSpace<TASKS, FDS, PIPES>::retain with ()",
+    "crates/ginux-process/src/lib.rs:1314:35: replace - with + in PipeSpace<TASKS, FDS, PIPES>::retain",
+    "crates/ginux-process/src/lib.rs:1314:35: replace - with / in PipeSpace<TASKS, FDS, PIPES>::retain",
+    "crates/ginux-process/src/lib.rs:1315:18: replace < with <= in PipeSpace<TASKS, FDS, PIPES>::retain",
+    "crates/ginux-process/src/lib.rs:1315:18: replace < with == in PipeSpace<TASKS, FDS, PIPES>::retain",
+    "crates/ginux-process/src/lib.rs:1315:18: replace < with > in PipeSpace<TASKS, FDS, PIPES>::retain",
+    "crates/ginux-process/src/lib.rs:1315:26: replace && with || in PipeSpace<TASKS, FDS, PIPES>::retain",
+    "crates/ginux-process/src/lib.rs:1316:36: replace += with *= in PipeSpace<TASKS, FDS, PIPES>::retain",
+    "crates/ginux-process/src/lib.rs:1316:36: replace += with -= in PipeSpace<TASKS, FDS, PIPES>::retain",
+    "crates/ginux-process/src/lib.rs:1321:23: replace == with != in PipeSpace<TASKS, FDS, PIPES>::release",
+    "crates/ginux-process/src/lib.rs:1321:43: replace || with && in PipeSpace<TASKS, FDS, PIPES>::release",
+    "crates/ginux-process/src/lib.rs:1321:57: replace == with != in PipeSpace<TASKS, FDS, PIPES>::release",
+    "crates/ginux-process/src/lib.rs:1321:9: replace PipeSpace<TASKS, FDS, PIPES>::release with ()",
+    "crates/ginux-process/src/lib.rs:1324:41: replace - with + in PipeSpace<TASKS, FDS, PIPES>::release",
+    "crates/ginux-process/src/lib.rs:1324:41: replace - with / in PipeSpace<TASKS, FDS, PIPES>::release",
+    "crates/ginux-process/src/lib.rs:1325:18: replace < with <= in PipeSpace<TASKS, FDS, PIPES>::release",
+    "crates/ginux-process/src/lib.rs:1325:18: replace < with == in PipeSpace<TASKS, FDS, PIPES>::release",
+    "crates/ginux-process/src/lib.rs:1325:18: replace < with > in PipeSpace<TASKS, FDS, PIPES>::release",
+    "crates/ginux-process/src/lib.rs:1325:26: replace && with || in PipeSpace<TASKS, FDS, PIPES>::release",
+    "crates/ginux-process/src/lib.rs:1325:52: replace && with || in PipeSpace<TASKS, FDS, PIPES>::release",
+    "crates/ginux-process/src/lib.rs:1325:78: replace > with < in PipeSpace<TASKS, FDS, PIPES>::release",
+    "crates/ginux-process/src/lib.rs:1325:78: replace > with == in PipeSpace<TASKS, FDS, PIPES>::release",
+    "crates/ginux-process/src/lib.rs:1325:78: replace > with >= in PipeSpace<TASKS, FDS, PIPES>::release",
+    "crates/ginux-process/src/lib.rs:1326:36: replace -= with += in PipeSpace<TASKS, FDS, PIPES>::release",
+    "crates/ginux-process/src/lib.rs:1326:36: replace -= with /= in PipeSpace<TASKS, FDS, PIPES>::release",
+    "crates/ginux-process/src/lib.rs:1327:39: replace == with != in PipeSpace<TASKS, FDS, PIPES>::release",
+    "crates/ginux-process/src/lib.rs:1367:49: replace || with && in PipeSpace<TASKS, FDS, PIPES>::create_pipe",
+    "crates/ginux-process/src/lib.rs:1376:17: replace < with <= in PipeSpace<TASKS, FDS, PIPES>::create_pipe",
+    "crates/ginux-process/src/lib.rs:1376:17: replace < with == in PipeSpace<TASKS, FDS, PIPES>::create_pipe",
+    "crates/ginux-process/src/lib.rs:137:27: replace &= with |= in Credentials::drop_capabilities",
+    "crates/ginux-process/src/lib.rs:137:9: replace Credentials::drop_capabilities with ()",
+    "crates/ginux-process/src/lib.rs:1380:30: replace + with * in PipeSpace<TASKS, FDS, PIPES>::create_pipe",
+    "crates/ginux-process/src/lib.rs:1388:41: replace == with != in PipeSpace<TASKS, FDS, PIPES>::create_pipe",
+    "crates/ginux-process/src/lib.rs:1438:21: replace match guard old_fd <= 2 with true in PipeSpace<TASKS, FDS, PIPES>::duplicate",
+    "crates/ginux-process/src/lib.rs:1451:61: replace == with != in PipeSpace<TASKS, FDS, PIPES>::duplicate",
+    "crates/ginux-process/src/lib.rs:1452:12: delete ! in PipeSpace<TASKS, FDS, PIPES>::duplicate",
+    "crates/ginux-process/src/lib.rs:1456:24: replace != with == in PipeSpace<TASKS, FDS, PIPES>::duplicate",
+    "crates/ginux-process/src/lib.rs:1472:9: replace PipeSpace<TASKS, FDS, PIPES>::close -> Result<bool, ProcessError> with Ok(false)",
+    "crates/ginux-process/src/lib.rs:1472:9: replace PipeSpace<TASKS, FDS, PIPES>::close -> Result<bool, ProcessError> with Ok(true)",
+    "crates/ginux-process/src/lib.rs:1478:66: replace == with != in PipeSpace<TASKS, FDS, PIPES>::close",
+    "crates/ginux-process/src/lib.rs:1492:9: replace PipeSpace<TASKS, FDS, PIPES>::set_cloexec -> Result<(), ProcessError> with Ok(())",
+    "crates/ginux-process/src/lib.rs:1496:25: replace == with != in PipeSpace<TASKS, FDS, PIPES>::set_cloexec",
+    "crates/ginux-process/src/lib.rs:1521:9: replace PipeSpace<TASKS, FDS, PIPES>::share -> Result<(), ProcessError> with Ok(())",
+    "crates/ginux-process/src/lib.rs:1525:37: replace == with != in PipeSpace<TASKS, FDS, PIPES>::share",
+    "crates/ginux-process/src/lib.rs:1533:9: replace PipeSpace<TASKS, FDS, PIPES>::unshare -> Result<(), ProcessError> with Ok(())",
+    "crates/ginux-process/src/lib.rs:1539:39: replace != with == in PipeSpace<TASKS, FDS, PIPES>::unshare",
+    "crates/ginux-process/src/lib.rs:1541:13: replace > with < in PipeSpace<TASKS, FDS, PIPES>::unshare",
+    "crates/ginux-process/src/lib.rs:1541:13: replace > with == in PipeSpace<TASKS, FDS, PIPES>::unshare",
+    "crates/ginux-process/src/lib.rs:1541:13: replace > with >= in PipeSpace<TASKS, FDS, PIPES>::unshare",
+    "crates/ginux-process/src/lib.rs:1550:9: replace PipeSpace<TASKS, FDS, PIPES>::rename_task with ()",
+    "crates/ginux-process/src/lib.rs:1552:28: replace == with != in PipeSpace<TASKS, FDS, PIPES>::rename_task",
+    "crates/ginux-process/src/lib.rs:1563:9: replace PipeSpace<TASKS, FDS, PIPES>::exec_scrub -> u32 with 0",
+    "crates/ginux-process/src/lib.rs:1563:9: replace PipeSpace<TASKS, FDS, PIPES>::exec_scrub -> u32 with 1",
+    "crates/ginux-process/src/lib.rs:1571:23: replace += with *= in PipeSpace<TASKS, FDS, PIPES>::exec_scrub",
+    "crates/ginux-process/src/lib.rs:1571:23: replace += with -= in PipeSpace<TASKS, FDS, PIPES>::exec_scrub",
+    "crates/ginux-process/src/lib.rs:1582:9: replace PipeSpace<TASKS, FDS, PIPES>::release_task with ()",
+    "crates/ginux-process/src/lib.rs:1586:24: replace == with != in PipeSpace<TASKS, FDS, PIPES>::release_task",
+    "crates/ginux-process/src/lib.rs:1590:65: replace != with == in PipeSpace<TASKS, FDS, PIPES>::release_task",
+    "crates/ginux-process/src/lib.rs:1603:17: replace == with != in PipeSpace<TASKS, FDS, PIPES>::pipe_ends",
+    "crates/ginux-process/src/lib.rs:1603:9: replace PipeSpace<TASKS, FDS, PIPES>::pipe_ends -> u32 with 0",
+    "crates/ginux-process/src/lib.rs:1603:9: replace PipeSpace<TASKS, FDS, PIPES>::pipe_ends -> u32 with 1",
+    "crates/ginux-process/src/lib.rs:1606:35: replace - with + in PipeSpace<TASKS, FDS, PIPES>::pipe_ends",
+    "crates/ginux-process/src/lib.rs:1606:35: replace - with / in PipeSpace<TASKS, FDS, PIPES>::pipe_ends",
+    "crates/ginux-process/src/lib.rs:1607:18: replace < with <= in PipeSpace<TASKS, FDS, PIPES>::pipe_ends",
+    "crates/ginux-process/src/lib.rs:1607:18: replace < with == in PipeSpace<TASKS, FDS, PIPES>::pipe_ends",
+    "crates/ginux-process/src/lib.rs:1607:18: replace < with > in PipeSpace<TASKS, FDS, PIPES>::pipe_ends",
+    "crates/ginux-process/src/lib.rs:1607:26: replace && with || in PipeSpace<TASKS, FDS, PIPES>::pipe_ends",
+    "crates/ginux-process/src/lib.rs:1616:9: replace PipeSpace<TASKS, FDS, PIPES>::active_pipes -> usize with 0",
+    "crates/ginux-process/src/lib.rs:1616:9: replace PipeSpace<TASKS, FDS, PIPES>::active_pipes -> usize with 1",
+    "crates/ginux-process/src/lib.rs:1621:9: replace PipeSpace<TASKS, FDS, PIPES>::task_fds -> usize with 0",
+    "crates/ginux-process/src/lib.rs:1621:9: replace PipeSpace<TASKS, FDS, PIPES>::task_fds -> usize with 1",
+    "crates/ginux-process/src/lib.rs:205:48: replace | with &",
+    "crates/ginux-process/src/lib.rs:205:48: replace | with ^",
+    "crates/ginux-process/src/lib.rs:205:62: replace | with &",
+    "crates/ginux-process/src/lib.rs:205:62: replace | with ^",
+    "crates/ginux-process/src/lib.rs:206:47: replace | with &",
+    "crates/ginux-process/src/lib.rs:206:47: replace | with ^",
+    "crates/ginux-process/src/lib.rs:206:59: replace | with &",
+    "crates/ginux-process/src/lib.rs:206:59: replace | with ^",
+    "crates/ginux-process/src/lib.rs:206:72: replace | with &",
+    "crates/ginux-process/src/lib.rs:206:72: replace | with ^",
+    "crates/ginux-process/src/lib.rs:230:9: replace ChildStatus::word -> u32 with 0",
+    "crates/ginux-process/src/lib.rs:230:9: replace ChildStatus::word -> u32 with 1",
+    "crates/ginux-process/src/lib.rs:231:57: replace & with ^ in ChildStatus::word",
+    "crates/ginux-process/src/lib.rs:231:57: replace & with | in ChildStatus::word",
+    "crates/ginux-process/src/lib.rs:231:65: replace << with >> in ChildStatus::word",
+    "crates/ginux-process/src/lib.rs:232:62: replace & with ^ in ChildStatus::word",
+    "crates/ginux-process/src/lib.rs:232:62: replace & with | in ChildStatus::word",
+    "crates/ginux-process/src/lib.rs:239:9: replace ChildStatus::shell_code -> i32 with -1",
+    "crates/ginux-process/src/lib.rs:239:9: replace ChildStatus::shell_code -> i32 with 0",
+    "crates/ginux-process/src/lib.rs:239:9: replace ChildStatus::shell_code -> i32 with 1",
+    "crates/ginux-process/src/lib.rs:241:50: replace + with * in ChildStatus::shell_code",
+    "crates/ginux-process/src/lib.rs:241:50: replace + with - in ChildStatus::shell_code",
+    "crates/ginux-process/src/lib.rs:310:45: replace == with != in ProcessTable<TASKS>::allocate",
+    "crates/ginux-process/src/lib.rs:334:28: replace match guard self.tasks[index].id == id with true in ProcessTable<TASKS>::index",
+    "crates/ginux-process/src/lib.rs:344:9: replace ProcessTable<TASKS>::lookup -> Option<TaskView> with None",
+    "crates/ginux-process/src/lib.rs:346:40: replace && with || in ProcessTable<TASKS>::lookup",
+    "crates/ginux-process/src/lib.rs:346:55: replace == with != in ProcessTable<TASKS>::lookup",
+    "crates/ginux-process/src/lib.rs:446:9: replace ProcessTable<TASKS>::reap_thread -> Result<(), ProcessError> with Ok(())",
+    "crates/ginux-process/src/lib.rs:448:37: replace || with && in ProcessTable<TASKS>::reap_thread",
+    "crates/ginux-process/src/lib.rs:462:44: replace && with || in ProcessTable<TASKS>::exec_group",
+    "crates/ginux-process/src/lib.rs:462:59: replace == with != in ProcessTable<TASKS>::exec_group",
+    "crates/ginux-process/src/lib.rs:470:30: replace && with || in ProcessTable<TASKS>::exec_group",
+    "crates/ginux-process/src/lib.rs:470:43: replace == with != in ProcessTable<TASKS>::exec_group",
+    "crates/ginux-process/src/lib.rs:533:9: replace ProcessTable<TASKS>::has_waitable_child -> Result<bool, ProcessError> with Ok(false)",
+    "crates/ginux-process/src/lib.rs:533:9: replace ProcessTable<TASKS>::has_waitable_child -> Result<bool, ProcessError> with Ok(true)",
+    "crates/ginux-process/src/lib.rs:534:43: replace != with == in ProcessTable<TASKS>::has_waitable_child",
+    "crates/ginux-process/src/lib.rs:57:9: replace TaskId::generation -> u32 with 0",
+    "crates/ginux-process/src/lib.rs:57:9: replace TaskId::generation -> u32 with 1",
+    "crates/ginux-process/src/lib.rs:584:36: replace == with != in ProcessTable<TASKS>::wait",
+    "crates/ginux-process/src/lib.rs:585:36: replace == with != in ProcessTable<TASKS>::wait",
+    "crates/ginux-process/src/lib.rs:5:34: replace << with >>",
+    "crates/ginux-process/src/lib.rs:624:50: replace || with && in ProcessTable<TASKS>::set_process_group_for",
+    "crates/ginux-process/src/lib.rs:630:31: replace && with || in ProcessTable<TASKS>::set_process_group_for",
+    "crates/ginux-process/src/lib.rs:630:47: replace == with != in ProcessTable<TASKS>::set_process_group_for",
+    "crates/ginux-process/src/lib.rs:630:65: replace && with || in ProcessTable<TASKS>::set_process_group_for",
+    "crates/ginux-process/src/lib.rs:630:87: replace == with != in ProcessTable<TASKS>::set_process_group_for",
+    "crates/ginux-process/src/lib.rs:692:24: replace || with && in ProcessTable<TASKS>::set_signal_action",
+    "crates/ginux-process/src/lib.rs:692:34: replace > with == in ProcessTable<TASKS>::set_signal_action",
+    "crates/ginux-process/src/lib.rs:692:34: replace > with >= in ProcessTable<TASKS>::set_signal_action",
+    "crates/ginux-process/src/lib.rs:701:24: replace || with && in ProcessTable<TASKS>::signal_action",
+    "crates/ginux-process/src/lib.rs:701:34: replace > with == in ProcessTable<TASKS>::signal_action",
+    "crates/ginux-process/src/lib.rs:701:34: replace > with >= in ProcessTable<TASKS>::signal_action",
+    "crates/ginux-process/src/lib.rs:730:42: replace |= with &= in ProcessTable<TASKS>::begin_signal",
+    "crates/ginux-process/src/lib.rs:730:50: replace << with >> in ProcessTable<TASKS>::begin_signal",
+    "crates/ginux-process/src/lib.rs:730:61: replace - with + in ProcessTable<TASKS>::begin_signal",
+    "crates/ginux-process/src/lib.rs:730:61: replace - with / in ProcessTable<TASKS>::begin_signal",
+    "crates/ginux-process/src/lib.rs:762:30: replace && with || in ProcessTable<TASKS>::shutdown",
+    "crates/ginux-process/src/lib.rs:773:30: replace && with || in ProcessTable<TASKS>::reap_all",
+    "crates/ginux-process/src/lib.rs:783:9: replace ProcessTable<TASKS>::active -> usize with 0",
+    "crates/ginux-process/src/lib.rs:787:9: replace ProcessTable<TASKS>::views -> usize with 0",
+    "crates/ginux-process/src/lib.rs:787:9: replace ProcessTable<TASKS>::views -> usize with 1",
+    "crates/ginux-process/src/lib.rs:789:22: replace == with != in ProcessTable<TASKS>::views",
+    "crates/ginux-process/src/lib.rs:7:49: replace | with ^",
+    "crates/ginux-process/src/lib.rs:802:19: replace += with *= in ProcessTable<TASKS>::views",
+    "crates/ginux-process/src/lib.rs:802:19: replace += with -= in ProcessTable<TASKS>::views",
+    "crates/ginux-process/src/lib.rs:845:40: replace - with + in VirtualClock::set_realtime_ns",
+    "crates/ginux-process/src/lib.rs:922:40: replace && with || in TimerTable<TIMERS>::timer_mut",
+    "crates/ginux-process/src/lib.rs:947:30: replace || with && in TimerTable<TIMERS>::update",
+    "crates/ginux-process/src/lib.rs:947:56: replace || with && in TimerTable<TIMERS>::update",
+    "crates/ginux-process/src/lib.rs:947:66: replace < with <= in TimerTable<TIMERS>::update",
+    "crates/ginux-process/src/lib.rs:947:66: replace < with == in TimerTable<TIMERS>::update",
+    "crates/ginux-process/src/lib.rs:977:9: replace TimerTable<TIMERS>::close -> Result<(), ProcessError> with Ok(())"
    ]
   },
   "ginux-vfs": {
@@ -395,551 +1656,52 @@
       }
      ]
     }
-   ]
-  },
-  "ginux-devices": {
-   "total_missed": 25,
-   "functions": {
-    "DeviceRegistry<DEVICES, FDS>::views": 7,
-    "IsolatedNetwork<FRAMES>::receive": 7,
-    "DeviceRegistry<DEVICES, FDS>::read": 6,
-    "DeviceRegistry<DEVICES, FDS>::descriptor": 2,
-    "DeviceRegistry<DEVICES, FDS>::assign": 1,
-    "DeviceRegistry<DEVICES, FDS>::open": 1,
-    "BlockBackend::is_empty": 1
-   },
-   "top_clusters": [
-    {
-     "fn": "DeviceRegistry<DEVICES, FDS>::views",
-     "count": 7,
-     "sample": [
-      {
-       "line": 190,
-       "mut": "replace && with ||"
-      },
-      {
-       "line": 192,
-       "mut": "replace == with !="
-      },
-      {
-       "line": 190,
-       "mut": "replace == with !="
-      }
-     ]
-    },
-    {
-     "fn": "IsolatedNetwork<FRAMES>::receive",
-     "count": 7,
-     "sample": [
-      {
-       "line": 477,
-       "mut": "replace < with =="
-      },
-      {
-       "line": 477,
-       "mut": "replace < with <="
-      },
-      {
-       "line": 483,
-       "mut": "replace % with /"
-      }
-     ]
-    },
-    {
-     "fn": "DeviceRegistry<DEVICES, FDS>::read",
-     "count": 6,
-     "sample": [
-      {
-       "line": 266,
-       "mut": "replace ^= with |="
-      },
-      {
-       "line": 266,
-       "mut": "replace << with >>"
-      },
-      {
-       "line": 267,
-       "mut": "replace ^= with |="
-      }
-     ]
-    },
-    {
-     "fn": "DeviceRegistry<DEVICES, FDS>::descriptor",
-     "count": 2,
-     "sample": [
-      {
-       "line": 243,
-       "mut": "replace && with ||"
-      },
-      {
-       "line": 247,
-       "mut": "replace && with ||"
-      }
-     ]
-    },
-    {
-     "fn": "DeviceRegistry<DEVICES, FDS>::assign",
-     "count": 1,
-     "sample": [
-      {
-       "line": 149,
-       "mut": "replace == with !="
-      }
-     ]
-    },
-    {
-     "fn": "DeviceRegistry<DEVICES, FDS>::open",
-     "count": 1,
-     "sample": [
-      {
-       "line": 232,
-       "mut": "replace | with ^"
-      }
-     ]
-    },
-    {
-     "fn": "BlockBackend::is_empty",
-     "count": 1,
-     "sample": [
-      {
-       "line": 333,
-       "mut": "replace == with !="
-      }
-     ]
-    }
-   ]
-  },
-  "ginux-kernel-views": {
-   "total_missed": 64,
-   "scan_run": 6,
-   "functions": {
-    "CgroupFs<GROUPS>::attach": 13,
-    "CgroupFs<GROUPS>::read": 12,
-    "validate_group_path": 8,
-    "?": 6,
-    "ProcFs<'a>::read": 5,
-    "SysFs<'a>::read": 4,
-    "CgroupFs<GROUPS>::remove": 4,
-    "IdentityFs<'a>::readlink": 2,
-    "CgroupFs<GROUPS>::write": 2,
-    "parse_controllers": 2,
-    "IdentityFs<'a>::read": 1,
-    "write_status": 1,
-    "write_stat": 1,
-    "split_file": 1,
-    "parse_limit_u32": 1,
-    "ByteWriter<'a>::limit": 1
-   },
-   "top_clusters": [
-    {
-     "fn": "CgroupFs<GROUPS>::attach",
-     "count": 13,
-     "sample": [
-      {
-       "line": 106,
-       "mut": "replace || with &&"
-      },
-      {
-       "line": 113,
-       "mut": "replace == with !="
-      },
-      {
-       "line": 117,
-       "mut": "replace < with =="
-      }
-     ]
-    },
-    {
-     "fn": "CgroupFs<GROUPS>::read",
-     "count": 12,
-     "sample": [
-      {
-       "line": 160,
-       "mut": "delete match arm b\"cgroup.controllers\""
-      },
-      {
-       "line": 161,
-       "mut": "delete match arm b\"cgroup.subtree_control\""
-      },
-      {
-       "line": 180,
-       "mut": "delete match arm b\"pids.max\""
-      }
-     ]
-    },
-    {
-     "fn": "validate_group_path",
-     "count": 8,
-     "sample": [
-      {
-       "line": 211,
-       "mut": "replace || with &&"
-      },
-      {
-       "line": 210,
-       "mut": "replace || with &&"
-      },
-      {
-       "line": 209,
-       "mut": "replace || with &&"
-      }
-     ]
-    },
-    {
-     "fn": "?",
-     "count": 6,
-     "sample": [
-      {
-       "line": 126,
-       "mut": "replace SysFs<'a>::list_devices -> usize with 0"
-      },
-      {
-       "line": 126,
-       "mut": "replace SysFs<'a>::list_devices -> usize with 1"
-      },
-      {
-       "line": 361,
-       "mut": "replace write_stat -> Result<(), ViewError> with Ok(())"
-      }
-     ]
-    },
-    {
-     "fn": "ProcFs<'a>::read",
-     "count": 5,
-     "sample": [
-      {
-       "line": 267,
-       "mut": "delete match arm b\"/proc/sys/kernel/hostname\""
-      },
-      {
-       "line": 245,
-       "mut": "replace % with +"
-      },
-      {
-       "line": 252,
-       "mut": "replace / with %"
-      }
-     ]
-    }
-   ]
-  },
-  "ginux-oci": {
-   "total_missed": 60,
-   "scan_run": 7,
-   "functions": {
-    "?": 19,
-    "fetch_blob": 12,
-    "human_size": 12,
-    "registry_token": 4,
-    "safe_whiteout_dir": 3,
-    "remove_path": 3,
-    "select_manifest": 2,
-    "parse_reference": 1,
-    "safe_tar_path": 1,
-    "api_registry": 1,
-    "digest_file": 1,
-    "main": 1
-   },
-   "top_clusters": [
-    {
-     "fn": "?",
-     "count": 19,
-     "sample": [
-      {
-       "line": 177,
-       "mut": "replace registry_token -> Result<Option<String>, String> with Ok(Some(String::new()))"
-      },
-      {
-       "line": 177,
-       "mut": "replace registry_token -> Result<Option<String>, String> with Ok(None)"
-      },
-      {
-       "line": 177,
-       "mut": "replace registry_token -> Result<Option<String>, String> with Ok(Some(\"xyzzy\".into()))"
-      }
-     ]
-    },
-    {
-     "fn": "fetch_blob",
-     "count": 12,
-     "sample": [
-      {
-       "line": 277,
-       "mut": "replace * with +"
-      },
-      {
-       "line": 285,
-       "mut": "replace += with *="
-      },
-      {
-       "line": 286,
-       "mut": "replace >= with <"
-      }
-     ]
-    },
-    {
-     "fn": "human_size",
-     "count": 12,
-     "sample": [
-      {
-       "line": 595,
-       "mut": "replace && with ||"
-      },
-      {
-       "line": 595,
-       "mut": "replace >= with <"
-      },
-      {
-       "line": 595,
-       "mut": "replace < with =="
-      }
-     ]
-    },
-    {
-     "fn": "registry_token",
-     "count": 4,
-     "sample": [
-      {
-       "line": 186,
-       "mut": "replace != with =="
-      },
-      {
-       "line": 200,
-       "mut": "replace == with !="
-      },
-      {
-       "line": 207,
-       "mut": "replace == with !="
-      }
-     ]
-    },
-    {
-     "fn": "safe_whiteout_dir",
-     "count": 3,
-     "sample": [
-      {
-       "line": 469,
-       "mut": "replace match guard error.kind() == io::ErrorKind::NotFound with true"
-      },
-      {
-       "line": 469,
-       "mut": "replace match guard error.kind() == io::ErrorKind::NotFound with false"
-      },
-      {
-       "line": 469,
-       "mut": "replace == with !="
-      }
-     ]
-    }
-   ]
-  },
-  "ginux-core": {
-   "total_missed": 35,
-   "scan_run": 8,
-   "functions": {
-    "balanced_arguments_allowed": 19,
-    "loopback_netlink_ack_index": 12,
-    "balanced_surface": 2,
-    "balanced_identity_result": 2
-   },
-   "top_clusters": [
-    {
-     "fn": "balanced_arguments_allowed",
-     "count": 19,
-     "sample": [
-      {
-       "line": 442,
-       "mut": "replace | with ^"
-      },
-      {
-       "line": 442,
-       "mut": "replace | with ^"
-      },
-      {
-       "line": 442,
-       "mut": "replace | with ^"
-      }
-     ]
-    },
-    {
-     "fn": "loopback_netlink_ack_index",
-     "count": 12,
-     "sample": [
-      {
-       "line": 85,
-       "mut": "replace + with *"
-      },
-      {
-       "line": 88,
-       "mut": "replace < with =="
-      },
-      {
-       "line": 88,
-       "mut": "replace || with &&"
-      }
-     ]
-    },
-    {
-     "fn": "balanced_surface",
-     "count": 2,
-     "sample": [
-      {
-       "line": 338,
-       "mut": "delete match arm 318"
-      },
-      {
-       "line": 341,
-       "mut": "delete match arm SYS_EXIT | SYS_EXIT_GROUP"
-      }
-     ]
-    },
-    {
-     "fn": "balanced_identity_result",
-     "count": 2,
-     "sample": [
-      {
-       "line": 368,
-       "mut": "delete match arm SYS_GETPPID"
-      },
-      {
-       "line": 369,
-       "mut": "delete match arm SYS_GETPGRP"
-      }
-     ]
-    }
-   ]
-  },
-  "ginux-instance": {
-   "total_missed": 325,
-   "scan_run": 9,
-   "functions": {
-    "InstanceConfig::apply_override_inner": 76,
-    "?": 74,
-    "parse_field": 58,
-    "InstanceConfig::validate": 24,
-    "InstanceConfig::derive_contract_grants": 12,
-    "ConfigBuilder::finish": 9,
-    "InstanceConfig::network_source_ipv4": 8,
-    "parse_string": 8,
-    "InstanceConfig::privilege_setid_denied": 5,
-    "parse_section": 5,
-    "validate_port": 4,
-    "parse_port": 4,
-    "InstanceConfig::parse": 3,
-    "NormalizedConfig::quoted": 3,
-    "parse_list": 3,
-    "parse_syscall_list": 3,
-    "InstanceConfig::normalized": 2,
-    "parse_multiline_hook_list": 2,
-    "strip_comment": 2,
-    "validate_instance_path": 2,
-    "validate_policy_path": 2,
-    "port_forward_conflicts": 2,
-    "validate_volume": 2,
-    "push_unique": 1,
-    "InstanceConfig::device_create_denied": 1,
-    "InstanceConfig::translated_port": 1,
-    "parse_u64": 1,
-    "parse_allow_deny": 1,
-    "parse_legacy_audit_mode": 1,
-    "validate_identifier": 1,
-    "validate_network_rule": 1,
-    "validate_port_forward": 1,
-    "port_forward_parts": 1,
-    "protected_virtual_path": 1,
-    "validate_instance_command": 1
-   },
-   "top_clusters": [
-    {
-     "fn": "InstanceConfig::apply_override_inner",
-     "count": 76,
-     "sample": [
-      {
-       "line": 679,
-       "mut": "delete match arm b\"instance.id\""
-      },
-      {
-       "line": 682,
-       "mut": "delete match arm b\"instance.args\""
-      },
-      {
-       "line": 680,
-       "mut": "delete match arm b\"instance.root\""
-      }
-     ]
-    },
-    {
-     "fn": "?",
-     "count": 74,
-     "sample": [
-      {
-       "line": 262,
-       "mut": "replace ConfigError::as_str -> &'static str with \"\""
-      },
-      {
-       "line": 262,
-       "mut": "replace ConfigError::as_str -> &'static str with \"xyzzy\""
-      },
-      {
-       "line": 285,
-       "mut": "replace <impl fmt::Display for ConfigError>::fmt -> fmt::Result with Ok(Default::default())"
-      }
-     ]
-    },
-    {
-     "fn": "parse_field",
-     "count": 58,
-     "sample": [
-      {
-       "line": 1742,
-       "mut": "delete match arm (Section::Network, b\"ingress_allow\")"
-      },
-      {
-       "line": 1750,
-       "mut": "delete match arm (Section::Network, b\"egress_allow\")"
-      },
-      {
-       "line": 1746,
-       "mut": "delete match arm (Section::Network, b\"ingress_deny\")"
-      }
-     ]
-    },
-    {
-     "fn": "InstanceConfig::validate",
-     "count": 24,
-     "sample": [
-      {
-       "line": 825,
-       "mut": "replace != with =="
-      },
-      {
-       "line": 831,
-       "mut": "replace || with &&"
-      },
-      {
-       "line": 839,
-       "mut": "replace || with &&"
-      }
-     ]
-    },
-    {
-     "fn": "InstanceConfig::derive_contract_grants",
-     "count": 12,
-     "sample": [
-      {
-       "line": 591,
-       "mut": "replace || with &&"
-      },
-      {
-       "line": 590,
-       "mut": "delete !"
-      },
-      {
-       "line": 591,
-       "mut": "delete !"
-      }
-     ]
-    }
+   ],
+   "survivors": [
+    "crates/ginux-vfs/src/lib.rs:122:33: replace > with == in Index<'a>::resolve",
+    "crates/ginux-vfs/src/lib.rs:122:33: replace > with >= in Index<'a>::resolve",
+    "crates/ginux-vfs/src/lib.rs:144:34: replace > with >= in decode_record",
+    "crates/ginux-vfs/src/lib.rs:144:57: replace > with == in decode_record",
+    "crates/ginux-vfs/src/lib.rs:144:57: replace > with >= in decode_record",
+    "crates/ginux-vfs/src/lib.rs:169:29: replace > with == in encode_record",
+    "crates/ginux-vfs/src/lib.rs:169:29: replace > with >= in encode_record",
+    "crates/ginux-vfs/src/lib.rs:169:9: replace || with && in encode_record",
+    "crates/ginux-vfs/src/lib.rs:170:29: replace > with == in encode_record",
+    "crates/ginux-vfs/src/lib.rs:170:29: replace > with >= in encode_record",
+    "crates/ginux-vfs/src/lib.rs:170:9: replace || with && in encode_record",
+    "crates/ginux-vfs/src/lib.rs:171:9: replace || with && in encode_record",
+    "crates/ginux-vfs/src/lib.rs:238:20: replace < with <= in resolve_components",
+    "crates/ginux-vfs/src/lib.rs:258:28: replace + with * in resolve_components",
+    "crates/ginux-vfs/src/lib.rs:258:28: replace + with - in resolve_components",
+    "crates/ginux-vfs/src/lib.rs:296:24: replace + with * in resolve_components",
+    "crates/ginux-vfs/src/lib.rs:373:57: replace & with ^ in VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::open",
+    "crates/ginux-vfs/src/lib.rs:373:57: replace & with | in VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::open",
+    "crates/ginux-vfs/src/lib.rs:404:26: replace & with ^ in VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::open",
+    "crates/ginux-vfs/src/lib.rs:404:26: replace & with | in VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::open",
+    "crates/ginux-vfs/src/lib.rs:420:39: replace & with ^ in VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::open",
+    "crates/ginux-vfs/src/lib.rs:420:39: replace & with | in VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::open",
+    "crates/ginux-vfs/src/lib.rs:432:44: replace match guard flags & O_CREATE != 0 with true in VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::open",
+    "crates/ginux-vfs/src/lib.rs:432:50: replace & with ^ in VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::open",
+    "crates/ginux-vfs/src/lib.rs:432:50: replace & with | in VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::open",
+    "crates/ginux-vfs/src/lib.rs:489:28: replace || with && in VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::write",
+    "crates/ginux-vfs/src/lib.rs:495:16: replace > with == in VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::write",
+    "crates/ginux-vfs/src/lib.rs:495:16: replace > with >= in VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::write",
+    "crates/ginux-vfs/src/lib.rs:539:31: replace && with || in VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::referenced",
+    "crates/ginux-vfs/src/lib.rs:543:9: replace VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::release_unlinked with ()",
+    "crates/ginux-vfs/src/lib.rs:622:27: replace match guard self.overlay[slot].state == 2 && !self.referenced(slot) with false in VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::create_overlay",
+    "crates/ginux-vfs/src/lib.rs:622:52: replace == with != in VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::create_overlay",
+    "crates/ginux-vfs/src/lib.rs:635:17: replace > with == in VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::copy_to_overlay",
+    "crates/ginux-vfs/src/lib.rs:635:17: replace > with >= in VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::copy_to_overlay",
+    "crates/ginux-vfs/src/lib.rs:651:9: replace VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::find_base_record -> Option<usize> with Some(1)",
+    "crates/ginux-vfs/src/lib.rs:653:19: replace < with <= in VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::find_base_record",
+    "crates/ginux-vfs/src/lib.rs:657:59: replace + with * in VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::find_base_record",
+    "crates/ginux-vfs/src/lib.rs:686:9: replace VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::require_parent -> Result<(), VfsError> with Ok(())",
+    "crates/ginux-vfs/src/lib.rs:690:31: replace == with != in VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::require_parent",
+    "crates/ginux-vfs/src/lib.rs:89:9: replace Index<'a>::len -> usize with 0",
+    "crates/ginux-vfs/src/lib.rs:89:9: replace Index<'a>::len -> usize with 1",
+    "crates/ginux-vfs/src/lib.rs:93:20: replace == with != in Index<'a>::is_empty",
+    "crates/ginux-vfs/src/lib.rs:93:9: replace Index<'a>::is_empty -> bool with false",
+    "crates/ginux-vfs/src/lib.rs:93:9: replace Index<'a>::is_empty -> bool with true"
    ]
   }
  }

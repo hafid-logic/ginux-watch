@@ -8,7 +8,7 @@ completion, so stock refills the moment a scan finishes (no cron wait).
 Artifact download 302-redirects to blob storage; forwarding Authorization breaks
 it (playbook D10) -> capture Location, then fetch WITHOUT auth headers.
 """
-import datetime, io, json, os, sys, urllib.error, urllib.request, zipfile, pathlib
+import datetime, io, json, os, re, sys, urllib.error, urllib.request, zipfile, pathlib
 
 REPO = os.environ.get("GITHUB_REPOSITORY", "hafid-logic/ginux-watch")
 TOK = os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN", "")
@@ -43,10 +43,19 @@ def missed_lines(run_id):
             z = zipfile.ZipFile(io.BytesIO(r.read()))
         crate = a["name"].replace("mutation-scan-", "")
         for n in z.namelist():
+            body = z.read(n).decode(errors="replace")
             if n.endswith("missed.txt"):
-                for line in z.read(n).decode(errors="replace").splitlines():
+                for line in body.splitlines():
                     if line.strip():
                         out.append((crate, line.strip()))
+            elif n.endswith("scan.log"):
+                # cargo-mutants prints survivors as: MISSED   <file:line:col: description> in ...
+                for line in body.splitlines():
+                    if line.startswith("MISSED"):
+                        desc = line[len("MISSED"):].strip()
+                        desc = re.sub(r"\s+in\s+\d+s\s+build.*$", "", desc)
+                        if desc:
+                            out.append((crate, desc))
     return out
 
 
@@ -61,10 +70,24 @@ def main():
                 continue
             seen.add(line)
             per.setdefault(crate, []).append(line)
+    prev = {}
+    dp = pathlib.Path("state/discoveries.json")
+    if dp.exists():
+        try:
+            prev = json.loads(dp.read_text()).get("crates", {}) or {}
+        except Exception:
+            prev = {}
+    crates = {}
+    for k in sorted(set(per) | set(prev)):
+        entry = dict(prev.get(k, {})) if isinstance(prev.get(k), dict) else {}
+        if k in per:
+            entry["survivors"] = sorted(per[k])
+            entry.setdefault("total_missed", len(per[k]))
+        crates[k] = entry
     doc = {"generated_utc": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-           "source": "mutation-scan artifacts (cargo-mutants missed.txt)",
+           "source": "mutation-scan artifacts (scan.log MISSED lines + missed.txt when present)",
            "total_survivors": sum(len(v) for v in per.values()),
-           "crates": {k: sorted(v) for k, v in sorted(per.items())}}
+           "crates": crates}
     pathlib.Path("state").mkdir(exist_ok=True)
     pathlib.Path("state/discoveries.json").write_text(json.dumps(doc, indent=1) + "\n")
     print(f"harvest: {doc['total_survivors']} survivors across {len(per)} crates")
