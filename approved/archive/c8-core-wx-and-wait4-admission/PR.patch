@@ -1,0 +1,57 @@
+From 428dcab736fc65d455f9fbc922c7b0a94c25a215 Mon Sep 17 00:00:00 2001
+From: Abdelhafid DJIDEL <266947999+hafid-logic@users.noreply.github.com>
+Date: Thu, 26 Nov 2026 22:07:58 +0000
+Subject: [PATCH] tests(core): pin W^X prot sweep and wait4 pid admission
+
+### What
+Sweeps every `prot` combination 0..8 for `mmap` (9) and `mprotect` (10): admission holds iff the bits do not request WRITE and EXEC together, including higher prot bits. Also pins `wait4` pid admission: pid 0 is rejected while `-1` and positive pids are admitted.
+
+### Why it matters
+W^X is an isolation invariant of the balanced contract, and `wait4` pid 0 would target a process group the single-task contract does not model. Neither arm had a direct test, so relaxing either passes the existing suite.
+
+### Mutation evidence (fail-then-pass)
+| Mutant | Existing suite | New test |
+|---|---|---|
+| narrow the W^X mask to `PROT_EXEC` only | PASS (survives) | FAIL (killed) |
+| drop the `wait4` pid check | PASS (survives) | FAIL (killed) |
+
+Baseline (clean tree + new test): PASS. Reproduce: `cargo test -p ginux-core --lib mmap_mprotect_reject`.
+
+Prepared with AI assistance; reviewed by me.
+---
+ crates/ginux-core/src/lib.rs | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
+
+diff --git a/crates/ginux-core/src/lib.rs b/crates/ginux-core/src/lib.rs
+index 1389e2fd..65dbf923 100644
+--- a/crates/ginux-core/src/lib.rs
++++ b/crates/ginux-core/src/lib.rs
+@@ -1004,4 +1004,25 @@ mod tests {
+         assert!(!balanced_arguments_allowed(302, 1, 0, 0));
+         assert!(!balanced_arguments_allowed(302, 0, 100, 0));
+     }
++
++    #[test]
++    fn mmap_mprotect_reject_wx_and_wait4_rejects_pid_zero() {
++        for prot in 0u64..8 {
++            let wx = prot & 2 != 0 && prot & 4 != 0;
++            assert_eq!(
++                balanced_arguments_allowed(9, 0, 0x1000, prot),
++                !wx,
++                "mmap prot {prot}"
++            );
++            assert_eq!(
++                balanced_arguments_allowed(10, 0, 0x1000, prot),
++                !wx,
++                "mprotect prot {prot}"
++            );
++        }
++        assert!(!balanced_arguments_allowed(9, 0, 0x1000, 6 | 0x100));
++        assert!(!balanced_arguments_allowed(SYS_WAIT4, 0, 0, 0));
++        assert!(balanced_arguments_allowed(SYS_WAIT4, u64::MAX, 0, 0));
++        assert!(balanced_arguments_allowed(SYS_WAIT4, 1, 0, 0));
++    }
+ }
+-- 
+2.47.3
+

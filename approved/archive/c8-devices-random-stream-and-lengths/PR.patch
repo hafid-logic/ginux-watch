@@ -1,0 +1,63 @@
+From aa0acdfd5be93647b774f0dbbaa834ffe19787c3 Mon Sep 17 00:00:00 2001
+From: Abdelhafid DJIDEL <266947999+hafid-logic@users.noreply.github.com>
+Date: Thu, 26 Nov 2026 22:10:30 +0000
+Subject: [PATCH] tests(devices): pin random stream advance and reported read
+ lengths
+
+### What
+Pins `DeviceRegistry::read` for pseudo devices: two registries with the same initial state produce an identical Random stream, successive reads advance the state (never a constant fill), Zero fills the buffer exactly, and both report the full requested length.
+
+### Why it matters
+The existing suite checks that Random output is non-zero but never that it advances per read or that the returned length matches the buffer. A constant fill or a zero length return passes it while silently breaking userspace read loops.
+
+### Mutation evidence (fail-then-pass)
+| Mutant | Existing suite | New test |
+|---|---|---|
+| Random byte becomes a constant `0x42` | PASS (survives) | FAIL (killed) |
+| Random returns `Ok(0)` instead of `output.len()` | PASS (survives) | FAIL (killed) |
+
+Baseline (clean tree + new test): PASS. Reproduce: `cargo test -p ginux-devices --lib random_reads_are`.
+
+Prepared with AI assistance; reviewed by me.
+---
+ crates/ginux-devices/src/lib.rs | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
+
+diff --git a/crates/ginux-devices/src/lib.rs b/crates/ginux-devices/src/lib.rs
+index 6e11c291..cb87dcf6 100644
+--- a/crates/ginux-devices/src/lib.rs
++++ b/crates/ginux-devices/src/lib.rs
+@@ -853,4 +853,30 @@ mod tests {
+         assert_eq!(registry.views(1, &mut full), 4);
+         assert_eq!(full[3].name.as_bytes(), b"dddd");
+     }
++
++    #[test]
++    fn random_reads_are_deterministic_per_state_and_zero_fills() {
++        let mut a: DeviceRegistry<4, 4> = DeviceRegistry::new();
++        a.assign(1, 10, DeviceName::new(b"rand").unwrap(), DeviceKind::Random)
++            .unwrap();
++        a.assign(1, 11, DeviceName::new(b"zero").unwrap(), DeviceKind::Zero)
++            .unwrap();
++        let ra = a.open(1, b"rand").unwrap();
++        let za = a.open(1, b"zero").unwrap();
++        let mut b: DeviceRegistry<4, 4> = DeviceRegistry::new();
++        b.assign(1, 10, DeviceName::new(b"rand").unwrap(), DeviceKind::Random)
++            .unwrap();
++        let rb = b.open(1, b"rand").unwrap();
++        let mut x = [0u8; 8];
++        let mut y = [0u8; 8];
++        assert_eq!(a.read(1, ra, &mut x), Ok(8));
++        assert_eq!(b.read(1, rb, &mut y), Ok(8));
++        assert_eq!(x, y);
++        let mut z = [0u8; 8];
++        assert_eq!(a.read(1, ra, &mut z), Ok(8));
++        assert_ne!(x, z);
++        let mut w = [0xAAu8; 5];
++        assert_eq!(a.read(1, za, &mut w), Ok(5));
++        assert_eq!(w, [0u8; 5]);
++    }
+ }
+-- 
+2.47.3
+

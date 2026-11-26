@@ -1,0 +1,70 @@
+From d28d842e305f2e0b58be8a4d7d86308d7a175c96 Mon Sep 17 00:00:00 2001
+From: Abdelhafid DJIDEL <266947999+hafid-logic@users.noreply.github.com>
+Date: Thu, 26 Nov 2026 21:54:11 +0000
+Subject: [PATCH] tests(devices): pin views major/minor projection for pseudo
+ devices
+
+### What
+Pins `DeviceRegistry::views` numeric device identity: Zero projects major/minor (1, 5) and Random projects (1, 8), alongside instance filtering and the untouched output tail.
+
+### Why it matters
+The merged truncation test pins counts and names but not the numeric major/minor pairs. Userspace mounts devtmpfs nodes from these numbers; a wrong minor silently maps the wrong device while passing the suite.
+
+### Mutation evidence (fail-then-pass)
+| Mutant | Existing suite | New test |
+|---|---|---|
+| `Zero => (1, 5)` -> `(1, 3)` | PASS (survives) | FAIL (killed) |
+| `Random => (1, 8)` -> `(1, 9)` | PASS (survives) | FAIL (killed) |
+
+Baseline (clean tree + new test): PASS. Reproduce: `cargo test -p ginux-devices --lib views_pin_major`.
+
+Prepared with AI assistance; reviewed by me.
+---
+ crates/ginux-devices/src/lib.rs | 33 +++++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
+
+diff --git a/crates/ginux-devices/src/lib.rs b/crates/ginux-devices/src/lib.rs
+index 6e11c291..df4d66fc 100644
+--- a/crates/ginux-devices/src/lib.rs
++++ b/crates/ginux-devices/src/lib.rs
+@@ -853,4 +853,37 @@ mod tests {
+         assert_eq!(registry.views(1, &mut full), 4);
+         assert_eq!(full[3].name.as_bytes(), b"dddd");
+     }
++
++    #[test]
++    fn views_pin_major_minor_projection_and_output_cap() {
++        let mut registry: DeviceRegistry<8, 8> = DeviceRegistry::new();
++        registry
++            .assign(1, 10, DeviceName::new(b"zero").unwrap(), DeviceKind::Zero)
++            .unwrap();
++        registry
++            .assign(1, 11, DeviceName::new(b"rand").unwrap(), DeviceKind::Random)
++            .unwrap();
++        registry
++            .assign(2, 12, DeviceName::new(b"null").unwrap(), DeviceKind::Null)
++            .unwrap();
++        let pad = DeviceView {
++            name: DeviceName::new(b"pad").unwrap(),
++            kind: DeviceKind::Null,
++            major: 9,
++            minor: 9,
++        };
++        let mut out = [pad; 4];
++        assert_eq!(registry.views(1, &mut out), 2);
++        // fixed pseudo-device numbers
++        assert_eq!((out[0].major, out[0].minor), (1, 5));
++        assert_eq!((out[1].major, out[1].minor), (1, 8));
++        // untouched tail
++        assert_eq!((out[2].major, out[2].minor), (9, 9));
++        // output smaller than the instance's device count: capped
++        let mut small = [pad; 1];
++        assert_eq!(registry.views(1, &mut small), 1);
++        assert_eq!(small[0].name.as_bytes(), b"zero");
++        // empty output
++        assert_eq!(registry.views(1, &mut []), 0);
++    }
+ }
+-- 
+2.47.3
+
