@@ -1,0 +1,49 @@
+name: harvest-scans
+# v9.3 EVENT-DRIVEN harvest: runs the moment a mutation-scan finishes, so the
+# discovery stock is never empty while the owner merges at near-real-time speed.
+# Then fires pipeline-tick so the autopilot refills seats immediately (no cron wait).
+on:
+  workflow_run:
+    workflows: [mutation-scan]
+    types: [completed]
+  workflow_dispatch: {}
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: harvest-scans
+  cancel-in-progress: false
+jobs:
+  harvest:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Harvest missed mutants into stock
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 team/scripts/harvest-scans.py
+      - name: Commit refreshed stock
+        run: |
+          git config user.name "harvest-scans"
+          git config user.email "actions@users.noreply.github.com"
+          git add state/discoveries.json
+          if ! git diff --cached --quiet; then
+            git commit -m "stock: harvest mutation-scan survivors [skip ci]"
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin main && git push; then break; fi
+              git rebase --abort >/dev/null 2>&1 || true; sleep $((i * 5))
+            done
+          fi
+      - name: Tick the autopilot immediately (event, not clock)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          curl -sS -X POST -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/dispatches" \
+            -d '{"event_type":"pipeline-tick"}' || true
