@@ -1,0 +1,1 @@
+tests(kernel-views): pin SysFs list_devices output-capacity truncation

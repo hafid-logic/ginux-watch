@@ -1,0 +1,61 @@
+From 29b667ffac148cf27df8dabb80ea64b2d30ab853 Mon Sep 17 00:00:00 2001
+From: Abdelhafid DJIDEL <266947999+hafid-logic@users.noreply.github.com>
+Date: Thu, 26 Nov 2026 21:29:28 +0000
+Subject: [PATCH] tests(kernel-views): pin sysfs cpu online range and zero-cpu
+ guard
+
+### What
+Pins `/sys/devices/system/cpu/online`: a single CPU renders `0\n` (no range), many CPUs render `0-(count-1)\n`, and zero CPUs fail closed with `NotFound`.
+
+### Why it matters
+The range suffix and the zero guard are boundary behavior. The existing test only reads the two-CPU case, so widening the range condition to `>= 1` or removing the zero guard survives the suite.
+
+### Mutation evidence (fail-then-pass)
+| Mutant | Existing suite | New test |
+|---|---|---|
+| `cpu_count > 1` -> `>= 1` | PASS (survives) | FAIL (killed) |
+| remove `cpu_count == 0` guard | PASS (survives) | FAIL (killed) |
+
+Baseline (clean tree + new test): PASS. Reproduce: `cargo test -p ginux-kernel-views --lib sysfs_cpu_online`.
+
+Prepared with AI assistance; reviewed by me.
+---
+ crates/ginux-kernel-views/src/lib.rs | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
+
+diff --git a/crates/ginux-kernel-views/src/lib.rs b/crates/ginux-kernel-views/src/lib.rs
+index 37eb6517..327fa5e7 100644
+--- a/crates/ginux-kernel-views/src/lib.rs
++++ b/crates/ginux-kernel-views/src/lib.rs
+@@ -691,4 +691,28 @@ mod tests {
+             Err(ViewError::ReadOnly)
+         );
+     }
++
++    #[test]
++    fn sysfs_cpu_online_pins_single_zero_and_range() {
++        let devices: [DeviceView; 0] = [];
++        let mut output = [0u8; 32];
++        // single cpu: "0\n" (no range suffix)
++        let one = SysFs::new(&devices, 1);
++        let len = one
++            .read(b"/sys/devices/system/cpu/online", &mut output)
++            .unwrap();
++        assert_eq!(&output[..len], b"0\n");
++        // zero cpus: NotFound (fail-closed)
++        let zero = SysFs::new(&devices, 0);
++        assert_eq!(
++            zero.read(b"/sys/devices/system/cpu/online", &mut output),
++            Err(ViewError::NotFound)
++        );
++        // many cpus: upper bound is count-1
++        let many = SysFs::new(&devices, 4);
++        let len = many
++            .read(b"/sys/devices/system/cpu/online", &mut output)
++            .unwrap();
++        assert_eq!(&output[..len], b"0-3\n");
++    }
+ }
+-- 
+2.47.3
+
