@@ -112,4 +112,4 @@ auth_tiers:
 
 # v9.1 (2026-11-24): owner raised the open-upstream-PR cap from 2 to 3.
 # Preparation and branch pushes are uncapped; only open upstream PRs are limited.
-upstream_pr_cap: 3
+upstream_pr_cap: 5
