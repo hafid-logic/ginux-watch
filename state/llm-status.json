@@ -1,11 +1,11 @@
 {
- "updated": "2026-11-26T08:27:08Z",
+ "updated": "2026-11-26T21:38:40Z",
  "providers": {
   "nvidia": {
    "configured": true,
    "status": "ok",
    "model_current": "nvidia/nemotron-3-ultra-550b-a55b",
-   "last_success": "2026-11-26T08:27:06Z",
+   "last_success": "2026-11-26T21:38:38Z",
    "last_error_class": null,
    "consecutive_failures": 0,
    "rate_limit": null,
@@ -14,11 +14,11 @@
   },
   "openrouter": {
    "configured": true,
-   "status": "ok",
+   "status": "degraded",
    "model_current": "openrouter/free",
    "last_success": "2026-11-26T08:27:08Z",
-   "last_error_class": null,
-   "consecutive_failures": 0,
+   "last_error_class": "api_shape",
+   "consecutive_failures": 1,
    "rate_limit": null,
    "model_actual": "google/gemma-4-31b-it:free",
    "last_diag": {
@@ -76,7 +76,7 @@
    "model_current": "gemini-3.6-flash",
    "last_success": "2026-11-22T19:46:08Z",
    "last_error_class": "auth_failed",
-   "consecutive_failures": 7,
+   "consecutive_failures": 8,
    "rate_limit": null,
    "model_actual": "gemini-3.6-flash",
    "consecutive_429": 0,
@@ -97,14 +97,17 @@
   "date_utc": "2026-11-26",
   "calls": {},
   "calls_probe": {
-   "nvidia": 1,
-   "google-ai-studio": 1,
-   "openrouter": 1
+   "nvidia": 2,
+   "google-ai-studio": 2,
+   "openrouter": 2
   },
   "failed": {
    "calls_probe": {
     "google-ai-studio": {
-     "auth_failed": 1
+     "auth_failed": 2
+    },
+    "openrouter": {
+     "api_shape": 1
     }
    }
   }
