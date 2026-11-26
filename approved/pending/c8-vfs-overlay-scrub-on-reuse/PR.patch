@@ -1,0 +1,44 @@
+From f0dafe04af9ace07398e93c04c25807833776153 Mon Sep 17 00:00:00 2001
+From: Abdelhafid DJIDEL <266947999+hafid-logic@users.noreply.github.com>
+Date: Thu, 26 Nov 2026 23:47:08 +0000
+Subject: [PATCH] tests: vfs-overlay-scrub-on-reuse
+
+---
+ crates/ginux-vfs/src/lib.rs | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
+
+diff --git a/crates/ginux-vfs/src/lib.rs b/crates/ginux-vfs/src/lib.rs
+index 3f5ecce5..10a0a2f1 100644
+--- a/crates/ginux-vfs/src/lib.rs
++++ b/crates/ginux-vfs/src/lib.rs
+@@ -1285,4 +1285,27 @@ mod tests {
+         c[16..20].copy_from_slice(&99u32.to_le_bytes());
+         assert_eq!(Index::new(&c).err(), Some(VfsError::InvalidIndex));
+     }
++
++    #[test]
++    fn unlinked_overlay_slot_is_scrubbed_before_reuse() {
++        let bytes = index_bytes();
++        let mut vfs: VirtualFs<'_, Reader, 2, 32, 4> =
++            VirtualFs::new(Index::new(&bytes).unwrap(), Reader(*b"BASETOOL"));
++        let w = vfs.open(b"/usr/scrub", O_WRITE | O_CREATE).unwrap();
++        vfs.write(w, b"secret").unwrap();
++        vfs.close(w).unwrap();
++        let r = vfs.open(b"/usr/scrub", O_READ).unwrap();
++        vfs.unlink(b"/usr/scrub").unwrap();
++        let mut out = [0u8; 6];
++        assert_eq!(vfs.read(r, &mut out), Ok(6));
++        assert_eq!(&out, b"secret");
++        vfs.close(r).unwrap();
++        // the freed slot must be scrubbed: a fresh overlay starts empty
++        let w2 = vfs
++            .open(b"/usr/other", O_WRITE | O_CREATE | O_READ)
++            .unwrap();
++        assert_eq!(vfs.read(w2, &mut out), Ok(0));
++        vfs.write(w2, b"ab").unwrap();
++        assert_eq!(vfs.read(w2, &mut out[..2]), Ok(0));
++    }
+ }
+-- 
+2.47.3
+

@@ -1,0 +1,40 @@
+From 6e02bb144800054c4c32f1cfb374f3109dec79ee Mon Sep 17 00:00:00 2001
+From: Abdelhafid DJIDEL <266947999+hafid-logic@users.noreply.github.com>
+Date: Thu, 26 Nov 2026 23:47:09 +0000
+Subject: [PATCH] tests: process-pipe-ends-guards
+
+---
+ crates/ginux-process/src/lib.rs | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
+
+diff --git a/crates/ginux-process/src/lib.rs b/crates/ginux-process/src/lib.rs
+index 8df66a9f..0d932075 100644
+--- a/crates/ginux-process/src/lib.rs
++++ b/crates/ginux-process/src/lib.rs
+@@ -2167,4 +2167,23 @@ mod tests {
+             Err(ProcessError::DescriptorFull)
+         );
+     }
++
++    #[test]
++    fn pipe_ends_reports_zero_for_invalid_and_dead_pipes() {
++        let mut pipes: PipeSpace<2, 8, 2> = PipeSpace::new();
++        // pipe 0 is always invalid
++        assert_eq!(pipes.pipe_ends(0), 0);
++        // out-of-range pipe id
++        assert_eq!(pipes.pipe_ends(99), 0);
++        // create a pipe, verify ends=2
++        let id = pipes.create_pipe(1, 6, 7, false).unwrap();
++        assert_eq!(pipes.pipe_ends(id), 2);
++        // close both ends -> pipe freed, ends report 0
++        pipes.close(1, 6).unwrap();
++        pipes.close(1, 7).unwrap();
++        assert_eq!(pipes.pipe_ends(id), 0);
++        // re-create at same slot, verify fresh count
++        let id2 = pipes.create_pipe(1, 3, 4, false).unwrap();
++        assert_eq!(pipes.pipe_ends(id2), 2);
++    }
+ }
+-- 
+2.47.3
+

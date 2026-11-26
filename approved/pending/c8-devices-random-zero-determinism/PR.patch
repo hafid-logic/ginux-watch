@@ -1,0 +1,47 @@
+From 78afc5e3a69539ccf579e4eca15b204fa68b427c Mon Sep 17 00:00:00 2001
+From: Abdelhafid DJIDEL <266947999+hafid-logic@users.noreply.github.com>
+Date: Thu, 26 Nov 2026 23:47:08 +0000
+Subject: [PATCH] tests: devices-random-zero-determinism
+
+---
+ crates/ginux-devices/src/lib.rs | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
+
+diff --git a/crates/ginux-devices/src/lib.rs b/crates/ginux-devices/src/lib.rs
+index 2a3b9f7a..9e5c5094 100644
+--- a/crates/ginux-devices/src/lib.rs
++++ b/crates/ginux-devices/src/lib.rs
+@@ -943,4 +943,30 @@ mod tests {
+         // foreign instance cannot reach the descriptor
+         assert!(registry.write(2, null, b"abc").is_err());
+     }
++
++    #[test]
++    fn random_reads_are_deterministic_per_state_and_zero_fills() {
++        let mut a: DeviceRegistry<4, 4> = DeviceRegistry::new();
++        a.assign(1, 10, DeviceName::new(b"rand").unwrap(), DeviceKind::Random)
++            .unwrap();
++        a.assign(1, 11, DeviceName::new(b"zero").unwrap(), DeviceKind::Zero)
++            .unwrap();
++        let ra = a.open(1, b"rand").unwrap();
++        let za = a.open(1, b"zero").unwrap();
++        let mut b: DeviceRegistry<4, 4> = DeviceRegistry::new();
++        b.assign(1, 10, DeviceName::new(b"rand").unwrap(), DeviceKind::Random)
++            .unwrap();
++        let rb = b.open(1, b"rand").unwrap();
++        let mut x = [0u8; 8];
++        let mut y = [0u8; 8];
++        assert_eq!(a.read(1, ra, &mut x), Ok(8));
++        assert_eq!(b.read(1, rb, &mut y), Ok(8));
++        assert_eq!(x, y);
++        let mut z = [0u8; 8];
++        assert_eq!(a.read(1, ra, &mut z), Ok(8));
++        assert_ne!(x, z);
++        let mut w = [0xAAu8; 5];
++        assert_eq!(a.read(1, za, &mut w), Ok(5));
++        assert_eq!(w, [0u8; 5]);
++    }
+ }
+-- 
+2.47.3
+

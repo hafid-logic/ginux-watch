@@ -1,0 +1,1 @@
+tests(core): pin wait4 pid admission including -1 and pid zero rejection

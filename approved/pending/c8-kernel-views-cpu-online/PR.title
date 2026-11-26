@@ -1,1 +1,0 @@
-tests(kernel-views): pin sysfs cpu online range and zero-cpu guard
