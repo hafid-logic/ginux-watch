@@ -23,9 +23,9 @@ def main():
         if not meta.exists(): continue
         m=json.loads(meta.read_text()); crate=m["crate"]; filt=m["filter"]
         run(U,"git","checkout","-q","-B","workbase","origin/main")
-        r=run(U,"git","am",str((d/"PR.patch").resolve()))
+        r=run(U,"git","apply","--3way",str((d/"PR.patch").resolve()))
         if r.returncode!=0:
-            run(U,"git","am","--abort"); out[d.name]={"proven":False,"why":"am-fail"}; continue
+            out[d.name]={"proven":False,"why":"apply-fail"}; continue
         base=test_ok(crate,filt)
         muts=[]
         for mu in m["mutants"]:
@@ -37,7 +37,7 @@ def main():
             survives = full.returncode==0
             # with-test
             run(U,"git","checkout","-q","-B","workbase","origin/main")
-            run(U,"git","am",str((d/"PR.patch").resolve()))
+            run(U,"git","apply","--3way",str((d/"PR.patch").resolve()))
             f=U/m["file"]; s=f.read_text(); f.write_text(s.replace(mu["old"],mu["new"]))
             killed = not test_ok(crate,filt)
             muts.append({"name":mu["name"],"survives":survives,"killed":killed})
