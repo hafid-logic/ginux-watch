@@ -1,6 +1,18 @@
 {
  "c8-core-wait4-pid-admission": {
   "proven": false,
-  "why": "am-fail"
+  "baseline": true,
+  "mutants": [
+   {
+    "name": "wait4-gt1",
+    "survives": false,
+    "killed": true
+   },
+   {
+    "name": "wait4-true",
+    "survives": false,
+    "killed": true
+   }
+  ]
  }
 }
