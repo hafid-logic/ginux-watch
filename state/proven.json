@@ -14,5 +14,57 @@
     "killed": true
    }
   ]
+ },
+ "c8-devices-random-zero-determinism": {
+  "proven": false,
+  "baseline": false,
+  "mutants": [
+   {
+    "name": "zero-fill-1",
+    "survives": false,
+    "killed": true
+   },
+   {
+    "name": "rand-byte-0",
+    "survives": false,
+    "killed": true
+   }
+  ]
+ },
+ "c8-process-pipe-ends-guards": {
+  "proven": false,
+  "baseline": true,
+  "mutants": [
+   {
+    "name": "no-zero-guard",
+    "survives": false,
+    "killed": true
+   },
+   {
+    "name": "no-live",
+    "survives": false,
+    "killed": true
+   }
+  ]
+ },
+ "c8-process-retain-refcount": {
+  "proven": false,
+  "why": "apply-fail"
+ },
+ "c8-vfs-overlay-scrub-on-reuse": {
+  "proven": false,
+  "baseline": true,
+  "mutants": [
+   {
+    "name": "no-scrub",
+    "survives": true,
+    "killed": false
+   },
+   {
+    "name": "keep-len",
+    "survives": true,
+    "killed": false
+   }
+  ]
  }
 }
