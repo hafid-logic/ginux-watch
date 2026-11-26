@@ -1,0 +1,36 @@
+From 02eb090892579a73976cd6dea8a0bdeb152e8a3c Mon Sep 17 00:00:00 2001
+From: ginux-watch agent <hafid-logic@users.noreply.github.com>
+Date: Thu, 26 Nov 2026 10:44:58 +0000
+Subject: [PATCH] tests(devices): pin partition offsets to absolute backend
+ positions
+
+---
+ crates/ginux-devices/src/lib.rs | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/crates/ginux-devices/src/lib.rs b/crates/ginux-devices/src/lib.rs
+index 63189346..887a25bd 100644
+--- a/crates/ginux-devices/src/lib.rs
++++ b/crates/ginux-devices/src/lib.rs
+@@ -672,6 +672,18 @@ mod tests {
+             .unwrap();
+     }
+ 
++    #[test]
++    fn partition_offsets_map_to_absolute_backend_positions() {
++        let mut partition = Partition::new(block(), 16, 16, false).unwrap();
++        partition.write_at(2, b"abc").unwrap();
++        assert_eq!(&partition.backend.bytes[18..21], b"abc");
++        assert_eq!(&partition.backend.bytes[0..3], &[0, 0, 0]);
++        assert_eq!(&partition.backend.bytes[16..18], &[0, 0]);
++        let mut out = [0u8; 3];
++        partition.read_at(2, &mut out).unwrap();
++        assert_eq!(&out, b"abc");
++    }
++
+     #[test]
+     fn block_partition_confines_reads_and_writes() {
+         let mut partition = Partition::new(block(), 16, 16, false).unwrap();
+-- 
+2.47.3
+
