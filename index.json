@@ -1,8 +1,273 @@
 {
- "generated_at_utc": "2026-11-26T14:56:53Z",
+ "generated_at_utc": "2026-11-26T23:40:58Z",
  "source_repo": "gmkurtzer/ginux",
- "item_count": 341,
+ "item_count": 353,
  "items": {
+  "360": {
+   "kind": "pr",
+   "title": "tests(core): pin wait4 pid admission including -1 and pid zero rejection",
+   "state": "closed",
+   "merged_at": null,
+   "files": [
+    "crates/ginux-core/src/lib.rs"
+   ],
+   "keywords": [
+    "pass",
+    "fail",
+    "pid",
+    "killed",
+    "survives",
+    "wait4",
+    "admitted",
+    "arg0",
+    "arm",
+    "core"
+   ]
+  },
+  "359": {
+   "kind": "pr",
+   "title": "tests(vfs): pin index header version and record-size validation",
+   "state": "closed",
+   "merged_at": "2026-11-26T22:45:11Z",
+   "files": [
+    "crates/ginux-vfs/src/lib.rs"
+   ],
+   "keywords": [
+    "record",
+    "header",
+    "pass",
+    "check",
+    "fail",
+    "index",
+    "size",
+    "version",
+    "drop",
+    "existing"
+   ]
+  },
+  "358": {
+   "kind": "pr",
+   "title": "tests(devices): pin per-kind write policy and empty-write accounting",
+   "state": "closed",
+   "merged_at": "2026-11-26T22:48:26Z",
+   "files": [
+    "crates/ginux-devices/src/lib.rs"
+   ],
+   "keywords": [
+    "write",
+    "pass",
+    "random",
+    "fail",
+    "kind",
+    "length",
+    "null",
+    "writes",
+    "zero",
+    "accounting"
+   ]
+  },
+  "357": {
+   "kind": "pr",
+   "title": "tests(devices): pin random stream advance and reported read lengths",
+   "state": "closed",
+   "merged_at": "2026-11-26T22:39:25Z",
+   "files": [
+    "crates/ginux-devices/src/lib.rs"
+   ],
+   "keywords": [
+    "random",
+    "pass",
+    "read",
+    "constant",
+    "devices",
+    "fail",
+    "length",
+    "zero",
+    "advance",
+    "buffer"
+   ]
+  },
+  "356": {
+   "kind": "pr",
+   "title": "tests(core): pin W^X prot sweep and wait4 pid admission",
+   "state": "closed",
+   "merged_at": "2026-11-26T22:35:10Z",
+   "files": [
+    "crates/ginux-core/src/lib.rs"
+   ],
+   "keywords": [
+    "pid",
+    "pass",
+    "wait4",
+    "admission",
+    "fail",
+    "prot",
+    "bits",
+    "contract",
+    "core",
+    "existing"
+   ]
+  },
+  "355": {
+   "kind": "pr",
+   "title": "tests(devices): pin views major/minor projection for pseudo devices",
+   "state": "closed",
+   "merged_at": "2026-11-26T22:31:37Z",
+   "files": [
+    "crates/ginux-devices/src/lib.rs"
+   ],
+   "keywords": [
+    "minor",
+    "pass",
+    "devices",
+    "fail",
+    "major",
+    "device",
+    "killed",
+    "numeric",
+    "pins",
+    "projects"
+   ]
+  },
+  "354": {
+   "kind": "pr",
+   "title": "tests(process): pin create_pipe fd-collision and two-slot admission g…",
+   "state": "closed",
+   "merged_at": "2026-11-26T22:27:51Z",
+   "files": [
+    "crates/ginux-process/src/lib.rs"
+   ],
+   "keywords": [
+    "free",
+    "pass",
+    "pipe",
+    "two",
+    "admission",
+    "collision",
+    "existing",
+    "fail",
+    "slot",
+    "create_pipe"
+   ]
+  },
+  "353": {
+   "kind": "pr",
+   "title": "tests(kernel-views): pin cgroup attach membership move and pids.max cap",
+   "state": "closed",
+   "merged_at": "2026-11-26T21:37:05Z",
+   "files": [
+    "crates/ginux-kernel-views/src/cgroup.rs",
+    "crates/ginux-kernel-views/src/lib.rs"
+   ],
+   "keywords": [
+    "group",
+    "pid",
+    "attach",
+    "pass",
+    "fail",
+    "max",
+    "membership",
+    "pids",
+    "survives",
+    "cap"
+   ]
+  },
+  "352": {
+   "kind": "pr",
+   "title": "tests(devices): pin views projection truncation at output capacity",
+   "state": "closed",
+   "merged_at": "2026-11-26T21:33:34Z",
+   "files": [
+    "crates/ginux-devices/src/lib.rs"
+   ],
+   "keywords": [
+    "output",
+    "count",
+    "len",
+    "pass",
+    "devices",
+    "fail",
+    "survives",
+    "views",
+    "assignment",
+    "break"
+   ]
+  },
+  "351": {
+   "kind": "pr",
+   "title": "tests(kernel-views): pin cgroup group-path validation shapes",
+   "state": "closed",
+   "merged_at": "2026-11-26T21:26:51Z",
+   "files": [
+    "crates/ginux-kernel-views/src/cgroup.rs"
+   ],
+   "keywords": [
+    "charset",
+    "pass",
+    "clause",
+    "fail",
+    "slash",
+    "survives",
+    "cgroup",
+    "drop",
+    "existing",
+    "group"
+   ]
+  },
+  "350": {
+   "kind": "pr",
+   "title": "tests(devices): pin partition offsets to absolute backend positions",
+   "state": "closed",
+   "merged_at": "2026-11-26T20:25:58Z",
+   "files": [
+    "crates/ginux-devices/src/lib.rs"
+   ],
+   "keywords": [
+    "partition",
+    "backend",
+    "existing",
+    "absolute",
+    "devices",
+    "mapping",
+    "offset",
+    "suite",
+    "writes",
+    "adds"
+   ]
+  },
+  "349": {
+   "kind": "pr",
+   "title": "Draft: complete filesystem mediation",
+   "state": "open",
+   "merged_at": null,
+   "files": [
+    "Makefile",
+    "crates/ginux-fs-policy/src/bin/fs-policy-doc.rs",
+    "crates/ginux-fs-policy/src/lib.rs",
+    "crates/ginux-fs-policy/tests/gate53_suites.rs",
+    "crates/ginux-init/src/dispatch.rs",
+    "crates/ginux-init/src/fs_hooks.rs",
+    "crates/ginux-init/src/launch.rs",
+    "crates/ginux-init/src/main.rs",
+    "crates/ginux-init/src/native_path.rs",
+    "docs/fs-operation-inventory.md",
+    "hdae/PLAN.md",
+    "hdae/STATUS.md",
+    "hdae/gates-todo/53-complete-filesystem-mediation.md"
+   ],
+   "keywords": [
+    "through",
+    "complete",
+    "filesystem",
+    "component",
+    "gate",
+    "operation",
+    "policy",
+    "x86",
+    "001",
+    "019"
+   ]
+  },
   "348": {
    "kind": "pr",
    "title": "tests(devices): pin IsolatedNetwork receive buffer, empty, and closed boundaries",
@@ -8153,15 +8418,17 @@
   }
  },
  "keywords": {
-  "buffer": [
-   348,
-   305,
-   219,
-   187,
-   158,
-   21
-  ],
   "pass": [
+   360,
+   359,
+   358,
+   357,
+   356,
+   355,
+   354,
+   353,
+   352,
+   351,
    348,
    347,
    346,
@@ -8192,15 +8459,17 @@
    156,
    86
   ],
-  "empty": [
-   348,
-   335,
-   317,
-   306,
-   298,
-   128
-  ],
   "fail": [
+   360,
+   359,
+   358,
+   357,
+   356,
+   355,
+   354,
+   353,
+   352,
+   351,
    348,
    347,
    346,
@@ -8227,29 +8496,36 @@
    28,
    4
   ],
-  "frame": [
-   348,
-   326,
-   86,
-   82,
-   46,
-   28
+  "pid": [
+   360,
+   356,
+   353,
+   335,
+   285,
+   274,
+   267,
+   214,
+   126,
+   102
   ],
-  "len": [
-   348,
-   344
-  ],
-  "queue": [
-   348,
-   13,
-   10,
-   4
-  ],
-  "receive": [
-   348,
-   275
+  "killed": [
+   360,
+   355,
+   347,
+   345,
+   344,
+   343,
+   341,
+   325,
+   324,
+   323,
+   185
   ],
   "survives": [
+   360,
+   353,
+   352,
+   351,
    348,
    347,
    345,
@@ -8264,31 +8540,30 @@
    324,
    323
   ],
-  "devices": [
-   348,
-   337,
-   336,
-   332,
-   320,
-   312,
-   181,
-   173,
-   172
+  "wait4": [
+   360,
+   356,
+   220,
+   213,
+   212,
+   130
   ],
-  "ack": [
-   347,
-   305,
-   302,
-   65,
-   64
+  "admitted": [
+   360
   ],
-  "alignment": [
-   347
+  "arg0": [
+   360,
+   346
   ],
-  "message": [
-   347
+  "arm": [
+   360,
+   342,
+   340,
+   324
   ],
   "core": [
+   360,
+   356,
    347,
    346,
    340,
@@ -8296,71 +8571,24 @@
    177,
    162
   ],
-  "existing": [
-   347,
-   344,
-   341,
-   340,
-   339,
-   337,
-   336,
-   335,
-   331,
-   330,
-   320,
-   319,
-   310,
-   296,
-   177,
-   154,
-   153,
-   142,
-   49,
-   47,
-   38
-  ],
-  "guard": [
-   347,
-   337,
-   336,
-   317,
-   101,
-   27
-  ],
-  "killed": [
-   347,
-   345,
-   344,
-   343,
-   341,
+  "record": [
+   359,
    325,
-   324,
-   323,
-   185
+   275,
+   268,
+   187,
+   186,
+   107
   ],
-  "arg1": [
-   346,
-   163
-  ],
-  "option": [
-   346
-  ],
-  "prctl": [
-   346,
-   277
-  ],
-  "admission": [
-   346,
-   324,
-   243
-  ],
-  "arg0": [
-   346
-  ],
-  "argument": [
-   346
+  "header": [
+   359,
+   193,
+   131,
+   107,
+   44
   ],
   "check": [
+   359,
    346,
    338,
    322,
@@ -8412,6 +8640,502 @@
    9,
    4,
    3
+  ],
+  "index": [
+   359,
+   312,
+   197,
+   196,
+   193,
+   192,
+   175,
+   174,
+   167,
+   166,
+   42
+  ],
+  "size": [
+   359,
+   246,
+   192,
+   132,
+   119,
+   108,
+   43,
+   38,
+   13,
+   4
+  ],
+  "version": [
+   359,
+   131
+  ],
+  "drop": [
+   359,
+   351,
+   323
+  ],
+  "existing": [
+   359,
+   356,
+   354,
+   351,
+   350,
+   347,
+   344,
+   341,
+   340,
+   339,
+   337,
+   336,
+   335,
+   331,
+   330,
+   320,
+   319,
+   310,
+   296,
+   177,
+   154,
+   153,
+   142,
+   49,
+   47,
+   38
+  ],
+  "write": [
+   358,
+   279,
+   278,
+   241,
+   206,
+   205,
+   178,
+   132,
+   108,
+   88,
+   81
+  ],
+  "random": [
+   358,
+   357,
+   342
+  ],
+  "kind": [
+   358
+  ],
+  "length": [
+   358,
+   357,
+   325,
+   317,
+   310,
+   241,
+   128,
+   36,
+   30,
+   21
+  ],
+  "null": [
+   358,
+   247,
+   188,
+   159
+  ],
+  "writes": [
+   358,
+   350,
+   193,
+   145
+  ],
+  "zero": [
+   358,
+   357,
+   108,
+   65
+  ],
+  "accounting": [
+   358
+  ],
+  "read": [
+   357,
+   194,
+   185,
+   179,
+   178,
+   162,
+   138
+  ],
+  "constant": [
+   357
+  ],
+  "devices": [
+   357,
+   355,
+   352,
+   350,
+   348,
+   337,
+   336,
+   332,
+   320,
+   312,
+   181,
+   173,
+   172
+  ],
+  "advance": [
+   357
+  ],
+  "buffer": [
+   357,
+   348,
+   305,
+   219,
+   187,
+   158,
+   21
+  ],
+  "admission": [
+   356,
+   354,
+   346,
+   324,
+   243
+  ],
+  "prot": [
+   356,
+   104
+  ],
+  "bits": [
+   356,
+   215,
+   91
+  ],
+  "contract": [
+   356,
+   304,
+   299,
+   298,
+   291,
+   283,
+   278,
+   269,
+   258,
+   254,
+   251,
+   243,
+   237,
+   231,
+   230,
+   13
+  ],
+  "minor": [
+   355
+  ],
+  "major": [
+   355
+  ],
+  "device": [
+   355,
+   341,
+   337,
+   336,
+   326,
+   320,
+   278,
+   237,
+   125,
+   30,
+   29,
+   28,
+   1
+  ],
+  "numeric": [
+   355
+  ],
+  "pins": [
+   355
+  ],
+  "projects": [
+   355,
+   337
+  ],
+  "free": [
+   354,
+   313
+  ],
+  "pipe": [
+   354,
+   339,
+   327,
+   113
+  ],
+  "two": [
+   354,
+   317,
+   269,
+   118
+  ],
+  "collision": [
+   354
+  ],
+  "slot": [
+   354,
+   131,
+   107
+  ],
+  "create_pipe": [
+   354
+  ],
+  "group": [
+   353,
+   351,
+   340,
+   330,
+   296
+  ],
+  "attach": [
+   353
+  ],
+  "max": [
+   353
+  ],
+  "membership": [
+   353
+  ],
+  "pids": [
+   353
+  ],
+  "cap": [
+   353
+  ],
+  "output": [
+   352,
+   269,
+   267,
+   228,
+   21,
+   20
+  ],
+  "count": [
+   352,
+   324,
+   219
+  ],
+  "len": [
+   352,
+   348,
+   344
+  ],
+  "views": [
+   352,
+   337,
+   183,
+   182
+  ],
+  "assignment": [
+   352
+  ],
+  "break": [
+   352
+  ],
+  "charset": [
+   351,
+   310
+  ],
+  "clause": [
+   351
+  ],
+  "slash": [
+   351,
+   141
+  ],
+  "cgroup": [
+   351,
+   248,
+   245
+  ],
+  "partition": [
+   350,
+   332
+  ],
+  "backend": [
+   350,
+   283,
+   181
+  ],
+  "absolute": [
+   350
+  ],
+  "mapping": [
+   350,
+   124,
+   88,
+   81,
+   78
+  ],
+  "offset": [
+   350,
+   144
+  ],
+  "suite": [
+   350,
+   337,
+   324,
+   320,
+   319,
+   317
+  ],
+  "adds": [
+   350,
+   306,
+   305,
+   304,
+   292,
+   258,
+   255,
+   52
+  ],
+  "through": [
+   349,
+   329,
+   258,
+   205,
+   122
+  ],
+  "complete": [
+   349,
+   333,
+   11
+  ],
+  "filesystem": [
+   349,
+   304,
+   291
+  ],
+  "component": [
+   349,
+   142,
+   141,
+   117
+  ],
+  "gate": [
+   349,
+   334,
+   333,
+   289,
+   287,
+   286,
+   282,
+   273,
+   267,
+   266,
+   265,
+   264,
+   263,
+   259,
+   257,
+   255,
+   254,
+   253,
+   252,
+   251,
+   235,
+   231,
+   229,
+   228,
+   225,
+   210,
+   196,
+   181,
+   172
+  ],
+  "operation": [
+   349,
+   299,
+   291,
+   230,
+   84,
+   7
+  ],
+  "policy": [
+   349,
+   319,
+   287,
+   86,
+   9
+  ],
+  "x86": [
+   349,
+   265
+  ],
+  "001": [
+   349
+  ],
+  "019": [
+   349
+  ],
+  "empty": [
+   348,
+   335,
+   317,
+   306,
+   298,
+   128
+  ],
+  "frame": [
+   348,
+   326,
+   86,
+   82,
+   46,
+   28
+  ],
+  "queue": [
+   348,
+   13,
+   10,
+   4
+  ],
+  "receive": [
+   348,
+   275
+  ],
+  "ack": [
+   347,
+   305,
+   302,
+   65,
+   64
+  ],
+  "alignment": [
+   347
+  ],
+  "message": [
+   347
+  ],
+  "guard": [
+   347,
+   337,
+   336,
+   317,
+   101,
+   27
+  ],
+  "arg1": [
+   346,
+   163
+  ],
+  "option": [
+   346
+  ],
+  "prctl": [
+   346,
+   277
+  ],
+  "argument": [
+   346
   ],
   "0x7f": [
    345,
@@ -8505,18 +9229,10 @@
    160,
    159
   ],
-  "random": [
-   342
-  ],
   "318": [
    342,
    322,
    163
-  ],
-  "arm": [
-   342,
-   340,
-   324
   ],
   "arms": [
    342,
@@ -8530,20 +9246,6 @@
   ],
   "balanced_surface": [
    342
-  ],
-  "device": [
-   341,
-   337,
-   336,
-   326,
-   320,
-   278,
-   237,
-   125,
-   30,
-   29,
-   28,
-   1
   ],
   "availability": [
    341
@@ -8565,11 +9267,6 @@
   "delete": [
    340
   ],
-  "group": [
-   340,
-   330,
-   296
-  ],
   "release": [
    339,
    309,
@@ -8585,11 +9282,6 @@
    332,
    327,
    175
-  ],
-  "pipe": [
-   339,
-   327,
-   113
   ],
   "closes": [
    339
@@ -8737,11 +9429,6 @@
    232,
    207
   ],
-  "views": [
-   337,
-   183,
-   182
-  ],
   "entry": [
    337,
    213,
@@ -8760,18 +9447,8 @@
    10,
    7
   ],
-  "projects": [
-   337
-  ],
   "requesting": [
    337
-  ],
-  "suite": [
-   337,
-   324,
-   320,
-   319,
-   317
   ],
   "network": [
    336,
@@ -8826,15 +9503,6 @@
    335,
    79
   ],
-  "pid": [
-   335,
-   285,
-   274,
-   267,
-   214,
-   126,
-   102
-  ],
   "task": [
    335,
    327,
@@ -8865,36 +9533,6 @@
    335,
    319,
    229
-  ],
-  "gate": [
-   334,
-   333,
-   289,
-   287,
-   286,
-   282,
-   273,
-   267,
-   266,
-   265,
-   264,
-   263,
-   259,
-   257,
-   255,
-   254,
-   253,
-   252,
-   251,
-   235,
-   231,
-   229,
-   228,
-   225,
-   210,
-   196,
-   181,
-   172
   ],
   "bench": [
    334,
@@ -8976,10 +9614,6 @@
    20,
    6
   ],
-  "complete": [
-   333,
-   11
-  ],
   "consolidated": [
    333
   ],
@@ -8993,9 +9627,6 @@
    42
   ],
   "fit": [
-   332
-  ],
-  "partition": [
    332
   ],
   "access": [
@@ -9130,12 +9761,6 @@
    280,
    261,
    61
-  ],
-  "through": [
-   329,
-   258,
-   205,
-   122
   ],
   "url": [
    328
@@ -9278,16 +9903,6 @@
   "max_path": [
    325
   ],
-  "length": [
-   325,
-   317,
-   310,
-   241,
-   128,
-   36,
-   30,
-   21
-  ],
   "one": [
    325,
    320,
@@ -9303,31 +9918,16 @@
    15,
    5
   ],
-  "record": [
-   325,
-   275,
-   268,
-   187,
-   186,
-   107
-  ],
   "iovcnt": [
    324
   ],
   "writev": [
    324
   ],
-  "count": [
-   324,
-   219
-  ],
   "limit": [
    323,
    67,
    22
-  ],
-  "drop": [
-   323
   ],
   "admit": [
    323
@@ -9545,12 +10145,6 @@
   "five": [
    319
   ],
-  "policy": [
-   319,
-   287,
-   86,
-   9
-  ],
   "refused": [
    319
   ],
@@ -9607,11 +10201,6 @@
   "part": [
    317,
    74
-  ],
-  "two": [
-   317,
-   269,
-   118
   ],
   "weakens": [
    317
@@ -9792,9 +10381,6 @@
   "unsafe": [
    313
   ],
-  "free": [
-   313
-  ],
   "realloc": [
    313
   ],
@@ -9825,18 +10411,6 @@
   "flag": [
    312,
    126
-  ],
-  "index": [
-   312,
-   197,
-   196,
-   193,
-   192,
-   175,
-   174,
-   167,
-   166,
-   42
   ],
   "property": [
    312
@@ -9885,9 +10459,6 @@
    94,
    59,
    57
-  ],
-  "charset": [
-   310
   ],
   "library": [
    310
@@ -10045,15 +10616,6 @@
   "298": [
    306
   ],
-  "adds": [
-   306,
-   305,
-   304,
-   292,
-   258,
-   255,
-   52
-  ],
   "corresponding": [
    306
   ],
@@ -10073,27 +10635,6 @@
   ],
   "converted": [
    305
-  ],
-  "contract": [
-   304,
-   299,
-   298,
-   291,
-   283,
-   278,
-   269,
-   258,
-   254,
-   251,
-   243,
-   237,
-   231,
-   230,
-   13
-  ],
-  "filesystem": [
-   304,
-   291
   ],
   "global": [
    304,
@@ -10255,13 +10796,6 @@
   ],
   "reads": [
    300
-  ],
-  "operation": [
-   299,
-   291,
-   230,
-   84,
-   7
   ],
   "default": [
    298,
@@ -10674,10 +11208,6 @@
    124,
    88
   ],
-  "backend": [
-   283,
-   181
-  ],
   "state": [
    282,
    254,
@@ -10808,18 +11338,6 @@
    113,
    102,
    53
-  ],
-  "write": [
-   279,
-   278,
-   241,
-   206,
-   205,
-   178,
-   132,
-   108,
-   88,
-   81
   ],
   "now": [
    279,
@@ -10963,13 +11481,6 @@
   "generated": [
    269
   ],
-  "output": [
-   269,
-   267,
-   228,
-   21,
-   20
-  ],
   "getpgid": [
    269
   ],
@@ -11023,9 +11534,6 @@
    67,
    46,
    19
-  ],
-  "x86": [
-   265
   ],
   "219": [
    265
@@ -11318,10 +11826,6 @@
    100,
    71
   ],
-  "cgroup": [
-   248,
-   245
-  ],
   "containment": [
    248
   ],
@@ -11356,11 +11860,6 @@
    97,
    24
   ],
-  "null": [
-   247,
-   188,
-   159
-  ],
   "enotty": [
    246
   ],
@@ -11370,17 +11869,6 @@
   "real": [
    246,
    192
-  ],
-  "size": [
-   246,
-   192,
-   132,
-   119,
-   108,
-   43,
-   38,
-   13,
-   4
   ],
   "43090000947": [
    246
@@ -11809,12 +12297,6 @@
   "process_vm_writev": [
    221
   ],
-  "wait4": [
-   220,
-   213,
-   212,
-   130
-  ],
   "load": [
    219
   ],
@@ -11895,10 +12377,6 @@
   ],
   "4242": [
    215
-  ],
-  "bits": [
-   215,
-   91
   ],
   "glibc": [
    215,
@@ -12097,14 +12575,6 @@
    195,
    194
   ],
-  "read": [
-   194,
-   185,
-   179,
-   178,
-   162,
-   138
-  ],
   "sparse": [
    193,
    192
@@ -12114,16 +12584,6 @@
    192,
    175,
    174
-  ],
-  "writes": [
-   193,
-   145
-  ],
-  "header": [
-   193,
-   131,
-   107,
-   44
   ],
   "layers": [
    193
@@ -12656,9 +13116,6 @@
    144,
    119
   ],
-  "offset": [
-   144
-  ],
   "fallocate": [
    144,
    119
@@ -12694,20 +13151,12 @@
   "eexist": [
    142
   ],
-  "component": [
-   142,
-   141,
-   117
-  ],
   "enotdir": [
    141,
    116,
    90
   ],
   "trailing": [
-   141
-  ],
-  "slash": [
    141
   ],
   "eisdir": [
@@ -12815,17 +13264,10 @@
    132,
    108
   ],
-  "slot": [
-   131,
-   107
-  ],
   "generation": [
    131,
    107,
    41
-  ],
-  "version": [
-   131
   ],
   "__wclone": [
    130
@@ -12879,12 +13321,6 @@
   ],
   "map_shared": [
    124,
-   81,
-   78
-  ],
-  "mapping": [
-   124,
-   88,
    81,
    78
   ],
@@ -12978,10 +13414,6 @@
   "st_nlink": [
    109
   ],
-  "zero": [
-   108,
-   65
-  ],
   "posix_spawn": [
    106
   ],
@@ -13009,9 +13441,6 @@
    104
   ],
   "mremap": [
-   104
-  ],
-  "prot": [
    104
   ],
   "timerfd": [
