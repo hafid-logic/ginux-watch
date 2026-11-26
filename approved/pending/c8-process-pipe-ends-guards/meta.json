@@ -1,0 +1,17 @@
+{
+ "crate": "ginux-process",
+ "file": "crates/ginux-process/src/lib.rs",
+ "filter": "pipe_ends_reports",
+ "mutants": [
+  {
+   "name": "no-zero-guard",
+   "old": "if pipe == 0 {\n            return 0;\n        }",
+   "new": "if false {\n            return 0;\n        }"
+  },
+  {
+   "name": "no-live",
+   "old": "if index < PIPES && self.pipes[index].live {",
+   "new": "if index < PIPES {"
+  }
+ ]
+}

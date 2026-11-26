@@ -1,0 +1,17 @@
+{
+ "crate": "ginux-process",
+ "file": "crates/ginux-process/src/lib.rs",
+ "filter": "duplicate_retains",
+ "mutants": [
+  {
+   "name": "retain-plus2",
+   "old": "self.pipes[index].ends += 1;",
+   "new": "self.pipes[index].ends += 2;"
+  },
+  {
+   "name": "retain-nolive",
+   "old": "if index < PIPES && self.pipes[index].live {",
+   "new": "if index < PIPES {"
+  }
+ ]
+}

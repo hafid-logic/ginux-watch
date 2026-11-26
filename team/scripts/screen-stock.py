@@ -16,7 +16,7 @@ def main():
     for d in sorted((ROOT/"approved/pending").iterdir()):
         n=d.name[3:]
         c=api(tok,f"/repos/gmkurtzer/ginux/compare/main...hafid-logic:tests/{n}")
-        if c is None or c.get("ahead_by",0)==0:
+        if c is not None and c.get("ahead_by",0)==0:
             subprocess.run(["git","mv",str(d),str(arch/d.name)],cwd=ROOT,capture_output=True)
             if not (arch/d.name).exists():
                 d.rename(arch/d.name)

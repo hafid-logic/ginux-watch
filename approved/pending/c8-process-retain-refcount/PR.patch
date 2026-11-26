@@ -1,0 +1,43 @@
+From c17af921391b5954ea477873da89440e93b18e0b Mon Sep 17 00:00:00 2001
+From: Abdelhafid DJIDEL <266947999+hafid-logic@users.noreply.github.com>
+Date: Thu, 26 Nov 2026 23:51:15 +0000
+Subject: [PATCH] tests: process-retain-refcount
+
+---
+ crates/ginux-process/src/lib.rs | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
+
+diff --git a/crates/ginux-process/src/lib.rs b/crates/ginux-process/src/lib.rs
+index 8df66a9f..e1d8acf5 100644
+--- a/crates/ginux-process/src/lib.rs
++++ b/crates/ginux-process/src/lib.rs
+@@ -2167,4 +2167,26 @@ mod tests {
+             Err(ProcessError::DescriptorFull)
+         );
+     }
++
++    #[test]
++    fn duplicate_retains_pipe_ends_and_survives_source_close() {
++        let mut pipes: PipeSpace<2, 8, 2> = PipeSpace::new();
++        let id = pipes.create_pipe(1, 0, 1, false).unwrap();
++        assert_eq!(pipes.pipe_ends(id), 2);
++        // duplicating both ends raises the count to four
++        pipes.duplicate(1, 0, 2, false).unwrap();
++        pipes.duplicate(1, 1, 3, false).unwrap();
++        assert_eq!(pipes.pipe_ends(id), 4);
++        // closing the originals leaves the pipe alive through the copies
++        pipes.close(1, 0).unwrap();
++        pipes.close(1, 1).unwrap();
++        assert_eq!(pipes.pipe_ends(id), 2);
++        assert_eq!(pipes.active_pipes(), 1);
++        // only the last copy frees it
++        pipes.close(1, 2).unwrap();
++        assert_eq!(pipes.pipe_ends(id), 1);
++        pipes.close(1, 3).unwrap();
++        assert_eq!(pipes.pipe_ends(id), 0);
++        assert_eq!(pipes.active_pipes(), 0);
++    }
+ }
+-- 
+2.47.3
+
