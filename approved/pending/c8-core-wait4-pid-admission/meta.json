@@ -1,0 +1,17 @@
+{
+ "crate": "ginux-core",
+ "file": "crates/ginux-core/src/lib.rs",
+ "filter": "mmap_mprotect_reject",
+ "mutants": [
+  {
+   "name": "wait4-gt1",
+   "old": "SYS_WAIT4 => arg0 == u64::MAX || arg0 > 0,",
+   "new": "SYS_WAIT4 => arg0 == u64::MAX || arg0 > 1,"
+  },
+  {
+   "name": "wait4-true",
+   "old": "SYS_WAIT4 => arg0 == u64::MAX || arg0 > 0,",
+   "new": "SYS_WAIT4 => true,"
+  }
+ ]
+}

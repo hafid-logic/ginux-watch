@@ -38,9 +38,15 @@ def is_reserve(tok, up, fork, b):
         return False
 
 def stock_packages(stock_dir, prefix, pushed):
+    proven={}
+    pj=Path("state/proven.json")
+    if pj.exists():
+        try: proven=json.loads(pj.read_text())
+        except Exception: proven={}
     out=[]
     for d in sorted(Path(stock_dir).iterdir()):
         if not (d/"PR.patch").exists(): continue
+        if proven and not proven.get(d.name,{}).get("proven"): continue
         branch=prefix+d.name.replace("c8-","")
         if branch not in pushed: out.append((d,branch))
     return out
