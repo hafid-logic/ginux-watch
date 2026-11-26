@@ -50,6 +50,11 @@
 
 - **أتمتة v9.2 (PR داخلي #81، جاهز للدمج):** watcher يزامن STATE تلقائيًا + autopilot يلتزم تقرير الاحتياط المُعبّأ. الاحتياط 3 بروابط PR معبّأة (outbox/RESERVES.md). open_cap=3 (يُرفع 5 بعد دورة مُتحقّقة).
 
+- **#340** مدموج: tests(core): pin balanced virtual parent and group i
+- **#341** مدموج: tests(fs-policy): pin ObjectId availability to eithe
+- **#342** مدموج: tests(core): pin balanced surface mapping for random
+- **#344** مدموج: tests(vfs): pin encode_record path and link validati
+
 ## فهرس
 - الأرشيف: state/history/STATE-archive-2026-11-18.md — التسليم: HANDOFF.md
 - التقارير: reports/ — المصفوفة: matrix/upstream-watch.json
