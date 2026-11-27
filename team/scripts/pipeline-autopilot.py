@@ -58,7 +58,7 @@ def push_pkg(up, fork, tok, d, branch):
     def g(*a): return subprocess.run(["git","-C",str(work)]+list(a),capture_output=True,text=True)
     g("fetch","-q","origin","main")
     g("checkout","-q","-B",branch,"FETCH_HEAD")
-    r=g("am",str((d/"PR.patch").resolve()))
+    r=g("am","--3way",str((d/"PR.patch").resolve()))
     if r.returncode!=0:
         g("am","--abort"); return False
     if g("diff","--quiet","FETCH_HEAD","HEAD").returncode==0:
