@@ -80,6 +80,26 @@
    }
   ]
  },
+ "c8-kernel-views-cgroup-remove-busy": {
+  "proven": true,
+  "baseline": true,
+  "mutants": [
+   {
+    "name": "active-or",
+    "anchor_ok": true,
+    "anchor_count": 1,
+    "survives": true,
+    "killed": true
+   },
+   {
+    "name": "parent-neq",
+    "anchor_ok": true,
+    "anchor_count": 1,
+    "survives": true,
+    "killed": true
+   }
+  ]
+ },
  "c8-process-pipe-ends-guards": {
   "proven": true,
   "baseline": true,
@@ -96,6 +116,26 @@
     "anchor_ok": true,
     "anchor_count": 2,
     "scoped": true,
+    "survives": true,
+    "killed": true
+   }
+  ]
+ },
+ "c8-process-unshare-copy": {
+  "proven": true,
+  "baseline": true,
+  "mutants": [
+   {
+    "name": "filter-zero",
+    "anchor_ok": true,
+    "anchor_count": 1,
+    "survives": true,
+    "killed": true
+   },
+   {
+    "name": "threshold-ge1",
+    "anchor_ok": true,
+    "anchor_count": 1,
     "survives": true,
     "killed": true
    }
