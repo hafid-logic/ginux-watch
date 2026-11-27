@@ -1,0 +1,1268 @@
+{
+ "generated_utc": "2026-11-27T18:44:19Z",
+ "main_sha": "8b857786882224c33182f2efeca846e8f660f18a",
+ "total_survivors": 638,
+ "dropped": {
+  "cosmetic": 16,
+  "stale-line": 7,
+  "no-fn": 2,
+  "covered": 43
+ },
+ "candidates": [
+  {
+   "crate": "ginux-instance",
+   "file": "crates/ginux-instance/src/lib.rs",
+   "function": "apply_override_inner",
+   "span": [
+    677,
+    816
+   ],
+   "live_mutants": 76,
+   "score": 242,
+   "mutants": [
+    {
+     "line": 679,
+     "desc": "delete match arm b\"instance.id\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"instance.id\" => self.id = parse_string(value)?,"
+    },
+    {
+     "line": 680,
+     "desc": "delete match arm b\"instance.root\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"instance.root\" => self.root = parse_string(value)?,"
+    },
+    {
+     "line": 681,
+     "desc": "delete match arm b\"instance.init\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"instance.init\" => self.init = parse_string(value)?,"
+    },
+    {
+     "line": 682,
+     "desc": "delete match arm b\"instance.args\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"instance.args\" => self.args = parse_list(value)?,"
+    },
+    {
+     "line": 683,
+     "desc": "delete match arm b\"instance.environment\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"instance.environment\" => self.environment = parse_list(value)?,"
+    },
+    {
+     "line": 684,
+     "desc": "delete match arm b\"instance.workdir\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"instance.workdir\" => self.workdir = parse_string(value)?,"
+    },
+    {
+     "line": 687,
+     "desc": "delete match arm b\"resources.memory_mib\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"resources.memory_mib\" => self.memory_mib = parse_u64(value)?,"
+    },
+    {
+     "line": 688,
+     "desc": "delete match arm b\"execution.profile\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"execution.profile\" => {"
+    },
+    {
+     "line": 690,
+     "desc": "delete match arm b\"security\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"security\" => ExecutionProfile::Security,"
+    },
+    {
+     "line": 691,
+     "desc": "delete match arm b\"balanced\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"balanced\" => ExecutionProfile::Balanced,"
+    },
+    {
+     "line": 692,
+     "desc": "delete match arm b\"performance\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"performance\" => ExecutionProfile::Performance,"
+    },
+    {
+     "line": 696,
+     "desc": "delete match arm b\"execution.backend\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"execution.backend\" => {"
+    },
+    {
+     "line": 698,
+     "desc": "delete match arm b\"interpreter\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"interpreter\" => ExecutionBackend::Interpreter,"
+    },
+    {
+     "line": 699,
+     "desc": "delete match arm b\"ptrace-sysemu\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"ptrace-sysemu\" => ExecutionBackend::PtraceSysemu,"
+    },
+    {
+     "line": 700,
+     "desc": "delete match arm b\"ptrace-native\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"ptrace-native\" => ExecutionBackend::PtraceNative,"
+    },
+    {
+     "line": 704,
+     "desc": "delete match arm b\"contract.syscalls.control\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"contract.syscalls.control\" => {"
+    },
+    {
+     "line": 706,
+     "desc": "delete match arm b\"paranoid\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"paranoid\" => DispatchMode::Paranoid,"
+    },
+    {
+     "line": 707,
+     "desc": "delete match arm b\"selective\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"selective\" => DispatchMode::Selective,"
+    },
+    {
+     "line": 711,
+     "desc": "delete match arm b\"contract.version\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"contract.version\" => self.contract_recipe_version = parse_u64(value)?,"
+    },
+    {
+     "line": 712,
+     "desc": "delete match arm b\"contract.catalog\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"contract.catalog\" => self.contract_catalog_version = parse_u64(value)?,"
+    },
+    {
+     "line": 713,
+     "desc": "delete match arm b\"contract.default\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"contract.default\" => self.contract_default = parse_contract_default(value)?,"
+    },
+    {
+     "line": 715,
+     "desc": "delete match arm b\"contract.deny\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"contract.deny\" => self.contract_deny = parse_list(value)?,"
+    },
+    {
+     "line": 717,
+     "desc": "delete match arm b\"contract.syscalls.default\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"contract.syscalls.default\" => {"
+    },
+    {
+     "line": 720,
+     "desc": "delete match arm b\"contract.syscalls.allow\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"contract.syscalls.allow\" => self.contract_exact_allow = parse_syscall_list(value)?,"
+    },
+    {
+     "line": 721,
+     "desc": "delete match arm b\"contract.syscalls.deny\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"contract.syscalls.deny\" => self.contract_exact_deny = parse_syscall_list(value)?,"
+    },
+    {
+     "line": 722,
+     "desc": "delete match arm b\"contract.filesystem.default\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"contract.filesystem.default\" => {"
+    },
+    {
+     "line": 725,
+     "desc": "delete match arm b\"contract.filesystem.read\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"contract.filesystem.read\" => self.filesystem_read = parse_list(value)?,"
+    },
+    {
+     "line": 726,
+     "desc": "delete match arm b\"contract.filesystem.write\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"contract.filesystem.write\" => self.filesystem_write = parse_list(value)?,"
+    },
+    {
+     "line": 727,
+     "desc": "delete match arm b\"contract.filesystem.create\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"contract.filesystem.create\" => self.filesystem_create = parse_list(value)?,"
+    },
+    {
+     "line": 728,
+     "desc": "delete match arm b\"contract.filesystem.deny\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"contract.filesystem.deny\" => self.filesystem_write_deny = parse_list(value)?,"
+    },
+    {
+     "line": 729,
+     "desc": "delete match arm b\"contract.network.default\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"contract.network.default\" => {"
+    },
+    {
+     "line": 732,
+     "desc": "delete match arm b\"contract.network.inbound\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"contract.network.inbound\" => self.ingress_allow = parse_list(value)?,"
+    },
+    {
+     "line": 733,
+     "desc": "delete match arm b\"contract.network.outbound\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"contract.network.outbound\" => self.egress_allow = parse_list(value)?,"
+    },
+    {
+     "line": 734,
+     "desc": "delete match arm b\"contract.devices.default\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"contract.devices.default\" => {"
+    },
+    {
+     "line": 737,
+     "desc": "delete match arm b\"contract.devices.read\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"contract.devices.read\" => self.device_read = parse_list(value)?,"
+    },
+    {
+     "line": 738,
+     "desc": "delete match arm b\"contract.devices.write\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"contract.devices.write\" => self.device_write = parse_list(value)?,"
+    },
+    {
+     "line": 739,
+     "desc": "delete match arm b\"contract.devices.create\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"contract.devices.create\" => {"
+    },
+    {
+     "line": 741,
+     "desc": "delete ! in InstanceConfig::apply_override_inner",
+     "source_line": "self.filesystem_device_nodes = !self.device_create.as_slice().is_empty();"
+    },
+    {
+     "line": 743,
+     "desc": "delete match arm b\"contract.privileges.default\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"contract.privileges.default\" => {"
+    },
+    {
+     "line": 746,
+     "desc": "delete match arm b\"contract.privileges.setuid\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"contract.privileges.setuid\" => self.privilege_setuid = parse_list(value)?,"
+    },
+    {
+     "line": 747,
+     "desc": "delete match arm b\"contract.privileges.setgid\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"contract.privileges.setgid\" => self.privilege_setgid = parse_list(value)?,"
+    },
+    {
+     "line": 748,
+     "desc": "delete match arm b\"contract.process.default\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"contract.process.default\" => {"
+    },
+    {
+     "line": 751,
+     "desc": "delete match arm b\"contract.process.max_processes\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"contract.process.max_processes\" => self.process_max_processes = parse_u64(value)?,"
+    },
+    {
+     "line": 752,
+     "desc": "delete match arm b\"contract.process.max_threads\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"contract.process.max_threads\" => self.process_max_threads = parse_u64(value)?,"
+    },
+    {
+     "line": 753,
+     "desc": "delete match arm b\"contract.process.signals\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"contract.process.signals\" => self.process_signals = parse_list(value)?,"
+    },
+    {
+     "line": 754,
+     "desc": "delete match arm b\"contract.process.ptrace\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"contract.process.ptrace\" => self.process_ptrace = parse_allow_deny(value)?,"
+    },
+    {
+     "line": 755,
+     "desc": "delete match arm b\"contract.process.namespace_create\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"contract.process.namespace_create\" => {"
+    },
+    {
+     "line": 758,
+     "desc": "delete match arm b\"contract.process.namespace_join\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"contract.process.namespace_join\" => self.process_namespace_join = parse_list(value)?,"
+    },
+    {
+     "line": 759,
+     "desc": "delete match arm b\"contract.kernel.default\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"contract.kernel.default\" => {"
+    },
+    {
+     "line": 762,
+     "desc": "delete match arm b\"contract.kernel.proc_read\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"contract.kernel.proc_read\" => self.kernel_proc_read = parse_list(value)?,"
+    },
+    {
+     "line": 763,
+     "desc": "delete match arm b\"contract.kernel.proc_write\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"contract.kernel.proc_write\" => self.kernel_proc_write = parse_list(value)?,"
+    },
+    {
+     "line": 764,
+     "desc": "delete match arm b\"contract.kernel.sys_read\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"contract.kernel.sys_read\" => self.kernel_sys_read = parse_list(value)?,"
+    },
+    {
+     "line": 765,
+     "desc": "delete match arm b\"contract.kernel.sys_write\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"contract.kernel.sys_write\" => self.kernel_sys_write = parse_list(value)?,"
+    },
+    {
+     "line": 766,
+     "desc": "delete match arm b\"storage.assignments\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"storage.assignments\" => self.storage = parse_list(value)?,"
+    },
+    {
+     "line": 767,
+     "desc": "delete match arm b\"volumes.assignments\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"volumes.assignments\" => self.volumes = parse_list(value)?,"
+    },
+    {
+     "line": 768,
+     "desc": "delete match arm b\"devices.assignments\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"devices.assignments\" => self.devices = parse_list(value)?,"
+    },
+    {
+     "line": 771,
+     "desc": "delete match arm b\"none\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"none\" => NetworkBackend::None,"
+    },
+    {
+     "line": 772,
+     "desc": "delete match arm b\"mediated\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"mediated\" => NetworkBackend::Mediated,"
+    },
+    {
+     "line": 778,
+     "desc": "delete match arm b\"network.source\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"network.source\" => self.network_source = parse_string(value)?,"
+    },
+    {
+     "line": 779,
+     "desc": "delete match arm b\"network.ingress_allow\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"network.ingress_allow\" => self.ingress_allow = parse_list(value)?,"
+    },
+    {
+     "line": 780,
+     "desc": "delete match arm b\"network.ingress_deny\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"network.ingress_deny\" => self.ingress_deny = parse_list(value)?,"
+    },
+    {
+     "line": 781,
+     "desc": "delete match arm b\"network.egress_allow\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"network.egress_allow\" => self.egress_allow = parse_list(value)?,"
+    },
+    {
+     "line": 782,
+     "desc": "delete match arm b\"network.egress_deny\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"network.egress_deny\" => self.egress_deny = parse_list(value)?,"
+    },
+    {
+     "line": 784,
+     "desc": "delete match arm b\"access.uid\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"access.uid\" => self.access_uid = parse_u64(value)?,"
+    },
+    {
+     "line": 785,
+     "desc": "delete match arm b\"access.gid\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"access.gid\" => self.access_gid = parse_u64(value)?,"
+    },
+    {
+     "line": 786,
+     "desc": "delete match arm b\"hooks.pre_boot\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"hooks.pre_boot\" => self.pre_boot_hooks = parse_list(value)?,"
+    },
+    {
+     "line": 787,
+     "desc": "delete match arm b\"hooks.timeout_seconds\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"hooks.timeout_seconds\" => self.hook_timeout_seconds = parse_u64(value)?,"
+    },
+    {
+     "line": 788,
+     "desc": "delete match arm b\"hooks.failure\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"hooks.failure\" => {"
+    },
+    {
+     "line": 790,
+     "desc": "delete match arm b\"stop\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"stop\" => HookFailurePolicy::Stop,"
+    },
+    {
+     "line": 791,
+     "desc": "delete match arm b\"continue\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"continue\" => HookFailurePolicy::Continue,"
+    },
+    {
+     "line": 795,
+     "desc": "delete match arm b\"lifecycle.stop_timeout_seconds\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"lifecycle.stop_timeout_seconds\" => self.stop_timeout_seconds = parse_u64(value)?,"
+    },
+    {
+     "line": 796,
+     "desc": "delete match arm b\"audit.enabled\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"audit.enabled\" => {"
+    },
+    {
+     "line": 803,
+     "desc": "delete match arm b\"audit.mode\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"audit.mode\" => {"
+    },
+    {
+     "line": 806,
+     "desc": "delete match arm b\"failure.policy\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"failure.policy\" => {"
+    },
+    {
+     "line": 808,
+     "desc": "delete match arm b\"stop\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"stop\" => FailurePolicy::Stop,"
+    },
+    {
+     "line": 809,
+     "desc": "delete match arm b\"fail\" in InstanceConfig::apply_override_inner",
+     "source_line": "b\"fail\" => FailurePolicy::Fail,"
+    }
+   ],
+   "fn_source": "    fn apply_override_inner(&mut self, key: &[u8], value: &[u8]) -> Result<(), ConfigError> {\n        match key {\n            b\"instance.id\" => self.id = parse_string(value)?,\n            b\"instance.root\" => self.root = parse_string(value)?,\n            b\"instance.init\" => self.init = parse_string(value)?,\n            b\"instance.args\" => self.args = parse_list(value)?,\n            b\"instance.environment\" => self.environment = parse_list(value)?,\n            b\"instance.workdir\" => self.workdir = parse_string(value)?,\n            b\"identity.hostname\" => self.hostname = parse_string(value)?,\n            b\"resources.vcpus\" => self.vcpus = parse_u64(value)?,\n            b\"resources.memory_mib\" => self.memory_mib = parse_u64(value)?,\n            b\"execution.profile\" => {\n                self.execution_profile = match parse_string::<32>(value)?.as_bytes() {\n                    b\"security\" => ExecutionProfile::Security,\n                    b\"balanced\" => ExecutionProfile::Balanced,\n                    b\"performance\" => ExecutionProfile::Performance,\n                    _ => return Err(ConfigError::InvalidValue),\n                }\n            }\n            b\"execution.backend\" => {\n                self.execution_backend = match parse_string::<32>(value)?.as_bytes() {\n                    b\"interpreter\" => ExecutionBackend::Interpreter,\n                    b\"ptrace-sysemu\" => ExecutionBackend::PtraceSysemu,\n                    b\"ptrace-native\" => ExecutionBackend::PtraceNative,\n                    _ => return Err(ConfigError::InvalidValue),\n                }\n            }\n            b\"contract.syscalls.control\" => {\n                self.dispatch_mode = match parse_string::<32>(value)?.as_bytes() {\n                    b\"paranoid\" => DispatchMode::Paranoid,\n                    b\"selective\" => DispatchMode::Selective,\n                    _ => return Err(ConfigError::InvalidValue),\n                }\n            }\n            b\"contract.version\" => self.contract_recipe_version = parse_u64(value)?,\n            b\"contract.catalog\" => self.contract_catalog_version = parse_u64(value)?,\n            b\"contract.default\" => self.contract_default = parse_contract_default(value)?,\n            b\"contract.allow\" => self.contract_allow = parse_list(value)?,\n            b\"contract.deny\" => self.contract_deny = parse_list(value)?,\n            b\"contract.digest\" => return Err(ConfigError::DerivedField),\n            b\"contract.syscalls.default\" => {\n                parse_contract_default(value)?;\n            }\n            b\"contract.syscalls.allow\" => self.contract_exact_allow = parse_syscall_list(value)?,\n            b\"contract.syscalls.deny\" => self.contract_exact_deny = parse_syscall_list(value)?,\n            b\"contract.filesystem.default\" => {\n                parse_contract_default(value)?;\n            }\n            b\"contract.filesystem.read\" => self.filesystem_read = parse_list(value)?,\n            b\"contract.filesystem.write\" => self.filesystem_write = parse_list(value)?,\n            b\"contract.filesystem.create\" => self.filesystem_create = parse_list(value)?,\n            b\"contract.filesystem.deny\" => self.filesystem_write_deny = parse_list(value)?,\n            b\"contract.network.default\" => {\n                parse_contract_default(value)?;\n            }\n            b\"contract.network.inbound\" => self.ingress_allow = parse_list(value)?,\n            b\"contract.network.outbound\" => self.egress_allow = parse_list(value)?,\n            b\"contract.devices.default\" => {\n                parse_contract_default(value)?;\n            }\n            b\"contract.devices.read\" => self.device_read = parse_list(value)?,\n            b\"contract.devices.write\" => self.device_write = parse_list(value)?,\n            b\"contract.devices.create\" => {\n                self.device_create = parse_list(value)?;\n                self.filesystem_device_nodes = !self.device_create.as_slice().is_empty();\n            }\n            b\"contract.privileges.default\" => {\n                parse_contract_default(value)?;\n            }\n            b\"contract.privileges.setuid\" => self.privilege_setuid = parse_list(value)?,\n            b\"contract.privileges.setgid\" => self.privilege_setgid = parse_list(value)?,\n            b\"contract.process.default\" => {\n                parse_contract_default(value)?;\n            }\n            b\"contract.process.max_processes\" => self.process_max_processes = parse_u64(value)?,\n            b\"contract.process.max_threads\" => self.process_max_threads = parse_u64(value)?,\n            b\"contract.process.signals\" => self.process_signals = parse_list(value)?,\n            b\"contract.process.ptrace\" => self.process_ptrace = parse_allow_deny(value)?,\n            b\"contract.process.namespace_create\" => {\n                self.process_namespace_create = parse_list(value)?\n            }\n            b\"contract.process.namespace_join\" => self.process_namespace_join = parse_list(value)?,\n            b\"contract.kernel.default\" => {\n                parse_contract_default(value)?;\n            }\n            b\"contract.kernel.proc_read\" => self.kernel_proc_read = parse_list(value)?,\n            b\"contract.kernel.proc_write\" => self.kernel_proc_write = parse_list(value)?,\n            b\"contract.kernel.sys_read\" => self.kernel_sys_read = parse_list(value)?,\n            b\"contract.kernel.sys_write\" => self.kernel_sys_write = parse_list(value)?,\n            b\"storage.assignments\" => self.storage = parse_list(value)?,\n            b\"volumes.assignments\" => self.volumes = parse_list(value)?,\n            b\"devices.assignments\" => self.devices = parse_list(value)?,\n            b\"network.backend\" => {\n                self.network_backend = match parse_string::<32>(value)?.as_bytes() {\n                    b\"none\" => NetworkBackend::None,\n                    b\"mediated\" => NetworkBackend::Mediated,\n                    b\"shared\" => NetworkBackend::Shared,\n                    _ => return Err(ConfigError::InvalidValue),\n                }\n            }\n            b\"network.interface\" => self.network_interface = parse_string(value)?,\n            b\"network.source\" => self.network_source = parse_string(value)?,\n            b\"network.ingress_allow\" => self.ingress_allow = parse_list(value)?,\n            b\"network.ingress_deny\" => self.ingress_deny = parse_list(value)?,\n            b\"network.egress_allow\" => self.egress_allow = parse_list(value)?,\n            b\"network.egress_deny\" => self.egress_deny = parse_list(value)?,\n            b\"network.port_forwards\" => self.port_forwards = parse_list(value)?,\n            b\"access.uid\" => self.access_uid = parse_u64(value)?,\n            b\"access.gid\" => self.access_gid = parse_u64(value)?,\n            b\"hooks.pre_boot\" => self.pre_boot_hooks = parse_list(value)?,\n            b\"hooks.timeout_seconds\" => self.hook_timeout_seconds = parse_u64(value)?,\n            b\"hooks.failure\" => {\n                self.hook_failure_policy = match parse_string::<32>(value)?.as_bytes() {\n                    b\"stop\" => HookFailurePolicy::Stop,\n                    b\"continue\" => HookFailurePolicy::Continue,\n                    _ => return Err(ConfigError::InvalidValue),\n                }\n            }\n            b\"lifecycle.stop_timeout_seconds\" => self.stop_timeout_seconds = parse_u64(value)?,\n            b\"audit.enabled\" => {\n                self.audit_mode = if parse_bool(value)? {\n                    AuditMode::Enabled\n                } else {\n                    AuditMode::Disabled\n                }\n            }\n            b\"audit.mode\" => {\n                self.audit_mode = parse_legacy_audit_mode(value)?;\n            }\n            b\"failure.policy\" => {\n                self.failure_policy = match parse_string::<32>(value)?.as_bytes() {\n                    b\"stop\" => FailurePolicy::Stop,\n                    b\"fail\" => FailurePolicy::Fail,\n                    _ => return Err(ConfigError::InvalidValue),\n                }\n            }\n            _ => return Err(ConfigError::UnknownField),\n        }\n        Ok(())\n    }"
+  },
+  {
+   "crate": "ginux-instance",
+   "file": "crates/ginux-instance/src/lib.rs",
+   "function": "parse_field",
+   "span": [
+    1494,
+    1813
+   ],
+   "live_mutants": 58,
+   "score": 189,
+   "mutants": [
+    {
+     "line": 1502,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1 << 0)?;"
+    },
+    {
+     "line": 1526,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1 << 16)?;"
+    },
+    {
+     "line": 1554,
+     "desc": "delete match arm b\"ptrace-sysemu\" in parse_field",
+     "source_line": "b\"ptrace-sysemu\" => ExecutionBackend::PtraceSysemu,"
+    },
+    {
+     "line": 1561,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1u128 << 36)?;"
+    },
+    {
+     "line": 1573,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1 << 19)?;"
+    },
+    {
+     "line": 1577,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1 << 20)?;"
+    },
+    {
+     "line": 1585,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1u128 << 52)?;"
+    },
+    {
+     "line": 1593,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1u128 << 53)?;"
+    },
+    {
+     "line": 1597,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1u128 << 47)?;"
+    },
+    {
+     "line": 1601,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1u128 << 48)?;"
+    },
+    {
+     "line": 1605,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1u128 << 54)?;"
+    },
+    {
+     "line": 1609,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1u128 << 55)?;"
+    },
+    {
+     "line": 1613,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1u128 << 56)?;"
+    },
+    {
+     "line": 1617,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1u128 << 57)?;"
+    },
+    {
+     "line": 1621,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1u128 << 49)?;"
+    },
+    {
+     "line": 1625,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1u128 << 58)?;"
+    },
+    {
+     "line": 1629,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1u128 << 42)?;"
+    },
+    {
+     "line": 1633,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1u128 << 43)?;"
+    },
+    {
+     "line": 1637,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1u128 << 59)?;"
+    },
+    {
+     "line": 1641,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1u128 << 60)?;"
+    },
+    {
+     "line": 1645,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1u128 << 61)?;"
+    },
+    {
+     "line": 1649,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1u128 << 62)?;"
+    },
+    {
+     "line": 1654,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1u128 << 63)?;"
+    },
+    {
+     "line": 1658,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1u128 << 64)?;"
+    },
+    {
+     "line": 1662,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1u128 << 65)?;"
+    },
+    {
+     "line": 1666,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1u128 << 66)?;"
+    },
+    {
+     "line": 1670,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1u128 << 67)?;"
+    },
+    {
+     "line": 1674,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1u128 << 68)?;"
+    },
+    {
+     "line": 1678,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1u128 << 69)?;"
+    },
+    {
+     "line": 1682,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1u128 << 70)?;"
+    },
+    {
+     "line": 1686,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1u128 << 71)?;"
+    },
+    {
+     "line": 1690,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1u128 << 72)?;"
+    },
+    {
+     "line": 1694,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1u128 << 73)?;"
+    },
+    {
+     "line": 1698,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1u128 << 74)?;"
+    },
+    {
+     "line": 1702,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1u128 << 75)?;"
+    },
+    {
+     "line": 1706,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1u128 << 76)?;"
+    },
+    {
+     "line": 1710,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1u128 << 77)?;"
+    },
+    {
+     "line": 1718,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1 << 22)?;"
+    },
+    {
+     "line": 1726,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1 << 13)?;"
+    },
+    {
+     "line": 1735,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1 << 23)?;"
+    },
+    {
+     "line": 1739,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1 << 24)?;"
+    },
+    {
+     "line": 1742,
+     "desc": "delete match arm (Section::Network, b\"ingress_allow\") in parse_field",
+     "source_line": "(Section::Network, b\"ingress_allow\") => {"
+    },
+    {
+     "line": 1743,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1 << 25)?;"
+    },
+    {
+     "line": 1746,
+     "desc": "delete match arm (Section::Network, b\"ingress_deny\") in parse_field",
+     "source_line": "(Section::Network, b\"ingress_deny\") => {"
+    },
+    {
+     "line": 1747,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1 << 26)?;"
+    },
+    {
+     "line": 1750,
+     "desc": "delete match arm (Section::Network, b\"egress_allow\") in parse_field",
+     "source_line": "(Section::Network, b\"egress_allow\") => {"
+    },
+    {
+     "line": 1751,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1 << 27)?;"
+    },
+    {
+     "line": 1754,
+     "desc": "delete match arm (Section::Network, b\"egress_deny\") in parse_field",
+     "source_line": "(Section::Network, b\"egress_deny\") => {"
+    },
+    {
+     "line": 1755,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1 << 28)?;"
+    },
+    {
+     "line": 1759,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1 << 29)?;"
+    },
+    {
+     "line": 1763,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1 << 30)?;"
+    },
+    {
+     "line": 1767,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1 << 31)?;"
+    },
+    {
+     "line": 1771,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1u128 << 32)?;"
+    },
+    {
+     "line": 1775,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1u128 << 33)?;"
+    },
+    {
+     "line": 1779,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1u128 << 34)?;"
+    },
+    {
+     "line": 1782,
+     "desc": "delete match arm b\"continue\" in parse_field",
+     "source_line": "b\"continue\" => HookFailurePolicy::Continue,"
+    },
+    {
+     "line": 1787,
+     "desc": "replace << with >> in parse_field",
+     "source_line": "builder.mark(1u128 << 35)?;"
+    },
+    {
+     "line": 1806,
+     "desc": "delete match arm b\"fail\" in parse_field",
+     "source_line": "b\"fail\" => FailurePolicy::Fail,"
+    }
+   ],
+   "fn_source": "fn parse_field(\n    builder: &mut ConfigBuilder,\n    section: Section,\n    key: &[u8],\n    value: &[u8],\n) -> Result<(), ConfigError> {\n    match (section, key) {\n        (Section::Root, b\"schema_version\") => {\n            builder.mark(1 << 0)?;\n            builder.schema_version = parse_u64(value)?;\n        }\n        (Section::Instance, b\"id\") => {\n            builder.mark(1 << 1)?;\n            builder.id = parse_string(value)?;\n        }\n        (Section::Instance, b\"root\") => {\n            builder.mark(1 << 2)?;\n            builder.root = parse_string(value)?;\n        }\n        (Section::Instance, b\"init\") => {\n            builder.mark(1 << 3)?;\n            builder.init = parse_string(value)?;\n        }\n        (Section::Instance, b\"args\") => {\n            builder.mark(1 << 4)?;\n            builder.args = parse_list(value)?;\n        }\n        (Section::Instance, b\"environment\") => {\n            builder.mark(1 << 5)?;\n            builder.environment = parse_list(value)?;\n        }\n        (Section::Instance, b\"workdir\") => {\n            builder.mark(1 << 16)?;\n            builder.workdir = parse_string(value)?;\n        }\n        (Section::Identity, b\"hostname\") => {\n            builder.mark(1 << 17)?;\n            builder.hostname = parse_string(value)?;\n        }\n        (Section::Resources, b\"vcpus\") => {\n            builder.mark(1 << 6)?;\n            builder.vcpus = parse_u64(value)?;\n        }\n        (Section::Resources, b\"memory_mib\") => {\n            builder.mark(1 << 7)?;\n            builder.memory_mib = parse_u64(value)?;\n        }\n        (Section::Execution, b\"profile\") => {\n            builder.mark(1 << 8)?;\n            builder.execution_profile = match parse_string::<32>(value)?.as_bytes() {\n                b\"security\" => ExecutionProfile::Security,\n                b\"balanced\" => ExecutionProfile::Balanced,\n                b\"performance\" => ExecutionProfile::Performance,\n                _ => return Err(ConfigError::InvalidValue),\n            };\n        }\n        (Section::Execution, b\"backend\") => {\n            builder.mark(1 << 9)?;\n            builder.execution_backend = match parse_string::<32>(value)?.as_bytes() {\n                b\"interpreter\" => ExecutionBackend::Interpreter,\n                b\"ptrace-sysemu\" => ExecutionBackend::PtraceSysemu,\n                b\"ptrace-native\" => ExecutionBackend::PtraceNative,\n                _ => return Err(ConfigError::InvalidValue),\n            };\n        }\n        (Section::Contract, b\"version\") => {\n            builder.mark(1 << 10)?;\n            builder.mark(1u128 << 36)?;\n            builder.contract_recipe_version = parse_u64(value)?;\n        }\n        (Section::Contract, b\"catalog\") => {\n            builder.mark(1u128 << 37)?;\n            builder.contract_catalog_version = parse_u64(value)?;\n        }\n        (Section::Contract, b\"default\") => {\n            builder.mark(1u128 << 38)?;\n            builder.contract_default = parse_contract_default(value)?;\n        }\n        (Section::Contract, b\"allow\") => {\n            builder.mark(1 << 19)?;\n            builder.contract_allow = parse_list(value)?;\n        }\n        (Section::Contract, b\"deny\") => {\n            builder.mark(1 << 20)?;\n            builder.contract_deny = parse_list(value)?;\n        }\n        (Section::Contract, b\"digest\") => {\n            builder.mark(1 << 21)?;\n            builder.contract_digest = parse_string(value)?;\n        }\n        (Section::ContractSyscalls, b\"control\") => {\n            builder.mark(1u128 << 52)?;\n            builder.dispatch_mode = match parse_string::<32>(value)?.as_bytes() {\n                b\"paranoid\" => DispatchMode::Paranoid,\n                b\"selective\" => DispatchMode::Selective,\n                _ => return Err(ConfigError::InvalidValue),\n            };\n        }\n        (Section::ContractSyscalls, b\"default\") => {\n            builder.mark(1u128 << 53)?;\n            parse_contract_default(value)?;\n        }\n        (Section::ContractSyscalls, b\"allow\") => {\n            builder.mark(1u128 << 47)?;\n            builder.contract_exact_allow = parse_syscall_list(value)?;\n        }\n        (Section::ContractSyscalls, b\"deny\") => {\n            builder.mark(1u128 << 48)?;\n            builder.contract_exact_deny = parse_syscall_list(value)?;\n        }\n        (Section::ContractFilesystem, b\"default\") => {\n            builder.mark(1u128 << 54)?;\n            parse_contract_default(value)?;\n        }\n        (Section::ContractFilesystem, b\"read\") => {\n            builder.mark(1u128 << 55)?;\n            builder.filesystem_read = parse_list(value)?;\n        }\n        (Section::ContractFilesystem, b\"write\") => {\n            builder.mark(1u128 << 56)?;\n            builder.filesystem_write = parse_list(value)?;\n        }\n        (Section::ContractFilesystem, b\"create\") => {\n            builder.mark(1u128 << 57)?;\n            builder.filesystem_create = parse_list(value)?;\n        }\n        (Section::ContractFilesystem, b\"deny\") => {\n            builder.mark(1u128 << 49)?;\n            builder.filesystem_write_deny = parse_list(value)?;\n        }\n        (Section::ContractNetwork, b\"default\") => {\n            builder.mark(1u128 << 58)?;\n            parse_contract_default(value)?;\n        }\n        (Section::ContractNetwork, b\"inbound\") => {\n            builder.mark(1u128 << 42)?;\n            builder.ingress_allow = parse_list(value)?;\n        }\n        (Section::ContractNetwork, b\"outbound\") => {\n            builder.mark(1u128 << 43)?;\n            builder.egress_allow = parse_list(value)?;\n        }\n        (Section::ContractDevices, b\"default\") => {\n            builder.mark(1u128 << 59)?;\n            parse_contract_default(value)?;\n        }\n        (Section::ContractDevices, b\"read\") => {\n            builder.mark(1u128 << 60)?;\n            builder.device_read = parse_list(value)?;\n        }\n        (Section::ContractDevices, b\"write\") => {\n            builder.mark(1u128 << 61)?;\n            builder.device_write = parse_list(value)?;\n        }\n        (Section::ContractDevices, b\"create\") => {\n            builder.mark(1u128 << 62)?;\n            builder.device_create = parse_list(value)?;\n            builder.filesystem_device_nodes = !builder.device_create.as_slice().is_empty();\n        }\n        (Section::ContractPrivileges, b\"default\") => {\n            builder.mark(1u128 << 63)?;\n            parse_contract_default(value)?;\n        }\n        (Section::ContractPrivileges, b\"setuid\") => {\n            builder.mark(1u128 << 64)?;\n            builder.privilege_setuid = parse_list(value)?;\n        }\n        (Section::ContractPrivileges, b\"setgid\") => {\n            builder.mark(1u128 << 65)?;\n            builder.privilege_setgid = parse_list(value)?;\n        }\n        (Section::ContractProcess, b\"default\") => {\n            builder.mark(1u128 << 66)?;\n            parse_contract_default(value)?;\n        }\n        (Section::ContractProcess, b\"max_processes\") => {\n            builder.mark(1u128 << 67)?;\n            builder.process_max_processes = parse_u64(value)?;\n        }\n        (Section::ContractProcess, b\"max_threads\") => {\n            builder.mark(1u128 << 68)?;\n            builder.process_max_threads = parse_u64(value)?;\n        }\n        (Section::ContractProcess, b\"signals\") => {\n            builder.mark(1u128 << 69)?;\n            builder.process_signals = parse_list(value)?;\n        }\n        (Section::ContractProcess, b\"ptrace\") => {\n            builder.mark(1u128 << 70)?;\n            builder.process_ptrace = parse_allow_deny(value)?;\n        }\n        (Section::ContractProcess, b\"namespace_create\") => {\n            builder.mark(1u128 << 71)?;\n            builder.process_namespace_create = parse_list(value)?;\n        }\n        (Section::ContractProcess, b\"namespace_join\") => {\n            builder.mark(1u128 << 72)?;\n            builder.process_namespace_join = parse_list(value)?;\n        }\n        (Section::ContractKernel, b\"default\") => {\n            builder.mark(1u128 << 73)?;\n            parse_contract_default(value)?;\n        }\n        (Section::ContractKernel, b\"proc_read\") => {\n            builder.mark(1u128 << 74)?;\n            builder.kernel_proc_read = parse_list(value)?;\n        }\n        (Section::ContractKernel, b\"proc_write\") => {\n            builder.mark(1u128 << 75)?;\n            builder.kernel_proc_write = parse_list(value)?;\n        }\n        (Section::ContractKernel, b\"sys_read\") => {\n            builder.mark(1u128 << 76)?;\n            builder.kernel_sys_read = parse_list(value)?;\n        }\n        (Section::ContractKernel, b\"sys_write\") => {\n            builder.mark(1u128 << 77)?;\n            builder.kernel_sys_write = parse_list(value)?;\n        }\n        (Section::Storage, b\"assignments\") => {\n            builder.mark(1 << 11)?;\n            builder.storage = parse_list(value)?;\n        }\n        (Section::Volumes, b\"assignments\") => {\n            builder.mark(1 << 22)?;\n            builder.volumes = parse_list(value)?;\n        }\n        (Section::Devices, b\"assignments\") => {\n            builder.mark(1 << 12)?;\n            builder.devices = parse_list(value)?;\n        }\n        (Section::Network, b\"backend\") => {\n            builder.mark(1 << 13)?;\n            builder.network_backend = match parse_string::<32>(value)?.as_bytes() {\n                b\"none\" => NetworkBackend::None,\n                b\"mediated\" => NetworkBackend::Mediated,\n                b\"shared\" => NetworkBackend::Shared,\n                _ => return Err(ConfigError::InvalidValue),\n            };\n        }\n        (Section::Network, b\"interface\") => {\n            builder.mark(1 << 23)?;\n            builder.network_interface = parse_string(value)?;\n        }\n        (Section::Network, b\"source\") => {\n            builder.mark(1 << 24)?;\n            builder.network_source = parse_string(value)?;\n        }\n        (Section::Network, b\"ingress_allow\") => {\n            builder.mark(1 << 25)?;\n            builder.ingress_allow = parse_list(value)?;\n        }\n        (Section::Network, b\"ingress_deny\") => {\n            builder.mark(1 << 26)?;\n            builder.ingress_deny = parse_list(value)?;\n        }\n        (Section::Network, b\"egress_allow\") => {\n            builder.mark(1 << 27)?;\n            builder.egress_allow = parse_list(value)?;\n        }\n        (Section::Network, b\"egress_deny\") => {\n            builder.mark(1 << 28)?;\n            builder.egress_deny = parse_list(value)?;\n        }\n        (Section::Network, b\"port_forwards\") => {\n            builder.mark(1 << 29)?;\n            builder.port_forwards = parse_list(value)?;\n        }\n        (Section::Access, b\"uid\") => {\n            builder.mark(1 << 30)?;\n            builder.access_uid = parse_u64(value)?;\n        }\n        (Section::Access, b\"gid\") => {\n            builder.mark(1 << 31)?;\n            builder.access_gid = parse_u64(value)?;\n        }\n        (Section::Hooks, b\"pre_boot\") => {\n            builder.mark(1u128 << 32)?;\n            builder.pre_boot_hooks = parse_list(value)?;\n        }\n        (Section::Hooks, b\"timeout_seconds\") => {\n            builder.mark(1u128 << 33)?;\n            builder.hook_timeout_seconds = parse_u64(value)?;\n        }\n        (Section::Hooks, b\"failure\") => {\n            builder.mark(1u128 << 34)?;\n            builder.hook_failure_policy = match parse_string::<32>(value)?.as_bytes() {\n                b\"stop\" => HookFailurePolicy::Stop,\n                b\"continue\" => HookFailurePolicy::Continue,\n                _ => return Err(ConfigError::InvalidValue),\n            };\n        }\n        (Section::Lifecycle, b\"stop_timeout_seconds\") => {\n            builder.mark(1u128 << 35)?;\n            builder.stop_timeout_seconds = parse_u64(value)?;\n        }\n        (Section::Audit, b\"enabled\") => {\n            builder.mark(1 << 14)?;\n            builder.audit_mode = if parse_bool(value)? {\n                AuditMode::Enabled\n            } else {\n                AuditMode::Disabled\n            };\n        }\n        (Section::Audit, b\"mode\") => {\n            builder.mark(1 << 14)?;\n            builder.audit_mode = parse_legacy_audit_mode(value)?;\n        }\n        (Section::Failure, b\"policy\") => {\n            builder.mark(1 << 15)?;\n            builder.failure_policy = match parse_string::<32>(value)?.as_bytes() {\n                b\"stop\" => FailurePolicy::Stop,\n                b\"fail\" => FailurePolicy::Fail,\n                _ => return Err(ConfigError::InvalidValue),\n            };\n        }\n        _ => return Err(ConfigError::UnknownField),\n    }\n    Ok(())\n}"
+  },
+  {
+   "crate": "ginux-instance",
+   "file": "crates/ginux-instance/src/lib.rs",
+   "function": "finish",
+   "span": [
+    474,
+    582
+   ],
+   "live_mutants": 9,
+   "score": 42,
+   "mutants": [
+    {
+     "line": 476,
+     "desc": "replace << with >> in ConfigBuilder::finish",
+     "source_line": "const WORKDIR_BIT: u128 = 1 << 16;"
+    },
+    {
+     "line": 479,
+     "desc": "replace << with >> in ConfigBuilder::finish",
+     "source_line": "const RECIPE_VERSION_BIT: u128 = 1 << 36;"
+    },
+    {
+     "line": 480,
+     "desc": "replace << with >> in ConfigBuilder::finish",
+     "source_line": "const RECIPE_CATALOG_BIT: u128 = 1 << 37;"
+    },
+    {
+     "line": 481,
+     "desc": "replace << with >> in ConfigBuilder::finish",
+     "source_line": "const RECIPE_DEFAULT_BIT: u128 = 1 << 38;"
+    },
+    {
+     "line": 485,
+     "desc": "replace & with ^ in ConfigBuilder::finish",
+     "source_line": "if self.seen & RECIPE_VERSION_BIT != 0"
+    },
+    {
+     "line": 485,
+     "desc": "replace & with | in ConfigBuilder::finish",
+     "source_line": "if self.seen & RECIPE_VERSION_BIT != 0"
+    },
+    {
+     "line": 485,
+     "desc": "replace != with == in ConfigBuilder::finish",
+     "source_line": "if self.seen & RECIPE_VERSION_BIT != 0"
+    },
+    {
+     "line": 486,
+     "desc": "replace | with ^ in ConfigBuilder::finish",
+     "source_line": "&& self.seen & (RECIPE_CATALOG_BIT | RECIPE_DEFAULT_BIT)"
+    },
+    {
+     "line": 487,
+     "desc": "replace | with ^ in ConfigBuilder::finish",
+     "source_line": "!= RECIPE_CATALOG_BIT | RECIPE_DEFAULT_BIT"
+    }
+   ],
+   "fn_source": "    fn finish(self) -> Result<InstanceConfig, ConfigError> {\n        const REQUIRED: u128 = ((1 << 16) - 1) & !(1 << 13);\n        const WORKDIR_BIT: u128 = 1 << 16;\n        const HOSTNAME_BIT: u128 = 1 << 17;\n        const CONTRACT_DIGEST_BIT: u128 = 1 << 21;\n        const RECIPE_VERSION_BIT: u128 = 1 << 36;\n        const RECIPE_CATALOG_BIT: u128 = 1 << 37;\n        const RECIPE_DEFAULT_BIT: u128 = 1 << 38;\n        if self.seen & REQUIRED != REQUIRED {\n            return Err(ConfigError::MissingField);\n        }\n        if self.seen & RECIPE_VERSION_BIT != 0\n            && self.seen & (RECIPE_CATALOG_BIT | RECIPE_DEFAULT_BIT)\n                != RECIPE_CATALOG_BIT | RECIPE_DEFAULT_BIT\n        {\n            return Err(ConfigError::MissingField);\n        }\n        let workdir = if self.seen & WORKDIR_BIT != 0 {\n            self.workdir\n        } else {\n            Text::from_bytes(b\"/work\").map_err(|_| ConfigError::InvalidValue)?\n        };\n        let hostname = if self.seen & HOSTNAME_BIT != 0 {\n            self.hostname\n        } else {\n            self.id\n        };\n        let supplied_contract_digest = self.contract_digest;\n        let supplied_contract_digest_set = self.seen & CONTRACT_DIGEST_BIT != 0;\n        let mut config = InstanceConfig {\n            schema_version: self.schema_version,\n            id: self.id,\n            hostname,\n            root: self.root,\n            init: self.init,\n            args: self.args,\n            environment: self.environment,\n            workdir,\n            vcpus: self.vcpus,\n            memory_mib: self.memory_mib,\n            execution_profile: self.execution_profile,\n            execution_backend: self.execution_backend,\n            dispatch_mode: self.dispatch_mode,\n            contract_profile: self.contract_profile,\n            contract_templates: self.contract_templates,\n            contract_allow: self.contract_allow,\n            contract_deny: self.contract_deny,\n            contract_recipe_version: self.contract_recipe_version,\n            contract_catalog_version: self.contract_catalog_version,\n            contract_default: self.contract_default,\n            contract_read: self.contract_read,\n            contract_write: self.contract_write,\n            contract_execute: self.contract_execute,\n            contract_connect: self.contract_connect,\n            contract_listen: self.contract_listen,\n            contract_process: self.contract_process,\n            contract_system: self.contract_system,\n            contract_recipe_deny: self.contract_recipe_deny,\n            contract_exact_allow: self.contract_exact_allow,\n            contract_exact_deny: self.contract_exact_deny,\n            contract_digest: Text::empty(),\n            filesystem_read: self.filesystem_read,\n            filesystem_write: self.filesystem_write,\n            filesystem_create: self.filesystem_create,\n            filesystem_write_deny: self.filesystem_write_deny,\n            privilege_setuid: self.privilege_setuid,\n            privilege_setgid: self.privilege_setgid,\n            filesystem_device_nodes: self.filesystem_device_nodes,\n            device_read: self.device_read,\n            device_write: self.device_write,\n            device_create: self.device_create,\n            process_max_processes: self.process_max_processes,\n            process_max_threads: self.process_max_threads,\n            process_signals: self.process_signals,\n            process_ptrace: self.process_ptrace,\n            process_namespace_create: self.process_namespace_create,\n            process_namespace_join: self.process_namespace_join,\n            kernel_proc_read: self.kernel_proc_read,\n            kernel_proc_write: self.kernel_proc_write,\n            kernel_sys_read: self.kernel_sys_read,\n            kernel_sys_write: self.kernel_sys_write,\n            storage: self.storage,\n            volumes: self.volumes,\n            devices: self.devices,\n            network_backend: self.network_backend,\n            network_interface: self.network_interface,\n            network_source: self.network_source,\n            ingress_allow: self.ingress_allow,\n            ingress_deny: self.ingress_deny,\n            egress_allow: self.egress_allow,\n            egress_deny: self.egress_deny,\n            port_forwards: self.port_forwards,\n            access_uid: self.access_uid,\n            access_gid: self.access_gid,\n            pre_boot_hooks: self.pre_boot_hooks,\n            hook_timeout_seconds: self.hook_timeout_seconds,\n            hook_failure_policy: self.hook_failure_policy,\n            stop_timeout_seconds: self.stop_timeout_seconds,\n            audit_mode: self.audit_mode,\n            failure_policy: self.failure_policy,\n        };\n        config.derive_contract_grants()?;\n        config.validate()?;\n        config.refresh_contract()?;\n        if supplied_contract_digest_set && supplied_contract_digest != config.contract_digest {\n            return Err(ConfigError::ContractDigestMismatch);\n        }\n        Ok(config)\n    }"
+  },
+  {
+   "crate": "ginux-instance",
+   "file": "crates/ginux-instance/src/lib.rs",
+   "function": "derive_contract_grants",
+   "span": [
+    586,
+    623
+   ],
+   "live_mutants": 12,
+   "score": 41,
+   "mutants": [
+    {
+     "line": 590,
+     "desc": "delete ! in InstanceConfig::derive_contract_grants",
+     "source_line": "if !self.filesystem_write.as_slice().is_empty()"
+    },
+    {
+     "line": 591,
+     "desc": "replace || with && in InstanceConfig::derive_contract_grants",
+     "source_line": "|| !self.filesystem_create.as_slice().is_empty()"
+    },
+    {
+     "line": 591,
+     "desc": "delete ! in InstanceConfig::derive_contract_grants",
+     "source_line": "|| !self.filesystem_create.as_slice().is_empty()"
+    },
+    {
+     "line": 595,
+     "desc": "delete ! in InstanceConfig::derive_contract_grants",
+     "source_line": "if !self.device_read.as_slice().is_empty() {"
+    },
+    {
+     "line": 598,
+     "desc": "delete ! in InstanceConfig::derive_contract_grants",
+     "source_line": "if !self.device_write.as_slice().is_empty() || !self.device_create.as_slice().is_empty() {"
+    },
+    {
+     "line": 598,
+     "desc": "replace || with && in InstanceConfig::derive_contract_grants",
+     "source_line": "if !self.device_write.as_slice().is_empty() || !self.device_create.as_slice().is_empty() {"
+    },
+    {
+     "line": 598,
+     "desc": "delete ! in InstanceConfig::derive_contract_grants",
+     "source_line": "if !self.device_write.as_slice().is_empty() || !self.device_create.as_slice().is_empty() {"
+    },
+    {
+     "line": 601,
+     "desc": "delete ! in InstanceConfig::derive_contract_grants",
+     "source_line": "if !self.ingress_allow.as_slice().is_empty() {"
+    },
+    {
+     "line": 604,
+     "desc": "delete ! in InstanceConfig::derive_contract_grants",
+     "source_line": "if !self.egress_allow.as_slice().is_empty() {"
+    },
+    {
+     "line": 607,
+     "desc": "delete ! in InstanceConfig::derive_contract_grants",
+     "source_line": "if !self.process_signals.as_slice().is_empty() {"
+    },
+    {
+     "line": 610,
+     "desc": "delete ! in InstanceConfig::derive_contract_grants",
+     "source_line": "if !self.kernel_proc_read.as_slice().is_empty() {"
+    },
+    {
+     "line": 616,
+     "desc": "delete ! in InstanceConfig::derive_contract_grants",
+     "source_line": "if !self.kernel_sys_read.as_slice().is_empty() {"
+    }
+   ],
+   "fn_source": "    fn derive_contract_grants(&mut self) -> Result<(), ConfigError> {\n        if !self.filesystem_read.as_slice().is_empty() {\n            push_unique(&mut self.contract_read, b\"filesystem.**\")?;\n        }\n        if !self.filesystem_write.as_slice().is_empty()\n            || !self.filesystem_create.as_slice().is_empty()\n        {\n            push_unique(&mut self.contract_write, b\"filesystem.**\")?;\n        }\n        if !self.device_read.as_slice().is_empty() {\n            push_unique(&mut self.contract_read, b\"device.**\")?;\n        }\n        if !self.device_write.as_slice().is_empty() || !self.device_create.as_slice().is_empty() {\n            push_unique(&mut self.contract_write, b\"device.**\")?;\n        }\n        if !self.ingress_allow.as_slice().is_empty() {\n            push_unique(&mut self.contract_listen, b\"network.**\")?;\n        }\n        if !self.egress_allow.as_slice().is_empty() {\n            push_unique(&mut self.contract_connect, b\"network.**\")?;\n        }\n        if !self.process_signals.as_slice().is_empty() {\n            push_unique(&mut self.contract_process, b\"signal.**\")?;\n        }\n        if !self.kernel_proc_read.as_slice().is_empty() {\n            push_unique(&mut self.contract_read, b\"proc.**\")?;\n        }\n        if !self.kernel_proc_write.as_slice().is_empty() {\n            push_unique(&mut self.contract_write, b\"proc.**\")?;\n        }\n        if !self.kernel_sys_read.as_slice().is_empty() {\n            push_unique(&mut self.contract_read, b\"sys.**\")?;\n        }\n        if !self.kernel_sys_write.as_slice().is_empty() {\n            push_unique(&mut self.contract_write, b\"sys.**\")?;\n        }\n        Ok(())\n    }"
+  },
+  {
+   "crate": "ginux-process",
+   "file": "crates/ginux-process/src/lib.rs",
+   "function": "unshare",
+   "span": [
+    1532,
+    1546
+   ],
+   "live_mutants": 5,
+   "score": 41,
+   "mutants": [
+    {
+     "line": 1533,
+     "desc": "replace PipeSpace<TASKS, FDS, PIPES>::unshare -> Result<(), ProcessError> with Ok(())",
+     "source_line": "let Some(slot) = self.task_index(task) else {"
+    },
+    {
+     "line": 1539,
+     "desc": "replace != with == in PipeSpace<TASKS, FDS, PIPES>::unshare",
+     "source_line": ".filter(|member| **member != 0)"
+    },
+    {
+     "line": 1541,
+     "desc": "replace > with < in PipeSpace<TASKS, FDS, PIPES>::unshare",
+     "source_line": "> 1"
+    },
+    {
+     "line": 1541,
+     "desc": "replace > with == in PipeSpace<TASKS, FDS, PIPES>::unshare",
+     "source_line": "> 1"
+    },
+    {
+     "line": 1541,
+     "desc": "replace > with >= in PipeSpace<TASKS, FDS, PIPES>::unshare",
+     "source_line": "> 1"
+    }
+   ],
+   "fn_source": "    pub fn unshare(&mut self, task: u32) -> Result<(), ProcessError> {\n        let Some(slot) = self.task_index(task) else {\n            return Ok(());\n        };\n        if self.tasks[slot]\n            .members\n            .iter()\n            .filter(|member| **member != 0)\n            .count()\n            > 1\n        {\n            self.inherit(task, task)?;\n        }\n        Ok(())\n    }"
+  },
+  {
+   "crate": "ginux-process",
+   "file": "crates/ginux-process/src/lib.rs",
+   "function": "add",
+   "span": [
+    1019,
+    1041
+   ],
+   "live_mutants": 5,
+   "score": 40,
+   "mutants": [
+    {
+     "line": 1020,
+     "desc": "replace || with && in EventPoll<ENTRIES>::add",
+     "source_line": "if descriptor == 0 || events == 0 || events & !(EVENT_READ | EVENT_WRITE) != 0 {"
+    },
+    {
+     "line": 1020,
+     "desc": "replace || with && in EventPoll<ENTRIES>::add",
+     "source_line": "if descriptor == 0 || events == 0 || events & !(EVENT_READ | EVENT_WRITE) != 0 {"
+    },
+    {
+     "line": 1020,
+     "desc": "replace | with ^ in EventPoll<ENTRIES>::add",
+     "source_line": "if descriptor == 0 || events == 0 || events & !(EVENT_READ | EVENT_WRITE) != 0 {"
+    },
+    {
+     "line": 1026,
+     "desc": "replace && with || in EventPoll<ENTRIES>::add",
+     "source_line": ".any(|entry| entry.active && entry.descriptor == descriptor)"
+    },
+    {
+     "line": 1026,
+     "desc": "replace == with != in EventPoll<ENTRIES>::add",
+     "source_line": ".any(|entry| entry.active && entry.descriptor == descriptor)"
+    }
+   ],
+   "fn_source": "    pub fn add(&mut self, descriptor: u32, events: u32) -> Result<(), ProcessError> {\n        if descriptor == 0 || events == 0 || events & !(EVENT_READ | EVENT_WRITE) != 0 {\n            return Err(ProcessError::InvalidEvent);\n        }\n        if self\n            .entries\n            .iter()\n            .any(|entry| entry.active && entry.descriptor == descriptor)\n        {\n            return Err(ProcessError::InvalidEvent);\n        }\n        let entry = self\n            .entries\n            .iter_mut()\n            .find(|entry| !entry.active)\n            .ok_or(ProcessError::EventLimit)?;\n        *entry = EventInterest {\n            active: true,\n            descriptor,\n            events,\n        };\n        Ok(())\n    }"
+  },
+  {
+   "crate": "ginux-process",
+   "file": "crates/ginux-process/src/lib.rs",
+   "function": "update",
+   "span": [
+    945,
+    964
+   ],
+   "live_mutants": 4,
+   "score": 39,
+   "mutants": [
+    {
+     "line": 947,
+     "desc": "replace || with && in TimerTable<TIMERS>::update",
+     "source_line": "if !timer.active || timer.deadline_ns == 0 || now_ns < timer.deadline_ns {"
+    },
+    {
+     "line": 947,
+     "desc": "replace || with && in TimerTable<TIMERS>::update",
+     "source_line": "if !timer.active || timer.deadline_ns == 0 || now_ns < timer.deadline_ns {"
+    },
+    {
+     "line": 947,
+     "desc": "replace < with <= in TimerTable<TIMERS>::update",
+     "source_line": "if !timer.active || timer.deadline_ns == 0 || now_ns < timer.deadline_ns {"
+    },
+    {
+     "line": 947,
+     "desc": "replace < with == in TimerTable<TIMERS>::update",
+     "source_line": "if !timer.active || timer.deadline_ns == 0 || now_ns < timer.deadline_ns {"
+    }
+   ],
+   "fn_source": "    pub fn update(&mut self, now_ns: u64) {\n        for timer in &mut self.timers {\n            if !timer.active || timer.deadline_ns == 0 || now_ns < timer.deadline_ns {\n                continue;\n            }\n            match (now_ns - timer.deadline_ns).checked_div(timer.interval_ns) {\n                None => {\n                    timer.expirations = timer.expirations.saturating_add(1);\n                    timer.deadline_ns = 0;\n                }\n                Some(periods) => {\n                    let count = 1 + periods;\n                    timer.expirations = timer.expirations.saturating_add(count);\n                    timer.deadline_ns = timer\n                        .deadline_ns\n                        .saturating_add(count.saturating_mul(timer.interval_ns));\n                }\n            }\n        }\n    }"
+  },
+  {
+   "crate": "ginux-process",
+   "file": "crates/ginux-process/src/lib.rs",
+   "function": "exec_group",
+   "span": [
+    456,
+    477
+   ],
+   "live_mutants": 4,
+   "score": 37,
+   "mutants": [
+    {
+     "line": 462,
+     "desc": "replace && with || in ProcessTable<TASKS>::exec_group",
+     "source_line": ".position(|task| task.occupied && task.id.pid == replacement.tgid)"
+    },
+    {
+     "line": 462,
+     "desc": "replace == with != in ProcessTable<TASKS>::exec_group",
+     "source_line": ".position(|task| task.occupied && task.id.pid == replacement.tgid)"
+    },
+    {
+     "line": 470,
+     "desc": "replace && with || in ProcessTable<TASKS>::exec_group",
+     "source_line": "if task.occupied && task.tgid == leader.id.pid {"
+    },
+    {
+     "line": 470,
+     "desc": "replace == with != in ProcessTable<TASKS>::exec_group",
+     "source_line": "if task.occupied && task.tgid == leader.id.pid {"
+    }
+   ],
+   "fn_source": "    pub fn exec_group(&mut self, caller: TaskId) -> Result<(TaskId, u32), ProcessError> {\n        let caller_index = self.index(caller)?;\n        let mut replacement = self.tasks[caller_index];\n        let leader_index = self\n            .tasks\n            .iter()\n            .position(|task| task.occupied && task.id.pid == replacement.tgid)\n            .ok_or(ProcessError::InvalidTask)?;\n        let leader = self.tasks[leader_index];\n        replacement.id = leader.id;\n        replacement.parent = leader.parent;\n        replacement.state = TaskState::Running;\n        replacement.exec_epoch = leader.exec_epoch;\n        for task in &mut self.tasks {\n            if task.occupied && task.tgid == leader.id.pid {\n                *task = Task::empty();\n            }\n        }\n        self.tasks[leader_index] = replacement;\n        let epoch = self.exec(leader.id)?;\n        Ok((leader.id, epoch))\n    }"
+  },
+  {
+   "crate": "ginux-instance",
+   "file": "crates/ginux-instance/src/lib.rs",
+   "function": "privilege_setid_denied",
+   "span": [
+    1244,
+    1247
+   ],
+   "live_mutants": 7,
+   "score": 34,
+   "mutants": [
+    {
+     "line": 1245,
+     "desc": "replace && with || in InstanceConfig::privilege_setid_denied",
+     "source_line": "(setuid && !policy_path_matches(&self.privilege_setuid, path))"
+    },
+    {
+     "line": 1245,
+     "desc": "delete ! in InstanceConfig::privilege_setid_denied",
+     "source_line": "(setuid && !policy_path_matches(&self.privilege_setuid, path))"
+    },
+    {
+     "line": 1245,
+     "desc": "replace InstanceConfig::privilege_setid_denied -> bool with false",
+     "source_line": "(setuid && !policy_path_matches(&self.privilege_setuid, path))"
+    },
+    {
+     "line": 1245,
+     "desc": "replace InstanceConfig::privilege_setid_denied -> bool with true",
+     "source_line": "(setuid && !policy_path_matches(&self.privilege_setuid, path))"
+    },
+    {
+     "line": 1246,
+     "desc": "replace || with && in InstanceConfig::privilege_setid_denied",
+     "source_line": "|| (setgid && !policy_path_matches(&self.privilege_setgid, path))"
+    },
+    {
+     "line": 1246,
+     "desc": "replace && with || in InstanceConfig::privilege_setid_denied",
+     "source_line": "|| (setgid && !policy_path_matches(&self.privilege_setgid, path))"
+    },
+    {
+     "line": 1246,
+     "desc": "delete ! in InstanceConfig::privilege_setid_denied",
+     "source_line": "|| (setgid && !policy_path_matches(&self.privilege_setgid, path))"
+    }
+   ],
+   "fn_source": "    pub fn privilege_setid_denied(&self, path: &[u8], setuid: bool, setgid: bool) -> bool {\n        (setuid && !policy_path_matches(&self.privilege_setuid, path))\n            || (setgid && !policy_path_matches(&self.privilege_setgid, path))\n    }"
+  },
+  {
+   "crate": "ginux-instance",
+   "file": "crates/ginux-instance/src/lib.rs",
+   "function": "parse_string",
+   "span": [
+    1860,
+    1887
+   ],
+   "live_mutants": 8,
+   "score": 33,
+   "mutants": [
+    {
+     "line": 1861,
+     "desc": "replace || with && in parse_string",
+     "source_line": "if value.len() < 2 || value[0] != b'\"' || value[value.len() - 1] != b'\"' {"
+    },
+    {
+     "line": 1861,
+     "desc": "replace || with && in parse_string",
+     "source_line": "if value.len() < 2 || value[0] != b'\"' || value[value.len() - 1] != b'\"' {"
+    },
+    {
+     "line": 1870,
+     "desc": "replace - with + in parse_string",
+     "source_line": "if index >= value.len() - 1 {"
+    },
+    {
+     "line": 1870,
+     "desc": "replace - with / in parse_string",
+     "source_line": "if index >= value.len() - 1 {"
+    },
+    {
+     "line": 1876,
+     "desc": "delete match arm b'n' in parse_string",
+     "source_line": "b'n' => b'\\n',"
+    },
+    {
+     "line": 1877,
+     "desc": "delete match arm b't' in parse_string",
+     "source_line": "b't' => b'\\t',"
+    },
+    {
+     "line": 1880,
+     "desc": "replace || with && in parse_string",
+     "source_line": "} else if byte == b'\"' || byte < 32 || byte == 127 {"
+    },
+    {
+     "line": 1880,
+     "desc": "replace || with && in parse_string",
+     "source_line": "} else if byte == b'\"' || byte < 32 || byte == 127 {"
+    }
+   ],
+   "fn_source": "fn parse_string<const N: usize>(value: &[u8]) -> Result<Text<N>, ConfigError> {\n    if value.len() < 2 || value[0] != b'\"' || value[value.len() - 1] != b'\"' {\n        return Err(ConfigError::InvalidSyntax);\n    }\n    let mut output = Text::empty();\n    let mut index = 1;\n    while index < value.len() - 1 {\n        let mut byte = value[index];\n        if byte == b'\\\\' {\n            index += 1;\n            if index >= value.len() - 1 {\n                return Err(ConfigError::InvalidSyntax);\n            }\n            byte = match value[index] {\n                b'\"' => b'\"',\n                b'\\\\' => b'\\\\',\n                b'n' => b'\\n',\n                b't' => b'\\t',\n                _ => return Err(ConfigError::InvalidSyntax),\n            };\n        } else if byte == b'\"' || byte < 32 || byte == 127 {\n            return Err(ConfigError::InvalidSyntax);\n        }\n        output.push(byte)?;\n        index += 1;\n    }\n    Ok(output)\n}"
+  },
+  {
+   "crate": "ginux-vfs",
+   "file": "crates/ginux-vfs/src/lib.rs",
+   "function": "decode_record",
+   "span": [
+    132,
+    157
+   ],
+   "live_mutants": 3,
+   "score": 32,
+   "mutants": [
+    {
+     "line": 144,
+     "desc": "replace > with >= in decode_record",
+     "source_line": "if path_len == 0 || path_len > MAX_PATH || link_len > MAX_LINK {"
+    },
+    {
+     "line": 144,
+     "desc": "replace > with == in decode_record",
+     "source_line": "if path_len == 0 || path_len > MAX_PATH || link_len > MAX_LINK {"
+    },
+    {
+     "line": 144,
+     "desc": "replace > with >= in decode_record",
+     "source_line": "if path_len == 0 || path_len > MAX_PATH || link_len > MAX_LINK {"
+    }
+   ],
+   "fn_source": "fn decode_record(bytes: &[u8]) -> Result<Entry<'_>, VfsError> {\n    if bytes.len() != RECORD_SIZE {\n        return Err(VfsError::InvalidIndex);\n    }\n    let path_len = read_u16(bytes, 0)? as usize;\n    let kind = match bytes[2] {\n        1 => NodeKind::File,\n        2 => NodeKind::Directory,\n        3 => NodeKind::Symlink,\n        _ => return Err(VfsError::InvalidIndex),\n    };\n    let link_len = read_u16(bytes, 32)? as usize;\n    if path_len == 0 || path_len > MAX_PATH || link_len > MAX_LINK {\n        return Err(VfsError::InvalidIndex);\n    }\n    Ok(Entry {\n        path: &bytes[40..40 + path_len],\n        kind,\n        mode: read_u32(bytes, 4)?,\n        uid: read_u32(bytes, 8)?,\n        gid: read_u32(bytes, 12)?,\n        size: read_u64(bytes, 16)?,\n        data_offset: read_u64(bytes, 24)?,\n        link: &bytes[40 + MAX_PATH..40 + MAX_PATH + link_len],\n    })\n}"
+  },
+  {
+   "crate": "ginux-process",
+   "file": "crates/ginux-process/src/lib.rs",
+   "function": "retain",
+   "span": [
+    1310,
+    1318
+   ],
+   "live_mutants": 2,
+   "score": 32,
+   "mutants": [
+    {
+     "line": 1315,
+     "desc": "replace < with <= in PipeSpace<TASKS, FDS, PIPES>::retain",
+     "source_line": "if index < PIPES && self.pipes[index].live {"
+    },
+    {
+     "line": 1315,
+     "desc": "replace && with || in PipeSpace<TASKS, FDS, PIPES>::retain",
+     "source_line": "if index < PIPES && self.pipes[index].live {"
+    }
+   ],
+   "fn_source": "    fn retain(&mut self, pipe: u32) {\n        if pipe == 0 {\n            return;\n        }\n        let index = pipe as usize - 1;\n        if index < PIPES && self.pipes[index].live {\n            self.pipes[index].ends += 1;\n        }\n    }"
+  },
+  {
+   "crate": "ginux-instance",
+   "file": "crates/ginux-instance/src/lib.rs",
+   "function": "network_source_ipv4",
+   "span": [
+    1274,
+    1299
+   ],
+   "live_mutants": 10,
+   "score": 31,
+   "mutants": [
+    {
+     "line": 1275,
+     "desc": "replace InstanceConfig::network_source_ipv4 -> Option<[u8; 4]> with Some([0; 4])",
+     "source_line": "let bytes = self.network_source.as_bytes();"
+    },
+    {
+     "line": 1275,
+     "desc": "replace InstanceConfig::network_source_ipv4 -> Option<[u8; 4]> with Some([1; 4])",
+     "source_line": "let bytes = self.network_source.as_bytes();"
+    },
+    {
+     "line": 1283,
+     "desc": "replace || with && in InstanceConfig::network_source_ipv4",
+     "source_line": "if part.is_empty() || part.len() > 3 || !part.iter().all(u8::is_ascii_digit) {"
+    },
+    {
+     "line": 1283,
+     "desc": "replace || with && in InstanceConfig::network_source_ipv4",
+     "source_line": "if part.is_empty() || part.len() > 3 || !part.iter().all(u8::is_ascii_digit) {"
+    },
+    {
+     "line": 1288,
+     "desc": "replace * with + in InstanceConfig::network_source_ipv4",
+     "source_line": "value = value * 10 + u16::from(*byte - b'0');"
+    },
+    {
+     "line": 1288,
+     "desc": "replace * with / in InstanceConfig::network_source_ipv4",
+     "source_line": "value = value * 10 + u16::from(*byte - b'0');"
+    },
+    {
+     "line": 1288,
+     "desc": "replace + with * in InstanceConfig::network_source_ipv4",
+     "source_line": "value = value * 10 + u16::from(*byte - b'0');"
+    },
+    {
+     "line": 1288,
+     "desc": "replace - with / in InstanceConfig::network_source_ipv4",
+     "source_line": "value = value * 10 + u16::from(*byte - b'0');"
+    },
+    {
+     "line": 1290,
+     "desc": "replace > with == in InstanceConfig::network_source_ipv4",
+     "source_line": "if value > 255 {"
+    },
+    {
+     "line": 1290,
+     "desc": "replace > with >= in InstanceConfig::network_source_ipv4",
+     "source_line": "if value > 255 {"
+    }
+   ],
+   "fn_source": "    pub fn network_source_ipv4(&self) -> Option<[u8; 4]> {\n        let bytes = self.network_source.as_bytes();\n        if bytes.is_empty() {\n            return None;\n        }\n        let mut output = [0u8; 4];\n        let mut parts = bytes.split(|byte| *byte == b'.');\n        for octet in &mut output {\n            let part = parts.next()?;\n            if part.is_empty() || part.len() > 3 || !part.iter().all(u8::is_ascii_digit) {\n                return None;\n            }\n            let mut value = 0u16;\n            for byte in part {\n                value = value * 10 + u16::from(*byte - b'0');\n            }\n            if value > 255 {\n                return None;\n            }\n            *octet = value as u8;\n        }\n        if parts.next().is_some() {\n            return None;\n        }\n        Some(output)\n    }"
+  },
+  {
+   "crate": "ginux-process",
+   "file": "crates/ginux-process/src/lib.rs",
+   "function": "release_task",
+   "span": [
+    1581,
+    1598
+   ],
+   "live_mutants": 3,
+   "score": 31,
+   "mutants": [
+    {
+     "line": 1582,
+     "desc": "replace PipeSpace<TASKS, FDS, PIPES>::release_task with ()",
+     "source_line": "let Some(slot) = self.task_index(task) else {"
+    },
+    {
+     "line": 1586,
+     "desc": "replace == with != in PipeSpace<TASKS, FDS, PIPES>::release_task",
+     "source_line": "if *member == task {"
+    },
+    {
+     "line": 1590,
+     "desc": "replace != with == in PipeSpace<TASKS, FDS, PIPES>::release_task",
+     "source_line": "if self.tasks[slot].members.iter().any(|member| *member != 0) {"
+    }
+   ],
+   "fn_source": "    pub fn release_task(&mut self, task: u32) {\n        let Some(slot) = self.task_index(task) else {\n            return;\n        };\n        for member in &mut self.tasks[slot].members {\n            if *member == task {\n                *member = 0;\n            }\n        }\n        if self.tasks[slot].members.iter().any(|member| *member != 0) {\n            return;\n        }\n        let entries = self.tasks[slot].entries;\n        for entry in entries.iter().flatten() {\n            self.release(*entry);\n        }\n        self.tasks[slot] = TaskDescriptors::empty();\n    }"
+  },
+  {
+   "crate": "ginux-process",
+   "file": "crates/ginux-process/src/lib.rs",
+   "function": "remove_task",
+   "span": [
+    1190,
+    1196
+   ],
+   "live_mutants": 3,
+   "score": 31,
+   "mutants": [
+    {
+     "line": 1191,
+     "desc": "replace FutexTable<WAITERS>::remove_task with ()",
+     "source_line": "for waiter in &mut self.waiters {"
+    },
+    {
+     "line": 1192,
+     "desc": "replace && with || in FutexTable<WAITERS>::remove_task",
+     "source_line": "if waiter.active && waiter.task == task {"
+    },
+    {
+     "line": 1192,
+     "desc": "replace == with != in FutexTable<WAITERS>::remove_task",
+     "source_line": "if waiter.active && waiter.task == task {"
+    }
+   ],
+   "fn_source": "    pub fn remove_task(&mut self, task: TaskId) {\n        for waiter in &mut self.waiters {\n            if waiter.active && waiter.task == task {\n                *waiter = FutexWaiter::empty();\n            }\n        }\n    }"
+  }
+ ]
+}

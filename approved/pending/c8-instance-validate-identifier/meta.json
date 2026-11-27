@@ -1,7 +1,7 @@
 {
  "crate": "ginux-instance",
  "file": "crates/ginux-instance/src/lib.rs",
- "filter": "validate_rejects_bad_identifier",
+ "filter": "validate_pins_identifier",
  "mutants": [
   {
    "name": "id-ok",

@@ -1,1 +1,1 @@
-tests(instance): derive contract write grant from create-only lists
+tests(instance): derive write grant from create-only filesystem policy

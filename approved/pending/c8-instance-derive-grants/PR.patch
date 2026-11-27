@@ -1,49 +1,55 @@
-From 7d31dceb4054ccde0c0b035e05a5054bed7267aa Mon Sep 17 00:00:00 2001
+From 2cb6174a3809f42c8b6e6514db9587900518f97c Mon Sep 17 00:00:00 2001
 From: ginux-watch-agent <actions@users.noreply.github.com>
-Date: Fri, 27 Nov 2026 10:40:52 +0000
-Subject: [PATCH] tests(instance): derive contract write grant from create-only
- lists
+Date: Fri, 27 Nov 2026 18:44:28 +0000
+Subject: [PATCH] tests(instance): derive write grant from create-only
+ filesystem policy
 
 ### What
-Pins that a create-only filesystem list still derives the filesystem.** write grant.
+Pins `derive_contract_grants`: a create-only filesystem policy derives the `filesystem.**` write grant while read stays ungranted.
 
 ### Why it matters
-Write authority must follow create capability; dropping the create clause under-grants. Existing tests don't pin this derivation.
+Create implies mutation; dropping the create arm or requiring both lists silently unmediates creation paths. Existing recipes always set read+write+create together, so the create-only edge is unpinned.
 
 ### Mutation evidence (fail-then-pass)
 | Mutant | Existing suite | New test |
 |---|---|---|
-| drop filesystem_create clause | PASS (survives) | FAIL (killed) |
-| && -> || in write condition | PASS (survives) | FAIL (killed) |
+| drop `|| !filesystem_create...is_empty()` | PASS (survives) | FAIL (killed) |
+| `||` -> `&&` | PASS (survives) | FAIL (killed) |
 
-Baseline: PASS. Reproduce: `cargo test -p ginux-instance --lib derive_grants_write_from_create`.
+Baseline: PASS. Reproduce: `cargo test -p ginux-instance --lib create_only_filesystem_grants`.
 
 Prepared with AI assistance; reviewed by me.
 ---
- crates/ginux-instance/src/lib.rs | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ crates/ginux-instance/src/lib.rs | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
 diff --git a/crates/ginux-instance/src/lib.rs b/crates/ginux-instance/src/lib.rs
-index d5f17444..bc460469 100644
+index d5f17444..b43eb2aa 100644
 --- a/crates/ginux-instance/src/lib.rs
 +++ b/crates/ginux-instance/src/lib.rs
-@@ -3120,4 +3120,21 @@ failure = "stop"
+@@ -3120,4 +3120,27 @@ failure = "stop"
          c.memory_mib = 15;
          assert!(c.validate().is_err());
      }
 +
 +    #[test]
-+    fn derive_grants_write_from_create() {
-+        let mut c = InstanceConfig::parse(VALID.as_bytes()).unwrap();
-+        c.filesystem_write.clear();
-+        c.filesystem_create.clear();
-+        c.contract_write.clear();
-+        c.filesystem_create
-+            .push(Text::from_bytes(b"/tmp/x").unwrap())
-+            .unwrap();
-+        c.derive_contract_grants().unwrap();
++    fn create_only_filesystem_grants_derive_write() {
++        let recipe = VALID.replace(
++            "[storage]",
++            "[contract.filesystem]\ndefault = \"deny\"\nread = []\nwrite = []\ncreate = [\"/tmp\"]\ndeny = []\n[contract.kernel]\ndefault = \"deny\"\nproc_read = [\"/\"]\nproc_write = []\nsys_read = [\"/\"]\nsys_write = []\n[storage]",
++        );
++        let c = InstanceConfig::parse(recipe.as_bytes()).unwrap();
++        assert!(c.filesystem_write.as_slice().is_empty());
++        assert_eq!(c.filesystem_create.as_slice().len(), 1);
++        // create-only policy must still mediate writes (create implies write path)
 +        assert!(c
 +            .contract_write
++            .as_slice()
++            .iter()
++            .any(|t| t.as_bytes() == b"filesystem.**"));
++        // read stays empty: no read grant without read policy
++        assert!(!c
++            .contract_read
 +            .as_slice()
 +            .iter()
 +            .any(|t| t.as_bytes() == b"filesystem.**"));

@@ -1,1 +1,1 @@
-tests: process-pipe-ends-guards
+tests(process): pin pipe_ends zero for invalid and dead pipes

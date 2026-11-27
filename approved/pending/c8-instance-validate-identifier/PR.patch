@@ -1,44 +1,59 @@
-From aa62851264d4920fe552d3ed9f628bd09cba598f Mon Sep 17 00:00:00 2001
+From bbf199d291cb221b2ccd987affe7436331cc4922 Mon Sep 17 00:00:00 2001
 From: ginux-watch-agent <actions@users.noreply.github.com>
-Date: Fri, 27 Nov 2026 10:40:52 +0000
-Subject: [PATCH] tests(instance): validate rejects invalid identifier shapes
+Date: Fri, 27 Nov 2026 18:44:28 +0000
+Subject: [PATCH] tests(instance): pin id and hostname identifier validation
+ edges
 
 ### What
-Pins validate_identifier via validate: empty or space-containing ids rejected, valid id accepted.
+Pins `validate` identifier rules for both id and hostname: empty/spaced rejected, dotted alnum accepted, hostname checked independently.
 
 ### Why it matters
-Identifier validation is a fail-closed gate; weakening it admits malformed ids. Existing tests don't pin these shapes.
+Hostname defaults to id, so suites that never set a distinct hostname cannot detect a skipped hostname check. Removing either validation call survives today.
 
 ### Mutation evidence (fail-then-pass)
 | Mutant | Existing suite | New test |
 |---|---|---|
-| validate_identifier -> Ok | PASS (survives) | FAIL (killed) |
-| empty check removed | PASS (survives) | FAIL (killed) |
+| skip `validate_identifier(self.id...)` | PASS (survives) | FAIL (killed) |
+| skip `validate_identifier(self.hostname...)` | PASS (survives) | FAIL (killed) |
 
-Baseline: PASS. Reproduce: `cargo test -p ginux-instance --lib validate_rejects_bad_identifier`.
+Baseline: PASS. Reproduce: `cargo test -p ginux-instance --lib validate_pins_identifier`.
 
 Prepared with AI assistance; reviewed by me.
 ---
- crates/ginux-instance/src/lib.rs | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ crates/ginux-instance/src/lib.rs | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
 diff --git a/crates/ginux-instance/src/lib.rs b/crates/ginux-instance/src/lib.rs
-index d5f17444..119a0bd7 100644
+index d5f17444..76cc98be 100644
 --- a/crates/ginux-instance/src/lib.rs
 +++ b/crates/ginux-instance/src/lib.rs
-@@ -3120,4 +3120,15 @@ failure = "stop"
+@@ -3120,4 +3120,29 @@ failure = "stop"
          c.memory_mib = 15;
          assert!(c.validate().is_err());
      }
 +
 +    #[test]
-+    fn validate_rejects_bad_identifier() {
-+        let mut c = InstanceConfig::parse(VALID.as_bytes()).unwrap();
++    fn validate_pins_identifier_and_hostname_edges() {
++        let src = VALID.replace(
++            "[resources]",
++            "[identity]\nhostname = \"host.example\"\n\n[resources]",
++        );
++        let mut c = InstanceConfig::parse(src.as_bytes()).unwrap();
++        assert_eq!(c.hostname.as_bytes(), b"host.example");
++        assert!(c.validate().is_ok());
++        // id edges: empty and space rejected, alnum accepted
 +        c.id = Text::from_bytes(b"").unwrap();
 +        assert!(c.validate().is_err());
 +        c.id = Text::from_bytes(b"bad id").unwrap();
 +        assert!(c.validate().is_err());
 +        c.id = Text::from_bytes(b"demo").unwrap();
++        assert!(c.validate().is_ok());
++        // hostname edges are validated independently of id
++        c.hostname = Text::from_bytes(b"bad host").unwrap();
++        assert!(c.validate().is_err());
++        c.hostname = Text::from_bytes(b"").unwrap();
++        assert!(c.validate().is_err());
++        c.hostname = Text::from_bytes(b"host-2.example").unwrap();
 +        assert!(c.validate().is_ok());
 +    }
  }

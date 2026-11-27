@@ -1,15 +1,15 @@
 ### What
-Pins `apply_override` for resources.vcpus/memory_mib and rejection of unknown keys.
+Pins the `resources.memory_mib` override: value applies, exact lower bound 16 accepted, 15 rejected atomically, quoted numbers rejected.
 
 ### Why it matters
-Override arms map keys to fields; a deleted arm silently ignores the override. Existing tests don't pin these arms.
+Override arms are fail-closed config gates; deleting the memory arm or its validation admits invalid configs. Existing override tests pin vcpus but never memory.
 
 ### Mutation evidence (fail-then-pass)
 | Mutant | Existing suite | New test |
 |---|---|---|
-| delete `resources.vcpus` arm | PASS (survives) | FAIL (killed) |
 | delete `resources.memory_mib` arm | PASS (survives) | FAIL (killed) |
+| `16..=` -> `15..=` in validate | PASS (survives) | FAIL (killed) |
 
-Baseline: PASS. Reproduce: `cargo test -p ginux-instance --lib override_resources_vcpus`.
+Baseline: PASS. Reproduce: `cargo test -p ginux-instance --lib memory_override_enforces`.
 
 Prepared with AI assistance; reviewed by me.

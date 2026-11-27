@@ -1,7 +1,7 @@
 {
  "crate": "ginux-instance",
  "file": "crates/ginux-instance/src/lib.rs",
- "filter": "derive_grants_write_from_create",
+ "filter": "create_only_filesystem_grants",
  "mutants": [
   {
    "name": "drop-create",

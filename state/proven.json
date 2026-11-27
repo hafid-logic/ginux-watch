@@ -1,20 +1,4 @@
 {
- "c8-core-open-readonly": {
-  "proven": false,
-  "baseline": false,
-  "mutants": [
-   {
-    "name": "open-noacc",
-    "survives": false,
-    "killed": true
-   },
-   {
-    "name": "openat0",
-    "survives": false,
-    "killed": true
-   }
-  ]
- },
  "c8-instance-derive-grants": {
   "proven": false,
   "baseline": false,
@@ -86,37 +70,5 @@
  "c8-process-retain-refcount": {
   "proven": false,
   "why": "apply-fail"
- },
- "c8-vfs-overlay-scrub-on-reuse": {
-  "proven": false,
-  "baseline": true,
-  "mutants": [
-   {
-    "name": "no-scrub",
-    "survives": true,
-    "killed": false
-   },
-   {
-    "name": "keep-len",
-    "survives": true,
-    "killed": false
-   }
-  ]
- },
- "c8-vfs-overlay-scrub-reuse": {
-  "proven": false,
-  "baseline": true,
-  "mutants": [
-   {
-    "name": "no-scrub",
-    "survives": true,
-    "killed": false
-   },
-   {
-    "name": "keep-len",
-    "survives": true,
-    "killed": false
-   }
-  ]
  }
 }
