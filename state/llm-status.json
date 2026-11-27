@@ -1,11 +1,11 @@
 {
- "updated": "2026-11-26T21:38:40Z",
+ "updated": "2026-11-27T00:51:31Z",
  "providers": {
   "nvidia": {
    "configured": true,
    "status": "ok",
    "model_current": "nvidia/nemotron-3-ultra-550b-a55b",
-   "last_success": "2026-11-26T21:38:38Z",
+   "last_success": "2026-11-27T00:51:27Z",
    "last_error_class": null,
    "consecutive_failures": 0,
    "rate_limit": null,
@@ -14,13 +14,13 @@
   },
   "openrouter": {
    "configured": true,
-   "status": "degraded",
+   "status": "ok",
    "model_current": "openrouter/free",
-   "last_success": "2026-11-26T08:27:08Z",
-   "last_error_class": "api_shape",
-   "consecutive_failures": 1,
+   "last_success": "2026-11-27T00:51:31Z",
+   "last_error_class": null,
+   "consecutive_failures": 0,
    "rate_limit": null,
-   "model_actual": "google/gemma-4-31b-it:free",
+   "model_actual": "recursive/flint-v1.0:free",
    "last_diag": {
     "error_class": "api_shape",
     "http_status": 200,
@@ -76,7 +76,7 @@
    "model_current": "gemini-3.6-flash",
    "last_success": "2026-11-22T19:46:08Z",
    "last_error_class": "auth_failed",
-   "consecutive_failures": 8,
+   "consecutive_failures": 9,
    "rate_limit": null,
    "model_actual": "gemini-3.6-flash",
    "consecutive_429": 0,
@@ -94,20 +94,17 @@
  },
  "note": "runtime-managed by scripts/llm_router.py; providers appear on first call. No secrets are stored here — status classes only (unconfigured/ok/down/auth_failed).",
  "daily": {
-  "date_utc": "2026-11-26",
+  "date_utc": "2026-11-27",
   "calls": {},
   "calls_probe": {
-   "nvidia": 2,
-   "google-ai-studio": 2,
-   "openrouter": 2
+   "nvidia": 1,
+   "google-ai-studio": 1,
+   "openrouter": 1
   },
   "failed": {
    "calls_probe": {
     "google-ai-studio": {
-     "auth_failed": 2
-    },
-    "openrouter": {
-     "api_shape": 1
+     "auth_failed": 1
     }
    }
   }
