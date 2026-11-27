@@ -9,7 +9,7 @@ on:
   workflow_dispatch: {}
 permissions:
   contents: write
-  actions: read
+  actions: write
 concurrency:
   group: harvest-scans
   cancel-in-progress: false
@@ -27,18 +27,24 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: python3 team/scripts/harvest-scans.py
+      - name: Author fresh packages on current main
+        run: python3 team/scripts/auto-author.py
       - name: Commit refreshed stock
         run: |
           git config user.name "harvest-scans"
           git config user.email "actions@users.noreply.github.com"
-          git add state/discoveries.json
+          git add state/discoveries.json approved/pending
           if ! git diff --cached --quiet; then
-            git commit -m "stock: harvest mutation-scan survivors [skip ci]"
+            git commit -m "stock: harvest survivors + author fresh packages [skip ci]"
             for i in 1 2 3; do
               if git pull --rebase -X theirs origin main && git push; then break; fi
               git rebase --abort >/dev/null 2>&1 || true; sleep $((i * 5))
             done
           fi
+      - name: Prove the fresh stock on runner
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run package-prover.yml --repo ${{ github.repository }} --ref main || true
       - name: Tick the autopilot immediately (event, not clock)
         env:
           GH_TOKEN: ${{ github.token }}
