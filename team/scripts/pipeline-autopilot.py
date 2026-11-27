@@ -93,6 +93,8 @@ def main():
     tok=os.environ.get("PIPELINE_PAT") or os.environ.get("GH_TOKEN")
     if not tok: print("NO TOKEN"); return 1
     os.environ["GH_TOKEN"]=tok
+    for _k,_v in (("GIT_AUTHOR_NAME","ginux-watch-agent"),("GIT_AUTHOR_EMAIL","actions@users.noreply.github.com"),("GIT_COMMITTER_NAME","ginux-watch-agent"),("GIT_COMMITTER_EMAIL","actions@users.noreply.github.com")):
+        os.environ.setdefault(_k,_v)
     opened=open_refs(tok,UP,author)
     pushed=fork_branches(tok,fork,prefix)
     reserves=[b for b in pushed if b not in opened and is_reserve(tok,UP,fork,b)]

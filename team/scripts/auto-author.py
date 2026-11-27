@@ -4,6 +4,10 @@ registry of genuine-gap generators (fresh, not on main), writes them to
 approved/pending with meta.json (mutants) so the runner prover can validate and
 the autopilot can push. Runs on runner or machine; no manual push."""
 import json, os, subprocess
+import os as _os
+for _k,_v in (("GIT_AUTHOR_NAME","ginux-watch-agent"),("GIT_AUTHOR_EMAIL","actions@users.noreply.github.com"),("GIT_COMMITTER_NAME","ginux-watch-agent"),("GIT_COMMITTER_EMAIL","actions@users.noreply.github.com")):
+    _os.environ.setdefault(_k,_v)
+
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 U = Path("/tmp/author-upstream")
