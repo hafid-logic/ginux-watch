@@ -1,6 +1,6 @@
 {
  "last_seen_sha": "8b857786882224c33182f2efeca846e8f660f18a",
- "last_checked": "2026-11-27T19:52:12Z",
+ "last_checked": "2026-11-27T20:09:42Z",
  "last_dispatch": {
   "at": "2026-11-05T02:56:29Z",
   "range": "4d4a53bb..d337713b",
@@ -28,7 +28,7 @@
    "updated_at": "2026-11-13T02:27:17Z",
    "last_comment_at": "2026-11-13T02:27:13Z",
    "last_comment_author": "gmkurtzer",
-   "checked": "2026-11-27T19:52:12Z"
+   "checked": "2026-11-27T20:09:42Z"
   },
   "207": {
    "state": "closed",
@@ -37,7 +37,7 @@
    "updated_at": "2026-11-13T02:58:34Z",
    "last_comment_at": "2026-11-13T02:58:33Z",
    "last_comment_author": "gmkurtzer",
-   "checked": "2026-11-27T19:52:12Z"
+   "checked": "2026-11-27T20:09:42Z"
   },
   "227": {
    "state": "merged",
@@ -46,7 +46,7 @@
    "updated_at": "2026-11-13T02:27:02Z",
    "last_comment_at": "2026-11-06T14:58:30Z",
    "last_comment_author": "gmkurtzer",
-   "checked": "2026-11-27T19:52:12Z"
+   "checked": "2026-11-27T20:09:42Z"
   }
  },
  "breaker_absorbed": {
@@ -91,9 +91,9 @@
   }
  },
  "heartbeat": {
-  "last_run": "2026-11-27T19:52:12Z",
+  "last_run": "2026-11-27T20:09:42Z",
   "last_conclusion": "success",
-  "last_success": "2026-11-27T19:52:12Z",
+  "last_success": "2026-11-27T20:09:42Z",
   "alert_basis": "last_success",
   "source": "team-watcher (GitHub Actions)",
   "checked": "2026-11-27T00:51:05Z",
@@ -101,5 +101,42 @@
  },
  "alert_threshold_hours": 12,
  "scheduling": "best-effort (GitHub Actions)",
- "our_open_prs": {}
+ "our_open_prs": {
+  "365": {
+   "title": "tests(instance): pin instance.id override and unknown-key rejection",
+   "state": "open",
+   "head_sha": "2eaa0499b0598725bd5aae190a7d42df26723e2f",
+   "base_sha": "8b857786882224c33182f2efeca846e8f660f18a",
+   "stale": false,
+   "mergeable_state": "clean",
+   "comments": null,
+   "review_comments": null,
+   "updated_at": "2026-11-27T19:54:55Z",
+   "checked": "2026-11-27T20:09:42Z"
+  },
+  "364": {
+   "title": "tests(instance): pin id and hostname identifier validation edges",
+   "state": "open",
+   "head_sha": "25358456f732047335cd8b034e190a8a4f27f8cd",
+   "base_sha": "8b857786882224c33182f2efeca846e8f660f18a",
+   "stale": false,
+   "mergeable_state": "clean",
+   "comments": null,
+   "review_comments": null,
+   "updated_at": "2026-11-27T19:54:38Z",
+   "checked": "2026-11-27T20:09:42Z"
+  },
+  "363": {
+   "title": "tests(instance): derive write grant from create-only filesystem policy",
+   "state": "open",
+   "head_sha": "031bdedeb89281bb240ecc5a58cd0d7ef8b267ed",
+   "base_sha": "8b857786882224c33182f2efeca846e8f660f18a",
+   "stale": false,
+   "mergeable_state": "clean",
+   "comments": null,
+   "review_comments": null,
+   "updated_at": "2026-11-27T19:54:15Z",
+   "checked": "2026-11-27T20:09:42Z"
+  }
+ }
 }
