@@ -17,19 +17,67 @@
  },
  "c8-instance-derive-grants": {
   "proven": false,
-  "why": "apply-fail"
+  "baseline": false,
+  "mutants": [
+   {
+    "name": "drop-create",
+    "survives": true,
+    "killed": true
+   },
+   {
+    "name": "and",
+    "survives": true,
+    "killed": true
+   }
+  ]
  },
  "c8-instance-override-id": {
   "proven": false,
-  "why": "apply-fail"
+  "baseline": false,
+  "mutants": [
+   {
+    "name": "del-id",
+    "survives": true,
+    "killed": true
+   },
+   {
+    "name": "id-noop",
+    "survives": true,
+    "killed": true
+   }
+  ]
  },
  "c8-instance-override-resources": {
   "proven": false,
-  "why": "apply-fail"
+  "baseline": true,
+  "mutants": [
+   {
+    "name": "del-vcpus",
+    "survives": false,
+    "killed": true
+   },
+   {
+    "name": "del-mem",
+    "survives": true,
+    "killed": true
+   }
+  ]
  },
  "c8-instance-validate-identifier": {
   "proven": false,
-  "why": "apply-fail"
+  "baseline": true,
+  "mutants": [
+   {
+    "name": "id-ok",
+    "survives": true,
+    "killed": true
+   },
+   {
+    "name": "hostname-ok",
+    "survives": true,
+    "killed": false
+   }
+  ]
  },
  "c8-process-pipe-ends-guards": {
   "proven": false,
