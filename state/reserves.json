@@ -1,25 +1,31 @@
 {
- "generated_utc": "2026-11-27T20:14:15Z",
+ "generated_utc": "2026-11-27T21:57:52Z",
  "reserves": [
   {
-   "branch": "tests/instance-override-resources",
-   "title": "tests(instance): pin memory override application and exact bounds",
-   "url": "https://github.com/gmkurtzer/ginux/compare/main...hafid-logic:tests/instance-override-resources?quick_pull=1&title=tests%28instance%29%3A+pin+memory+override+application+and+exact+bounds&body=%23%23%23+What%0APins+the+%60resources.memory_mib%60+override%3A+value+applies%2C+exact+lower+bound+16+accepted%2C+15+rejected+atomically%2C+quoted+numbers+rejected.%0A%0A%23%23%23+Why+it+matters%0AOverride+arms+are+fail-closed+config+gates%3B+deleting+the+memory+arm+or+its+validation+admits+invalid+configs.+Existing+override+tests+pin+vcpus+but+never+memory.%0A%0A%23%23%23+Mutation+evidence+%28fail-then-pass%29%0A%7C+Mutant+%7C+Existing+suite+%7C+New+test+%7C%0A%7C---%7C---%7C---%7C%0A%7C+delete+%60resources.memory_mib%60+arm+%7C+PASS+%28survives%29+%7C+FAIL+%28killed%29+%7C%0A%7C+discard+parsed+u64+%28return+Ok%28256%29%29+%7C+PASS+%28survives%29+%7C+FAIL+%28killed%29+%7C%0A%0ABaseline%3A+PASS.+Reproduce%3A+%60cargo+test+-p+ginux-instance+--lib+memory_override_enforces%60.%0A%0APrepared+with+AI+assistance%3B+reviewed+by+me.%0A"
+   "branch": "tests/instance-override-arms-table",
+   "title": "tests(instance): pin override arms for workdir, environment, selective, catalog",
+   "url": "https://github.com/gmkurtzer/ginux/compare/main...hafid-logic:tests/instance-override-arms-table?quick_pull=1&title=tests%28instance%29%3A+pin+override+arms+for+workdir%2C+environment%2C+selective%2C+catalog&body=%23%23%23+What%0ATable-driven+pin+of+four+%60apply_override_inner%60+arms+%28workdir%2C+environment%2C+syscalls.control%3Dselective%2C+catalog%29%3A+values+apply%2C+catalog+is+version-pinned+fail-closed%2C+unknown+and+derived+keys+rejected.%0A%0A%23%23%23+Why+it+matters%0AEach+match+arm+is+an+operator-facing+config+gate%3B+deleting+any+arm+silently+ignores+overrides+or+admits+a+mismatched+contract+catalog.+Existing+tests+cover+id%2Fvcpus%2Fhostname+but+not+these+four+arms.%0A%0A%23%23%23+Mutation+evidence+%28fail-then-pass%29%0A%7C+Mutant+%7C+Existing+suite+%7C+New+test+%7C%0A%7C---%7C---%7C---%7C%0A%7C+delete+%60instance.workdir%60+arm+%7C+PASS+%28survives%29+%7C+FAIL+%28killed%29+%7C%0A%7C+delete+%60instance.environment%60+arm+%7C+PASS+%28survives%29+%7C+FAIL+%28killed%29+%7C%0A%7C+delete+%60b%22selective%22%60+arm+%7C+PASS+%28survives%29+%7C+FAIL+%28killed%29+%7C%0A%7C+delete+%60contract.catalog%60+arm+%7C+PASS+%28survives%29+%7C+FAIL+%28killed%29+%7C%0A%0ABaseline%3A+PASS.+Reproduce%3A+%60cargo+test+-p+ginux-instance+--lib+override_arms_apply%60.%0A%0APrepared+with+AI+assistance%3B+reviewed+by+me.%0A",
+   "crate": "ginux-instance",
+   "target_file": "crates/ginux-instance/src/lib.rs"
   },
   {
-   "branch": "tests/kernel-views-cgroup-remove-busy",
-   "title": "tests(kernel-views): pin cgroup remove busy guard for active children",
-   "url": "https://github.com/gmkurtzer/ginux/compare/main...hafid-logic:tests/kernel-views-cgroup-remove-busy?quick_pull=1&title=tests%28kernel-views%29%3A+pin+cgroup+remove+busy+guard+for+active+children&body=%23%23%23+What%0APins+%60remove%60+busy+semantics%3A+an+active+child+group+blocks+parent+removal%2C+leaf+groups+remove+cleanly%2C+freed+inactive+slots+never+block%2C+root+and+non-root+callers+are+denied.%0A%0A%23%23%23+Why+it+matters%0AThe+busy+guard+chains+%60active+%26%26+path+%21%3D+self+%26%26+parent+%3D%3D+path%60%3B+flipping+any+operator+lets+parents+of+live+children+be+removed+%28orphaning+confinement%29+or+blocks+legitimate+cleanup.+Existing+tests+pin+only+the+member-count+branch.%0A%0A%23%23%23+Mutation+evidence+%28fail-then-pass%29%0A%7C+Mutant+%7C+Existing+suite+%7C+New+test+%7C%0A%7C---%7C---%7C---%7C%0A%7C+%60group.active+%26%26%60+-%3E+%60group.active+%7C%7C%60+%7C+PASS+%28survives%29+%7C+FAIL+%28killed%29+%7C%0A%7C+%60parent_path%28...%29+%3D%3D+path%60+-%3E+%60%21%3D+path%60+%7C+PASS+%28survives%29+%7C+FAIL+%28killed%29+%7C%0A%0ABaseline%3A+PASS.+Reproduce%3A+%60cargo+test+-p+ginux-kernel-views+--lib+remove_busy_only%60.%0A%0APrepared+with+AI+assistance%3B+reviewed+by+me.%0A"
-  },
-  {
-   "branch": "tests/process-pipe-ends-guards",
-   "title": "tests(process): pin pipe_ends zero for invalid and dead pipes",
-   "url": "https://github.com/gmkurtzer/ginux/compare/main...hafid-logic:tests/process-pipe-ends-guards?quick_pull=1&title=tests%28process%29%3A+pin+pipe_ends+zero+for+invalid+and+dead+pipes&body=%23%23%23+What%0APins+%60pipe_ends%60%3A+pipe+0+and+out-of-range+ids+report+0%2C+live+pipes+report+their+end+count%2C+freed+slots+report+0%2C+reused+slots+report+fresh+counts.%0A%0A%23%23%23+Why+it+matters%0ADiagnostics+drive+leak+checks%3B+dropping+the+zero+guard+indexes+pipe+0+-+1+%28underflow%29+and+returning+0+for+live+pipes+misreports+leaks.+No+existing+test+exercises+these+edges.%0A%0A%23%23%23+Mutation+evidence+%28fail-then-pass%29%0A%7C+Mutant+%7C+Existing+suite+%7C+New+test+%7C%0A%7C---%7C---%7C---%7C%0A%7C+disable+%60pipe+%3D%3D+0%60+guard+%7C+PASS+%28survives%29+%7C+FAIL+%28killed%29+%7C%0A%7C+return+0+for+live+pipes+%7C+PASS+%28survives%29+%7C+FAIL+%28killed%29+%7C%0A%0ABaseline%3A+PASS.+Reproduce%3A+%60cargo+test+-p+ginux-process+--lib+pipe_ends_reports%60.%0A%0APrepared+with+AI+assistance%3B+reviewed+by+me.%0A"
-  },
-  {
-   "branch": "tests/process-unshare-copy",
-   "title": "tests(process): pin unshare private-copy, solo no-op, and unknown-task edges",
-   "url": "https://github.com/gmkurtzer/ginux/compare/main...hafid-logic:tests/process-unshare-copy?quick_pull=1&title=tests%28process%29%3A+pin+unshare+private-copy%2C+solo+no-op%2C+and+unknown-task+edges&body=%23%23%23+What%0APins+%60unshare%60%3A+a+shared+descriptor+table+is+copied+privately+%28pipe+ends+retained%29%2C+a+solo+task+is+a+no-op%2C+and+unknown+tasks+return+Ok+without+allocation.%0A%0A%23%23%23+Why+it+matters%0AExec+unshares+files+before+CLOEXEC+scrub%3B+counting+zero+members+or+off-by-one+on+the+member+threshold+either+leaks+shared+fds+across+exec+or+double-retains+pipes.+No+existing+test+exercises+unshare.%0A%0A%23%23%23+Mutation+evidence+%28fail-then-pass%29%0A%7C+Mutant+%7C+Existing+suite+%7C+New+test+%7C%0A%7C---%7C---%7C---%7C%0A%7C+%60%2A%2Amember+%21%3D+0%60+-%3E+%60%3D%3D+0%60+%7C+PASS+%28survives%29+%7C+FAIL+%28killed%29+%7C%0A%7C+%60%3E+1%60+-%3E+%60%3E%3D+1%60+%7C+PASS+%28survives%29+%7C+FAIL+%28killed%29+%7C%0A%0ABaseline%3A+PASS.+Reproduce%3A+%60cargo+test+-p+ginux-process+--lib+unshare_copies_shared%60.%0A%0APrepared+with+AI+assistance%3B+reviewed+by+me.%0A"
+   "branch": "tests/oci-select-manifest-platform",
+   "title": "tests(oci): pin select_manifest linux/amd64/no-variant platform gate",
+   "url": "https://github.com/gmkurtzer/ginux/compare/main...hafid-logic:tests/oci-select-manifest-platform?quick_pull=1&title=tests%28oci%29%3A+pin+select_manifest+linux%2Famd64%2Fno-variant+platform+gate&body=%23%23%23+What%0APins+%60select_manifest%60%3A+only+linux%2Famd64+with+empty+variant+is+selected%3B+wrong+OS%2C+wrong+arch%2C+or+non-empty+variant+are+rejected.%0A%0A%23%23%23+Why+it+matters%0APlatform+selection+gates+which+manifest+runs%3B+flipping+%60%26%26%60+to+%60%7C%7C%60+admits+foreign-OS+or+variant+manifests+into+the+amd64+slot+%E2%80%94+a+confinement-relevant+mis-selection.+No+existing+test+exercises+select_manifest.%0A%0A%23%23%23+Mutation+evidence+%28fail-then-pass%29%0A%7C+Mutant+%7C+Existing+suite+%7C+New+test+%7C%0A%7C---%7C---%7C---%7C%0A%7C+first+%60%26%26%60+-%3E+%60%7C%7C%60+%7C+PASS+%28survives%29+%7C+FAIL+%28killed%29+%7C%0A%7C+second+%60%26%26%60+-%3E+%60%7C%7C%60+%7C+PASS+%28survives%29+%7C+FAIL+%28killed%29+%7C%0A%0ABaseline%3A+PASS.+Reproduce%3A+%60cargo+test+-p+ginux-oci+--lib+select_manifest_requires%60.%0A%0APrepared+with+AI+assistance%3B+reviewed+by+me.%0A",
+   "crate": "ginux-oci",
+   "target_file": "crates/ginux-oci/src/lib.rs"
   }
- ]
+ ],
+ "conflict_free_batch": [
+  "tests/instance-override-arms-table",
+  "tests/oci-select-manifest-platform"
+ ],
+ "by_target_file": {
+  "crates/ginux-instance/src/lib.rs": [
+   "tests/instance-override-arms-table"
+  ],
+  "crates/ginux-oci/src/lib.rs": [
+   "tests/oci-select-manifest-platform"
+  ]
+ }
 }
