@@ -31,21 +31,49 @@
    }
   ]
  },
- "c8-process-pipe-ends-guards": {
+ "c8-instance-override-id": {
   "proven": false,
-  "baseline": true,
+  "baseline": false,
   "mutants": [
    {
-    "name": "no-zero-guard",
+    "name": "del-id",
     "survives": false,
     "killed": true
    },
    {
-    "name": "no-live",
+    "name": "id-noop",
     "survives": false,
     "killed": true
    }
   ]
+ },
+ "c8-instance-override-resources": {
+  "proven": false,
+  "why": "apply-fail"
+ },
+ "c8-instance-validate-bounds": {
+  "proven": false,
+  "why": "apply-fail"
+ },
+ "c8-process-exec-scrub-cloexec": {
+  "proven": false,
+  "baseline": true,
+  "mutants": [
+   {
+    "name": "invert-cloexec",
+    "survives": false,
+    "killed": true
+   },
+   {
+    "name": "count0",
+    "survives": false,
+    "killed": true
+   }
+  ]
+ },
+ "c8-process-pipe-ends-guards": {
+  "proven": false,
+  "why": "apply-fail"
  },
  "c8-process-retain-refcount": {
   "proven": false,
@@ -66,5 +94,9 @@
     "killed": false
    }
   ]
+ },
+ "c8-vfs-overlay-scrub-reuse": {
+  "proven": false,
+  "why": "apply-fail"
  }
 }
