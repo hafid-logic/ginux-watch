@@ -40,7 +40,7 @@
   ]
  },
  "c8-instance-override-resources": {
-  "proven": false,
+  "proven": true,
   "baseline": true,
   "mutants": [
    {
@@ -55,7 +55,7 @@
     "anchor_ok": true,
     "anchor_count": 1,
     "scoped": true,
-    "survives": false,
+    "survives": true,
     "killed": true
    }
   ]
@@ -81,7 +81,7 @@
   ]
  },
  "c8-process-pipe-ends-guards": {
-  "proven": false,
+  "proven": true,
   "baseline": true,
   "mutants": [
    {
@@ -92,11 +92,11 @@
     "killed": true
    },
    {
-    "name": "returns-zero-for-live",
+    "name": "oob-index",
     "anchor_ok": true,
-    "anchor_count": 5,
+    "anchor_count": 2,
     "scoped": true,
-    "survives": false,
+    "survives": true,
     "killed": true
    }
   ]
