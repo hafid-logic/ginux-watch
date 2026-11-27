@@ -85,6 +85,23 @@ def selftest():
     return 0
 
 UP=""
+def trigger_harvest(repo):
+    gt=os.environ.get("GITHUB_TOKEN")
+    if not gt: print("no GITHUB_TOKEN for harvest"); return
+    import time
+    lj=Path("state/last-harvest.json"); now=time.time()
+    if lj.exists():
+        try:
+            if now-json.loads(lj.read_text()).get("ts",0) < 1800: print("harvest cooldown"); return
+        except Exception: pass
+    fired=[]
+    for crate in ["ginux-core","ginux-process","ginux-vfs"]:
+        body=json.dumps({"ref":"main","inputs":{"crate":crate}}).encode()
+        req=urllib.request.Request("https://api.github.com/repos/"+repo+"/actions/workflows/mutation-scan.yml/dispatches",data=body,method="POST",headers={"Authorization":"Bearer "+gt,"Accept":"application/vnd.github+json","User-Agent":"autopilot","Content-Type":"application/json"})
+        try: urllib.request.urlopen(req,timeout=30); fired.append(crate)
+        except Exception as e: print("harvest",crate,"err",e)
+    lj.write_text(json.dumps({"ts":now,"fired":fired}))
+    print("harvest dispatched:",fired)
 def main():
     global UP
     if "--selftest" in sys.argv: return selftest()
@@ -111,6 +128,8 @@ def main():
     subprocess.run([sys.executable, str(Path(__file__).parent/"verify-proposals.py")], check=False)
     subprocess.run([sys.executable, str(Path(__file__).parent/"rebase-reserves.py")], check=False)
     subprocess.run([sys.executable, str(Path(__file__).parent/"ensure-pr-text.py")], check=False)
+    if len(reserves) < pushed_tgt and not stk:
+        trigger_harvest("hafid-logic/ginux-watch")
     return 0
 
 if __name__=="__main__":
