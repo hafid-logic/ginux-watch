@@ -1,6 +1,6 @@
-From 90136447f86ff29f8287693696d8b0bcd09a8e87 Mon Sep 17 00:00:00 2001
+From efe5840caf31db46ad7a5982982a83dff34764ad Mon Sep 17 00:00:00 2001
 From: ginux-watch-agent <actions@users.noreply.github.com>
-Date: Fri, 27 Nov 2026 21:54:26 +0000
+Date: Fri, 27 Nov 2026 21:57:00 +0000
 Subject: [PATCH] tests(instance): pin override arms for workdir, environment,
  selective, catalog
 
