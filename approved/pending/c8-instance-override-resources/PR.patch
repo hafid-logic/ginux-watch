@@ -1,20 +1,35 @@
-From 624b046cf48532d48a093a5b72e581638bffbe1a Mon Sep 17 00:00:00 2001
-From: Abdelhafid DJIDEL <266947999+hafid-logic@users.noreply.github.com>
-Date: Fri, 27 Nov 2026 00:44:57 +0000
+From 47cace2559cd0757545802c0d78ab2eb9705d181 Mon Sep 17 00:00:00 2001
+From: ginux-watch-agent <actions@users.noreply.github.com>
+Date: Fri, 27 Nov 2026 09:20:44 +0000
 Subject: [PATCH] tests(instance): pin resource overrides and unknown-key
  rejection
 
+### What
+Pins `apply_override` for resources.vcpus/memory_mib and rejection of unknown keys.
+
+### Why it matters
+Override arms map keys to fields; a deleted arm silently ignores the override. Existing tests don't pin these arms.
+
+### Mutation evidence (fail-then-pass)
+| Mutant | Existing suite | New test |
+|---|---|---|
+| delete `resources.vcpus` arm | PASS (survives) | FAIL (killed) |
+| delete `resources.memory_mib` arm | PASS (survives) | FAIL (killed) |
+
+Baseline: PASS. Reproduce: `cargo test -p ginux-instance --lib override_resources_vcpus`.
+
+Prepared with AI assistance; reviewed by me.
 ---
  crates/ginux-instance/src/lib.rs | 10 ++++++++++
  1 file changed, 10 insertions(+)
 
 diff --git a/crates/ginux-instance/src/lib.rs b/crates/ginux-instance/src/lib.rs
-index 0c3fd234..1cf5bb50 100644
+index d5f17444..4fbe2b06 100644
 --- a/crates/ginux-instance/src/lib.rs
 +++ b/crates/ginux-instance/src/lib.rs
-@@ -3106,4 +3106,14 @@ failure = "stop"
-         assert!(!runtime.resources_acquired());
-         assert!(!runtime.managed_task());
+@@ -3120,4 +3120,14 @@ failure = "stop"
+         c.memory_mib = 15;
+         assert!(c.validate().is_err());
      }
 +
 +    #[test]
@@ -28,5 +43,5 @@ index 0c3fd234..1cf5bb50 100644
 +    }
  }
 -- 
-2.47.3
+2.56.1
 

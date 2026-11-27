@@ -1,20 +1,35 @@
-From a8cfa4c0594b00b7b5d78ad61119821f66d5569f Mon Sep 17 00:00:00 2001
-From: Abdelhafid DJIDEL <266947999+hafid-logic@users.noreply.github.com>
-Date: Fri, 27 Nov 2026 00:44:58 +0000
+From d02aca79e44e1379d9d355dca7fc062e1f4c8fb2 Mon Sep 17 00:00:00 2001
+From: ginux-watch-agent <actions@users.noreply.github.com>
+Date: Fri, 27 Nov 2026 09:20:44 +0000
 Subject: [PATCH] tests(instance): derive contract write grant from create-only
  lists
 
+### What
+Pins that a create-only filesystem list still derives the filesystem.** write grant.
+
+### Why it matters
+Write authority must follow create capability; dropping the create clause under-grants. Existing tests don't pin this derivation.
+
+### Mutation evidence (fail-then-pass)
+| Mutant | Existing suite | New test |
+|---|---|---|
+| drop filesystem_create clause | PASS (survives) | FAIL (killed) |
+| && -> || in write condition | PASS (survives) | FAIL (killed) |
+
+Baseline: PASS. Reproduce: `cargo test -p ginux-instance --lib derive_grants_write_from_create`.
+
+Prepared with AI assistance; reviewed by me.
 ---
  crates/ginux-instance/src/lib.rs | 17 +++++++++++++++++
  1 file changed, 17 insertions(+)
 
 diff --git a/crates/ginux-instance/src/lib.rs b/crates/ginux-instance/src/lib.rs
-index 0c3fd234..f9ce8298 100644
+index d5f17444..bc460469 100644
 --- a/crates/ginux-instance/src/lib.rs
 +++ b/crates/ginux-instance/src/lib.rs
-@@ -3106,4 +3106,21 @@ failure = "stop"
-         assert!(!runtime.resources_acquired());
-         assert!(!runtime.managed_task());
+@@ -3120,4 +3120,21 @@ failure = "stop"
+         c.memory_mib = 15;
+         assert!(c.validate().is_err());
      }
 +
 +    #[test]
@@ -35,5 +50,5 @@ index 0c3fd234..f9ce8298 100644
 +    }
  }
 -- 
-2.47.3
+2.56.1
 

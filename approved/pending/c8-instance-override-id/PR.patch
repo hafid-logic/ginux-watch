@@ -1,20 +1,35 @@
-From 7a72f5ebfb0f45eeebca8dee2c7c02f744a5e5fd Mon Sep 17 00:00:00 2001
-From: Abdelhafid DJIDEL <266947999+hafid-logic@users.noreply.github.com>
-Date: Fri, 27 Nov 2026 00:44:58 +0000
+From 46e4d70c715a6dd200f248a74794194f5910422a Mon Sep 17 00:00:00 2001
+From: ginux-watch-agent <actions@users.noreply.github.com>
+Date: Fri, 27 Nov 2026 09:20:44 +0000
 Subject: [PATCH] tests(instance): pin instance.id override and unknown-key
  rejection
 
+### What
+Pins `apply_override` for instance.id and rejection of unknown instance keys.
+
+### Why it matters
+A deleted id arm silently ignores the override. Existing tests don't pin this arm.
+
+### Mutation evidence (fail-then-pass)
+| Mutant | Existing suite | New test |
+|---|---|---|
+| delete `instance.id` arm | PASS (survives) | FAIL (killed) |
+| id parse ignored | PASS (survives) | FAIL (killed) |
+
+Baseline: PASS. Reproduce: `cargo test -p ginux-instance --lib override_instance_id`.
+
+Prepared with AI assistance; reviewed by me.
 ---
  crates/ginux-instance/src/lib.rs | 8 ++++++++
  1 file changed, 8 insertions(+)
 
 diff --git a/crates/ginux-instance/src/lib.rs b/crates/ginux-instance/src/lib.rs
-index 0c3fd234..b921ae93 100644
+index d5f17444..8541eb9a 100644
 --- a/crates/ginux-instance/src/lib.rs
 +++ b/crates/ginux-instance/src/lib.rs
-@@ -3106,4 +3106,12 @@ failure = "stop"
-         assert!(!runtime.resources_acquired());
-         assert!(!runtime.managed_task());
+@@ -3120,4 +3120,12 @@ failure = "stop"
+         c.memory_mib = 15;
+         assert!(c.validate().is_err());
      }
 +
 +    #[test]
@@ -26,5 +41,5 @@ index 0c3fd234..b921ae93 100644
 +    }
  }
 -- 
-2.47.3
+2.56.1
 

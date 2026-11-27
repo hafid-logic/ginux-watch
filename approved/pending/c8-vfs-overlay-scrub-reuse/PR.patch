@@ -1,8 +1,23 @@
-From 8f7629d97349a57a7f85a09662533271ba9f5d7e Mon Sep 17 00:00:00 2001
-From: Abdelhafid DJIDEL <266947999+hafid-logic@users.noreply.github.com>
-Date: Fri, 27 Nov 2026 00:44:57 +0000
+From a4ac28439905de9c5e1ed20f86aad9ce69c5754b Mon Sep 17 00:00:00 2001
+From: ginux-watch-agent <actions@users.noreply.github.com>
+Date: Fri, 27 Nov 2026 09:20:44 +0000
 Subject: [PATCH] tests(vfs): scrub unlinked overlay slot before reuse
 
+### What
+Pins that an unlinked overlay slot is scrubbed (data zeroed, len reset) before reuse so a fresh overlay never leaks prior bytes.
+
+### Why it matters
+Overlay reuse must not expose stale content. Existing tests cover whiteouts but not scrub-on-reuse, so dropping the scrub survives.
+
+### Mutation evidence (fail-then-pass)
+| Mutant | Existing suite | New test |
+|---|---|---|
+| drop `data.fill(0)` | PASS (survives) | FAIL (killed) |
+| drop `len = 0` | PASS (survives) | FAIL (killed) |
+
+Baseline: PASS. Reproduce: `cargo test -p ginux-vfs --lib unlinked_overlay_slot`.
+
+Prepared with AI assistance; reviewed by me.
 ---
  crates/ginux-vfs/src/lib.rs | 23 +++++++++++++++++++++++
  1 file changed, 23 insertions(+)
@@ -40,5 +55,5 @@ index 3f5ecce5..10a0a2f1 100644
 +    }
  }
 -- 
-2.47.3
+2.56.1
 
