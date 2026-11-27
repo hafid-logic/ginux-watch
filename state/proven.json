@@ -100,27 +100,5 @@
     "killed": true
    }
   ]
- },
- "c8-process-retain-refcount": {
-  "proven": false,
-  "baseline": true,
-  "mutants": [
-   {
-    "name": "noop-retain",
-    "anchor_ok": true,
-    "anchor_count": 1,
-    "scoped": true,
-    "survives": false,
-    "killed": true
-   },
-   {
-    "name": "decrement-retain",
-    "anchor_ok": true,
-    "anchor_count": 1,
-    "scoped": true,
-    "survives": false,
-    "killed": true
-   }
-  ]
  }
 }

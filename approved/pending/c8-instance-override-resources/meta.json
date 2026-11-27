@@ -11,7 +11,7 @@
   {
    "name": "mem-noop",
    "old": "self.memory_mib = parse_u64(value)?",
-   "new": "{ let _ = parse_u64(value)?; 256 }",
+   "new": "{ let _ = parse_u64(value)?; }",
    "context": "            b\"resources.memory_mib\" => self.memory_mib = parse_u64(value)?,"
   }
  ]

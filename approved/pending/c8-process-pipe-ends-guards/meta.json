@@ -9,9 +9,9 @@
    "new": "if false {\n            return 0;\n        }"
   },
   {
-   "name": "returns-zero-for-live",
-   "old": "self.pipes[index].ends",
-   "new": "0",
+   "name": "oob-index",
+   "old": "if index < PIPES && self.pipes[index].live {",
+   "new": "if index <= PIPES && self.pipes[index].live {",
    "context": "let index = pipe as usize - 1;\n        if index < PIPES && self.pipes[index].live {\n            self.pipes[index].ends\n        } else {\n            0\n        }"
   }
  ]

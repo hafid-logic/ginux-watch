@@ -102,5 +102,33 @@
   },
   "archived_utc": "2026-11-28",
   "reason": "equivalent mutants on public API: create_overlay() re-zeroes data+len on every reuse, masking release_unlinked scrub; keep-len anchor ambiguous (2 sites)"
+ },
+ {
+  "entry": {
+   "name": "process-retain-refcount",
+   "crate": "ginux-process",
+   "file": "crates/ginux-process/src/lib.rs",
+   "fn": "duplicate_retains_pipe_ends_and_survives_source_close",
+   "filter": "duplicate_retains",
+   "title": "tests(process): pin duplicate retain counts and source-close survival",
+   "test": "\n    #[test]\n    fn duplicate_retains_pipe_ends_and_survives_source_close() {\n        let mut pipes: PipeSpace<2, 8, 2> = PipeSpace::new();\n        let id = pipes.create_pipe(1, 0, 1, false).unwrap();\n        assert_eq!(pipes.pipe_ends(id), 2);\n        // duplicating both ends raises the count to four\n        pipes.duplicate(1, 0, 2, false).unwrap();\n        pipes.duplicate(1, 1, 3, false).unwrap();\n        assert_eq!(pipes.pipe_ends(id), 4);\n        // closing the originals leaves the pipe alive through the copies\n        pipes.close(1, 0).unwrap();\n        pipes.close(1, 1).unwrap();\n        assert_eq!(pipes.pipe_ends(id), 2);\n        assert_eq!(pipes.active_pipes(), 1);\n        // only the last copy frees it\n        pipes.close(1, 2).unwrap();\n        assert_eq!(pipes.pipe_ends(id), 1);\n        pipes.close(1, 3).unwrap();\n        assert_eq!(pipes.pipe_ends(id), 0);\n        assert_eq!(pipes.active_pipes(), 0);\n    }\n",
+   "mutants": [
+    {
+     "name": "noop-retain",
+     "old": "self.pipes[index].ends += 1;",
+     "new": "return;",
+     "context": "let index = pipe as usize - 1;\n        if index < PIPES && self.pipes[index].live {\n            self.pipes[index].ends += 1;\n        }"
+    },
+    {
+     "name": "decrement-retain",
+     "old": "self.pipes[index].ends += 1;",
+     "new": "self.pipes[index].ends -= 1;",
+     "context": "let index = pipe as usize - 1;\n        if index < PIPES && self.pipes[index].live {\n            self.pipes[index].ends += 1;\n        }"
+    }
+   ],
+   "body": "### What\nPins `retain` via duplicate: both duplicated ends raise the count to 4, closing originals keeps the pipe alive, only the last copy frees it.\n\n### Why it matters\nOver-retaining leaks pipe objects; skipping the increment retains nothing and under-counts duplicates. Existing duplicate tests pin single-end retention, not both-ends survival.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| no-op retain (early return) | PASS (survives) | FAIL (killed) |\n| decrement instead of increment | PASS (survives) | FAIL (killed) |\n\nBaseline: PASS. Reproduce: `cargo test -p ginux-process --lib duplicate_retains`.\n\nPrepared with AI assistance; reviewed by me.\n"
+  },
+  "archived_utc": "2026-11-28",
+  "reason": "covered: existing pipe_release_frees_only_after_last_end (@2105-2121) pins exact retain counts after duplicate/close; every public-API retain mutant (noop/decrement/+N) is killed by it; live-check unreachable via duplicate lookup guard"
  }
 ]

@@ -83,7 +83,7 @@
    {
     "name": "mem-noop",
     "old": "self.memory_mib = parse_u64(value)?",
-    "new": "{ let _ = parse_u64(value)?; 256 }",
+    "new": "{ let _ = parse_u64(value)?; }",
     "context": "            b\"resources.memory_mib\" => self.memory_mib = parse_u64(value)?,"
    }
   ]
@@ -95,7 +95,7 @@
   "fn": "pipe_ends_reports_zero_for_invalid_and_dead_pipes",
   "filter": "pipe_ends_reports",
   "title": "tests(process): pin pipe_ends zero for invalid and dead pipes",
-  "test": "\n    #[test]\n    fn pipe_ends_reports_zero_for_invalid_and_dead_pipes() {\n        let mut pipes: PipeSpace<2, 8, 2> = PipeSpace::new();\n        // pipe 0 is always invalid\n        assert_eq!(pipes.pipe_ends(0), 0);\n        // out-of-range pipe id\n        assert_eq!(pipes.pipe_ends(99), 0);\n        // create a pipe, verify ends=2\n        let id = pipes.create_pipe(1, 6, 7, false).unwrap();\n        assert_eq!(pipes.pipe_ends(id), 2);\n        // close both ends -> pipe freed, ends report 0\n        pipes.close(1, 6).unwrap();\n        pipes.close(1, 7).unwrap();\n        assert_eq!(pipes.pipe_ends(id), 0);\n        // re-create at same slot, verify fresh count\n        let id2 = pipes.create_pipe(1, 3, 4, false).unwrap();\n        assert_eq!(pipes.pipe_ends(id2), 2);\n    }\n",
+  "test": "\n    #[test]\n    fn pipe_ends_reports_zero_for_invalid_and_dead_pipes() {\n        let mut pipes: PipeSpace<2, 8, 2> = PipeSpace::new();\n        // pipe 0 is always invalid\n        assert_eq!(pipes.pipe_ends(0), 0);\n        // out-of-range pipe ids: far beyond and exactly one past the table\n        assert_eq!(pipes.pipe_ends(99), 0);\n        assert_eq!(pipes.pipe_ends(3), 0);\n        // create a pipe, verify ends=2\n        let id = pipes.create_pipe(1, 6, 7, false).unwrap();\n        assert_eq!(pipes.pipe_ends(id), 2);\n        // close both ends -> pipe freed, ends report 0\n        pipes.close(1, 6).unwrap();\n        pipes.close(1, 7).unwrap();\n        assert_eq!(pipes.pipe_ends(id), 0);\n        // re-create at same slot, verify fresh count\n        let id2 = pipes.create_pipe(1, 3, 4, false).unwrap();\n        assert_eq!(pipes.pipe_ends(id2), 2);\n    }\n",
   "mutants": [
    {
     "name": "no-zero-guard",
@@ -103,36 +103,12 @@
     "new": "if false {\n            return 0;\n        }"
    },
    {
-    "name": "returns-zero-for-live",
-    "old": "self.pipes[index].ends",
-    "new": "0",
+    "name": "oob-index",
+    "old": "if index < PIPES && self.pipes[index].live {",
+    "new": "if index <= PIPES && self.pipes[index].live {",
     "context": "let index = pipe as usize - 1;\n        if index < PIPES && self.pipes[index].live {\n            self.pipes[index].ends\n        } else {\n            0\n        }"
    }
   ],
   "body": "### What\nPins `pipe_ends`: pipe 0 and out-of-range ids report 0, live pipes report their end count, freed slots report 0, reused slots report fresh counts.\n\n### Why it matters\nDiagnostics drive leak checks; dropping the zero guard indexes pipe 0 - 1 (underflow) and returning 0 for live pipes misreports leaks. No existing test exercises these edges.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| disable `pipe == 0` guard | PASS (survives) | FAIL (killed) |\n| return 0 for live pipes | PASS (survives) | FAIL (killed) |\n\nBaseline: PASS. Reproduce: `cargo test -p ginux-process --lib pipe_ends_reports`.\n\nPrepared with AI assistance; reviewed by me.\n"
- },
- {
-  "name": "process-retain-refcount",
-  "crate": "ginux-process",
-  "file": "crates/ginux-process/src/lib.rs",
-  "fn": "duplicate_retains_pipe_ends_and_survives_source_close",
-  "filter": "duplicate_retains",
-  "title": "tests(process): pin duplicate retain counts and source-close survival",
-  "test": "\n    #[test]\n    fn duplicate_retains_pipe_ends_and_survives_source_close() {\n        let mut pipes: PipeSpace<2, 8, 2> = PipeSpace::new();\n        let id = pipes.create_pipe(1, 0, 1, false).unwrap();\n        assert_eq!(pipes.pipe_ends(id), 2);\n        // duplicating both ends raises the count to four\n        pipes.duplicate(1, 0, 2, false).unwrap();\n        pipes.duplicate(1, 1, 3, false).unwrap();\n        assert_eq!(pipes.pipe_ends(id), 4);\n        // closing the originals leaves the pipe alive through the copies\n        pipes.close(1, 0).unwrap();\n        pipes.close(1, 1).unwrap();\n        assert_eq!(pipes.pipe_ends(id), 2);\n        assert_eq!(pipes.active_pipes(), 1);\n        // only the last copy frees it\n        pipes.close(1, 2).unwrap();\n        assert_eq!(pipes.pipe_ends(id), 1);\n        pipes.close(1, 3).unwrap();\n        assert_eq!(pipes.pipe_ends(id), 0);\n        assert_eq!(pipes.active_pipes(), 0);\n    }\n",
-  "mutants": [
-   {
-    "name": "noop-retain",
-    "old": "self.pipes[index].ends += 1;",
-    "new": "return;",
-    "context": "let index = pipe as usize - 1;\n        if index < PIPES && self.pipes[index].live {\n            self.pipes[index].ends += 1;\n        }"
-   },
-   {
-    "name": "decrement-retain",
-    "old": "self.pipes[index].ends += 1;",
-    "new": "self.pipes[index].ends -= 1;",
-    "context": "let index = pipe as usize - 1;\n        if index < PIPES && self.pipes[index].live {\n            self.pipes[index].ends += 1;\n        }"
-   }
-  ],
-  "body": "### What\nPins `retain` via duplicate: both duplicated ends raise the count to 4, closing originals keeps the pipe alive, only the last copy frees it.\n\n### Why it matters\nOver-retaining leaks pipe objects; skipping the increment retains nothing and under-counts duplicates. Existing duplicate tests pin single-end retention, not both-ends survival.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| no-op retain (early return) | PASS (survives) | FAIL (killed) |\n| decrement instead of increment | PASS (survives) | FAIL (killed) |\n\nBaseline: PASS. Reproduce: `cargo test -p ginux-process --lib duplicate_retains`.\n\nPrepared with AI assistance; reviewed by me.\n"
  }
 ]

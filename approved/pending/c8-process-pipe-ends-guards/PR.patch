@@ -1,6 +1,6 @@
-From 5cfc657b1010e2f4f55136deb1779b7143190fd5 Mon Sep 17 00:00:00 2001
+From 8c729a22a920a023ac16bdcc76a6bb2d8317e4f7 Mon Sep 17 00:00:00 2001
 From: ginux-watch-agent <actions@users.noreply.github.com>
-Date: Fri, 27 Nov 2026 19:48:23 +0000
+Date: Fri, 27 Nov 2026 19:51:15 +0000
 Subject: [PATCH] tests(process): pin pipe_ends zero for invalid and dead pipes
 
 ### What
@@ -19,14 +19,14 @@ Baseline: PASS. Reproduce: `cargo test -p ginux-process --lib pipe_ends_reports`
 
 Prepared with AI assistance; reviewed by me.
 ---
- crates/ginux-process/src/lib.rs | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ crates/ginux-process/src/lib.rs | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
 diff --git a/crates/ginux-process/src/lib.rs b/crates/ginux-process/src/lib.rs
-index 4db4a228..ae09c7a9 100644
+index 4db4a228..d20d600e 100644
 --- a/crates/ginux-process/src/lib.rs
 +++ b/crates/ginux-process/src/lib.rs
-@@ -2187,4 +2187,23 @@ mod tests {
+@@ -2187,4 +2187,24 @@ mod tests {
          // unknown task scrubs nothing
          assert_eq!(pipes.exec_scrub(99), 0);
      }
@@ -36,8 +36,9 @@ index 4db4a228..ae09c7a9 100644
 +        let mut pipes: PipeSpace<2, 8, 2> = PipeSpace::new();
 +        // pipe 0 is always invalid
 +        assert_eq!(pipes.pipe_ends(0), 0);
-+        // out-of-range pipe id
++        // out-of-range pipe ids: far beyond and exactly one past the table
 +        assert_eq!(pipes.pipe_ends(99), 0);
++        assert_eq!(pipes.pipe_ends(3), 0);
 +        // create a pipe, verify ends=2
 +        let id = pipes.create_pipe(1, 6, 7, false).unwrap();
 +        assert_eq!(pipes.pipe_ends(id), 2);

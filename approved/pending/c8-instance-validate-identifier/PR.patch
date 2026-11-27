@@ -1,6 +1,6 @@
-From 5a61b4a23027550fbffbcc91c16018b028c7c7fb Mon Sep 17 00:00:00 2001
+From ac4e9295de9c809c8b1f7547e425d41fbf6e65f6 Mon Sep 17 00:00:00 2001
 From: ginux-watch-agent <actions@users.noreply.github.com>
-Date: Fri, 27 Nov 2026 19:48:23 +0000
+Date: Fri, 27 Nov 2026 19:51:14 +0000
 Subject: [PATCH] tests(instance): pin id and hostname identifier validation
  edges
 
