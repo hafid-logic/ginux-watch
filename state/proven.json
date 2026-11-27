@@ -1,15 +1,19 @@
 {
  "c8-instance-derive-grants": {
-  "proven": false,
-  "baseline": false,
+  "proven": true,
+  "baseline": true,
   "mutants": [
    {
     "name": "drop-create",
+    "anchor_ok": true,
+    "anchor_count": 1,
     "survives": true,
     "killed": true
    },
    {
     "name": "and",
+    "anchor_ok": true,
+    "anchor_count": 1,
     "survives": true,
     "killed": true
    }
@@ -18,57 +22,89 @@
  "c8-instance-override-id": {
   "proven": false,
   "baseline": false,
-  "mutants": [
-   {
-    "name": "del-id",
-    "survives": true,
-    "killed": true
-   },
-   {
-    "name": "id-noop",
-    "survives": true,
-    "killed": true
-   }
-  ]
+  "why": "baseline-fail",
+  "baseline_err": "\u001b[1m\u001b[92m   Compiling\u001b[0m ginux-instance v0.1.0 (/tmp/prover-upstream/crates/ginux-instance)\n\u001b[1m\u001b[92m    Finished\u001b[0m `test` profile [unoptimized + debuginfo] target(s) in 0.44s\n\u001b[1m\u001b[92m     Running\u001b[0m unittests src/lib.rs (target/debug/build/ginux-instance/f48c2932834b0f98/out/ginux_instance-f48c2932834b0f98)\n\u001b[1m\u001b[91merror\u001b[0m: test failed, to rerun pass `-p ginux-instance --lib`"
  },
  "c8-instance-override-resources": {
   "proven": false,
   "baseline": true,
   "mutants": [
    {
-    "name": "del-vcpus",
-    "survives": false,
+    "name": "del-mem",
+    "anchor_ok": true,
+    "anchor_count": 1,
+    "survives": true,
     "killed": true
    },
    {
-    "name": "del-mem",
-    "survives": true,
+    "name": "mem15",
+    "anchor_ok": true,
+    "anchor_count": 1,
+    "survives": false,
     "killed": true
    }
   ]
  },
  "c8-instance-validate-identifier": {
-  "proven": false,
+  "proven": true,
   "baseline": true,
   "mutants": [
    {
     "name": "id-ok",
+    "anchor_ok": true,
+    "anchor_count": 1,
     "survives": true,
     "killed": true
    },
    {
     "name": "hostname-ok",
+    "anchor_ok": true,
+    "anchor_count": 1,
     "survives": true,
-    "killed": false
+    "killed": true
    }
   ]
  },
  "c8-process-pipe-ends-guards": {
   "proven": false,
-  "why": "apply-fail"
+  "baseline": true,
+  "mutants": [
+   {
+    "name": "no-zero-guard",
+    "anchor_ok": true,
+    "anchor_count": 1,
+    "survives": true,
+    "killed": true
+   },
+   {
+    "name": "no-live",
+    "anchor_ok": true,
+    "anchor_count": 2,
+    "scoped": true,
+    "survives": true,
+    "killed": false
+   }
+  ]
  },
  "c8-process-retain-refcount": {
   "proven": false,
-  "why": "apply-fail"
+  "baseline": true,
+  "mutants": [
+   {
+    "name": "retain-plus2",
+    "anchor_ok": true,
+    "anchor_count": 1,
+    "survives": false,
+    "killed": true
+   },
+   {
+    "name": "retain-nolive",
+    "anchor_ok": true,
+    "anchor_count": 2,
+    "scoped": true,
+    "survives": true,
+    "killed": false
+   }
+  ]
  }
 }
