@@ -11,7 +11,7 @@ def run(cwd, *a):
     return subprocess.run(list(a), cwd=cwd, capture_output=True, text=True,
         env={**os.environ, "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS": "", "RUSTFLAGS": ""})
 def reset():
-    reset()
+    run(U,"git","checkout","-q","-B","workbase","origin/main")
     run(U,"git","reset","--hard","-q","origin/main")
     run(U,"git","clean","-fdq")
 def test_ok(crate, filt):
