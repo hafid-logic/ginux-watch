@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-27T00:51:31Z",
+ "updated": "2026-11-27T08:41:39Z",
  "schema": "llm-probe-v1",
  "note": "DATA ONLY — probe rows are runtime availability evidence; no secrets; fixed probe input sha256_16 below",
  "probe_input_sha256_16": "6ba85cba8c23d00c",
@@ -3047,6 +3047,69 @@
    "status": "unavailable",
    "secret": "DECIDER_API_KEY",
    "at": "2026-11-27T00:51:31Z"
+  },
+  {
+   "provider": "nvidia",
+   "model": "nvidia/nemotron-3-ultra-550b-a55b",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 3.73,
+   "http_status": 200,
+   "model_actual": "nvidia/nemotron-3-ultra-550b-a55b",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "usage"
+   ],
+   "at": "2026-11-27T08:41:37Z"
+  },
+  {
+   "provider": "google-ai-studio",
+   "model": "gemini-3.6-flash",
+   "ok": false,
+   "category": "auth_failed",
+   "status": "failed",
+   "latency_s": 0.08,
+   "http_status": 403,
+   "model_actual": null,
+   "resp_top_keys": null,
+   "at": "2026-11-27T08:41:38Z",
+   "excerpt200": "[{\n  \"error\": {\n    \"code\": 403,\n    \"message\": \"The Gemini API free tier is not available for this project. To use the Gemini API, please set up billing to upgrade to the paid tier at https://aistudi"
+  },
+  {
+   "provider": "openrouter",
+   "model": "openrouter/free",
+   "ok": true,
+   "category": "ok",
+   "status": "ok",
+   "latency_s": 1.34,
+   "http_status": 200,
+   "model_actual": "baidu/ernie-5.5-flash-preview:free",
+   "resp_top_keys": [
+    "choices",
+    "created",
+    "id",
+    "model",
+    "object",
+    "provider",
+    "service_tier",
+    "system_fingerprint",
+    "usage"
+   ],
+   "at": "2026-11-27T08:41:39Z"
+  },
+  {
+   "provider": "strands-decider-space",
+   "model": null,
+   "ok": false,
+   "category": "unconfigured",
+   "status": "unavailable",
+   "secret": "DECIDER_API_KEY",
+   "at": "2026-11-27T08:41:39Z"
   }
  ]
 }
