@@ -1,0 +1,55 @@
+From 23be09a2d4c2d4031936b4fafc19c066e70eb62e Mon Sep 17 00:00:00 2001
+From: ginux-watch-agent <actions@users.noreply.github.com>
+Date: Fri, 27 Nov 2026 21:54:26 +0000
+Subject: [PATCH] tests(oci): pin select_manifest linux/amd64/no-variant
+ platform gate
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+### What
+Pins `select_manifest`: only linux/amd64 with empty variant is selected; wrong OS, wrong arch, or non-empty variant are rejected.
+
+### Why it matters
+Platform selection gates which manifest runs; flipping `&&` to `||` admits foreign-OS or variant manifests into the amd64 slot — a confinement-relevant mis-selection. No existing test exercises select_manifest.
+
+### Mutation evidence (fail-then-pass)
+| Mutant | Existing suite | New test |
+|---|---|---|
+| first `&&` -> `||` | PASS (survives) | FAIL (killed) |
+| second `&&` -> `||` | PASS (survives) | FAIL (killed) |
+
+Baseline: PASS. Reproduce: `cargo test -p ginux-oci --lib select_manifest_requires`.
+
+Prepared with AI assistance; reviewed by me.
+---
+ crates/ginux-oci/src/lib.rs | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git a/crates/ginux-oci/src/lib.rs b/crates/ginux-oci/src/lib.rs
+index 63f9ee58..e9579a9f 100644
+--- a/crates/ginux-oci/src/lib.rs
++++ b/crates/ginux-oci/src/lib.rs
+@@ -842,4 +842,19 @@ mod tests {
+         fs::remove_dir_all(root).unwrap();
+         fs::remove_dir_all(outside).unwrap();
+     }
++
++    #[test]
++    fn select_manifest_requires_linux_amd64_no_variant() {
++        let good = serde_json::json!({"manifests":[{"mediaType":"application/vnd.oci.image.manifest.v1+json","digest":"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","size":1,"platform":{"os":"linux","architecture":"amd64"}}]});
++        assert!(select_manifest(&good).unwrap().is_some());
++        // wrong OS must not be selected even if arch matches
++        let bad_os = serde_json::json!({"manifests":[{"mediaType":"application/vnd.oci.image.manifest.v1+json","digest":"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","size":1,"platform":{"os":"windows","architecture":"amd64"}}]});
++        assert!(select_manifest(&bad_os).is_err());
++        // wrong arch must not be selected even if os matches
++        let bad_arch = serde_json::json!({"manifests":[{"mediaType":"application/vnd.oci.image.manifest.v1+json","digest":"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","size":1,"platform":{"os":"linux","architecture":"arm64"}}]});
++        assert!(select_manifest(&bad_arch).is_err());
++        // non-empty variant must not match the plain amd64 slot
++        let variant = serde_json::json!({"manifests":[{"mediaType":"application/vnd.oci.image.manifest.v1+json","digest":"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","size":1,"platform":{"os":"linux","architecture":"amd64","variant":"v8"}}]});
++        assert!(select_manifest(&variant).is_err());
++    }
+ }
+-- 
+2.47.3
+

@@ -1,0 +1,19 @@
+{
+ "crate": "ginux-oci",
+ "file": "crates/ginux-oci/src/lib.rs",
+ "filter": "select_manifest_requires",
+ "mutants": [
+  {
+   "name": "or-os",
+   "old": "        if os == Some(\"linux\") && architecture == Some(\"amd64\") && variant.is_empty() {",
+   "new": "        if os == Some(\"linux\") || architecture == Some(\"amd64\") && variant.is_empty() {",
+   "line": 339
+  },
+  {
+   "name": "or-variant",
+   "old": "        if os == Some(\"linux\") && architecture == Some(\"amd64\") && variant.is_empty() {",
+   "new": "        if os == Some(\"linux\") && architecture == Some(\"amd64\") || variant.is_empty() {",
+   "line": 339
+  }
+ ]
+}

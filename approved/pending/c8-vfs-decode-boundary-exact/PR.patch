@@ -1,0 +1,63 @@
+From f47e18c744bc2ed1448e440fe4c11f31d21bbd2a Mon Sep 17 00:00:00 2001
+From: ginux-watch-agent <actions@users.noreply.github.com>
+Date: Fri, 27 Nov 2026 21:54:26 +0000
+Subject: [PATCH] tests(vfs): pin decode_record exact path/link bounds and
+ overflow rejection
+
+### What
+Pins `decode_record` length gates: exact MAX_PATH/MAX_LINK fit decodes, one-past-MAX_LINK and zero-length path are rejected at index load.
+
+### Why it matters
+Decode gates guard every record read; relaxing `>` to `>=` rejects valid exact-fit images, while `==` admits oversized links that later slice out of bounds. Existing tests pin encode-side and path-overflow only, not decode-side exact fit or link overflow.
+
+### Mutation evidence (fail-then-pass)
+| Mutant | Existing suite | New test |
+|---|---|---|
+| `link_len > MAX_LINK` -> `>=` | PASS (survives) | FAIL (killed) |
+| `path_len > MAX_PATH` -> `==` | PASS (survives) | FAIL (killed) |
+
+Baseline: PASS. Reproduce: `cargo test -p ginux-vfs --lib decode_record_accepts_exact`.
+
+Prepared with AI assistance; reviewed by me.
+---
+ crates/ginux-vfs/src/lib.rs | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
+
+diff --git a/crates/ginux-vfs/src/lib.rs b/crates/ginux-vfs/src/lib.rs
+index 3f5ecce5..fc9c92f0 100644
+--- a/crates/ginux-vfs/src/lib.rs
++++ b/crates/ginux-vfs/src/lib.rs
+@@ -1285,4 +1285,30 @@ mod tests {
+         c[16..20].copy_from_slice(&99u32.to_le_bytes());
+         assert_eq!(Index::new(&c).err(), Some(VfsError::InvalidIndex));
+     }
++
++    #[test]
++    fn decode_record_accepts_exact_path_and_link_bounds() {
++        let mut buf = [0u8; HEADER_SIZE + RECORD_SIZE];
++        encode_header(1, (&mut buf[..HEADER_SIZE]).try_into().unwrap());
++        let rec = &mut buf[HEADER_SIZE..];
++        rec[2] = 3; // symlink
++                    // exact MAX_PATH path and MAX_LINK link must decode (boundary inclusive)
++        rec[0..2].copy_from_slice(&(MAX_PATH as u16).to_le_bytes());
++        rec[32..34].copy_from_slice(&(MAX_LINK as u16).to_le_bytes());
++        rec[40] = b'/';
++        for b in &mut rec[41..40 + MAX_PATH] {
++            *b = b'a';
++        }
++        for b in &mut rec[40 + MAX_PATH..40 + MAX_PATH + MAX_LINK] {
++            *b = b'b';
++        }
++        assert!(Index::new(&buf).is_ok());
++        // one past MAX_LINK must be rejected at decode time
++        rec[32..34].copy_from_slice(&((MAX_LINK + 1) as u16).to_le_bytes());
++        assert_eq!(Index::new(&buf).err(), Some(VfsError::InvalidIndex));
++        // zero-length path rejected; exact-fit restored stays ok
++        rec[32..34].copy_from_slice(&(MAX_LINK as u16).to_le_bytes());
++        rec[0..2].copy_from_slice(&0u16.to_le_bytes());
++        assert_eq!(Index::new(&buf).err(), Some(VfsError::InvalidIndex));
++    }
+ }
+-- 
+2.47.3
+

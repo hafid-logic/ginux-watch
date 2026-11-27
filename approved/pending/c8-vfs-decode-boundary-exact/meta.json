@@ -1,0 +1,19 @@
+{
+ "crate": "ginux-vfs",
+ "file": "crates/ginux-vfs/src/lib.rs",
+ "filter": "decode_record_accepts_exact",
+ "mutants": [
+  {
+   "name": "link-ge",
+   "old": "    if path_len == 0 || path_len > MAX_PATH || link_len > MAX_LINK {",
+   "new": "    if path_len == 0 || path_len > MAX_PATH || link_len >= MAX_LINK {",
+   "line": 144
+  },
+  {
+   "name": "path-eq",
+   "old": "    if path_len == 0 || path_len > MAX_PATH || link_len > MAX_LINK {",
+   "new": "    if path_len == 0 || path_len == MAX_PATH || link_len > MAX_LINK {",
+   "line": 144
+  }
+ ]
+}

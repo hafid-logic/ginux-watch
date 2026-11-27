@@ -1,0 +1,1 @@
+tests(oci): pin select_manifest linux/amd64/no-variant platform gate

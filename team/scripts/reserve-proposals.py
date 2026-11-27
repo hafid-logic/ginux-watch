@@ -2,7 +2,12 @@
 """reserve-proposals — attach a pre-filled PR title+body (English, GFM, AI footer)
 to every PUSHED reserve as a one-click GitHub compare URL. Reads PR.title+PR.md
 from approved/pending/c8-<name>/. Writes outbox/RESERVES.md + state/reserves.json.
-Token: GH_TOKEN or PIPELINE_PAT. Never opens a PR (opening is always human)."""
+Token: GH_TOKEN or PIPELINE_PAT. Never opens a PR (opening is always human).
+
+Phase-4 (owner directive): Zero-Conflict Matrix. Each reserve carries its
+target_file (from meta.json). RESERVES.md groups reserves by target file and
+recommends a Conflict-Free Batch: at most ONE open PR per target file (and per
+crate) at a time, so simultaneous owner openings never self-conflict."""
 import json, os, subprocess, urllib.request, urllib.parse, datetime
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
@@ -35,18 +40,38 @@ def main():
             if api(tok,f"/repos/{up}/compare/main...{fo}:{b}").get("ahead_by",0)<=0: continue
         except Exception: continue
         d=ROOT/stock/("c8-"+b[len(prefix):])
-        tf=d/"PR.title"; bf=d/"PR.md"
+        tf=d/"PR.title"; bf=d/"PR.md"; mf=d/"meta.json"
         if not (tf.exists() and bf.exists()): continue
         title=tf.read_text().strip(); body=bf.read_text()
-        rows.append({"branch":b,"title":title,"url":proposal_url(up,fo,b,title,body)})
-    out={"generated_utc":datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),"reserves":rows}
+        meta=json.loads(mf.read_text()) if mf.exists() else {}
+        rows.append({"branch":b,"title":title,"url":proposal_url(up,fo,b,title,body),
+                     "crate":meta.get("crate","unknown"),"target_file":meta.get("file","unknown")})
+    # Zero-Conflict Matrix: group by target_file; conflict-free batch = first row per file AND per crate
+    by_file={}
+    for r in rows: by_file.setdefault(r["target_file"],[]).append(r)
+    batch=[]; seen_crate=set(); seen_file=set()
+    for r in rows:
+        if r["target_file"] in seen_file or r["crate"] in seen_crate: continue
+        batch.append(r); seen_file.add(r["target_file"]); seen_crate.add(r["crate"])
+    out={"generated_utc":datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+         "reserves":rows,"conflict_free_batch":[r["branch"] for r in batch],
+         "by_target_file":{f:[r["branch"] for r in rs] for f,rs in by_file.items()}}
     (ROOT/"state/reserves.json").write_text(json.dumps(out,indent=1))
     md=["# Reserves ready for owner to open (one click, pre-filled title+body)","",
-        "Opening upstream is ALWAYS human. Each link opens GitHub's PR form pre-filled (English, GFM, AI footer). No manual copying.",""]
-    for r in rows:
-        md += [f"## `{r['branch']}`", f"**Title:** {r['title']}", f"[Open pre-filled PR]({r['url']})", ""]
+        "Opening upstream is ALWAYS human. Each link opens GitHub's PR form pre-filled (English, GFM, AI footer). No manual copying.","",
+        "## Zero-Conflict Matrix (phase 4)","",
+        "**Rule:** at most ONE open PR per target file and per crate at a time. Open the recommended batch together; hold same-file/same-crate reserves until the prior PR merges.","",
+        "### Recommended Conflict-Free Batch (open these together)", ""]
+    for r in batch:
+        md += [f"- `{r['branch']}` ({r['crate']} → `{r['target_file']}`) — [Open]({r['url']})"]
+    md += ["", "### All reserves grouped by target file", ""]
+    for f, rs in sorted(by_file.items()):
+        md += [f"#### `{f}`" + ("  ⚠ same-file conflict: open sequentially" if len(rs)>1 else "")]
+        for r in rs:
+            mark = " ✅ batch" if r in batch else " ⏸ hold"
+            md += [f"- `{r['branch']}`{mark} — [Open]({r['url']})"]
+        md += [""]
     (ROOT/"outbox").mkdir(exist_ok=True)
     (ROOT/"outbox/RESERVES.md").write_text("\n".join(md))
-    print(f"reserves with proposals: {len(rows)}")
-    for r in rows: print(" -",r["branch"])
+    print(f"reserves with proposals: {len(rows)}; conflict-free batch: {[r['branch'] for r in batch]}")
 if __name__=="__main__": main()

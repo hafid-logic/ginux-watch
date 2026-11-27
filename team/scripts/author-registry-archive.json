@@ -130,5 +130,193 @@
   },
   "archived_utc": "2026-11-28",
   "reason": "covered: existing pipe_release_frees_only_after_last_end (@2105-2121) pins exact retain counts after duplicate/close; every public-API retain mutant (noop/decrement/+N) is killed by it; live-check unreachable via duplicate lookup guard"
+ },
+ {
+  "entry": {
+   "name": "instance-derive-grants",
+   "crate": "ginux-instance",
+   "file": "crates/ginux-instance/src/lib.rs",
+   "fn": "create_only_filesystem_grants_derive_write",
+   "filter": "create_only_filesystem_grants",
+   "title": "tests(instance): derive write grant from create-only filesystem policy",
+   "test": "\n    #[test]\n    fn create_only_filesystem_grants_derive_write() {\n        let recipe = VALID.replace(\n            \"[storage]\",\n            \"[contract.filesystem]\\ndefault = \\\"deny\\\"\\nread = []\\nwrite = []\\ncreate = [\\\"/tmp\\\"]\\ndeny = []\\n[contract.kernel]\\ndefault = \\\"deny\\\"\\nproc_read = [\\\"/\\\"]\\nproc_write = []\\nsys_read = [\\\"/\\\"]\\nsys_write = []\\n[storage]\",\n        );\n        let c = InstanceConfig::parse(recipe.as_bytes()).unwrap();\n        assert!(c.filesystem_write.as_slice().is_empty());\n        assert_eq!(c.filesystem_create.as_slice().len(), 1);\n        // create-only policy must still mediate writes (create implies write path)\n        assert!(c.contract_write.as_slice().iter().any(|t| t.as_bytes() == b\"filesystem.**\"));\n        // read stays empty: no read grant without read policy\n        assert!(!c.contract_read.as_slice().iter().any(|t| t.as_bytes() == b\"filesystem.**\"));\n    }\n",
+   "body": "### What\nPins `derive_contract_grants`: a create-only filesystem policy derives the `filesystem.**` write grant while read stays ungranted.\n\n### Why it matters\nCreate implies mutation; dropping the create arm or requiring both lists silently unmediates creation paths. Existing recipes always set read+write+create together, so the create-only edge is unpinned.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| drop `|| !filesystem_create...is_empty()` | PASS (survives) | FAIL (killed) |\n| `||` -> `&&` | PASS (survives) | FAIL (killed) |\n\nBaseline: PASS. Reproduce: `cargo test -p ginux-instance --lib create_only_filesystem_grants`.\n\nPrepared with AI assistance; reviewed by me.\n",
+   "mutants": [
+    {
+     "name": "drop-create",
+     "old": "        if !self.filesystem_write.as_slice().is_empty()\n            || !self.filesystem_create.as_slice().is_empty()\n        {",
+     "new": "        if !self.filesystem_write.as_slice().is_empty() {"
+    },
+    {
+     "name": "and",
+     "old": "        if !self.filesystem_write.as_slice().is_empty()\n            || !self.filesystem_create.as_slice().is_empty()\n        {",
+     "new": "        if !self.filesystem_write.as_slice().is_empty()\n            && !self.filesystem_create.as_slice().is_empty()\n        {"
+    }
+   ]
+  },
+  "archived_utc": "2026-11-28",
+  "reason": "merged upstream PR #363-#369 (2026-11-27T20:41-21:10Z)"
+ },
+ {
+  "entry": {
+   "name": "instance-validate-identifier",
+   "crate": "ginux-instance",
+   "file": "crates/ginux-instance/src/lib.rs",
+   "fn": "validate_pins_identifier_and_hostname_edges",
+   "filter": "validate_pins_identifier",
+   "title": "tests(instance): pin id and hostname identifier validation edges",
+   "test": "\n    #[test]\n    fn validate_pins_identifier_and_hostname_edges() {\n        let src = VALID.replace(\"[resources]\", \"[identity]\\nhostname = \\\"host.example\\\"\\n\\n[resources]\");\n        let mut c = InstanceConfig::parse(src.as_bytes()).unwrap();\n        assert_eq!(c.hostname.as_bytes(), b\"host.example\");\n        assert!(c.validate().is_ok());\n        // id edges: empty and space rejected, alnum accepted\n        c.id = Text::from_bytes(b\"\").unwrap();\n        assert!(c.validate().is_err());\n        c.id = Text::from_bytes(b\"bad id\").unwrap();\n        assert!(c.validate().is_err());\n        c.id = Text::from_bytes(b\"demo\").unwrap();\n        assert!(c.validate().is_ok());\n        // hostname edges are validated independently of id\n        c.hostname = Text::from_bytes(b\"bad host\").unwrap();\n        assert!(c.validate().is_err());\n        c.hostname = Text::from_bytes(b\"\").unwrap();\n        assert!(c.validate().is_err());\n        c.hostname = Text::from_bytes(b\"host-2.example\").unwrap();\n        assert!(c.validate().is_ok());\n    }\n",
+   "body": "### What\nPins `validate` identifier rules for both id and hostname: empty/spaced rejected, dotted alnum accepted, hostname checked independently.\n\n### Why it matters\nHostname defaults to id, so suites that never set a distinct hostname cannot detect a skipped hostname check. Removing either validation call survives today.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| skip `validate_identifier(self.id...)` | PASS (survives) | FAIL (killed) |\n| skip `validate_identifier(self.hostname...)` | PASS (survives) | FAIL (killed) |\n\nBaseline: PASS. Reproduce: `cargo test -p ginux-instance --lib validate_pins_identifier`.\n\nPrepared with AI assistance; reviewed by me.\n",
+   "mutants": [
+    {
+     "name": "id-ok",
+     "old": "        validate_identifier(self.id.as_bytes())?;",
+     "new": "        let _ = self.id.as_bytes();"
+    },
+    {
+     "name": "hostname-ok",
+     "old": "        validate_identifier(self.hostname.as_bytes())?;",
+     "new": "        let _ = self.hostname.as_bytes();"
+    }
+   ]
+  },
+  "archived_utc": "2026-11-28",
+  "reason": "merged upstream PR #363-#369 (2026-11-27T20:41-21:10Z)"
+ },
+ {
+  "entry": {
+   "name": "instance-override-id",
+   "crate": "ginux-instance",
+   "file": "crates/ginux-instance/src/lib.rs",
+   "fn": "override_instance_id_and_reject_unknown",
+   "filter": "override_instance_id",
+   "title": "tests(instance): pin instance.id override and unknown-key rejection",
+   "test": "\n    #[test]\n    fn override_instance_id_and_reject_unknown() {\n        let mut c = InstanceConfig::parse(VALID.as_bytes()).unwrap();\n        c.apply_override(b\"instance.id\", b\"\\\"other\\\"\").unwrap();\n        assert_eq!(c.id.as_bytes(), b\"other\");\n        // unknown keys fail closed without partial mutation\n        assert!(c.apply_override(b\"instance.nope\", b\"\\\"x\\\"\").is_err());\n        // unquoted value is a syntax error, not a silent accept\n        assert!(c.apply_override(b\"instance.id\", b\"bare\").is_err());\n        assert_eq!(c.id.as_bytes(), b\"other\");\n    }\n",
+   "body": "### What\nPins the `instance.id` override arm: quoted values apply, unknown keys and unquoted values fail closed without partial mutation.\n\n### Why it matters\nDeleting the arm or making it a no-op silently ignores operator overrides; existing tests pin vcpus/hostname but not id.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| delete `instance.id` arm | PASS (survives) | FAIL (killed) |\n| arm parses but discards value | PASS (survives) | FAIL (killed) |\n\nBaseline: PASS. Reproduce: `cargo test -p ginux-instance --lib override_instance_id`.\n\nPrepared with AI assistance; reviewed by me.\n",
+   "mutants": [
+    {
+     "name": "del-id",
+     "old": "            b\"instance.id\" => self.id = parse_string(value)?,\n",
+     "new": ""
+    },
+    {
+     "name": "id-noop",
+     "old": "            b\"instance.id\" => self.id = parse_string(value)?,\n",
+     "new": "            b\"instance.id\" => { let _ = parse_string::<64>(value)?; },\n"
+    }
+   ]
+  },
+  "archived_utc": "2026-11-28",
+  "reason": "merged upstream PR #363-#369 (2026-11-27T20:41-21:10Z)"
+ },
+ {
+  "entry": {
+   "name": "instance-override-resources",
+   "crate": "ginux-instance",
+   "file": "crates/ginux-instance/src/lib.rs",
+   "fn": "memory_override_enforces_exact_bounds",
+   "filter": "memory_override_enforces",
+   "title": "tests(instance): pin memory override application and exact bounds",
+   "test": "\n    #[test]\n    fn memory_override_enforces_exact_bounds() {\n        let mut c = InstanceConfig::parse(VALID.as_bytes()).unwrap();\n        c.apply_override(b\"resources.memory_mib\", b\"256\").unwrap();\n        assert_eq!(c.memory_mib, 256);\n        // exact lower bound accepted, one below rejected without partial mutation\n        c.apply_override(b\"resources.memory_mib\", b\"16\").unwrap();\n        assert_eq!(c.memory_mib, 16);\n        assert!(c.apply_override(b\"resources.memory_mib\", b\"15\").is_err());\n        assert_eq!(c.memory_mib, 16);\n        // non-numeric values fail closed\n        assert!(c.apply_override(b\"resources.memory_mib\", b\"\\\"256\\\"\").is_err());\n        assert_eq!(c.memory_mib, 16);\n    }\n",
+   "body": "### What\nPins the `resources.memory_mib` override: value applies, exact lower bound 16 accepted, 15 rejected atomically, quoted numbers rejected.\n\n### Why it matters\nOverride arms are fail-closed config gates; deleting the memory arm or its validation admits invalid configs. Existing override tests pin vcpus but never memory.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| delete `resources.memory_mib` arm | PASS (survives) | FAIL (killed) |\n| discard parsed u64 (return Ok(256)) | PASS (survives) | FAIL (killed) |\n\nBaseline: PASS. Reproduce: `cargo test -p ginux-instance --lib memory_override_enforces`.\n\nPrepared with AI assistance; reviewed by me.\n",
+   "mutants": [
+    {
+     "name": "del-mem",
+     "old": "            b\"resources.memory_mib\" => self.memory_mib = parse_u64(value)?,\n",
+     "new": ""
+    },
+    {
+     "name": "mem-noop",
+     "old": "self.memory_mib = parse_u64(value)?",
+     "new": "{ let _ = parse_u64(value)?; }",
+     "context": "            b\"resources.memory_mib\" => self.memory_mib = parse_u64(value)?,"
+    }
+   ]
+  },
+  "archived_utc": "2026-11-28",
+  "reason": "merged upstream PR #363-#369 (2026-11-27T20:41-21:10Z)"
+ },
+ {
+  "entry": {
+   "name": "process-pipe-ends-guards",
+   "crate": "ginux-process",
+   "file": "crates/ginux-process/src/lib.rs",
+   "fn": "pipe_ends_reports_zero_for_invalid_and_dead_pipes",
+   "filter": "pipe_ends_reports",
+   "title": "tests(process): pin pipe_ends zero for invalid and dead pipes",
+   "test": "\n    #[test]\n    fn pipe_ends_reports_zero_for_invalid_and_dead_pipes() {\n        let mut pipes: PipeSpace<2, 8, 2> = PipeSpace::new();\n        // pipe 0 is always invalid\n        assert_eq!(pipes.pipe_ends(0), 0);\n        // out-of-range pipe ids: far beyond and exactly one past the table\n        assert_eq!(pipes.pipe_ends(99), 0);\n        assert_eq!(pipes.pipe_ends(3), 0);\n        // create a pipe, verify ends=2\n        let id = pipes.create_pipe(1, 6, 7, false).unwrap();\n        assert_eq!(pipes.pipe_ends(id), 2);\n        // close both ends -> pipe freed, ends report 0\n        pipes.close(1, 6).unwrap();\n        pipes.close(1, 7).unwrap();\n        assert_eq!(pipes.pipe_ends(id), 0);\n        // re-create at same slot, verify fresh count\n        let id2 = pipes.create_pipe(1, 3, 4, false).unwrap();\n        assert_eq!(pipes.pipe_ends(id2), 2);\n    }\n",
+   "mutants": [
+    {
+     "name": "no-zero-guard",
+     "old": "if pipe == 0 {\n            return 0;\n        }",
+     "new": "if false {\n            return 0;\n        }"
+    },
+    {
+     "name": "oob-index",
+     "old": "if index < PIPES && self.pipes[index].live {",
+     "new": "if index <= PIPES && self.pipes[index].live {",
+     "context": "let index = pipe as usize - 1;\n        if index < PIPES && self.pipes[index].live {\n            self.pipes[index].ends\n        } else {\n            0\n        }"
+    }
+   ],
+   "body": "### What\nPins `pipe_ends`: pipe 0 and out-of-range ids report 0, live pipes report their end count, freed slots report 0, reused slots report fresh counts.\n\n### Why it matters\nDiagnostics drive leak checks; dropping the zero guard indexes pipe 0 - 1 (underflow) and returning 0 for live pipes misreports leaks. No existing test exercises these edges.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| disable `pipe == 0` guard | PASS (survives) | FAIL (killed) |\n| return 0 for live pipes | PASS (survives) | FAIL (killed) |\n\nBaseline: PASS. Reproduce: `cargo test -p ginux-process --lib pipe_ends_reports`.\n\nPrepared with AI assistance; reviewed by me.\n"
+  },
+  "archived_utc": "2026-11-28",
+  "reason": "merged upstream PR #363-#369 (2026-11-27T20:41-21:10Z)"
+ },
+ {
+  "entry": {
+   "name": "process-unshare-copy",
+   "crate": "ginux-process",
+   "file": "crates/ginux-process/src/lib.rs",
+   "fn": "unshare_copies_shared_table_and_solo_is_noop",
+   "filter": "unshare_copies_shared",
+   "title": "tests(process): pin unshare private-copy, solo no-op, and unknown-task edges",
+   "test": "\n    #[test]\n    fn unshare_copies_shared_table_and_solo_is_noop() {\n        let mut pipes: PipeSpace<4, 8, 4> = PipeSpace::new();\n        let id = pipes.create_pipe(1, 0, 1, false).unwrap();\n        assert_eq!(pipes.pipe_ends(id), 2);\n        // solo task: unshare must be a no-op (no extra retain, fds intact)\n        pipes.unshare(1).unwrap();\n        assert_eq!(pipes.pipe_ends(id), 2);\n        assert!(pipes.lookup(1, 0).is_some());\n        // share with task 2, then unshare task 1: private copy keeps both ends\n        pipes.share(2, 1).unwrap();\n        pipes.unshare(1).unwrap();\n        assert!(pipes.lookup(1, 0).is_some());\n        assert!(pipes.lookup(1, 1).is_some());\n        assert_eq!(pipes.pipe_ends(id), 4);\n        // task 2 still shares the original table; closing its ends frees only its refs\n        pipes.close(2, 0).unwrap();\n        pipes.close(2, 1).unwrap();\n        assert_eq!(pipes.pipe_ends(id), 2);\n        assert!(pipes.lookup(1, 0).is_some());\n        // unknown task: Ok, nothing allocated\n        pipes.unshare(99).unwrap();\n        assert_eq!(pipes.task_fds(99), 0);\n    }\n",
+   "body": "### What\nPins `unshare`: a shared descriptor table is copied privately (pipe ends retained), a solo task is a no-op, and unknown tasks return Ok without allocation.\n\n### Why it matters\nExec unshares files before CLOEXEC scrub; counting zero members or off-by-one on the member threshold either leaks shared fds across exec or double-retains pipes. No existing test exercises unshare.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| `**member != 0` -> `== 0` | PASS (survives) | FAIL (killed) |\n| `> 1` -> `>= 1` | PASS (survives) | FAIL (killed) |\n\nBaseline: PASS. Reproduce: `cargo test -p ginux-process --lib unshare_copies_shared`.\n\nPrepared with AI assistance; reviewed by me.\n",
+   "mutants": [
+    {
+     "name": "filter-zero",
+     "old": "            .filter(|member| **member != 0)",
+     "new": "            .filter(|member| **member == 0)",
+     "line": 1539
+    },
+    {
+     "name": "threshold-ge1",
+     "old": "            > 1",
+     "new": "            >= 1",
+     "line": 1541
+    }
+   ]
+  },
+  "archived_utc": "2026-11-28",
+  "reason": "merged upstream PR #363-#369 (2026-11-27T20:41-21:10Z)"
+ },
+ {
+  "entry": {
+   "name": "kernel-views-cgroup-remove-busy",
+   "crate": "ginux-kernel-views",
+   "file": "crates/ginux-kernel-views/src/cgroup.rs",
+   "fn": "remove_busy_only_for_active_children_not_inactive_slots",
+   "filter": "remove_busy_only",
+   "title": "tests(kernel-views): pin cgroup remove busy guard for active children",
+   "test": "\n    #[test]\n    fn remove_busy_only_for_active_children_not_inactive_slots() {\n        let mut cg: CgroupFs<4> = CgroupFs::new();\n        cg.create(b\"/a.slice\", 0).unwrap();\n        cg.create(b\"/a.slice/child\", 0).unwrap();\n        // active child blocks parent removal (Busy), even with zero members\n        assert_eq!(cg.remove(b\"/a.slice\", 0), Err(ViewError::Busy));\n        // leaf with no children and no members removes cleanly\n        cg.remove(b\"/a.slice/child\", 0).unwrap();\n        cg.remove(b\"/a.slice\", 0).unwrap();\n        // freed slots are inactive: must not block re-creation or sibling removal\n        cg.create(b\"/b.slice\", 0).unwrap();\n        cg.create(b\"/b.slice/kid\", 0).unwrap();\n        cg.remove(b\"/b.slice/kid\", 0).unwrap();\n        cg.remove(b\"/b.slice\", 0).unwrap();\n        // root is never removable; non-root uid denied\n        assert_eq!(cg.remove(b\"/\", 0), Err(ViewError::PermissionDenied));\n        cg.create(b\"/c.slice\", 0).unwrap();\n        assert_eq!(cg.remove(b\"/c.slice\", 1000), Err(ViewError::PermissionDenied));\n        cg.remove(b\"/c.slice\", 0).unwrap();\n    }\n",
+   "body": "### What\nPins `remove` busy semantics: an active child group blocks parent removal, leaf groups remove cleanly, freed inactive slots never block, root and non-root callers are denied.\n\n### Why it matters\nThe busy guard chains `active && path != self && parent == path`; flipping any operator lets parents of live children be removed (orphaning confinement) or blocks legitimate cleanup. Existing tests pin only the member-count branch.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| `group.active &&` -> `group.active ||` | PASS (survives) | FAIL (killed) |\n| `parent_path(...) == path` -> `!= path` | PASS (survives) | FAIL (killed) |\n\nBaseline: PASS. Reproduce: `cargo test -p ginux-kernel-views --lib remove_busy_only`.\n\nPrepared with AI assistance; reviewed by me.\n",
+   "mutants": [
+    {
+     "name": "active-or",
+     "old": "                group.active && group.path() != path && parent_path(group.path()) == path",
+     "new": "                group.active || group.path() != path && parent_path(group.path()) == path",
+     "line": 90
+    },
+    {
+     "name": "parent-neq",
+     "old": "                group.active && group.path() != path && parent_path(group.path()) == path",
+     "new": "                group.active && group.path() != path && parent_path(group.path()) != path",
+     "line": 90
+    }
+   ]
+  },
+  "archived_utc": "2026-11-28",
+  "reason": "merged upstream PR #363-#369 (2026-11-27T20:41-21:10Z)"
  }
 ]

@@ -1,12 +1,12 @@
 {
- "generated_utc": "2026-11-27T20:07:48Z",
- "main_sha": "8b857786882224c33182f2efeca846e8f660f18a",
+ "generated_utc": "2026-11-27T21:54:36Z",
+ "main_sha": "0f08bd4cd943dc8786b9182454fc572dd566cc6f",
  "total_survivors": 638,
  "dropped": {
   "cosmetic": 16,
   "stale-line": 7,
   "no-fn": 2,
-  "covered": 46,
+  "covered": 48,
   "unsynth": 164
  },
  "candidates": [
@@ -1667,72 +1667,6 @@
   {
    "crate": "ginux-process",
    "file": "crates/ginux-process/src/lib.rs",
-   "function": "unshare",
-   "span": [
-    1532,
-    1546
-   ],
-   "live_mutants": 5,
-   "ready_count": 4,
-   "score": 41,
-   "mutants": [
-    {
-     "line": 1533,
-     "desc": "replace PipeSpace<TASKS, FDS, PIPES>::unshare -> Result<(), ProcessError> with Ok(())",
-     "source_line": "let Some(slot) = self.task_index(task) else {"
-    },
-    {
-     "line": 1539,
-     "desc": "replace != with == in PipeSpace<TASKS, FDS, PIPES>::unshare",
-     "source_line": ".filter(|member| **member != 0)"
-    },
-    {
-     "line": 1541,
-     "desc": "replace > with < in PipeSpace<TASKS, FDS, PIPES>::unshare",
-     "source_line": "> 1"
-    },
-    {
-     "line": 1541,
-     "desc": "replace > with == in PipeSpace<TASKS, FDS, PIPES>::unshare",
-     "source_line": "> 1"
-    },
-    {
-     "line": 1541,
-     "desc": "replace > with >= in PipeSpace<TASKS, FDS, PIPES>::unshare",
-     "source_line": "> 1"
-    }
-   ],
-   "ready_mutants": [
-    {
-     "name": "op2val-1539c39",
-     "old": "            .filter(|member| **member != 0)",
-     "new": "            .filter(|member| **member == 0)",
-     "line": 1539
-    },
-    {
-     "name": "op2val-1541c13",
-     "old": "            > 1",
-     "new": "            < 1",
-     "line": 1541
-    },
-    {
-     "name": "op2val-1541c13",
-     "old": "            > 1",
-     "new": "            == 1",
-     "line": 1541
-    },
-    {
-     "name": "op2val-1541c13",
-     "old": "            > 1",
-     "new": "            >= 1",
-     "line": 1541
-    }
-   ],
-   "fn_source": "    pub fn unshare(&mut self, task: u32) -> Result<(), ProcessError> {\n        let Some(slot) = self.task_index(task) else {\n            return Ok(());\n        };\n        if self.tasks[slot]\n            .members\n            .iter()\n            .filter(|member| **member != 0)\n            .count()\n            > 1\n        {\n            self.inherit(task, task)?;\n        }\n        Ok(())\n    }"
-  },
-  {
-   "crate": "ginux-process",
-   "file": "crates/ginux-process/src/lib.rs",
    "function": "add",
    "span": [
     1019,
@@ -2361,6 +2295,45 @@
     }
    ],
    "fn_source": "    pub fn views(&self, output: &mut [TaskView]) -> usize {\n        let mut count = 0usize;\n        for task in self.tasks.iter().filter(|task| task.occupied) {\n            if count == output.len() {\n                break;\n            }\n            output[count] = TaskView {\n                id: task.id,\n                tgid: task.tgid,\n                parent: task.parent,\n                process_group: task.process_group,\n                session: task.session,\n                state: task.state,\n                credentials: task.credentials,\n                exec_epoch: task.exec_epoch,\n            };\n            count += 1;\n        }\n        count\n    }"
+  },
+  {
+   "crate": "ginux-process",
+   "file": "crates/ginux-process/src/lib.rs",
+   "function": "has_waitable_child",
+   "span": [
+    528,
+    542
+   ],
+   "live_mutants": 3,
+   "ready_count": 1,
+   "score": 30,
+   "mutants": [
+    {
+     "line": 533,
+     "desc": "replace ProcessTable<TASKS>::has_waitable_child -> Result<bool, ProcessError> with Ok(false)",
+     "source_line": "let parent_index = self.index(parent)?;"
+    },
+    {
+     "line": 533,
+     "desc": "replace ProcessTable<TASKS>::has_waitable_child -> Result<bool, ProcessError> with Ok(true)",
+     "source_line": "let parent_index = self.index(parent)?;"
+    },
+    {
+     "line": 534,
+     "desc": "replace != with == in ProcessTable<TASKS>::has_waitable_child",
+     "source_line": "if self.tasks[parent_index].state != TaskState::Running {"
+    }
+   ],
+   "ready_mutants": [
+    {
+     "name": "op2val-534c43",
+     "old": "        if self.tasks[parent_index].state != TaskState::Running {",
+     "new": "        if self.tasks[parent_index].state == TaskState::Running {",
+     "line": 534,
+     "context": "    ) -> Result<bool, ProcessError> {\n        let parent_index = self.index(parent)?;\n        if self.tasks[parent_index].state != TaskState::Running {\n            return Err(ProcessError::InvalidState);\n        }"
+    }
+   ],
+   "fn_source": "    pub fn has_waitable_child(\n        &self,\n        parent: TaskId,\n        target: WaitTarget,\n    ) -> Result<bool, ProcessError> {\n        let parent_index = self.index(parent)?;\n        if self.tasks[parent_index].state != TaskState::Running {\n            return Err(ProcessError::InvalidState);\n        }\n        let parent_pid = self.tasks[parent_index].tgid;\n        Ok(self\n            .tasks\n            .iter()\n            .any(|task| self.is_waitable_child(task, parent_pid, target)))\n    }"
   }
  ],
  "crate_balanced_top": {
@@ -2394,14 +2367,6 @@
    {
     "crate": "ginux-process",
     "file": "crates/ginux-process/src/lib.rs",
-    "function": "unshare",
-    "score": 41,
-    "live_mutants": 5,
-    "ready_count": 4
-   },
-   {
-    "crate": "ginux-process",
-    "file": "crates/ginux-process/src/lib.rs",
     "function": "add",
     "score": 40,
     "live_mutants": 5,
@@ -2412,6 +2377,14 @@
     "file": "crates/ginux-process/src/lib.rs",
     "function": "update",
     "score": 39,
+    "live_mutants": 4,
+    "ready_count": 4
+   },
+   {
+    "crate": "ginux-process",
+    "file": "crates/ginux-process/src/lib.rs",
+    "function": "exec_group",
+    "score": 37,
     "live_mutants": 4,
     "ready_count": 4
    }
@@ -2469,14 +2442,6 @@
    }
   ],
   "ginux-kernel-views": [
-   {
-    "crate": "ginux-kernel-views",
-    "file": "crates/ginux-kernel-views/src/cgroup.rs",
-    "function": "remove",
-    "score": 22,
-    "live_mutants": 4,
-    "ready_count": 4
-   },
    {
     "crate": "ginux-kernel-views",
     "file": "crates/ginux-kernel-views/src/cgroup.rs",
@@ -2563,14 +2528,6 @@
    "score": 41,
    "live_mutants": 12,
    "ready_count": 12
-  },
-  {
-   "crate": "ginux-process",
-   "file": "crates/ginux-process/src/lib.rs",
-   "function": "unshare",
-   "score": 41,
-   "live_mutants": 5,
-   "ready_count": 4
   },
   {
    "crate": "ginux-process",
@@ -2803,14 +2760,6 @@
    "score": 23,
    "live_mutants": 3,
    "ready_count": 1
-  },
-  {
-   "crate": "ginux-kernel-views",
-   "file": "crates/ginux-kernel-views/src/cgroup.rs",
-   "function": "remove",
-   "score": 22,
-   "live_mutants": 4,
-   "ready_count": 4
   },
   {
    "crate": "ginux-instance",
