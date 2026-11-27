@@ -1,6 +1,6 @@
 {
- "last_seen_sha": "7accbf1dfba96c7af478fd6cb88b42721ff6b976",
- "last_checked": "2026-11-25T21:49:42Z",
+ "last_seen_sha": "db49263d4a3a66317c862f1a047624c65f651630",
+ "last_checked": "2026-11-27T01:43:09Z",
  "last_dispatch": {
   "at": "2026-11-05T02:56:29Z",
   "range": "4d4a53bb..d337713b",
@@ -28,7 +28,7 @@
    "updated_at": "2026-11-13T02:27:17Z",
    "last_comment_at": "2026-11-13T02:27:13Z",
    "last_comment_author": "gmkurtzer",
-   "checked": "2026-11-25T21:49:42Z"
+   "checked": "2026-11-27T01:43:09Z"
   },
   "207": {
    "state": "closed",
@@ -37,7 +37,7 @@
    "updated_at": "2026-11-13T02:58:34Z",
    "last_comment_at": "2026-11-13T02:58:33Z",
    "last_comment_author": "gmkurtzer",
-   "checked": "2026-11-25T21:49:42Z"
+   "checked": "2026-11-27T01:43:09Z"
   },
   "227": {
    "state": "merged",
@@ -46,7 +46,7 @@
    "updated_at": "2026-11-13T02:27:02Z",
    "last_comment_at": "2026-11-06T14:58:30Z",
    "last_comment_author": "gmkurtzer",
-   "checked": "2026-11-25T21:49:42Z"
+   "checked": "2026-11-27T01:43:09Z"
   }
  },
  "breaker_absorbed": {
@@ -91,9 +91,9 @@
   }
  },
  "heartbeat": {
-  "last_run": "2026-11-27T00:51:05Z",
-  "last_conclusion": "failure",
-  "last_success": "2026-11-25T21:49:42Z",
+  "last_run": "2026-11-27T01:43:09Z",
+  "last_conclusion": "success",
+  "last_success": "2026-11-27T01:43:09Z",
   "alert_basis": "last_success",
   "source": "team-watcher (GitHub Actions)",
   "checked": "2026-11-27T00:51:05Z",
@@ -102,53 +102,29 @@
  "alert_threshold_hours": 12,
  "scheduling": "best-effort (GitHub Actions)",
  "our_open_prs": {
-  "344": {
-   "title": "tests(vfs): pin encode_record path and link validation",
+  "362": {
+   "title": "tests(process): pin exec_scrub cloexec-only teardown and pipe release",
    "state": "open",
-   "head_sha": "1912da9846c305ba0d7891c2444205ad8d3e1a2e",
-   "base_sha": "7accbf1dfba96c7af478fd6cb88b42721ff6b976",
+   "head_sha": "f04b15177d39eb87ef4a3d9bdbfe62a2c7d5e075",
+   "base_sha": "db49263d4a3a66317c862f1a047624c65f651630",
    "stale": false,
    "mergeable_state": "clean",
    "comments": null,
    "review_comments": null,
-   "updated_at": "2026-11-25T21:36:29Z",
-   "checked": "2026-11-25T21:49:42Z"
+   "updated_at": "2026-11-27T01:32:32Z",
+   "checked": "2026-11-27T01:43:09Z"
   },
-  "342": {
-   "title": "tests(core): pin balanced surface mapping for random and lifecycle",
+  "361": {
+   "title": "tests(instance): pin validate vcpu and memory bounds",
    "state": "open",
-   "head_sha": "4c58a1a2e536d235b1441ce182f9691d2e257648",
-   "base_sha": "7accbf1dfba96c7af478fd6cb88b42721ff6b976",
+   "head_sha": "77f262f60c9e4857ddf519976255ca01c0e82528",
+   "base_sha": "db49263d4a3a66317c862f1a047624c65f651630",
    "stale": false,
    "mergeable_state": "clean",
    "comments": null,
    "review_comments": null,
-   "updated_at": "2026-11-25T21:35:45Z",
-   "checked": "2026-11-25T21:49:42Z"
-  },
-  "341": {
-   "title": "tests(fs-policy): pin ObjectId availability to either nonzero component",
-   "state": "open",
-   "head_sha": "7fae9b1be633fd857e66fca59a17b2764dceca0d",
-   "base_sha": "7accbf1dfba96c7af478fd6cb88b42721ff6b976",
-   "stale": false,
-   "mergeable_state": "clean",
-   "comments": null,
-   "review_comments": null,
-   "updated_at": "2026-11-25T20:05:59Z",
-   "checked": "2026-11-25T21:49:42Z"
-  },
-  "340": {
-   "title": "tests(core): pin balanced virtual parent and group identity",
-   "state": "open",
-   "head_sha": "51a4f2db8b0ec7edc91d3736e54bf034eb8872da",
-   "base_sha": "7accbf1dfba96c7af478fd6cb88b42721ff6b976",
-   "stale": false,
-   "mergeable_state": "clean",
-   "comments": null,
-   "review_comments": null,
-   "updated_at": "2026-11-25T20:04:26Z",
-   "checked": "2026-11-25T21:49:42Z"
+   "updated_at": "2026-11-27T01:32:14Z",
+   "checked": "2026-11-27T01:43:09Z"
   }
  }
 }
