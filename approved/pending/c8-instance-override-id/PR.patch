@@ -1,6 +1,6 @@
-From 46e4d70c715a6dd200f248a74794194f5910422a Mon Sep 17 00:00:00 2001
+From d0a4bb125e25997c7a115232a2acd0d7995b881e Mon Sep 17 00:00:00 2001
 From: ginux-watch-agent <actions@users.noreply.github.com>
-Date: Fri, 27 Nov 2026 09:20:44 +0000
+Date: Fri, 27 Nov 2026 10:40:52 +0000
 Subject: [PATCH] tests(instance): pin instance.id override and unknown-key
  rejection
 
@@ -41,5 +41,5 @@ index d5f17444..8541eb9a 100644
 +    }
  }
 -- 
-2.56.1
+2.47.3
 
