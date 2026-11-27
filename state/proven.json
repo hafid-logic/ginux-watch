@@ -15,38 +15,6 @@
    }
   ]
  },
- "c8-core-wait4-pid-admission": {
-  "proven": false,
-  "baseline": true,
-  "mutants": [
-   {
-    "name": "wait4-gt1",
-    "survives": false,
-    "killed": true
-   },
-   {
-    "name": "wait4-true",
-    "survives": false,
-    "killed": true
-   }
-  ]
- },
- "c8-devices-random-zero-determinism": {
-  "proven": false,
-  "baseline": false,
-  "mutants": [
-   {
-    "name": "zero-fill-1",
-    "survives": false,
-    "killed": true
-   },
-   {
-    "name": "rand-byte-0",
-    "survives": false,
-    "killed": true
-   }
-  ]
- },
  "c8-instance-derive-grants": {
   "proven": false,
   "why": "apply-fail"
