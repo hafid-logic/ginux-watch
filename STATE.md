@@ -9,6 +9,7 @@
   الرأس `4f036ce`. الحالة: جاهزة، تنتظر نشر المشغّل (تصنيف: حسّاس؛ لا تفاصيل استغلال علنية).
 
 ## الحالة الراهنة
+- **طلبات upstream المفتوحة:** #361 (instance validate bounds)، #362 (process exec_scrub cloexec) — فُتحا بشريًا من الاحتياط المُشفى.
 - **طلبات upstream المفتوحة (حسابي):** #335 (procfs task-path identity)، #336 (sysfs device-kind)، #337 (devices views instance-isolation). الفتح بشري دائمًا؛ الـautopilot يدفع الاحتياط فقط.
 - **upstream [MEASURED 2026-11-24T14:4xZ]:** main عند `fe4d904d`. دمجاتنا 9:
   #227، #295، #296، #310 (oci-reference-guards)، #311 (allocator c_char)، #312 (devices descriptors)،
