@@ -110,5 +110,53 @@
    }
   ],
   "body": "### What\nPins `pipe_ends`: pipe 0 and out-of-range ids report 0, live pipes report their end count, freed slots report 0, reused slots report fresh counts.\n\n### Why it matters\nDiagnostics drive leak checks; dropping the zero guard indexes pipe 0 - 1 (underflow) and returning 0 for live pipes misreports leaks. No existing test exercises these edges.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| disable `pipe == 0` guard | PASS (survives) | FAIL (killed) |\n| return 0 for live pipes | PASS (survives) | FAIL (killed) |\n\nBaseline: PASS. Reproduce: `cargo test -p ginux-process --lib pipe_ends_reports`.\n\nPrepared with AI assistance; reviewed by me.\n"
+ },
+ {
+  "name": "process-unshare-copy",
+  "crate": "ginux-process",
+  "file": "crates/ginux-process/src/lib.rs",
+  "fn": "unshare_copies_shared_table_and_solo_is_noop",
+  "filter": "unshare_copies_shared",
+  "title": "tests(process): pin unshare private-copy, solo no-op, and unknown-task edges",
+  "test": "\n    #[test]\n    fn unshare_copies_shared_table_and_solo_is_noop() {\n        let mut pipes: PipeSpace<4, 8, 4> = PipeSpace::new();\n        let id = pipes.create_pipe(1, 0, 1, false).unwrap();\n        assert_eq!(pipes.pipe_ends(id), 2);\n        // solo task: unshare must be a no-op (no extra retain, fds intact)\n        pipes.unshare(1).unwrap();\n        assert_eq!(pipes.pipe_ends(id), 2);\n        assert!(pipes.lookup(1, 0).is_some());\n        // share with task 2, then unshare task 1: private copy keeps both ends\n        pipes.share(2, 1).unwrap();\n        pipes.unshare(1).unwrap();\n        assert!(pipes.lookup(1, 0).is_some());\n        assert!(pipes.lookup(1, 1).is_some());\n        assert_eq!(pipes.pipe_ends(id), 4);\n        // task 2 still shares the original table; closing its ends frees only its refs\n        pipes.close(2, 0).unwrap();\n        pipes.close(2, 1).unwrap();\n        assert_eq!(pipes.pipe_ends(id), 2);\n        assert!(pipes.lookup(1, 0).is_some());\n        // unknown task: Ok, nothing allocated\n        pipes.unshare(99).unwrap();\n        assert_eq!(pipes.task_fds(99), 0);\n    }\n",
+  "body": "### What\nPins `unshare`: a shared descriptor table is copied privately (pipe ends retained), a solo task is a no-op, and unknown tasks return Ok without allocation.\n\n### Why it matters\nExec unshares files before CLOEXEC scrub; counting zero members or off-by-one on the member threshold either leaks shared fds across exec or double-retains pipes. No existing test exercises unshare.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| `**member != 0` -> `== 0` | PASS (survives) | FAIL (killed) |\n| `> 1` -> `>= 1` | PASS (survives) | FAIL (killed) |\n\nBaseline: PASS. Reproduce: `cargo test -p ginux-process --lib unshare_copies_shared`.\n\nPrepared with AI assistance; reviewed by me.\n",
+  "mutants": [
+   {
+    "name": "filter-zero",
+    "old": "            .filter(|member| **member != 0)",
+    "new": "            .filter(|member| **member == 0)",
+    "line": 1539
+   },
+   {
+    "name": "threshold-ge1",
+    "old": "            > 1",
+    "new": "            >= 1",
+    "line": 1541
+   }
+  ]
+ },
+ {
+  "name": "kernel-views-cgroup-remove-busy",
+  "crate": "ginux-kernel-views",
+  "file": "crates/ginux-kernel-views/src/cgroup.rs",
+  "fn": "remove_busy_only_for_active_children_not_inactive_slots",
+  "filter": "remove_busy_only",
+  "title": "tests(kernel-views): pin cgroup remove busy guard for active children",
+  "test": "\n    #[test]\n    fn remove_busy_only_for_active_children_not_inactive_slots() {\n        let mut cg: CgroupFs<4> = CgroupFs::new();\n        cg.create(b\"/a.slice\", 0).unwrap();\n        cg.create(b\"/a.slice/child\", 0).unwrap();\n        // active child blocks parent removal (Busy), even with zero members\n        assert_eq!(cg.remove(b\"/a.slice\", 0), Err(ViewError::Busy));\n        // leaf with no children and no members removes cleanly\n        cg.remove(b\"/a.slice/child\", 0).unwrap();\n        cg.remove(b\"/a.slice\", 0).unwrap();\n        // freed slots are inactive: must not block re-creation or sibling removal\n        cg.create(b\"/b.slice\", 0).unwrap();\n        cg.create(b\"/b.slice/kid\", 0).unwrap();\n        cg.remove(b\"/b.slice/kid\", 0).unwrap();\n        cg.remove(b\"/b.slice\", 0).unwrap();\n        // root is never removable; non-root uid denied\n        assert_eq!(cg.remove(b\"/\", 0), Err(ViewError::PermissionDenied));\n        cg.create(b\"/c.slice\", 0).unwrap();\n        assert_eq!(cg.remove(b\"/c.slice\", 1000), Err(ViewError::PermissionDenied));\n        cg.remove(b\"/c.slice\", 0).unwrap();\n    }\n",
+  "body": "### What\nPins `remove` busy semantics: an active child group blocks parent removal, leaf groups remove cleanly, freed inactive slots never block, root and non-root callers are denied.\n\n### Why it matters\nThe busy guard chains `active && path != self && parent == path`; flipping any operator lets parents of live children be removed (orphaning confinement) or blocks legitimate cleanup. Existing tests pin only the member-count branch.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| `group.active &&` -> `group.active ||` | PASS (survives) | FAIL (killed) |\n| `parent_path(...) == path` -> `!= path` | PASS (survives) | FAIL (killed) |\n\nBaseline: PASS. Reproduce: `cargo test -p ginux-kernel-views --lib remove_busy_only`.\n\nPrepared with AI assistance; reviewed by me.\n",
+  "mutants": [
+   {
+    "name": "active-or",
+    "old": "                group.active && group.path() != path && parent_path(group.path()) == path",
+    "new": "                group.active || group.path() != path && parent_path(group.path()) == path",
+    "line": 90
+   },
+   {
+    "name": "parent-neq",
+    "old": "                group.active && group.path() != path && parent_path(group.path()) == path",
+    "new": "                group.active && group.path() != path && parent_path(group.path()) != path",
+    "line": 90
+   }
+  ]
  }
 ]

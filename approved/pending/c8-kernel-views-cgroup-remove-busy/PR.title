@@ -1,0 +1,1 @@
+tests(kernel-views): pin cgroup remove busy guard for active children

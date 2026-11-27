@@ -1,0 +1,19 @@
+{
+ "crate": "ginux-kernel-views",
+ "file": "crates/ginux-kernel-views/src/cgroup.rs",
+ "filter": "remove_busy_only",
+ "mutants": [
+  {
+   "name": "active-or",
+   "old": "                group.active && group.path() != path && parent_path(group.path()) == path",
+   "new": "                group.active || group.path() != path && parent_path(group.path()) == path",
+   "line": 90
+  },
+  {
+   "name": "parent-neq",
+   "old": "                group.active && group.path() != path && parent_path(group.path()) == path",
+   "new": "                group.active && group.path() != path && parent_path(group.path()) != path",
+   "line": 90
+  }
+ ]
+}

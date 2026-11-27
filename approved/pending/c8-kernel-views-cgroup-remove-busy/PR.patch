@@ -1,0 +1,62 @@
+From 0463581ddb762136cad4aa60539d0af08bf649e7 Mon Sep 17 00:00:00 2001
+From: ginux-watch-agent <actions@users.noreply.github.com>
+Date: Fri, 27 Nov 2026 20:09:30 +0000
+Subject: [PATCH] tests(kernel-views): pin cgroup remove busy guard for active
+ children
+
+### What
+Pins `remove` busy semantics: an active child group blocks parent removal, leaf groups remove cleanly, freed inactive slots never block, root and non-root callers are denied.
+
+### Why it matters
+The busy guard chains `active && path != self && parent == path`; flipping any operator lets parents of live children be removed (orphaning confinement) or blocks legitimate cleanup. Existing tests pin only the member-count branch.
+
+### Mutation evidence (fail-then-pass)
+| Mutant | Existing suite | New test |
+|---|---|---|
+| `group.active &&` -> `group.active ||` | PASS (survives) | FAIL (killed) |
+| `parent_path(...) == path` -> `!= path` | PASS (survives) | FAIL (killed) |
+
+Baseline: PASS. Reproduce: `cargo test -p ginux-kernel-views --lib remove_busy_only`.
+
+Prepared with AI assistance; reviewed by me.
+---
+ crates/ginux-kernel-views/src/cgroup.rs | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
+
+diff --git a/crates/ginux-kernel-views/src/cgroup.rs b/crates/ginux-kernel-views/src/cgroup.rs
+index 69cc6bee..461e7b7c 100644
+--- a/crates/ginux-kernel-views/src/cgroup.rs
++++ b/crates/ginux-kernel-views/src/cgroup.rs
+@@ -441,4 +441,29 @@ mod tests {
+         cgroups.write(b"/b/pids.max", b"1\n", 0).unwrap();
+         assert_eq!(cgroups.attach(b"/b", 8, 0), Err(ViewError::LimitExceeded));
+     }
++
++    #[test]
++    fn remove_busy_only_for_active_children_not_inactive_slots() {
++        let mut cg: CgroupFs<4> = CgroupFs::new();
++        cg.create(b"/a.slice", 0).unwrap();
++        cg.create(b"/a.slice/child", 0).unwrap();
++        // active child blocks parent removal (Busy), even with zero members
++        assert_eq!(cg.remove(b"/a.slice", 0), Err(ViewError::Busy));
++        // leaf with no children and no members removes cleanly
++        cg.remove(b"/a.slice/child", 0).unwrap();
++        cg.remove(b"/a.slice", 0).unwrap();
++        // freed slots are inactive: must not block re-creation or sibling removal
++        cg.create(b"/b.slice", 0).unwrap();
++        cg.create(b"/b.slice/kid", 0).unwrap();
++        cg.remove(b"/b.slice/kid", 0).unwrap();
++        cg.remove(b"/b.slice", 0).unwrap();
++        // root is never removable; non-root uid denied
++        assert_eq!(cg.remove(b"/", 0), Err(ViewError::PermissionDenied));
++        cg.create(b"/c.slice", 0).unwrap();
++        assert_eq!(
++            cg.remove(b"/c.slice", 1000),
++            Err(ViewError::PermissionDenied)
++        );
++        cg.remove(b"/c.slice", 0).unwrap();
++    }
+ }
+-- 
+2.47.3
+

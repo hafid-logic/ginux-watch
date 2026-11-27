@@ -1,12 +1,13 @@
 {
- "generated_utc": "2026-11-27T18:44:19Z",
+ "generated_utc": "2026-11-27T20:07:48Z",
  "main_sha": "8b857786882224c33182f2efeca846e8f660f18a",
  "total_survivors": 638,
  "dropped": {
   "cosmetic": 16,
   "stale-line": 7,
   "no-fn": 2,
-  "covered": 43
+  "covered": 46,
+  "unsynth": 164
  },
  "candidates": [
   {
@@ -18,6 +19,7 @@
     816
    ],
    "live_mutants": 76,
+   "ready_count": 60,
    "score": 242,
    "mutants": [
     {
@@ -401,6 +403,368 @@
      "source_line": "b\"fail\" => FailurePolicy::Fail,"
     }
    ],
+   "ready_mutants": [
+    {
+     "name": "del-arm-679",
+     "old": "            b\"instance.id\" => self.id = parse_string(value)?,\n",
+     "new": "",
+     "line": 679
+    },
+    {
+     "name": "del-arm-680",
+     "old": "            b\"instance.root\" => self.root = parse_string(value)?,\n",
+     "new": "",
+     "line": 680
+    },
+    {
+     "name": "del-arm-681",
+     "old": "            b\"instance.init\" => self.init = parse_string(value)?,\n",
+     "new": "",
+     "line": 681
+    },
+    {
+     "name": "del-arm-682",
+     "old": "            b\"instance.args\" => self.args = parse_list(value)?,\n",
+     "new": "",
+     "line": 682
+    },
+    {
+     "name": "del-arm-683",
+     "old": "            b\"instance.environment\" => self.environment = parse_list(value)?,\n",
+     "new": "",
+     "line": 683
+    },
+    {
+     "name": "del-arm-684",
+     "old": "            b\"instance.workdir\" => self.workdir = parse_string(value)?,\n",
+     "new": "",
+     "line": 684
+    },
+    {
+     "name": "del-arm-687",
+     "old": "            b\"resources.memory_mib\" => self.memory_mib = parse_u64(value)?,\n",
+     "new": "",
+     "line": 687
+    },
+    {
+     "name": "del-arm-690",
+     "old": "                    b\"security\" => ExecutionProfile::Security,\n",
+     "new": "",
+     "line": 690
+    },
+    {
+     "name": "del-arm-691",
+     "old": "                    b\"balanced\" => ExecutionProfile::Balanced,\n",
+     "new": "",
+     "line": 691
+    },
+    {
+     "name": "del-arm-692",
+     "old": "                    b\"performance\" => ExecutionProfile::Performance,\n",
+     "new": "",
+     "line": 692
+    },
+    {
+     "name": "del-arm-698",
+     "old": "                    b\"interpreter\" => ExecutionBackend::Interpreter,\n",
+     "new": "",
+     "line": 698
+    },
+    {
+     "name": "del-arm-699",
+     "old": "                    b\"ptrace-sysemu\" => ExecutionBackend::PtraceSysemu,\n",
+     "new": "",
+     "line": 699
+    },
+    {
+     "name": "del-arm-700",
+     "old": "                    b\"ptrace-native\" => ExecutionBackend::PtraceNative,\n",
+     "new": "",
+     "line": 700
+    },
+    {
+     "name": "del-arm-706",
+     "old": "                    b\"paranoid\" => DispatchMode::Paranoid,\n",
+     "new": "",
+     "line": 706
+    },
+    {
+     "name": "del-arm-707",
+     "old": "                    b\"selective\" => DispatchMode::Selective,\n",
+     "new": "",
+     "line": 707
+    },
+    {
+     "name": "del-arm-711",
+     "old": "            b\"contract.version\" => self.contract_recipe_version = parse_u64(value)?,\n",
+     "new": "",
+     "line": 711
+    },
+    {
+     "name": "del-arm-712",
+     "old": "            b\"contract.catalog\" => self.contract_catalog_version = parse_u64(value)?,\n",
+     "new": "",
+     "line": 712
+    },
+    {
+     "name": "del-arm-713",
+     "old": "            b\"contract.default\" => self.contract_default = parse_contract_default(value)?,\n",
+     "new": "",
+     "line": 713
+    },
+    {
+     "name": "del-arm-715",
+     "old": "            b\"contract.deny\" => self.contract_deny = parse_list(value)?,\n",
+     "new": "",
+     "line": 715
+    },
+    {
+     "name": "del-arm-720",
+     "old": "            b\"contract.syscalls.allow\" => self.contract_exact_allow = parse_syscall_list(value)?,\n",
+     "new": "",
+     "line": 720
+    },
+    {
+     "name": "del-arm-721",
+     "old": "            b\"contract.syscalls.deny\" => self.contract_exact_deny = parse_syscall_list(value)?,\n",
+     "new": "",
+     "line": 721
+    },
+    {
+     "name": "del-arm-725",
+     "old": "            b\"contract.filesystem.read\" => self.filesystem_read = parse_list(value)?,\n",
+     "new": "",
+     "line": 725
+    },
+    {
+     "name": "del-arm-726",
+     "old": "            b\"contract.filesystem.write\" => self.filesystem_write = parse_list(value)?,\n",
+     "new": "",
+     "line": 726
+    },
+    {
+     "name": "del-arm-727",
+     "old": "            b\"contract.filesystem.create\" => self.filesystem_create = parse_list(value)?,\n",
+     "new": "",
+     "line": 727
+    },
+    {
+     "name": "del-arm-728",
+     "old": "            b\"contract.filesystem.deny\" => self.filesystem_write_deny = parse_list(value)?,\n",
+     "new": "",
+     "line": 728
+    },
+    {
+     "name": "del-arm-732",
+     "old": "            b\"contract.network.inbound\" => self.ingress_allow = parse_list(value)?,\n",
+     "new": "",
+     "line": 732
+    },
+    {
+     "name": "del-arm-733",
+     "old": "            b\"contract.network.outbound\" => self.egress_allow = parse_list(value)?,\n",
+     "new": "",
+     "line": 733
+    },
+    {
+     "name": "del-arm-737",
+     "old": "            b\"contract.devices.read\" => self.device_read = parse_list(value)?,\n",
+     "new": "",
+     "line": 737
+    },
+    {
+     "name": "del-arm-738",
+     "old": "            b\"contract.devices.write\" => self.device_write = parse_list(value)?,\n",
+     "new": "",
+     "line": 738
+    },
+    {
+     "name": "del-741c48",
+     "old": "                self.filesystem_device_nodes = !self.device_create.as_slice().is_empty();",
+     "new": "                self.filesystem_device_nodes = self.device_create.as_slice().is_empty();",
+     "line": 741
+    },
+    {
+     "name": "del-arm-746",
+     "old": "            b\"contract.privileges.setuid\" => self.privilege_setuid = parse_list(value)?,\n",
+     "new": "",
+     "line": 746
+    },
+    {
+     "name": "del-arm-747",
+     "old": "            b\"contract.privileges.setgid\" => self.privilege_setgid = parse_list(value)?,\n",
+     "new": "",
+     "line": 747
+    },
+    {
+     "name": "del-arm-751",
+     "old": "            b\"contract.process.max_processes\" => self.process_max_processes = parse_u64(value)?,\n",
+     "new": "",
+     "line": 751
+    },
+    {
+     "name": "del-arm-752",
+     "old": "            b\"contract.process.max_threads\" => self.process_max_threads = parse_u64(value)?,\n",
+     "new": "",
+     "line": 752
+    },
+    {
+     "name": "del-arm-753",
+     "old": "            b\"contract.process.signals\" => self.process_signals = parse_list(value)?,\n",
+     "new": "",
+     "line": 753
+    },
+    {
+     "name": "del-arm-754",
+     "old": "            b\"contract.process.ptrace\" => self.process_ptrace = parse_allow_deny(value)?,\n",
+     "new": "",
+     "line": 754
+    },
+    {
+     "name": "del-arm-758",
+     "old": "            b\"contract.process.namespace_join\" => self.process_namespace_join = parse_list(value)?,\n",
+     "new": "",
+     "line": 758
+    },
+    {
+     "name": "del-arm-762",
+     "old": "            b\"contract.kernel.proc_read\" => self.kernel_proc_read = parse_list(value)?,\n",
+     "new": "",
+     "line": 762
+    },
+    {
+     "name": "del-arm-763",
+     "old": "            b\"contract.kernel.proc_write\" => self.kernel_proc_write = parse_list(value)?,\n",
+     "new": "",
+     "line": 763
+    },
+    {
+     "name": "del-arm-764",
+     "old": "            b\"contract.kernel.sys_read\" => self.kernel_sys_read = parse_list(value)?,\n",
+     "new": "",
+     "line": 764
+    },
+    {
+     "name": "del-arm-765",
+     "old": "            b\"contract.kernel.sys_write\" => self.kernel_sys_write = parse_list(value)?,\n",
+     "new": "",
+     "line": 765
+    },
+    {
+     "name": "del-arm-766",
+     "old": "            b\"storage.assignments\" => self.storage = parse_list(value)?,\n",
+     "new": "",
+     "line": 766
+    },
+    {
+     "name": "del-arm-767",
+     "old": "            b\"volumes.assignments\" => self.volumes = parse_list(value)?,\n",
+     "new": "",
+     "line": 767
+    },
+    {
+     "name": "del-arm-768",
+     "old": "            b\"devices.assignments\" => self.devices = parse_list(value)?,\n",
+     "new": "",
+     "line": 768
+    },
+    {
+     "name": "del-arm-771",
+     "old": "                    b\"none\" => NetworkBackend::None,\n",
+     "new": "",
+     "line": 771
+    },
+    {
+     "name": "del-arm-772",
+     "old": "                    b\"mediated\" => NetworkBackend::Mediated,\n",
+     "new": "",
+     "line": 772
+    },
+    {
+     "name": "del-arm-778",
+     "old": "            b\"network.source\" => self.network_source = parse_string(value)?,\n",
+     "new": "",
+     "line": 778
+    },
+    {
+     "name": "del-arm-779",
+     "old": "            b\"network.ingress_allow\" => self.ingress_allow = parse_list(value)?,\n",
+     "new": "",
+     "line": 779
+    },
+    {
+     "name": "del-arm-780",
+     "old": "            b\"network.ingress_deny\" => self.ingress_deny = parse_list(value)?,\n",
+     "new": "",
+     "line": 780
+    },
+    {
+     "name": "del-arm-781",
+     "old": "            b\"network.egress_allow\" => self.egress_allow = parse_list(value)?,\n",
+     "new": "",
+     "line": 781
+    },
+    {
+     "name": "del-arm-782",
+     "old": "            b\"network.egress_deny\" => self.egress_deny = parse_list(value)?,\n",
+     "new": "",
+     "line": 782
+    },
+    {
+     "name": "del-arm-784",
+     "old": "            b\"access.uid\" => self.access_uid = parse_u64(value)?,\n",
+     "new": "",
+     "line": 784
+    },
+    {
+     "name": "del-arm-785",
+     "old": "            b\"access.gid\" => self.access_gid = parse_u64(value)?,\n",
+     "new": "",
+     "line": 785
+    },
+    {
+     "name": "del-arm-786",
+     "old": "            b\"hooks.pre_boot\" => self.pre_boot_hooks = parse_list(value)?,\n",
+     "new": "",
+     "line": 786
+    },
+    {
+     "name": "del-arm-787",
+     "old": "            b\"hooks.timeout_seconds\" => self.hook_timeout_seconds = parse_u64(value)?,\n",
+     "new": "",
+     "line": 787
+    },
+    {
+     "name": "del-arm-790",
+     "old": "                    b\"stop\" => HookFailurePolicy::Stop,\n",
+     "new": "",
+     "line": 790
+    },
+    {
+     "name": "del-arm-791",
+     "old": "                    b\"continue\" => HookFailurePolicy::Continue,\n",
+     "new": "",
+     "line": 791
+    },
+    {
+     "name": "del-arm-795",
+     "old": "            b\"lifecycle.stop_timeout_seconds\" => self.stop_timeout_seconds = parse_u64(value)?,\n",
+     "new": "",
+     "line": 795
+    },
+    {
+     "name": "del-arm-808",
+     "old": "                    b\"stop\" => FailurePolicy::Stop,\n",
+     "new": "",
+     "line": 808
+    },
+    {
+     "name": "del-arm-809",
+     "old": "                    b\"fail\" => FailurePolicy::Fail,\n",
+     "new": "",
+     "line": 809
+    }
+   ],
    "fn_source": "    fn apply_override_inner(&mut self, key: &[u8], value: &[u8]) -> Result<(), ConfigError> {\n        match key {\n            b\"instance.id\" => self.id = parse_string(value)?,\n            b\"instance.root\" => self.root = parse_string(value)?,\n            b\"instance.init\" => self.init = parse_string(value)?,\n            b\"instance.args\" => self.args = parse_list(value)?,\n            b\"instance.environment\" => self.environment = parse_list(value)?,\n            b\"instance.workdir\" => self.workdir = parse_string(value)?,\n            b\"identity.hostname\" => self.hostname = parse_string(value)?,\n            b\"resources.vcpus\" => self.vcpus = parse_u64(value)?,\n            b\"resources.memory_mib\" => self.memory_mib = parse_u64(value)?,\n            b\"execution.profile\" => {\n                self.execution_profile = match parse_string::<32>(value)?.as_bytes() {\n                    b\"security\" => ExecutionProfile::Security,\n                    b\"balanced\" => ExecutionProfile::Balanced,\n                    b\"performance\" => ExecutionProfile::Performance,\n                    _ => return Err(ConfigError::InvalidValue),\n                }\n            }\n            b\"execution.backend\" => {\n                self.execution_backend = match parse_string::<32>(value)?.as_bytes() {\n                    b\"interpreter\" => ExecutionBackend::Interpreter,\n                    b\"ptrace-sysemu\" => ExecutionBackend::PtraceSysemu,\n                    b\"ptrace-native\" => ExecutionBackend::PtraceNative,\n                    _ => return Err(ConfigError::InvalidValue),\n                }\n            }\n            b\"contract.syscalls.control\" => {\n                self.dispatch_mode = match parse_string::<32>(value)?.as_bytes() {\n                    b\"paranoid\" => DispatchMode::Paranoid,\n                    b\"selective\" => DispatchMode::Selective,\n                    _ => return Err(ConfigError::InvalidValue),\n                }\n            }\n            b\"contract.version\" => self.contract_recipe_version = parse_u64(value)?,\n            b\"contract.catalog\" => self.contract_catalog_version = parse_u64(value)?,\n            b\"contract.default\" => self.contract_default = parse_contract_default(value)?,\n            b\"contract.allow\" => self.contract_allow = parse_list(value)?,\n            b\"contract.deny\" => self.contract_deny = parse_list(value)?,\n            b\"contract.digest\" => return Err(ConfigError::DerivedField),\n            b\"contract.syscalls.default\" => {\n                parse_contract_default(value)?;\n            }\n            b\"contract.syscalls.allow\" => self.contract_exact_allow = parse_syscall_list(value)?,\n            b\"contract.syscalls.deny\" => self.contract_exact_deny = parse_syscall_list(value)?,\n            b\"contract.filesystem.default\" => {\n                parse_contract_default(value)?;\n            }\n            b\"contract.filesystem.read\" => self.filesystem_read = parse_list(value)?,\n            b\"contract.filesystem.write\" => self.filesystem_write = parse_list(value)?,\n            b\"contract.filesystem.create\" => self.filesystem_create = parse_list(value)?,\n            b\"contract.filesystem.deny\" => self.filesystem_write_deny = parse_list(value)?,\n            b\"contract.network.default\" => {\n                parse_contract_default(value)?;\n            }\n            b\"contract.network.inbound\" => self.ingress_allow = parse_list(value)?,\n            b\"contract.network.outbound\" => self.egress_allow = parse_list(value)?,\n            b\"contract.devices.default\" => {\n                parse_contract_default(value)?;\n            }\n            b\"contract.devices.read\" => self.device_read = parse_list(value)?,\n            b\"contract.devices.write\" => self.device_write = parse_list(value)?,\n            b\"contract.devices.create\" => {\n                self.device_create = parse_list(value)?;\n                self.filesystem_device_nodes = !self.device_create.as_slice().is_empty();\n            }\n            b\"contract.privileges.default\" => {\n                parse_contract_default(value)?;\n            }\n            b\"contract.privileges.setuid\" => self.privilege_setuid = parse_list(value)?,\n            b\"contract.privileges.setgid\" => self.privilege_setgid = parse_list(value)?,\n            b\"contract.process.default\" => {\n                parse_contract_default(value)?;\n            }\n            b\"contract.process.max_processes\" => self.process_max_processes = parse_u64(value)?,\n            b\"contract.process.max_threads\" => self.process_max_threads = parse_u64(value)?,\n            b\"contract.process.signals\" => self.process_signals = parse_list(value)?,\n            b\"contract.process.ptrace\" => self.process_ptrace = parse_allow_deny(value)?,\n            b\"contract.process.namespace_create\" => {\n                self.process_namespace_create = parse_list(value)?\n            }\n            b\"contract.process.namespace_join\" => self.process_namespace_join = parse_list(value)?,\n            b\"contract.kernel.default\" => {\n                parse_contract_default(value)?;\n            }\n            b\"contract.kernel.proc_read\" => self.kernel_proc_read = parse_list(value)?,\n            b\"contract.kernel.proc_write\" => self.kernel_proc_write = parse_list(value)?,\n            b\"contract.kernel.sys_read\" => self.kernel_sys_read = parse_list(value)?,\n            b\"contract.kernel.sys_write\" => self.kernel_sys_write = parse_list(value)?,\n            b\"storage.assignments\" => self.storage = parse_list(value)?,\n            b\"volumes.assignments\" => self.volumes = parse_list(value)?,\n            b\"devices.assignments\" => self.devices = parse_list(value)?,\n            b\"network.backend\" => {\n                self.network_backend = match parse_string::<32>(value)?.as_bytes() {\n                    b\"none\" => NetworkBackend::None,\n                    b\"mediated\" => NetworkBackend::Mediated,\n                    b\"shared\" => NetworkBackend::Shared,\n                    _ => return Err(ConfigError::InvalidValue),\n                }\n            }\n            b\"network.interface\" => self.network_interface = parse_string(value)?,\n            b\"network.source\" => self.network_source = parse_string(value)?,\n            b\"network.ingress_allow\" => self.ingress_allow = parse_list(value)?,\n            b\"network.ingress_deny\" => self.ingress_deny = parse_list(value)?,\n            b\"network.egress_allow\" => self.egress_allow = parse_list(value)?,\n            b\"network.egress_deny\" => self.egress_deny = parse_list(value)?,\n            b\"network.port_forwards\" => self.port_forwards = parse_list(value)?,\n            b\"access.uid\" => self.access_uid = parse_u64(value)?,\n            b\"access.gid\" => self.access_gid = parse_u64(value)?,\n            b\"hooks.pre_boot\" => self.pre_boot_hooks = parse_list(value)?,\n            b\"hooks.timeout_seconds\" => self.hook_timeout_seconds = parse_u64(value)?,\n            b\"hooks.failure\" => {\n                self.hook_failure_policy = match parse_string::<32>(value)?.as_bytes() {\n                    b\"stop\" => HookFailurePolicy::Stop,\n                    b\"continue\" => HookFailurePolicy::Continue,\n                    _ => return Err(ConfigError::InvalidValue),\n                }\n            }\n            b\"lifecycle.stop_timeout_seconds\" => self.stop_timeout_seconds = parse_u64(value)?,\n            b\"audit.enabled\" => {\n                self.audit_mode = if parse_bool(value)? {\n                    AuditMode::Enabled\n                } else {\n                    AuditMode::Disabled\n                }\n            }\n            b\"audit.mode\" => {\n                self.audit_mode = parse_legacy_audit_mode(value)?;\n            }\n            b\"failure.policy\" => {\n                self.failure_policy = match parse_string::<32>(value)?.as_bytes() {\n                    b\"stop\" => FailurePolicy::Stop,\n                    b\"fail\" => FailurePolicy::Fail,\n                    _ => return Err(ConfigError::InvalidValue),\n                }\n            }\n            _ => return Err(ConfigError::UnknownField),\n        }\n        Ok(())\n    }"
   },
   {
@@ -412,6 +776,7 @@
     1813
    ],
    "live_mutants": 58,
+   "ready_count": 54,
    "score": 189,
    "mutants": [
     {
@@ -705,6 +1070,333 @@
      "source_line": "b\"fail\" => FailurePolicy::Fail,"
     }
    ],
+   "ready_mutants": [
+    {
+     "name": "op2val-1502c28",
+     "old": "            builder.mark(1 << 0)?;",
+     "new": "            builder.mark(1 >> 0)?;",
+     "line": 1502
+    },
+    {
+     "name": "op2val-1526c28",
+     "old": "            builder.mark(1 << 16)?;",
+     "new": "            builder.mark(1 >> 16)?;",
+     "line": 1526
+    },
+    {
+     "name": "del-arm-1554",
+     "old": "                b\"interpreter\" => ExecutionBackend::Interpreter,\n                b\"ptrace-sysemu\" => ExecutionBackend::PtraceSysemu,\n                b\"ptrace-native\" => ExecutionBackend::PtraceNative,",
+     "new": "                b\"interpreter\" => ExecutionBackend::Interpreter,\n\n                b\"ptrace-native\" => ExecutionBackend::PtraceNative,",
+     "line": 1554
+    },
+    {
+     "name": "op2val-1561c32",
+     "old": "            builder.mark(1u128 << 36)?;",
+     "new": "            builder.mark(1u128 >> 36)?;",
+     "line": 1561
+    },
+    {
+     "name": "op2val-1573c28",
+     "old": "            builder.mark(1 << 19)?;",
+     "new": "            builder.mark(1 >> 19)?;",
+     "line": 1573
+    },
+    {
+     "name": "op2val-1577c28",
+     "old": "            builder.mark(1 << 20)?;",
+     "new": "            builder.mark(1 >> 20)?;",
+     "line": 1577
+    },
+    {
+     "name": "op2val-1585c32",
+     "old": "            builder.mark(1u128 << 52)?;",
+     "new": "            builder.mark(1u128 >> 52)?;",
+     "line": 1585
+    },
+    {
+     "name": "op2val-1593c32",
+     "old": "            builder.mark(1u128 << 53)?;",
+     "new": "            builder.mark(1u128 >> 53)?;",
+     "line": 1593
+    },
+    {
+     "name": "op2val-1597c32",
+     "old": "            builder.mark(1u128 << 47)?;",
+     "new": "            builder.mark(1u128 >> 47)?;",
+     "line": 1597
+    },
+    {
+     "name": "op2val-1601c32",
+     "old": "            builder.mark(1u128 << 48)?;",
+     "new": "            builder.mark(1u128 >> 48)?;",
+     "line": 1601
+    },
+    {
+     "name": "op2val-1605c32",
+     "old": "            builder.mark(1u128 << 54)?;",
+     "new": "            builder.mark(1u128 >> 54)?;",
+     "line": 1605
+    },
+    {
+     "name": "op2val-1609c32",
+     "old": "            builder.mark(1u128 << 55)?;",
+     "new": "            builder.mark(1u128 >> 55)?;",
+     "line": 1609
+    },
+    {
+     "name": "op2val-1613c32",
+     "old": "            builder.mark(1u128 << 56)?;",
+     "new": "            builder.mark(1u128 >> 56)?;",
+     "line": 1613
+    },
+    {
+     "name": "op2val-1617c32",
+     "old": "            builder.mark(1u128 << 57)?;",
+     "new": "            builder.mark(1u128 >> 57)?;",
+     "line": 1617
+    },
+    {
+     "name": "op2val-1621c32",
+     "old": "            builder.mark(1u128 << 49)?;",
+     "new": "            builder.mark(1u128 >> 49)?;",
+     "line": 1621
+    },
+    {
+     "name": "op2val-1625c32",
+     "old": "            builder.mark(1u128 << 58)?;",
+     "new": "            builder.mark(1u128 >> 58)?;",
+     "line": 1625
+    },
+    {
+     "name": "op2val-1629c32",
+     "old": "            builder.mark(1u128 << 42)?;",
+     "new": "            builder.mark(1u128 >> 42)?;",
+     "line": 1629
+    },
+    {
+     "name": "op2val-1633c32",
+     "old": "            builder.mark(1u128 << 43)?;",
+     "new": "            builder.mark(1u128 >> 43)?;",
+     "line": 1633
+    },
+    {
+     "name": "op2val-1637c32",
+     "old": "            builder.mark(1u128 << 59)?;",
+     "new": "            builder.mark(1u128 >> 59)?;",
+     "line": 1637
+    },
+    {
+     "name": "op2val-1641c32",
+     "old": "            builder.mark(1u128 << 60)?;",
+     "new": "            builder.mark(1u128 >> 60)?;",
+     "line": 1641
+    },
+    {
+     "name": "op2val-1645c32",
+     "old": "            builder.mark(1u128 << 61)?;",
+     "new": "            builder.mark(1u128 >> 61)?;",
+     "line": 1645
+    },
+    {
+     "name": "op2val-1649c32",
+     "old": "            builder.mark(1u128 << 62)?;",
+     "new": "            builder.mark(1u128 >> 62)?;",
+     "line": 1649
+    },
+    {
+     "name": "op2val-1654c32",
+     "old": "            builder.mark(1u128 << 63)?;",
+     "new": "            builder.mark(1u128 >> 63)?;",
+     "line": 1654
+    },
+    {
+     "name": "op2val-1658c32",
+     "old": "            builder.mark(1u128 << 64)?;",
+     "new": "            builder.mark(1u128 >> 64)?;",
+     "line": 1658
+    },
+    {
+     "name": "op2val-1662c32",
+     "old": "            builder.mark(1u128 << 65)?;",
+     "new": "            builder.mark(1u128 >> 65)?;",
+     "line": 1662
+    },
+    {
+     "name": "op2val-1666c32",
+     "old": "            builder.mark(1u128 << 66)?;",
+     "new": "            builder.mark(1u128 >> 66)?;",
+     "line": 1666
+    },
+    {
+     "name": "op2val-1670c32",
+     "old": "            builder.mark(1u128 << 67)?;",
+     "new": "            builder.mark(1u128 >> 67)?;",
+     "line": 1670
+    },
+    {
+     "name": "op2val-1674c32",
+     "old": "            builder.mark(1u128 << 68)?;",
+     "new": "            builder.mark(1u128 >> 68)?;",
+     "line": 1674
+    },
+    {
+     "name": "op2val-1678c32",
+     "old": "            builder.mark(1u128 << 69)?;",
+     "new": "            builder.mark(1u128 >> 69)?;",
+     "line": 1678
+    },
+    {
+     "name": "op2val-1682c32",
+     "old": "            builder.mark(1u128 << 70)?;",
+     "new": "            builder.mark(1u128 >> 70)?;",
+     "line": 1682
+    },
+    {
+     "name": "op2val-1686c32",
+     "old": "            builder.mark(1u128 << 71)?;",
+     "new": "            builder.mark(1u128 >> 71)?;",
+     "line": 1686
+    },
+    {
+     "name": "op2val-1690c32",
+     "old": "            builder.mark(1u128 << 72)?;",
+     "new": "            builder.mark(1u128 >> 72)?;",
+     "line": 1690
+    },
+    {
+     "name": "op2val-1694c32",
+     "old": "            builder.mark(1u128 << 73)?;",
+     "new": "            builder.mark(1u128 >> 73)?;",
+     "line": 1694
+    },
+    {
+     "name": "op2val-1698c32",
+     "old": "            builder.mark(1u128 << 74)?;",
+     "new": "            builder.mark(1u128 >> 74)?;",
+     "line": 1698
+    },
+    {
+     "name": "op2val-1702c32",
+     "old": "            builder.mark(1u128 << 75)?;",
+     "new": "            builder.mark(1u128 >> 75)?;",
+     "line": 1702
+    },
+    {
+     "name": "op2val-1706c32",
+     "old": "            builder.mark(1u128 << 76)?;",
+     "new": "            builder.mark(1u128 >> 76)?;",
+     "line": 1706
+    },
+    {
+     "name": "op2val-1710c32",
+     "old": "            builder.mark(1u128 << 77)?;",
+     "new": "            builder.mark(1u128 >> 77)?;",
+     "line": 1710
+    },
+    {
+     "name": "op2val-1718c28",
+     "old": "            builder.mark(1 << 22)?;",
+     "new": "            builder.mark(1 >> 22)?;",
+     "line": 1718
+    },
+    {
+     "name": "op2val-1726c28",
+     "old": "            builder.mark(1 << 13)?;",
+     "new": "            builder.mark(1 >> 13)?;",
+     "line": 1726
+    },
+    {
+     "name": "op2val-1735c28",
+     "old": "            builder.mark(1 << 23)?;",
+     "new": "            builder.mark(1 >> 23)?;",
+     "line": 1735
+    },
+    {
+     "name": "op2val-1739c28",
+     "old": "            builder.mark(1 << 24)?;",
+     "new": "            builder.mark(1 >> 24)?;",
+     "line": 1739
+    },
+    {
+     "name": "op2val-1743c28",
+     "old": "            builder.mark(1 << 25)?;",
+     "new": "            builder.mark(1 >> 25)?;",
+     "line": 1743
+    },
+    {
+     "name": "op2val-1747c28",
+     "old": "            builder.mark(1 << 26)?;",
+     "new": "            builder.mark(1 >> 26)?;",
+     "line": 1747
+    },
+    {
+     "name": "op2val-1751c28",
+     "old": "            builder.mark(1 << 27)?;",
+     "new": "            builder.mark(1 >> 27)?;",
+     "line": 1751
+    },
+    {
+     "name": "op2val-1755c28",
+     "old": "            builder.mark(1 << 28)?;",
+     "new": "            builder.mark(1 >> 28)?;",
+     "line": 1755
+    },
+    {
+     "name": "op2val-1759c28",
+     "old": "            builder.mark(1 << 29)?;",
+     "new": "            builder.mark(1 >> 29)?;",
+     "line": 1759
+    },
+    {
+     "name": "op2val-1763c28",
+     "old": "            builder.mark(1 << 30)?;",
+     "new": "            builder.mark(1 >> 30)?;",
+     "line": 1763
+    },
+    {
+     "name": "op2val-1767c28",
+     "old": "            builder.mark(1 << 31)?;",
+     "new": "            builder.mark(1 >> 31)?;",
+     "line": 1767
+    },
+    {
+     "name": "op2val-1771c32",
+     "old": "            builder.mark(1u128 << 32)?;",
+     "new": "            builder.mark(1u128 >> 32)?;",
+     "line": 1771,
+     "context": "        (Section::Hooks, b\"pre_boot\") => {\n            builder.mark(1u128 << 32)?;\n            builder.pre_boot_hooks = parse_list(value)?;"
+    },
+    {
+     "name": "op2val-1775c32",
+     "old": "            builder.mark(1u128 << 33)?;",
+     "new": "            builder.mark(1u128 >> 33)?;",
+     "line": 1775
+    },
+    {
+     "name": "op2val-1779c32",
+     "old": "            builder.mark(1u128 << 34)?;",
+     "new": "            builder.mark(1u128 >> 34)?;",
+     "line": 1779
+    },
+    {
+     "name": "del-arm-1782",
+     "old": "                b\"stop\" => HookFailurePolicy::Stop,\n                b\"continue\" => HookFailurePolicy::Continue,\n                _ => return Err(ConfigError::InvalidValue),",
+     "new": "                b\"stop\" => HookFailurePolicy::Stop,\n\n                _ => return Err(ConfigError::InvalidValue),",
+     "line": 1782
+    },
+    {
+     "name": "op2val-1787c32",
+     "old": "            builder.mark(1u128 << 35)?;",
+     "new": "            builder.mark(1u128 >> 35)?;",
+     "line": 1787
+    },
+    {
+     "name": "del-arm-1806",
+     "old": "                b\"stop\" => FailurePolicy::Stop,\n                b\"fail\" => FailurePolicy::Fail,\n                _ => return Err(ConfigError::InvalidValue),",
+     "new": "                b\"stop\" => FailurePolicy::Stop,\n\n                _ => return Err(ConfigError::InvalidValue),",
+     "line": 1806
+    }
+   ],
    "fn_source": "fn parse_field(\n    builder: &mut ConfigBuilder,\n    section: Section,\n    key: &[u8],\n    value: &[u8],\n) -> Result<(), ConfigError> {\n    match (section, key) {\n        (Section::Root, b\"schema_version\") => {\n            builder.mark(1 << 0)?;\n            builder.schema_version = parse_u64(value)?;\n        }\n        (Section::Instance, b\"id\") => {\n            builder.mark(1 << 1)?;\n            builder.id = parse_string(value)?;\n        }\n        (Section::Instance, b\"root\") => {\n            builder.mark(1 << 2)?;\n            builder.root = parse_string(value)?;\n        }\n        (Section::Instance, b\"init\") => {\n            builder.mark(1 << 3)?;\n            builder.init = parse_string(value)?;\n        }\n        (Section::Instance, b\"args\") => {\n            builder.mark(1 << 4)?;\n            builder.args = parse_list(value)?;\n        }\n        (Section::Instance, b\"environment\") => {\n            builder.mark(1 << 5)?;\n            builder.environment = parse_list(value)?;\n        }\n        (Section::Instance, b\"workdir\") => {\n            builder.mark(1 << 16)?;\n            builder.workdir = parse_string(value)?;\n        }\n        (Section::Identity, b\"hostname\") => {\n            builder.mark(1 << 17)?;\n            builder.hostname = parse_string(value)?;\n        }\n        (Section::Resources, b\"vcpus\") => {\n            builder.mark(1 << 6)?;\n            builder.vcpus = parse_u64(value)?;\n        }\n        (Section::Resources, b\"memory_mib\") => {\n            builder.mark(1 << 7)?;\n            builder.memory_mib = parse_u64(value)?;\n        }\n        (Section::Execution, b\"profile\") => {\n            builder.mark(1 << 8)?;\n            builder.execution_profile = match parse_string::<32>(value)?.as_bytes() {\n                b\"security\" => ExecutionProfile::Security,\n                b\"balanced\" => ExecutionProfile::Balanced,\n                b\"performance\" => ExecutionProfile::Performance,\n                _ => return Err(ConfigError::InvalidValue),\n            };\n        }\n        (Section::Execution, b\"backend\") => {\n            builder.mark(1 << 9)?;\n            builder.execution_backend = match parse_string::<32>(value)?.as_bytes() {\n                b\"interpreter\" => ExecutionBackend::Interpreter,\n                b\"ptrace-sysemu\" => ExecutionBackend::PtraceSysemu,\n                b\"ptrace-native\" => ExecutionBackend::PtraceNative,\n                _ => return Err(ConfigError::InvalidValue),\n            };\n        }\n        (Section::Contract, b\"version\") => {\n            builder.mark(1 << 10)?;\n            builder.mark(1u128 << 36)?;\n            builder.contract_recipe_version = parse_u64(value)?;\n        }\n        (Section::Contract, b\"catalog\") => {\n            builder.mark(1u128 << 37)?;\n            builder.contract_catalog_version = parse_u64(value)?;\n        }\n        (Section::Contract, b\"default\") => {\n            builder.mark(1u128 << 38)?;\n            builder.contract_default = parse_contract_default(value)?;\n        }\n        (Section::Contract, b\"allow\") => {\n            builder.mark(1 << 19)?;\n            builder.contract_allow = parse_list(value)?;\n        }\n        (Section::Contract, b\"deny\") => {\n            builder.mark(1 << 20)?;\n            builder.contract_deny = parse_list(value)?;\n        }\n        (Section::Contract, b\"digest\") => {\n            builder.mark(1 << 21)?;\n            builder.contract_digest = parse_string(value)?;\n        }\n        (Section::ContractSyscalls, b\"control\") => {\n            builder.mark(1u128 << 52)?;\n            builder.dispatch_mode = match parse_string::<32>(value)?.as_bytes() {\n                b\"paranoid\" => DispatchMode::Paranoid,\n                b\"selective\" => DispatchMode::Selective,\n                _ => return Err(ConfigError::InvalidValue),\n            };\n        }\n        (Section::ContractSyscalls, b\"default\") => {\n            builder.mark(1u128 << 53)?;\n            parse_contract_default(value)?;\n        }\n        (Section::ContractSyscalls, b\"allow\") => {\n            builder.mark(1u128 << 47)?;\n            builder.contract_exact_allow = parse_syscall_list(value)?;\n        }\n        (Section::ContractSyscalls, b\"deny\") => {\n            builder.mark(1u128 << 48)?;\n            builder.contract_exact_deny = parse_syscall_list(value)?;\n        }\n        (Section::ContractFilesystem, b\"default\") => {\n            builder.mark(1u128 << 54)?;\n            parse_contract_default(value)?;\n        }\n        (Section::ContractFilesystem, b\"read\") => {\n            builder.mark(1u128 << 55)?;\n            builder.filesystem_read = parse_list(value)?;\n        }\n        (Section::ContractFilesystem, b\"write\") => {\n            builder.mark(1u128 << 56)?;\n            builder.filesystem_write = parse_list(value)?;\n        }\n        (Section::ContractFilesystem, b\"create\") => {\n            builder.mark(1u128 << 57)?;\n            builder.filesystem_create = parse_list(value)?;\n        }\n        (Section::ContractFilesystem, b\"deny\") => {\n            builder.mark(1u128 << 49)?;\n            builder.filesystem_write_deny = parse_list(value)?;\n        }\n        (Section::ContractNetwork, b\"default\") => {\n            builder.mark(1u128 << 58)?;\n            parse_contract_default(value)?;\n        }\n        (Section::ContractNetwork, b\"inbound\") => {\n            builder.mark(1u128 << 42)?;\n            builder.ingress_allow = parse_list(value)?;\n        }\n        (Section::ContractNetwork, b\"outbound\") => {\n            builder.mark(1u128 << 43)?;\n            builder.egress_allow = parse_list(value)?;\n        }\n        (Section::ContractDevices, b\"default\") => {\n            builder.mark(1u128 << 59)?;\n            parse_contract_default(value)?;\n        }\n        (Section::ContractDevices, b\"read\") => {\n            builder.mark(1u128 << 60)?;\n            builder.device_read = parse_list(value)?;\n        }\n        (Section::ContractDevices, b\"write\") => {\n            builder.mark(1u128 << 61)?;\n            builder.device_write = parse_list(value)?;\n        }\n        (Section::ContractDevices, b\"create\") => {\n            builder.mark(1u128 << 62)?;\n            builder.device_create = parse_list(value)?;\n            builder.filesystem_device_nodes = !builder.device_create.as_slice().is_empty();\n        }\n        (Section::ContractPrivileges, b\"default\") => {\n            builder.mark(1u128 << 63)?;\n            parse_contract_default(value)?;\n        }\n        (Section::ContractPrivileges, b\"setuid\") => {\n            builder.mark(1u128 << 64)?;\n            builder.privilege_setuid = parse_list(value)?;\n        }\n        (Section::ContractPrivileges, b\"setgid\") => {\n            builder.mark(1u128 << 65)?;\n            builder.privilege_setgid = parse_list(value)?;\n        }\n        (Section::ContractProcess, b\"default\") => {\n            builder.mark(1u128 << 66)?;\n            parse_contract_default(value)?;\n        }\n        (Section::ContractProcess, b\"max_processes\") => {\n            builder.mark(1u128 << 67)?;\n            builder.process_max_processes = parse_u64(value)?;\n        }\n        (Section::ContractProcess, b\"max_threads\") => {\n            builder.mark(1u128 << 68)?;\n            builder.process_max_threads = parse_u64(value)?;\n        }\n        (Section::ContractProcess, b\"signals\") => {\n            builder.mark(1u128 << 69)?;\n            builder.process_signals = parse_list(value)?;\n        }\n        (Section::ContractProcess, b\"ptrace\") => {\n            builder.mark(1u128 << 70)?;\n            builder.process_ptrace = parse_allow_deny(value)?;\n        }\n        (Section::ContractProcess, b\"namespace_create\") => {\n            builder.mark(1u128 << 71)?;\n            builder.process_namespace_create = parse_list(value)?;\n        }\n        (Section::ContractProcess, b\"namespace_join\") => {\n            builder.mark(1u128 << 72)?;\n            builder.process_namespace_join = parse_list(value)?;\n        }\n        (Section::ContractKernel, b\"default\") => {\n            builder.mark(1u128 << 73)?;\n            parse_contract_default(value)?;\n        }\n        (Section::ContractKernel, b\"proc_read\") => {\n            builder.mark(1u128 << 74)?;\n            builder.kernel_proc_read = parse_list(value)?;\n        }\n        (Section::ContractKernel, b\"proc_write\") => {\n            builder.mark(1u128 << 75)?;\n            builder.kernel_proc_write = parse_list(value)?;\n        }\n        (Section::ContractKernel, b\"sys_read\") => {\n            builder.mark(1u128 << 76)?;\n            builder.kernel_sys_read = parse_list(value)?;\n        }\n        (Section::ContractKernel, b\"sys_write\") => {\n            builder.mark(1u128 << 77)?;\n            builder.kernel_sys_write = parse_list(value)?;\n        }\n        (Section::Storage, b\"assignments\") => {\n            builder.mark(1 << 11)?;\n            builder.storage = parse_list(value)?;\n        }\n        (Section::Volumes, b\"assignments\") => {\n            builder.mark(1 << 22)?;\n            builder.volumes = parse_list(value)?;\n        }\n        (Section::Devices, b\"assignments\") => {\n            builder.mark(1 << 12)?;\n            builder.devices = parse_list(value)?;\n        }\n        (Section::Network, b\"backend\") => {\n            builder.mark(1 << 13)?;\n            builder.network_backend = match parse_string::<32>(value)?.as_bytes() {\n                b\"none\" => NetworkBackend::None,\n                b\"mediated\" => NetworkBackend::Mediated,\n                b\"shared\" => NetworkBackend::Shared,\n                _ => return Err(ConfigError::InvalidValue),\n            };\n        }\n        (Section::Network, b\"interface\") => {\n            builder.mark(1 << 23)?;\n            builder.network_interface = parse_string(value)?;\n        }\n        (Section::Network, b\"source\") => {\n            builder.mark(1 << 24)?;\n            builder.network_source = parse_string(value)?;\n        }\n        (Section::Network, b\"ingress_allow\") => {\n            builder.mark(1 << 25)?;\n            builder.ingress_allow = parse_list(value)?;\n        }\n        (Section::Network, b\"ingress_deny\") => {\n            builder.mark(1 << 26)?;\n            builder.ingress_deny = parse_list(value)?;\n        }\n        (Section::Network, b\"egress_allow\") => {\n            builder.mark(1 << 27)?;\n            builder.egress_allow = parse_list(value)?;\n        }\n        (Section::Network, b\"egress_deny\") => {\n            builder.mark(1 << 28)?;\n            builder.egress_deny = parse_list(value)?;\n        }\n        (Section::Network, b\"port_forwards\") => {\n            builder.mark(1 << 29)?;\n            builder.port_forwards = parse_list(value)?;\n        }\n        (Section::Access, b\"uid\") => {\n            builder.mark(1 << 30)?;\n            builder.access_uid = parse_u64(value)?;\n        }\n        (Section::Access, b\"gid\") => {\n            builder.mark(1 << 31)?;\n            builder.access_gid = parse_u64(value)?;\n        }\n        (Section::Hooks, b\"pre_boot\") => {\n            builder.mark(1u128 << 32)?;\n            builder.pre_boot_hooks = parse_list(value)?;\n        }\n        (Section::Hooks, b\"timeout_seconds\") => {\n            builder.mark(1u128 << 33)?;\n            builder.hook_timeout_seconds = parse_u64(value)?;\n        }\n        (Section::Hooks, b\"failure\") => {\n            builder.mark(1u128 << 34)?;\n            builder.hook_failure_policy = match parse_string::<32>(value)?.as_bytes() {\n                b\"stop\" => HookFailurePolicy::Stop,\n                b\"continue\" => HookFailurePolicy::Continue,\n                _ => return Err(ConfigError::InvalidValue),\n            };\n        }\n        (Section::Lifecycle, b\"stop_timeout_seconds\") => {\n            builder.mark(1u128 << 35)?;\n            builder.stop_timeout_seconds = parse_u64(value)?;\n        }\n        (Section::Audit, b\"enabled\") => {\n            builder.mark(1 << 14)?;\n            builder.audit_mode = if parse_bool(value)? {\n                AuditMode::Enabled\n            } else {\n                AuditMode::Disabled\n            };\n        }\n        (Section::Audit, b\"mode\") => {\n            builder.mark(1 << 14)?;\n            builder.audit_mode = parse_legacy_audit_mode(value)?;\n        }\n        (Section::Failure, b\"policy\") => {\n            builder.mark(1 << 15)?;\n            builder.failure_policy = match parse_string::<32>(value)?.as_bytes() {\n                b\"stop\" => FailurePolicy::Stop,\n                b\"fail\" => FailurePolicy::Fail,\n                _ => return Err(ConfigError::InvalidValue),\n            };\n        }\n        _ => return Err(ConfigError::UnknownField),\n    }\n    Ok(())\n}"
   },
   {
@@ -716,6 +1408,7 @@
     582
    ],
    "live_mutants": 9,
+   "ready_count": 9,
    "score": 42,
    "mutants": [
     {
@@ -764,6 +1457,62 @@
      "source_line": "!= RECIPE_CATALOG_BIT | RECIPE_DEFAULT_BIT"
     }
    ],
+   "ready_mutants": [
+    {
+     "name": "op2val-476c37",
+     "old": "        const WORKDIR_BIT: u128 = 1 << 16;",
+     "new": "        const WORKDIR_BIT: u128 = 1 >> 16;",
+     "line": 476
+    },
+    {
+     "name": "op2val-479c44",
+     "old": "        const RECIPE_VERSION_BIT: u128 = 1 << 36;",
+     "new": "        const RECIPE_VERSION_BIT: u128 = 1 >> 36;",
+     "line": 479
+    },
+    {
+     "name": "op2val-480c44",
+     "old": "        const RECIPE_CATALOG_BIT: u128 = 1 << 37;",
+     "new": "        const RECIPE_CATALOG_BIT: u128 = 1 >> 37;",
+     "line": 480
+    },
+    {
+     "name": "op2val-481c44",
+     "old": "        const RECIPE_DEFAULT_BIT: u128 = 1 << 38;",
+     "new": "        const RECIPE_DEFAULT_BIT: u128 = 1 >> 38;",
+     "line": 481
+    },
+    {
+     "name": "op2val-485c22",
+     "old": "        if self.seen & RECIPE_VERSION_BIT != 0",
+     "new": "        if self.seen ^ RECIPE_VERSION_BIT != 0",
+     "line": 485
+    },
+    {
+     "name": "op2val-485c22",
+     "old": "        if self.seen & RECIPE_VERSION_BIT != 0",
+     "new": "        if self.seen | RECIPE_VERSION_BIT != 0",
+     "line": 485
+    },
+    {
+     "name": "op2val-485c43",
+     "old": "        if self.seen & RECIPE_VERSION_BIT != 0",
+     "new": "        if self.seen & RECIPE_VERSION_BIT == 0",
+     "line": 485
+    },
+    {
+     "name": "op2val-486c48",
+     "old": "            && self.seen & (RECIPE_CATALOG_BIT | RECIPE_DEFAULT_BIT)",
+     "new": "            && self.seen & (RECIPE_CATALOG_BIT ^ RECIPE_DEFAULT_BIT)",
+     "line": 486
+    },
+    {
+     "name": "op2val-487c39",
+     "old": "                != RECIPE_CATALOG_BIT | RECIPE_DEFAULT_BIT",
+     "new": "                != RECIPE_CATALOG_BIT ^ RECIPE_DEFAULT_BIT",
+     "line": 487
+    }
+   ],
    "fn_source": "    fn finish(self) -> Result<InstanceConfig, ConfigError> {\n        const REQUIRED: u128 = ((1 << 16) - 1) & !(1 << 13);\n        const WORKDIR_BIT: u128 = 1 << 16;\n        const HOSTNAME_BIT: u128 = 1 << 17;\n        const CONTRACT_DIGEST_BIT: u128 = 1 << 21;\n        const RECIPE_VERSION_BIT: u128 = 1 << 36;\n        const RECIPE_CATALOG_BIT: u128 = 1 << 37;\n        const RECIPE_DEFAULT_BIT: u128 = 1 << 38;\n        if self.seen & REQUIRED != REQUIRED {\n            return Err(ConfigError::MissingField);\n        }\n        if self.seen & RECIPE_VERSION_BIT != 0\n            && self.seen & (RECIPE_CATALOG_BIT | RECIPE_DEFAULT_BIT)\n                != RECIPE_CATALOG_BIT | RECIPE_DEFAULT_BIT\n        {\n            return Err(ConfigError::MissingField);\n        }\n        let workdir = if self.seen & WORKDIR_BIT != 0 {\n            self.workdir\n        } else {\n            Text::from_bytes(b\"/work\").map_err(|_| ConfigError::InvalidValue)?\n        };\n        let hostname = if self.seen & HOSTNAME_BIT != 0 {\n            self.hostname\n        } else {\n            self.id\n        };\n        let supplied_contract_digest = self.contract_digest;\n        let supplied_contract_digest_set = self.seen & CONTRACT_DIGEST_BIT != 0;\n        let mut config = InstanceConfig {\n            schema_version: self.schema_version,\n            id: self.id,\n            hostname,\n            root: self.root,\n            init: self.init,\n            args: self.args,\n            environment: self.environment,\n            workdir,\n            vcpus: self.vcpus,\n            memory_mib: self.memory_mib,\n            execution_profile: self.execution_profile,\n            execution_backend: self.execution_backend,\n            dispatch_mode: self.dispatch_mode,\n            contract_profile: self.contract_profile,\n            contract_templates: self.contract_templates,\n            contract_allow: self.contract_allow,\n            contract_deny: self.contract_deny,\n            contract_recipe_version: self.contract_recipe_version,\n            contract_catalog_version: self.contract_catalog_version,\n            contract_default: self.contract_default,\n            contract_read: self.contract_read,\n            contract_write: self.contract_write,\n            contract_execute: self.contract_execute,\n            contract_connect: self.contract_connect,\n            contract_listen: self.contract_listen,\n            contract_process: self.contract_process,\n            contract_system: self.contract_system,\n            contract_recipe_deny: self.contract_recipe_deny,\n            contract_exact_allow: self.contract_exact_allow,\n            contract_exact_deny: self.contract_exact_deny,\n            contract_digest: Text::empty(),\n            filesystem_read: self.filesystem_read,\n            filesystem_write: self.filesystem_write,\n            filesystem_create: self.filesystem_create,\n            filesystem_write_deny: self.filesystem_write_deny,\n            privilege_setuid: self.privilege_setuid,\n            privilege_setgid: self.privilege_setgid,\n            filesystem_device_nodes: self.filesystem_device_nodes,\n            device_read: self.device_read,\n            device_write: self.device_write,\n            device_create: self.device_create,\n            process_max_processes: self.process_max_processes,\n            process_max_threads: self.process_max_threads,\n            process_signals: self.process_signals,\n            process_ptrace: self.process_ptrace,\n            process_namespace_create: self.process_namespace_create,\n            process_namespace_join: self.process_namespace_join,\n            kernel_proc_read: self.kernel_proc_read,\n            kernel_proc_write: self.kernel_proc_write,\n            kernel_sys_read: self.kernel_sys_read,\n            kernel_sys_write: self.kernel_sys_write,\n            storage: self.storage,\n            volumes: self.volumes,\n            devices: self.devices,\n            network_backend: self.network_backend,\n            network_interface: self.network_interface,\n            network_source: self.network_source,\n            ingress_allow: self.ingress_allow,\n            ingress_deny: self.ingress_deny,\n            egress_allow: self.egress_allow,\n            egress_deny: self.egress_deny,\n            port_forwards: self.port_forwards,\n            access_uid: self.access_uid,\n            access_gid: self.access_gid,\n            pre_boot_hooks: self.pre_boot_hooks,\n            hook_timeout_seconds: self.hook_timeout_seconds,\n            hook_failure_policy: self.hook_failure_policy,\n            stop_timeout_seconds: self.stop_timeout_seconds,\n            audit_mode: self.audit_mode,\n            failure_policy: self.failure_policy,\n        };\n        config.derive_contract_grants()?;\n        config.validate()?;\n        config.refresh_contract()?;\n        if supplied_contract_digest_set && supplied_contract_digest != config.contract_digest {\n            return Err(ConfigError::ContractDigestMismatch);\n        }\n        Ok(config)\n    }"
   },
   {
@@ -775,6 +1524,7 @@
     623
    ],
    "live_mutants": 12,
+   "ready_count": 12,
    "score": 41,
    "mutants": [
     {
@@ -838,6 +1588,80 @@
      "source_line": "if !self.kernel_sys_read.as_slice().is_empty() {"
     }
    ],
+   "ready_mutants": [
+    {
+     "name": "del-590c12",
+     "old": "        if !self.filesystem_write.as_slice().is_empty()",
+     "new": "        if self.filesystem_write.as_slice().is_empty()",
+     "line": 590
+    },
+    {
+     "name": "op2val-591c13",
+     "old": "            || !self.filesystem_create.as_slice().is_empty()",
+     "new": "            && !self.filesystem_create.as_slice().is_empty()",
+     "line": 591
+    },
+    {
+     "name": "del-591c16",
+     "old": "            || !self.filesystem_create.as_slice().is_empty()",
+     "new": "            || self.filesystem_create.as_slice().is_empty()",
+     "line": 591
+    },
+    {
+     "name": "del-595c12",
+     "old": "        if !self.device_read.as_slice().is_empty() {",
+     "new": "        if self.device_read.as_slice().is_empty() {",
+     "line": 595
+    },
+    {
+     "name": "del-598c12",
+     "old": "        if !self.device_write.as_slice().is_empty() || !self.device_create.as_slice().is_empty() {",
+     "new": "        if self.device_write.as_slice().is_empty() || !self.device_create.as_slice().is_empty() {",
+     "line": 598
+    },
+    {
+     "name": "op2val-598c53",
+     "old": "        if !self.device_write.as_slice().is_empty() || !self.device_create.as_slice().is_empty() {",
+     "new": "        if !self.device_write.as_slice().is_empty() && !self.device_create.as_slice().is_empty() {",
+     "line": 598
+    },
+    {
+     "name": "del-598c56",
+     "old": "        if !self.device_write.as_slice().is_empty() || !self.device_create.as_slice().is_empty() {",
+     "new": "        if !self.device_write.as_slice().is_empty() || self.device_create.as_slice().is_empty() {",
+     "line": 598
+    },
+    {
+     "name": "del-601c12",
+     "old": "        if !self.ingress_allow.as_slice().is_empty() {",
+     "new": "        if self.ingress_allow.as_slice().is_empty() {",
+     "line": 601
+    },
+    {
+     "name": "del-604c12",
+     "old": "        if !self.egress_allow.as_slice().is_empty() {",
+     "new": "        if self.egress_allow.as_slice().is_empty() {",
+     "line": 604
+    },
+    {
+     "name": "del-607c12",
+     "old": "        if !self.process_signals.as_slice().is_empty() {",
+     "new": "        if self.process_signals.as_slice().is_empty() {",
+     "line": 607
+    },
+    {
+     "name": "del-610c12",
+     "old": "        if !self.kernel_proc_read.as_slice().is_empty() {",
+     "new": "        if self.kernel_proc_read.as_slice().is_empty() {",
+     "line": 610
+    },
+    {
+     "name": "del-616c12",
+     "old": "        if !self.kernel_sys_read.as_slice().is_empty() {",
+     "new": "        if self.kernel_sys_read.as_slice().is_empty() {",
+     "line": 616
+    }
+   ],
    "fn_source": "    fn derive_contract_grants(&mut self) -> Result<(), ConfigError> {\n        if !self.filesystem_read.as_slice().is_empty() {\n            push_unique(&mut self.contract_read, b\"filesystem.**\")?;\n        }\n        if !self.filesystem_write.as_slice().is_empty()\n            || !self.filesystem_create.as_slice().is_empty()\n        {\n            push_unique(&mut self.contract_write, b\"filesystem.**\")?;\n        }\n        if !self.device_read.as_slice().is_empty() {\n            push_unique(&mut self.contract_read, b\"device.**\")?;\n        }\n        if !self.device_write.as_slice().is_empty() || !self.device_create.as_slice().is_empty() {\n            push_unique(&mut self.contract_write, b\"device.**\")?;\n        }\n        if !self.ingress_allow.as_slice().is_empty() {\n            push_unique(&mut self.contract_listen, b\"network.**\")?;\n        }\n        if !self.egress_allow.as_slice().is_empty() {\n            push_unique(&mut self.contract_connect, b\"network.**\")?;\n        }\n        if !self.process_signals.as_slice().is_empty() {\n            push_unique(&mut self.contract_process, b\"signal.**\")?;\n        }\n        if !self.kernel_proc_read.as_slice().is_empty() {\n            push_unique(&mut self.contract_read, b\"proc.**\")?;\n        }\n        if !self.kernel_proc_write.as_slice().is_empty() {\n            push_unique(&mut self.contract_write, b\"proc.**\")?;\n        }\n        if !self.kernel_sys_read.as_slice().is_empty() {\n            push_unique(&mut self.contract_read, b\"sys.**\")?;\n        }\n        if !self.kernel_sys_write.as_slice().is_empty() {\n            push_unique(&mut self.contract_write, b\"sys.**\")?;\n        }\n        Ok(())\n    }"
   },
   {
@@ -849,6 +1673,7 @@
     1546
    ],
    "live_mutants": 5,
+   "ready_count": 4,
    "score": 41,
    "mutants": [
     {
@@ -877,6 +1702,32 @@
      "source_line": "> 1"
     }
    ],
+   "ready_mutants": [
+    {
+     "name": "op2val-1539c39",
+     "old": "            .filter(|member| **member != 0)",
+     "new": "            .filter(|member| **member == 0)",
+     "line": 1539
+    },
+    {
+     "name": "op2val-1541c13",
+     "old": "            > 1",
+     "new": "            < 1",
+     "line": 1541
+    },
+    {
+     "name": "op2val-1541c13",
+     "old": "            > 1",
+     "new": "            == 1",
+     "line": 1541
+    },
+    {
+     "name": "op2val-1541c13",
+     "old": "            > 1",
+     "new": "            >= 1",
+     "line": 1541
+    }
+   ],
    "fn_source": "    pub fn unshare(&mut self, task: u32) -> Result<(), ProcessError> {\n        let Some(slot) = self.task_index(task) else {\n            return Ok(());\n        };\n        if self.tasks[slot]\n            .members\n            .iter()\n            .filter(|member| **member != 0)\n            .count()\n            > 1\n        {\n            self.inherit(task, task)?;\n        }\n        Ok(())\n    }"
   },
   {
@@ -888,6 +1739,7 @@
     1041
    ],
    "live_mutants": 5,
+   "ready_count": 5,
    "score": 40,
    "mutants": [
     {
@@ -916,6 +1768,38 @@
      "source_line": ".any(|entry| entry.active && entry.descriptor == descriptor)"
     }
    ],
+   "ready_mutants": [
+    {
+     "name": "op2val-1020c28",
+     "old": "        if descriptor == 0 || events == 0 || events & !(EVENT_READ | EVENT_WRITE) != 0 {",
+     "new": "        if descriptor == 0 && events == 0 || events & !(EVENT_READ | EVENT_WRITE) != 0 {",
+     "line": 1020
+    },
+    {
+     "name": "op2val-1020c43",
+     "old": "        if descriptor == 0 || events == 0 || events & !(EVENT_READ | EVENT_WRITE) != 0 {",
+     "new": "        if descriptor == 0 || events == 0 && events & !(EVENT_READ | EVENT_WRITE) != 0 {",
+     "line": 1020
+    },
+    {
+     "name": "op2val-1020c68",
+     "old": "        if descriptor == 0 || events == 0 || events & !(EVENT_READ | EVENT_WRITE) != 0 {",
+     "new": "        if descriptor == 0 || events == 0 || events & !(EVENT_READ ^ EVENT_WRITE) != 0 {",
+     "line": 1020
+    },
+    {
+     "name": "op2val-1026c39",
+     "old": "            .any(|entry| entry.active && entry.descriptor == descriptor)",
+     "new": "            .any(|entry| entry.active || entry.descriptor == descriptor)",
+     "line": 1026
+    },
+    {
+     "name": "op2val-1026c59",
+     "old": "            .any(|entry| entry.active && entry.descriptor == descriptor)",
+     "new": "            .any(|entry| entry.active && entry.descriptor != descriptor)",
+     "line": 1026
+    }
+   ],
    "fn_source": "    pub fn add(&mut self, descriptor: u32, events: u32) -> Result<(), ProcessError> {\n        if descriptor == 0 || events == 0 || events & !(EVENT_READ | EVENT_WRITE) != 0 {\n            return Err(ProcessError::InvalidEvent);\n        }\n        if self\n            .entries\n            .iter()\n            .any(|entry| entry.active && entry.descriptor == descriptor)\n        {\n            return Err(ProcessError::InvalidEvent);\n        }\n        let entry = self\n            .entries\n            .iter_mut()\n            .find(|entry| !entry.active)\n            .ok_or(ProcessError::EventLimit)?;\n        *entry = EventInterest {\n            active: true,\n            descriptor,\n            events,\n        };\n        Ok(())\n    }"
   },
   {
@@ -927,6 +1811,7 @@
     964
    ],
    "live_mutants": 4,
+   "ready_count": 4,
    "score": 39,
    "mutants": [
     {
@@ -950,6 +1835,32 @@
      "source_line": "if !timer.active || timer.deadline_ns == 0 || now_ns < timer.deadline_ns {"
     }
    ],
+   "ready_mutants": [
+    {
+     "name": "op2val-947c30",
+     "old": "            if !timer.active || timer.deadline_ns == 0 || now_ns < timer.deadline_ns {",
+     "new": "            if !timer.active && timer.deadline_ns == 0 || now_ns < timer.deadline_ns {",
+     "line": 947
+    },
+    {
+     "name": "op2val-947c56",
+     "old": "            if !timer.active || timer.deadline_ns == 0 || now_ns < timer.deadline_ns {",
+     "new": "            if !timer.active || timer.deadline_ns == 0 && now_ns < timer.deadline_ns {",
+     "line": 947
+    },
+    {
+     "name": "op2val-947c66",
+     "old": "            if !timer.active || timer.deadline_ns == 0 || now_ns < timer.deadline_ns {",
+     "new": "            if !timer.active || timer.deadline_ns == 0 || now_ns <= timer.deadline_ns {",
+     "line": 947
+    },
+    {
+     "name": "op2val-947c66",
+     "old": "            if !timer.active || timer.deadline_ns == 0 || now_ns < timer.deadline_ns {",
+     "new": "            if !timer.active || timer.deadline_ns == 0 || now_ns == timer.deadline_ns {",
+     "line": 947
+    }
+   ],
    "fn_source": "    pub fn update(&mut self, now_ns: u64) {\n        for timer in &mut self.timers {\n            if !timer.active || timer.deadline_ns == 0 || now_ns < timer.deadline_ns {\n                continue;\n            }\n            match (now_ns - timer.deadline_ns).checked_div(timer.interval_ns) {\n                None => {\n                    timer.expirations = timer.expirations.saturating_add(1);\n                    timer.deadline_ns = 0;\n                }\n                Some(periods) => {\n                    let count = 1 + periods;\n                    timer.expirations = timer.expirations.saturating_add(count);\n                    timer.deadline_ns = timer\n                        .deadline_ns\n                        .saturating_add(count.saturating_mul(timer.interval_ns));\n                }\n            }\n        }\n    }"
   },
   {
@@ -961,6 +1872,7 @@
     477
    ],
    "live_mutants": 4,
+   "ready_count": 4,
    "score": 37,
    "mutants": [
     {
@@ -984,6 +1896,32 @@
      "source_line": "if task.occupied && task.tgid == leader.id.pid {"
     }
    ],
+   "ready_mutants": [
+    {
+     "name": "op2val-462c44",
+     "old": "            .position(|task| task.occupied && task.id.pid == replacement.tgid)",
+     "new": "            .position(|task| task.occupied || task.id.pid == replacement.tgid)",
+     "line": 462
+    },
+    {
+     "name": "op2val-462c59",
+     "old": "            .position(|task| task.occupied && task.id.pid == replacement.tgid)",
+     "new": "            .position(|task| task.occupied && task.id.pid != replacement.tgid)",
+     "line": 462
+    },
+    {
+     "name": "op2val-470c30",
+     "old": "            if task.occupied && task.tgid == leader.id.pid {",
+     "new": "            if task.occupied || task.tgid == leader.id.pid {",
+     "line": 470
+    },
+    {
+     "name": "op2val-470c43",
+     "old": "            if task.occupied && task.tgid == leader.id.pid {",
+     "new": "            if task.occupied && task.tgid != leader.id.pid {",
+     "line": 470
+    }
+   ],
    "fn_source": "    pub fn exec_group(&mut self, caller: TaskId) -> Result<(TaskId, u32), ProcessError> {\n        let caller_index = self.index(caller)?;\n        let mut replacement = self.tasks[caller_index];\n        let leader_index = self\n            .tasks\n            .iter()\n            .position(|task| task.occupied && task.id.pid == replacement.tgid)\n            .ok_or(ProcessError::InvalidTask)?;\n        let leader = self.tasks[leader_index];\n        replacement.id = leader.id;\n        replacement.parent = leader.parent;\n        replacement.state = TaskState::Running;\n        replacement.exec_epoch = leader.exec_epoch;\n        for task in &mut self.tasks {\n            if task.occupied && task.tgid == leader.id.pid {\n                *task = Task::empty();\n            }\n        }\n        self.tasks[leader_index] = replacement;\n        let epoch = self.exec(leader.id)?;\n        Ok((leader.id, epoch))\n    }"
   },
   {
@@ -995,6 +1933,7 @@
     1247
    ],
    "live_mutants": 7,
+   "ready_count": 5,
    "score": 34,
    "mutants": [
     {
@@ -1033,61 +1972,39 @@
      "source_line": "|| (setgid && !policy_path_matches(&self.privilege_setgid, path))"
     }
    ],
-   "fn_source": "    pub fn privilege_setid_denied(&self, path: &[u8], setuid: bool, setgid: bool) -> bool {\n        (setuid && !policy_path_matches(&self.privilege_setuid, path))\n            || (setgid && !policy_path_matches(&self.privilege_setgid, path))\n    }"
-  },
-  {
-   "crate": "ginux-instance",
-   "file": "crates/ginux-instance/src/lib.rs",
-   "function": "parse_string",
-   "span": [
-    1860,
-    1887
-   ],
-   "live_mutants": 8,
-   "score": 33,
-   "mutants": [
+   "ready_mutants": [
     {
-     "line": 1861,
-     "desc": "replace || with && in parse_string",
-     "source_line": "if value.len() < 2 || value[0] != b'\"' || value[value.len() - 1] != b'\"' {"
+     "name": "op2val-1245c17",
+     "old": "        (setuid && !policy_path_matches(&self.privilege_setuid, path))",
+     "new": "        (setuid || !policy_path_matches(&self.privilege_setuid, path))",
+     "line": 1245
     },
     {
-     "line": 1861,
-     "desc": "replace || with && in parse_string",
-     "source_line": "if value.len() < 2 || value[0] != b'\"' || value[value.len() - 1] != b'\"' {"
+     "name": "del-1245c20",
+     "old": "        (setuid && !policy_path_matches(&self.privilege_setuid, path))",
+     "new": "        (setuid && policy_path_matches(&self.privilege_setuid, path))",
+     "line": 1245
     },
     {
-     "line": 1870,
-     "desc": "replace - with + in parse_string",
-     "source_line": "if index >= value.len() - 1 {"
+     "name": "op2val-1246c13",
+     "old": "            || (setgid && !policy_path_matches(&self.privilege_setgid, path))",
+     "new": "            && (setgid && !policy_path_matches(&self.privilege_setgid, path))",
+     "line": 1246
     },
     {
-     "line": 1870,
-     "desc": "replace - with / in parse_string",
-     "source_line": "if index >= value.len() - 1 {"
+     "name": "op2val-1246c24",
+     "old": "            || (setgid && !policy_path_matches(&self.privilege_setgid, path))",
+     "new": "            || (setgid || !policy_path_matches(&self.privilege_setgid, path))",
+     "line": 1246
     },
     {
-     "line": 1876,
-     "desc": "delete match arm b'n' in parse_string",
-     "source_line": "b'n' => b'\\n',"
-    },
-    {
-     "line": 1877,
-     "desc": "delete match arm b't' in parse_string",
-     "source_line": "b't' => b'\\t',"
-    },
-    {
-     "line": 1880,
-     "desc": "replace || with && in parse_string",
-     "source_line": "} else if byte == b'\"' || byte < 32 || byte == 127 {"
-    },
-    {
-     "line": 1880,
-     "desc": "replace || with && in parse_string",
-     "source_line": "} else if byte == b'\"' || byte < 32 || byte == 127 {"
+     "name": "del-1246c27",
+     "old": "            || (setgid && !policy_path_matches(&self.privilege_setgid, path))",
+     "new": "            || (setgid && policy_path_matches(&self.privilege_setgid, path))",
+     "line": 1246
     }
    ],
-   "fn_source": "fn parse_string<const N: usize>(value: &[u8]) -> Result<Text<N>, ConfigError> {\n    if value.len() < 2 || value[0] != b'\"' || value[value.len() - 1] != b'\"' {\n        return Err(ConfigError::InvalidSyntax);\n    }\n    let mut output = Text::empty();\n    let mut index = 1;\n    while index < value.len() - 1 {\n        let mut byte = value[index];\n        if byte == b'\\\\' {\n            index += 1;\n            if index >= value.len() - 1 {\n                return Err(ConfigError::InvalidSyntax);\n            }\n            byte = match value[index] {\n                b'\"' => b'\"',\n                b'\\\\' => b'\\\\',\n                b'n' => b'\\n',\n                b't' => b'\\t',\n                _ => return Err(ConfigError::InvalidSyntax),\n            };\n        } else if byte == b'\"' || byte < 32 || byte == 127 {\n            return Err(ConfigError::InvalidSyntax);\n        }\n        output.push(byte)?;\n        index += 1;\n    }\n    Ok(output)\n}"
+   "fn_source": "    pub fn privilege_setid_denied(&self, path: &[u8], setuid: bool, setgid: bool) -> bool {\n        (setuid && !policy_path_matches(&self.privilege_setuid, path))\n            || (setgid && !policy_path_matches(&self.privilege_setgid, path))\n    }"
   },
   {
    "crate": "ginux-vfs",
@@ -1098,6 +2015,7 @@
     157
    ],
    "live_mutants": 3,
+   "ready_count": 3,
    "score": 32,
    "mutants": [
     {
@@ -1116,6 +2034,26 @@
      "source_line": "if path_len == 0 || path_len > MAX_PATH || link_len > MAX_LINK {"
     }
    ],
+   "ready_mutants": [
+    {
+     "name": "op2val-144c34",
+     "old": "    if path_len == 0 || path_len > MAX_PATH || link_len > MAX_LINK {",
+     "new": "    if path_len == 0 || path_len >= MAX_PATH || link_len > MAX_LINK {",
+     "line": 144
+    },
+    {
+     "name": "op2val-144c57",
+     "old": "    if path_len == 0 || path_len > MAX_PATH || link_len > MAX_LINK {",
+     "new": "    if path_len == 0 || path_len > MAX_PATH || link_len == MAX_LINK {",
+     "line": 144
+    },
+    {
+     "name": "op2val-144c57",
+     "old": "    if path_len == 0 || path_len > MAX_PATH || link_len > MAX_LINK {",
+     "new": "    if path_len == 0 || path_len > MAX_PATH || link_len >= MAX_LINK {",
+     "line": 144
+    }
+   ],
    "fn_source": "fn decode_record(bytes: &[u8]) -> Result<Entry<'_>, VfsError> {\n    if bytes.len() != RECORD_SIZE {\n        return Err(VfsError::InvalidIndex);\n    }\n    let path_len = read_u16(bytes, 0)? as usize;\n    let kind = match bytes[2] {\n        1 => NodeKind::File,\n        2 => NodeKind::Directory,\n        3 => NodeKind::Symlink,\n        _ => return Err(VfsError::InvalidIndex),\n    };\n    let link_len = read_u16(bytes, 32)? as usize;\n    if path_len == 0 || path_len > MAX_PATH || link_len > MAX_LINK {\n        return Err(VfsError::InvalidIndex);\n    }\n    Ok(Entry {\n        path: &bytes[40..40 + path_len],\n        kind,\n        mode: read_u32(bytes, 4)?,\n        uid: read_u32(bytes, 8)?,\n        gid: read_u32(bytes, 12)?,\n        size: read_u64(bytes, 16)?,\n        data_offset: read_u64(bytes, 24)?,\n        link: &bytes[40 + MAX_PATH..40 + MAX_PATH + link_len],\n    })\n}"
   },
   {
@@ -1127,6 +2065,7 @@
     1318
    ],
    "live_mutants": 2,
+   "ready_count": 2,
    "score": 32,
    "mutants": [
     {
@@ -1140,6 +2079,22 @@
      "source_line": "if index < PIPES && self.pipes[index].live {"
     }
    ],
+   "ready_mutants": [
+    {
+     "name": "op2val-1315c18",
+     "old": "        if index < PIPES && self.pipes[index].live {",
+     "new": "        if index <= PIPES && self.pipes[index].live {",
+     "line": 1315,
+     "context": "        let index = pipe as usize - 1;\n        if index < PIPES && self.pipes[index].live {\n            self.pipes[index].ends += 1;"
+    },
+    {
+     "name": "op2val-1315c26",
+     "old": "        if index < PIPES && self.pipes[index].live {",
+     "new": "        if index < PIPES || self.pipes[index].live {",
+     "line": 1315,
+     "context": "        let index = pipe as usize - 1;\n        if index < PIPES && self.pipes[index].live {\n            self.pipes[index].ends += 1;"
+    }
+   ],
    "fn_source": "    fn retain(&mut self, pipe: u32) {\n        if pipe == 0 {\n            return;\n        }\n        let index = pipe as usize - 1;\n        if index < PIPES && self.pipes[index].live {\n            self.pipes[index].ends += 1;\n        }\n    }"
   },
   {
@@ -1151,6 +2106,7 @@
     1299
    ],
    "live_mutants": 10,
+   "ready_count": 8,
    "score": 31,
    "mutants": [
     {
@@ -1204,6 +2160,56 @@
      "source_line": "if value > 255 {"
     }
    ],
+   "ready_mutants": [
+    {
+     "name": "op2val-1283c32",
+     "old": "            if part.is_empty() || part.len() > 3 || !part.iter().all(u8::is_ascii_digit) {",
+     "new": "            if part.is_empty() && part.len() > 3 || !part.iter().all(u8::is_ascii_digit) {",
+     "line": 1283
+    },
+    {
+     "name": "op2val-1283c50",
+     "old": "            if part.is_empty() || part.len() > 3 || !part.iter().all(u8::is_ascii_digit) {",
+     "new": "            if part.is_empty() || part.len() > 3 && !part.iter().all(u8::is_ascii_digit) {",
+     "line": 1283
+    },
+    {
+     "name": "op2val-1288c31",
+     "old": "                value = value * 10 + u16::from(*byte - b'0');",
+     "new": "                value = value + 10 + u16::from(*byte - b'0');",
+     "line": 1288
+    },
+    {
+     "name": "op2val-1288c31",
+     "old": "                value = value * 10 + u16::from(*byte - b'0');",
+     "new": "                value = value / 10 + u16::from(*byte - b'0');",
+     "line": 1288
+    },
+    {
+     "name": "op2val-1288c36",
+     "old": "                value = value * 10 + u16::from(*byte - b'0');",
+     "new": "                value = value * 10 * u16::from(*byte - b'0');",
+     "line": 1288
+    },
+    {
+     "name": "op2val-1288c54",
+     "old": "                value = value * 10 + u16::from(*byte - b'0');",
+     "new": "                value = value * 10 + u16::from(*byte / b'0');",
+     "line": 1288
+    },
+    {
+     "name": "op2val-1290c22",
+     "old": "            if value > 255 {",
+     "new": "            if value == 255 {",
+     "line": 1290
+    },
+    {
+     "name": "op2val-1290c22",
+     "old": "            if value > 255 {",
+     "new": "            if value >= 255 {",
+     "line": 1290
+    }
+   ],
    "fn_source": "    pub fn network_source_ipv4(&self) -> Option<[u8; 4]> {\n        let bytes = self.network_source.as_bytes();\n        if bytes.is_empty() {\n            return None;\n        }\n        let mut output = [0u8; 4];\n        let mut parts = bytes.split(|byte| *byte == b'.');\n        for octet in &mut output {\n            let part = parts.next()?;\n            if part.is_empty() || part.len() > 3 || !part.iter().all(u8::is_ascii_digit) {\n                return None;\n            }\n            let mut value = 0u16;\n            for byte in part {\n                value = value * 10 + u16::from(*byte - b'0');\n            }\n            if value > 255 {\n                return None;\n            }\n            *octet = value as u8;\n        }\n        if parts.next().is_some() {\n            return None;\n        }\n        Some(output)\n    }"
   },
   {
@@ -1215,6 +2221,7 @@
     1598
    ],
    "live_mutants": 3,
+   "ready_count": 2,
    "score": 31,
    "mutants": [
     {
@@ -1233,6 +2240,20 @@
      "source_line": "if self.tasks[slot].members.iter().any(|member| *member != 0) {"
     }
    ],
+   "ready_mutants": [
+    {
+     "name": "op2val-1586c24",
+     "old": "            if *member == task {",
+     "new": "            if *member != task {",
+     "line": 1586
+    },
+    {
+     "name": "op2val-1590c65",
+     "old": "        if self.tasks[slot].members.iter().any(|member| *member != 0) {",
+     "new": "        if self.tasks[slot].members.iter().any(|member| *member == 0) {",
+     "line": 1590
+    }
+   ],
    "fn_source": "    pub fn release_task(&mut self, task: u32) {\n        let Some(slot) = self.task_index(task) else {\n            return;\n        };\n        for member in &mut self.tasks[slot].members {\n            if *member == task {\n                *member = 0;\n            }\n        }\n        if self.tasks[slot].members.iter().any(|member| *member != 0) {\n            return;\n        }\n        let entries = self.tasks[slot].entries;\n        for entry in entries.iter().flatten() {\n            self.release(*entry);\n        }\n        self.tasks[slot] = TaskDescriptors::empty();\n    }"
   },
   {
@@ -1244,6 +2265,7 @@
     1196
    ],
    "live_mutants": 3,
+   "ready_count": 2,
    "score": 31,
    "mutants": [
     {
@@ -1262,7 +2284,693 @@
      "source_line": "if waiter.active && waiter.task == task {"
     }
    ],
+   "ready_mutants": [
+    {
+     "name": "op2val-1192c30",
+     "old": "            if waiter.active && waiter.task == task {",
+     "new": "            if waiter.active || waiter.task == task {",
+     "line": 1192
+    },
+    {
+     "name": "op2val-1192c45",
+     "old": "            if waiter.active && waiter.task == task {",
+     "new": "            if waiter.active && waiter.task != task {",
+     "line": 1192
+    }
+   ],
    "fn_source": "    pub fn remove_task(&mut self, task: TaskId) {\n        for waiter in &mut self.waiters {\n            if waiter.active && waiter.task == task {\n                *waiter = FutexWaiter::empty();\n            }\n        }\n    }"
+  },
+  {
+   "crate": "ginux-process",
+   "file": "crates/ginux-process/src/lib.rs",
+   "function": "views",
+   "span": [
+    786,
+    805
+   ],
+   "live_mutants": 5,
+   "ready_count": 3,
+   "score": 30,
+   "mutants": [
+    {
+     "line": 787,
+     "desc": "replace ProcessTable<TASKS>::views -> usize with 0",
+     "source_line": "let mut count = 0usize;"
+    },
+    {
+     "line": 787,
+     "desc": "replace ProcessTable<TASKS>::views -> usize with 1",
+     "source_line": "let mut count = 0usize;"
+    },
+    {
+     "line": 789,
+     "desc": "replace == with != in ProcessTable<TASKS>::views",
+     "source_line": "if count == output.len() {"
+    },
+    {
+     "line": 802,
+     "desc": "replace += with *= in ProcessTable<TASKS>::views",
+     "source_line": "count += 1;"
+    },
+    {
+     "line": 802,
+     "desc": "replace += with -= in ProcessTable<TASKS>::views",
+     "source_line": "count += 1;"
+    }
+   ],
+   "ready_mutants": [
+    {
+     "name": "op2val-789c22",
+     "old": "            if count == output.len() {",
+     "new": "            if count != output.len() {",
+     "line": 789
+    },
+    {
+     "name": "op2val-802c19",
+     "old": "            count += 1;",
+     "new": "            count *= 1;",
+     "line": 802,
+     "context": "            };\n            count += 1;\n        }"
+    },
+    {
+     "name": "op2val-802c19",
+     "old": "            count += 1;",
+     "new": "            count -= 1;",
+     "line": 802,
+     "context": "            };\n            count += 1;\n        }"
+    }
+   ],
+   "fn_source": "    pub fn views(&self, output: &mut [TaskView]) -> usize {\n        let mut count = 0usize;\n        for task in self.tasks.iter().filter(|task| task.occupied) {\n            if count == output.len() {\n                break;\n            }\n            output[count] = TaskView {\n                id: task.id,\n                tgid: task.tgid,\n                parent: task.parent,\n                process_group: task.process_group,\n                session: task.session,\n                state: task.state,\n                credentials: task.credentials,\n                exec_epoch: task.exec_epoch,\n            };\n            count += 1;\n        }\n        count\n    }"
+  }
+ ],
+ "crate_balanced_top": {
+  "ginux-instance": [
+   {
+    "crate": "ginux-instance",
+    "file": "crates/ginux-instance/src/lib.rs",
+    "function": "apply_override_inner",
+    "score": 242,
+    "live_mutants": 76,
+    "ready_count": 60
+   },
+   {
+    "crate": "ginux-instance",
+    "file": "crates/ginux-instance/src/lib.rs",
+    "function": "parse_field",
+    "score": 189,
+    "live_mutants": 58,
+    "ready_count": 54
+   },
+   {
+    "crate": "ginux-instance",
+    "file": "crates/ginux-instance/src/lib.rs",
+    "function": "finish",
+    "score": 42,
+    "live_mutants": 9,
+    "ready_count": 9
+   }
+  ],
+  "ginux-process": [
+   {
+    "crate": "ginux-process",
+    "file": "crates/ginux-process/src/lib.rs",
+    "function": "unshare",
+    "score": 41,
+    "live_mutants": 5,
+    "ready_count": 4
+   },
+   {
+    "crate": "ginux-process",
+    "file": "crates/ginux-process/src/lib.rs",
+    "function": "add",
+    "score": 40,
+    "live_mutants": 5,
+    "ready_count": 5
+   },
+   {
+    "crate": "ginux-process",
+    "file": "crates/ginux-process/src/lib.rs",
+    "function": "update",
+    "score": 39,
+    "live_mutants": 4,
+    "ready_count": 4
+   }
+  ],
+  "ginux-vfs": [
+   {
+    "crate": "ginux-vfs",
+    "file": "crates/ginux-vfs/src/lib.rs",
+    "function": "decode_record",
+    "score": 32,
+    "live_mutants": 3,
+    "ready_count": 3
+   },
+   {
+    "crate": "ginux-vfs",
+    "file": "crates/ginux-vfs/src/lib.rs",
+    "function": "copy_to_overlay",
+    "score": 28,
+    "live_mutants": 2,
+    "ready_count": 2
+   },
+   {
+    "crate": "ginux-vfs",
+    "file": "crates/ginux-vfs/src/lib.rs",
+    "function": "find_base_record",
+    "score": 25,
+    "live_mutants": 3,
+    "ready_count": 2
+   }
+  ],
+  "ginux-oci": [
+   {
+    "crate": "ginux-oci",
+    "file": "crates/ginux-oci/src/lib.rs",
+    "function": "human_size",
+    "score": 27,
+    "live_mutants": 12,
+    "ready_count": 12
+   },
+   {
+    "crate": "ginux-oci",
+    "file": "crates/ginux-oci/src/lib.rs",
+    "function": "fetch_blob",
+    "score": 21,
+    "live_mutants": 12,
+    "ready_count": 12
+   },
+   {
+    "crate": "ginux-oci",
+    "file": "crates/ginux-oci/src/lib.rs",
+    "function": "registry_token",
+    "score": 20,
+    "live_mutants": 7,
+    "ready_count": 4
+   }
+  ],
+  "ginux-kernel-views": [
+   {
+    "crate": "ginux-kernel-views",
+    "file": "crates/ginux-kernel-views/src/cgroup.rs",
+    "function": "remove",
+    "score": 22,
+    "live_mutants": 4,
+    "ready_count": 4
+   },
+   {
+    "crate": "ginux-kernel-views",
+    "file": "crates/ginux-kernel-views/src/cgroup.rs",
+    "function": "parse_controllers",
+    "score": 15,
+    "live_mutants": 4,
+    "ready_count": 2
+   },
+   {
+    "crate": "ginux-kernel-views",
+    "file": "crates/ginux-kernel-views/src/lib.rs",
+    "function": "write_stat",
+    "score": 14,
+    "live_mutants": 2,
+    "ready_count": 1
+   }
+  ],
+  "ginux-fs-policy": [
+   {
+    "crate": "ginux-fs-policy",
+    "file": "crates/ginux-fs-policy/src/bin/fs-policy-doc.rs",
+    "function": "main",
+    "score": 14,
+    "live_mutants": 6,
+    "ready_count": 5
+   },
+   {
+    "crate": "ginux-fs-policy",
+    "file": "crates/ginux-fs-policy/src/lib.rs",
+    "function": "complete_for_descriptor",
+    "score": 0,
+    "live_mutants": 2,
+    "ready_count": 0
+   }
+  ],
+  "ginux-devices": [
+   {
+    "crate": "ginux-devices",
+    "file": "crates/ginux-devices/src/lib.rs",
+    "function": "is_empty",
+    "score": 9,
+    "live_mutants": 3,
+    "ready_count": 1
+   },
+   {
+    "crate": "ginux-devices",
+    "file": "crates/ginux-devices/src/lib.rs",
+    "function": "size",
+    "score": 2,
+    "live_mutants": 2,
+    "ready_count": 0
+   }
+  ]
+ },
+ "all_qualified": [
+  {
+   "crate": "ginux-instance",
+   "file": "crates/ginux-instance/src/lib.rs",
+   "function": "apply_override_inner",
+   "score": 242,
+   "live_mutants": 76,
+   "ready_count": 60
+  },
+  {
+   "crate": "ginux-instance",
+   "file": "crates/ginux-instance/src/lib.rs",
+   "function": "parse_field",
+   "score": 189,
+   "live_mutants": 58,
+   "ready_count": 54
+  },
+  {
+   "crate": "ginux-instance",
+   "file": "crates/ginux-instance/src/lib.rs",
+   "function": "finish",
+   "score": 42,
+   "live_mutants": 9,
+   "ready_count": 9
+  },
+  {
+   "crate": "ginux-instance",
+   "file": "crates/ginux-instance/src/lib.rs",
+   "function": "derive_contract_grants",
+   "score": 41,
+   "live_mutants": 12,
+   "ready_count": 12
+  },
+  {
+   "crate": "ginux-process",
+   "file": "crates/ginux-process/src/lib.rs",
+   "function": "unshare",
+   "score": 41,
+   "live_mutants": 5,
+   "ready_count": 4
+  },
+  {
+   "crate": "ginux-process",
+   "file": "crates/ginux-process/src/lib.rs",
+   "function": "add",
+   "score": 40,
+   "live_mutants": 5,
+   "ready_count": 5
+  },
+  {
+   "crate": "ginux-process",
+   "file": "crates/ginux-process/src/lib.rs",
+   "function": "update",
+   "score": 39,
+   "live_mutants": 4,
+   "ready_count": 4
+  },
+  {
+   "crate": "ginux-process",
+   "file": "crates/ginux-process/src/lib.rs",
+   "function": "exec_group",
+   "score": 37,
+   "live_mutants": 4,
+   "ready_count": 4
+  },
+  {
+   "crate": "ginux-instance",
+   "file": "crates/ginux-instance/src/lib.rs",
+   "function": "privilege_setid_denied",
+   "score": 34,
+   "live_mutants": 7,
+   "ready_count": 5
+  },
+  {
+   "crate": "ginux-vfs",
+   "file": "crates/ginux-vfs/src/lib.rs",
+   "function": "decode_record",
+   "score": 32,
+   "live_mutants": 3,
+   "ready_count": 3
+  },
+  {
+   "crate": "ginux-process",
+   "file": "crates/ginux-process/src/lib.rs",
+   "function": "retain",
+   "score": 32,
+   "live_mutants": 2,
+   "ready_count": 2
+  },
+  {
+   "crate": "ginux-instance",
+   "file": "crates/ginux-instance/src/lib.rs",
+   "function": "network_source_ipv4",
+   "score": 31,
+   "live_mutants": 10,
+   "ready_count": 8
+  },
+  {
+   "crate": "ginux-process",
+   "file": "crates/ginux-process/src/lib.rs",
+   "function": "release_task",
+   "score": 31,
+   "live_mutants": 3,
+   "ready_count": 2
+  },
+  {
+   "crate": "ginux-process",
+   "file": "crates/ginux-process/src/lib.rs",
+   "function": "remove_task",
+   "score": 31,
+   "live_mutants": 3,
+   "ready_count": 2
+  },
+  {
+   "crate": "ginux-process",
+   "file": "crates/ginux-process/src/lib.rs",
+   "function": "views",
+   "score": 30,
+   "live_mutants": 5,
+   "ready_count": 3
+  },
+  {
+   "crate": "ginux-process",
+   "file": "crates/ginux-process/src/lib.rs",
+   "function": "has_waitable_child",
+   "score": 30,
+   "live_mutants": 3,
+   "ready_count": 1
+  },
+  {
+   "crate": "ginux-instance",
+   "file": "crates/ginux-instance/src/lib.rs",
+   "function": "parse_section",
+   "score": 29,
+   "live_mutants": 5,
+   "ready_count": 5
+  },
+  {
+   "crate": "ginux-process",
+   "file": "crates/ginux-process/src/lib.rs",
+   "function": "reap_thread",
+   "score": 29,
+   "live_mutants": 2,
+   "ready_count": 1
+  },
+  {
+   "crate": "ginux-process",
+   "file": "crates/ginux-process/src/lib.rs",
+   "function": "remove",
+   "score": 29,
+   "live_mutants": 2,
+   "ready_count": 1
+  },
+  {
+   "crate": "ginux-process",
+   "file": "crates/ginux-process/src/lib.rs",
+   "function": "set_cloexec",
+   "score": 29,
+   "live_mutants": 2,
+   "ready_count": 1
+  },
+  {
+   "crate": "ginux-process",
+   "file": "crates/ginux-process/src/lib.rs",
+   "function": "set_gid",
+   "score": 29,
+   "live_mutants": 2,
+   "ready_count": 1
+  },
+  {
+   "crate": "ginux-process",
+   "file": "crates/ginux-process/src/lib.rs",
+   "function": "share",
+   "score": 29,
+   "live_mutants": 2,
+   "ready_count": 1
+  },
+  {
+   "crate": "ginux-process",
+   "file": "crates/ginux-process/src/lib.rs",
+   "function": "shell_code",
+   "score": 28,
+   "live_mutants": 5,
+   "ready_count": 2
+  },
+  {
+   "crate": "ginux-vfs",
+   "file": "crates/ginux-vfs/src/lib.rs",
+   "function": "copy_to_overlay",
+   "score": 28,
+   "live_mutants": 2,
+   "ready_count": 2
+  },
+  {
+   "crate": "ginux-process",
+   "file": "crates/ginux-process/src/lib.rs",
+   "function": "rename_task",
+   "score": 28,
+   "live_mutants": 2,
+   "ready_count": 1
+  },
+  {
+   "crate": "ginux-oci",
+   "file": "crates/ginux-oci/src/lib.rs",
+   "function": "human_size",
+   "score": 27,
+   "live_mutants": 12,
+   "ready_count": 12
+  },
+  {
+   "crate": "ginux-process",
+   "file": "crates/ginux-process/src/lib.rs",
+   "function": "generation",
+   "score": 27,
+   "live_mutants": 2,
+   "ready_count": 0
+  },
+  {
+   "crate": "ginux-process",
+   "file": "crates/ginux-process/src/lib.rs",
+   "function": "task_fds",
+   "score": 27,
+   "live_mutants": 2,
+   "ready_count": 0
+  },
+  {
+   "crate": "ginux-vfs",
+   "file": "crates/ginux-vfs/src/lib.rs",
+   "function": "find_base_record",
+   "score": 25,
+   "live_mutants": 3,
+   "ready_count": 2
+  },
+  {
+   "crate": "ginux-process",
+   "file": "crates/ginux-process/src/lib.rs",
+   "function": "drop_capabilities",
+   "score": 25,
+   "live_mutants": 2,
+   "ready_count": 1
+  },
+  {
+   "crate": "ginux-vfs",
+   "file": "crates/ginux-vfs/src/lib.rs",
+   "function": "resolve_components",
+   "score": 24,
+   "live_mutants": 4,
+   "ready_count": 4
+  },
+  {
+   "crate": "ginux-instance",
+   "file": "crates/ginux-instance/src/lib.rs",
+   "function": "port_forward_conflicts",
+   "score": 24,
+   "live_mutants": 3,
+   "ready_count": 2
+  },
+  {
+   "crate": "ginux-vfs",
+   "file": "crates/ginux-vfs/src/lib.rs",
+   "function": "require_parent",
+   "score": 24,
+   "live_mutants": 2,
+   "ready_count": 1
+  },
+  {
+   "crate": "ginux-instance",
+   "file": "crates/ginux-instance/src/lib.rs",
+   "function": "device_create_denied",
+   "score": 23,
+   "live_mutants": 3,
+   "ready_count": 1
+  },
+  {
+   "crate": "ginux-kernel-views",
+   "file": "crates/ginux-kernel-views/src/cgroup.rs",
+   "function": "remove",
+   "score": 22,
+   "live_mutants": 4,
+   "ready_count": 4
+  },
+  {
+   "crate": "ginux-instance",
+   "file": "crates/ginux-instance/src/lib.rs",
+   "function": "validate_policy_path",
+   "score": 22,
+   "live_mutants": 2,
+   "ready_count": 2
+  },
+  {
+   "crate": "ginux-oci",
+   "file": "crates/ginux-oci/src/lib.rs",
+   "function": "fetch_blob",
+   "score": 21,
+   "live_mutants": 12,
+   "ready_count": 12
+  },
+  {
+   "crate": "ginux-instance",
+   "file": "crates/ginux-instance/src/lib.rs",
+   "function": "parse_multiline_hook_list",
+   "score": 21,
+   "live_mutants": 2,
+   "ready_count": 2
+  },
+  {
+   "crate": "ginux-instance",
+   "file": "crates/ginux-instance/src/lib.rs",
+   "function": "validate_volume",
+   "score": 21,
+   "live_mutants": 2,
+   "ready_count": 2
+  },
+  {
+   "crate": "ginux-oci",
+   "file": "crates/ginux-oci/src/lib.rs",
+   "function": "registry_token",
+   "score": 20,
+   "live_mutants": 7,
+   "ready_count": 4
+  },
+  {
+   "crate": "ginux-instance",
+   "file": "crates/ginux-instance/src/lib.rs",
+   "function": "port_forward_parts",
+   "score": 20,
+   "live_mutants": 3,
+   "ready_count": 1
+  },
+  {
+   "crate": "ginux-instance",
+   "file": "crates/ginux-instance/src/lib.rs",
+   "function": "parse_allow_deny",
+   "score": 19,
+   "live_mutants": 2,
+   "ready_count": 1
+  },
+  {
+   "crate": "ginux-instance",
+   "file": "crates/ginux-instance/src/lib.rs",
+   "function": "validate_network_rule",
+   "score": 19,
+   "live_mutants": 2,
+   "ready_count": 1
+  },
+  {
+   "crate": "ginux-instance",
+   "file": "crates/ginux-instance/src/lib.rs",
+   "function": "validate_port_forward",
+   "score": 19,
+   "live_mutants": 2,
+   "ready_count": 1
+  },
+  {
+   "crate": "ginux-kernel-views",
+   "file": "crates/ginux-kernel-views/src/cgroup.rs",
+   "function": "parse_controllers",
+   "score": 15,
+   "live_mutants": 4,
+   "ready_count": 2
+  },
+  {
+   "crate": "ginux-fs-policy",
+   "file": "crates/ginux-fs-policy/src/bin/fs-policy-doc.rs",
+   "function": "main",
+   "score": 14,
+   "live_mutants": 6,
+   "ready_count": 5
+  },
+  {
+   "crate": "ginux-kernel-views",
+   "file": "crates/ginux-kernel-views/src/lib.rs",
+   "function": "write_stat",
+   "score": 14,
+   "live_mutants": 2,
+   "ready_count": 1
+  },
+  {
+   "crate": "ginux-oci",
+   "file": "crates/ginux-oci/src/lib.rs",
+   "function": "remove_path",
+   "score": 12,
+   "live_mutants": 3,
+   "ready_count": 3
+  },
+  {
+   "crate": "ginux-oci",
+   "file": "crates/ginux-oci/src/lib.rs",
+   "function": "safe_whiteout_dir",
+   "score": 12,
+   "live_mutants": 3,
+   "ready_count": 3
+  },
+  {
+   "crate": "ginux-oci",
+   "file": "crates/ginux-oci/src/lib.rs",
+   "function": "select_manifest",
+   "score": 11,
+   "live_mutants": 2,
+   "ready_count": 2
+  },
+  {
+   "crate": "ginux-oci",
+   "file": "crates/ginux-oci/src/lib.rs",
+   "function": "bearer_fields",
+   "score": 10,
+   "live_mutants": 5,
+   "ready_count": 0
+  },
+  {
+   "crate": "ginux-devices",
+   "file": "crates/ginux-devices/src/lib.rs",
+   "function": "is_empty",
+   "score": 9,
+   "live_mutants": 3,
+   "ready_count": 1
+  },
+  {
+   "crate": "ginux-oci",
+   "file": "crates/ginux-oci/src/main.rs",
+   "function": "main",
+   "score": 8,
+   "live_mutants": 2,
+   "ready_count": 1
+  },
+  {
+   "crate": "ginux-devices",
+   "file": "crates/ginux-devices/src/lib.rs",
+   "function": "size",
+   "score": 2,
+   "live_mutants": 2,
+   "ready_count": 0
+  },
+  {
+   "crate": "ginux-fs-policy",
+   "file": "crates/ginux-fs-policy/src/lib.rs",
+   "function": "complete_for_descriptor",
+   "score": 0,
+   "live_mutants": 2,
+   "ready_count": 0
   }
  ]
 }
