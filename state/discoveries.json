@@ -1,7 +1,7 @@
 {
- "generated_utc": "2026-11-27T11:37:44Z",
+ "generated_utc": "2026-11-27T11:39:20Z",
  "source": "mutation-scan artifacts (scan.log MISSED lines + missed.txt when present)",
- "total_survivors": 746,
+ "total_survivors": 734,
  "crates": {
   "ginux-core": {
    "total_missed": 35,
@@ -229,22 +229,14 @@
    ],
    "survivors": [
     "crates/ginux-devices/src/lib.rs:149:40: replace == with != in DeviceRegistry<DEVICES, FDS>::assign",
-    "crates/ginux-devices/src/lib.rs:185:9: replace DeviceRegistry<DEVICES, FDS>::views -> usize with 0",
-    "crates/ginux-devices/src/lib.rs:185:9: replace DeviceRegistry<DEVICES, FDS>::views -> usize with 1",
-    "crates/ginux-devices/src/lib.rs:190:47: replace && with || in DeviceRegistry<DEVICES, FDS>::views",
-    "crates/ginux-devices/src/lib.rs:190:65: replace == with != in DeviceRegistry<DEVICES, FDS>::views",
-    "crates/ginux-devices/src/lib.rs:192:22: replace == with != in DeviceRegistry<DEVICES, FDS>::views",
     "crates/ginux-devices/src/lib.rs:201:57: replace + with * in DeviceRegistry<DEVICES, FDS>::views",
     "crates/ginux-devices/src/lib.rs:201:57: replace + with - in DeviceRegistry<DEVICES, FDS>::views",
-    "crates/ginux-devices/src/lib.rs:209:19: replace += with *= in DeviceRegistry<DEVICES, FDS>::views",
-    "crates/ginux-devices/src/lib.rs:209:19: replace += with -= in DeviceRegistry<DEVICES, FDS>::views",
     "crates/ginux-devices/src/lib.rs:232:24: replace | with ^ in DeviceRegistry<DEVICES, FDS>::open",
     "crates/ginux-devices/src/lib.rs:243:40: replace && with || in DeviceRegistry<DEVICES, FDS>::descriptor",
     "crates/ginux-devices/src/lib.rs:247:42: replace && with || in DeviceRegistry<DEVICES, FDS>::descriptor",
     "crates/ginux-devices/src/lib.rs:266:39: replace ^= with |= in DeviceRegistry<DEVICES, FDS>::read",
     "crates/ginux-devices/src/lib.rs:266:60: replace << with >> in DeviceRegistry<DEVICES, FDS>::read",
     "crates/ginux-devices/src/lib.rs:267:39: replace ^= with |= in DeviceRegistry<DEVICES, FDS>::read",
-    "crates/ginux-devices/src/lib.rs:267:60: replace >> with << in DeviceRegistry<DEVICES, FDS>::read",
     "crates/ginux-devices/src/lib.rs:268:39: replace ^= with |= in DeviceRegistry<DEVICES, FDS>::read",
     "crates/ginux-devices/src/lib.rs:268:60: replace << with >> in DeviceRegistry<DEVICES, FDS>::read",
     "crates/ginux-devices/src/lib.rs:333:20: replace == with != in BlockBackend::is_empty",
@@ -253,13 +245,9 @@
     "crates/ginux-devices/src/lib.rs:393:9: replace Partition<B>::size -> u64 with 0",
     "crates/ginux-devices/src/lib.rs:393:9: replace Partition<B>::size -> u64 with 1",
     "crates/ginux-devices/src/lib.rs:397:9: replace Partition<B>::flush -> Result<(), DeviceError> with Ok(())",
-    "crates/ginux-devices/src/lib.rs:477:25: replace < with <= in IsolatedNetwork<FRAMES>::receive",
-    "crates/ginux-devices/src/lib.rs:477:25: replace < with == in IsolatedNetwork<FRAMES>::receive",
     "crates/ginux-devices/src/lib.rs:483:32: replace + with * in IsolatedNetwork<FRAMES>::receive",
     "crates/ginux-devices/src/lib.rs:483:37: replace % with + in IsolatedNetwork<FRAMES>::receive",
-    "crates/ginux-devices/src/lib.rs:483:37: replace % with / in IsolatedNetwork<FRAMES>::receive",
-    "crates/ginux-devices/src/lib.rs:484:18: replace -= with += in IsolatedNetwork<FRAMES>::receive",
-    "crates/ginux-devices/src/lib.rs:484:18: replace -= with /= in IsolatedNetwork<FRAMES>::receive"
+    "crates/ginux-devices/src/lib.rs:483:37: replace % with / in IsolatedNetwork<FRAMES>::receive"
    ]
   },
   "ginux-fs-policy": {
