@@ -55,8 +55,22 @@
  },
  "c8-vfs-decode-boundary-exact": {
   "proven": false,
-  "baseline": false,
-  "why": "baseline-fail",
-  "baseline_err": "\n\u001b[1m\u001b[91merror[E0502]\u001b[0m\u001b[1m: cannot borrow `buf` as immutable because it is also borrowed as mutable\u001b[0m\n    \u001b[1m\u001b[94m--> \u001b[0mcrates/ginux-vfs/src/lib.rs:1308:31\n     \u001b[1m\u001b[94m|\u001b[0m\n\u001b[1m\u001b[94m1293\u001b[0m \u001b[1m\u001b[94m|\u001b[0m         let rec = &mut buf[HEADER_SIZE..];\n     \u001b[1m\u001b[94m|\u001b[0m                        \u001b[1m\u001b[94m---\u001b[0m \u001b[1m\u001b[94mmutable borrow occurs here\u001b[0m\n\u001b[1m\u001b[94m...\u001b[0m\n\u001b[1m\u001b[94m1308\u001b[0m \u001b[1m\u001b[94m|\u001b[0m         assert_eq!(Index::new(&buf).err(), Some(VfsError::InvalidIndex));\n     \u001b[1m\u001b[94m|\u001b[0m                               \u001b[1m\u001b[91m^^^^\u001b[0m \u001b[1m\u001b[91mimmutable borrow occurs here\u001b[0m\n\u001b[1m\u001b[94m1309\u001b[0m \u001b[1m\u001b[94m|\u001b[0m         // zero-length path rejected; exact-fit restored stays ok\n\u001b[1m\u001b[94m1310\u001b[0m \u001b[1m\u001b[94m|\u001b[0m         rec[32..34].copy_from_slice(&(MAX_LINK as u16).to_le_bytes());\n     \u001b[1m\u001b[94m|\u001b[0m         \u001b[1m\u001b[94m---\u001b[0m \u001b[1m\u001b[94mmutable borrow later used here\u001b[0m\n\n\u001b[1mFor more information about this error, try `rustc --explain E0502`.\u001b[0m\n\u001b[1m\u001b[91merror\u001b[0m: could not compile `ginux-vfs` (lib test) due to 2 previous errors"
+  "baseline": true,
+  "mutants": [
+   {
+    "name": "link-ge",
+    "anchor_ok": true,
+    "anchor_count": 1,
+    "survives": true,
+    "killed": true
+   },
+   {
+    "name": "path-eq",
+    "anchor_ok": true,
+    "anchor_count": 1,
+    "survives": false,
+    "killed": true
+   }
+  ]
  }
 }
