@@ -59,3 +59,10 @@
 ## فهرس
 - الأرشيف: state/history/STATE-archive-2026-11-18.md — التسليم: HANDOFF.md
 - التقارير: reports/ — المصفوفة: matrix/upstream-watch.json
+
+<!-- AUTO-OPEN-PRS:BEGIN -->
+## طلبات upstream المفتوحة (تحديث آلي — لا تحرّر يدويًا)
+
+- #361
+- #362
+<!-- AUTO-OPEN-PRS:END -->
