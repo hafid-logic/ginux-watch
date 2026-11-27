@@ -1,0 +1,57 @@
+name: upstream-monitor
+# LIVE upstream monitoring (owner directive 2026-11-27): watch gmkurtzer/ginux main.
+# On any advance, refresh the contribution pipeline against CURRENT main so seats
+# refill with fresh, non-duplicate gaps: screen -> author -> prove -> (autopilot pushes).
+on:
+  schedule:
+    - cron: "*/20 * * * *"
+  workflow_dispatch: {}
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: upstream-monitor
+  cancel-in-progress: false
+jobs:
+  monitor:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Detect upstream main advance
+        id: head
+        run: |
+          cur=$(curl -sS -m 20 https://api.github.com/repos/gmkurtzer/ginux/commits/main | python3 -c 'import json,sys;print(json.load(sys.stdin)["sha"])')
+          prev=$(python3 -c 'import json,os;print(json.load(open("state/upstream-head.json")).get("sha","") if os.path.exists("state/upstream-head.json") else "")')
+          echo "cur=$cur prev=$prev"
+          echo "changed=$([ "$cur" != "$prev" ] && echo yes || echo no)" >> "$GITHUB_OUTPUT"
+          echo "cur=$cur" >> "$GITHUB_OUTPUT"
+      - name: Refresh pipeline on advance (screen + author + prove)
+        if: steps.head.outputs.changed == 'yes'
+        env:
+          GH_TOKEN: ${{ secrets.PIPELINE_PAT }}
+          PIPELINE_PAT: ${{ secrets.PIPELINE_PAT }}
+        run: |
+          python3 team/scripts/screen-stock.py
+          python3 team/scripts/auto-author.py
+          python3 team/scripts/sync-open-pr-refs.py
+      - name: Dispatch prover (validate fresh stock on runner)
+        if: steps.head.outputs.changed == 'yes'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run package-prover.yml --repo hafid-logic/ginux-watch --ref main || true
+      - name: Persist upstream head + commit refresh
+        if: steps.head.outputs.changed == 'yes'
+        run: |
+          python3 -c 'import json,sys;json.dump({"sha":"${{ steps.head.outputs.cur }}"},open("state/upstream-head.json","w"))'
+          git config user.name "upstream-monitor"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A approved/ state/ team/tasks/ STATE.md
+          if ! git diff --cached --quiet; then
+            git commit -m "monitor: upstream advanced to ${{ steps.head.outputs.cur }} - pipeline refreshed [skip ci]"
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin main && git push; then break; fi
+              git rebase --abort >/dev/null 2>&1 || true; sleep $((i*5))
+            done
+          fi

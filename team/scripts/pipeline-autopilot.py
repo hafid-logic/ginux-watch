@@ -7,6 +7,7 @@ Heavy mutation scanning lives on runners (mutation-scan.yml); this is light.
 Token: PIPELINE_PAT (contents:write on fork). Modes: --dry-run, --selftest.
 """
 import json, os, subprocess, sys, datetime
+import dedup
 from pathlib import Path
 import urllib.request
 
@@ -57,6 +58,8 @@ def push_pkg(up, fork, tok, d, branch):
         subprocess.run(["git","clone","--quiet","https://github.com/"+up+".git",str(work)],check=True)
     def g(*a): return subprocess.run(["git","-C",str(work)]+list(a),capture_output=True,text=True)
     g("fetch","-q","origin","main")
+    if dedup.already_on_main(work,d):
+        print("DEDUP_SKIP",branch); return False
     g("checkout","-q","-B",branch,"FETCH_HEAD")
     r=g("am","--3way",str((d/"PR.patch").resolve()))
     if r.returncode!=0:

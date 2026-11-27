@@ -84,3 +84,6 @@ Two independent defects caused empty/misaligned table cells in an opened PR:
 
 ## Conflict auto-resolution (v9.2)
 Reserves that add a test at a crate's `mod tests` tail go stale when main advances (another PR merges there) ⇒ merge conflict. `rebase-reserves.py` (run by the autopilot) detects OPEN author PRs with `mergeable_state=dirty`, resets the fork branch to current upstream main, re-applies the test addition from the stock `PR.patch`, fmt, recommits (title+body) and force-pushes — resolving the conflict automatically. Stock `PR.patch` is refreshed to the rebased commit.
+
+## Anti-leak rule (R3) + live upstream monitor
+R3 (binding 2026-11-27): NEVER push a reserve/fork branch whose test or package is already on upstream main (merged or duplicate). Screen against the CURRENT main head before every push (team/scripts/dedup.py); screen-stock and the autopilot push path enforce it. Violation = leak (closed duplicate gmkurtzer/ginux pull/360). upstream-monitor.yml refreshes the pipeline on every main advance.
