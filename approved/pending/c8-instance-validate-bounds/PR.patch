@@ -1,0 +1,35 @@
+From 300952ee840b1fcee8f1cfce21582909eaf09521 Mon Sep 17 00:00:00 2001
+From: Abdelhafid DJIDEL <266947999+hafid-logic@users.noreply.github.com>
+Date: Fri, 27 Nov 2026 00:38:42 +0000
+Subject: [PATCH] tests(instance): pin validate vcpu and memory bounds
+
+---
+ crates/ginux-instance/src/lib.rs | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+diff --git a/crates/ginux-instance/src/lib.rs b/crates/ginux-instance/src/lib.rs
+index 0c3fd234..d5f17444 100644
+--- a/crates/ginux-instance/src/lib.rs
++++ b/crates/ginux-instance/src/lib.rs
+@@ -3106,4 +3106,18 @@ failure = "stop"
+         assert!(!runtime.resources_acquired());
+         assert!(!runtime.managed_task());
+     }
++
++    #[test]
++    fn validate_enforces_vcpu_and_memory_bounds() {
++        let mut c = InstanceConfig::parse(VALID.as_bytes()).unwrap();
++        c.vcpus = 0;
++        assert!(c.validate().is_err());
++        c.vcpus = 65;
++        assert!(c.validate().is_err());
++        c.vcpus = 64;
++        c.memory_mib = 16;
++        assert!(c.validate().is_ok());
++        c.memory_mib = 15;
++        assert!(c.validate().is_err());
++    }
+ }
+-- 
+2.47.3
+

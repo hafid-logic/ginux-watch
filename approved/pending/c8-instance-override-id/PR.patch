@@ -1,0 +1,30 @@
+From 09b5a93c30a51e43299ecbebe7e9d5fb8ae3ac8c Mon Sep 17 00:00:00 2001
+From: Abdelhafid DJIDEL <266947999+hafid-logic@users.noreply.github.com>
+Date: Fri, 27 Nov 2026 00:38:42 +0000
+Subject: [PATCH] tests(instance): pin instance.id override and unknown-key
+ rejection
+
+---
+ crates/ginux-instance/src/lib.rs | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/crates/ginux-instance/src/lib.rs b/crates/ginux-instance/src/lib.rs
+index 0c3fd234..b921ae93 100644
+--- a/crates/ginux-instance/src/lib.rs
++++ b/crates/ginux-instance/src/lib.rs
+@@ -3106,4 +3106,12 @@ failure = "stop"
+         assert!(!runtime.resources_acquired());
+         assert!(!runtime.managed_task());
+     }
++
++    #[test]
++    fn override_instance_id_and_reject_unknown() {
++        let mut c = InstanceConfig::parse(VALID.as_bytes()).unwrap();
++        c.apply_override(b"instance.id", b"other").unwrap();
++        assert_eq!(c.id.as_bytes(), b"other");
++        assert!(c.apply_override(b"instance.nope", b"x").is_err());
++    }
+ }
+-- 
+2.47.3
+

@@ -1,0 +1,17 @@
+{
+ "crate": "ginux-instance",
+ "file": "crates/ginux-instance/src/lib.rs",
+ "filter": "override_instance_id",
+ "mutants": [
+  {
+   "name": "del-id",
+   "old": "            b\"instance.id\" => self.id = parse_string(value)?,\n",
+   "new": ""
+  },
+  {
+   "name": "id-noop",
+   "old": "            b\"instance.id\" => self.id = parse_string(value)?,\n",
+   "new": "            b\"instance.id\" => { let _ = parse_string::<64>(value)?; },\n"
+  }
+ ]
+}

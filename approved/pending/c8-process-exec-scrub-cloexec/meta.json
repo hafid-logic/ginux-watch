@@ -1,0 +1,17 @@
+{
+ "crate": "ginux-process",
+ "file": "crates/ginux-process/src/lib.rs",
+ "filter": "exec_scrub_drops",
+ "mutants": [
+  {
+   "name": "invert-cloexec",
+   "old": "if entry.is_some_and(|entry| entry.cloexec) {",
+   "new": "if entry.is_some_and(|entry| !entry.cloexec) {"
+  },
+  {
+   "name": "count0",
+   "old": "count as u32\n    }",
+   "new": "0\n    }"
+  }
+ ]
+}

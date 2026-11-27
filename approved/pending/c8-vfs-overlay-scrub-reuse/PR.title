@@ -1,0 +1,1 @@
+tests(vfs): scrub unlinked overlay slot before reuse

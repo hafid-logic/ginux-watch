@@ -1,0 +1,1 @@
+tests(process): pin exec_scrub cloexec-only teardown and pipe release

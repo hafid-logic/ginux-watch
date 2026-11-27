@@ -1,0 +1,32 @@
+From 07c59c96ec0dba0cffc1c6a77c49e697e221c2ba Mon Sep 17 00:00:00 2001
+From: Abdelhafid DJIDEL <266947999+hafid-logic@users.noreply.github.com>
+Date: Fri, 27 Nov 2026 00:38:42 +0000
+Subject: [PATCH] tests(instance): pin resource overrides and unknown-key
+ rejection
+
+---
+ crates/ginux-instance/src/lib.rs | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/crates/ginux-instance/src/lib.rs b/crates/ginux-instance/src/lib.rs
+index 0c3fd234..1cf5bb50 100644
+--- a/crates/ginux-instance/src/lib.rs
++++ b/crates/ginux-instance/src/lib.rs
+@@ -3106,4 +3106,14 @@ failure = "stop"
+         assert!(!runtime.resources_acquired());
+         assert!(!runtime.managed_task());
+     }
++
++    #[test]
++    fn override_resources_vcpus_and_memory_and_reject_unknown() {
++        let mut c = InstanceConfig::parse(VALID.as_bytes()).unwrap();
++        c.apply_override(b"resources.vcpus", b"2").unwrap();
++        assert_eq!(c.vcpus, 2);
++        c.apply_override(b"resources.memory_mib", b"256").unwrap();
++        assert_eq!(c.memory_mib, 256);
++        assert!(c.apply_override(b"resources.nope", b"1").is_err());
++    }
+ }
+-- 
+2.47.3
+

@@ -1,0 +1,42 @@
+From 6436adde112d8149d24c5261cf52201f4faf3dd9 Mon Sep 17 00:00:00 2001
+From: Abdelhafid DJIDEL <266947999+hafid-logic@users.noreply.github.com>
+Date: Fri, 27 Nov 2026 00:38:41 +0000
+Subject: [PATCH] tests(process): pin exec_scrub cloexec-only teardown and pipe
+ release
+
+---
+ crates/ginux-process/src/lib.rs | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
+
+diff --git a/crates/ginux-process/src/lib.rs b/crates/ginux-process/src/lib.rs
+index 8df66a9f..4db4a228 100644
+--- a/crates/ginux-process/src/lib.rs
++++ b/crates/ginux-process/src/lib.rs
+@@ -2167,4 +2167,24 @@ mod tests {
+             Err(ProcessError::DescriptorFull)
+         );
+     }
++
++    #[test]
++    fn exec_scrub_drops_only_cloexec_ends_and_releases_pipes() {
++        let mut pipes: PipeSpace<2, 8, 2> = PipeSpace::new();
++        let keep = pipes.create_pipe(1, 0, 1, false).unwrap();
++        let drop_me = pipes.create_pipe(1, 2, 3, true).unwrap();
++        assert_eq!(pipes.active_pipes(), 2);
++        // scrub closes both cloexec ends of the second pipe only
++        assert_eq!(pipes.exec_scrub(1), 2);
++        assert_eq!(pipes.pipe_ends(drop_me), 0);
++        assert_eq!(pipes.pipe_ends(keep), 2);
++        assert_eq!(pipes.active_pipes(), 1);
++        // surviving fds remain usable; scrubbed ones are gone
++        assert!(pipes.lookup(1, 0).is_some());
++        assert!(pipes.lookup(1, 2).is_none());
++        // idempotent: nothing left to scrub
++        assert_eq!(pipes.exec_scrub(1), 0);
++        // unknown task scrubs nothing
++        assert_eq!(pipes.exec_scrub(99), 0);
++    }
+ }
+-- 
+2.47.3
+

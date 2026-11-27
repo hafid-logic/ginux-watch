@@ -1,0 +1,17 @@
+{
+ "crate": "ginux-instance",
+ "file": "crates/ginux-instance/src/lib.rs",
+ "filter": "override_resources_vcpus",
+ "mutants": [
+  {
+   "name": "del-vcpus",
+   "old": "            b\"resources.vcpus\" => self.vcpus = parse_u64(value)?,\n",
+   "new": ""
+  },
+  {
+   "name": "del-mem",
+   "old": "            b\"resources.memory_mib\" => self.memory_mib = parse_u64(value)?,\n",
+   "new": ""
+  }
+ ]
+}
