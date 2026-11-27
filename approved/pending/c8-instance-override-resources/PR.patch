@@ -1,6 +1,6 @@
-From 07c59c96ec0dba0cffc1c6a77c49e697e221c2ba Mon Sep 17 00:00:00 2001
+From 624b046cf48532d48a093a5b72e581638bffbe1a Mon Sep 17 00:00:00 2001
 From: Abdelhafid DJIDEL <266947999+hafid-logic@users.noreply.github.com>
-Date: Fri, 27 Nov 2026 00:38:42 +0000
+Date: Fri, 27 Nov 2026 00:44:57 +0000
 Subject: [PATCH] tests(instance): pin resource overrides and unknown-key
  rejection
 

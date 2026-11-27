@@ -1,0 +1,17 @@
+{
+ "crate": "ginux-instance",
+ "file": "crates/ginux-instance/src/lib.rs",
+ "filter": "derive_grants_write_from_create",
+ "mutants": [
+  {
+   "name": "drop-create",
+   "old": "        if !self.filesystem_write.as_slice().is_empty()\n            || !self.filesystem_create.as_slice().is_empty()\n        {",
+   "new": "        if !self.filesystem_write.as_slice().is_empty() {"
+  },
+  {
+   "name": "and",
+   "old": "        if !self.filesystem_write.as_slice().is_empty()\n            || !self.filesystem_create.as_slice().is_empty()\n        {",
+   "new": "        if !self.filesystem_write.as_slice().is_empty()\n            && !self.filesystem_create.as_slice().is_empty()\n        {"
+  }
+ ]
+}

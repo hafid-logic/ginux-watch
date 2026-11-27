@@ -1,0 +1,39 @@
+From a8cfa4c0594b00b7b5d78ad61119821f66d5569f Mon Sep 17 00:00:00 2001
+From: Abdelhafid DJIDEL <266947999+hafid-logic@users.noreply.github.com>
+Date: Fri, 27 Nov 2026 00:44:58 +0000
+Subject: [PATCH] tests(instance): derive contract write grant from create-only
+ lists
+
+---
+ crates/ginux-instance/src/lib.rs | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
+
+diff --git a/crates/ginux-instance/src/lib.rs b/crates/ginux-instance/src/lib.rs
+index 0c3fd234..f9ce8298 100644
+--- a/crates/ginux-instance/src/lib.rs
++++ b/crates/ginux-instance/src/lib.rs
+@@ -3106,4 +3106,21 @@ failure = "stop"
+         assert!(!runtime.resources_acquired());
+         assert!(!runtime.managed_task());
+     }
++
++    #[test]
++    fn derive_grants_write_from_create() {
++        let mut c = InstanceConfig::parse(VALID.as_bytes()).unwrap();
++        c.filesystem_write.clear();
++        c.filesystem_create.clear();
++        c.contract_write.clear();
++        c.filesystem_create
++            .push(Text::from_bytes(b"/tmp/x").unwrap())
++            .unwrap();
++        c.derive_contract_grants().unwrap();
++        assert!(c
++            .contract_write
++            .as_slice()
++            .iter()
++            .any(|t| t.as_bytes() == b"filesystem.**"));
++    }
+ }
+-- 
+2.47.3
+

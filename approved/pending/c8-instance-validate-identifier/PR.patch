@@ -1,0 +1,32 @@
+From 73377ce44c4409500fd1b11affd43a848056379a Mon Sep 17 00:00:00 2001
+From: Abdelhafid DJIDEL <266947999+hafid-logic@users.noreply.github.com>
+Date: Fri, 27 Nov 2026 00:44:58 +0000
+Subject: [PATCH] tests(instance): validate rejects invalid identifier shapes
+
+---
+ crates/ginux-instance/src/lib.rs | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/crates/ginux-instance/src/lib.rs b/crates/ginux-instance/src/lib.rs
+index 0c3fd234..7ff75dc1 100644
+--- a/crates/ginux-instance/src/lib.rs
++++ b/crates/ginux-instance/src/lib.rs
+@@ -3106,4 +3106,15 @@ failure = "stop"
+         assert!(!runtime.resources_acquired());
+         assert!(!runtime.managed_task());
+     }
++
++    #[test]
++    fn validate_rejects_bad_identifier() {
++        let mut c = InstanceConfig::parse(VALID.as_bytes()).unwrap();
++        c.id = Text::from_bytes(b"").unwrap();
++        assert!(c.validate().is_err());
++        c.id = Text::from_bytes(b"bad id").unwrap();
++        assert!(c.validate().is_err());
++        c.id = Text::from_bytes(b"demo").unwrap();
++        assert!(c.validate().is_ok());
++    }
+ }
+-- 
+2.47.3
+

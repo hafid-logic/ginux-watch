@@ -1,0 +1,31 @@
+From a7c944aa3b442f48a5bf441f7ada52bf0456994c Mon Sep 17 00:00:00 2001
+From: Abdelhafid DJIDEL <266947999+hafid-logic@users.noreply.github.com>
+Date: Fri, 27 Nov 2026 00:44:58 +0000
+Subject: [PATCH] tests(core): pin open/openat read-only admission
+
+---
+ crates/ginux-core/src/lib.rs | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/crates/ginux-core/src/lib.rs b/crates/ginux-core/src/lib.rs
+index 65dbf923..899d4c70 100644
+--- a/crates/ginux-core/src/lib.rs
++++ b/crates/ginux-core/src/lib.rs
+@@ -1025,4 +1025,14 @@ mod tests {
+         assert!(balanced_arguments_allowed(SYS_WAIT4, u64::MAX, 0, 0));
+         assert!(balanced_arguments_allowed(SYS_WAIT4, 1, 0, 0));
+     }
++
++    #[test]
++    fn open_admission_is_readonly() {
++        assert!(balanced_arguments_allowed(2, 0, 0, 0));
++        assert!(!balanced_arguments_allowed(2, 0, 1, 0));
++        assert!(!balanced_arguments_allowed(2, 0, 2, 0));
++        assert!(!balanced_arguments_allowed(2, 0, 0o100, 0));
++        assert!(balanced_arguments_allowed(257, 0, 0, 0));
++        assert!(!balanced_arguments_allowed(257, 0, 1, 0));
++    }
+ }
+-- 
+2.47.3
+

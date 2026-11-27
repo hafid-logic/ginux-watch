@@ -1,6 +1,6 @@
-From 6436adde112d8149d24c5261cf52201f4faf3dd9 Mon Sep 17 00:00:00 2001
+From 6f54f4066cb814afb38b7b89d68d8f94e3efebd1 Mon Sep 17 00:00:00 2001
 From: Abdelhafid DJIDEL <266947999+hafid-logic@users.noreply.github.com>
-Date: Fri, 27 Nov 2026 00:38:41 +0000
+Date: Fri, 27 Nov 2026 00:44:57 +0000
 Subject: [PATCH] tests(process): pin exec_scrub cloexec-only teardown and pipe
  release
 

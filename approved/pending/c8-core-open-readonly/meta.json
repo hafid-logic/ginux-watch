@@ -1,0 +1,17 @@
+{
+ "crate": "ginux-core",
+ "file": "crates/ginux-core/src/lib.rs",
+ "filter": "open_admission_is_readonly",
+ "mutants": [
+  {
+   "name": "open-noacc",
+   "old": "2 => arg1 & (O_ACCMODE | MUTATING_OPEN_FLAGS) == 0,",
+   "new": "2 => arg1 & MUTATING_OPEN_FLAGS == 0,"
+  },
+  {
+   "name": "openat0",
+   "old": "257 => arg2 & (O_ACCMODE | MUTATING_OPEN_FLAGS) == 0,",
+   "new": "257 => true,"
+  }
+ ]
+}

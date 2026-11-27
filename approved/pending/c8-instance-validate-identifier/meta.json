@@ -1,0 +1,17 @@
+{
+ "crate": "ginux-instance",
+ "file": "crates/ginux-instance/src/lib.rs",
+ "filter": "validate_rejects_bad_identifier",
+ "mutants": [
+  {
+   "name": "id-ok",
+   "old": "        validate_identifier(self.id.as_bytes())?;",
+   "new": "        let _ = self.id.as_bytes();"
+  },
+  {
+   "name": "hostname-ok",
+   "old": "        validate_identifier(self.hostname.as_bytes())?;",
+   "new": "        let _ = self.hostname.as_bytes();"
+  }
+ ]
+}
