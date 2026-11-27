@@ -34,6 +34,8 @@ approval before opening the PR. A general "prepare/open N PRs" instruction is NO
 to publish. Keep strong contributions ready as pushed branches; fill slots after merges
 only via this workflow. See `reports/deviations/2026-11-24-direct-upstream-pr.md`.
 
+**R3 (binding 2026-11-27): NEVER push a reserve/fork branch whose test or package is already on upstream main (merged or duplicate). Screen against the CURRENT main head before every push (team/scripts/dedup.py); screen-stock and the autopilot push path enforce it. Violation = leak (closed duplicate gmkurtzer/ginux pull/360). upstream-monitor.yml refreshes the pipeline on every main advance.**
+
 ## 5. Internal auto-merge guardrails
 ci success + `mergeable_state: clean` + same-repo + non-draft + path allowlist,
 with a **self-protecting denylist** (the guardrails themselves need owner merge).

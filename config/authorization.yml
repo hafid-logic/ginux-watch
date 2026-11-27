@@ -6,6 +6,7 @@ confirmed_by: hafid-logic
 confirmed_at: "2026-11-18"
 directive: directives/v8.4-20261118.md
 # R2 (binding 2026-11-24): every PR/issue body's final line = 'Prepared with AI assistance; reviewed by me.'
+# R3 (binding 2026-11-27): NEVER push a reserve/fork branch whose test or package is already on upstream main (merged or duplicate). Screen against the CURRENT main head before every push (team/scripts/dedup.py); screen-stock and the autopilot push path enforce it. Violation = leak (closed duplicate gmkurtzer/ginux pull/360). upstream-monitor.yml refreshes the pipeline on every main advance.
 default: human
 autonomous:
   - read_upstream_api

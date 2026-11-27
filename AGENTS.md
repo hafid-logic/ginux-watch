@@ -251,6 +251,7 @@ push, deletions, policy changes and gate acceptance are OWNER-ONLY.
 Upstream PRs/issues: never open directly — prepare, push a fork branch, get explicit
 per-item owner approval, then open (R1). Every PR/issue body ends with exactly
 `Prepared with AI assistance; reviewed by me.` (R2).
+R3 (binding 2026-11-27): NEVER push a reserve/fork branch whose test or package is already on upstream main (merged or duplicate). Screen against the CURRENT main head before every push (team/scripts/dedup.py); screen-stock and the autopilot push path enforce it. Violation = leak (closed duplicate gmkurtzer/ginux pull/360). upstream-monitor.yml refreshes the pipeline on every main advance.
 Reload this block after context compaction or handoff.
 <!-- END HDAE SECURITY CONTRACT -->
 
