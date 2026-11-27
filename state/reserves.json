@@ -1,4 +1,20 @@
 {
- "generated_utc": "2026-11-27T11:48:03Z",
- "reserves": []
+ "generated_utc": "2026-11-27T19:51:37Z",
+ "reserves": [
+  {
+   "branch": "tests/instance-derive-grants",
+   "title": "tests(instance): derive write grant from create-only filesystem policy",
+   "url": "https://github.com/gmkurtzer/ginux/compare/main...hafid-logic:tests/instance-derive-grants?quick_pull=1&title=tests%28instance%29%3A+derive+write+grant+from+create-only+filesystem+policy&body=%23%23%23+What%0APins+%60derive_contract_grants%60%3A+a+create-only+filesystem+policy+derives+the+%60filesystem.%2A%2A%60+write+grant+while+read+stays+ungranted.%0A%0A%23%23%23+Why+it+matters%0ACreate+implies+mutation%3B+dropping+the+create+arm+or+requiring+both+lists+silently+unmediates+creation+paths.+Existing+recipes+always+set+read%2Bwrite%2Bcreate+together%2C+so+the+create-only+edge+is+unpinned.%0A%0A%23%23%23+Mutation+evidence+%28fail-then-pass%29%0A%7C+Mutant+%7C+Existing+suite+%7C+New+test+%7C%0A%7C---%7C---%7C---%7C%0A%7C+drop+%60%7C%7C+%21filesystem_create...is_empty%28%29%60+%7C+PASS+%28survives%29+%7C+FAIL+%28killed%29+%7C%0A%7C+%60%7C%7C%60+-%3E+%60%26%26%60+%7C+PASS+%28survives%29+%7C+FAIL+%28killed%29+%7C%0A%0ABaseline%3A+PASS.+Reproduce%3A+%60cargo+test+-p+ginux-instance+--lib+create_only_filesystem_grants%60.%0A%0APrepared+with+AI+assistance%3B+reviewed+by+me.%0A"
+  },
+  {
+   "branch": "tests/instance-override-id",
+   "title": "tests(instance): pin instance.id override and unknown-key rejection",
+   "url": "https://github.com/gmkurtzer/ginux/compare/main...hafid-logic:tests/instance-override-id?quick_pull=1&title=tests%28instance%29%3A+pin+instance.id+override+and+unknown-key+rejection&body=%23%23%23+What%0APins+the+%60instance.id%60+override+arm%3A+quoted+values+apply%2C+unknown+keys+and+unquoted+values+fail+closed+without+partial+mutation.%0A%0A%23%23%23+Why+it+matters%0ADeleting+the+arm+or+making+it+a+no-op+silently+ignores+operator+overrides%3B+existing+tests+pin+vcpus%2Fhostname+but+not+id.%0A%0A%23%23%23+Mutation+evidence+%28fail-then-pass%29%0A%7C+Mutant+%7C+Existing+suite+%7C+New+test+%7C%0A%7C---%7C---%7C---%7C%0A%7C+delete+%60instance.id%60+arm+%7C+PASS+%28survives%29+%7C+FAIL+%28killed%29+%7C%0A%7C+arm+parses+but+discards+value+%7C+PASS+%28survives%29+%7C+FAIL+%28killed%29+%7C%0A%0ABaseline%3A+PASS.+Reproduce%3A+%60cargo+test+-p+ginux-instance+--lib+override_instance_id%60.%0A%0APrepared+with+AI+assistance%3B+reviewed+by+me.%0A"
+  },
+  {
+   "branch": "tests/instance-validate-identifier",
+   "title": "tests(instance): pin id and hostname identifier validation edges",
+   "url": "https://github.com/gmkurtzer/ginux/compare/main...hafid-logic:tests/instance-validate-identifier?quick_pull=1&title=tests%28instance%29%3A+pin+id+and+hostname+identifier+validation+edges&body=%23%23%23+What%0APins+%60validate%60+identifier+rules+for+both+id+and+hostname%3A+empty%2Fspaced+rejected%2C+dotted+alnum+accepted%2C+hostname+checked+independently.%0A%0A%23%23%23+Why+it+matters%0AHostname+defaults+to+id%2C+so+suites+that+never+set+a+distinct+hostname+cannot+detect+a+skipped+hostname+check.+Removing+either+validation+call+survives+today.%0A%0A%23%23%23+Mutation+evidence+%28fail-then-pass%29%0A%7C+Mutant+%7C+Existing+suite+%7C+New+test+%7C%0A%7C---%7C---%7C---%7C%0A%7C+skip+%60validate_identifier%28self.id...%29%60+%7C+PASS+%28survives%29+%7C+FAIL+%28killed%29+%7C%0A%7C+skip+%60validate_identifier%28self.hostname...%29%60+%7C+PASS+%28survives%29+%7C+FAIL+%28killed%29+%7C%0A%0ABaseline%3A+PASS.+Reproduce%3A+%60cargo+test+-p+ginux-instance+--lib+validate_pins_identifier%60.%0A%0APrepared+with+AI+assistance%3B+reviewed+by+me.%0A"
+  }
+ ]
 }
