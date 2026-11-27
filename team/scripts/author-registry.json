@@ -158,5 +158,41 @@
     "line": 90
    }
   ]
+ },
+ {
+  "name": "instance-override-arms-table",
+  "crate": "ginux-instance",
+  "file": "crates/ginux-instance/src/lib.rs",
+  "fn": "override_arms_apply_values_and_reject_unknown",
+  "filter": "override_arms_apply",
+  "title": "tests(instance): pin override arms for workdir, environment, selective, catalog",
+  "test": "\n    #[test]\n    fn override_arms_apply_values_and_reject_unknown() {\n        let mut c = InstanceConfig::parse(VALID.as_bytes()).unwrap();\n        // table: (key, value, expected-field-check)\n        c.apply_override(b\"instance.workdir\", b\"\\\"/work\\\"\").unwrap();\n        assert_eq!(c.workdir.as_bytes(), b\"/work\");\n        c.apply_override(b\"instance.environment\", b\"[\\\"A=1\\\"]\").unwrap();\n        assert_eq!(c.environment.as_slice().len(), 1);\n        c.apply_override(b\"contract.syscalls.control\", b\"\\\"selective\\\"\").unwrap();\n        assert_eq!(c.dispatch_mode, DispatchMode::Selective);\n        c.apply_override(b\"contract.catalog\", b\"3\").unwrap();\n        assert_eq!(c.contract_catalog_version, 3);\n        // unknown keys fail closed; derived fields rejected\n        assert!(c.apply_override(b\"no.such.key\", b\"\\\"x\\\"\").is_err());\n        assert!(c.apply_override(b\"contract.digest\", b\"\\\"x\\\"\").is_err());\n    }\n",
+  "body": "### What\nTable-driven pin of four `apply_override_inner` arms (workdir, environment, syscalls.control=selective, catalog): values apply, unknown and derived keys fail closed.\n\n### Why it matters\nEach match arm is an operator-facing config gate; deleting any arm silently ignores overrides. Existing tests cover id/vcpus/hostname but not these four arms.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| delete `instance.workdir` arm | PASS (survives) | FAIL (killed) |\n| delete `instance.environment` arm | PASS (survives) | FAIL (killed) |\n| delete `b\"selective\"` arm | PASS (survives) | FAIL (killed) |\n| delete `contract.catalog` arm | PASS (survives) | FAIL (killed) |\n\nBaseline: PASS. Reproduce: `cargo test -p ginux-instance --lib override_arms_apply`.\n\nPrepared with AI assistance; reviewed by me.\n",
+  "mutants": [
+   {
+    "name": "del-workdir",
+    "old": "            b\"instance.workdir\" => self.workdir = parse_string(value)?,\n",
+    "new": "",
+    "line": 684
+   },
+   {
+    "name": "del-environment",
+    "old": "            b\"instance.environment\" => self.environment = parse_list(value)?,\n",
+    "new": "",
+    "line": 683
+   },
+   {
+    "name": "del-selective",
+    "old": "                    b\"selective\" => DispatchMode::Selective,\n",
+    "new": "",
+    "line": 707
+   },
+   {
+    "name": "del-catalog",
+    "old": "            b\"contract.catalog\" => self.contract_catalog_version = parse_u64(value)?,\n",
+    "new": "",
+    "line": 712
+   }
+  ]
  }
 ]

@@ -3,6 +3,19 @@
 > v9.1 (2026-11-24): كل حزمنا المعتمدة السبعة دُمجت في upstream؛ لا حزمة معلّقة للنشر.
 > القواعد الدائمة في AGENTS.md / POLICY.md / METHODOLOGY.md؛ التاريخ في الأرشيف append-only.
 
+## تحديث المرحلة 2+3 (2026-11-28) — البنية التحتية المثبتة والاحتياط المتنوع
+- **المحرك:** prove-package.py v2 (anchor_count صارم، context-scoped، baseline_err + إيقاف مبكر، timeout=120) وauto-author.py v2 (JIT freshness على main الحالي، حقن mod-tests بمشي أقواس، إعادة توليد طازجة). اختبارات offline PASS؛ CI أخضر.
+- **جسر الفرز:** triage-discoveries.py v2 يشتق ready_mutants جراحياً من (line,col) لـcargo-mutants على main الحالي (تفرد عبر نمو النافذة/context) + crate_balanced_top (أفضل 3 لكل كرارة). 55 مرشحاً مؤهلاً؛ الاستبعادات: cosmetic 16، stale 7، covered 46، unsynth 164.
+- **الإثبات الحي [MEASURED run 46061682888]:** **7/7 حزم PROVEN** (baseline أخضر + طفرتان ناجيتان مقتولتان لكل حزمة، anchor_count موثق):
+  instance-derive-grants · instance-validate-identifier · instance-override-id · instance-override-resources · process-pipe-ends-guards · **process-unshare-copy** · **kernel-views-cgroup-remove-busy**.
+- **الاحتياط المدفوع على الفورك [MEASURED autopilot 46061805396 @ 20:11Z]:** 7 فروع tests/* جاهزة للفتح البشري (R1):
+  `tests/instance-derive-grants` · `tests/instance-override-id` · `tests/instance-override-resources` · `tests/instance-validate-identifier` · `tests/process-pipe-ends-guards` · `tests/process-unshare-copy` · `tests/kernel-views-cgroup-remove-busy`.
+  روابط الفتح: https://github.com/hafid-logic/ginux/pull/new/<branch> — العنوان والنص معبّآن مسبقاً من رسالة الcommit.
+- **مخزون إضافي:** حزمة ذهبية table-driven `instance-override-arms-table` (4 أذرع match: workdir/environment/selective/catalog، 4 طفرات delete-arm_exact) في approved/pending بانتظار إثبات العدّاء.
+- **تقييم unshare الأمني:** الطفرات الناجية في PipeSpace::unshare هي فجوة اختبارات ثوابت (عدّ الأعضاء/عتبة >1) وليست ثغرة عزل namespaces قابلة للاستغلال عبر API العام — لا مسار fix/* مطلوب هنا. الحزمة الاختبارية مثبتة.
+- **القواعد:** R1/R2/R3 سارية؛ لم يُفتح أي طلب upstream؛ الفتح بيد المالك حصراً لكل بند.
+
+
 ## حزم معتمدة غير منشورة
 - **لا شيء.** كل حزم approved/pending السابقة نُشرت ودُمجت (انظر أدناه). حزمة جديدة جاهزة:
   supply-chain url 2.5.8->2.5.9 (RUSTSEC-2026-0592) — الفرع `pkg/supply-chain-url-2.5.9`،

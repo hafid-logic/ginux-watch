@@ -1,0 +1,31 @@
+{
+ "crate": "ginux-instance",
+ "file": "crates/ginux-instance/src/lib.rs",
+ "filter": "override_arms_apply",
+ "mutants": [
+  {
+   "name": "del-workdir",
+   "old": "            b\"instance.workdir\" => self.workdir = parse_string(value)?,\n",
+   "new": "",
+   "line": 684
+  },
+  {
+   "name": "del-environment",
+   "old": "            b\"instance.environment\" => self.environment = parse_list(value)?,\n",
+   "new": "",
+   "line": 683
+  },
+  {
+   "name": "del-selective",
+   "old": "                    b\"selective\" => DispatchMode::Selective,\n",
+   "new": "",
+   "line": 707
+  },
+  {
+   "name": "del-catalog",
+   "old": "            b\"contract.catalog\" => self.contract_catalog_version = parse_u64(value)?,\n",
+   "new": "",
+   "line": 712
+  }
+ ]
+}

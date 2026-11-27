@@ -1,0 +1,58 @@
+From 6ff7768e4c26ec1af94f37325b0cabd901027468 Mon Sep 17 00:00:00 2001
+From: ginux-watch-agent <actions@users.noreply.github.com>
+Date: Fri, 27 Nov 2026 20:12:22 +0000
+Subject: [PATCH] tests(instance): pin override arms for workdir, environment,
+ selective, catalog
+
+### What
+Table-driven pin of four `apply_override_inner` arms (workdir, environment, syscalls.control=selective, catalog): values apply, unknown and derived keys fail closed.
+
+### Why it matters
+Each match arm is an operator-facing config gate; deleting any arm silently ignores overrides. Existing tests cover id/vcpus/hostname but not these four arms.
+
+### Mutation evidence (fail-then-pass)
+| Mutant | Existing suite | New test |
+|---|---|---|
+| delete `instance.workdir` arm | PASS (survives) | FAIL (killed) |
+| delete `instance.environment` arm | PASS (survives) | FAIL (killed) |
+| delete `b"selective"` arm | PASS (survives) | FAIL (killed) |
+| delete `contract.catalog` arm | PASS (survives) | FAIL (killed) |
+
+Baseline: PASS. Reproduce: `cargo test -p ginux-instance --lib override_arms_apply`.
+
+Prepared with AI assistance; reviewed by me.
+---
+ crates/ginux-instance/src/lib.rs | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
+
+diff --git a/crates/ginux-instance/src/lib.rs b/crates/ginux-instance/src/lib.rs
+index d5f17444..2e69796b 100644
+--- a/crates/ginux-instance/src/lib.rs
++++ b/crates/ginux-instance/src/lib.rs
+@@ -3120,4 +3120,23 @@ failure = "stop"
+         c.memory_mib = 15;
+         assert!(c.validate().is_err());
+     }
++
++    #[test]
++    fn override_arms_apply_values_and_reject_unknown() {
++        let mut c = InstanceConfig::parse(VALID.as_bytes()).unwrap();
++        // table: (key, value, expected-field-check)
++        c.apply_override(b"instance.workdir", b"\"/work\"").unwrap();
++        assert_eq!(c.workdir.as_bytes(), b"/work");
++        c.apply_override(b"instance.environment", b"[\"A=1\"]")
++            .unwrap();
++        assert_eq!(c.environment.as_slice().len(), 1);
++        c.apply_override(b"contract.syscalls.control", b"\"selective\"")
++            .unwrap();
++        assert_eq!(c.dispatch_mode, DispatchMode::Selective);
++        c.apply_override(b"contract.catalog", b"3").unwrap();
++        assert_eq!(c.contract_catalog_version, 3);
++        // unknown keys fail closed; derived fields rejected
++        assert!(c.apply_override(b"no.such.key", b"\"x\"").is_err());
++        assert!(c.apply_override(b"contract.digest", b"\"x\"").is_err());
++    }
+ }
+-- 
+2.47.3
+

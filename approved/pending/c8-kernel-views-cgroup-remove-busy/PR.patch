@@ -1,6 +1,6 @@
-From 0463581ddb762136cad4aa60539d0af08bf649e7 Mon Sep 17 00:00:00 2001
+From 0010cc79c6d4ce8a3ae483e0b4c001c7d880d748 Mon Sep 17 00:00:00 2001
 From: ginux-watch-agent <actions@users.noreply.github.com>
-Date: Fri, 27 Nov 2026 20:09:30 +0000
+Date: Fri, 27 Nov 2026 20:12:22 +0000
 Subject: [PATCH] tests(kernel-views): pin cgroup remove busy guard for active
  children
 

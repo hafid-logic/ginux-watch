@@ -1,6 +1,6 @@
-From 3bdc1912c44996070b7f1ee02036b3f6ab538d5b Mon Sep 17 00:00:00 2001
+From f11ebdd2a16c76b8ea773cec9dd797d7a3e1508e Mon Sep 17 00:00:00 2001
 From: ginux-watch-agent <actions@users.noreply.github.com>
-Date: Fri, 27 Nov 2026 20:09:29 +0000
+Date: Fri, 27 Nov 2026 20:12:22 +0000
 Subject: [PATCH] tests(instance): pin memory override application and exact
  bounds
 
