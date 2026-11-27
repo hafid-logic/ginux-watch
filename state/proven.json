@@ -49,131 +49,27 @@
  },
  "c8-instance-derive-grants": {
   "proven": false,
-  "baseline": false,
-  "mutants": [
-   {
-    "name": "drop-create",
-    "survives": true,
-    "killed": true
-   },
-   {
-    "name": "and",
-    "survives": true,
-    "killed": true
-   }
-  ]
+  "why": "apply-fail"
  },
  "c8-instance-override-id": {
   "proven": false,
-  "baseline": false,
-  "mutants": [
-   {
-    "name": "del-id",
-    "survives": true,
-    "killed": true
-   },
-   {
-    "name": "id-noop",
-    "survives": true,
-    "killed": true
-   }
-  ]
+  "why": "apply-fail"
  },
  "c8-instance-override-resources": {
   "proven": false,
-  "baseline": true,
-  "mutants": [
-   {
-    "name": "del-vcpus",
-    "survives": false,
-    "killed": true
-   },
-   {
-    "name": "del-mem",
-    "survives": true,
-    "killed": true
-   }
-  ]
- },
- "c8-instance-validate-bounds": {
-  "proven": true,
-  "baseline": true,
-  "mutants": [
-   {
-    "name": "vcpu65",
-    "survives": true,
-    "killed": true
-   },
-   {
-    "name": "mem15",
-    "survives": true,
-    "killed": true
-   }
-  ]
+  "why": "apply-fail"
  },
  "c8-instance-validate-identifier": {
   "proven": false,
-  "baseline": true,
-  "mutants": [
-   {
-    "name": "id-ok",
-    "survives": true,
-    "killed": true
-   },
-   {
-    "name": "hostname-ok",
-    "survives": true,
-    "killed": false
-   }
-  ]
- },
- "c8-process-exec-scrub-cloexec": {
-  "proven": true,
-  "baseline": true,
-  "mutants": [
-   {
-    "name": "invert-cloexec",
-    "survives": true,
-    "killed": true
-   },
-   {
-    "name": "count0",
-    "survives": true,
-    "killed": true
-   }
-  ]
+  "why": "apply-fail"
  },
  "c8-process-pipe-ends-guards": {
   "proven": false,
-  "baseline": true,
-  "mutants": [
-   {
-    "name": "no-zero-guard",
-    "survives": true,
-    "killed": true
-   },
-   {
-    "name": "no-live",
-    "survives": true,
-    "killed": false
-   }
-  ]
+  "why": "apply-fail"
  },
  "c8-process-retain-refcount": {
   "proven": false,
-  "baseline": true,
-  "mutants": [
-   {
-    "name": "retain-plus2",
-    "survives": false,
-    "killed": true
-   },
-   {
-    "name": "retain-nolive",
-    "survives": true,
-    "killed": false
-   }
-  ]
+  "why": "apply-fail"
  },
  "c8-vfs-overlay-scrub-on-reuse": {
   "proven": false,
