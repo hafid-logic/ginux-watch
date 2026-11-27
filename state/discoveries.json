@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-11-27T09:19:21Z",
+ "generated_utc": "2026-11-27T09:19:43Z",
  "source": "mutation-scan artifacts (scan.log MISSED lines + missed.txt when present)",
  "total_survivors": 746,
  "crates": {
