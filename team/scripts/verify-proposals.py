@@ -4,7 +4,7 @@
 table cells (catches unescaped pipes at the SOURCE).
 default: for every OPEN upstream PR by the author, assert body == approved PR.md
 byte-for-byte; auto-correct mismatches via gh pr edit --body-file (exact copy)."""
-import json, re, subprocess, sys
+import json, os, re, subprocess, sys
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 def gh(*a, inp=None):
@@ -23,6 +23,29 @@ def render_tables(body):
         cells=re.findall(r"<t[dh][^>]*>(.*?)</t[dh]>", row, re.S)
         out.append([re.sub(r"<[^>]+>","",c).strip() for c in cells])
     return out
+
+def reserves_check():
+    """Every reserve branch commit must carry the full PR.md body (GitHub prefill reads it)."""
+    import urllib.request
+    c=cfg(); tok=os.environ.get("GH_TOKEN") or os.environ.get("PIPELINE_PAT")
+    rj=ROOT/"state/reserves.json"
+    if not rj.exists() or not tok: print("reserves-check: skipped"); return 0
+    bad=0
+    for r in json.loads(rj.read_text()).get("reserves",[]):
+        b=r["branch"]; name="c8-"+b.split("/",1)[1]
+        d=None
+        for base in ("approved/pending","approved/archive"):
+            dd=ROOT/base/name
+            if (dd/"PR.md").exists(): d=dd; break
+        if d is None: print("reserves-check: NO_PKG",b); bad+=1; continue
+        req=urllib.request.Request("https://api.github.com/repos/"+c["fork"]+"/commits/"+b,
+            headers={"Authorization":"Bearer "+tok,"Accept":"application/vnd.github+json","User-Agent":"verify"})
+        msg=json.load(urllib.request.urlopen(req,timeout=30))["commit"]["message"]
+        body=msg.split("\n",1)[1].strip() if "\n" in msg else ""
+        if body!=(d/"PR.md").read_text().strip():
+            print("reserves-check: BODY_MISSING_OR_MISMATCH",b); bad+=1
+        else: print("reserves-check: OK",b)
+    return bad
 def lint():
     bad=0
     for d in sorted((ROOT/"approved/pending").iterdir()):
@@ -53,4 +76,4 @@ def verify():
     print(f"verified {checked} open PR(s); corrected {fixed}")
     return 0
 if __name__=="__main__":
-    sys.exit(lint() if "--lint" in sys.argv else verify())
+    sys.exit(lint() if "--lint" in sys.argv else (verify() + reserves_check()))

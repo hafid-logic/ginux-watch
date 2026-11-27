@@ -23,7 +23,7 @@ def main():
         i=s.rstrip().rfind("\n}"); f.write_text(s[:i]+"\n"+e["test"]+s[i:])
         subprocess.run(["cargo","fmt","-p",e["crate"]],cwd=U,env={**os.environ,"CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS":""},capture_output=True)
         subprocess.run(["git","-C",str(U),"add","-A"],check=True)
-        subprocess.run(["git","-C",str(U),"commit","-q","-m",e["title"]],check=True)
+        subprocess.run(["git","-C",str(U),"commit","-q","-m",e["title"],"-m",e["body"]],check=True)
         patch=subprocess.run(["git","-C",str(U),"format-patch","-1","--stdout"],capture_output=True,text=True).stdout
         d=ROOT/"approved/pending"/("c8-"+e["name"]); d.mkdir(parents=True,exist_ok=True)
         (d/"PR.patch").write_text(patch)
