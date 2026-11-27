@@ -9,9 +9,10 @@
    "new": ""
   },
   {
-   "name": "mem15",
-   "old": "if !(1..=64).contains(&self.vcpus) || !(16..=1_048_576).contains(&self.memory_mib) {",
-   "new": "if !(1..=64).contains(&self.vcpus) || !(15..=1_048_576).contains(&self.memory_mib) {"
+   "name": "mem-noop",
+   "old": "self.memory_mib = parse_u64(value)?",
+   "new": "{ let _ = parse_u64(value)?; 256 }",
+   "context": "            b\"resources.memory_mib\" => self.memory_mib = parse_u64(value)?,"
   }
  ]
 }

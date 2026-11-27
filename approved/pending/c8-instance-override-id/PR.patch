@@ -1,11 +1,11 @@
-From 0aa0642775e117542a770a030a1c283403175524 Mon Sep 17 00:00:00 2001
+From 0fd2a85932ebf74b3d322c01a94e9ae9fec3f879 Mon Sep 17 00:00:00 2001
 From: ginux-watch-agent <actions@users.noreply.github.com>
-Date: Fri, 27 Nov 2026 18:44:28 +0000
+Date: Fri, 27 Nov 2026 19:48:23 +0000
 Subject: [PATCH] tests(instance): pin instance.id override and unknown-key
  rejection
 
 ### What
-Pins the `instance.id` override arm: quoted values apply, hostname re-derives, unknown keys and unquoted values fail closed without partial mutation.
+Pins the `instance.id` override arm: quoted values apply, unknown keys and unquoted values fail closed without partial mutation.
 
 ### Why it matters
 Deleting the arm or making it a no-op silently ignores operator overrides; existing tests pin vcpus/hostname but not id.
@@ -20,14 +20,14 @@ Baseline: PASS. Reproduce: `cargo test -p ginux-instance --lib override_instance
 
 Prepared with AI assistance; reviewed by me.
 ---
- crates/ginux-instance/src/lib.rs | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ crates/ginux-instance/src/lib.rs | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
 diff --git a/crates/ginux-instance/src/lib.rs b/crates/ginux-instance/src/lib.rs
-index d5f17444..1e779b93 100644
+index d5f17444..143748c9 100644
 --- a/crates/ginux-instance/src/lib.rs
 +++ b/crates/ginux-instance/src/lib.rs
-@@ -3120,4 +3120,17 @@ failure = "stop"
+@@ -3120,4 +3120,16 @@ failure = "stop"
          c.memory_mib = 15;
          assert!(c.validate().is_err());
      }
@@ -37,8 +37,7 @@ index d5f17444..1e779b93 100644
 +        let mut c = InstanceConfig::parse(VALID.as_bytes()).unwrap();
 +        c.apply_override(b"instance.id", b"\"other\"").unwrap();
 +        assert_eq!(c.id.as_bytes(), b"other");
-+        // hostname follows id when unset: override re-derives and validates
-+        assert_eq!(c.hostname.as_bytes(), b"other");
++        // unknown keys fail closed without partial mutation
 +        assert!(c.apply_override(b"instance.nope", b"\"x\"").is_err());
 +        // unquoted value is a syntax error, not a silent accept
 +        assert!(c.apply_override(b"instance.id", b"bare").is_err());

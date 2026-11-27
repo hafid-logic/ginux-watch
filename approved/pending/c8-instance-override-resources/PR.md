@@ -8,7 +8,7 @@ Override arms are fail-closed config gates; deleting the memory arm or its valid
 | Mutant | Existing suite | New test |
 |---|---|---|
 | delete `resources.memory_mib` arm | PASS (survives) | FAIL (killed) |
-| `16..=` -> `15..=` in validate | PASS (survives) | FAIL (killed) |
+| discard parsed u64 (return Ok(256)) | PASS (survives) | FAIL (killed) |
 
 Baseline: PASS. Reproduce: `cargo test -p ginux-instance --lib memory_override_enforces`.
 

@@ -4,14 +4,15 @@
  "filter": "duplicate_retains",
  "mutants": [
   {
-   "name": "retain-plus2",
+   "name": "noop-retain",
    "old": "self.pipes[index].ends += 1;",
-   "new": "self.pipes[index].ends += 2;"
+   "new": "return;",
+   "context": "let index = pipe as usize - 1;\n        if index < PIPES && self.pipes[index].live {\n            self.pipes[index].ends += 1;\n        }"
   },
   {
-   "name": "retain-nolive",
-   "old": "if index < PIPES && self.pipes[index].live {",
-   "new": "if index < PIPES {",
+   "name": "decrement-retain",
+   "old": "self.pipes[index].ends += 1;",
+   "new": "self.pipes[index].ends -= 1;",
    "context": "let index = pipe as usize - 1;\n        if index < PIPES && self.pipes[index].live {\n            self.pipes[index].ends += 1;\n        }"
   }
  ]

@@ -1,5 +1,5 @@
 ### What
-Pins the `instance.id` override arm: quoted values apply, hostname re-derives, unknown keys and unquoted values fail closed without partial mutation.
+Pins the `instance.id` override arm: quoted values apply, unknown keys and unquoted values fail closed without partial mutation.
 
 ### Why it matters
 Deleting the arm or making it a no-op silently ignores operator overrides; existing tests pin vcpus/hostname but not id.

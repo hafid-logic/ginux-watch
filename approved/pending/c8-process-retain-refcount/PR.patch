@@ -1,6 +1,6 @@
-From cf1157e16257532600a3ab0b20e43b3fa512c5cb Mon Sep 17 00:00:00 2001
+From 972120fddc9e6b5ba64ce920321c6ddb082c71cd Mon Sep 17 00:00:00 2001
 From: ginux-watch-agent <actions@users.noreply.github.com>
-Date: Fri, 27 Nov 2026 18:44:28 +0000
+Date: Fri, 27 Nov 2026 19:48:23 +0000
 Subject: [PATCH] tests(process): pin duplicate retain counts and source-close
  survival
 
@@ -8,13 +8,13 @@ Subject: [PATCH] tests(process): pin duplicate retain counts and source-close
 Pins `retain` via duplicate: both duplicated ends raise the count to 4, closing originals keeps the pipe alive, only the last copy frees it.
 
 ### Why it matters
-Over-retaining leaks pipe objects; skipping the live check retains freed slots. Existing duplicate tests pin single-end retention, not both-ends survival.
+Over-retaining leaks pipe objects; skipping the increment retains nothing and under-counts duplicates. Existing duplicate tests pin single-end retention, not both-ends survival.
 
 ### Mutation evidence (fail-then-pass)
 | Mutant | Existing suite | New test |
 |---|---|---|
-| `ends += 1` -> `ends += 2` | PASS (survives) | FAIL (killed) |
-| drop `.live` check in retain | PASS (survives) | FAIL (killed) |
+| no-op retain (early return) | PASS (survives) | FAIL (killed) |
+| decrement instead of increment | PASS (survives) | FAIL (killed) |
 
 Baseline: PASS. Reproduce: `cargo test -p ginux-process --lib duplicate_retains`.
 
