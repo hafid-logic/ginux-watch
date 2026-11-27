@@ -5,6 +5,7 @@ policy: hdae-standing-delegation
 confirmed_by: hafid-logic
 confirmed_at: "2026-11-18"
 directive: directives/v8.4-20261118.md
+# R3 (binding 2026-11-27): never push/reserve a fork branch whose test fn already exists on upstream main; live-screen before every push (screen-stock.py); merged-content archived. Closes PR 360 duplicate leak; no manual exemption.
 # R2 (binding 2026-11-24): every PR/issue body's final line = 'Prepared with AI assistance; reviewed by me.'
 default: human
 autonomous:

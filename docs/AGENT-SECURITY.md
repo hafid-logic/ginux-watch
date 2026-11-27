@@ -54,3 +54,10 @@ Method and skill design originate from HDAE by Gregory M. Kurtzer
 **PR/issue closing line (R2, binding 2026-11-24).** The final line of every PR or issue
 body MUST be exactly: `Prepared with AI assistance; reviewed by me.` The HDAE method line
 must NOT be the closing line of PR/issue bodies; HDAE attribution stays in NOTICE/README/docs.
+
+**No duplicate reserves (R3, binding 2026-11-27).** Never push or reserve a fork branch
+whose test function already exists on upstream gmkurtzer/ginux main (merged via any PR).
+Before EVERY push, live-screen the package against upstream main (screen-stock.py extracts
+the added test fn from PR.patch and greps origin/main). Merged-content packages are archived,
+never pushed. Closes the PR 360 leak (a reserve whose content was already merged got opened as
+a duplicate PR). Applies to every agent at every stage; manual pushes are NOT exempt.

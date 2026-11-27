@@ -12,6 +12,7 @@ on:
     types: [completed]
 permissions:
   contents: write
+  actions: write
 concurrency:
   group: pipeline-autopilot
   cancel-in-progress: false
@@ -23,6 +24,7 @@ jobs:
       - name: Refill pushed reserve from stock (no upstream opening)
         env:
           PIPELINE_PAT: ${{ secrets.PIPELINE_PAT }}
+          GITHUB_TOKEN: ${{ github.token }}
         run: python3 team/scripts/pipeline-autopilot.py
       - name: Commit reserve proposals (v9.2)
         run: |

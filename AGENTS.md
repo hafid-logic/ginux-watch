@@ -62,6 +62,7 @@ no credentials.
 English, at most 150 words, facts only, one disclosure line ("analysis assisted by AI, reviewed
 by <human>"), no unverified CVE or SHA claims, no security claims, no promises we cannot keep.
 Do not duplicate an existing upstream issue or PR: search first and link to it instead.
+Never push/reserve a fork branch whose test is already merged on upstream main (R3, binding): live-screen first; the PR 360 duplicate must not recur.
 
 ## Credentials
 Never ask for, accept or print a token in chat, logs, reports or commits. Use the platform
