@@ -1,4 +1,20 @@
 {
+ "c8-core-open-readonly": {
+  "proven": false,
+  "baseline": false,
+  "mutants": [
+   {
+    "name": "open-noacc",
+    "survives": false,
+    "killed": true
+   },
+   {
+    "name": "openat0",
+    "survives": false,
+    "killed": true
+   }
+  ]
+ },
  "c8-core-wait4-pid-admission": {
   "proven": false,
   "baseline": true,
@@ -27,6 +43,22 @@
    {
     "name": "rand-byte-0",
     "survives": false,
+    "killed": true
+   }
+  ]
+ },
+ "c8-instance-derive-grants": {
+  "proven": false,
+  "baseline": false,
+  "mutants": [
+   {
+    "name": "drop-create",
+    "survives": true,
+    "killed": true
+   },
+   {
+    "name": "and",
+    "survives": true,
     "killed": true
    }
   ]
@@ -76,6 +108,22 @@
     "name": "mem15",
     "survives": true,
     "killed": true
+   }
+  ]
+ },
+ "c8-instance-validate-identifier": {
+  "proven": false,
+  "baseline": true,
+  "mutants": [
+   {
+    "name": "id-ok",
+    "survives": true,
+    "killed": true
+   },
+   {
+    "name": "hostname-ok",
+    "survives": true,
+    "killed": false
    }
   ]
  },
