@@ -1,6 +1,13 @@
 {
- "generated_utc": "2026-11-28T08:22:59Z",
+ "generated_utc": "2026-11-28T08:24:26Z",
  "reserves": [
+  {
+   "branch": "tests/instance-finish-workdir-recipe",
+   "title": "tests(instance): pin finish workdir preservation and partial-recipe rejection",
+   "url": "https://github.com/gmkurtzer/ginux/compare/main...hafid-logic:tests/instance-finish-workdir-recipe?quick_pull=1&title=tests%28instance%29%3A+pin+finish+workdir+preservation+and+partial-recipe+rejection&body=%23%23%23+What%0APins+%60finish%60+bitmask+defaults%3A+explicit+workdir+preserved%2C+absent+workdir+defaults+to+%2Fwork%2C+contract+recipe+missing+default+rejected.%0A%0A%23%23%23+Why+it+matters%0ABit-shift+errors+in+field+masks+silently+ignore+operator-supplied+values+or+admit+incomplete+recipes.+Existing+tests+never+set+workdir+explicitly+nor+omit+contract+default.%0A%0A%23%23%23+Mutation+evidence+%28fail-then-pass%29%0A%7C+Mutant+%7C+Existing+suite+%7C+New+test+%7C%0A%7C---%7C---%7C---%7C%0A%7C+%60WORKDIR_BIT+1%3C%3C16%60+-%3E+%601%3E%3E16%60+%7C+PASS+%28survives%29+%7C+FAIL+%28killed%29+%7C%0A%7C+%60RECIPE_DEFAULT_BIT+1%3C%3C38%60+-%3E+%601%3E%3E38%60+%7C+PASS+%28survives%29+%7C+FAIL+%28killed%29+%7C%0A%0ABaseline%3A+PASS.+Reproduce%3A+%60cargo+test+-p+ginux-instance+--lib+finish_preserves_explicit%60.%0A%0ASpec-Ref%3A+TOML+config+field-presence+semantics+%28instance+recipe+schema%29%0A%0APrepared+with+AI+assistance%3B+reviewed+by+me.%0A",
+   "crate": "ginux-instance",
+   "target_file": "crates/ginux-instance/src/lib.rs"
+  },
   {
    "branch": "tests/kernel-views-parse-controllers",
    "title": "tests(kernel-views): pin cgroup controller parsing accumulation and whitespace",
@@ -24,11 +31,15 @@
   }
  ],
  "conflict_free_batch": [
+  "tests/instance-finish-workdir-recipe",
   "tests/kernel-views-parse-controllers",
   "tests/oci-human-size-scaling",
   "tests/process-event-poll-admission"
  ],
  "by_target_file": {
+  "crates/ginux-instance/src/lib.rs": [
+   "tests/instance-finish-workdir-recipe"
+  ],
   "crates/ginux-kernel-views/src/cgroup.rs": [
    "tests/kernel-views-parse-controllers"
   ],
