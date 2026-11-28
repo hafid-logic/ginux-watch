@@ -10,9 +10,9 @@
    "line": 144
   },
   {
-   "name": "path-eq",
+   "name": "link-eq",
    "old": "    if path_len == 0 || path_len > MAX_PATH || link_len > MAX_LINK {",
-   "new": "    if path_len == 0 || path_len == MAX_PATH || link_len > MAX_LINK {",
+   "new": "    if path_len == 0 || path_len > MAX_PATH || link_len == MAX_LINK {",
    "line": 144
   }
  ]

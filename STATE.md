@@ -3,6 +3,14 @@
 > v9.1 (2026-11-24): كل حزمنا المعتمدة السبعة دُمجت في upstream؛ لا حزمة معلّقة للنشر.
 > القواعد الدائمة في AGENTS.md / POLICY.md / METHODOLOGY.md؛ التاريخ في الأرشيف append-only.
 
+## تحديث المرحلة 5 (2026-11-28) — ما بعد الدمج الشامل #363-#371
+- **حدث [MEASURED]:** المالك دمج 9 طلبات في ~2 ساعة: #363-#369 (20:41-21:10Z) + #370 golden override-arms (22:40Z) + #371 oci select-manifest (22:48Z). main تقدّم 8b857786 → 0f08bd4c → **5ae0d435**. صفر مفتوحة.
+- **vfs-decode-boundary-exact:** link-ge مثبت؛ path-eq كان مغطى بالاختبار الموجود @1211 (survives=false). استُبدل بـ link-eq (>→== لـ link_len) — فجوة decode حقيقية غير مغطاة. بانتظار إثبات العدّاء.
+- **المصفوفة الحالية:** instance/oci مدموجة؛ vfs قيد الإثبات؛ process/kernel-views يحتاجان حصادًا طازجًا على 5ae0d435 (mutation-scan مُطلق لكل كرارة على حدة لتفادي سقف 25د).
+- **Zero-Conflict Matrix:** reserve-proposals v2 نشط؛ الدفعة الخالية من التعارض تُحسب آليًا (واحد لكل ملف ولكل كرارة).
+- **تدقيق fix/* (مرحلة 4):** لا علل src حقيقية في الدوال الحساسة المدققة؛ كل الناجيات نقص تغطية. R1/R2/R3 سارية؛ لم يُفتح أي طلب upstream آليًا.
+
+
 ## تحديث المرحلة 2+3 (2026-11-28) — البنية التحتية المثبتة والاحتياط المتنوع
 - **المحرك:** prove-package.py v2 (anchor_count صارم، context-scoped، baseline_err + إيقاف مبكر، timeout=120) وauto-author.py v2 (JIT freshness على main الحالي، حقن mod-tests بمشي أقواس، إعادة توليد طازجة). اختبارات offline PASS؛ CI أخضر.
 - **جسر الفرز:** triage-discoveries.py v2 يشتق ready_mutants جراحياً من (line,col) لـcargo-mutants على main الحالي (تفرد عبر نمو النافذة/context) + crate_balanced_top (أفضل 3 لكل كرارة). 55 مرشحاً مؤهلاً؛ الاستبعادات: cosmetic 16، stale 7، covered 46، unsynth 164.

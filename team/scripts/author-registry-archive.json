@@ -318,5 +318,73 @@
   },
   "archived_utc": "2026-11-28",
   "reason": "merged upstream PR #363-#369 (2026-11-27T20:41-21:10Z)"
+ },
+ {
+  "entry": {
+   "name": "instance-override-arms-table",
+   "crate": "ginux-instance",
+   "file": "crates/ginux-instance/src/lib.rs",
+   "fn": "override_arms_apply_values_and_reject_unknown",
+   "filter": "override_arms_apply",
+   "title": "tests(instance): pin override arms for workdir, environment, selective, catalog",
+   "test": "\n    #[test]\n    fn override_arms_apply_values_and_reject_unknown() {\n        let mut c = InstanceConfig::parse(VALID.as_bytes()).unwrap();\n        c.apply_override(b\"instance.workdir\", b\"\\\"/work\\\"\").unwrap();\n        assert_eq!(c.workdir.as_bytes(), b\"/work\");\n        c.apply_override(b\"instance.environment\", b\"[\\\"A=1\\\"]\").unwrap();\n        assert_eq!(c.environment.as_slice().len(), 1);\n        c.apply_override(b\"contract.syscalls.control\", b\"\\\"selective\\\"\").unwrap();\n        assert_eq!(c.dispatch_mode, DispatchMode::Selective);\n        // catalog is pinned to the compiled CATALOG_VERSION: valid re-set ok, wrong version rejected\n        c.apply_override(b\"contract.catalog\", b\"2\").unwrap();\n        assert_eq!(c.contract_catalog_version, 2);\n        assert!(c.apply_override(b\"contract.catalog\", b\"3\").is_err());\n        assert_eq!(c.contract_catalog_version, 2);\n        assert!(c.apply_override(b\"no.such.key\", b\"\\\"x\\\"\").is_err());\n        assert!(c.apply_override(b\"contract.digest\", b\"\\\"x\\\"\").is_err());\n    }\n",
+   "body": "### What\nTable-driven pin of four `apply_override_inner` arms (workdir, environment, syscalls.control=selective, catalog): values apply, catalog is version-pinned fail-closed, unknown and derived keys rejected.\n\n### Why it matters\nEach match arm is an operator-facing config gate; deleting any arm silently ignores overrides or admits a mismatched contract catalog. Existing tests cover id/vcpus/hostname but not these four arms.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| delete `instance.workdir` arm | PASS (survives) | FAIL (killed) |\n| delete `instance.environment` arm | PASS (survives) | FAIL (killed) |\n| delete `b\"selective\"` arm | PASS (survives) | FAIL (killed) |\n| delete `contract.catalog` arm | PASS (survives) | FAIL (killed) |\n\nBaseline: PASS. Reproduce: `cargo test -p ginux-instance --lib override_arms_apply`.\n\nPrepared with AI assistance; reviewed by me.\n",
+   "mutants": [
+    {
+     "name": "del-workdir",
+     "old": "            b\"instance.workdir\" => self.workdir = parse_string(value)?,\n",
+     "new": "",
+     "line": 684
+    },
+    {
+     "name": "del-environment",
+     "old": "            b\"instance.environment\" => self.environment = parse_list(value)?,\n",
+     "new": "",
+     "line": 683
+    },
+    {
+     "name": "del-selective",
+     "old": "                    b\"selective\" => DispatchMode::Selective,\n",
+     "new": "",
+     "line": 707
+    },
+    {
+     "name": "del-catalog",
+     "old": "            b\"contract.catalog\" => self.contract_catalog_version = parse_u64(value)?,\n",
+     "new": "",
+     "line": 712
+    }
+   ]
+  },
+  "archived_utc": "2026-11-28",
+  "reason": "merged upstream PR #370/#371 (2026-11-27T22:40-22:48Z)"
+ },
+ {
+  "entry": {
+   "name": "oci-select-manifest-platform",
+   "crate": "ginux-oci",
+   "file": "crates/ginux-oci/src/lib.rs",
+   "fn": "select_manifest_requires_linux_amd64_no_variant",
+   "filter": "select_manifest_requires",
+   "title": "tests(oci): pin select_manifest linux/amd64/no-variant platform gate",
+   "test": "\n    #[test]\n    fn select_manifest_requires_linux_amd64_no_variant() {\n        let good = serde_json::json!({\"manifests\":[{\"mediaType\":\"application/vnd.oci.image.manifest.v1+json\",\"digest\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"size\":1,\"platform\":{\"os\":\"linux\",\"architecture\":\"amd64\"}}]});\n        assert!(select_manifest(&good).unwrap().is_some());\n        // wrong OS must not be selected even if arch matches\n        let bad_os = serde_json::json!({\"manifests\":[{\"mediaType\":\"application/vnd.oci.image.manifest.v1+json\",\"digest\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"size\":1,\"platform\":{\"os\":\"windows\",\"architecture\":\"amd64\"}}]});\n        assert!(select_manifest(&bad_os).is_err());\n        // wrong arch must not be selected even if os matches\n        let bad_arch = serde_json::json!({\"manifests\":[{\"mediaType\":\"application/vnd.oci.image.manifest.v1+json\",\"digest\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"size\":1,\"platform\":{\"os\":\"linux\",\"architecture\":\"arm64\"}}]});\n        assert!(select_manifest(&bad_arch).is_err());\n        // non-empty variant must not match the plain amd64 slot\n        let variant = serde_json::json!({\"manifests\":[{\"mediaType\":\"application/vnd.oci.image.manifest.v1+json\",\"digest\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"size\":1,\"platform\":{\"os\":\"linux\",\"architecture\":\"amd64\",\"variant\":\"v8\"}}]});\n        assert!(select_manifest(&variant).is_err());\n    }\n",
+   "body": "### What\nPins `select_manifest`: only linux/amd64 with empty variant is selected; wrong OS, wrong arch, or non-empty variant are rejected.\n\n### Why it matters\nPlatform selection gates which manifest runs; flipping `&&` to `||` admits foreign-OS or variant manifests into the amd64 slot \u2014 a confinement-relevant mis-selection. No existing test exercises select_manifest.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| first `&&` -> `||` | PASS (survives) | FAIL (killed) |\n| second `&&` -> `||` | PASS (survives) | FAIL (killed) |\n\nBaseline: PASS. Reproduce: `cargo test -p ginux-oci --lib select_manifest_requires`.\n\nPrepared with AI assistance; reviewed by me.\n",
+   "mutants": [
+    {
+     "name": "or-os",
+     "old": "        if os == Some(\"linux\") && architecture == Some(\"amd64\") && variant.is_empty() {",
+     "new": "        if os == Some(\"linux\") || architecture == Some(\"amd64\") && variant.is_empty() {",
+     "line": 339
+    },
+    {
+     "name": "or-variant",
+     "old": "        if os == Some(\"linux\") && architecture == Some(\"amd64\") && variant.is_empty() {",
+     "new": "        if os == Some(\"linux\") && architecture == Some(\"amd64\") || variant.is_empty() {",
+     "line": 339
+    }
+   ]
+  },
+  "archived_utc": "2026-11-28",
+  "reason": "merged upstream PR #370/#371 (2026-11-27T22:40-22:48Z)"
  }
 ]
