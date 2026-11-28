@@ -39,70 +39,10 @@
    }
   ]
  },
- "c8-instance-finish-workdir-recipe": {
-  "proven": true,
-  "baseline": true,
-  "mutants": [
-   {
-    "name": "workdir-shift",
-    "anchor_ok": true,
-    "anchor_count": 1,
-    "survives": true,
-    "killed": true
-   },
-   {
-    "name": "recipe-default-shift",
-    "anchor_ok": true,
-    "anchor_count": 1,
-    "survives": true,
-    "killed": true
-   }
-  ]
- },
- "c8-kernel-views-parse-controllers": {
-  "proven": true,
-  "baseline": true,
-  "mutants": [
-   {
-    "name": "and-assign",
-    "anchor_ok": true,
-    "anchor_count": 1,
-    "survives": true,
-    "killed": true
-   },
-   {
-    "name": "del-empty-arm",
-    "anchor_ok": true,
-    "anchor_count": 1,
-    "survives": true,
-    "killed": true
-   }
-  ]
- },
- "c8-process-event-poll-admission": {
-  "proven": true,
-  "baseline": true,
-  "mutants": [
-   {
-    "name": "or-and-desc",
-    "anchor_ok": true,
-    "anchor_count": 1,
-    "survives": true,
-    "killed": true
-   },
-   {
-    "name": "dup-or",
-    "anchor_ok": true,
-    "anchor_count": 1,
-    "survives": true,
-    "killed": true
-   }
-  ]
- },
  "c8-vfs-copy-overlay-size-boundary": {
   "proven": false,
   "baseline": false,
   "why": "baseline-fail",
-  "baseline_err": "\u001b[1m\u001b[94m1354\u001b[0m \u001b[92m+ \u001b[0m            vfs.copy_to_overlay(Path::new().unwrap(), big),\n     \u001b[1m\u001b[94m|\u001b[0m\n\n\u001b[1m\u001b[91merror[E0599]\u001b[0m\u001b[1m: no method named `unwrap` found for struct `Path` in the current scope\u001b[0m\n    \u001b[1m\u001b[94m--> \u001b[0mcrates/ginux-vfs/src/lib.rs:1354:52\n     \u001b[1m\u001b[94m|\u001b[0m\n\u001b[1m\u001b[94m 190\u001b[0m \u001b[1m\u001b[94m|\u001b[0m struct Path {\n     \u001b[1m\u001b[94m|\u001b[0m \u001b[1m\u001b[94m-----------\u001b[0m \u001b[1m\u001b[94mmethod `unwrap` not found for this struct\u001b[0m\n\u001b[1m\u001b[94m...\u001b[0m\n\u001b[1m\u001b[94m1354\u001b[0m \u001b[1m\u001b[94m|\u001b[0m             vfs.copy_to_overlay(Path::new(b\"/big\").unwrap(), big),\n     \u001b[1m\u001b[94m|\u001b[0m                                                    \u001b[1m\u001b[91m^^^^^^\u001b[0m \u001b[1m\u001b[91mmethod not found in `Path`\u001b[0m\n\n\u001b[1mSome errors have detailed explanations: E0061, E0599.\u001b[0m\n\u001b[1mFor more information about an error, try `rustc --explain E0061`.\u001b[0m\n\u001b[1m\u001b[91merror\u001b[0m: could not compile `ginux-vfs` (lib test) due to 4 previous errors"
+  "baseline_err": "    \u001b[1m\u001b[94m--> \u001b[0mcrates/ginux-vfs/src/lib.rs:1340:20\n     \u001b[1m\u001b[94m|\u001b[0m\n\u001b[1m\u001b[94m1340\u001b[0m \u001b[1m\u001b[94m|\u001b[0m             Reader(*b\"BASETOOLBASETOOLBASETOOLBASETOOL\"),\n     \u001b[1m\u001b[94m|\u001b[0m             \u001b[1m\u001b[94m------\u001b[0m \u001b[1m\u001b[91m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\u001b[0m \u001b[1m\u001b[91mexpected an array with a size of 8, found one with a size of 32\u001b[0m\n     \u001b[1m\u001b[94m|\u001b[0m             \u001b[1m\u001b[94m|\u001b[0m\n     \u001b[1m\u001b[94m|\u001b[0m             \u001b[1m\u001b[94marguments to this struct are incorrect\u001b[0m\n     \u001b[1m\u001b[94m|\u001b[0m\n\u001b[1m\u001b[92mnote\u001b[0m: tuple struct defined here\n    \u001b[1m\u001b[94m--> \u001b[0mcrates/ginux-vfs/src/lib.rs:824:12\n     \u001b[1m\u001b[94m|\u001b[0m\n\u001b[1m\u001b[94m 824\u001b[0m \u001b[1m\u001b[94m|\u001b[0m     struct Reader([u8; 8]);\n     \u001b[1m\u001b[94m|\u001b[0m            \u001b[1m\u001b[92m^^^^^^\u001b[0m\n\n\u001b[1mFor more information about this error, try `rustc --explain E0308`.\u001b[0m\n\u001b[1m\u001b[91merror\u001b[0m: could not compile `ginux-vfs` (lib test) due to 2 previous errors"
  }
 }
