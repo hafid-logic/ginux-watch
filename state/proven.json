@@ -111,6 +111,6 @@
   "proven": false,
   "baseline": false,
   "why": "baseline-fail",
-  "baseline_err": "\u001b[1m\u001b[92m   Compiling\u001b[0m ginux-vfs v0.1.0 (/tmp/prover-upstream/crates/ginux-vfs)\n\u001b[1m\u001b[92m    Finished\u001b[0m `test` profile [unoptimized + debuginfo] target(s) in 0.31s\n\u001b[1m\u001b[92m     Running\u001b[0m unittests src/lib.rs (target/debug/build/ginux-vfs/ccb6c21ddf8ee049/out/ginux_vfs-ccb6c21ddf8ee049)\n\u001b[1m\u001b[91merror\u001b[0m: test failed, to rerun pass `-p ginux-vfs --lib`"
+  "baseline_err": "\u001b[1m\u001b[92m   Compiling\u001b[0m ginux-vfs v0.1.0 (/tmp/prover-upstream/crates/ginux-vfs)\n\u001b[1m\u001b[92m    Finished\u001b[0m `test` profile [unoptimized + debuginfo] target(s) in 0.24s\n\u001b[1m\u001b[92m     Running\u001b[0m unittests src/lib.rs (target/debug/build/ginux-vfs/ccb6c21ddf8ee049/out/ginux_vfs-ccb6c21ddf8ee049)\n\u001b[1m\u001b[91merror\u001b[0m: test failed, to rerun pass `-p ginux-vfs --lib`"
  }
 }
