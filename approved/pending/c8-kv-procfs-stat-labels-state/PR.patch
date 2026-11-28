@@ -1,0 +1,76 @@
+From 39978794480e2a8ac101becd422eeb23ce31cc11 Mon Sep 17 00:00:00 2001
+From: Abdelhafid DJIDEL <266947999+hafid-logic@users.noreply.github.com>
+Date: Sat, 28 Nov 2026 10:23:45 +0000
+Subject: [PATCH] tests(kernel-views): pin procfs stat init/managed labels and
+ running state
+
+### What
+Pins `/proc/<pid>/stat` rendering: pid 1 is labelled `(init)`, other tasks `(managed)`, and a running task reports state `R`.
+
+### Why it matters
+Userspace tooling parses the stat label and state character. The existing suite reads status/identity leaves but never stat, so swapping the init predicate or the state mapping passes it.
+
+### Mutation evidence (fail-then-pass)
+| Mutant | Existing suite | New test |
+|---|---|---|
+| init predicate `pid == 1` -> `pid == 2` | PASS (survives) | FAIL (killed) |
+| `Running => 'R'` -> `'Z'` | PASS (survives) | FAIL (killed) |
+
+Spec-Ref: proc(5) /proc/[pid]/stat fields (comm, state).
+
+Baseline (clean tree + new test): PASS. Reproduce: `cargo test -p ginux-kernel-views --lib procfs_stat_labels`.
+
+Prepared with AI assistance; reviewed by me.
+---
+ crates/ginux-kernel-views/src/lib.rs | 37 ++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
+
+diff --git a/crates/ginux-kernel-views/src/lib.rs b/crates/ginux-kernel-views/src/lib.rs
+index 23fb854b..950b5a89 100644
+--- a/crates/ginux-kernel-views/src/lib.rs
++++ b/crates/ginux-kernel-views/src/lib.rs
+@@ -761,4 +761,41 @@ mod tests {
+             .unwrap();
+         assert_eq!(&output[..len], b"0-3\n");
+     }
++
++    #[test]
++    fn procfs_stat_labels_init_and_managed_and_running_state() {
++        let (views, count) = fixture();
++        let tasks = &views[..count];
++        let mounts: [MountView<'_>; 0] = [];
++        let procfs = ProcFs::new(
++            tasks,
++            2,
++            12_340_000_000,
++            MemoryView {
++                total_bytes: 512 * 1024 * 1024,
++                available_bytes: 384 * 1024 * 1024,
++            },
++            IdentityView {
++                hostname: b"instance-a",
++                machine_id: b"0123456789abcdef0123456789abcdef",
++                boot_id: b"11111111-2222-3333-4444-555555555555",
++            },
++            &mounts,
++        );
++        let mut out = [0u8; 256];
++        let len = procfs.read(b"/proc/1/stat", &mut out).unwrap();
++        assert!(
++            out[..len].windows(8).any(|w| w == b" (init) "),
++            "init label missing"
++        );
++        let len = procfs.read(b"/proc/2/stat", &mut out).unwrap();
++        assert!(
++            out[..len].windows(11).any(|w| w == b" (managed) "),
++            "managed label missing"
++        );
++        assert!(
++            out[..len].windows(3).any(|w| w == b" R "),
++            "running state missing"
++        );
++    }
+ }
+-- 
+2.47.3
+

@@ -1,0 +1,17 @@
+{
+ "crate": "ginux-oci",
+ "file": "crates/ginux-oci/src/lib.rs",
+ "filter": "remove_path_unlinks",
+ "mutants": [
+  {
+   "name": "notfound-err",
+   "old": "Err(error) if error.kind() == io::ErrorKind::NotFound => return Ok(()),",
+   "new": "Err(error) if error.kind() == io::ErrorKind::NotFound => return Err(io_error(error)),"
+  },
+  {
+   "name": "nonrecursive",
+   "old": "fs::remove_dir_all(path).map_err(io_error)",
+   "new": "fs::remove_dir(path).map_err(io_error)"
+  }
+ ]
+}

@@ -1,0 +1,17 @@
+{
+ "crate": "ginux-process",
+ "file": "crates/ginux-process/src/lib.rs",
+ "filter": "timer_update_one_shot",
+ "mutants": [
+  {
+   "name": "oneshot-2",
+   "old": "timer.expirations = timer.expirations.saturating_add(1);",
+   "new": "timer.expirations = timer.expirations.saturating_add(2);"
+  },
+  {
+   "name": "deadline-le",
+   "old": "now_ns < timer.deadline_ns {",
+   "new": "now_ns <= timer.deadline_ns {"
+  }
+ ]
+}

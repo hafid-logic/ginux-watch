@@ -1,0 +1,17 @@
+{
+ "crate": "ginux-kernel-views",
+ "file": "crates/ginux-kernel-views/src/lib.rs",
+ "filter": "procfs_stat_labels",
+ "mutants": [
+  {
+   "name": "init-pid2",
+   "old": "writer.bytes(if task.id.pid == 1 {",
+   "new": "writer.bytes(if task.id.pid == 2 {"
+  },
+  {
+   "name": "running-z",
+   "old": "        TaskState::Running => b'R',",
+   "new": "        TaskState::Running => b'Z',"
+  }
+ ]
+}

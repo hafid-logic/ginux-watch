@@ -1,0 +1,1 @@
+tests(core): pin write console-only fd set and netlink ACK kind gate

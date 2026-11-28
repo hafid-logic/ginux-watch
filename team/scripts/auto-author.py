@@ -87,6 +87,12 @@ def main():
         subprocess.run(["git","-C",str(U),"reset","--hard","-q","origin/main"],check=True)
         subprocess.run(["git","-C",str(U),"clean","-fdq"],check=True)
         f=U/e["file"]; s=f.read_text()
+        # no_std fast guard: reject heap-using tests before burning a runner round
+        if "#![no_std]" in s and "alloc::vec" not in s:
+            bad=[t for t in ("vec![","String::") if t in e["test"]]
+            if bad:
+                print("NO_STD_GUARD_FAIL", e["name"], bad); continue
+
         if e["fn"] in s:
             skipped.append(e["name"]+"(fn-in-file)"); continue
         ok, bad = jit_ok(s, e["mutants"])

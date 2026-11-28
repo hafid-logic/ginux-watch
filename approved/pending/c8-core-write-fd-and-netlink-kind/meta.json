@@ -1,0 +1,17 @@
+{
+ "crate": "ginux-core",
+ "file": "crates/ginux-core/src/lib.rs",
+ "filter": "write_admission_rejects",
+ "mutants": [
+  {
+   "name": "write-fd0",
+   "old": "        1 => matches!(arg0, 1 | 2) && arg2 <= 4096,",
+   "new": "        1 => matches!(arg0, 0 | 1 | 2) && arg2 <= 4096,"
+  },
+  {
+   "name": "netlink-kind",
+   "old": "if kind == 2 && message_length >= 20 {",
+   "new": "if message_length >= 20 {"
+  }
+ ]
+}

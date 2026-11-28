@@ -95,6 +95,14 @@
 - **#342** مدموج: tests(core): pin balanced surface mapping for random
 - **#344** مدموج: tests(vfs): pin encode_record path and link validati
 
+## المرحلة 8 (2026-11-28) — الكرارة الثامنة 8/8 + الموجة أ-2
+- **ginux-core 8/8 فُتحت:** تشريح كامل لناجيات core الـ35 سطرًا بسطر (قياس حي). المغطاة: balanced_surface(2)، balanced_identity_result(2)، ومعظم balanced_arguments_allowed(19) وnetlink(12). **الناجيتان الحيتان:** قبول fd=0 في write(1)، وإسقاط بوابة kind==2 في netlink ⇒ حزمة `tests/core-write-fd-and-netlink-kind@77acf322` (Spec-Ref: write(2) / RFC 3549 netlink(7)).
+- **الموجة أ-2 (4 حزم مُبرهنة، فروع fork):** core-write-fd-and-netlink-kind@77acf322 · oci-remove-path-idempotent-recursive@af45884e (OCI image-spec) · kv-procfs-stat-labels-state@39978794 (proc(5)) · process-timer-oneshot-periodic-edge@be4e7050 (timerfd(2)).
+- **فُتحت بقرار المشغّل:** #380 core · #381 kernel-views · #382 oci · #383 process-timer (الأربعة mergeable؛ CI أخضر عدا static-and-unit على #383 قيد التشغيل).
+- **الموجة ب مدموجة بالكامل:** #377 fs-policy · #378 devices · #379 vfs. لا تعارضات مع البوت.
+- **حارس no_std** مُضاف في auto-author.py (يرفض vec![/String:: على no_std قبل العدّاء) + الالتزام بعنوان+نص كامل.
+- **أرشفة:** مولّدات #373–#379 نُقلت إلى author-registry-archive.json.
+
 ## فهرس
 - الأرشيف: state/history/STATE-archive-2026-11-18.md — التسليم: HANDOFF.md
 - التقارير: reports/ — المصفوفة: matrix/upstream-watch.json

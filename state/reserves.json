@@ -1,20 +1,6 @@
 {
- "generated_utc": "2026-11-28T09:24:35Z",
- "reserves": [
-  {
-   "branch": "tests/vfs-copy-overlay-size-boundary",
-   "title": "tests(vfs): pin copy_to_overlay exact FILE_SIZE acceptance",
-   "url": "https://github.com/gmkurtzer/ginux/compare/main...hafid-logic:tests/vfs-copy-overlay-size-boundary?quick_pull=1&title=tests%28vfs%29%3A+pin+copy_to_overlay+exact+FILE_SIZE+acceptance&body=%23%23%23+What%0APins+%60copy_to_overlay%60+size+gate%3A+exact+FILE_SIZE+fit+copies+successfully%2C+and+smaller+base+files+also+copy+without+rejection.%0A%0A%23%23%23+Why+it+matters%0ARelaxing+%60%3E%60+to+%60%3E%3D%60+rejects+valid+exact-fit+images%3B+relaxing+to+%60%3D%3D%60+admits+only+exact+sizes+and+rejects+all+smaller+files.+Existing+tests+never+exercise+the+overlay+copy+size+boundary.%0A%0A%23%23%23+Mutation+evidence+%28fail-then-pass%29%0A%7C+Mutant+%7C+Existing+suite+%7C+New+test+%7C%0A%7C---%7C---%7C---%7C%0A%7C+%60size+%3E+FILE_SIZE%60+-%3E+%60size+%3E%3D+FILE_SIZE%60+%7C+PASS+%28survives%29+%7C+FAIL+%28killed%29+%7C%0A%7C+%60size+%3E+FILE_SIZE%60+-%3E+%60size+%3D%3D+FILE_SIZE%60+%7C+PASS+%28survives%29+%7C+FAIL+%28killed%29+%7C%0A%0ABaseline%3A+PASS.+Reproduce%3A+%60cargo+test+-p+ginux-vfs+--lib+copy_to_overlay_accepts%60.%0A%0ASpec-Ref%3A+overlay+copy-on-write+size+invariant+%28VFS+internal+contract%29%0A%0APrepared+with+AI+assistance%3B+reviewed+by+me.%0A",
-   "crate": "ginux-vfs",
-   "target_file": "crates/ginux-vfs/src/lib.rs"
-  }
- ],
- "conflict_free_batch": [
-  "tests/vfs-copy-overlay-size-boundary"
- ],
- "by_target_file": {
-  "crates/ginux-vfs/src/lib.rs": [
-   "tests/vfs-copy-overlay-size-boundary"
-  ]
- }
+ "generated_utc": "2026-11-28T10:45:24Z",
+ "reserves": [],
+ "conflict_free_batch": [],
+ "by_target_file": {}
 }
