@@ -1,6 +1,6 @@
-From 4a445ca2a4f9735650e2e4201db0e30d3f28225e Mon Sep 17 00:00:00 2001
+From e93f5bbe7d9b0f628b027a3e69789afb5974ad5e Mon Sep 17 00:00:00 2001
 From: ginux-watch-agent <actions@users.noreply.github.com>
-Date: Sat, 28 Nov 2026 12:16:01 +0000
+Date: Sat, 28 Nov 2026 12:24:13 +0000
 Subject: [PATCH] tests(instance): pin parse_field duplicate-detection bits for
  contract allow/deny
 

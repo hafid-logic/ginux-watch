@@ -1,6 +1,6 @@
-From c9a472a97cb8c50c8c2d7a57260ceeb94e3c0968 Mon Sep 17 00:00:00 2001
+From 8406b5708dcb9a4b4ad26bbdeca79aa3ce354a84 Mon Sep 17 00:00:00 2001
 From: ginux-watch-agent <actions@users.noreply.github.com>
-Date: Sat, 28 Nov 2026 12:16:02 +0000
+Date: Sat, 28 Nov 2026 12:24:14 +0000
 Subject: [PATCH] tests(vfs): pin Index::is_empty and the symlink link-length
  boundary
 MIME-Version: 1.0
@@ -8,10 +8,10 @@ Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 ### What
-Pins two VFS index guards: `Index::is_empty` reports true only for a zero-record index, and `Index::resolve` accepts a symlink whose target length equals the link buffer (`MAX_PATH`) exactly — the copy gate is `>` not `>=`.
+Pins two VFS index guards: `Index::is_empty` reports true only for a zero-record index, and `Index::resolve` accepts a symlink whose target length equals the link buffer (`MAX_LINK`) exactly — the copy gate is `>` not `>=`.
 
 ### Why it matters
-An inverted or constant-folded `is_empty` misreports index state to callers sizing iteration. Relaxing the link-length gate to `>=` rejects valid exact-fit targets. Existing tests never build an empty index nor an exact-MAX_PATH link.
+An inverted or constant-folded `is_empty` misreports index state to callers sizing iteration. Relaxing the link-length gate to `>=` rejects valid exact-fit targets. Existing tests never build an empty index nor an exact-MAX_LINK link.
 
 ### Mutation evidence (fail-then-pass)
 | Mutant | Existing suite | New test |
@@ -26,14 +26,14 @@ Spec-Ref: VFS index contract (emptiness predicate; symlink target buffer bound)
 
 Prepared with AI assistance; reviewed by me.
 ---
- crates/ginux-vfs/src/lib.rs | 54 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 54 insertions(+)
+ crates/ginux-vfs/src/lib.rs | 55 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 55 insertions(+)
 
 diff --git a/crates/ginux-vfs/src/lib.rs b/crates/ginux-vfs/src/lib.rs
-index 4390d2a2..9ecfe0c1 100644
+index 4390d2a2..c867a955 100644
 --- a/crates/ginux-vfs/src/lib.rs
 +++ b/crates/ginux-vfs/src/lib.rs
-@@ -1345,4 +1345,58 @@ mod tests {
+@@ -1345,4 +1345,59 @@ mod tests {
          let w2 = vfs2.open(b"/base", O_WRITE).unwrap();
          vfs2.close(w2).unwrap();
      }
@@ -51,7 +51,8 @@ index 4390d2a2..9ecfe0c1 100644
 +        let index = Index::new(&bytes).unwrap();
 +        assert!(!index.is_empty());
 +        assert!(index.len() > 0);
-+        // symlink whose target length equals MAX_PATH exactly: accepted by the copy gate
++        // symlink whose target length equals MAX_LINK exactly: the resolve copy
++        // gate is `>` not `>=`, so an exact-fit target must be accepted.
 +        let mut buf = [0u8; HEADER_SIZE + 2 * RECORD_SIZE];
 +        encode_header(2, (&mut buf[..HEADER_SIZE]).try_into().unwrap());
 +        let root = Entry {
@@ -71,7 +72,7 @@ index 4390d2a2..9ecfe0c1 100644
 +                .unwrap(),
 +        )
 +        .unwrap();
-+        let long_target = [b'a'; MAX_PATH];
++        let long_target = [b'a'; MAX_LINK];
 +        let link_entry = Entry {
 +            path: b"/l",
 +            kind: NodeKind::Symlink,

@@ -14,12 +14,6 @@
    "old": "    pub const METADATA: Self = Self(1 << 4);",
    "new": "    pub const METADATA: Self = Self(1 >> 4);",
    "line": 72
-  },
-  {
-   "name": "execute-shift-right",
-   "old": "    pub const EXECUTE: Self = Self(1 << 5);",
-   "new": "    pub const EXECUTE: Self = Self(1 >> 5);",
-   "line": 73
   }
  ]
 }

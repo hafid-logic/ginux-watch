@@ -9,7 +9,6 @@ Capability checks are bitwise: shifting a constant right (`1 >> 3 == 0`) turns C
 |---|---|---|
 | `CREATE: 1 << 3` -> `1 >> 3` | PASS (survives) | FAIL (killed) |
 | `METADATA: 1 << 4` -> `1 >> 4` | PASS (survives) | FAIL (killed) |
-| `EXECUTE: 1 << 5` -> `1 >> 5` | PASS (survives) | FAIL (killed) |
 
 Baseline (clean tree + new test): PASS. Reproduce: `cargo test -p ginux-fs-policy --lib rights_constants_pin_exact`.
 
