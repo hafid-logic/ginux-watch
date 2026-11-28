@@ -1,6 +1,6 @@
-From cb3b92060661d7246d9738bc3717f46b2cacf05b Mon Sep 17 00:00:00 2001
+From 48e399673e06664990801fd0cc1c47327c27d4d5 Mon Sep 17 00:00:00 2001
 From: ginux-watch-agent <actions@users.noreply.github.com>
-Date: Sat, 28 Nov 2026 12:24:14 +0000
+Date: Sat, 28 Nov 2026 12:28:52 +0000
 Subject: [PATCH] tests(devices): pin network view minor numbering and receive
  ring wrap order
 

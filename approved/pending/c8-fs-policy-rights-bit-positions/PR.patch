@@ -1,6 +1,6 @@
-From 9394f3d3b13c86caf439c7d84d1cc69aa8f7654a Mon Sep 17 00:00:00 2001
+From a63f8fb8ba7baa32e5af6ba8054ce5f515e59653 Mon Sep 17 00:00:00 2001
 From: ginux-watch-agent <actions@users.noreply.github.com>
-Date: Sat, 28 Nov 2026 12:24:14 +0000
+Date: Sat, 28 Nov 2026 12:28:52 +0000
 Subject: [PATCH] tests(fs-policy): pin Rights constants to exact distinct bit
  positions
 MIME-Version: 1.0

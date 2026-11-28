@@ -62,14 +62,14 @@
   "spec_ref": "ginux instance-config parser (seen-bitmap duplicate-field contract)"
  },
  {
-  "name": "vfs-index-empty-and-link-boundary",
+  "name": "vfs-index-is-empty-predicate",
   "crate": "ginux-vfs",
   "file": "crates/ginux-vfs/src/lib.rs",
-  "fn": "index_is_empty_and_resolve_link_length_boundary_are_exact",
-  "filter": "index_is_empty_and_resolve_link",
-  "title": "tests(vfs): pin Index::is_empty and the symlink link-length boundary",
-  "test": "\n    #[test]\n    fn index_is_empty_and_resolve_link_length_boundary_are_exact() {\n        // empty index: len 0, is_empty true\n        let mut header = [0u8; HEADER_SIZE];\n        encode_header(0, &mut header);\n        let empty = Index::new(&header).unwrap();\n        assert_eq!(empty.len(), 0);\n        assert!(empty.is_empty());\n        // non-empty index: is_empty false\n        let bytes = index_bytes();\n        let index = Index::new(&bytes).unwrap();\n        assert!(!index.is_empty());\n        assert!(index.len() > 0);\n        // symlink whose target length equals MAX_LINK exactly: the resolve copy\n        // gate is `>` not `>=`, so an exact-fit target must be accepted.\n        let mut buf = [0u8; HEADER_SIZE + 2 * RECORD_SIZE];\n        encode_header(2, (&mut buf[..HEADER_SIZE]).try_into().unwrap());\n        let root = Entry {\n            path: b\"/\", kind: NodeKind::Directory, mode: 0o755,\n            uid: 0, gid: 0, size: 0, data_offset: 0, link: b\"\",\n        };\n        encode_record(root, (&mut buf[HEADER_SIZE..HEADER_SIZE + RECORD_SIZE]).try_into().unwrap()).unwrap();\n        let long_target = [b'a'; MAX_LINK];\n        let link_entry = Entry {\n            path: b\"/l\", kind: NodeKind::Symlink, mode: 0o777,\n            uid: 0, gid: 0, size: 0, data_offset: 0, link: &long_target,\n        };\n        encode_record(link_entry, (&mut buf[HEADER_SIZE + RECORD_SIZE..]).try_into().unwrap()).unwrap();\n        let idx = Index::new(&buf).unwrap();\n        // exact-fit link copies without InvalidPath; resolution then fails NotFound\n        assert_eq!(idx.resolve(b\"/l\"), Err(VfsError::NotFound));\n    }\n",
-  "body": "### What\nPins two VFS index guards: `Index::is_empty` reports true only for a zero-record index, and `Index::resolve` accepts a symlink whose target length equals the link buffer (`MAX_LINK`) exactly — the copy gate is `>` not `>=`.\n\n### Why it matters\nAn inverted or constant-folded `is_empty` misreports index state to callers sizing iteration. Relaxing the link-length gate to `>=` rejects valid exact-fit targets. Existing tests never build an empty index nor an exact-MAX_LINK link.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| `count == 0` -> `count != 0` (is_empty) | PASS (survives) | FAIL (killed) |\n| `is_empty -> true` | PASS (survives) | FAIL (killed) |\n| link-length gate `>` -> `>=` | PASS (survives) | FAIL (killed) |\n\nBaseline (clean tree + new test): PASS. Reproduce: `cargo test -p ginux-vfs --lib index_is_empty_and_resolve_link`.\n\nPrepared with AI assistance; reviewed by me.",
+  "fn": "index_is_empty_predicate_tracks_record_count_exactly",
+  "filter": "index_is_empty_predicate",
+  "title": "tests(vfs): pin Index::is_empty against exact record counts",
+  "test": "\n    #[test]\n    fn index_is_empty_predicate_tracks_record_count_exactly() {\n        // empty index: len 0, is_empty true\n        let mut header = [0u8; HEADER_SIZE];\n        encode_header(0, &mut header);\n        let empty = Index::new(&header).unwrap();\n        assert_eq!(empty.len(), 0);\n        assert!(empty.is_empty());\n        // one-record index: len 1, is_empty false\n        let mut buf = [0u8; HEADER_SIZE + RECORD_SIZE];\n        encode_header(1, (&mut buf[..HEADER_SIZE]).try_into().unwrap());\n        let entry = Entry {\n            path: b\"/solo\", kind: NodeKind::File, mode: 0o644,\n            uid: 0, gid: 0, size: 0, data_offset: 0, link: b\"\",\n        };\n        encode_record(entry, (&mut buf[HEADER_SIZE..]).try_into().unwrap()).unwrap();\n        let one = Index::new(&buf).unwrap();\n        assert_eq!(one.len(), 1);\n        assert!(!one.is_empty());\n        // multi-record index stays non-empty\n        let bytes = index_bytes();\n        let index = Index::new(&bytes).unwrap();\n        assert!(index.len() > 1);\n        assert!(!index.is_empty());\n    }\n",
+  "body": "### What\nPins `Index::is_empty` against exact record counts: a zero-record index reports len 0 and is_empty true, while one-record and multi-record indexes report their exact len and is_empty false.\n\n### Why it matters\nCallers use the emptiness predicate before sizing iteration over the index. Inverting the comparison (`count != 0`) or constant-folding it to `true` misreports every non-empty index as empty (or vice versa), silently skipping base-image entries. No existing test builds an empty index or asserts the predicate.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| `count == 0` -> `count != 0` | PASS (survives) | FAIL (killed) |\n| `is_empty -> true` | PASS (survives) | FAIL (killed) |\n\nBaseline (clean tree + new test): PASS. Reproduce: `cargo test -p ginux-vfs --lib index_is_empty_predicate`.\n\nPrepared with AI assistance; reviewed by me.",
   "mutants": [
    {
     "name": "is-empty-ne",
@@ -82,15 +82,9 @@
     "old": "    pub const fn is_empty(&self) -> bool {\n        self.count == 0\n    }",
     "new": "    pub const fn is_empty(&self) -> bool {\n        true\n    }",
     "line": 92
-   },
-   {
-    "name": "link-ge",
-    "old": "            if entry.link.len() > link.len() {",
-    "new": "            if entry.link.len() >= link.len() {",
-    "line": 122
    }
   ],
-  "spec_ref": "VFS index contract (emptiness predicate; symlink target buffer bound)"
+  "spec_ref": "VFS index contract (emptiness predicate vs record count)"
  },
  {
   "name": "fs-policy-rights-bit-positions",

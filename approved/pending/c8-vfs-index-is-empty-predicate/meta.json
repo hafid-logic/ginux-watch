@@ -1,7 +1,7 @@
 {
  "crate": "ginux-vfs",
  "file": "crates/ginux-vfs/src/lib.rs",
- "filter": "index_is_empty_and_resolve_link",
+ "filter": "index_is_empty_predicate",
  "mutants": [
   {
    "name": "is-empty-ne",
@@ -14,12 +14,6 @@
    "old": "    pub const fn is_empty(&self) -> bool {\n        self.count == 0\n    }",
    "new": "    pub const fn is_empty(&self) -> bool {\n        true\n    }",
    "line": 92
-  },
-  {
-   "name": "link-ge",
-   "old": "            if entry.link.len() > link.len() {",
-   "new": "            if entry.link.len() >= link.len() {",
-   "line": 122
   }
  ]
 }

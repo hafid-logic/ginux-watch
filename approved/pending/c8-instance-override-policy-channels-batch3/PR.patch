@@ -1,6 +1,6 @@
-From cc93ce4f791e09ea8f80c325af7572f5db9e9e10 Mon Sep 17 00:00:00 2001
+From 0a187d2ba0a73c0e79955816597a0b66bbf5d128 Mon Sep 17 00:00:00 2001
 From: ginux-watch-agent <actions@users.noreply.github.com>
-Date: Sat, 28 Nov 2026 12:24:13 +0000
+Date: Sat, 28 Nov 2026 12:28:52 +0000
 Subject: [PATCH] tests(instance): pin device/process/kernel policy override
  arms (batch 3)
 
