@@ -1,6 +1,6 @@
-From c2d69b7929844007d4a71dfc59fbc892bccbf169 Mon Sep 17 00:00:00 2001
+From 95bb16f6c79737f1470793e4235140f6e543556c Mon Sep 17 00:00:00 2001
 From: ginux-watch-agent <actions@users.noreply.github.com>
-Date: Sat, 28 Nov 2026 08:55:29 +0000
+Date: Sat, 28 Nov 2026 08:56:30 +0000
 Subject: [PATCH] tests(instance): pin finish workdir preservation and
  partial-recipe rejection
 

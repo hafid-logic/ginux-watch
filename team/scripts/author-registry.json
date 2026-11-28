@@ -148,30 +148,5 @@
    }
   ],
   "spec_ref": "FNV-1a hash specification (offset basis 0xcbf29ce484222325, prime 0x100000001b3)"
- },
- {
-  "name": "vfs-copy-overlay-size-bound",
-  "crate": "ginux-vfs",
-  "file": "crates/ginux-vfs/src/lib.rs",
-  "fn": "copy_to_overlay_enforces_exact_file_size_bound",
-  "filter": "copy_to_overlay_enforces",
-  "title": "tests(vfs): pin copy_to_overlay exact FILE_SIZE boundary",
-  "test": "\n    #[test]\n    fn copy_to_overlay_enforces_exact_file_size_bound() {\n        let bytes = index_bytes();\n        let mut vfs: VirtualFs<'_, Reader, 4, 32, 4> =\n            VirtualFs::new(Index::new(&bytes).unwrap(), Reader(*b\"BASETOOL\"));\n        // exact FILE_SIZE fit must succeed\n        let entry = Entry { path: b\"/fit\", kind: NodeKind::File, mode: 0o644,\n            uid: 0, gid: 0, size: 32, data_offset: 0, link: b\"\" };\n        assert!(vfs.copy_to_overlay(Path::new(b\"/fit\").unwrap(), entry).is_ok());\n        // one past FILE_SIZE must be rejected\n        let big = Entry { path: b\"/big\", kind: NodeKind::File, mode: 0o644,\n            uid: 0, gid: 0, size: 33, data_offset: 0, link: b\"\" };\n        assert_eq!(vfs.copy_to_overlay(Path::new(b\"/big\").unwrap(), big),\n            Err(VfsError::FileTooLarge));\n    }\n",
-  "body": "### What\nPins `copy_to_overlay` size gate: exact FILE_SIZE fit accepted, one-past rejected with FileTooLarge.\n\n### Why it matters\nOverlay copy guards against buffer overflow; relaxing > to >= rejects valid exact-fit files, while == admits oversized entries that corrupt overlay storage. No existing test exercises this boundary.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| `size > FILE_SIZE` -> `>=` | PASS (survives) | FAIL (killed) |\n| `size > FILE_SIZE` -> `==` | PASS (survives) | FAIL (killed) |\n\nBaseline: PASS. Reproduce: `cargo test -p ginux-vfs --lib copy_to_overlay_enforces`.\n\nPrepared with AI assistance; reviewed by me.\n",
-  "mutants": [
-   {
-    "name": "size-ge",
-    "old": "        if size > FILE_SIZE {",
-    "new": "        if size >= FILE_SIZE {",
-    "line": 635
-   },
-   {
-    "name": "size-eq",
-    "old": "        if size > FILE_SIZE {",
-    "new": "        if size == FILE_SIZE {",
-    "line": 635
-   }
-  ],
-  "spec_ref": "overlay file-size capacity invariant (FILE_SIZE generic parameter)"
  }
 ]

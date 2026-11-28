@@ -1,0 +1,19 @@
+{
+ "crate": "ginux-fs-policy",
+ "file": "crates/ginux-fs-policy/src/lib.rs",
+ "filter": "identity_token_matches_fnv1a",
+ "mutants": [
+  {
+   "name": "xor-and",
+   "old": "        hash ^= bytes[index] as u64;",
+   "new": "        hash &= bytes[index] as u64;",
+   "line": 253
+  },
+  {
+   "name": "xor-or",
+   "old": "        hash ^= bytes[index] as u64;",
+   "new": "        hash |= bytes[index] as u64;",
+   "line": 253
+  }
+ ]
+}

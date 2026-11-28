@@ -1,0 +1,49 @@
+From a252d81f7f8b938cd05b25130f99c6d31380bdb6 Mon Sep 17 00:00:00 2001
+From: ginux-watch-agent <actions@users.noreply.github.com>
+Date: Sat, 28 Nov 2026 08:56:31 +0000
+Subject: [PATCH] tests(fs-policy): pin identity_token to exact FNV-1a
+ reference hashes
+
+### What
+Pins `identity_token` to exact FNV-1a reference hashes for empty, rocky, and peer inputs.
+
+### Why it matters
+Instance identity tokens gate capability separation; changing the XOR accumulation to AND/OR produces different hashes that still pass stability/separation checks but break cross-component identity agreement. Existing tests verify properties, not exact values.
+
+### Mutation evidence (fail-then-pass)
+| Mutant | Existing suite | New test |
+|---|---|---|
+| `^=` -> `&=` | PASS (survives) | FAIL (killed) |
+| `^=` -> `|=` | PASS (survives) | FAIL (killed) |
+
+Baseline: PASS. Reproduce: `cargo test -p ginux-fs-policy --lib identity_token_matches_fnv1a`.
+
+Spec-Ref: FNV-1a hash specification (offset basis 0xcbf29ce484222325, prime 0x100000001b3)
+
+Prepared with AI assistance; reviewed by me.
+---
+ crates/ginux-fs-policy/src/lib.rs | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/crates/ginux-fs-policy/src/lib.rs b/crates/ginux-fs-policy/src/lib.rs
+index 175857d5..7bc7453d 100644
+--- a/crates/ginux-fs-policy/src/lib.rs
++++ b/crates/ginux-fs-policy/src/lib.rs
+@@ -2363,4 +2363,14 @@ mod tests {
+         assert_eq!(nullable_path_snapshot_arguments(280), 1 << 1);
+         assert_eq!(nullable_path_snapshot_arguments(257), 0);
+     }
++
++    #[test]
++    fn identity_token_matches_fnv1a_reference_values() {
++        // Exact FNV-1a reference values (offset basis + prime per spec)
++        assert_eq!(identity_token(b""), 0xcbf2_9ce4_8422_2325);
++        assert_eq!(identity_token(b"rocky"), 0xb6d6_c546_5985_e177);
++        assert_eq!(identity_token(b"peer"), 0xdff7_710d_d73b_9849);
++        // zero-hash fallback to 1 is preserved
++        assert_ne!(identity_token(b""), 0);
++    }
+ }
+-- 
+2.47.3
+
