@@ -1,24 +1,30 @@
 {
- "c8-devices-network-view-minor-and-ring-wrap": {
+ "c8-instance-parse-section-header-shape": {
+  "proven": false,
+  "baseline": false,
+  "why": "baseline-fail",
+  "baseline_err": "     \u001b[1m\u001b[94m|\u001b[0m         \u001b[1m\u001b[91m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\u001b[0m \u001b[1m\u001b[91mthe trait `Debug` is not implemented for `Section`\u001b[0m\n     \u001b[1m\u001b[94m|\u001b[0m\n\u001b[1m\u001b[96mhelp\u001b[0m: the trait `Debug` \u001b[1m\u001b[35mis\u001b[0m conditionally implemented for `\u001b[1m\u001b[35mResult<T, E>\u001b[0m`\n    \u001b[1m\u001b[94m--> \u001b[0m/rustc/20ddd01716a87c0fcf06ae4752d85a4abc15bcdf/library/core/src/result.rs:553:15\n    \u001b[1m\u001b[94m::: \u001b[0m/rustc/20ddd01716a87c0fcf06ae4752d85a4abc15bcdf/library/core/src/result.rs:558:16\n     \u001b[1m\u001b[94m|\u001b[0m\n     \u001b[1m\u001b[94m= \u001b[0m\u001b[1mnote\u001b[0m: unsatisfied requirement introduced here: `Section: Debug`\n\u001b[1m\u001b[96mhelp\u001b[0m: consider annotating `Section` with `#[derive(Debug)]`\n     \u001b[1m\u001b[94m|\u001b[0m\n\u001b[1m\u001b[94m 290\u001b[0m \u001b[92m+ #[derive(Debug)]\u001b[0m\n\u001b[1m\u001b[94m 291\u001b[0m \u001b[1m\u001b[94m|\u001b[0m enum Section {\n     \u001b[1m\u001b[94m|\u001b[0m\n\n\u001b[1mFor more information about this error, try `rustc --explain E0277`.\u001b[0m\n\u001b[1m\u001b[91merror\u001b[0m: could not compile `ginux-instance` (lib test) due to 10 previous errors"
+ },
+ "c8-kv-identity-hostname-and-ns-links": {
   "proven": true,
   "baseline": true,
   "mutants": [
    {
-    "name": "minor-mul",
+    "name": "del-hostname",
     "anchor_ok": true,
     "anchor_count": 1,
     "survives": true,
     "killed": true
    },
    {
-    "name": "minor-sub",
+    "name": "del-ns-pid",
     "anchor_ok": true,
     "anchor_count": 1,
     "survives": true,
     "killed": true
    },
    {
-    "name": "wrap-div",
+    "name": "del-ns-uts",
     "anchor_ok": true,
     "anchor_count": 1,
     "survives": true,
@@ -26,19 +32,19 @@
    }
   ]
  },
- "c8-fs-policy-rights-bit-positions": {
+ "c8-oci-whiteout-parent-component-guards": {
   "proven": true,
   "baseline": true,
   "mutants": [
    {
-    "name": "create-shift-right",
+    "name": "accept-any-component",
     "anchor_ok": true,
     "anchor_count": 1,
     "survives": true,
     "killed": true
    },
    {
-    "name": "metadata-shift-right",
+    "name": "notfound-fatal",
     "anchor_ok": true,
     "anchor_count": 1,
     "survives": true,
@@ -46,33 +52,33 @@
    }
   ]
  },
- "c8-instance-override-policy-channels-batch3": {
+ "c8-process-exec-group-leader-replacement": {
   "proven": true,
   "baseline": true,
   "mutants": [
    {
-    "name": "del-dev-read",
+    "name": "leader-and-or",
     "anchor_ok": true,
     "anchor_count": 1,
     "survives": true,
     "killed": true
    },
    {
-    "name": "del-dev-create",
+    "name": "leader-eq-ne",
     "anchor_ok": true,
     "anchor_count": 1,
     "survives": true,
     "killed": true
    },
    {
-    "name": "del-proc-signals",
+    "name": "teardown-and-or",
     "anchor_ok": true,
     "anchor_count": 1,
     "survives": true,
     "killed": true
    },
    {
-    "name": "del-kernel-proc-read",
+    "name": "teardown-eq-ne",
     "anchor_ok": true,
     "anchor_count": 1,
     "survives": true,
@@ -80,39 +86,26 @@
    }
   ]
  },
- "c8-instance-parse-field-duplicate-bit-table": {
+ "c8-process-shell-code-signal-offset": {
   "proven": true,
   "baseline": true,
   "mutants": [
    {
-    "name": "allow-shift-right",
+    "name": "const-0",
     "anchor_ok": true,
     "anchor_count": 1,
     "survives": true,
     "killed": true
    },
    {
-    "name": "deny-shift-right",
-    "anchor_ok": true,
-    "anchor_count": 1,
-    "survives": true,
-    "killed": true
-   }
-  ]
- },
- "c8-vfs-index-is-empty-predicate": {
-  "proven": true,
-  "baseline": true,
-  "mutants": [
-   {
-    "name": "is-empty-ne",
+    "name": "plus-mul",
     "anchor_ok": true,
     "anchor_count": 1,
     "survives": true,
     "killed": true
    },
    {
-    "name": "is-empty-true",
+    "name": "plus-sub",
     "anchor_ok": true,
     "anchor_count": 1,
     "survives": true,
