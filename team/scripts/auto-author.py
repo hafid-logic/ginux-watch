@@ -19,6 +19,7 @@ for _k,_v in (("GIT_AUTHOR_NAME","ginux-watch-agent"),("GIT_AUTHOR_EMAIL","actio
     _os.environ.setdefault(_k,_v)
 
 from pathlib import Path
+from spec_ref import with_spec_ref
 ROOT = Path(__file__).resolve().parents[2]
 U = Path("/tmp/author-upstream")
 REG = json.loads((ROOT/"team/scripts/author-registry.json").read_text())
@@ -98,13 +99,13 @@ def main():
         f.write_text(s[:i]+"\n"+e["test"]+s[i:])
         subprocess.run(["cargo","fmt","-p",e["crate"]],cwd=U,env={**os.environ,"CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS":"","RUSTFLAGS":""},capture_output=True)
         subprocess.run(["git","-C",str(U),"add","-A"],check=True)
-        subprocess.run(["git","-C",str(U),"commit","-q","-m",e["title"],"-m",e["body"]],check=True)
+        subprocess.run(["git","-C",str(U),"commit","-q","-m",e["title"],"-m",with_spec_ref(e["body"],e)],check=True)
         patch=subprocess.run(["git","-C",str(U),"format-patch","-1","--stdout"],capture_output=True,text=True).stdout
         d=ROOT/"approved/pending"/("c8-"+e["name"]); d.mkdir(parents=True,exist_ok=True)
         (d/"PR.patch").write_text(patch)   # fresh regeneration overwrites stale patches
         (d/"meta.json").write_text(json.dumps({"crate":e["crate"],"file":e["file"],"filter":e["filter"],"mutants":e["mutants"]},indent=1))
         (d/"PR.title").write_text(e["title"]+"\n")
-        (d/"PR.md").write_text(e["body"])
+        (d/"PR.md").write_text(with_spec_ref(e["body"],e))
         made.append(e["name"])
     print("auto-authored:",made)
     print("skipped:",skipped)
