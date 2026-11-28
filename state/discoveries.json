@@ -1,10 +1,10 @@
 {
- "generated_utc": "2026-11-28T07:04:09Z",
+ "generated_utc": "2026-11-28T11:15:12Z",
  "source": "mutation-scan artifacts (scan.log MISSED lines + missed.txt when present)",
- "total_survivors": 593,
+ "total_survivors": 157,
  "crates": {
   "ginux-core": {
-   "total_missed": 35,
+   "total_missed": 11,
    "scan_run": 8,
    "functions": {
     "balanced_arguments_allowed": 19,
@@ -93,7 +93,7 @@
    ]
   },
   "ginux-devices": {
-   "total_missed": 25,
+   "total_missed": 15,
    "functions": {
     "DeviceRegistry<DEVICES, FDS>::views": 7,
     "IsolatedNetwork<FRAMES>::receive": 7,
@@ -210,11 +210,6 @@
     "crates/ginux-devices/src/lib.rs:232:24: replace | with ^ in DeviceRegistry<DEVICES, FDS>::open",
     "crates/ginux-devices/src/lib.rs:243:40: replace && with || in DeviceRegistry<DEVICES, FDS>::descriptor",
     "crates/ginux-devices/src/lib.rs:247:42: replace && with || in DeviceRegistry<DEVICES, FDS>::descriptor",
-    "crates/ginux-devices/src/lib.rs:266:39: replace ^= with |= in DeviceRegistry<DEVICES, FDS>::read",
-    "crates/ginux-devices/src/lib.rs:266:60: replace << with >> in DeviceRegistry<DEVICES, FDS>::read",
-    "crates/ginux-devices/src/lib.rs:267:39: replace ^= with |= in DeviceRegistry<DEVICES, FDS>::read",
-    "crates/ginux-devices/src/lib.rs:268:39: replace ^= with |= in DeviceRegistry<DEVICES, FDS>::read",
-    "crates/ginux-devices/src/lib.rs:268:60: replace << with >> in DeviceRegistry<DEVICES, FDS>::read",
     "crates/ginux-devices/src/lib.rs:333:20: replace == with != in BlockBackend::is_empty",
     "crates/ginux-devices/src/lib.rs:333:9: replace BlockBackend::is_empty -> bool with false",
     "crates/ginux-devices/src/lib.rs:333:9: replace BlockBackend::is_empty -> bool with true",
@@ -1098,7 +1093,7 @@
    ]
   },
   "ginux-process": {
-   "total_missed": 106,
+   "total_missed": 95,
    "functions": {
     "PipeSpace<TASKS, FDS, PIPES>::release": 14,
     "PipeSpace<TASKS, FDS, PIPES>::retain": 8,
@@ -1288,12 +1283,7 @@
     }
    ],
    "survivors": [
-    "crates/ginux-process/src/lib.rs:1020:28: replace || with && in EventPoll<ENTRIES>::add",
-    "crates/ginux-process/src/lib.rs:1020:43: replace || with && in EventPoll<ENTRIES>::add",
     "crates/ginux-process/src/lib.rs:1020:68: replace | with ^ in EventPoll<ENTRIES>::add",
-    "crates/ginux-process/src/lib.rs:1026:39: replace && with || in EventPoll<ENTRIES>::add",
-    "crates/ginux-process/src/lib.rs:1026:59: replace == with != in EventPoll<ENTRIES>::add",
-    "crates/ginux-process/src/lib.rs:1053:9: replace EventPoll<ENTRIES>::remove -> Result<(), ProcessError> with Ok(())",
     "crates/ginux-process/src/lib.rs:1056:40: replace && with || in EventPoll<ENTRIES>::remove",
     "crates/ginux-process/src/lib.rs:105:40: replace > with >= in Credentials::set_groups",
     "crates/ginux-process/src/lib.rs:1093:26: replace -= with += in EventFd::read",
@@ -1302,9 +1292,6 @@
     "crates/ginux-process/src/lib.rs:1191:9: replace FutexTable<WAITERS>::remove_task with ()",
     "crates/ginux-process/src/lib.rs:1192:30: replace && with || in FutexTable<WAITERS>::remove_task",
     "crates/ginux-process/src/lib.rs:1192:45: replace == with != in FutexTable<WAITERS>::remove_task",
-    "crates/ginux-process/src/lib.rs:1284:9: replace PipeSpace<TASKS, FDS, PIPES>::task_index -> Option<usize> with Some(0)",
-    "crates/ginux-process/src/lib.rs:1284:9: replace PipeSpace<TASKS, FDS, PIPES>::task_index -> Option<usize> with Some(1)",
-    "crates/ginux-process/src/lib.rs:1286:40: replace && with || in PipeSpace<TASKS, FDS, PIPES>::task_index",
     "crates/ginux-process/src/lib.rs:129:33: replace != with == in Credentials::set_gid",
     "crates/ginux-process/src/lib.rs:129:9: replace Credentials::set_gid -> Result<(), ProcessError> with Ok(())",
     "crates/ginux-process/src/lib.rs:1315:18: replace < with <= in PipeSpace<TASKS, FDS, PIPES>::retain",
@@ -1322,22 +1309,10 @@
     "crates/ginux-process/src/lib.rs:1452:12: delete ! in PipeSpace<TASKS, FDS, PIPES>::duplicate",
     "crates/ginux-process/src/lib.rs:1492:9: replace PipeSpace<TASKS, FDS, PIPES>::set_cloexec -> Result<(), ProcessError> with Ok(())",
     "crates/ginux-process/src/lib.rs:1496:25: replace == with != in PipeSpace<TASKS, FDS, PIPES>::set_cloexec",
-    "crates/ginux-process/src/lib.rs:1521:9: replace PipeSpace<TASKS, FDS, PIPES>::share -> Result<(), ProcessError> with Ok(())",
-    "crates/ginux-process/src/lib.rs:1525:37: replace == with != in PipeSpace<TASKS, FDS, PIPES>::share",
-    "crates/ginux-process/src/lib.rs:1533:9: replace PipeSpace<TASKS, FDS, PIPES>::unshare -> Result<(), ProcessError> with Ok(())",
-    "crates/ginux-process/src/lib.rs:1539:39: replace != with == in PipeSpace<TASKS, FDS, PIPES>::unshare",
-    "crates/ginux-process/src/lib.rs:1541:13: replace > with < in PipeSpace<TASKS, FDS, PIPES>::unshare",
-    "crates/ginux-process/src/lib.rs:1541:13: replace > with == in PipeSpace<TASKS, FDS, PIPES>::unshare",
-    "crates/ginux-process/src/lib.rs:1541:13: replace > with >= in PipeSpace<TASKS, FDS, PIPES>::unshare",
     "crates/ginux-process/src/lib.rs:1550:9: replace PipeSpace<TASKS, FDS, PIPES>::rename_task with ()",
     "crates/ginux-process/src/lib.rs:1552:28: replace == with != in PipeSpace<TASKS, FDS, PIPES>::rename_task",
-    "crates/ginux-process/src/lib.rs:1582:9: replace PipeSpace<TASKS, FDS, PIPES>::release_task with ()",
-    "crates/ginux-process/src/lib.rs:1586:24: replace == with != in PipeSpace<TASKS, FDS, PIPES>::release_task",
     "crates/ginux-process/src/lib.rs:1590:65: replace != with == in PipeSpace<TASKS, FDS, PIPES>::release_task",
-    "crates/ginux-process/src/lib.rs:1607:18: replace < with <= in PipeSpace<TASKS, FDS, PIPES>::pipe_ends",
-    "crates/ginux-process/src/lib.rs:1607:26: replace && with || in PipeSpace<TASKS, FDS, PIPES>::pipe_ends",
     "crates/ginux-process/src/lib.rs:1621:9: replace PipeSpace<TASKS, FDS, PIPES>::task_fds -> usize with 0",
-    "crates/ginux-process/src/lib.rs:1621:9: replace PipeSpace<TASKS, FDS, PIPES>::task_fds -> usize with 1",
     "crates/ginux-process/src/lib.rs:205:48: replace | with &",
     "crates/ginux-process/src/lib.rs:205:48: replace | with ^",
     "crates/ginux-process/src/lib.rs:205:62: replace | with &",
@@ -1554,9 +1529,6 @@
    "survivors": [
     "crates/ginux-vfs/src/lib.rs:122:33: replace > with == in Index<'a>::resolve",
     "crates/ginux-vfs/src/lib.rs:122:33: replace > with >= in Index<'a>::resolve",
-    "crates/ginux-vfs/src/lib.rs:144:34: replace > with >= in decode_record",
-    "crates/ginux-vfs/src/lib.rs:144:57: replace > with == in decode_record",
-    "crates/ginux-vfs/src/lib.rs:144:57: replace > with >= in decode_record",
     "crates/ginux-vfs/src/lib.rs:169:29: replace > with >= in encode_record",
     "crates/ginux-vfs/src/lib.rs:170:29: replace > with >= in encode_record",
     "crates/ginux-vfs/src/lib.rs:238:20: replace < with <= in resolve_components",
