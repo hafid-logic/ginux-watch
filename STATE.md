@@ -3,6 +3,14 @@
 > v9.1 (2026-11-24): كل حزمنا المعتمدة السبعة دُمجت في upstream؛ لا حزمة معلّقة للنشر.
 > القواعد الدائمة في AGENTS.md / POLICY.md / METHODOLOGY.md؛ التاريخ في الأرشيف append-only.
 
+## تحديث المرحلة 7 (2026-11-28) — triage v3 + الموجة ب + دمج الموجة أ الشامل
+- **triage v3 [MEASURED]:** unsynth 164→140 (-24 محررة). apply_override_inner r60→r76، parse_field r54→r58.机会 جديدة: oci remove_path(r3). harvest-scans يستبدل قائمة كل كرارة بالكامل عند مسح جديد (لا دمج قديم).
+- **الموجة أ مدموجة بالكامل [MEASURED]:** #373 oci human_size، #374 instance finish، #375 process EventPoll، #376 kv parse_controllers. main → e7885e4a. الحصيلة التراكمية 14 دمجة متتالية (#363–#376).
+- **الموجة ب:** devices-random-xorshift ✅ PROVEN+مدفوع؛ fs-policy-identity-token-fnv1a ✅ PROVEN+مدفوع (أضافه البوت/جلسة موازية — أول مساهمة في fs-policy!)؛ vfs-copy-overlay-size-boundary أُصلح ثلاث مرات (مسار خاطئ → حجم Reader غير مطابق → FILE_SIZE=8 مطابق لـ Reader([u8;8])) وبانتظار الإثبات النهائي.
+- **fs-policy/core محجوبان سابقًا لكن fs-policy فُتح عبر identity_token FNV-1a (دالة نقية).** core لا يزال محجوبًا (balanced_arguments_allowed مغطى بالاختبار الموجود @705–733).
+- **R1/R2/R3 سارية؛ لم يُفتح أي طلب upstream آليًا.**
+
+
 ## تحديث المرحلة 7 (2026-11-28) — triage v3 + الموجة ب + إصلاح حزم البوت
 - **triage v3:** تركيب multi-line delete-arm + fn-retval early-return. unsynth انخفض 164→140 (24 طفرة تحررت). المرشحون المؤهلون 51.
 - **harvest-scans fix:** latest-run-per-crate يستبدل الناجيات القديمة بالكامل؛ لا تراكم عبر المسوحات (يمنع survives=false الكاذب).

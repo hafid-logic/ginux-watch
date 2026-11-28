@@ -1,6 +1,6 @@
-From d869e1d3e513dc2ce4d25b9a488daef93dd66217 Mon Sep 17 00:00:00 2001
+From 02a9f2d6ea043e9c343c95051c73b4d5b46d9515 Mon Sep 17 00:00:00 2001
 From: ginux-watch-agent <actions@users.noreply.github.com>
-Date: Sat, 28 Nov 2026 09:18:41 +0000
+Date: Sat, 28 Nov 2026 09:20:51 +0000
 Subject: [PATCH] tests(vfs): pin copy_to_overlay exact FILE_SIZE acceptance
 
 ### What
@@ -21,14 +21,14 @@ Spec-Ref: overlay copy-on-write size invariant (VFS internal contract)
 
 Prepared with AI assistance; reviewed by me.
 ---
- crates/ginux-vfs/src/lib.rs | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ crates/ginux-vfs/src/lib.rs | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
 diff --git a/crates/ginux-vfs/src/lib.rs b/crates/ginux-vfs/src/lib.rs
-index 1f341a7a..33f38554 100644
+index 1f341a7a..da02b185 100644
 --- a/crates/ginux-vfs/src/lib.rs
 +++ b/crates/ginux-vfs/src/lib.rs
-@@ -1319,4 +1319,34 @@ mod tests {
+@@ -1319,4 +1319,32 @@ mod tests {
          // zero-length path rejected
          assert_eq!(Index::new(&buf).err(), Some(VfsError::InvalidIndex));
      }
@@ -43,21 +43,19 @@ index 1f341a7a..33f38554 100644
 +            mode: 0o644,
 +            uid: 0,
 +            gid: 0,
-+            size: 32,
++            size: 8,
 +            data_offset: 0,
 +            link: b"",
 +        };
 +        encode_record(entry, (&mut buf[HEADER_SIZE..]).try_into().unwrap()).unwrap();
-+        let mut vfs: VirtualFs<'_, Reader, 2, 32, 4> = VirtualFs::new(
-+            Index::new(&buf).unwrap(),
-+            Reader(*b"BASETOOLBASETOOLBASETOOLBASETOOL"),
-+        );
-+        // exact FILE_SIZE fit must copy successfully
++        let mut vfs: VirtualFs<'_, Reader, 2, 8, 4> =
++            VirtualFs::new(Index::new(&buf).unwrap(), Reader(*b"BASETOOL"));
++        // exact FILE_SIZE(8) fit must copy successfully
 +        let w = vfs.open(b"/exact", O_WRITE).unwrap();
 +        vfs.close(w).unwrap();
-+        // smaller base file (/base size=4 in standard fixture) must also work
++        // smaller base file (/base size=4) must also copy without rejection
 +        let std_bytes = index_bytes();
-+        let mut vfs2: VirtualFs<'_, Reader, 2, 32, 4> =
++        let mut vfs2: VirtualFs<'_, Reader, 2, 8, 4> =
 +            VirtualFs::new(Index::new(&std_bytes).unwrap(), Reader(*b"BASETOOL"));
 +        let w2 = vfs2.open(b"/base", O_WRITE).unwrap();
 +        vfs2.close(w2).unwrap();
