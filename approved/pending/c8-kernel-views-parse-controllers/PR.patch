@@ -1,6 +1,6 @@
-From 92026b252dfc693723aa5814c95782f1dc6e4dcb Mon Sep 17 00:00:00 2001
+From b85d7b3f57586d3386cb254a6d237d1a9943a3ae Mon Sep 17 00:00:00 2001
 From: ginux-watch-agent <actions@users.noreply.github.com>
-Date: Sat, 28 Nov 2026 08:18:47 +0000
+Date: Sat, 28 Nov 2026 08:21:30 +0000
 Subject: [PATCH] tests(kernel-views): pin cgroup controller parsing
  accumulation and whitespace
 

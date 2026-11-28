@@ -1,6 +1,6 @@
-From 773da6144821e2cffb10ae4bcfb7f53c83a527ad Mon Sep 17 00:00:00 2001
+From bd7b9b9055f948a70282fe8c0f27c87220d264ff Mon Sep 17 00:00:00 2001
 From: ginux-watch-agent <actions@users.noreply.github.com>
-Date: Sat, 28 Nov 2026 08:18:48 +0000
+Date: Sat, 28 Nov 2026 08:21:30 +0000
 Subject: [PATCH] tests(oci): pin human_size unit scaling and GiB cap
 
 ### What

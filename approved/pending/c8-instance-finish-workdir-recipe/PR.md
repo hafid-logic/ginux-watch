@@ -1,8 +1,8 @@
 ### What
-Pins `finish` bitmask defaults: explicit workdir preserved, absent workdir defaults to /work, partial contract recipe (missing default) rejected.
+Pins `finish` bitmask defaults: explicit workdir preserved, absent workdir defaults to /work, contract recipe missing default rejected.
 
 ### Why it matters
-Bit-shift errors in field masks silently ignore operator-supplied values or admit incomplete recipes. Existing tests never set workdir explicitly nor supply partial recipes.
+Bit-shift errors in field masks silently ignore operator-supplied values or admit incomplete recipes. Existing tests never set workdir explicitly nor omit contract default.
 
 ### Mutation evidence (fail-then-pass)
 | Mutant | Existing suite | New test |
