@@ -1,0 +1,19 @@
+{
+ "crate": "ginux-kernel-views",
+ "file": "crates/ginux-kernel-views/src/cgroup.rs",
+ "filter": "parse_controllers_accumulates",
+ "mutants": [
+  {
+   "name": "and-assign",
+   "old": "        controllers |= match token {",
+   "new": "        controllers &= match token {",
+   "line": 288
+  },
+  {
+   "name": "del-empty-arm",
+   "old": "            b\"\" => continue,\n",
+   "new": "",
+   "line": 292
+  }
+ ]
+}

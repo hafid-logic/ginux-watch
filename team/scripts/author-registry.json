@@ -22,5 +22,55 @@
     "line": 144
    }
   ]
+ },
+ {
+  "name": "process-event-poll-admission",
+  "crate": "ginux-process",
+  "file": "crates/ginux-process/src/lib.rs",
+  "fn": "event_poll_add_rejects_zero_invalid_and_duplicate",
+  "filter": "event_poll_add_rejects",
+  "title": "tests(process): pin EventPoll add admission for zero, invalid mask, and duplicates",
+  "test": "\n    #[test]\n    fn event_poll_add_rejects_zero_invalid_and_duplicate() {\n        let mut poll: EventPoll<4> = EventPoll::new();\n        // descriptor 0 rejected even with valid events\n        assert_eq!(poll.add(0, EVENT_READ), Err(ProcessError::InvalidEvent));\n        // zero events rejected even with valid descriptor\n        assert_eq!(poll.add(5, 0), Err(ProcessError::InvalidEvent));\n        // unsupported high bit rejected\n        assert_eq!(poll.add(5, EVENT_READ | 0x80), Err(ProcessError::InvalidEvent));\n        // valid single-bit and combined accepted\n        poll.add(5, EVENT_READ).unwrap();\n        poll.add(6, EVENT_READ | EVENT_WRITE).unwrap();\n        // duplicate active descriptor rejected\n        assert_eq!(poll.add(5, EVENT_WRITE), Err(ProcessError::InvalidEvent));\n        // removed slot can be re-added\n        poll.remove(5).unwrap();\n        poll.add(5, EVENT_WRITE).unwrap();\n    }\n",
+  "body": "### What\nPins `EventPoll::add` admission: descriptor 0, zero events, unsupported mask bits, and duplicate active descriptors are rejected; valid single/combined masks accepted; freed slots reusable.\n\n### Why it matters\nAdmission gates prevent invalid poll registrations that corrupt readiness reporting. Flipping `||` to `&&` admits zero-descriptor entries; XOR instead of AND-NOT misvalidates the event mask. Existing tests exercise only the happy path.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| first `||` -> `&&` | PASS (survives) | FAIL (killed) |\n| `& !(...)` -> `^ (...)` | PASS (survives) | FAIL (killed) |\n\nBaseline: PASS. Reproduce: `cargo test -p ginux-process --lib event_poll_add_rejects`.\n\nPrepared with AI assistance; reviewed by me.\n",
+  "mutants": [
+   {
+    "name": "or-and-desc",
+    "old": "        if descriptor == 0 || events == 0 || events & !(EVENT_READ | EVENT_WRITE) != 0 {",
+    "new": "        if descriptor == 0 && events == 0 || events & !(EVENT_READ | EVENT_WRITE) != 0 {",
+    "line": 1020
+   },
+   {
+    "name": "mask-xor",
+    "old": "        if descriptor == 0 || events == 0 || events & !(EVENT_READ | EVENT_WRITE) != 0 {",
+    "new": "        if descriptor == 0 || events == 0 || events ^ !(EVENT_READ | EVENT_WRITE) != 0 {",
+    "line": 1020
+   }
+  ],
+  "spec_ref": "poll(2) / epoll_ctl(2) registration semantics"
+ },
+ {
+  "name": "kernel-views-parse-controllers",
+  "crate": "ginux-kernel-views",
+  "file": "crates/ginux-kernel-views/src/cgroup.rs",
+  "fn": "parse_controllers_accumulates_and_skips_empty_tokens",
+  "filter": "parse_controllers_accumulates",
+  "title": "tests(kernel-views): pin cgroup controller parsing accumulation and whitespace",
+  "test": "\n    #[test]\n    fn parse_controllers_accumulates_and_skips_empty_tokens() {\n        // single controller\n        assert_eq!(parse_controllers(b\"+cpu\"), Ok(CPU));\n        // multiple controllers accumulate via OR\n        assert_eq!(parse_controllers(b\"+cpu +memory\"), Ok(CPU | MEMORY));\n        assert_eq!(parse_controllers(b\"+cpu +memory +pids\"), Ok(CPU | MEMORY | PIDS));\n        // trailing/double spaces produce empty tokens that must be skipped, not error\n        assert_eq!(parse_controllers(b\"+cpu \"), Ok(CPU));\n        assert_eq!(parse_controllers(b\"+cpu  +pids\"), Ok(CPU | PIDS));\n        // unknown token rejected\n        assert_eq!(parse_controllers(b\"+io\"), Err(ViewError::PermissionDenied));\n        // empty input yields zero controllers\n        assert_eq!(parse_controllers(b\"\"), Ok(0));\n    }\n",
+  "body": "### What\nPins `parse_controllers`: OR-accumulation of cpu/memory/pids flags, empty-token skipping for trailing/double spaces, unknown-token rejection, and empty-input zero result.\n\n### Why it matters\nController parsing gates cgroup subtree delegation; replacing `|=` with `&=` drops previously parsed controllers on multi-token input, and deleting the empty-token arm turns benign whitespace into a permission error. No existing test exercises this function.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| `|=` -> `&=` | PASS (survives) | FAIL (killed) |\n| delete `b\"\" => continue` arm | PASS (survives) | FAIL (killed) |\n\nBaseline: PASS. Reproduce: `cargo test -p ginux-kernel-views --lib parse_controllers_accumulates`.\n\nPrepared with AI assistance; reviewed by me.\n",
+  "mutants": [
+   {
+    "name": "and-assign",
+    "old": "        controllers |= match token {",
+    "new": "        controllers &= match token {",
+    "line": 288
+   },
+   {
+    "name": "del-empty-arm",
+    "old": "            b\"\" => continue,\n",
+    "new": "",
+    "line": 292
+   }
+  ],
+  "spec_ref": "cgroup v2 subtree_control documentation"
  }
 ]

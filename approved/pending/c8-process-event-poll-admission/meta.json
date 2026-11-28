@@ -1,0 +1,19 @@
+{
+ "crate": "ginux-process",
+ "file": "crates/ginux-process/src/lib.rs",
+ "filter": "event_poll_add_rejects",
+ "mutants": [
+  {
+   "name": "or-and-desc",
+   "old": "        if descriptor == 0 || events == 0 || events & !(EVENT_READ | EVENT_WRITE) != 0 {",
+   "new": "        if descriptor == 0 && events == 0 || events & !(EVENT_READ | EVENT_WRITE) != 0 {",
+   "line": 1020
+  },
+  {
+   "name": "mask-xor",
+   "old": "        if descriptor == 0 || events == 0 || events & !(EVENT_READ | EVENT_WRITE) != 0 {",
+   "new": "        if descriptor == 0 || events == 0 || events ^ !(EVENT_READ | EVENT_WRITE) != 0 {",
+   "line": 1020
+  }
+ ]
+}

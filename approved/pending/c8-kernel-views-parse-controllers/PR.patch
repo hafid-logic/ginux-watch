@@ -1,0 +1,58 @@
+From 87384b7e658d48c251df878a3940ce808600db88 Mon Sep 17 00:00:00 2001
+From: ginux-watch-agent <actions@users.noreply.github.com>
+Date: Sat, 28 Nov 2026 07:06:43 +0000
+Subject: [PATCH] tests(kernel-views): pin cgroup controller parsing
+ accumulation and whitespace
+
+### What
+Pins `parse_controllers`: OR-accumulation of cpu/memory/pids flags, empty-token skipping for trailing/double spaces, unknown-token rejection, and empty-input zero result.
+
+### Why it matters
+Controller parsing gates cgroup subtree delegation; replacing `|=` with `&=` drops previously parsed controllers on multi-token input, and deleting the empty-token arm turns benign whitespace into a permission error. No existing test exercises this function.
+
+### Mutation evidence (fail-then-pass)
+| Mutant | Existing suite | New test |
+|---|---|---|
+| `|=` -> `&=` | PASS (survives) | FAIL (killed) |
+| delete `b"" => continue` arm | PASS (survives) | FAIL (killed) |
+
+Baseline: PASS. Reproduce: `cargo test -p ginux-kernel-views --lib parse_controllers_accumulates`.
+
+Spec-Ref: cgroup v2 subtree_control documentation
+
+Prepared with AI assistance; reviewed by me.
+---
+ crates/ginux-kernel-views/src/cgroup.rs | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
+
+diff --git a/crates/ginux-kernel-views/src/cgroup.rs b/crates/ginux-kernel-views/src/cgroup.rs
+index 461e7b7c..dcb29c11 100644
+--- a/crates/ginux-kernel-views/src/cgroup.rs
++++ b/crates/ginux-kernel-views/src/cgroup.rs
+@@ -466,4 +466,23 @@ mod tests {
+         );
+         cg.remove(b"/c.slice", 0).unwrap();
+     }
++
++    #[test]
++    fn parse_controllers_accumulates_and_skips_empty_tokens() {
++        // single controller
++        assert_eq!(parse_controllers(b"+cpu"), Ok(CPU));
++        // multiple controllers accumulate via OR
++        assert_eq!(parse_controllers(b"+cpu +memory"), Ok(CPU | MEMORY));
++        assert_eq!(
++            parse_controllers(b"+cpu +memory +pids"),
++            Ok(CPU | MEMORY | PIDS)
++        );
++        // trailing/double spaces produce empty tokens that must be skipped, not error
++        assert_eq!(parse_controllers(b"+cpu "), Ok(CPU));
++        assert_eq!(parse_controllers(b"+cpu  +pids"), Ok(CPU | PIDS));
++        // unknown token rejected
++        assert_eq!(parse_controllers(b"+io"), Err(ViewError::PermissionDenied));
++        // empty input yields zero controllers
++        assert_eq!(parse_controllers(b""), Ok(0));
++    }
+ }
+-- 
+2.47.3
+

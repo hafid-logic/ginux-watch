@@ -1,0 +1,61 @@
+From 195731b95d9c249e914eef6c81ed16c8c7249c87 Mon Sep 17 00:00:00 2001
+From: ginux-watch-agent <actions@users.noreply.github.com>
+Date: Sat, 28 Nov 2026 07:06:43 +0000
+Subject: [PATCH] tests(process): pin EventPoll add admission for zero, invalid
+ mask, and duplicates
+
+### What
+Pins `EventPoll::add` admission: descriptor 0, zero events, unsupported mask bits, and duplicate active descriptors are rejected; valid single/combined masks accepted; freed slots reusable.
+
+### Why it matters
+Admission gates prevent invalid poll registrations that corrupt readiness reporting. Flipping `||` to `&&` admits zero-descriptor entries; XOR instead of AND-NOT misvalidates the event mask. Existing tests exercise only the happy path.
+
+### Mutation evidence (fail-then-pass)
+| Mutant | Existing suite | New test |
+|---|---|---|
+| first `||` -> `&&` | PASS (survives) | FAIL (killed) |
+| `& !(...)` -> `^ (...)` | PASS (survives) | FAIL (killed) |
+
+Baseline: PASS. Reproduce: `cargo test -p ginux-process --lib event_poll_add_rejects`.
+
+Spec-Ref: poll(2) / epoll_ctl(2) registration semantics
+
+Prepared with AI assistance; reviewed by me.
+---
+ crates/ginux-process/src/lib.rs | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
+
+diff --git a/crates/ginux-process/src/lib.rs b/crates/ginux-process/src/lib.rs
+index 9d4fb899..3cf50f78 100644
+--- a/crates/ginux-process/src/lib.rs
++++ b/crates/ginux-process/src/lib.rs
+@@ -2232,4 +2232,26 @@ mod tests {
+         pipes.unshare(99).unwrap();
+         assert_eq!(pipes.task_fds(99), 0);
+     }
++
++    #[test]
++    fn event_poll_add_rejects_zero_invalid_and_duplicate() {
++        let mut poll: EventPoll<4> = EventPoll::new();
++        // descriptor 0 rejected even with valid events
++        assert_eq!(poll.add(0, EVENT_READ), Err(ProcessError::InvalidEvent));
++        // zero events rejected even with valid descriptor
++        assert_eq!(poll.add(5, 0), Err(ProcessError::InvalidEvent));
++        // unsupported high bit rejected
++        assert_eq!(
++            poll.add(5, EVENT_READ | 0x80),
++            Err(ProcessError::InvalidEvent)
++        );
++        // valid single-bit and combined accepted
++        poll.add(5, EVENT_READ).unwrap();
++        poll.add(6, EVENT_READ | EVENT_WRITE).unwrap();
++        // duplicate active descriptor rejected
++        assert_eq!(poll.add(5, EVENT_WRITE), Err(ProcessError::InvalidEvent));
++        // removed slot can be re-added
++        poll.remove(5).unwrap();
++        poll.add(5, EVENT_WRITE).unwrap();
++    }
+ }
+-- 
+2.47.3
+
