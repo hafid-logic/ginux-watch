@@ -1,4 +1,10 @@
 {
+ "c8-devices-random-xorshift": {
+  "proven": false,
+  "baseline": false,
+  "why": "baseline-fail",
+  "baseline_err": "\u001b[1m\u001b[92m    Updating\u001b[0m crates.io index\n\u001b[1m\u001b[92m   Compiling\u001b[0m ginux-devices v0.1.0 (/tmp/prover-upstream/crates/ginux-devices)\n\u001b[1m\u001b[92m    Finished\u001b[0m `test` profile [unoptimized + debuginfo] target(s) in 0.77s\n\u001b[1m\u001b[92m     Running\u001b[0m unittests src/lib.rs (target/debug/build/ginux-devices/12d59e61c4180762/out/ginux_devices-12d59e61c4180762)\n\u001b[1m\u001b[91merror\u001b[0m: test failed, to rerun pass `-p ginux-devices --lib`"
+ },
  "c8-instance-finish-workdir-recipe": {
   "proven": true,
   "baseline": true,
@@ -39,26 +45,6 @@
    }
   ]
  },
- "c8-oci-human-size-scaling": {
-  "proven": true,
-  "baseline": true,
-  "mutants": [
-   {
-    "name": "loop-lt",
-    "anchor_ok": true,
-    "anchor_count": 1,
-    "survives": true,
-    "killed": true
-   },
-   {
-    "name": "unit-mul",
-    "anchor_ok": true,
-    "anchor_count": 1,
-    "survives": true,
-    "killed": true
-   }
-  ]
- },
  "c8-process-event-poll-admission": {
   "proven": true,
   "baseline": true,
@@ -78,5 +64,11 @@
     "killed": true
    }
   ]
+ },
+ "c8-vfs-copy-overlay-size-boundary": {
+  "proven": false,
+  "baseline": false,
+  "why": "baseline-fail",
+  "baseline_err": "\u001b[1m\u001b[92m   Compiling\u001b[0m ginux-vfs v0.1.0 (/tmp/prover-upstream/crates/ginux-vfs)\n\u001b[1m\u001b[91merror[E0425]\u001b[0m\u001b[1m: cannot find value `FILE_SIZE` in this scope\u001b[0m\n    \u001b[1m\u001b[94m--> \u001b[0mcrates/ginux-vfs/src/lib.rs:1332:37\n     \u001b[1m\u001b[94m|\u001b[0m\n\u001b[1m\u001b[94m1332\u001b[0m \u001b[1m\u001b[94m|\u001b[0m         assert!(vfs.write(w, &[0u8; FILE_SIZE]).is_ok());\n     \u001b[1m\u001b[94m|\u001b[0m                                     \u001b[1m\u001b[91m^^^^^^^^^\u001b[0m \u001b[1m\u001b[91mnot found in this scope\u001b[0m\n\n\u001b[1mFor more information about this error, try `rustc --explain E0425`.\u001b[0m\n\u001b[1m\u001b[91merror\u001b[0m: could not compile `ginux-vfs` (lib test) due to 1 previous error"
  }
 }
