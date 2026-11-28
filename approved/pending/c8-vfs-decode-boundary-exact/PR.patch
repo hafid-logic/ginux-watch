@@ -1,6 +1,6 @@
-From c7ce5e351c8c9142b6ff20bf1959bb46aef6d370 Mon Sep 17 00:00:00 2001
+From 91553e03a0c6285ce432109aa1b16ad05deb324c Mon Sep 17 00:00:00 2001
 From: ginux-watch-agent <actions@users.noreply.github.com>
-Date: Sat, 28 Nov 2026 07:00:51 +0000
+Date: Sat, 28 Nov 2026 07:03:35 +0000
 Subject: [PATCH] tests(vfs): pin decode_record exact path/link bounds and
  overflow rejection
 
@@ -67,5 +67,5 @@ index 3f5ecce5..1f341a7a 100644
 +    }
  }
 -- 
-2.47.3
+2.56.1
 
