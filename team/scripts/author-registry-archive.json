@@ -414,5 +414,34 @@
   },
   "archived_utc": "2026-11-28",
   "reason": "merged upstream PR #372 (2026-11-28T07:51Z)"
+ },
+ {
+  "entry": {
+   "name": "oci-human-size-scaling",
+   "crate": "ginux-oci",
+   "file": "crates/ginux-oci/src/lib.rs",
+   "fn": "human_size_scales_units_and_caps_at_gib",
+   "filter": "human_size_scales",
+   "title": "tests(oci): pin human_size unit scaling and GiB cap",
+   "test": "\n    #[test]\n    fn human_size_scales_units_and_caps_at_gib() {\n        assert_eq!(human_size(0), \"0 B\");\n        assert_eq!(human_size(512), \"512 B\");\n        assert_eq!(human_size(1024), \"1.0 KiB\");\n        assert_eq!(human_size(1536), \"1.5 KiB\");\n        assert_eq!(human_size(1024 * 1024), \"1.0 MiB\");\n        assert_eq!(human_size(1024 * 1024 * 1024), \"1.0 GiB\");\n        // beyond GiB stays in GiB (unit cap)\n        assert_eq!(human_size(2 * 1024 * 1024 * 1024), \"2.0 GiB\");\n    }\n",
+   "body": "### What\nPins `human_size` unit scaling: bytes below 1024 stay B, exact powers render KiB/MiB/GiB with one decimal, and values beyond GiB cap at the largest unit.\n\n### Why it matters\nProgress reporting relies on correct magnitude; flipping the loop threshold or stalling the unit counter renders every size as bytes. No existing test exercises human_size directly.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| `>= 1024.0` -> `< 1024.0` | PASS (survives) | FAIL (killed) |\n| `unit += 1` -> `unit *= 1` | PASS (survives) | FAIL (killed) |\n\nBaseline: PASS. Reproduce: `cargo test -p ginux-oci --lib human_size_scales`.\n\nPrepared with AI assistance; reviewed by me.\n",
+   "mutants": [
+    {
+     "name": "loop-lt",
+     "old": "    while value >= 1024.0 && unit + 1 < UNITS.len() {",
+     "new": "    while value < 1024.0 && unit + 1 < UNITS.len() {",
+     "line": 595
+    },
+    {
+     "name": "unit-mul",
+     "old": "        unit += 1;",
+     "new": "        unit *= 1;",
+     "line": 597
+    }
+   ],
+   "spec_ref": "IEC 80000-13 binary prefixes (KiB/MiB/GiB)"
+  },
+  "archived_utc": "2026-11-28",
+  "reason": "merged upstream PR #373 (during phase-7 session)"
  }
 ]

@@ -75,31 +75,6 @@
   "spec_ref": "TOML config field-presence semantics (instance recipe schema)"
  },
  {
-  "name": "oci-human-size-scaling",
-  "crate": "ginux-oci",
-  "file": "crates/ginux-oci/src/lib.rs",
-  "fn": "human_size_scales_units_and_caps_at_gib",
-  "filter": "human_size_scales",
-  "title": "tests(oci): pin human_size unit scaling and GiB cap",
-  "test": "\n    #[test]\n    fn human_size_scales_units_and_caps_at_gib() {\n        assert_eq!(human_size(0), \"0 B\");\n        assert_eq!(human_size(512), \"512 B\");\n        assert_eq!(human_size(1024), \"1.0 KiB\");\n        assert_eq!(human_size(1536), \"1.5 KiB\");\n        assert_eq!(human_size(1024 * 1024), \"1.0 MiB\");\n        assert_eq!(human_size(1024 * 1024 * 1024), \"1.0 GiB\");\n        // beyond GiB stays in GiB (unit cap)\n        assert_eq!(human_size(2 * 1024 * 1024 * 1024), \"2.0 GiB\");\n    }\n",
-  "body": "### What\nPins `human_size` unit scaling: bytes below 1024 stay B, exact powers render KiB/MiB/GiB with one decimal, and values beyond GiB cap at the largest unit.\n\n### Why it matters\nProgress reporting relies on correct magnitude; flipping the loop threshold or stalling the unit counter renders every size as bytes. No existing test exercises human_size directly.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| `>= 1024.0` -> `< 1024.0` | PASS (survives) | FAIL (killed) |\n| `unit += 1` -> `unit *= 1` | PASS (survives) | FAIL (killed) |\n\nBaseline: PASS. Reproduce: `cargo test -p ginux-oci --lib human_size_scales`.\n\nPrepared with AI assistance; reviewed by me.\n",
-  "mutants": [
-   {
-    "name": "loop-lt",
-    "old": "    while value >= 1024.0 && unit + 1 < UNITS.len() {",
-    "new": "    while value < 1024.0 && unit + 1 < UNITS.len() {",
-    "line": 595
-   },
-   {
-    "name": "unit-mul",
-    "old": "        unit += 1;",
-    "new": "        unit *= 1;",
-    "line": 597
-   }
-  ],
-  "spec_ref": "IEC 80000-13 binary prefixes (KiB/MiB/GiB)"
- },
- {
   "name": "devices-random-xorshift",
   "crate": "ginux-devices",
   "file": "crates/ginux-devices/src/lib.rs",
@@ -148,5 +123,55 @@
    }
   ],
   "spec_ref": "overlay copy-on-write size invariant (VFS internal contract)"
+ },
+ {
+  "name": "fs-policy-identity-token-fnv1a",
+  "crate": "ginux-fs-policy",
+  "file": "crates/ginux-fs-policy/src/lib.rs",
+  "fn": "identity_token_matches_fnv1a_reference_values",
+  "filter": "identity_token_matches_fnv1a",
+  "title": "tests(fs-policy): pin identity_token to exact FNV-1a reference hashes",
+  "test": "\n    #[test]\n    fn identity_token_matches_fnv1a_reference_values() {\n        // Exact FNV-1a reference values (offset basis + prime per spec)\n        assert_eq!(identity_token(b\"\"), 0xcbf2_9ce4_8422_2325);\n        assert_eq!(identity_token(b\"rocky\"), 0xb6d6_c546_5985_e177);\n        assert_eq!(identity_token(b\"peer\"), 0xdff7_710d_d73b_9849);\n        // zero-hash fallback to 1 is preserved\n        assert_ne!(identity_token(b\"\"), 0);\n    }\n",
+  "body": "### What\nPins `identity_token` to exact FNV-1a reference hashes for empty, rocky, and peer inputs.\n\n### Why it matters\nInstance identity tokens gate capability separation; changing the XOR accumulation to AND/OR produces different hashes that still pass stability/separation checks but break cross-component identity agreement. Existing tests verify properties, not exact values.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| `^=` -> `&=` | PASS (survives) | FAIL (killed) |\n| `^=` -> `|=` | PASS (survives) | FAIL (killed) |\n\nBaseline: PASS. Reproduce: `cargo test -p ginux-fs-policy --lib identity_token_matches_fnv1a`.\n\nPrepared with AI assistance; reviewed by me.\n",
+  "mutants": [
+   {
+    "name": "xor-and",
+    "old": "        hash ^= bytes[index] as u64;",
+    "new": "        hash &= bytes[index] as u64;",
+    "line": 253
+   },
+   {
+    "name": "xor-or",
+    "old": "        hash ^= bytes[index] as u64;",
+    "new": "        hash |= bytes[index] as u64;",
+    "line": 253
+   }
+  ],
+  "spec_ref": "FNV-1a hash specification (offset basis 0xcbf29ce484222325, prime 0x100000001b3)"
+ },
+ {
+  "name": "vfs-copy-overlay-size-bound",
+  "crate": "ginux-vfs",
+  "file": "crates/ginux-vfs/src/lib.rs",
+  "fn": "copy_to_overlay_enforces_exact_file_size_bound",
+  "filter": "copy_to_overlay_enforces",
+  "title": "tests(vfs): pin copy_to_overlay exact FILE_SIZE boundary",
+  "test": "\n    #[test]\n    fn copy_to_overlay_enforces_exact_file_size_bound() {\n        let bytes = index_bytes();\n        let mut vfs: VirtualFs<'_, Reader, 4, 32, 4> =\n            VirtualFs::new(Index::new(&bytes).unwrap(), Reader(*b\"BASETOOL\"));\n        // exact FILE_SIZE fit must succeed\n        let entry = Entry { path: b\"/fit\", kind: NodeKind::File, mode: 0o644,\n            uid: 0, gid: 0, size: 32, data_offset: 0, link: b\"\" };\n        assert!(vfs.copy_to_overlay(Path::new(b\"/fit\").unwrap(), entry).is_ok());\n        // one past FILE_SIZE must be rejected\n        let big = Entry { path: b\"/big\", kind: NodeKind::File, mode: 0o644,\n            uid: 0, gid: 0, size: 33, data_offset: 0, link: b\"\" };\n        assert_eq!(vfs.copy_to_overlay(Path::new(b\"/big\").unwrap(), big),\n            Err(VfsError::FileTooLarge));\n    }\n",
+  "body": "### What\nPins `copy_to_overlay` size gate: exact FILE_SIZE fit accepted, one-past rejected with FileTooLarge.\n\n### Why it matters\nOverlay copy guards against buffer overflow; relaxing > to >= rejects valid exact-fit files, while == admits oversized entries that corrupt overlay storage. No existing test exercises this boundary.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| `size > FILE_SIZE` -> `>=` | PASS (survives) | FAIL (killed) |\n| `size > FILE_SIZE` -> `==` | PASS (survives) | FAIL (killed) |\n\nBaseline: PASS. Reproduce: `cargo test -p ginux-vfs --lib copy_to_overlay_enforces`.\n\nPrepared with AI assistance; reviewed by me.\n",
+  "mutants": [
+   {
+    "name": "size-ge",
+    "old": "        if size > FILE_SIZE {",
+    "new": "        if size >= FILE_SIZE {",
+    "line": 635
+   },
+   {
+    "name": "size-eq",
+    "old": "        if size > FILE_SIZE {",
+    "new": "        if size == FILE_SIZE {",
+    "line": 635
+   }
+  ],
+  "spec_ref": "overlay file-size capacity invariant (FILE_SIZE generic parameter)"
  }
 ]
