@@ -1,8 +1,8 @@
 ### What
-Pins `copy_to_overlay` size gate: exact FILE_SIZE fit copies and reads back successfully.
+Pins `copy_to_overlay` size gate: exact FILE_SIZE fit copies successfully, and smaller base files also copy without rejection.
 
 ### Why it matters
-Relaxing `>` to `>=` rejects valid exact-fit images; relaxing to `==` admits oversized data that slices out of bounds. Existing tests never exercise the exact-boundary overlay copy path.
+Relaxing `>` to `>=` rejects valid exact-fit images; relaxing to `==` admits only exact sizes and rejects all smaller files. Existing tests never exercise the overlay copy size boundary.
 
 ### Mutation evidence (fail-then-pass)
 | Mutant | Existing suite | New test |

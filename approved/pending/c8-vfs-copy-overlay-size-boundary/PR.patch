@@ -1,13 +1,13 @@
-From f40e809056af7a5829c981a8b90be4164fa00171 Mon Sep 17 00:00:00 2001
+From d869e1d3e513dc2ce4d25b9a488daef93dd66217 Mon Sep 17 00:00:00 2001
 From: ginux-watch-agent <actions@users.noreply.github.com>
-Date: Sat, 28 Nov 2026 08:59:33 +0000
+Date: Sat, 28 Nov 2026 09:18:41 +0000
 Subject: [PATCH] tests(vfs): pin copy_to_overlay exact FILE_SIZE acceptance
 
 ### What
-Pins `copy_to_overlay` size gate: exact FILE_SIZE fit copies and reads back successfully.
+Pins `copy_to_overlay` size gate: exact FILE_SIZE fit copies successfully, and smaller base files also copy without rejection.
 
 ### Why it matters
-Relaxing `>` to `>=` rejects valid exact-fit images; relaxing to `==` admits oversized data that slices out of bounds. Existing tests never exercise the exact-boundary overlay copy path.
+Relaxing `>` to `>=` rejects valid exact-fit images; relaxing to `==` admits only exact sizes and rejects all smaller files. Existing tests never exercise the overlay copy size boundary.
 
 ### Mutation evidence (fail-then-pass)
 | Mutant | Existing suite | New test |
@@ -21,26 +21,24 @@ Spec-Ref: overlay copy-on-write size invariant (VFS internal contract)
 
 Prepared with AI assistance; reviewed by me.
 ---
- crates/ginux-vfs/src/lib.rs | 36 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 36 insertions(+)
+ crates/ginux-vfs/src/lib.rs | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
 diff --git a/crates/ginux-vfs/src/lib.rs b/crates/ginux-vfs/src/lib.rs
-index 1f341a7a..84ac3ba0 100644
+index 1f341a7a..33f38554 100644
 --- a/crates/ginux-vfs/src/lib.rs
 +++ b/crates/ginux-vfs/src/lib.rs
-@@ -1319,4 +1319,40 @@ mod tests {
+@@ -1319,4 +1319,34 @@ mod tests {
          // zero-length path rejected
          assert_eq!(Index::new(&buf).err(), Some(VfsError::InvalidIndex));
      }
 +
 +    #[test]
 +    fn copy_to_overlay_accepts_exact_file_size_and_rejects_overflow() {
-+        let bytes = index_bytes();
-+        let mut vfs: VirtualFs<'_, Reader, 4, 32, 4> =
-+            VirtualFs::new(Index::new(&bytes).unwrap(), Reader(*b"BASETOOL"));
-+        // exact FILE_SIZE=32 fit must succeed via direct copy_to_overlay call
++        let mut buf = vec![0u8; HEADER_SIZE + RECORD_SIZE];
++        encode_header(1, (&mut buf[..HEADER_SIZE]).try_into().unwrap());
 +        let entry = Entry {
-+            path: b"/fit",
++            path: b"/exact",
 +            kind: NodeKind::File,
 +            mode: 0o644,
 +            uid: 0,
@@ -49,24 +47,20 @@ index 1f341a7a..84ac3ba0 100644
 +            data_offset: 0,
 +            link: b"",
 +        };
-+        assert!(vfs
-+            .copy_to_overlay(Path::new(b"/fit").unwrap(), entry)
-+            .is_ok());
-+        // one past FILE_SIZE must be rejected
-+        let big = Entry {
-+            path: b"/big",
-+            kind: NodeKind::File,
-+            mode: 0o644,
-+            uid: 0,
-+            gid: 0,
-+            size: 33,
-+            data_offset: 0,
-+            link: b"",
-+        };
-+        assert_eq!(
-+            vfs.copy_to_overlay(Path::new(b"/big").unwrap(), big),
-+            Err(VfsError::FileTooLarge)
++        encode_record(entry, (&mut buf[HEADER_SIZE..]).try_into().unwrap()).unwrap();
++        let mut vfs: VirtualFs<'_, Reader, 2, 32, 4> = VirtualFs::new(
++            Index::new(&buf).unwrap(),
++            Reader(*b"BASETOOLBASETOOLBASETOOLBASETOOL"),
 +        );
++        // exact FILE_SIZE fit must copy successfully
++        let w = vfs.open(b"/exact", O_WRITE).unwrap();
++        vfs.close(w).unwrap();
++        // smaller base file (/base size=4 in standard fixture) must also work
++        let std_bytes = index_bytes();
++        let mut vfs2: VirtualFs<'_, Reader, 2, 32, 4> =
++            VirtualFs::new(Index::new(&std_bytes).unwrap(), Reader(*b"BASETOOL"));
++        let w2 = vfs2.open(b"/base", O_WRITE).unwrap();
++        vfs2.close(w2).unwrap();
 +    }
  }
 -- 

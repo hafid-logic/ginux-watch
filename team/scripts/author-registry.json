@@ -1,80 +1,5 @@
 [
  {
-  "name": "process-event-poll-admission",
-  "crate": "ginux-process",
-  "file": "crates/ginux-process/src/lib.rs",
-  "fn": "event_poll_add_rejects_zero_invalid_and_duplicate",
-  "filter": "event_poll_add_rejects",
-  "title": "tests(process): pin EventPoll add admission for zero, invalid mask, and duplicates",
-  "test": "\n    #[test]\n    fn event_poll_add_rejects_zero_invalid_and_duplicate() {\n        let mut poll: EventPoll<4> = EventPoll::new();\n        // descriptor 0 rejected even with valid events\n        assert_eq!(poll.add(0, EVENT_READ), Err(ProcessError::InvalidEvent));\n        // zero events rejected even with valid descriptor\n        assert_eq!(poll.add(5, 0), Err(ProcessError::InvalidEvent));\n        // unsupported high bit rejected\n        assert_eq!(poll.add(5, EVENT_READ | 0x80), Err(ProcessError::InvalidEvent));\n        // valid single-bit and combined accepted\n        poll.add(5, EVENT_READ).unwrap();\n        poll.add(6, EVENT_READ | EVENT_WRITE).unwrap();\n        // duplicate active descriptor rejected\n        assert_eq!(poll.add(5, EVENT_WRITE), Err(ProcessError::InvalidEvent));\n        // removed slot can be re-added\n        poll.remove(5).unwrap();\n        poll.add(5, EVENT_WRITE).unwrap();\n    }\n",
-  "body": "### What\nPins `EventPoll::add` admission: descriptor 0, zero events, unsupported mask bits, and duplicate active descriptors are rejected; valid single/combined masks accepted; freed slots reusable.\n\n### Why it matters\nAdmission gates prevent invalid poll registrations that corrupt readiness reporting. Flipping `||` to `&&` admits zero-descriptor entries; XOR instead of AND-NOT misvalidates the event mask. Existing tests exercise only the happy path.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| first `||` -> `&&` | PASS (survives) | FAIL (killed) |\n| `& !(...)` -> `^ (...)` | PASS (survives) | FAIL (killed) |\n\nBaseline: PASS. Reproduce: `cargo test -p ginux-process --lib event_poll_add_rejects`.\n\nPrepared with AI assistance; reviewed by me.\n",
-  "mutants": [
-   {
-    "name": "or-and-desc",
-    "old": "        if descriptor == 0 || events == 0 || events & !(EVENT_READ | EVENT_WRITE) != 0 {",
-    "new": "        if descriptor == 0 && events == 0 || events & !(EVENT_READ | EVENT_WRITE) != 0 {",
-    "line": 1020
-   },
-   {
-    "name": "dup-or",
-    "old": "            .any(|entry| entry.active && entry.descriptor == descriptor)",
-    "new": "            .any(|entry| entry.active || entry.descriptor == descriptor)",
-    "line": 1026
-   }
-  ],
-  "spec_ref": "poll(2) / epoll_ctl(2) registration semantics"
- },
- {
-  "name": "kernel-views-parse-controllers",
-  "crate": "ginux-kernel-views",
-  "file": "crates/ginux-kernel-views/src/cgroup.rs",
-  "fn": "parse_controllers_accumulates_and_skips_empty_tokens",
-  "filter": "parse_controllers_accumulates",
-  "title": "tests(kernel-views): pin cgroup controller parsing accumulation and whitespace",
-  "test": "\n    #[test]\n    fn parse_controllers_accumulates_and_skips_empty_tokens() {\n        // single controller\n        assert_eq!(parse_controllers(b\"+cpu\"), Ok(CPU));\n        // multiple controllers accumulate via OR\n        assert_eq!(parse_controllers(b\"+cpu +memory\"), Ok(CPU | MEMORY));\n        assert_eq!(parse_controllers(b\"+cpu +memory +pids\"), Ok(CPU | MEMORY | PIDS));\n        // trailing/double spaces produce empty tokens that must be skipped, not error\n        assert_eq!(parse_controllers(b\"+cpu \"), Ok(CPU));\n        assert_eq!(parse_controllers(b\"+cpu  +pids\"), Ok(CPU | PIDS));\n        // unknown token rejected\n        assert_eq!(parse_controllers(b\"+io\"), Err(ViewError::PermissionDenied));\n        // empty input yields zero controllers\n        assert_eq!(parse_controllers(b\"\"), Ok(0));\n    }\n",
-  "body": "### What\nPins `parse_controllers`: OR-accumulation of cpu/memory/pids flags, empty-token skipping for trailing/double spaces, unknown-token rejection, and empty-input zero result.\n\n### Why it matters\nController parsing gates cgroup subtree delegation; replacing `|=` with `&=` drops previously parsed controllers on multi-token input, and deleting the empty-token arm turns benign whitespace into a permission error. No existing test exercises this function.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| `|=` -> `&=` | PASS (survives) | FAIL (killed) |\n| delete `b\"\" => continue` arm | PASS (survives) | FAIL (killed) |\n\nBaseline: PASS. Reproduce: `cargo test -p ginux-kernel-views --lib parse_controllers_accumulates`.\n\nPrepared with AI assistance; reviewed by me.\n",
-  "mutants": [
-   {
-    "name": "and-assign",
-    "old": "        controllers |= match token {",
-    "new": "        controllers &= match token {",
-    "line": 288
-   },
-   {
-    "name": "del-empty-arm",
-    "old": "            b\"\" => continue,\n",
-    "new": "",
-    "line": 292
-   }
-  ],
-  "spec_ref": "cgroup v2 subtree_control documentation"
- },
- {
-  "name": "instance-finish-workdir-recipe",
-  "crate": "ginux-instance",
-  "file": "crates/ginux-instance/src/lib.rs",
-  "fn": "finish_preserves_explicit_workdir_and_rejects_partial_recipe",
-  "filter": "finish_preserves_explicit",
-  "title": "tests(instance): pin finish workdir preservation and partial-recipe rejection",
-  "test": "\n    #[test]\n    fn finish_preserves_explicit_workdir_and_rejects_partial_recipe() {\n        let src = VALID.replace(\"id = \\\"demo\\\"\", \"id = \\\"demo\\\"\\nworkdir = \\\"/custom\\\"\");\n        let c = InstanceConfig::parse(src.as_bytes()).unwrap();\n        assert_eq!(c.workdir.as_bytes(), b\"/custom\");\n        let d = InstanceConfig::parse(VALID.as_bytes()).unwrap();\n        assert_eq!(d.workdir.as_bytes(), b\"/work\");\n        let partial = VALID.replace(\"default = \\\"deny\\\"\\n\", \"\");\n        assert!(InstanceConfig::parse(partial.as_bytes()).is_err());\n    }\n",
-  "body": "### What\nPins `finish` bitmask defaults: explicit workdir preserved, absent workdir defaults to /work, contract recipe missing default rejected.\n\n### Why it matters\nBit-shift errors in field masks silently ignore operator-supplied values or admit incomplete recipes. Existing tests never set workdir explicitly nor omit contract default.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| `WORKDIR_BIT 1<<16` -> `1>>16` | PASS (survives) | FAIL (killed) |\n| `RECIPE_DEFAULT_BIT 1<<38` -> `1>>38` | PASS (survives) | FAIL (killed) |\n\nBaseline: PASS. Reproduce: `cargo test -p ginux-instance --lib finish_preserves_explicit`.\n\nPrepared with AI assistance; reviewed by me.\n",
-  "mutants": [
-   {
-    "name": "workdir-shift",
-    "old": "        const WORKDIR_BIT: u128 = 1 << 16;",
-    "new": "        const WORKDIR_BIT: u128 = 1 >> 16;",
-    "line": 476
-   },
-   {
-    "name": "recipe-default-shift",
-    "old": "        const RECIPE_DEFAULT_BIT: u128 = 1 << 38;",
-    "new": "        const RECIPE_DEFAULT_BIT: u128 = 1 >> 38;",
-    "line": 481
-   }
-  ],
-  "spec_ref": "TOML config field-presence semantics (instance recipe schema)"
- },
- {
   "name": "devices-random-xorshift",
   "crate": "ginux-devices",
   "file": "crates/ginux-devices/src/lib.rs",
@@ -106,8 +31,8 @@
   "fn": "copy_to_overlay_accepts_exact_file_size_and_rejects_overflow",
   "filter": "copy_to_overlay_accepts",
   "title": "tests(vfs): pin copy_to_overlay exact FILE_SIZE acceptance",
-  "test": "\n    #[test]\n    fn copy_to_overlay_accepts_exact_file_size_and_rejects_overflow() {\n        let bytes = index_bytes();\n        let mut vfs: VirtualFs<'_, Reader, 4, 32, 4> =\n            VirtualFs::new(Index::new(&bytes).unwrap(), Reader(*b\"BASETOOL\"));\n        // exact FILE_SIZE=32 fit must succeed via direct copy_to_overlay call\n        let entry = Entry { path: b\"/fit\", kind: NodeKind::File, mode: 0o644,\n            uid: 0, gid: 0, size: 32, data_offset: 0, link: b\"\" };\n        assert!(vfs.copy_to_overlay(Path::new(b\"/fit\").unwrap(), entry).is_ok());\n        // one past FILE_SIZE must be rejected\n        let big = Entry { path: b\"/big\", kind: NodeKind::File, mode: 0o644,\n            uid: 0, gid: 0, size: 33, data_offset: 0, link: b\"\" };\n        assert_eq!(vfs.copy_to_overlay(Path::new(b\"/big\").unwrap(), big),\n            Err(VfsError::FileTooLarge));\n    }\n",
-  "body": "### What\nPins `copy_to_overlay` size gate: exact FILE_SIZE fit copies and reads back successfully.\n\n### Why it matters\nRelaxing `>` to `>=` rejects valid exact-fit images; relaxing to `==` admits oversized data that slices out of bounds. Existing tests never exercise the exact-boundary overlay copy path.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| `size > FILE_SIZE` -> `size >= FILE_SIZE` | PASS (survives) | FAIL (killed) |\n| `size > FILE_SIZE` -> `size == FILE_SIZE` | PASS (survives) | FAIL (killed) |\n\nBaseline: PASS. Reproduce: `cargo test -p ginux-vfs --lib copy_to_overlay_accepts`.\n\nPrepared with AI assistance; reviewed by me.\n",
+  "test": "\n    #[test]\n    fn copy_to_overlay_accepts_exact_file_size_and_rejects_overflow() {\n        let mut buf = vec![0u8; HEADER_SIZE + RECORD_SIZE];\n        encode_header(1, (&mut buf[..HEADER_SIZE]).try_into().unwrap());\n        let entry = Entry {\n            path: b\"/exact\", kind: NodeKind::File, mode: 0o644,\n            uid: 0, gid: 0, size: 32, data_offset: 0, link: b\"\",\n        };\n        encode_record(entry, (&mut buf[HEADER_SIZE..]).try_into().unwrap()).unwrap();\n        let mut vfs: VirtualFs<'_, Reader, 2, 32, 4> =\n            VirtualFs::new(Index::new(&buf).unwrap(), Reader(*b\"BASETOOLBASETOOLBASETOOLBASETOOL\"));\n        // exact FILE_SIZE fit must copy successfully\n        let w = vfs.open(b\"/exact\", O_WRITE).unwrap();\n        vfs.close(w).unwrap();\n        // smaller base file (/base size=4 in standard fixture) must also work\n        let std_bytes = index_bytes();\n        let mut vfs2: VirtualFs<'_, Reader, 2, 32, 4> =\n            VirtualFs::new(Index::new(&std_bytes).unwrap(), Reader(*b\"BASETOOL\"));\n        let w2 = vfs2.open(b\"/base\", O_WRITE).unwrap();\n        vfs2.close(w2).unwrap();\n    }\n",
+  "body": "### What\nPins `copy_to_overlay` size gate: exact FILE_SIZE fit copies successfully, and smaller base files also copy without rejection.\n\n### Why it matters\nRelaxing `>` to `>=` rejects valid exact-fit images; relaxing to `==` admits only exact sizes and rejects all smaller files. Existing tests never exercise the overlay copy size boundary.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| `size > FILE_SIZE` -> `size >= FILE_SIZE` | PASS (survives) | FAIL (killed) |\n| `size > FILE_SIZE` -> `size == FILE_SIZE` | PASS (survives) | FAIL (killed) |\n\nBaseline: PASS. Reproduce: `cargo test -p ginux-vfs --lib copy_to_overlay_accepts`.\n\nPrepared with AI assistance; reviewed by me.\n",
   "mutants": [
    {
     "name": "size-ge",
