@@ -1,6 +1,6 @@
 {
  "c8-vfs-decode-boundary-exact": {
-  "proven": false,
+  "proven": true,
   "baseline": true,
   "mutants": [
    {
@@ -11,10 +11,10 @@
     "killed": true
    },
    {
-    "name": "path-eq",
+    "name": "link-eq",
     "anchor_ok": true,
     "anchor_count": 1,
-    "survives": false,
+    "survives": true,
     "killed": true
    }
   ]
