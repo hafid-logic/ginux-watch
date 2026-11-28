@@ -1,0 +1,27 @@
+{
+ "crate": "ginux-process",
+ "file": "crates/ginux-process/src/lib.rs",
+ "filter": "exec_group_replaces_leader",
+ "mutants": [
+  {
+   "name": "leader-and-or",
+   "old": "            .position(|task| task.occupied && task.id.pid == replacement.tgid)",
+   "new": "            .position(|task| task.occupied || task.id.pid == replacement.tgid)"
+  },
+  {
+   "name": "leader-eq-ne",
+   "old": "            .position(|task| task.occupied && task.id.pid == replacement.tgid)",
+   "new": "            .position(|task| task.occupied && task.id.pid != replacement.tgid)"
+  },
+  {
+   "name": "teardown-and-or",
+   "old": "            if task.occupied && task.tgid == leader.id.pid {",
+   "new": "            if task.occupied || task.tgid == leader.id.pid {"
+  },
+  {
+   "name": "teardown-eq-ne",
+   "old": "            if task.occupied && task.tgid == leader.id.pid {",
+   "new": "            if task.occupied && task.tgid != leader.id.pid {"
+  }
+ ]
+}

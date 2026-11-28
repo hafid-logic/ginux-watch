@@ -1,1 +1,148 @@
-[]
+[
+ {
+  "name": "process-exec-group-leader-replacement",
+  "crate": "ginux-process",
+  "file": "crates/ginux-process/src/lib.rs",
+  "fn": "exec_group_replaces_leader_and_clears_only_same_tgid_threads",
+  "filter": "exec_group_replaces_leader",
+  "title": "tests(process): pin exec_group leader replacement and same-tgid thread teardown",
+  "test": "\n    #[test]\n    fn exec_group_replaces_leader_and_clears_only_same_tgid_threads() {\n        let mut table: ProcessTable<8> = ProcessTable::new();\n        let init = table.create_init(Credentials::root()).unwrap();\n        let leader = table.fork(init).unwrap();\n        // a second independent task must survive the group exec\n        let bystander = table.fork(init).unwrap();\n        let before_b = table.view(bystander).unwrap();\n        let (id, epoch) = table.exec_group(leader).unwrap();\n        assert_eq!(id.pid, leader.pid);\n        assert!(epoch >= 1);\n        let after = table.view(id).unwrap();\n        assert_eq!(after.state, TaskState::Running);\n        assert_eq!(after.exec_epoch, epoch);\n        // bystander untouched: still present with same identity\n        let after_b = table.view(bystander).unwrap();\n        assert_eq!(after_b.id.pid, before_b.id.pid);\n        assert_eq!(after_b.tgid, before_b.tgid);\n    }\n",
+  "body": "### What\nPins `ProcessTable::exec_group`: the calling thread replaces its thread-group leader, returns the leader id with a bumped exec epoch, and leaves tasks outside the group untouched.\n\n### Why it matters\nLinux `execve` from a non-leader thread tears down only threads sharing that tgid. Weakening the leader lookup (`occupied && pid == tgid` -> `||` or `!=`) or the teardown filter would either fail every group exec or wipe unrelated tasks. No existing test calls `exec_group`, so all four mutations survive the current suite.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| leader lookup `&&` -> `\\|\\|` | PASS (survives) | FAIL (killed) |\n| leader lookup `==` -> `!=` | PASS (survives) | FAIL (killed) |\n| teardown filter `&&` -> `\\|\\|` | PASS (survives) | FAIL (killed) |\n| teardown filter `==` -> `!=` | PASS (survives) | FAIL (killed) |\n\nBaseline (clean tree + new test): PASS. Reproduce: `cargo test -p ginux-process --lib exec_group_replaces_leader`.\n\nPrepared with AI assistance; reviewed by me.",
+  "mutants": [
+   {
+    "name": "leader-and-or",
+    "old": "            .position(|task| task.occupied && task.id.pid == replacement.tgid)",
+    "new": "            .position(|task| task.occupied || task.id.pid == replacement.tgid)"
+   },
+   {
+    "name": "leader-eq-ne",
+    "old": "            .position(|task| task.occupied && task.id.pid == replacement.tgid)",
+    "new": "            .position(|task| task.occupied && task.id.pid != replacement.tgid)"
+   },
+   {
+    "name": "teardown-and-or",
+    "old": "            if task.occupied && task.tgid == leader.id.pid {",
+    "new": "            if task.occupied || task.tgid == leader.id.pid {"
+   },
+   {
+    "name": "teardown-eq-ne",
+    "old": "            if task.occupied && task.tgid == leader.id.pid {",
+    "new": "            if task.occupied && task.tgid != leader.id.pid {"
+   }
+  ],
+  "spec_ref": "execve(2) thread-group semantics (leader replacement, same-tgid teardown)"
+ },
+ {
+  "name": "kv-identity-hostname-and-ns-links",
+  "crate": "ginux-kernel-views",
+  "file": "crates/ginux-kernel-views/src/lib.rs",
+  "fn": "identity_hostname_read_and_pid_uts_namespace_links_are_exact",
+  "filter": "identity_hostname_read_and_pid_uts",
+  "title": "tests(kernel-views): pin /etc/hostname read and ns/pid + ns/uts readlink targets",
+  "test": "\n    #[test]\n    fn identity_hostname_read_and_pid_uts_namespace_links_are_exact() {\n        let (tasks, count) = fixture();\n        let identity = IdentityView {\n            hostname: b\"instance-a\",\n            machine_id: b\"0123456789abcdef0123456789abcdef\",\n            boot_id: b\"11111111-2222-3333-4444-555555555555\",\n        };\n        let identities = IdentityFs::new(\n            &tasks[..count],\n            identity,\n            NamespaceView { mount: 101, pid: 102, uts: 103, cgroup: 104 },\n        );\n        let mut output = [0u8; 128];\n        let len = identities.read(b\"/etc/hostname\", &mut output).unwrap();\n        assert_eq!(&output[..len], b\"instance-a\\n\");\n        let len = identities.readlink(b\"/proc/1/ns/pid\", &mut output).unwrap();\n        assert_eq!(&output[..len], b\"pid:[102]\");\n        let len = identities.readlink(b\"/proc/1/ns/uts\", &mut output).unwrap();\n        assert_eq!(&output[..len], b\"uts:[103]\");\n        // unknown namespace leaf still NotFound\n        assert_eq!(\n            identities.readlink(b\"/proc/1/ns/net\", &mut output),\n            Err(ViewError::NotFound)\n        );\n    }\n",
+  "body": "### What\nPins three IdentityFs arms: reading `/etc/hostname` returns the instance hostname with a trailing newline, and `readlink` on `ns/pid` / `ns/uts` renders `pid:[id]` / `uts:[id]` with the instance-owned namespace ids.\n\n### Why it matters\nUserspace reads hostname and namespace links to detect isolation. Deleting any of these match arms turns a valid path into NotFound, breaking hostname resolution and namespace introspection. The existing identity test pins machine-id, ns/mnt and ns/cgroup only, so all three deletions survive it.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| delete `/etc/hostname` read arm | PASS (survives) | FAIL (killed) |\n| delete `ns/pid` readlink arm | PASS (survives) | FAIL (killed) |\n| delete `ns/uts` readlink arm | PASS (survives) | FAIL (killed) |\n\nBaseline (clean tree + new test): PASS. Reproduce: `cargo test -p ginux-kernel-views --lib identity_hostname_read_and_pid_uts`.\n\nPrepared with AI assistance; reviewed by me.",
+  "mutants": [
+   {
+    "name": "del-hostname",
+    "old": "            b\"/etc/hostname\" => writer.bytes(self.identity.hostname)?,\n",
+    "new": ""
+   },
+   {
+    "name": "del-ns-pid",
+    "old": "            b\"ns/pid\" => (b\"pid\".as_slice(), self.namespaces.pid),\n",
+    "new": ""
+   },
+   {
+    "name": "del-ns-uts",
+    "old": "            b\"ns/uts\" => (b\"uts\".as_slice(), self.namespaces.uts),\n",
+    "new": ""
+   }
+  ],
+  "spec_ref": "proc(5) namespace symlinks (ns/pid, ns/uts); hostname(7) via /etc/hostname"
+ },
+ {
+  "name": "oci-whiteout-parent-component-guards",
+  "crate": "ginux-oci",
+  "file": "crates/ginux-oci/src/lib.rs",
+  "fn": "safe_whiteout_dir_rejects_non_normal_components_and_missing_leaf_is_ok",
+  "filter": "safe_whiteout_dir_rejects_non_normal",
+  "title": "tests(oci): pin safe_whiteout_dir component guards and missing-leaf tolerance",
+  "test": "\n    #[test]\n    fn safe_whiteout_dir_rejects_non_normal_components_and_missing_leaf_is_ok() {\n        let root = temp_dir(\"whiteout-components\");\n        // parent with a CurDir component is rejected (non-Normal)\n        assert!(safe_whiteout_dir(&root, Path::new(\"./sub\")).is_err());\n        // parent with ParentDir is rejected\n        assert!(safe_whiteout_dir(&root, Path::new(\"../escape\")).is_err());\n        // absolute prefix is rejected\n        assert!(safe_whiteout_dir(&root, Path::new(\"/abs\")).is_err());\n        // plain missing directories are tolerated (created later by the layer)\n        let ok = safe_whiteout_dir(&root, Path::new(\"fresh/deeper\")).unwrap();\n        assert_eq!(ok, root.join(\"fresh/deeper\"));\n        // empty parent resolves to the root itself\n        assert_eq!(safe_whiteout_dir(&root, Path::new(\"\")).unwrap(), root);\n        fs::remove_dir_all(root).unwrap();\n    }\n",
+  "body": "### What\nPins `safe_whiteout_dir` traversal rules: any non-Normal path component (`./`, `../`, absolute prefix) is rejected, while not-yet-existing normal directories are tolerated and an empty parent resolves to the extraction root.\n\n### Why it matters\nThis guard is the security boundary keeping OCI whiteouts inside the rootfs. Accepting `Component::CurDir`/`ParentDir` would let a crafted layer walk out of the root; rejecting missing directories would break legitimate layers that create parents later. The existing symlink test only covers the symlink branch, so these mutations survive.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| accept all components (`_ => {}`) | PASS (survives) | FAIL (killed) |\n| treat NotFound as fatal | PASS (survives) | FAIL (killed) |\n\nBaseline (clean tree + new test): PASS. Reproduce: `cargo test -p ginux-oci --lib safe_whiteout_dir_rejects_non_normal`.\n\nPrepared with AI assistance; reviewed by me.",
+  "mutants": [
+   {
+    "name": "accept-any-component",
+    "old": "            _ => return Err(format!(\"unsafe OCI whiteout path: {}\", parent.display())),",
+    "new": "            _ => {}"
+   },
+   {
+    "name": "notfound-fatal",
+    "old": "                    Err(error) if error.kind() == io::ErrorKind::NotFound => {}",
+    "new": "                    Err(error) if error.kind() == io::ErrorKind::NotFound => return Err(io_error(error)),"
+   }
+  ],
+  "spec_ref": "OCI image-spec layer whiteout application (path traversal containment)"
+ },
+ {
+  "name": "instance-parse-section-header-shape",
+  "crate": "ginux-instance",
+  "file": "crates/ginux-instance/src/lib.rs",
+  "fn": "parse_section_rejects_malformed_headers_and_accepts_minimal",
+  "filter": "parse_section_rejects_malformed",
+  "title": "tests(instance): pin parse_section header shape guards",
+  "insert_before_test": "parses_and_normalizes_versioned_config",
+  "test": "\n    #[test]\n    fn parse_section_rejects_malformed_headers_and_accepts_minimal() {\n        // minimal-length header of an unknown section: shape passes, section unknown\n        assert_eq!(parse_section(b\"[a]\"), Err(ConfigError::UnknownSection));\n        // too short\n        assert_eq!(parse_section(b\"[]\"), Err(ConfigError::InvalidSyntax));\n        // missing closing bracket\n        assert_eq!(parse_section(b\"[audit\"), Err(ConfigError::InvalidSyntax));\n        // nested opening bracket inside the name\n        assert_eq!(parse_section(b\"[a[b]\"), Err(ConfigError::InvalidSyntax));\n        // known sections still resolve\n        assert_eq!(parse_section(b\"[audit]\"), Ok(Section::Audit));\n    }\n",
+  "body": "### What\nPins the three shape guards at the top of `parse_section`: minimum length 3, mandatory trailing `]`, and no nested `[` inside the section name — while a minimal-length header still reaches the section match and known headers resolve.\n\n### Why it matters\nThese guards run before any section dispatch; weakening them admits malformed headers into the config parser (or rejects valid minimal ones). Existing tests parse whole valid documents and never feed malformed headers directly, so the boundary and boolean mutations survive.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| `line.len() < 3` -> `<= 3` | PASS (survives) | FAIL (killed) |\n| `line.len() < 3` -> `== 3` | PASS (survives) | FAIL (killed) |\n| first `\\|\\|` -> `&&` | PASS (survives) | FAIL (killed) |\n| second `\\|\\|` -> `&&` | PASS (survives) | FAIL (killed) |\n\nBaseline (clean tree + new test): PASS. Reproduce: `cargo test -p ginux-instance --lib parse_section_rejects_malformed`.\n\nPrepared with AI assistance; reviewed by me.",
+  "mutants": [
+   {
+    "name": "len-le",
+    "old": "    if line.len() < 3 || line[line.len() - 1] != b']' || line[1..line.len() - 1].contains(&b'[') {",
+    "new": "    if line.len() <= 3 || line[line.len() - 1] != b']' || line[1..line.len() - 1].contains(&b'[') {"
+   },
+   {
+    "name": "len-eq",
+    "old": "    if line.len() < 3 || line[line.len() - 1] != b']' || line[1..line.len() - 1].contains(&b'[') {",
+    "new": "    if line.len() == 3 || line[line.len() - 1] != b']' || line[1..line.len() - 1].contains(&b'[') {"
+   },
+   {
+    "name": "first-and",
+    "old": "    if line.len() < 3 || line[line.len() - 1] != b']' || line[1..line.len() - 1].contains(&b'[') {",
+    "new": "    if line.len() < 3 && line[line.len() - 1] != b']' || line[1..line.len() - 1].contains(&b'[') {"
+   },
+   {
+    "name": "second-and",
+    "old": "    if line.len() < 3 || line[line.len() - 1] != b']' || line[1..line.len() - 1].contains(&b'[') {",
+    "new": "    if line.len() < 3 || line[line.len() - 1] != b']' && line[1..line.len() - 1].contains(&b'[') {"
+   }
+  ],
+  "spec_ref": "ginux instance-config section header grammar"
+ },
+ {
+  "name": "process-shell-code-signal-offset",
+  "crate": "ginux-process",
+  "file": "crates/ginux-process/src/lib.rs",
+  "fn": "shell_code_pins_128_plus_signal_and_exit_passthrough",
+  "filter": "shell_code_pins_128",
+  "title": "tests(process): pin ChildStatus::shell_code 128+signal convention",
+  "test": "\n    #[test]\n    fn shell_code_pins_128_plus_signal_and_exit_passthrough() {\n        // exited children pass their code through unchanged\n        assert_eq!(ChildStatus::Exited(0).shell_code(), 0);\n        assert_eq!(ChildStatus::Exited(7).shell_code(), 7);\n        assert_eq!(ChildStatus::Exited(255).shell_code(), 255);\n        // signaled children report the shell convention 128 + signal\n        assert_eq!(ChildStatus::Signaled(1).shell_code(), 129);\n        assert_eq!(ChildStatus::Signaled(9).shell_code(), 137);\n        assert_eq!(ChildStatus::Signaled(15).shell_code(), 143);\n        assert_eq!(ChildStatus::Signaled(64).shell_code(), 192);\n    }\n",
+  "body": "### What\nPins `ChildStatus::shell_code`: exited children pass their exit code through unchanged, and signaled children report the shell convention `128 + signal` (SIGKILL 9 -> 137, SIGTERM 15 -> 143).\n\n### Why it matters\nDiagnostics and shell-facing wrappers rely on this exact offset. Constant-folding the result or replacing `+` with `*`/`-` produces plausible-looking but wrong status codes. No existing test calls `shell_code`, so every mutation on it survives the current suite.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| `shell_code -> 0` | PASS (survives) | FAIL (killed) |\n| `128 + signal` -> `128 * signal` | PASS (survives) | FAIL (killed) |\n| `128 + signal` -> `128 - signal` | PASS (survives) | FAIL (killed) |\n\nBaseline (clean tree + new test): PASS. Reproduce: `cargo test -p ginux-process --lib shell_code_pins_128`.\n\nPrepared with AI assistance; reviewed by me.",
+  "mutants": [
+   {
+    "name": "const-0",
+    "old": "    pub const fn shell_code(self) -> i32 {\n        match self {\n            ChildStatus::Exited(code) => code,\n            ChildStatus::Signaled(signal) => 128 + signal as i32,\n        }\n    }",
+    "new": "    pub const fn shell_code(self) -> i32 {\n        0\n    }"
+   },
+   {
+    "name": "plus-mul",
+    "old": "            ChildStatus::Signaled(signal) => 128 + signal as i32,",
+    "new": "            ChildStatus::Signaled(signal) => 128 * signal as i32,"
+   },
+   {
+    "name": "plus-sub",
+    "old": "            ChildStatus::Signaled(signal) => 128 + signal as i32,",
+    "new": "            ChildStatus::Signaled(signal) => 128 - signal as i32,"
+   }
+  ],
+  "spec_ref": "POSIX shell exit-status convention (128 + signal number)"
+ }
+]

@@ -1,0 +1,59 @@
+From d6e78cf0c1adffb4907438dbbee3a038b3572823 Mon Sep 17 00:00:00 2001
+From: ginux-watch-agent <actions@users.noreply.github.com>
+Date: Sat, 28 Nov 2026 13:53:39 +0000
+Subject: [PATCH] tests(instance): pin parse_section header shape guards
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+### What
+Pins the three shape guards at the top of `parse_section`: minimum length 3, mandatory trailing `]`, and no nested `[` inside the section name — while a minimal-length header still reaches the section match and known headers resolve.
+
+### Why it matters
+These guards run before any section dispatch; weakening them admits malformed headers into the config parser (or rejects valid minimal ones). Existing tests parse whole valid documents and never feed malformed headers directly, so the boundary and boolean mutations survive.
+
+### Mutation evidence (fail-then-pass)
+| Mutant | Existing suite | New test |
+|---|---|---|
+| `line.len() < 3` -> `<= 3` | PASS (survives) | FAIL (killed) |
+| `line.len() < 3` -> `== 3` | PASS (survives) | FAIL (killed) |
+| first `\|\|` -> `&&` | PASS (survives) | FAIL (killed) |
+| second `\|\|` -> `&&` | PASS (survives) | FAIL (killed) |
+
+Baseline (clean tree + new test): PASS. Reproduce: `cargo test -p ginux-instance --lib parse_section_rejects_malformed`.
+
+Spec-Ref: ginux instance-config section header grammar
+
+Prepared with AI assistance; reviewed by me.
+---
+ crates/ginux-instance/src/lib.rs | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+diff --git a/crates/ginux-instance/src/lib.rs b/crates/ginux-instance/src/lib.rs
+index 2ccda8a0..d46d23cf 100644
+--- a/crates/ginux-instance/src/lib.rs
++++ b/crates/ginux-instance/src/lib.rs
+@@ -2413,6 +2413,20 @@ enabled = true
+ policy = "stop"
+ "#;
+ 
++    #[test]
++    fn parse_section_rejects_malformed_headers_and_accepts_minimal() {
++        // minimal-length header of an unknown section: shape passes, section unknown
++        assert_eq!(parse_section(b"[a]"), Err(ConfigError::UnknownSection));
++        // too short
++        assert_eq!(parse_section(b"[]"), Err(ConfigError::InvalidSyntax));
++        // missing closing bracket
++        assert_eq!(parse_section(b"[audit"), Err(ConfigError::InvalidSyntax));
++        // nested opening bracket inside the name
++        assert_eq!(parse_section(b"[a[b]"), Err(ConfigError::InvalidSyntax));
++        // known sections still resolve
++        assert_eq!(parse_section(b"[audit]"), Ok(Section::Audit));
++    }
++
+     #[test]
+     fn parses_and_normalizes_versioned_config() {
+         let config = InstanceConfig::parse(VALID.as_bytes()).unwrap();
+-- 
+2.47.3
+

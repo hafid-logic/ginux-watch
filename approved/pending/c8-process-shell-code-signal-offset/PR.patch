@@ -1,0 +1,55 @@
+From f27d0aee8b39f2596c57e552ed3c473bc56c2375 Mon Sep 17 00:00:00 2001
+From: ginux-watch-agent <actions@users.noreply.github.com>
+Date: Sat, 28 Nov 2026 13:53:39 +0000
+Subject: [PATCH] tests(process): pin ChildStatus::shell_code 128+signal
+ convention
+
+### What
+Pins `ChildStatus::shell_code`: exited children pass their exit code through unchanged, and signaled children report the shell convention `128 + signal` (SIGKILL 9 -> 137, SIGTERM 15 -> 143).
+
+### Why it matters
+Diagnostics and shell-facing wrappers rely on this exact offset. Constant-folding the result or replacing `+` with `*`/`-` produces plausible-looking but wrong status codes. No existing test calls `shell_code`, so every mutation on it survives the current suite.
+
+### Mutation evidence (fail-then-pass)
+| Mutant | Existing suite | New test |
+|---|---|---|
+| `shell_code -> 0` | PASS (survives) | FAIL (killed) |
+| `128 + signal` -> `128 * signal` | PASS (survives) | FAIL (killed) |
+| `128 + signal` -> `128 - signal` | PASS (survives) | FAIL (killed) |
+
+Baseline (clean tree + new test): PASS. Reproduce: `cargo test -p ginux-process --lib shell_code_pins_128`.
+
+Spec-Ref: POSIX shell exit-status convention (128 + signal number)
+
+Prepared with AI assistance; reviewed by me.
+---
+ crates/ginux-process/src/lib.rs | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/crates/ginux-process/src/lib.rs b/crates/ginux-process/src/lib.rs
+index 209af037..58542ee9 100644
+--- a/crates/ginux-process/src/lib.rs
++++ b/crates/ginux-process/src/lib.rs
+@@ -1802,6 +1802,19 @@ mod tests {
+         assert_eq!(table.view(grandchild).unwrap().parent, child.pid);
+     }
+ 
++    #[test]
++    fn shell_code_pins_128_plus_signal_and_exit_passthrough() {
++        // exited children pass their code through unchanged
++        assert_eq!(ChildStatus::Exited(0).shell_code(), 0);
++        assert_eq!(ChildStatus::Exited(7).shell_code(), 7);
++        assert_eq!(ChildStatus::Exited(255).shell_code(), 255);
++        // signaled children report the shell convention 128 + signal
++        assert_eq!(ChildStatus::Signaled(1).shell_code(), 129);
++        assert_eq!(ChildStatus::Signaled(9).shell_code(), 137);
++        assert_eq!(ChildStatus::Signaled(15).shell_code(), 143);
++        assert_eq!(ChildStatus::Signaled(64).shell_code(), 192);
++    }
++
+     #[test]
+     fn an_init_thread_reaps_orphans_after_the_init_leader_exits() {
+         let mut table: ProcessTable<6> = ProcessTable::new();
+-- 
+2.47.3
+

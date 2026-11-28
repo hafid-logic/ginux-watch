@@ -1,0 +1,17 @@
+{
+ "crate": "ginux-oci",
+ "file": "crates/ginux-oci/src/lib.rs",
+ "filter": "safe_whiteout_dir_rejects_non_normal",
+ "mutants": [
+  {
+   "name": "accept-any-component",
+   "old": "            _ => return Err(format!(\"unsafe OCI whiteout path: {}\", parent.display())),",
+   "new": "            _ => {}"
+  },
+  {
+   "name": "notfound-fatal",
+   "old": "                    Err(error) if error.kind() == io::ErrorKind::NotFound => {}",
+   "new": "                    Err(error) if error.kind() == io::ErrorKind::NotFound => return Err(io_error(error)),"
+  }
+ ]
+}

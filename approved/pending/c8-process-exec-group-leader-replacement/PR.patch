@@ -1,0 +1,63 @@
+From e03c6b21f695af4cd77ef17283e114c7fcb68d0b Mon Sep 17 00:00:00 2001
+From: ginux-watch-agent <actions@users.noreply.github.com>
+Date: Sat, 28 Nov 2026 13:53:38 +0000
+Subject: [PATCH] tests(process): pin exec_group leader replacement and
+ same-tgid thread teardown
+
+### What
+Pins `ProcessTable::exec_group`: the calling thread replaces its thread-group leader, returns the leader id with a bumped exec epoch, and leaves tasks outside the group untouched.
+
+### Why it matters
+Linux `execve` from a non-leader thread tears down only threads sharing that tgid. Weakening the leader lookup (`occupied && pid == tgid` -> `||` or `!=`) or the teardown filter would either fail every group exec or wipe unrelated tasks. No existing test calls `exec_group`, so all four mutations survive the current suite.
+
+### Mutation evidence (fail-then-pass)
+| Mutant | Existing suite | New test |
+|---|---|---|
+| leader lookup `&&` -> `\|\|` | PASS (survives) | FAIL (killed) |
+| leader lookup `==` -> `!=` | PASS (survives) | FAIL (killed) |
+| teardown filter `&&` -> `\|\|` | PASS (survives) | FAIL (killed) |
+| teardown filter `==` -> `!=` | PASS (survives) | FAIL (killed) |
+
+Baseline (clean tree + new test): PASS. Reproduce: `cargo test -p ginux-process --lib exec_group_replaces_leader`.
+
+Spec-Ref: execve(2) thread-group semantics (leader replacement, same-tgid teardown)
+
+Prepared with AI assistance; reviewed by me.
+---
+ crates/ginux-process/src/lib.rs | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
+
+diff --git a/crates/ginux-process/src/lib.rs b/crates/ginux-process/src/lib.rs
+index 209af037..5fcc753d 100644
+--- a/crates/ginux-process/src/lib.rs
++++ b/crates/ginux-process/src/lib.rs
+@@ -2008,6 +2008,26 @@ mod tests {
+         assert_eq!(table.next_signal(init), Ok(Some(10)));
+     }
+ 
++    #[test]
++    fn exec_group_replaces_leader_and_clears_only_same_tgid_threads() {
++        let mut table: ProcessTable<8> = ProcessTable::new();
++        let init = table.create_init(Credentials::root()).unwrap();
++        let leader = table.fork(init).unwrap();
++        // a second independent task must survive the group exec
++        let bystander = table.fork(init).unwrap();
++        let before_b = table.view(bystander).unwrap();
++        let (id, epoch) = table.exec_group(leader).unwrap();
++        assert_eq!(id.pid, leader.pid);
++        assert!(epoch >= 1);
++        let after = table.view(id).unwrap();
++        assert_eq!(after.state, TaskState::Running);
++        assert_eq!(after.exec_epoch, epoch);
++        // bystander untouched: still present with same identity
++        let after_b = table.view(bystander).unwrap();
++        assert_eq!(after_b.id.pid, before_b.id.pid);
++        assert_eq!(after_b.tgid, before_b.tgid);
++    }
++
+     #[test]
+     fn eventfd_and_futex_have_bounded_linux_style_results() {
+         let mut event = EventFd::new(0, false);
+-- 
+2.47.3
+

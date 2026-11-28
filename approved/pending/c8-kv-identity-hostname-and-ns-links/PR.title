@@ -1,0 +1,1 @@
+tests(kernel-views): pin /etc/hostname read and ns/pid + ns/uts readlink targets

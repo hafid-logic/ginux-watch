@@ -1,0 +1,22 @@
+{
+ "crate": "ginux-kernel-views",
+ "file": "crates/ginux-kernel-views/src/lib.rs",
+ "filter": "identity_hostname_read_and_pid_uts",
+ "mutants": [
+  {
+   "name": "del-hostname",
+   "old": "            b\"/etc/hostname\" => writer.bytes(self.identity.hostname)?,\n",
+   "new": ""
+  },
+  {
+   "name": "del-ns-pid",
+   "old": "            b\"ns/pid\" => (b\"pid\".as_slice(), self.namespaces.pid),\n",
+   "new": ""
+  },
+  {
+   "name": "del-ns-uts",
+   "old": "            b\"ns/uts\" => (b\"uts\".as_slice(), self.namespaces.uts),\n",
+   "new": ""
+  }
+ ]
+}

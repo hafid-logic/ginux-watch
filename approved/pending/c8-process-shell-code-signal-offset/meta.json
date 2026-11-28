@@ -1,0 +1,22 @@
+{
+ "crate": "ginux-process",
+ "file": "crates/ginux-process/src/lib.rs",
+ "filter": "shell_code_pins_128",
+ "mutants": [
+  {
+   "name": "const-0",
+   "old": "    pub const fn shell_code(self) -> i32 {\n        match self {\n            ChildStatus::Exited(code) => code,\n            ChildStatus::Signaled(signal) => 128 + signal as i32,\n        }\n    }",
+   "new": "    pub const fn shell_code(self) -> i32 {\n        0\n    }"
+  },
+  {
+   "name": "plus-mul",
+   "old": "            ChildStatus::Signaled(signal) => 128 + signal as i32,",
+   "new": "            ChildStatus::Signaled(signal) => 128 * signal as i32,"
+  },
+  {
+   "name": "plus-sub",
+   "old": "            ChildStatus::Signaled(signal) => 128 + signal as i32,",
+   "new": "            ChildStatus::Signaled(signal) => 128 - signal as i32,"
+  }
+ ]
+}

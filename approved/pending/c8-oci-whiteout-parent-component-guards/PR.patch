@@ -1,0 +1,58 @@
+From a09e52b842ae59fdb1d08ece4189729e2b1db501 Mon Sep 17 00:00:00 2001
+From: ginux-watch-agent <actions@users.noreply.github.com>
+Date: Sat, 28 Nov 2026 13:53:38 +0000
+Subject: [PATCH] tests(oci): pin safe_whiteout_dir component guards and
+ missing-leaf tolerance
+
+### What
+Pins `safe_whiteout_dir` traversal rules: any non-Normal path component (`./`, `../`, absolute prefix) is rejected, while not-yet-existing normal directories are tolerated and an empty parent resolves to the extraction root.
+
+### Why it matters
+This guard is the security boundary keeping OCI whiteouts inside the rootfs. Accepting `Component::CurDir`/`ParentDir` would let a crafted layer walk out of the root; rejecting missing directories would break legitimate layers that create parents later. The existing symlink test only covers the symlink branch, so these mutations survive.
+
+### Mutation evidence (fail-then-pass)
+| Mutant | Existing suite | New test |
+|---|---|---|
+| accept all components (`_ => {}`) | PASS (survives) | FAIL (killed) |
+| treat NotFound as fatal | PASS (survives) | FAIL (killed) |
+
+Baseline (clean tree + new test): PASS. Reproduce: `cargo test -p ginux-oci --lib safe_whiteout_dir_rejects_non_normal`.
+
+Spec-Ref: OCI image-spec layer whiteout application (path traversal containment)
+
+Prepared with AI assistance; reviewed by me.
+---
+ crates/ginux-oci/src/lib.rs | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
+
+diff --git a/crates/ginux-oci/src/lib.rs b/crates/ginux-oci/src/lib.rs
+index b2b2f97b..d5ac45bc 100644
+--- a/crates/ginux-oci/src/lib.rs
++++ b/crates/ginux-oci/src/lib.rs
+@@ -793,6 +793,23 @@ mod tests {
+         fs::remove_dir_all(cache).unwrap();
+     }
+ 
++    #[test]
++    fn safe_whiteout_dir_rejects_non_normal_components_and_missing_leaf_is_ok() {
++        let root = temp_dir("whiteout-components");
++        // parent with a CurDir component is rejected (non-Normal)
++        assert!(safe_whiteout_dir(&root, Path::new("./sub")).is_err());
++        // parent with ParentDir is rejected
++        assert!(safe_whiteout_dir(&root, Path::new("../escape")).is_err());
++        // absolute prefix is rejected
++        assert!(safe_whiteout_dir(&root, Path::new("/abs")).is_err());
++        // plain missing directories are tolerated (created later by the layer)
++        let ok = safe_whiteout_dir(&root, Path::new("fresh/deeper")).unwrap();
++        assert_eq!(ok, root.join("fresh/deeper"));
++        // empty parent resolves to the root itself
++        assert_eq!(safe_whiteout_dir(&root, Path::new("")).unwrap(), root);
++        fs::remove_dir_all(root).unwrap();
++    }
++
+     #[test]
+     fn blob_downloads_only_on_a_miss_and_repairs_verified_content() {
+         let cache = temp_dir("repair");
+-- 
+2.47.3
+

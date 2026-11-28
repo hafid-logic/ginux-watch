@@ -1,0 +1,27 @@
+{
+ "crate": "ginux-instance",
+ "file": "crates/ginux-instance/src/lib.rs",
+ "filter": "parse_section_rejects_malformed",
+ "mutants": [
+  {
+   "name": "len-le",
+   "old": "    if line.len() < 3 || line[line.len() - 1] != b']' || line[1..line.len() - 1].contains(&b'[') {",
+   "new": "    if line.len() <= 3 || line[line.len() - 1] != b']' || line[1..line.len() - 1].contains(&b'[') {"
+  },
+  {
+   "name": "len-eq",
+   "old": "    if line.len() < 3 || line[line.len() - 1] != b']' || line[1..line.len() - 1].contains(&b'[') {",
+   "new": "    if line.len() == 3 || line[line.len() - 1] != b']' || line[1..line.len() - 1].contains(&b'[') {"
+  },
+  {
+   "name": "first-and",
+   "old": "    if line.len() < 3 || line[line.len() - 1] != b']' || line[1..line.len() - 1].contains(&b'[') {",
+   "new": "    if line.len() < 3 && line[line.len() - 1] != b']' || line[1..line.len() - 1].contains(&b'[') {"
+  },
+  {
+   "name": "second-and",
+   "old": "    if line.len() < 3 || line[line.len() - 1] != b']' || line[1..line.len() - 1].contains(&b'[') {",
+   "new": "    if line.len() < 3 || line[line.len() - 1] != b']' && line[1..line.len() - 1].contains(&b'[') {"
+  }
+ ]
+}

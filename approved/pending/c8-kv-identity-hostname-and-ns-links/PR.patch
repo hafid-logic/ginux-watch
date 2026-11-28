@@ -1,0 +1,74 @@
+From bdb6c6c015a5f7590e2b2c8ab19ed13ebcc449af Mon Sep 17 00:00:00 2001
+From: ginux-watch-agent <actions@users.noreply.github.com>
+Date: Sat, 28 Nov 2026 13:53:38 +0000
+Subject: [PATCH] tests(kernel-views): pin /etc/hostname read and ns/pid +
+ ns/uts readlink targets
+
+### What
+Pins three IdentityFs arms: reading `/etc/hostname` returns the instance hostname with a trailing newline, and `readlink` on `ns/pid` / `ns/uts` renders `pid:[id]` / `uts:[id]` with the instance-owned namespace ids.
+
+### Why it matters
+Userspace reads hostname and namespace links to detect isolation. Deleting any of these match arms turns a valid path into NotFound, breaking hostname resolution and namespace introspection. The existing identity test pins machine-id, ns/mnt and ns/cgroup only, so all three deletions survive it.
+
+### Mutation evidence (fail-then-pass)
+| Mutant | Existing suite | New test |
+|---|---|---|
+| delete `/etc/hostname` read arm | PASS (survives) | FAIL (killed) |
+| delete `ns/pid` readlink arm | PASS (survives) | FAIL (killed) |
+| delete `ns/uts` readlink arm | PASS (survives) | FAIL (killed) |
+
+Baseline (clean tree + new test): PASS. Reproduce: `cargo test -p ginux-kernel-views --lib identity_hostname_read_and_pid_uts`.
+
+Spec-Ref: proc(5) namespace symlinks (ns/pid, ns/uts); hostname(7) via /etc/hostname
+
+Prepared with AI assistance; reviewed by me.
+---
+ crates/ginux-kernel-views/src/lib.rs | 32 ++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
+
+diff --git a/crates/ginux-kernel-views/src/lib.rs b/crates/ginux-kernel-views/src/lib.rs
+index 950b5a89..8c6c4106 100644
+--- a/crates/ginux-kernel-views/src/lib.rs
++++ b/crates/ginux-kernel-views/src/lib.rs
+@@ -600,6 +600,38 @@ mod tests {
+         assert!(sysfs.read(b"/sys/class/net/net0/type", &mut output).is_ok());
+     }
+ 
++    #[test]
++    fn identity_hostname_read_and_pid_uts_namespace_links_are_exact() {
++        let (tasks, count) = fixture();
++        let identity = IdentityView {
++            hostname: b"instance-a",
++            machine_id: b"0123456789abcdef0123456789abcdef",
++            boot_id: b"11111111-2222-3333-4444-555555555555",
++        };
++        let identities = IdentityFs::new(
++            &tasks[..count],
++            identity,
++            NamespaceView {
++                mount: 101,
++                pid: 102,
++                uts: 103,
++                cgroup: 104,
++            },
++        );
++        let mut output = [0u8; 128];
++        let len = identities.read(b"/etc/hostname", &mut output).unwrap();
++        assert_eq!(&output[..len], b"instance-a\n");
++        let len = identities.readlink(b"/proc/1/ns/pid", &mut output).unwrap();
++        assert_eq!(&output[..len], b"pid:[102]");
++        let len = identities.readlink(b"/proc/1/ns/uts", &mut output).unwrap();
++        assert_eq!(&output[..len], b"uts:[103]");
++        // unknown namespace leaf still NotFound
++        assert_eq!(
++            identities.readlink(b"/proc/1/ns/net", &mut output),
++            Err(ViewError::NotFound)
++        );
++    }
++
+     #[test]
+     fn sysfs_projects_only_assigned_virtual_devices() {
+         let mut registry: DeviceRegistry<6, 2> = DeviceRegistry::new();
+-- 
+2.47.3
+
