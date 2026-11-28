@@ -3,7 +3,7 @@
   "proven": false,
   "baseline": false,
   "why": "baseline-fail",
-  "baseline_err": "\u001b[1m\u001b[92m    Updating\u001b[0m crates.io index\n\u001b[1m\u001b[92m   Compiling\u001b[0m ginux-devices v0.1.0 (/tmp/prover-upstream/crates/ginux-devices)\n\u001b[1m\u001b[92m    Finished\u001b[0m `test` profile [unoptimized + debuginfo] target(s) in 0.77s\n\u001b[1m\u001b[92m     Running\u001b[0m unittests src/lib.rs (target/debug/build/ginux-devices/12d59e61c4180762/out/ginux_devices-12d59e61c4180762)\n\u001b[1m\u001b[91merror\u001b[0m: test failed, to rerun pass `-p ginux-devices --lib`"
+  "baseline_err": "\u001b[1m\u001b[92m    Updating\u001b[0m crates.io index\n\u001b[1m\u001b[92m   Compiling\u001b[0m ginux-devices v0.1.0 (/tmp/prover-upstream/crates/ginux-devices)\n\u001b[1m\u001b[92m    Finished\u001b[0m `test` profile [unoptimized + debuginfo] target(s) in 0.55s\n\u001b[1m\u001b[92m     Running\u001b[0m unittests src/lib.rs (target/debug/build/ginux-devices/12d59e61c4180762/out/ginux_devices-12d59e61c4180762)\n\u001b[1m\u001b[91merror\u001b[0m: test failed, to rerun pass `-p ginux-devices --lib`"
  },
  "c8-instance-finish-workdir-recipe": {
   "proven": true,
