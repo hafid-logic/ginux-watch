@@ -1,6 +1,6 @@
-From a09e52b842ae59fdb1d08ece4189729e2b1db501 Mon Sep 17 00:00:00 2001
+From edaef6d6e1e91f2ae076f25c3f38613b4371f31f Mon Sep 17 00:00:00 2001
 From: ginux-watch-agent <actions@users.noreply.github.com>
-Date: Sat, 28 Nov 2026 13:53:38 +0000
+Date: Sat, 28 Nov 2026 13:57:10 +0000
 Subject: [PATCH] tests(oci): pin safe_whiteout_dir component guards and
  missing-leaf tolerance
 

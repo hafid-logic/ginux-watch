@@ -1,6 +1,6 @@
-From f27d0aee8b39f2596c57e552ed3c473bc56c2375 Mon Sep 17 00:00:00 2001
+From f80634c9658743239fb3b2225cb7d7601dc7abfd Mon Sep 17 00:00:00 2001
 From: ginux-watch-agent <actions@users.noreply.github.com>
-Date: Sat, 28 Nov 2026 13:53:39 +0000
+Date: Sat, 28 Nov 2026 13:57:11 +0000
 Subject: [PATCH] tests(process): pin ChildStatus::shell_code 128+signal
  convention
 

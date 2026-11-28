@@ -1,6 +1,6 @@
-From bdb6c6c015a5f7590e2b2c8ab19ed13ebcc449af Mon Sep 17 00:00:00 2001
+From dcf29c925639c68b8c3a5919e9e1058fd48c995a Mon Sep 17 00:00:00 2001
 From: ginux-watch-agent <actions@users.noreply.github.com>
-Date: Sat, 28 Nov 2026 13:53:38 +0000
+Date: Sat, 28 Nov 2026 13:57:10 +0000
 Subject: [PATCH] tests(kernel-views): pin /etc/hostname read and ns/pid +
  ns/uts readlink targets
 

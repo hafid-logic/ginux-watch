@@ -1,6 +1,6 @@
-From e03c6b21f695af4cd77ef17283e114c7fcb68d0b Mon Sep 17 00:00:00 2001
+From edd0a6d7fd4bb8b5196e2d4992ebeb183681317b Mon Sep 17 00:00:00 2001
 From: ginux-watch-agent <actions@users.noreply.github.com>
-Date: Sat, 28 Nov 2026 13:53:38 +0000
+Date: Sat, 28 Nov 2026 13:57:10 +0000
 Subject: [PATCH] tests(process): pin exec_group leader replacement and
  same-tgid thread teardown
 
