@@ -100,8 +100,8 @@
    }
   ]
  },
- "c8-vfs-index-empty-and-link-boundary": {
-  "proven": false,
+ "c8-vfs-index-is-empty-predicate": {
+  "proven": true,
   "baseline": true,
   "mutants": [
    {
@@ -117,13 +117,6 @@
     "anchor_count": 1,
     "survives": true,
     "killed": true
-   },
-   {
-    "name": "link-ge",
-    "anchor_ok": true,
-    "anchor_count": 1,
-    "survives": true,
-    "killed": false
    }
   ]
  }
