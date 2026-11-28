@@ -53,7 +53,7 @@
 - **upstream [MEASURED 2026-11-24T14:4xZ]:** main عند `fe4d904d`. دمجاتنا 9:
   #227، #295، #296، #310 (oci-reference-guards)، #311 (allocator c_char)، #312 (devices descriptors)،
   #317 (oci-boundary-exact، دمج 13:42Z + شكر المالك)، #319 (fs-policy path-admission، 13:48Z)،
-  #320 (devices revoke-instance-scope، 13:54Z). **مفتوحة لنا 2/5 (السقف 5): #377، #378 — كلها اختبارات خاصيات مُبرهنة بالطفرات (ناجيتان تُقتلان لكل حزمة). تفويض المالك: directives/v9.2-20261124.md.
+  #320 (devices revoke-instance-scope، 13:54Z). **مفتوحة لنا 4/5 (السقف 5): #380 core-write-fd-netlink-kind، #381 kv-procfs-stat، #382 oci-remove-path، #383 process-timer — الموجة أ-2، كلها مُبرهنة بطفرتين ناجيتين تُقتلان. المرحلة 8: ginux-core 8/8.
 - **CI upstream على الرأس fe4d904d:** 3 فحوص خضراء (static-and-unit / launch-integration / changes،
   اكتملت 13:55–13:58Z) ⇒ **لا عمى CI اليوم**.
 - **v9.1 مهمة 3 (جدول قرار syscalls):** لا crate باسم ginux-syscall؛ الموازي ginux-core
