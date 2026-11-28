@@ -1,29 +1,5 @@
 [
  {
-  "name": "vfs-decode-boundary-exact",
-  "crate": "ginux-vfs",
-  "file": "crates/ginux-vfs/src/lib.rs",
-  "fn": "decode_record_accepts_exact_path_and_link_bounds",
-  "filter": "decode_record_accepts_exact",
-  "title": "tests(vfs): pin decode_record exact path/link bounds and overflow rejection",
-  "test": "\n    #[test]\n    fn decode_record_accepts_exact_path_and_link_bounds() {\n        let mut buf = [0u8; HEADER_SIZE + RECORD_SIZE];\n        encode_header(1, (&mut buf[..HEADER_SIZE]).try_into().unwrap());\n        {\n            let rec = &mut buf[HEADER_SIZE..];\n            rec[2] = 3; // symlink\n            rec[0..2].copy_from_slice(&(MAX_PATH as u16).to_le_bytes());\n            rec[32..34].copy_from_slice(&(MAX_LINK as u16).to_le_bytes());\n            rec[40] = b'/';\n            for b in &mut rec[41..40 + MAX_PATH] { *b = b'a'; }\n            for b in &mut rec[40 + MAX_PATH..40 + MAX_PATH + MAX_LINK] { *b = b'b'; }\n        }\n        // exact MAX_PATH path and MAX_LINK link must decode (boundary inclusive)\n        assert!(Index::new(&buf).is_ok());\n        {\n            let rec = &mut buf[HEADER_SIZE..];\n            rec[32..34].copy_from_slice(&((MAX_LINK + 1) as u16).to_le_bytes());\n        }\n        // one past MAX_LINK must be rejected at decode time\n        assert_eq!(Index::new(&buf).err(), Some(VfsError::InvalidIndex));\n        {\n            let rec = &mut buf[HEADER_SIZE..];\n            rec[32..34].copy_from_slice(&(MAX_LINK as u16).to_le_bytes());\n            rec[0..2].copy_from_slice(&0u16.to_le_bytes());\n        }\n        // zero-length path rejected\n        assert_eq!(Index::new(&buf).err(), Some(VfsError::InvalidIndex));\n    }\n",
-  "body": "### What\nPins `decode_record` length gates: exact MAX_PATH/MAX_LINK fit decodes, one-past-MAX_LINK and zero-length path are rejected at index load.\n\n### Why it matters\nDecode gates guard every record read; relaxing `>` to `>=` rejects valid exact-fit images, while `==` admits oversized links that later slice out of bounds. Existing tests pin encode-side and path-overflow only, not decode-side exact fit or link overflow.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| `link_len > MAX_LINK` -> `>=` | PASS (survives) | FAIL (killed) |\n| `path_len > MAX_PATH` -> `==` | PASS (survives) | FAIL (killed) |\n\nBaseline: PASS. Reproduce: `cargo test -p ginux-vfs --lib decode_record_accepts_exact`.\n\nPrepared with AI assistance; reviewed by me.\n",
-  "mutants": [
-   {
-    "name": "link-ge",
-    "old": "    if path_len == 0 || path_len > MAX_PATH || link_len > MAX_LINK {",
-    "new": "    if path_len == 0 || path_len > MAX_PATH || link_len >= MAX_LINK {",
-    "line": 144
-   },
-   {
-    "name": "link-eq",
-    "old": "    if path_len == 0 || path_len > MAX_PATH || link_len > MAX_LINK {",
-    "new": "    if path_len == 0 || path_len > MAX_PATH || link_len == MAX_LINK {",
-    "line": 144
-   }
-  ]
- },
- {
   "name": "process-event-poll-admission",
   "crate": "ginux-process",
   "file": "crates/ginux-process/src/lib.rs",
@@ -40,10 +16,10 @@
     "line": 1020
    },
    {
-    "name": "mask-xor",
-    "old": "        if descriptor == 0 || events == 0 || events & !(EVENT_READ | EVENT_WRITE) != 0 {",
-    "new": "        if descriptor == 0 || events == 0 || events ^ !(EVENT_READ | EVENT_WRITE) != 0 {",
-    "line": 1020
+    "name": "dup-or",
+    "old": "            .any(|entry| entry.active && entry.descriptor == descriptor)",
+    "new": "            .any(|entry| entry.active || entry.descriptor == descriptor)",
+    "line": 1026
    }
   ],
   "spec_ref": "poll(2) / epoll_ctl(2) registration semantics"
@@ -72,5 +48,55 @@
    }
   ],
   "spec_ref": "cgroup v2 subtree_control documentation"
+ },
+ {
+  "name": "instance-finish-workdir-recipe",
+  "crate": "ginux-instance",
+  "file": "crates/ginux-instance/src/lib.rs",
+  "fn": "finish_preserves_explicit_workdir_and_rejects_partial_recipe",
+  "filter": "finish_preserves_explicit",
+  "title": "tests(instance): pin finish workdir preservation and partial-recipe rejection",
+  "test": "\n    #[test]\n    fn finish_preserves_explicit_workdir_and_rejects_partial_recipe() {\n        // explicit workdir must be preserved (not replaced by default \"/work\")\n        let src = VALID.replace(\"[resources]\", \"workdir = \\\"/custom\\\"\\n\\n[resources]\");\n        let c = InstanceConfig::parse(src.as_bytes()).unwrap();\n        assert_eq!(c.workdir.as_bytes(), b\"/custom\");\n        // absent workdir defaults to \"/work\"\n        let d = InstanceConfig::parse(VALID.as_bytes()).unwrap();\n        assert_eq!(d.workdir.as_bytes(), b\"/work\");\n        // partial recipe (version+catalog, no default) must be rejected\n        let partial = VALID.replace(\"[storage]\", \"[contract.recipe]\\nversion = 1\\ncatalog = 2\\n[storage]\");\n        assert!(InstanceConfig::parse(partial.as_bytes()).is_err());\n    }\n",
+  "body": "### What\nPins `finish` bitmask defaults: explicit workdir preserved, absent workdir defaults to /work, partial contract recipe (missing default) rejected.\n\n### Why it matters\nBit-shift errors in field masks silently ignore operator-supplied values or admit incomplete recipes. Existing tests never set workdir explicitly nor supply partial recipes.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| `WORKDIR_BIT 1<<16` -> `1>>16` | PASS (survives) | FAIL (killed) |\n| `RECIPE_DEFAULT_BIT 1<<38` -> `1>>38` | PASS (survives) | FAIL (killed) |\n\nBaseline: PASS. Reproduce: `cargo test -p ginux-instance --lib finish_preserves_explicit`.\n\nPrepared with AI assistance; reviewed by me.\n",
+  "mutants": [
+   {
+    "name": "workdir-shift",
+    "old": "        const WORKDIR_BIT: u128 = 1 << 16;",
+    "new": "        const WORKDIR_BIT: u128 = 1 >> 16;",
+    "line": 476
+   },
+   {
+    "name": "recipe-default-shift",
+    "old": "        const RECIPE_DEFAULT_BIT: u128 = 1 << 38;",
+    "new": "        const RECIPE_DEFAULT_BIT: u128 = 1 >> 38;",
+    "line": 481
+   }
+  ],
+  "spec_ref": "TOML config field-presence semantics (instance recipe schema)"
+ },
+ {
+  "name": "oci-human-size-scaling",
+  "crate": "ginux-oci",
+  "file": "crates/ginux-oci/src/lib.rs",
+  "fn": "human_size_scales_units_and_caps_at_gib",
+  "filter": "human_size_scales",
+  "title": "tests(oci): pin human_size unit scaling and GiB cap",
+  "test": "\n    #[test]\n    fn human_size_scales_units_and_caps_at_gib() {\n        assert_eq!(human_size(0), \"0 B\");\n        assert_eq!(human_size(512), \"512 B\");\n        assert_eq!(human_size(1024), \"1.0 KiB\");\n        assert_eq!(human_size(1536), \"1.5 KiB\");\n        assert_eq!(human_size(1024 * 1024), \"1.0 MiB\");\n        assert_eq!(human_size(1024 * 1024 * 1024), \"1.0 GiB\");\n        // beyond GiB stays in GiB (unit cap)\n        assert_eq!(human_size(2 * 1024 * 1024 * 1024), \"2.0 GiB\");\n    }\n",
+  "body": "### What\nPins `human_size` unit scaling: bytes below 1024 stay B, exact powers render KiB/MiB/GiB with one decimal, and values beyond GiB cap at the largest unit.\n\n### Why it matters\nProgress reporting relies on correct magnitude; flipping the loop threshold or stalling the unit counter renders every size as bytes. No existing test exercises human_size directly.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| `>= 1024.0` -> `< 1024.0` | PASS (survives) | FAIL (killed) |\n| `unit += 1` -> `unit *= 1` | PASS (survives) | FAIL (killed) |\n\nBaseline: PASS. Reproduce: `cargo test -p ginux-oci --lib human_size_scales`.\n\nPrepared with AI assistance; reviewed by me.\n",
+  "mutants": [
+   {
+    "name": "loop-lt",
+    "old": "    while value >= 1024.0 && unit + 1 < UNITS.len() {",
+    "new": "    while value < 1024.0 && unit + 1 < UNITS.len() {",
+    "line": 595
+   },
+   {
+    "name": "unit-mul",
+    "old": "        unit += 1;",
+    "new": "        unit *= 1;",
+    "line": 597
+   }
+  ],
+  "spec_ref": "IEC 80000-13 binary prefixes (KiB/MiB/GiB)"
  }
 ]

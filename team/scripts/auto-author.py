@@ -19,6 +19,7 @@ for _k,_v in (("GIT_AUTHOR_NAME","ginux-watch-agent"),("GIT_AUTHOR_EMAIL","actio
     _os.environ.setdefault(_k,_v)
 
 from pathlib import Path
+import sys as _sys; _sys.path.insert(0, str(Path(__file__).resolve().parent))
 from spec_ref import with_spec_ref
 ROOT = Path(__file__).resolve().parents[2]
 U = Path("/tmp/author-upstream")

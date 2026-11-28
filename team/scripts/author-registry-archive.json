@@ -386,5 +386,33 @@
   },
   "archived_utc": "2026-11-28",
   "reason": "merged upstream PR #370/#371 (2026-11-27T22:40-22:48Z)"
+ },
+ {
+  "entry": {
+   "name": "vfs-decode-boundary-exact",
+   "crate": "ginux-vfs",
+   "file": "crates/ginux-vfs/src/lib.rs",
+   "fn": "decode_record_accepts_exact_path_and_link_bounds",
+   "filter": "decode_record_accepts_exact",
+   "title": "tests(vfs): pin decode_record exact path/link bounds and overflow rejection",
+   "test": "\n    #[test]\n    fn decode_record_accepts_exact_path_and_link_bounds() {\n        let mut buf = [0u8; HEADER_SIZE + RECORD_SIZE];\n        encode_header(1, (&mut buf[..HEADER_SIZE]).try_into().unwrap());\n        {\n            let rec = &mut buf[HEADER_SIZE..];\n            rec[2] = 3; // symlink\n            rec[0..2].copy_from_slice(&(MAX_PATH as u16).to_le_bytes());\n            rec[32..34].copy_from_slice(&(MAX_LINK as u16).to_le_bytes());\n            rec[40] = b'/';\n            for b in &mut rec[41..40 + MAX_PATH] { *b = b'a'; }\n            for b in &mut rec[40 + MAX_PATH..40 + MAX_PATH + MAX_LINK] { *b = b'b'; }\n        }\n        // exact MAX_PATH path and MAX_LINK link must decode (boundary inclusive)\n        assert!(Index::new(&buf).is_ok());\n        {\n            let rec = &mut buf[HEADER_SIZE..];\n            rec[32..34].copy_from_slice(&((MAX_LINK + 1) as u16).to_le_bytes());\n        }\n        // one past MAX_LINK must be rejected at decode time\n        assert_eq!(Index::new(&buf).err(), Some(VfsError::InvalidIndex));\n        {\n            let rec = &mut buf[HEADER_SIZE..];\n            rec[32..34].copy_from_slice(&(MAX_LINK as u16).to_le_bytes());\n            rec[0..2].copy_from_slice(&0u16.to_le_bytes());\n        }\n        // zero-length path rejected\n        assert_eq!(Index::new(&buf).err(), Some(VfsError::InvalidIndex));\n    }\n",
+   "body": "### What\nPins `decode_record` length gates: exact MAX_PATH/MAX_LINK fit decodes, one-past-MAX_LINK and zero-length path are rejected at index load.\n\n### Why it matters\nDecode gates guard every record read; relaxing `>` to `>=` rejects valid exact-fit images, while `==` admits oversized links that later slice out of bounds. Existing tests pin encode-side and path-overflow only, not decode-side exact fit or link overflow.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| `link_len > MAX_LINK` -> `>=` | PASS (survives) | FAIL (killed) |\n| `path_len > MAX_PATH` -> `==` | PASS (survives) | FAIL (killed) |\n\nBaseline: PASS. Reproduce: `cargo test -p ginux-vfs --lib decode_record_accepts_exact`.\n\nPrepared with AI assistance; reviewed by me.\n",
+   "mutants": [
+    {
+     "name": "link-ge",
+     "old": "    if path_len == 0 || path_len > MAX_PATH || link_len > MAX_LINK {",
+     "new": "    if path_len == 0 || path_len > MAX_PATH || link_len >= MAX_LINK {",
+     "line": 144
+    },
+    {
+     "name": "link-eq",
+     "old": "    if path_len == 0 || path_len > MAX_PATH || link_len > MAX_LINK {",
+     "new": "    if path_len == 0 || path_len > MAX_PATH || link_len == MAX_LINK {",
+     "line": 144
+    }
+   ]
+  },
+  "archived_utc": "2026-11-28",
+  "reason": "merged upstream PR #372 (2026-11-28T07:51Z)"
  }
 ]

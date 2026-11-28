@@ -1,0 +1,19 @@
+{
+ "crate": "ginux-instance",
+ "file": "crates/ginux-instance/src/lib.rs",
+ "filter": "finish_preserves_explicit",
+ "mutants": [
+  {
+   "name": "workdir-shift",
+   "old": "        const WORKDIR_BIT: u128 = 1 << 16;",
+   "new": "        const WORKDIR_BIT: u128 = 1 >> 16;",
+   "line": 476
+  },
+  {
+   "name": "recipe-default-shift",
+   "old": "        const RECIPE_DEFAULT_BIT: u128 = 1 << 38;",
+   "new": "        const RECIPE_DEFAULT_BIT: u128 = 1 >> 38;",
+   "line": 481
+  }
+ ]
+}

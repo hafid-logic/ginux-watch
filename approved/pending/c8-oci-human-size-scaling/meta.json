@@ -1,0 +1,19 @@
+{
+ "crate": "ginux-oci",
+ "file": "crates/ginux-oci/src/lib.rs",
+ "filter": "human_size_scales",
+ "mutants": [
+  {
+   "name": "loop-lt",
+   "old": "    while value >= 1024.0 && unit + 1 < UNITS.len() {",
+   "new": "    while value < 1024.0 && unit + 1 < UNITS.len() {",
+   "line": 595
+  },
+  {
+   "name": "unit-mul",
+   "old": "        unit += 1;",
+   "new": "        unit *= 1;",
+   "line": 597
+  }
+ ]
+}

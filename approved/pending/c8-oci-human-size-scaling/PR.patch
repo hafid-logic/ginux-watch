@@ -1,0 +1,50 @@
+From 773da6144821e2cffb10ae4bcfb7f53c83a527ad Mon Sep 17 00:00:00 2001
+From: ginux-watch-agent <actions@users.noreply.github.com>
+Date: Sat, 28 Nov 2026 08:18:48 +0000
+Subject: [PATCH] tests(oci): pin human_size unit scaling and GiB cap
+
+### What
+Pins `human_size` unit scaling: bytes below 1024 stay B, exact powers render KiB/MiB/GiB with one decimal, and values beyond GiB cap at the largest unit.
+
+### Why it matters
+Progress reporting relies on correct magnitude; flipping the loop threshold or stalling the unit counter renders every size as bytes. No existing test exercises human_size directly.
+
+### Mutation evidence (fail-then-pass)
+| Mutant | Existing suite | New test |
+|---|---|---|
+| `>= 1024.0` -> `< 1024.0` | PASS (survives) | FAIL (killed) |
+| `unit += 1` -> `unit *= 1` | PASS (survives) | FAIL (killed) |
+
+Baseline: PASS. Reproduce: `cargo test -p ginux-oci --lib human_size_scales`.
+
+Spec-Ref: IEC 80000-13 binary prefixes (KiB/MiB/GiB)
+
+Prepared with AI assistance; reviewed by me.
+---
+ crates/ginux-oci/src/lib.rs | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/crates/ginux-oci/src/lib.rs b/crates/ginux-oci/src/lib.rs
+index e9579a9f..01e040f4 100644
+--- a/crates/ginux-oci/src/lib.rs
++++ b/crates/ginux-oci/src/lib.rs
+@@ -857,4 +857,16 @@ mod tests {
+         let variant = serde_json::json!({"manifests":[{"mediaType":"application/vnd.oci.image.manifest.v1+json","digest":"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","size":1,"platform":{"os":"linux","architecture":"amd64","variant":"v8"}}]});
+         assert!(select_manifest(&variant).is_err());
+     }
++
++    #[test]
++    fn human_size_scales_units_and_caps_at_gib() {
++        assert_eq!(human_size(0), "0 B");
++        assert_eq!(human_size(512), "512 B");
++        assert_eq!(human_size(1024), "1.0 KiB");
++        assert_eq!(human_size(1536), "1.5 KiB");
++        assert_eq!(human_size(1024 * 1024), "1.0 MiB");
++        assert_eq!(human_size(1024 * 1024 * 1024), "1.0 GiB");
++        // beyond GiB stays in GiB (unit cap)
++        assert_eq!(human_size(2 * 1024 * 1024 * 1024), "2.0 GiB");
++    }
+ }
+-- 
+2.47.3
+

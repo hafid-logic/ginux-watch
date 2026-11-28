@@ -10,10 +10,10 @@
    "line": 1020
   },
   {
-   "name": "mask-xor",
-   "old": "        if descriptor == 0 || events == 0 || events & !(EVENT_READ | EVENT_WRITE) != 0 {",
-   "new": "        if descriptor == 0 || events == 0 || events ^ !(EVENT_READ | EVENT_WRITE) != 0 {",
-   "line": 1020
+   "name": "dup-or",
+   "old": "            .any(|entry| entry.active && entry.descriptor == descriptor)",
+   "new": "            .any(|entry| entry.active || entry.descriptor == descriptor)",
+   "line": 1026
   }
  ]
 }

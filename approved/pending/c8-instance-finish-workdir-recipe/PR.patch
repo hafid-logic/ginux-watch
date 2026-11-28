@@ -1,0 +1,56 @@
+From 12103b037ff6877025dbc2ab16a6b9fcd44f8f03 Mon Sep 17 00:00:00 2001
+From: ginux-watch-agent <actions@users.noreply.github.com>
+Date: Sat, 28 Nov 2026 08:18:47 +0000
+Subject: [PATCH] tests(instance): pin finish workdir preservation and
+ partial-recipe rejection
+
+### What
+Pins `finish` bitmask defaults: explicit workdir preserved, absent workdir defaults to /work, partial contract recipe (missing default) rejected.
+
+### Why it matters
+Bit-shift errors in field masks silently ignore operator-supplied values or admit incomplete recipes. Existing tests never set workdir explicitly nor supply partial recipes.
+
+### Mutation evidence (fail-then-pass)
+| Mutant | Existing suite | New test |
+|---|---|---|
+| `WORKDIR_BIT 1<<16` -> `1>>16` | PASS (survives) | FAIL (killed) |
+| `RECIPE_DEFAULT_BIT 1<<38` -> `1>>38` | PASS (survives) | FAIL (killed) |
+
+Baseline: PASS. Reproduce: `cargo test -p ginux-instance --lib finish_preserves_explicit`.
+
+Spec-Ref: TOML config field-presence semantics (instance recipe schema)
+
+Prepared with AI assistance; reviewed by me.
+---
+ crates/ginux-instance/src/lib.rs | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
+
+diff --git a/crates/ginux-instance/src/lib.rs b/crates/ginux-instance/src/lib.rs
+index 8e80d148..e1b5be71 100644
+--- a/crates/ginux-instance/src/lib.rs
++++ b/crates/ginux-instance/src/lib.rs
+@@ -3217,4 +3217,21 @@ failure = "stop"
+         assert!(c.apply_override(b"no.such.key", b"\"x\"").is_err());
+         assert!(c.apply_override(b"contract.digest", b"\"x\"").is_err());
+     }
++
++    #[test]
++    fn finish_preserves_explicit_workdir_and_rejects_partial_recipe() {
++        // explicit workdir must be preserved (not replaced by default "/work")
++        let src = VALID.replace("[resources]", "workdir = \"/custom\"\n\n[resources]");
++        let c = InstanceConfig::parse(src.as_bytes()).unwrap();
++        assert_eq!(c.workdir.as_bytes(), b"/custom");
++        // absent workdir defaults to "/work"
++        let d = InstanceConfig::parse(VALID.as_bytes()).unwrap();
++        assert_eq!(d.workdir.as_bytes(), b"/work");
++        // partial recipe (version+catalog, no default) must be rejected
++        let partial = VALID.replace(
++            "[storage]",
++            "[contract.recipe]\nversion = 1\ncatalog = 2\n[storage]",
++        );
++        assert!(InstanceConfig::parse(partial.as_bytes()).is_err());
++    }
+ }
+-- 
+2.47.3
+
