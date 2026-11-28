@@ -40,9 +40,23 @@
   ]
  },
  "c8-vfs-copy-overlay-size-boundary": {
-  "proven": false,
-  "baseline": false,
-  "why": "baseline-fail",
-  "baseline_err": "\u001b[1m\u001b[92m   Compiling\u001b[0m ginux-vfs v0.1.0 (/tmp/prover-upstream/crates/ginux-vfs)\n\u001b[1m\u001b[91merror\u001b[0m\u001b[1m: cannot find macro `vec` in this scope\u001b[0m\n    \u001b[1m\u001b[94m--> \u001b[0mcrates/ginux-vfs/src/lib.rs:1325:23\n     \u001b[1m\u001b[94m|\u001b[0m\n\u001b[1m\u001b[94m1325\u001b[0m \u001b[1m\u001b[94m|\u001b[0m         let mut buf = vec![0u8; HEADER_SIZE + RECORD_SIZE];\n     \u001b[1m\u001b[94m|\u001b[0m                       \u001b[1m\u001b[91m^^^\u001b[0m\n\n\u001b[1m\u001b[91merror\u001b[0m: could not compile `ginux-vfs` (lib test) due to 1 previous error"
+  "proven": true,
+  "baseline": true,
+  "mutants": [
+   {
+    "name": "size-ge",
+    "anchor_ok": true,
+    "anchor_count": 1,
+    "survives": true,
+    "killed": true
+   },
+   {
+    "name": "size-eq",
+    "anchor_ok": true,
+    "anchor_count": 1,
+    "survives": true,
+    "killed": true
+   }
+  ]
  }
 }
