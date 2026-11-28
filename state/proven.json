@@ -1,1 +1,116 @@
-{}
+{
+ "c8-devices-network-view-minor-and-ring-wrap": {
+  "proven": true,
+  "baseline": true,
+  "mutants": [
+   {
+    "name": "minor-mul",
+    "anchor_ok": true,
+    "anchor_count": 1,
+    "survives": true,
+    "killed": true
+   },
+   {
+    "name": "minor-sub",
+    "anchor_ok": true,
+    "anchor_count": 1,
+    "survives": true,
+    "killed": true
+   },
+   {
+    "name": "wrap-div",
+    "anchor_ok": true,
+    "anchor_count": 1,
+    "survives": true,
+    "killed": true
+   }
+  ]
+ },
+ "c8-fs-policy-rights-bit-positions": {
+  "proven": false,
+  "baseline": true,
+  "mutants": [
+   {
+    "name": "create-shift-right",
+    "anchor_ok": true,
+    "anchor_count": 1,
+    "survives": true,
+    "killed": true
+   },
+   {
+    "name": "metadata-shift-right",
+    "anchor_ok": true,
+    "anchor_count": 1,
+    "survives": true,
+    "killed": true
+   },
+   {
+    "name": "execute-shift-right",
+    "anchor_ok": true,
+    "anchor_count": 1,
+    "survives": false,
+    "killed": true
+   }
+  ]
+ },
+ "c8-instance-override-policy-channels-batch3": {
+  "proven": true,
+  "baseline": true,
+  "mutants": [
+   {
+    "name": "del-dev-read",
+    "anchor_ok": true,
+    "anchor_count": 1,
+    "survives": true,
+    "killed": true
+   },
+   {
+    "name": "del-dev-create",
+    "anchor_ok": true,
+    "anchor_count": 1,
+    "survives": true,
+    "killed": true
+   },
+   {
+    "name": "del-proc-signals",
+    "anchor_ok": true,
+    "anchor_count": 1,
+    "survives": true,
+    "killed": true
+   },
+   {
+    "name": "del-kernel-proc-read",
+    "anchor_ok": true,
+    "anchor_count": 1,
+    "survives": true,
+    "killed": true
+   }
+  ]
+ },
+ "c8-instance-parse-field-duplicate-bit-table": {
+  "proven": true,
+  "baseline": true,
+  "mutants": [
+   {
+    "name": "allow-shift-right",
+    "anchor_ok": true,
+    "anchor_count": 1,
+    "survives": true,
+    "killed": true
+   },
+   {
+    "name": "deny-shift-right",
+    "anchor_ok": true,
+    "anchor_count": 1,
+    "survives": true,
+    "killed": true
+   }
+  ]
+ },
+ "c8-vfs-index-empty-and-link-boundary": {
+  "proven": false,
+  "baseline": false,
+  "why": "baseline-fail",
+  "baseline_err": "\u001b[1m\u001b[92m   Compiling\u001b[0m ginux-vfs v0.1.0 (/tmp/prover-upstream/crates/ginux-vfs)\n\u001b[1m\u001b[92m    Finished\u001b[0m `test` profile [unoptimized + debuginfo] target(s) in 0.31s\n\u001b[1m\u001b[92m     Running\u001b[0m unittests src/lib.rs (target/debug/build/ginux-vfs/ccb6c21ddf8ee049/out/ginux_vfs-ccb6c21ddf8ee049)\n\u001b[1m\u001b[91merror\u001b[0m: test failed, to rerun pass `-p ginux-vfs --lib`"
+ }
+}
