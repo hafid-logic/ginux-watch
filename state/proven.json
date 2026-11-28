@@ -1,4 +1,24 @@
 {
+ "c8-instance-finish-workdir-recipe": {
+  "proven": false,
+  "baseline": true,
+  "mutants": [
+   {
+    "name": "workdir-shift",
+    "anchor_ok": true,
+    "anchor_count": 1,
+    "survives": true,
+    "killed": true
+   },
+   {
+    "name": "recipe-default-shift",
+    "anchor_ok": true,
+    "anchor_count": 1,
+    "survives": true,
+    "killed": false
+   }
+  ]
+ },
  "c8-kernel-views-parse-controllers": {
   "proven": true,
   "baseline": true,
@@ -19,8 +39,28 @@
    }
   ]
  },
+ "c8-oci-human-size-scaling": {
+  "proven": true,
+  "baseline": true,
+  "mutants": [
+   {
+    "name": "loop-lt",
+    "anchor_ok": true,
+    "anchor_count": 1,
+    "survives": true,
+    "killed": true
+   },
+   {
+    "name": "unit-mul",
+    "anchor_ok": true,
+    "anchor_count": 1,
+    "survives": true,
+    "killed": true
+   }
+  ]
+ },
  "c8-process-event-poll-admission": {
-  "proven": false,
+  "proven": true,
   "baseline": true,
   "mutants": [
    {
@@ -31,27 +71,7 @@
     "killed": true
    },
    {
-    "name": "mask-xor",
-    "anchor_ok": true,
-    "anchor_count": 1,
-    "survives": false,
-    "killed": true
-   }
-  ]
- },
- "c8-vfs-decode-boundary-exact": {
-  "proven": true,
-  "baseline": true,
-  "mutants": [
-   {
-    "name": "link-ge",
-    "anchor_ok": true,
-    "anchor_count": 1,
-    "survives": true,
-    "killed": true
-   },
-   {
-    "name": "link-eq",
+    "name": "dup-or",
     "anchor_ok": true,
     "anchor_count": 1,
     "survives": true,
