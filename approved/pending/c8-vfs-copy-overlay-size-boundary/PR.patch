@@ -1,6 +1,6 @@
-From 02a9f2d6ea043e9c343c95051c73b4d5b46d9515 Mon Sep 17 00:00:00 2001
+From 4b059602d0205f5c6c70a14fbf166299fb6b8071 Mon Sep 17 00:00:00 2001
 From: ginux-watch-agent <actions@users.noreply.github.com>
-Date: Sat, 28 Nov 2026 09:20:51 +0000
+Date: Sat, 28 Nov 2026 09:22:44 +0000
 Subject: [PATCH] tests(vfs): pin copy_to_overlay exact FILE_SIZE acceptance
 
 ### What
@@ -21,21 +21,21 @@ Spec-Ref: overlay copy-on-write size invariant (VFS internal contract)
 
 Prepared with AI assistance; reviewed by me.
 ---
- crates/ginux-vfs/src/lib.rs | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ crates/ginux-vfs/src/lib.rs | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
 diff --git a/crates/ginux-vfs/src/lib.rs b/crates/ginux-vfs/src/lib.rs
-index 1f341a7a..da02b185 100644
+index 1f341a7a..4390d2a2 100644
 --- a/crates/ginux-vfs/src/lib.rs
 +++ b/crates/ginux-vfs/src/lib.rs
-@@ -1319,4 +1319,32 @@ mod tests {
+@@ -1319,4 +1319,30 @@ mod tests {
          // zero-length path rejected
          assert_eq!(Index::new(&buf).err(), Some(VfsError::InvalidIndex));
      }
 +
 +    #[test]
 +    fn copy_to_overlay_accepts_exact_file_size_and_rejects_overflow() {
-+        let mut buf = vec![0u8; HEADER_SIZE + RECORD_SIZE];
++        let mut buf = [0u8; HEADER_SIZE + RECORD_SIZE];
 +        encode_header(1, (&mut buf[..HEADER_SIZE]).try_into().unwrap());
 +        let entry = Entry {
 +            path: b"/exact",
@@ -50,10 +50,8 @@ index 1f341a7a..da02b185 100644
 +        encode_record(entry, (&mut buf[HEADER_SIZE..]).try_into().unwrap()).unwrap();
 +        let mut vfs: VirtualFs<'_, Reader, 2, 8, 4> =
 +            VirtualFs::new(Index::new(&buf).unwrap(), Reader(*b"BASETOOL"));
-+        // exact FILE_SIZE(8) fit must copy successfully
 +        let w = vfs.open(b"/exact", O_WRITE).unwrap();
 +        vfs.close(w).unwrap();
-+        // smaller base file (/base size=4) must also copy without rejection
 +        let std_bytes = index_bytes();
 +        let mut vfs2: VirtualFs<'_, Reader, 2, 8, 4> =
 +            VirtualFs::new(Index::new(&std_bytes).unwrap(), Reader(*b"BASETOOL"));
