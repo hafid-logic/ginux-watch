@@ -109,3 +109,10 @@
 - قبول البوابات بقرار المالك: v84 (نقل بلا تعديل) + v85 في hdae/gates-done/ + ACCEPTANCE.md.
 - إسناد HDAE لـ Gregory M. Kurtzer (gmkurtzer/hdae, Apache-2.0) في NOTICE + docs/ATTRIBUTION.md + README.
 - تقرير الجلسة: reports/2026-11-19-session-report.md. تجربة المستوى 0 مؤجلة بطلب المالك. توكن الـApp ينتهي 2026-11-19 08:40Z.
+
+## المرحلة 8 (2026-11-28) — 8/8 Grand Slam + الموجة أ-2
+- **الكرارة الثامنة فُتحت:** ginux-core أصبح مغطى بحزمة مثبّتة بعد تشريح كل ناجياته الـ35 (لا اكتفاء بـcrate_balanced_top). الناجيتان الحيتان: write(1) fd-set و netlink kind==2 gate.
+- **الموجة أ-2 مُبرهنة ومفتوحة:** #380 core-write-fd-and-netlink-kind · #381 kv-procfs-stat-labels-state · #382 oci-remove-path-idempotent-recursive · #383 process-timer-expiration-accounting. كلها baseline أخضر + طفرتان ناجيتان تُقتلان + fmt نظيف + نص كامل في رسالة الـcommit.
+- **الموجة ب:** #377/#378/#379 دُمجت؛ صفر تعارضات مع البوت.
+- **تحسينات الأتمتة:** حارس no_std مسبق في auto-author.py؛ الالتزام `-m title -m body` لضمان نص الـPR على كل فرع؛ أرشفة المولّدات المدموجة (#373–#379).
+- **التالي:** انتظار دمج #380–#383، ثم موجة أ-3 من الكراتات الشاغرة (instance/process/oci) عبر نفس الحلقة.
