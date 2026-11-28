@@ -1,0 +1,97 @@
+From c9a472a97cb8c50c8c2d7a57260ceeb94e3c0968 Mon Sep 17 00:00:00 2001
+From: ginux-watch-agent <actions@users.noreply.github.com>
+Date: Sat, 28 Nov 2026 12:16:02 +0000
+Subject: [PATCH] tests(vfs): pin Index::is_empty and the symlink link-length
+ boundary
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+### What
+Pins two VFS index guards: `Index::is_empty` reports true only for a zero-record index, and `Index::resolve` accepts a symlink whose target length equals the link buffer (`MAX_PATH`) exactly — the copy gate is `>` not `>=`.
+
+### Why it matters
+An inverted or constant-folded `is_empty` misreports index state to callers sizing iteration. Relaxing the link-length gate to `>=` rejects valid exact-fit targets. Existing tests never build an empty index nor an exact-MAX_PATH link.
+
+### Mutation evidence (fail-then-pass)
+| Mutant | Existing suite | New test |
+|---|---|---|
+| `count == 0` -> `count != 0` (is_empty) | PASS (survives) | FAIL (killed) |
+| `is_empty -> true` | PASS (survives) | FAIL (killed) |
+| link-length gate `>` -> `>=` | PASS (survives) | FAIL (killed) |
+
+Baseline (clean tree + new test): PASS. Reproduce: `cargo test -p ginux-vfs --lib index_is_empty_and_resolve_link`.
+
+Spec-Ref: VFS index contract (emptiness predicate; symlink target buffer bound)
+
+Prepared with AI assistance; reviewed by me.
+---
+ crates/ginux-vfs/src/lib.rs | 54 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 54 insertions(+)
+
+diff --git a/crates/ginux-vfs/src/lib.rs b/crates/ginux-vfs/src/lib.rs
+index 4390d2a2..9ecfe0c1 100644
+--- a/crates/ginux-vfs/src/lib.rs
++++ b/crates/ginux-vfs/src/lib.rs
+@@ -1345,4 +1345,58 @@ mod tests {
+         let w2 = vfs2.open(b"/base", O_WRITE).unwrap();
+         vfs2.close(w2).unwrap();
+     }
++
++    #[test]
++    fn index_is_empty_and_resolve_link_length_boundary_are_exact() {
++        // empty index: len 0, is_empty true
++        let mut header = [0u8; HEADER_SIZE];
++        encode_header(0, &mut header);
++        let empty = Index::new(&header).unwrap();
++        assert_eq!(empty.len(), 0);
++        assert!(empty.is_empty());
++        // non-empty index: is_empty false
++        let bytes = index_bytes();
++        let index = Index::new(&bytes).unwrap();
++        assert!(!index.is_empty());
++        assert!(index.len() > 0);
++        // symlink whose target length equals MAX_PATH exactly: accepted by the copy gate
++        let mut buf = [0u8; HEADER_SIZE + 2 * RECORD_SIZE];
++        encode_header(2, (&mut buf[..HEADER_SIZE]).try_into().unwrap());
++        let root = Entry {
++            path: b"/",
++            kind: NodeKind::Directory,
++            mode: 0o755,
++            uid: 0,
++            gid: 0,
++            size: 0,
++            data_offset: 0,
++            link: b"",
++        };
++        encode_record(
++            root,
++            (&mut buf[HEADER_SIZE..HEADER_SIZE + RECORD_SIZE])
++                .try_into()
++                .unwrap(),
++        )
++        .unwrap();
++        let long_target = [b'a'; MAX_PATH];
++        let link_entry = Entry {
++            path: b"/l",
++            kind: NodeKind::Symlink,
++            mode: 0o777,
++            uid: 0,
++            gid: 0,
++            size: 0,
++            data_offset: 0,
++            link: &long_target,
++        };
++        encode_record(
++            link_entry,
++            (&mut buf[HEADER_SIZE + RECORD_SIZE..]).try_into().unwrap(),
++        )
++        .unwrap();
++        let idx = Index::new(&buf).unwrap();
++        // exact-fit link copies without InvalidPath; resolution then fails NotFound
++        assert_eq!(idx.resolve(b"/l"), Err(VfsError::NotFound));
++    }
+ }
+-- 
+2.47.3
+

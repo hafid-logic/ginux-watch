@@ -1,0 +1,85 @@
+From 112de58000c5b2ef3355cbf5f72aa58bf8dd0910 Mon Sep 17 00:00:00 2001
+From: ginux-watch-agent <actions@users.noreply.github.com>
+Date: Sat, 28 Nov 2026 12:16:02 +0000
+Subject: [PATCH] tests(devices): pin network view minor numbering and receive
+ ring wrap order
+
+### What
+Pins two device behaviors: network `views` project major 0 with one-based minors (`slot index + 1`), and `IsolatedNetwork::receive` advances the ring head with modulo wrap so FIFO order survives a full wrap cycle.
+
+### Why it matters
+The minor number identifies the network interface to userspace; `index + 1` mutated to `index * 1` or `index - 1` shifts every interface id. The receive head `(head + 1) % FRAMES` mutated to `/` breaks wrap-around and returns stale frames. Existing view tests only cover pseudo-devices; existing receive tests never wrap the ring.
+
+### Mutation evidence (fail-then-pass)
+| Mutant | Existing suite | New test |
+|---|---|---|
+| `index as u32 + 1` -> `index as u32 * 1` (network minor) | PASS (survives) | FAIL (killed) |
+| `index as u32 + 1` -> `index as u32 - 1` | PASS (survives) | FAIL (killed) |
+| `(head + 1) % FRAMES` -> `(head + 1) / FRAMES` | PASS (survives) | FAIL (killed) |
+
+Baseline (clean tree + new test): PASS. Reproduce: `cargo test -p ginux-devices --lib network_view_minor_is_one_based`.
+
+Spec-Ref: device view projection contract (network minor numbering); ring-buffer FIFO semantics
+
+Prepared with AI assistance; reviewed by me.
+---
+ crates/ginux-devices/src/lib.rs | 45 +++++++++++++++++++++++++++++++++
+ 1 file changed, 45 insertions(+)
+
+diff --git a/crates/ginux-devices/src/lib.rs b/crates/ginux-devices/src/lib.rs
+index 0dcdc474..479c6e88 100644
+--- a/crates/ginux-devices/src/lib.rs
++++ b/crates/ginux-devices/src/lib.rs
+@@ -989,4 +989,49 @@ mod tests {
+         };
+         assert!(!many.is_empty());
+     }
++
++    #[test]
++    fn network_view_minor_is_one_based_and_receive_ring_wraps_in_order() {
++        let mut registry: DeviceRegistry<8, 8> = DeviceRegistry::new();
++        registry
++            .assign(
++                1,
++                30,
++                DeviceName::new(b"net0").unwrap(),
++                DeviceKind::Network,
++            )
++            .unwrap();
++        registry
++            .assign(
++                1,
++                31,
++                DeviceName::new(b"net1").unwrap(),
++                DeviceKind::Network,
++            )
++            .unwrap();
++        let pad = DeviceView {
++            name: DeviceName::new(b"pad").unwrap(),
++            kind: DeviceKind::Null,
++            major: 9,
++            minor: 9,
++        };
++        let mut out = [pad; 2];
++        assert_eq!(registry.views(1, &mut out), 2);
++        // network views: major 0, minor = slot index + 1 (one-based)
++        assert_eq!((out[0].major, out[0].minor), (0, 1));
++        assert_eq!((out[1].major, out[1].minor), (0, 2));
++        // ring wrap: fill 2, drain 1, refill 1 -> FIFO order preserved across wrap
++        let mut net: IsolatedNetwork<2> = IsolatedNetwork::new();
++        net.send(b"aa").unwrap();
++        net.send(b"bb").unwrap();
++        let mut buf = [0u8; 2];
++        assert_eq!(net.receive(&mut buf), Ok(2));
++        assert_eq!(&buf, b"aa");
++        net.send(b"cc").unwrap();
++        assert_eq!(net.receive(&mut buf), Ok(2));
++        assert_eq!(&buf, b"bb");
++        assert_eq!(net.receive(&mut buf), Ok(2));
++        assert_eq!(&buf, b"cc");
++        assert_eq!(net.receive(&mut buf), Err(DeviceError::QueueEmpty));
++    }
+ }
+-- 
+2.47.3
+
