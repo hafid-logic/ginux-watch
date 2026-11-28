@@ -1,0 +1,19 @@
+{
+ "crate": "ginux-vfs",
+ "file": "crates/ginux-vfs/src/lib.rs",
+ "filter": "copy_to_overlay_accepts",
+ "mutants": [
+  {
+   "name": "size-ge",
+   "old": "        if size > FILE_SIZE {",
+   "new": "        if size >= FILE_SIZE {",
+   "line": 635
+  },
+  {
+   "name": "size-eq",
+   "old": "        if size > FILE_SIZE {",
+   "new": "        if size == FILE_SIZE {",
+   "line": 635
+  }
+ ]
+}

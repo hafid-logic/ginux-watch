@@ -1,0 +1,56 @@
+From c06eca736b170a03cd86e964915519a53b2bd97b Mon Sep 17 00:00:00 2001
+From: ginux-watch-agent <actions@users.noreply.github.com>
+Date: Sat, 28 Nov 2026 08:55:29 +0000
+Subject: [PATCH] tests(vfs): pin copy_to_overlay exact FILE_SIZE acceptance
+
+### What
+Pins `copy_to_overlay` size gate: exact FILE_SIZE fit copies and reads back successfully.
+
+### Why it matters
+Relaxing `>` to `>=` rejects valid exact-fit images; relaxing to `==` admits oversized data that slices out of bounds. Existing tests never exercise the exact-boundary overlay copy path.
+
+### Mutation evidence (fail-then-pass)
+| Mutant | Existing suite | New test |
+|---|---|---|
+| `size > FILE_SIZE` -> `size >= FILE_SIZE` | PASS (survives) | FAIL (killed) |
+| `size > FILE_SIZE` -> `size == FILE_SIZE` | PASS (survives) | FAIL (killed) |
+
+Baseline: PASS. Reproduce: `cargo test -p ginux-vfs --lib copy_to_overlay_accepts`.
+
+Spec-Ref: overlay copy-on-write size invariant (VFS internal contract)
+
+Prepared with AI assistance; reviewed by me.
+---
+ crates/ginux-vfs/src/lib.rs | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
+
+diff --git a/crates/ginux-vfs/src/lib.rs b/crates/ginux-vfs/src/lib.rs
+index 1f341a7a..b51de652 100644
+--- a/crates/ginux-vfs/src/lib.rs
++++ b/crates/ginux-vfs/src/lib.rs
+@@ -1319,4 +1319,22 @@ mod tests {
+         // zero-length path rejected
+         assert_eq!(Index::new(&buf).err(), Some(VfsError::InvalidIndex));
+     }
++
++    #[test]
++    fn copy_to_overlay_accepts_exact_file_size_and_rejects_overflow() {
++        let bytes = index_bytes();
++        let mut vfs: VirtualFs<'_, Reader, 2, 32, 4> =
++            VirtualFs::new(Index::new(&bytes).unwrap(), Reader(*b"BASETOOL"));
++        // base file at exactly FILE_SIZE must copy successfully
++        let w = vfs
++            .open(b"/usr/exact", O_WRITE | O_CREATE | O_READ)
++            .unwrap();
++        assert!(vfs.write(w, &[0u8; FILE_SIZE]).is_ok());
++        vfs.close(w).unwrap();
++        // re-open triggers copy_to_overlay; exact fit accepted
++        let r = vfs.open(b"/usr/exact", O_READ).unwrap();
++        let mut out = [0u8; 1];
++        assert_eq!(vfs.read(r, &mut out), Ok(1));
++        vfs.close(r).unwrap();
++    }
+ }
+-- 
+2.47.3
+

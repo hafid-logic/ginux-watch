@@ -61,15 +61,20 @@ def missed_lines(run_id):
 
 def main():
     runs = gj(f"/repos/{REPO}/actions/workflows/mutation-scan.yml/runs?per_page=30").get("workflow_runs", [])
-    per, seen = {}, set()
-    for r in runs:
+    per, seen, done_crates = {}, set(), set()
+    for r in runs:  # API returns newest first; keep ONLY the latest scan per crate
         if r.get("conclusion") != "success":
             continue
-        for crate, line in missed_lines(r["id"]):
+        rows = missed_lines(r["id"])
+        for crate, line in rows:
+            if crate in done_crates:
+                continue  # stale older scan for an already-harvested crate
             if line in seen:
                 continue
             seen.add(line)
             per.setdefault(crate, []).append(line)
+        for crate, _ in rows:
+            done_crates.add(crate)
     prev = {}
     dp = pathlib.Path("state/discoveries.json")
     if dp.exists():
@@ -82,7 +87,7 @@ def main():
         entry = dict(prev.get(k, {})) if isinstance(prev.get(k), dict) else {}
         if k in per:
             entry["survivors"] = sorted(per[k])
-            entry.setdefault("total_missed", len(per[k]))
+            entry["total_missed"] = len(per[k])
         crates[k] = entry
     doc = {"generated_utc": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
            "source": "mutation-scan artifacts (scan.log MISSED lines + missed.txt when present)",

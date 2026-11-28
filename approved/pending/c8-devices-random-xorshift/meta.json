@@ -1,0 +1,19 @@
+{
+ "crate": "ginux-devices",
+ "file": "crates/ginux-devices/src/lib.rs",
+ "filter": "random_read_pins",
+ "mutants": [
+  {
+   "name": "xor-or-13",
+   "old": "                    self.random_state ^= self.random_state << 13;",
+   "new": "                    self.random_state |= self.random_state << 13;",
+   "line": 266
+  },
+  {
+   "name": "shift-dir-13",
+   "old": "                    self.random_state ^= self.random_state << 13;",
+   "new": "                    self.random_state ^= self.random_state >> 13;",
+   "line": 266
+  }
+ ]
+}

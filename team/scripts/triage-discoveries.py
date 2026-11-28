@@ -18,6 +18,8 @@ NEW (owner directive phase 3):
 Read-only: no builds, no cargo."""
 import json, re, subprocess
 from pathlib import Path
+import sys as _sys; _sys.path.insert(0, str(Path(__file__).resolve().parent))
+from triage_v3 import synth_del_arm_v3, synth_fn_ret_v3
 
 ROOT = Path(__file__).resolve().parents[2]
 U = Path("/tmp/triage-upstream")
@@ -121,6 +123,7 @@ def unique_anchor(lines, idx, old_line, new_line):
 
 
 def synth_mutant(lines, ln, col, desc, fname):
+    NL=chr(10)
     """Exact synthesis from cargo-mutants description at (ln, col), 1-based."""
     idx = ln - 1
     if idx >= len(lines):
@@ -132,6 +135,8 @@ def synth_mutant(lines, ln, col, desc, fname):
     if m:
         x, y = m["x"], m["y"]
         if line[ci:ci + len(x)] != x:
+            mu = synth_fn_ret_v3(lines, ln, col, desc, fname)
+            if mu: return mu
             return None
         new_line = line[:ci] + y + line[ci + len(x):]
         u = unique_anchor(lines, idx, line, new_line)
@@ -146,50 +151,93 @@ def synth_mutant(lines, ln, col, desc, fname):
         pat = m["pat"]
         if not line.lstrip().startswith(pat):
             return None
-        # delete the whole arm line (single-line arms only; multi-line skipped)
-        if "=>" not in line or not line.rstrip().endswith(","):
+        if "=>" not in line:
             return None
-        new_line = ""
-        whole = "\n".join(lines)
-        if whole.count(line + "\n") == 1:
-            return {"name": f"del-arm-{ln}", "old": line + "\n", "new": "", "line": ln}
-        u = unique_anchor(lines, idx, line, "")
-        if not u: return None
-        old, new, ctx = u
-        # deletion via context: replace block containing the arm with block minus arm
-        if ctx:
-            nl = lines[:]
-            nl[idx] = ""
-            lo = max(0, idx - 1); hi = min(len(lines), idx + 2)
-            old_b = "\n".join(lines[lo:hi]); new_b = "\n".join(nl[lo:hi])
-            if whole.count(old_b) == 1:
-                return {"name": f"del-arm-{ln}", "old": old_b, "new": new_b, "line": ln}
+        whole = NL.join(lines)
+        arrow = line.index("=>")
+        rest = line[arrow+2:]
+        d = 0; found = False; end_col = None
+        for k, ch in enumerate(rest):
+            if ch in "{([": d += 1
+            elif ch in "})]": d -= 1
+            elif ch == "," and d == 0:
+                end_col = arrow + 2 + k + 1; found = True; break
+        if found:
+            old_arm = line + NL
+            remainder = line[end_col:]
+            new_val = (remainder + NL) if remainder.strip() else ""
+            if whole.count(old_arm) == 1:
+                return {"name": f"del-arm-{ln}", "old": old_arm, "new": new_val, "line": ln}
+            for radius in (1, 2):
+                lo = max(0, idx - radius); hi = min(len(lines), idx + radius + 1)
+                ob = NL.join(lines[lo:hi])
+                nl = lines[lo:hi][:]; nl[idx-lo] = remainder
+                nb = NL.join(nl)
+                if whole.count(ob) == 1:
+                    return {"name": f"del-arm-{ln}", "old": ob, "new": nb, "line": ln}
+            return None
+        # multi-line arm: walk forward tracking depth until closing } or , at depth 0
+        d = 0; started = False; ei = idx; ec = arrow + 2
+        while ei < len(lines):
+            seg = lines[ei][ec:] if ei == idx else lines[ei]
+            base = ec if ei == idx else 0
+            for k, ch in enumerate(seg):
+                if ch in "{([": d += 1; started = True
+                elif ch in "})]":
+                    d -= 1
+                    if started and d == 0:
+                        end_c = base + k + 1
+                        if end_c < len(lines[ei]) and lines[ei][end_c] == ",": end_c += 1
+                        arm_lines = lines[idx:ei+1][:]
+                        arm_lines[-1] = lines[ei][:end_c]
+                        old_arm = NL.join(arm_lines) + NL
+                        if whole.count(old_arm) == 1:
+                            return {"name": f"del-arm-{ln}", "old": old_arm, "new": "", "line": ln}
+                        for radius in (1, 2):
+                            lo = max(0, idx - radius); hi = min(len(lines), ei + radius + 1)
+                            ob = NL.join(lines[lo:hi])
+                            nl = lines[lo:hi][:]
+                            for rr in range(idx-lo, ei-lo+1): nl[rr] = ""
+                            nb = NL.join(nl)
+                            if whole.count(ob) == 1:
+                                return {"name": f"del-arm-{ln}", "old": ob, "new": nb, "line": ln}
+                        return None
+                elif ch == "," and d == 0 and started:
+                    end_c = base + k + 1
+                    arm_lines = lines[idx:ei+1][:]
+                    arm_lines[-1] = lines[ei][:end_c]
+                    old_arm = NL.join(arm_lines) + NL
+                    if whole.count(old_arm) == 1:
+                        return {"name": f"del-arm-{ln}", "old": old_arm, "new": "", "line": ln}
+                    return None
+            ei += 1; ec = 0
         return None
 
     m = REPL_FN.match(desc)
     if m and " -> " in desc and not REPL_OP.match(desc.replace("match guard ", "")):
-        # function-return replacement: body becomes `return <y>;` — needs full
-        # fn body span; emit as context-scoped whole-function replacement.
         y = m["y"]
         span = fn_span(lines, ln)
         if span is None: return None
-        _, start, end = span
-        # signature line is start-1..; find opening brace line
-        body_old = "\n".join(lines[start - 1:end])
-        # replace body: keep signature up to '{', then ' return y; }'
+        fname2, start, end = span
+        whole = NL.join(lines)
         sig_end = None
         for k in range(start - 1, end):
             if "{" in lines[k]:
-                sig_end = k
-                break
+                sig_end = k; break
         if sig_end is None: return None
-        head = lines[sig_end][:lines[sig_end].index("{") + 1]
-        new_body = head + f"\n        return {y};\n    }}"
-        whole = "\n".join(lines)
-        if whole.count(body_old) != 1:
-            return None
-        return {"name": f"ret-{ln}", "old": body_old, "new": new_body, "line": ln,
-                "note": "whole-function body replacement (cargo-mutants fn-value mutant)"}
+        brace_col = lines[sig_end].index("{")
+        old_line = lines[sig_end]
+        new_line = old_line[:brace_col+1] + f" return {y};" + old_line[brace_col+1:]
+        if whole.count(old_line) == 1:
+            return {"name": f"ret-{fname2}-{ln}", "old": old_line, "new": new_line, "line": ln}
+        for radius in (1, 2):
+            lo = max(0, sig_end - radius); hi = min(len(lines), sig_end + radius + 1)
+            ob = NL.join(lines[lo:hi])
+            nl = lines[lo:hi][:]; nl[sig_end-lo] = new_line
+            nb = NL.join(nl)
+            if whole.count(ob) == 1:
+                return {"name": f"ret-{fname2}-{ln}", "old": ob, "new": nb, "line": ln}
+        return None
 
     m = REPL_OP.match(desc)
     if m:
