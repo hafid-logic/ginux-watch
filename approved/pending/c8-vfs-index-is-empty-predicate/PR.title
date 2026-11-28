@@ -1,1 +1,0 @@
-tests(vfs): pin Index::is_empty against exact record counts

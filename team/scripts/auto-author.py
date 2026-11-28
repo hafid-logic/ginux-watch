@@ -13,7 +13,7 @@ Phase-2 hardening (owner directive 2026-11-28):
 - Fresh regeneration: existing approved/pending/c8-<name> packages are
   rebuilt on current main every run (overwrite PR.patch/meta/title/body),
   curing line-number drift apply-fails."""
-import json, os, re, subprocess
+import json, os, re, subprocess, hashlib
 import os as _os
 for _k,_v in (("GIT_AUTHOR_NAME","ginux-watch-agent"),("GIT_AUTHOR_EMAIL","actions@users.noreply.github.com"),("GIT_COMMITTER_NAME","ginux-watch-agent"),("GIT_COMMITTER_EMAIL","actions@users.noreply.github.com")):
     _os.environ.setdefault(_k,_v)
@@ -62,6 +62,34 @@ def tests_close_index(src):
         j += 1
     return None
 
+def diversified_insert_index(src, entry):
+    """Anchor-Diversified Injection (phase 10): pick a deterministic, stable
+    insertion point BEFORE an existing #[test] fn in the middle of mod tests,
+    instead of always appending at the closing brace. Two generators targeting
+    the same file then land on distant lines => no self-merge tail conflicts.
+    Explicit entry["insert_before_test"] wins; otherwise hash(name) % n picks
+    an anchor when mod tests has >5 test fns. Falls back to tail append."""
+    m = re.search(r'\bmod\s+tests\b', src)
+    if not m:
+        return tests_close_index(src)
+    body_start = src.find('{', m.end())
+    if body_start < 0:
+        return tests_close_index(src)
+    anchors = [body_start + mm.start() for mm in re.finditer(r'#\[test\]', src[body_start:])]
+    explicit = entry.get("insert_before_test")
+    if explicit:
+        pat = re.compile(r'fn\s+' + re.escape(explicit) + r'\b')
+        for a in anchors:
+            if pat.search(src[a:a+400]):
+                return src.rfind('\n', 0, a)
+        print(f"WARNING insert_before_test-not-found: {entry['name']} {explicit} - tail fallback")
+        return tests_close_index(src)
+    if len(anchors) > 5:
+        h = int(hashlib.sha256(entry["name"].encode()).hexdigest(), 16)
+        a = anchors[h % len(anchors)]
+        return src.rfind('\n', 0, a)
+    return tests_close_index(src)
+
 def jit_ok(src, mutants):
     """Every mutant anchor must be live & unambiguous on current main."""
     for mu in mutants:
@@ -99,7 +127,7 @@ def main():
         if not ok:
             print(f"WARNING stale-mutant-anchor: {e['name']} mutant={bad} — skipped")
             skipped.append(e["name"]+"(stale-mutant-anchor)"); continue
-        i=tests_close_index(s)
+        i=diversified_insert_index(s, e)
         if i is None:
             print(f"WARNING no-mod-tests: {e['name']} — skipped")
             skipped.append(e["name"]+"(no-mod-tests)"); continue

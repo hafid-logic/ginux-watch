@@ -75,7 +75,7 @@
    ]
   },
   "archived_utc": "2026-11-28",
-  "reason": "both mutants already killed by existing suite (balanced_contract_allows_read_only_directory_opens) \u2014 no genuine gap"
+  "reason": "both mutants already killed by existing suite (balanced_contract_allows_read_only_directory_opens) — no genuine gap"
  },
  {
   "entry": {
@@ -368,7 +368,7 @@
    "filter": "select_manifest_requires",
    "title": "tests(oci): pin select_manifest linux/amd64/no-variant platform gate",
    "test": "\n    #[test]\n    fn select_manifest_requires_linux_amd64_no_variant() {\n        let good = serde_json::json!({\"manifests\":[{\"mediaType\":\"application/vnd.oci.image.manifest.v1+json\",\"digest\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"size\":1,\"platform\":{\"os\":\"linux\",\"architecture\":\"amd64\"}}]});\n        assert!(select_manifest(&good).unwrap().is_some());\n        // wrong OS must not be selected even if arch matches\n        let bad_os = serde_json::json!({\"manifests\":[{\"mediaType\":\"application/vnd.oci.image.manifest.v1+json\",\"digest\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"size\":1,\"platform\":{\"os\":\"windows\",\"architecture\":\"amd64\"}}]});\n        assert!(select_manifest(&bad_os).is_err());\n        // wrong arch must not be selected even if os matches\n        let bad_arch = serde_json::json!({\"manifests\":[{\"mediaType\":\"application/vnd.oci.image.manifest.v1+json\",\"digest\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"size\":1,\"platform\":{\"os\":\"linux\",\"architecture\":\"arm64\"}}]});\n        assert!(select_manifest(&bad_arch).is_err());\n        // non-empty variant must not match the plain amd64 slot\n        let variant = serde_json::json!({\"manifests\":[{\"mediaType\":\"application/vnd.oci.image.manifest.v1+json\",\"digest\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"size\":1,\"platform\":{\"os\":\"linux\",\"architecture\":\"amd64\",\"variant\":\"v8\"}}]});\n        assert!(select_manifest(&variant).is_err());\n    }\n",
-   "body": "### What\nPins `select_manifest`: only linux/amd64 with empty variant is selected; wrong OS, wrong arch, or non-empty variant are rejected.\n\n### Why it matters\nPlatform selection gates which manifest runs; flipping `&&` to `||` admits foreign-OS or variant manifests into the amd64 slot \u2014 a confinement-relevant mis-selection. No existing test exercises select_manifest.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| first `&&` -> `||` | PASS (survives) | FAIL (killed) |\n| second `&&` -> `||` | PASS (survives) | FAIL (killed) |\n\nBaseline: PASS. Reproduce: `cargo test -p ginux-oci --lib select_manifest_requires`.\n\nPrepared with AI assistance; reviewed by me.\n",
+   "body": "### What\nPins `select_manifest`: only linux/amd64 with empty variant is selected; wrong OS, wrong arch, or non-empty variant are rejected.\n\n### Why it matters\nPlatform selection gates which manifest runs; flipping `&&` to `||` admits foreign-OS or variant manifests into the amd64 slot — a confinement-relevant mis-selection. No existing test exercises select_manifest.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| first `&&` -> `||` | PASS (survives) | FAIL (killed) |\n| second `&&` -> `||` | PASS (survives) | FAIL (killed) |\n\nBaseline: PASS. Reproduce: `cargo test -p ginux-oci --lib select_manifest_requires`.\n\nPrepared with AI assistance; reviewed by me.\n",
    "mutants": [
     {
      "name": "or-os",
@@ -617,5 +617,173 @@
   },
   "merged_pr": "377",
   "archived": "phase8-step1"
+ },
+ {
+  "entry": {
+   "name": "instance-override-policy-channels-batch3",
+   "crate": "ginux-instance",
+   "file": "crates/ginux-instance/src/lib.rs",
+   "fn": "override_policy_channels_devices_process_kernel_apply_exactly",
+   "filter": "override_policy_channels",
+   "title": "tests(instance): pin device/process/kernel policy override arms (batch 3)",
+   "test": "\n    #[test]\n    fn override_policy_channels_devices_process_kernel_apply_exactly() {\n        let mut c = InstanceConfig::parse(VALID.as_bytes()).unwrap();\n        c.apply_override(b\"contract.devices.read\", b\"[\\\"/dev/null\\\"]\").unwrap();\n        assert_eq!(c.device_read.as_slice().len(), 1);\n        assert_eq!(c.device_read.as_slice()[0].as_bytes(), b\"/dev/null\");\n        c.apply_override(b\"contract.devices.write\", b\"[\\\"/dev/zero\\\"]\").unwrap();\n        assert_eq!(c.device_write.as_slice().len(), 1);\n        c.apply_override(b\"contract.devices.create\", b\"[\\\"/dev/custom\\\"]\").unwrap();\n        assert_eq!(c.device_create.as_slice().len(), 1);\n        assert!(c.filesystem_device_nodes);\n        c.apply_override(b\"contract.process.signals\", b\"[\\\"signal.kill\\\"]\").unwrap();\n        assert_eq!(c.process_signals.as_slice().len(), 1);\n        c.apply_override(b\"contract.kernel.proc_read\", b\"[\\\"/proc/**\\\"]\").unwrap();\n        assert_eq!(c.kernel_proc_read.as_slice().len(), 1);\n        assert_eq!(c.kernel_proc_read.as_slice()[0].as_bytes(), b\"/proc/**\");\n    }\n",
+   "body": "### What\nPins the third batch of `apply_override_inner` match arms: `contract.devices.read/.write/.create`, `contract.process.signals` and `contract.kernel.proc_read` each apply their parsed list to the matching field, and a non-empty device create list flips `filesystem_device_nodes`.\n\n### Why it matters\nEach arm is an independent security-policy channel. A deleted arm silently ignores the operator's override while returning success, so a device or kernel rule would never take effect. The existing suite pins batch 1 (#370) and the filesystem batch (#385) but not these five arms.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| delete `contract.devices.read` arm | PASS (survives) | FAIL (killed) |\n| delete `contract.devices.create` arm | PASS (survives) | FAIL (killed) |\n| delete `contract.process.signals` arm | PASS (survives) | FAIL (killed) |\n| delete `contract.kernel.proc_read` arm | PASS (survives) | FAIL (killed) |\n\nBaseline (clean tree + new test): PASS. Reproduce: `cargo test -p ginux-instance --lib override_policy_channels`.\n\nPrepared with AI assistance; reviewed by me.",
+   "mutants": [
+    {
+     "name": "del-dev-read",
+     "old": "            b\"contract.devices.read\" => self.device_read = parse_list(value)?,\n",
+     "new": "",
+     "line": 737
+    },
+    {
+     "name": "del-dev-create",
+     "old": "            b\"contract.devices.create\" => {\n                self.device_create = parse_list(value)?;\n                self.filesystem_device_nodes = !self.device_create.as_slice().is_empty();\n            }\n",
+     "new": "",
+     "line": 739
+    },
+    {
+     "name": "del-proc-signals",
+     "old": "            b\"contract.process.signals\" => self.process_signals = parse_list(value)?,\n",
+     "new": "",
+     "line": 753
+    },
+    {
+     "name": "del-kernel-proc-read",
+     "old": "            b\"contract.kernel.proc_read\" => self.kernel_proc_read = parse_list(value)?,\n",
+     "new": "",
+     "line": 762
+    }
+   ],
+   "spec_ref": "ginux instance-config override contract (device/process/kernel policy channels)"
+  },
+  "merged_pr": "388",
+  "archived": "phase10-step1",
+  "archived_utc": "2026-11-28T13:17:54Z"
+ },
+ {
+  "entry": {
+   "name": "instance-parse-field-duplicate-bit-table",
+   "crate": "ginux-instance",
+   "file": "crates/ginux-instance/src/lib.rs",
+   "fn": "parse_field_duplicate_detection_pins_contract_allow_deny_bits",
+   "filter": "parse_field_duplicate_detection",
+   "title": "tests(instance): pin parse_field duplicate-detection bits for contract allow/deny",
+   "test": "\n    #[test]\n    fn parse_field_duplicate_detection_pins_contract_allow_deny_bits() {\n        let dup_allow = VALID.replace(\"allow = []\", \"allow = []\\nallow = [\\\"syscall.clock_*\\\"]\");\n        assert_eq!(\n            InstanceConfig::parse(dup_allow.as_bytes()),\n            Err(ConfigError::DuplicateField)\n        );\n        let dup_deny = VALID.replace(\"deny = []\", \"deny = []\\ndeny = [\\\"syscall.mount*\\\"]\");\n        assert_eq!(\n            InstanceConfig::parse(dup_deny.as_bytes()),\n            Err(ConfigError::DuplicateField)\n        );\n        // single occurrence still parses cleanly\n        assert!(InstanceConfig::parse(VALID.as_bytes()).is_ok());\n    }\n",
+   "body": "### What\nPins the `seen` bitmap bits used by `parse_field` for `[contract] allow` (bit 19) and `deny` (bit 20): repeating either key must fail with `DuplicateField`, while a single occurrence parses cleanly.\n\n### Why it matters\n`builder.mark(1 << N)` is the only duplicate guard. Shifting right (`1 >> 19 == 0`) marks bit 0, already seen from `schema_version`, so every config carrying `allow`/`deny` would be rejected as a duplicate of the wrong field. The existing duplicate test only pins `instance.id` (bit 1).\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| `mark(1 << 19)` -> `mark(1 >> 19)` (contract.allow) | PASS (survives) | FAIL (killed) |\n| `mark(1 << 20)` -> `mark(1 >> 20)` (contract.deny) | PASS (survives) | FAIL (killed) |\n\nBaseline (clean tree + new test): PASS. Reproduce: `cargo test -p ginux-instance --lib parse_field_duplicate_detection`.\n\nPrepared with AI assistance; reviewed by me.",
+   "mutants": [
+    {
+     "name": "allow-shift-right",
+     "old": "            builder.mark(1 << 19)?;",
+     "new": "            builder.mark(1 >> 19)?;",
+     "line": 1573
+    },
+    {
+     "name": "deny-shift-right",
+     "old": "            builder.mark(1 << 20)?;",
+     "new": "            builder.mark(1 >> 20)?;",
+     "line": 1577
+    }
+   ],
+   "spec_ref": "ginux instance-config parser (seen-bitmap duplicate-field contract)"
+  },
+  "merged_pr": "387",
+  "archived": "phase10-step1",
+  "archived_utc": "2026-11-28T13:17:54Z"
+ },
+ {
+  "entry": {
+   "name": "vfs-index-is-empty-predicate",
+   "crate": "ginux-vfs",
+   "file": "crates/ginux-vfs/src/lib.rs",
+   "fn": "index_is_empty_predicate_tracks_record_count_exactly",
+   "filter": "index_is_empty_predicate",
+   "title": "tests(vfs): pin Index::is_empty against exact record counts",
+   "test": "\n    #[test]\n    fn index_is_empty_predicate_tracks_record_count_exactly() {\n        // empty index: len 0, is_empty true\n        let mut header = [0u8; HEADER_SIZE];\n        encode_header(0, &mut header);\n        let empty = Index::new(&header).unwrap();\n        assert_eq!(empty.len(), 0);\n        assert!(empty.is_empty());\n        // one-record index: len 1, is_empty false\n        let mut buf = [0u8; HEADER_SIZE + RECORD_SIZE];\n        encode_header(1, (&mut buf[..HEADER_SIZE]).try_into().unwrap());\n        let entry = Entry {\n            path: b\"/solo\", kind: NodeKind::File, mode: 0o644,\n            uid: 0, gid: 0, size: 0, data_offset: 0, link: b\"\",\n        };\n        encode_record(entry, (&mut buf[HEADER_SIZE..]).try_into().unwrap()).unwrap();\n        let one = Index::new(&buf).unwrap();\n        assert_eq!(one.len(), 1);\n        assert!(!one.is_empty());\n        // multi-record index stays non-empty\n        let bytes = index_bytes();\n        let index = Index::new(&bytes).unwrap();\n        assert!(index.len() > 1);\n        assert!(!index.is_empty());\n    }\n",
+   "body": "### What\nPins `Index::is_empty` against exact record counts: a zero-record index reports len 0 and is_empty true, while one-record and multi-record indexes report their exact len and is_empty false.\n\n### Why it matters\nCallers use the emptiness predicate before sizing iteration over the index. Inverting the comparison (`count != 0`) or constant-folding it to `true` misreports every non-empty index as empty (or vice versa), silently skipping base-image entries. No existing test builds an empty index or asserts the predicate.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| `count == 0` -> `count != 0` | PASS (survives) | FAIL (killed) |\n| `is_empty -> true` | PASS (survives) | FAIL (killed) |\n\nBaseline (clean tree + new test): PASS. Reproduce: `cargo test -p ginux-vfs --lib index_is_empty_predicate`.\n\nPrepared with AI assistance; reviewed by me.",
+   "mutants": [
+    {
+     "name": "is-empty-ne",
+     "old": "        self.count == 0",
+     "new": "        self.count != 0",
+     "line": 93
+    },
+    {
+     "name": "is-empty-true",
+     "old": "    pub const fn is_empty(&self) -> bool {\n        self.count == 0\n    }",
+     "new": "    pub const fn is_empty(&self) -> bool {\n        true\n    }",
+     "line": 92
+    }
+   ],
+   "spec_ref": "VFS index contract (emptiness predicate vs record count)"
+  },
+  "merged_pr": "386",
+  "archived": "phase10-step1",
+  "archived_utc": "2026-11-28T13:17:54Z"
+ },
+ {
+  "entry": {
+   "name": "fs-policy-rights-bit-positions",
+   "crate": "ginux-fs-policy",
+   "file": "crates/ginux-fs-policy/src/lib.rs",
+   "fn": "rights_constants_pin_exact_bit_positions",
+   "filter": "rights_constants_pin_exact",
+   "title": "tests(fs-policy): pin Rights constants to exact distinct bit positions",
+   "test": "\n    #[test]\n    fn rights_constants_pin_exact_bit_positions() {\n        assert_eq!(Rights::LOOKUP, Rights(1 << 0));\n        assert_eq!(Rights::READ, Rights(1 << 1));\n        assert_eq!(Rights::WRITE, Rights(1 << 2));\n        assert_eq!(Rights::CREATE, Rights(1 << 3));\n        assert_eq!(Rights::METADATA, Rights(1 << 4));\n        assert_eq!(Rights::EXECUTE, Rights(1 << 5));\n        // pairwise distinct: no two rights may share a bit\n        let all = [\n            Rights::LOOKUP, Rights::READ, Rights::WRITE,\n            Rights::CREATE, Rights::METADATA, Rights::EXECUTE,\n        ];\n        for (i, a) in all.iter().enumerate() {\n            for (j, b) in all.iter().enumerate() {\n                if i != j {\n                    assert!(!a.contains(*b));\n                }\n            }\n        }\n    }\n",
+   "body": "### What\nPins every `Rights` constant to its exact bit position (LOOKUP=1<<0 … EXECUTE=1<<5) and asserts pairwise non-containment so no two rights collapse onto the same bit.\n\n### Why it matters\nCapability checks are bitwise: shifting a constant right (`1 >> 3 == 0`) turns CREATE into the empty right that authorizes nothing, while colliding bits silently grant extra permissions. The existing `rights_contains_requires_every_requested_bit` test is shift-invariant (it only checks containment algebra), so it survives every `<<`->`>>` mutation.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| `CREATE: 1 << 3` -> `1 >> 3` | PASS (survives) | FAIL (killed) |\n| `METADATA: 1 << 4` -> `1 >> 4` | PASS (survives) | FAIL (killed) |\n\nBaseline (clean tree + new test): PASS. Reproduce: `cargo test -p ginux-fs-policy --lib rights_constants_pin_exact`.\n\nPrepared with AI assistance; reviewed by me.",
+   "mutants": [
+    {
+     "name": "create-shift-right",
+     "old": "    pub const CREATE: Self = Self(1 << 3);",
+     "new": "    pub const CREATE: Self = Self(1 >> 3);",
+     "line": 71
+    },
+    {
+     "name": "metadata-shift-right",
+     "old": "    pub const METADATA: Self = Self(1 << 4);",
+     "new": "    pub const METADATA: Self = Self(1 >> 4);",
+     "line": 72
+    }
+   ],
+   "spec_ref": "capability rights bitmask contract (distinct single-bit rights)"
+  },
+  "merged_pr": "389",
+  "archived": "phase10-step1",
+  "archived_utc": "2026-11-28T13:17:54Z"
+ },
+ {
+  "entry": {
+   "name": "devices-network-view-minor-and-ring-wrap",
+   "crate": "ginux-devices",
+   "file": "crates/ginux-devices/src/lib.rs",
+   "fn": "network_view_minor_is_one_based_and_receive_ring_wraps_in_order",
+   "filter": "network_view_minor_is_one_based",
+   "title": "tests(devices): pin network view minor numbering and receive ring wrap order",
+   "test": "\n    #[test]\n    fn network_view_minor_is_one_based_and_receive_ring_wraps_in_order() {\n        let mut registry: DeviceRegistry<8, 8> = DeviceRegistry::new();\n        registry.assign(1, 30, DeviceName::new(b\"net0\").unwrap(), DeviceKind::Network).unwrap();\n        registry.assign(1, 31, DeviceName::new(b\"net1\").unwrap(), DeviceKind::Network).unwrap();\n        let pad = DeviceView {\n            name: DeviceName::new(b\"pad\").unwrap(),\n            kind: DeviceKind::Null, major: 9, minor: 9,\n        };\n        let mut out = [pad; 2];\n        assert_eq!(registry.views(1, &mut out), 2);\n        // network views: major 0, minor = slot index + 1 (one-based)\n        assert_eq!((out[0].major, out[0].minor), (0, 1));\n        assert_eq!((out[1].major, out[1].minor), (0, 2));\n        // ring wrap: fill 2, drain 1, refill 1 -> FIFO order preserved across wrap\n        let mut net: IsolatedNetwork<2> = IsolatedNetwork::new();\n        net.send(b\"aa\").unwrap();\n        net.send(b\"bb\").unwrap();\n        let mut buf = [0u8; 2];\n        assert_eq!(net.receive(&mut buf), Ok(2));\n        assert_eq!(&buf, b\"aa\");\n        net.send(b\"cc\").unwrap();\n        assert_eq!(net.receive(&mut buf), Ok(2));\n        assert_eq!(&buf, b\"bb\");\n        assert_eq!(net.receive(&mut buf), Ok(2));\n        assert_eq!(&buf, b\"cc\");\n        assert_eq!(net.receive(&mut buf), Err(DeviceError::QueueEmpty));\n    }\n",
+   "body": "### What\nPins two device behaviors: network `views` project major 0 with one-based minors (`slot index + 1`), and `IsolatedNetwork::receive` advances the ring head with modulo wrap so FIFO order survives a full wrap cycle.\n\n### Why it matters\nThe minor number identifies the network interface to userspace; `index + 1` mutated to `index * 1` or `index - 1` shifts every interface id. The receive head `(head + 1) % FRAMES` mutated to `/` breaks wrap-around and returns stale frames. Existing view tests only cover pseudo-devices; existing receive tests never wrap the ring.\n\n### Mutation evidence (fail-then-pass)\n| Mutant | Existing suite | New test |\n|---|---|---|\n| `index as u32 + 1` -> `index as u32 * 1` (network minor) | PASS (survives) | FAIL (killed) |\n| `index as u32 + 1` -> `index as u32 - 1` | PASS (survives) | FAIL (killed) |\n| `(head + 1) % FRAMES` -> `(head + 1) / FRAMES` | PASS (survives) | FAIL (killed) |\n\nBaseline (clean tree + new test): PASS. Reproduce: `cargo test -p ginux-devices --lib network_view_minor_is_one_based`.\n\nPrepared with AI assistance; reviewed by me.",
+   "mutants": [
+    {
+     "name": "minor-mul",
+     "old": "                DeviceKind::Network => (0, index as u32 + 1),",
+     "new": "                DeviceKind::Network => (0, index as u32 * 1),",
+     "line": 201
+    },
+    {
+     "name": "minor-sub",
+     "old": "                DeviceKind::Network => (0, index as u32 + 1),",
+     "new": "                DeviceKind::Network => (0, index as u32 - 1),",
+     "line": 201
+    },
+    {
+     "name": "wrap-div",
+     "old": "        self.head = (self.head + 1) % FRAMES;",
+     "new": "        self.head = (self.head + 1) / FRAMES;",
+     "line": 483
+    }
+   ],
+   "spec_ref": "device view projection contract (network minor numbering); ring-buffer FIFO semantics"
+  },
+  "merged_pr": "390",
+  "archived": "phase10-step1",
+  "archived_utc": "2026-11-28T13:17:54Z"
  }
 ]
