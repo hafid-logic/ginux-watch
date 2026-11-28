@@ -1,6 +1,6 @@
 {
  "c8-instance-finish-workdir-recipe": {
-  "proven": false,
+  "proven": true,
   "baseline": true,
   "mutants": [
    {
@@ -15,7 +15,7 @@
     "anchor_ok": true,
     "anchor_count": 1,
     "survives": true,
-    "killed": false
+    "killed": true
    }
   ]
  },
