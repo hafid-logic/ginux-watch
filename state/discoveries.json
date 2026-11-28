@@ -1,10 +1,10 @@
 {
- "generated_utc": "2026-11-28T11:15:12Z",
+ "generated_utc": "2026-11-28T13:19:20Z",
  "source": "mutation-scan artifacts (scan.log MISSED lines + missed.txt when present)",
- "total_survivors": 157,
+ "total_survivors": 190,
  "crates": {
   "ginux-core": {
-   "total_missed": 11,
+   "total_missed": 10,
    "scan_run": 8,
    "functions": {
     "balanced_arguments_allowed": 19,
@@ -88,8 +88,7 @@
     "crates/ginux-core/src/lib.rs:450:38: replace | with ^ in balanced_arguments_allowed",
     "crates/ginux-core/src/lib.rs:450:66: replace | with ^ in balanced_arguments_allowed",
     "crates/ginux-core/src/lib.rs:455:34: replace | with ^ in balanced_arguments_allowed",
-    "crates/ginux-core/src/lib.rs:88:27: replace < with <= in loopback_netlink_ack_index",
-    "crates/ginux-core/src/lib.rs:92:22: replace && with || in loopback_netlink_ack_index"
+    "crates/ginux-core/src/lib.rs:88:27: replace < with <= in loopback_netlink_ack_index"
    ]
   },
   "ginux-devices": {
@@ -222,7 +221,7 @@
    ]
   },
   "ginux-fs-policy": {
-   "total_missed": 9,
+   "total_missed": 36,
    "functions": {
     "main": 5,
     "ObjectId::is_available": 2,
@@ -285,20 +284,34 @@
     "crates/ginux-fs-policy/src/bin/fs-policy-doc.rs:38:5: replace render -> String with \"xyzzy\".into()",
     "crates/ginux-fs-policy/src/bin/fs-policy-doc.rs:38:5: replace render -> String with String::new()",
     "crates/ginux-fs-policy/src/bin/fs-policy-doc.rs:7:5: replace main with ()",
-    "crates/ginux-fs-policy/src/lib.rs:126:9: replace Capability::is_available -> bool with false",
-    "crates/ginux-fs-policy/src/lib.rs:126:9: replace Capability::is_available -> bool with true",
-    "crates/ginux-fs-policy/src/lib.rs:234:14: replace ^= with &= in identity_token",
-    "crates/ginux-fs-policy/src/lib.rs:234:14: replace ^= with |= in identity_token",
-    "crates/ginux-fs-policy/src/lib.rs:256:9: replace Owner::name -> &'static str with \"\"",
-    "crates/ginux-fs-policy/src/lib.rs:256:9: replace Owner::name -> &'static str with \"xyzzy\"",
-    "crates/ginux-fs-policy/src/lib.rs:49:21: replace != with == in ObjectId::is_available",
-    "crates/ginux-fs-policy/src/lib.rs:49:26: replace || with && in ObjectId::is_available",
-    "crates/ginux-fs-policy/src/lib.rs:49:40: replace != with == in ObjectId::is_available",
-    "crates/ginux-fs-policy/src/lib.rs:49:9: replace ObjectId::is_available -> bool with true",
-    "crates/ginux-fs-policy/src/lib.rs:66:37: replace << with >>",
-    "crates/ginux-fs-policy/src/lib.rs:67:35: replace << with >>",
-    "crates/ginux-fs-policy/src/lib.rs:69:37: replace << with >>",
-    "crates/ginux-fs-policy/src/lib.rs:70:39: replace << with >>"
+    "crates/ginux-fs-policy/src/lib.rs:128:9: replace Capability::is_available -> bool with false",
+    "crates/ginux-fs-policy/src/lib.rs:128:9: replace Capability::is_available -> bool with true",
+    "crates/ginux-fs-policy/src/lib.rs:1771:26: replace << with >> in path_snapshot_arguments",
+    "crates/ginux-fs-policy/src/lib.rs:1772:64: replace << with >> in path_snapshot_arguments",
+    "crates/ginux-fs-policy/src/lib.rs:1772:70: replace | with ^ in path_snapshot_arguments",
+    "crates/ginux-fs-policy/src/lib.rs:1775:37: replace | with ^ in path_snapshot_arguments",
+    "crates/ginux-fs-policy/src/lib.rs:1776:19: replace << with >> in path_snapshot_arguments",
+    "crates/ginux-fs-policy/src/lib.rs:1776:25: replace | with ^ in path_snapshot_arguments",
+    "crates/ginux-fs-policy/src/lib.rs:1872:14: replace match guard context.arguments[2] & 2 != 0 && context.arguments[3] & 1 != 0 with true in descriptor_required_rights",
+    "crates/ginux-fs-policy/src/lib.rs:1872:35: replace & with | in descriptor_required_rights",
+    "crates/ginux-fs-policy/src/lib.rs:1872:44: replace && with || in descriptor_required_rights",
+    "crates/ginux-fs-policy/src/lib.rs:1872:68: replace & with | in descriptor_required_rights",
+    "crates/ginux-fs-policy/src/lib.rs:1875:9: delete match arm 22 | 32 | 33 | 213 | 232 | 233 | 291 | 292 | 293 | 294 | 319 | 435 | 436 in descriptor_required_rights",
+    "crates/ginux-fs-policy/src/lib.rs:1876:9: delete match arm 5 | 8 | 16 | 72 | 73 | 138 | 221 | 451 in descriptor_required_rights",
+    "crates/ginux-fs-policy/src/lib.rs:288:9: replace OperationFamily::name -> &'static str with \"\"",
+    "crates/ginux-fs-policy/src/lib.rs:288:9: replace OperationFamily::name -> &'static str with \"xyzzy\"",
+    "crates/ginux-fs-policy/src/lib.rs:314:9: replace Executor::name -> &'static str with \"\"",
+    "crates/ginux-fs-policy/src/lib.rs:314:9: replace Executor::name -> &'static str with \"xyzzy\"",
+    "crates/ginux-fs-policy/src/lib.rs:331:9: replace Owner::name -> &'static str with \"\"",
+    "crates/ginux-fs-policy/src/lib.rs:331:9: replace Owner::name -> &'static str with \"xyzzy\"",
+    "crates/ginux-fs-policy/src/lib.rs:68:37: replace << with >>",
+    "crates/ginux-fs-policy/src/lib.rs:69:35: replace << with >>",
+    "crates/ginux-fs-policy/src/lib.rs:71:37: replace << with >>",
+    "crates/ginux-fs-policy/src/lib.rs:72:39: replace << with >>",
+    "crates/ginux-fs-policy/src/namespace_commit.rs:17:9: delete ! in Lease::is_waiting",
+    "crates/ginux-fs-policy/src/namespace_commit.rs:17:9: replace Lease::is_waiting -> bool with false",
+    "crates/ginux-fs-policy/src/namespace_commit.rs:17:9: replace Lease::is_waiting -> bool with true",
+    "crates/ginux-fs-policy/src/namespace_commit.rs:67:13: delete match arm Lease::None in Barrier::release"
    ]
   },
   "ginux-instance": {
@@ -1381,7 +1394,7 @@
    ]
   },
   "ginux-vfs": {
-   "total_missed": 36,
+   "total_missed": 34,
    "functions": {
     "VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::open": 9,
     "encode_record": 7,
@@ -1551,8 +1564,6 @@
     "crates/ginux-vfs/src/lib.rs:543:9: replace VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::release_unlinked with ()",
     "crates/ginux-vfs/src/lib.rs:622:27: replace match guard self.overlay[slot].state == 2 && !self.referenced(slot) with false in VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::create_overlay",
     "crates/ginux-vfs/src/lib.rs:622:52: replace == with != in VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::create_overlay",
-    "crates/ginux-vfs/src/lib.rs:635:17: replace > with == in VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::copy_to_overlay",
-    "crates/ginux-vfs/src/lib.rs:635:17: replace > with >= in VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::copy_to_overlay",
     "crates/ginux-vfs/src/lib.rs:651:9: replace VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::find_base_record -> Option<usize> with Some(1)",
     "crates/ginux-vfs/src/lib.rs:653:19: replace < with <= in VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::find_base_record",
     "crates/ginux-vfs/src/lib.rs:657:59: replace + with * in VirtualFs<'a, R, FILES, FILE_SIZE, FDS>::find_base_record",
