@@ -1,6 +1,6 @@
 {
  "last_seen_sha": "7e664d3817102e53018afc4358dd92ff1e430d11",
- "last_checked": "2026-11-28T08:55:44Z",
+ "last_checked": "2026-11-28T08:56:55Z",
  "last_dispatch": {
   "at": "2026-11-05T02:56:29Z",
   "range": "4d4a53bb..d337713b",
@@ -28,7 +28,7 @@
    "updated_at": "2026-11-13T02:27:17Z",
    "last_comment_at": "2026-11-13T02:27:13Z",
    "last_comment_author": "gmkurtzer",
-   "checked": "2026-11-28T08:55:44Z"
+   "checked": "2026-11-28T08:56:55Z"
   },
   "207": {
    "state": "closed",
@@ -37,7 +37,7 @@
    "updated_at": "2026-11-13T02:58:34Z",
    "last_comment_at": "2026-11-13T02:58:33Z",
    "last_comment_author": "gmkurtzer",
-   "checked": "2026-11-28T08:55:44Z"
+   "checked": "2026-11-28T08:56:55Z"
   },
   "227": {
    "state": "merged",
@@ -46,7 +46,7 @@
    "updated_at": "2026-11-13T02:27:02Z",
    "last_comment_at": "2026-11-06T14:58:30Z",
    "last_comment_author": "gmkurtzer",
-   "checked": "2026-11-28T08:55:44Z"
+   "checked": "2026-11-28T08:56:55Z"
   }
  },
  "breaker_absorbed": {
@@ -91,9 +91,9 @@
   }
  },
  "heartbeat": {
-  "last_run": "2026-11-28T08:55:44Z",
+  "last_run": "2026-11-28T08:56:55Z",
   "last_conclusion": "success",
-  "last_success": "2026-11-28T08:55:44Z",
+  "last_success": "2026-11-28T08:56:55Z",
   "alert_basis": "last_success",
   "source": "team-watcher (GitHub Actions)",
   "checked": "2026-11-27T00:51:05Z",
@@ -108,11 +108,11 @@
    "head_sha": "ebd5238bd3f693dc1b8e00277d4579d35f2919ab",
    "base_sha": "d92863db558eb4c39a8e3d60798b7fd9a52d53ac",
    "stale": true,
-   "mergeable_state": "unknown",
+   "mergeable_state": "clean",
    "comments": null,
    "review_comments": null,
    "updated_at": "2026-11-28T08:34:33Z",
-   "checked": "2026-11-28T08:55:44Z"
+   "checked": "2026-11-28T08:56:55Z"
   },
   "375": {
    "title": "tests(process): pin EventPoll add admission for zero, invalid mask, and duplicates",
@@ -120,11 +120,11 @@
    "head_sha": "ae08e844140bfa1c036e38abbae29cc4d40b1b37",
    "base_sha": "d92863db558eb4c39a8e3d60798b7fd9a52d53ac",
    "stale": true,
-   "mergeable_state": "unknown",
+   "mergeable_state": "clean",
    "comments": null,
    "review_comments": null,
    "updated_at": "2026-11-28T08:33:49Z",
-   "checked": "2026-11-28T08:55:44Z"
+   "checked": "2026-11-28T08:56:55Z"
   },
   "374": {
    "title": "tests(instance): pin finish workdir preservation and partial-recipe rejection",
@@ -132,11 +132,11 @@
    "head_sha": "13cf86d28c8d4d61bbc5ca077aa59ad74f35e688",
    "base_sha": "d92863db558eb4c39a8e3d60798b7fd9a52d53ac",
    "stale": true,
-   "mergeable_state": "unknown",
+   "mergeable_state": "clean",
    "comments": null,
    "review_comments": null,
    "updated_at": "2026-11-28T08:32:25Z",
-   "checked": "2026-11-28T08:55:44Z"
+   "checked": "2026-11-28T08:56:55Z"
   }
  }
 }
