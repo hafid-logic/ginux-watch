@@ -3,6 +3,16 @@
 > v9.1 (2026-11-24): كل حزمنا المعتمدة السبعة دُمجت في upstream؛ لا حزمة معلّقة للنشر.
 > القواعد الدائمة في AGENTS.md / POLICY.md / METHODOLOGY.md؛ التاريخ في الأرشيف append-only.
 
+## تحديث المرحلة 7 (2026-11-28) — triage v3 + الموجة ب + إصلاح حزم البوت
+- **triage v3:** تركيب multi-line delete-arm + fn-retval early-return. unsynth انخفض 164→140 (24 طفرة تحررت). المرشحون المؤهلون 51.
+- **harvest-scans fix:** latest-run-per-crate يستبدل الناجيات القديمة بالكامل؛ لا تراكم عبر المسوحات (يمنع survives=false الكاذب).
+- **fs-policy-identity-token-fnv1a:** ✅ PROVEN — أول مساهمة في ginux-fs-policy! تثبيت قيم FNV-1a المرجعية الدقيقة (طفرتا ^=→&=/|=). Spec-Ref: FNV-1a hash specification.
+- **إصلاح حزم البوت:** devices-random-xorshift (بذرة خاطئة 1→0x6a09e667f3bcc909) وvfs-copy-overlay-size-boundary (FILE_SIZE غير معرّف → استدعاء مباشر بـ Entry). بانتظار إثبات الجولة الثانية.
+- **الموجة أ:** #373 (oci) دُمج؛ #374/#375/#376 مفتوحة. أُرشفت oci من السجل.
+- **devices/core:** معظم الدوال متعددة الطفرات مغطاة بالاختبارات الموجودة؛ devices-random-xorshift (بوت) هو المساهمة الوحيدة قيد الإثبات. core يحتاج مسحًا طازجًا أو دالة أخرى.
+- R1/R2/R3 سارية؛ لم يُفتح أي طلب upstream آليًا.
+
+
 ## تحديث المرحلة 5 (2026-11-28) — ما بعد الدمج الشامل #363-#371
 - **حدث [MEASURED]:** المالك دمج 9 طلبات في ~2 ساعة: #363-#369 (20:41-21:10Z) + #370 golden override-arms (22:40Z) + #371 oci select-manifest (22:48Z). main تقدّم 8b857786 → 0f08bd4c → **5ae0d435**. صفر مفتوحة.
 - **vfs-decode-boundary-exact:** link-ge مثبت؛ path-eq كان مغطى بالاختبار الموجود @1211 (survives=false). استُبدل بـ link-eq (>→== لـ link_len) — فجوة decode حقيقية غير مغطاة. بانتظار إثبات العدّاء.

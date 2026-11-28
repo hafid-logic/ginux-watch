@@ -1,6 +1,6 @@
-From de281fcf324eb4596b64e378ac3e3ae4b617636c Mon Sep 17 00:00:00 2001
+From fc3413d49aeff13d252d76c27217368ab392db96 Mon Sep 17 00:00:00 2001
 From: ginux-watch-agent <actions@users.noreply.github.com>
-Date: Sat, 28 Nov 2026 08:56:30 +0000
+Date: Sat, 28 Nov 2026 08:59:32 +0000
 Subject: [PATCH] tests(process): pin EventPoll add admission for zero, invalid
  mask, and duplicates
 

@@ -1,6 +1,6 @@
-From 16fbbe42a993de3f52cff35ca759bd7a648d7d37 Mon Sep 17 00:00:00 2001
+From f40e809056af7a5829c981a8b90be4164fa00171 Mon Sep 17 00:00:00 2001
 From: ginux-watch-agent <actions@users.noreply.github.com>
-Date: Sat, 28 Nov 2026 08:56:30 +0000
+Date: Sat, 28 Nov 2026 08:59:33 +0000
 Subject: [PATCH] tests(vfs): pin copy_to_overlay exact FILE_SIZE acceptance
 
 ### What
@@ -21,14 +21,14 @@ Spec-Ref: overlay copy-on-write size invariant (VFS internal contract)
 
 Prepared with AI assistance; reviewed by me.
 ---
- crates/ginux-vfs/src/lib.rs | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ crates/ginux-vfs/src/lib.rs | 36 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
 
 diff --git a/crates/ginux-vfs/src/lib.rs b/crates/ginux-vfs/src/lib.rs
-index 1f341a7a..b51de652 100644
+index 1f341a7a..84ac3ba0 100644
 --- a/crates/ginux-vfs/src/lib.rs
 +++ b/crates/ginux-vfs/src/lib.rs
-@@ -1319,4 +1319,22 @@ mod tests {
+@@ -1319,4 +1319,40 @@ mod tests {
          // zero-length path rejected
          assert_eq!(Index::new(&buf).err(), Some(VfsError::InvalidIndex));
      }
@@ -36,19 +36,37 @@ index 1f341a7a..b51de652 100644
 +    #[test]
 +    fn copy_to_overlay_accepts_exact_file_size_and_rejects_overflow() {
 +        let bytes = index_bytes();
-+        let mut vfs: VirtualFs<'_, Reader, 2, 32, 4> =
++        let mut vfs: VirtualFs<'_, Reader, 4, 32, 4> =
 +            VirtualFs::new(Index::new(&bytes).unwrap(), Reader(*b"BASETOOL"));
-+        // base file at exactly FILE_SIZE must copy successfully
-+        let w = vfs
-+            .open(b"/usr/exact", O_WRITE | O_CREATE | O_READ)
-+            .unwrap();
-+        assert!(vfs.write(w, &[0u8; FILE_SIZE]).is_ok());
-+        vfs.close(w).unwrap();
-+        // re-open triggers copy_to_overlay; exact fit accepted
-+        let r = vfs.open(b"/usr/exact", O_READ).unwrap();
-+        let mut out = [0u8; 1];
-+        assert_eq!(vfs.read(r, &mut out), Ok(1));
-+        vfs.close(r).unwrap();
++        // exact FILE_SIZE=32 fit must succeed via direct copy_to_overlay call
++        let entry = Entry {
++            path: b"/fit",
++            kind: NodeKind::File,
++            mode: 0o644,
++            uid: 0,
++            gid: 0,
++            size: 32,
++            data_offset: 0,
++            link: b"",
++        };
++        assert!(vfs
++            .copy_to_overlay(Path::new(b"/fit").unwrap(), entry)
++            .is_ok());
++        // one past FILE_SIZE must be rejected
++        let big = Entry {
++            path: b"/big",
++            kind: NodeKind::File,
++            mode: 0o644,
++            uid: 0,
++            gid: 0,
++            size: 33,
++            data_offset: 0,
++            link: b"",
++        };
++        assert_eq!(
++            vfs.copy_to_overlay(Path::new(b"/big").unwrap(), big),
++            Err(VfsError::FileTooLarge)
++        );
 +    }
  }
 -- 
