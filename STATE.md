@@ -113,3 +113,16 @@
 - #377
 - #378
 <!-- AUTO-OPEN-PRS:END -->
+
+## المرحلة 9 (2026-11-28) — الموجة ب-2: 5 حزم مُبرهنة ومفتوحة
+- **الدمجات:** #380–#383 دُمجت (10:56Z)، ثم #384/#385 (11:56Z) ⇒ 23 دمجة متتالية #363–#385.
+- **مسح طازج:** fs-policy/devices/vfs على العدّادات (runs 46138903059/46138905472/46138907994)؛ discoveries.json = 157 ناجية (11:15Z)؛ triage v3 ⇒ 42 مرشحاً.
+- **الموجة ب-2 (5/5 PROVEN على العدّاء، فُتحت بقرار المشغّل):**
+  - #386 vfs-index-is-empty-predicate (VFS index contract) — أُعيد قاعدتها بعد فشل launch-integration غير المرتبط (close_range gap عابر)؛ CI أخضر عدا static-and-unit قيد التشغيل.
+  - #387 instance-parse-field-duplicate-bit-table (seen-bitmap duplicate contract) — CI أخضر 3/3.
+  - #388 instance-override-policy-channels-batch3 (device/process/kernel policy channels) — CI أخضر 3/3.
+  - #389 fs-policy-rights-bit-positions (capability rights bitmask) — CI أخضر 3/3.
+  - #390 devices-network-view-minor-and-ring-wrap (network minor + ring FIFO) — CI أخضر 3/3.
+- **تصحيحات هندسية بالقياس:** إسقاط طفرة EXECUTE المقتولة أصلاً (fs-policy)؛ إسقاط طفرة link-length المكافئة على الواجهة العامة وتضييق حزمة vfs إلى is_empty (MAX_LINK=128 لا MAX_PATH).
+- **الاحتياط المدفوع:** 0 حالياً — كل الحزم الخمس فُتحت كطلبات (open=5/5). إعادة التعبئة تحتاج موجة جديدة من المسح الطازج.
+- **R1/R2/R3:** لم يفتح الوكيل أي طلب upstream؛ الفتح بشري. حارس no_std ملتزم. لا مساس بالملفات المحمية.
